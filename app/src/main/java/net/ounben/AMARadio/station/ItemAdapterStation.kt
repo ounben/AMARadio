@@ -186,23 +186,23 @@ open class ItemAdapterStation(
                 setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
             }
             if (prefs.getBoolean("compact_style", false)) setupCompactStyle(holder)
-            if (prefs.getBoolean("icon_click_toggles_favorite", true)) {
-                val isInFavorites = favouriteManager.has(station.StationUuid)
-                val toggleFavoriteListener = View.OnClickListener {
-                    if (favouriteManager.has(station.StationUuid)) {
-                        StationActions.removeFromFavourites(fragmentActivity, it, station)
-                    } else {
-                        StationActions.markAsFavourite(fragmentActivity, station)
-                    }
-                    notifyItemChanged(holder.adapterPosition)
+            
+            val isInFavorites = favouriteManager.has(station.StationUuid)
+            val toggleFavoriteListener = View.OnClickListener {
+                if (favouriteManager.has(station.StationUuid)) {
+                    StationActions.removeFromFavourites(fragmentActivity, it, station)
+                } else {
+                    StationActions.markAsFavourite(fragmentActivity, station)
                 }
-                holder.imageViewIcon.contentDescription = fragmentActivity.getString(if (isInFavorites) R.string.detail_unstar else R.string.detail_star)
-                holder.imageViewIcon.setOnClickListener(toggleFavoriteListener)
-                holder.frameLayout.setOnClickListener(toggleFavoriteListener)
-            } else {
-                holder.imageViewIcon.setOnClickListener(null)
-                holder.frameLayout.setOnClickListener(null)
+                notifyItemChanged(holder.adapterPosition)
             }
+            
+            holder.starredStatusIcon.setOnClickListener(toggleFavoriteListener)
+            holder.starredStatusIcon.contentDescription = fragmentActivity.getString(if (isInFavorites) R.string.detail_unstar else R.string.detail_star)
+
+            val playListener = View.OnClickListener { holder.onClick(it) }
+            holder.imageViewIcon.setOnClickListener(playListener)
+            holder.frameLayout.setOnClickListener(playListener)
         }
 
         val isExpanded = position == expandedPosition

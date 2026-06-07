@@ -55,9 +55,11 @@
 
             <ImageView
                 android:id="@+id/starredStatusIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:layout_gravity="top|end"
+                android:padding="9dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:scaleType="fitCenter"
                 app:srcCompat="@drawable/ic_star_transparent_with_border_24dp" />
 
