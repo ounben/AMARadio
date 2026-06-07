@@ -182,13 +182,13 @@ open class ItemAdapterStation(
                 setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
                 PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
             } else {
-                holder.imageViewIcon.setImageDrawable(null)
+                holder.imageViewIcon.setImageDrawable(stationImagePlaceholder)
+                setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
             }
             if (prefs.getBoolean("compact_style", false)) setupCompactStyle(holder)
             if (prefs.getBoolean("icon_click_toggles_favorite", true)) {
                 val isInFavorites = favouriteManager.has(station.StationUuid)
-                holder.imageViewIcon.contentDescription = fragmentActivity.getString(if (isInFavorites) R.string.detail_unstar else R.string.detail_star)
-                holder.imageViewIcon.setOnClickListener {
+                val toggleFavoriteListener = View.OnClickListener {
                     if (favouriteManager.has(station.StationUuid)) {
                         StationActions.removeFromFavourites(fragmentActivity, it, station)
                     } else {
@@ -196,6 +196,12 @@ open class ItemAdapterStation(
                     }
                     notifyItemChanged(holder.adapterPosition)
                 }
+                holder.imageViewIcon.contentDescription = fragmentActivity.getString(if (isInFavorites) R.string.detail_unstar else R.string.detail_star)
+                holder.imageViewIcon.setOnClickListener(toggleFavoriteListener)
+                holder.frameLayout.setOnClickListener(toggleFavoriteListener)
+            } else {
+                holder.imageViewIcon.setOnClickListener(null)
+                holder.frameLayout.setOnClickListener(null)
             }
         }
 
