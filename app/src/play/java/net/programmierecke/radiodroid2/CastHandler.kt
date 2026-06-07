@@ -1,4 +1,4 @@
-package net.programmierecke.radiodroid2
+package net.ounben.AMARadio
 
 import android.content.Context
 import android.net.Uri
@@ -11,9 +11,9 @@ import com.google.android.gms.cast.framework.*
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.common.images.WebImage
-import net.programmierecke.radiodroid2.cast.CastAwareActivity
-import net.programmierecke.radiodroid2.service.PauseReason
-import net.programmierecke.radiodroid2.service.PlayerServiceUtil
+import net.ounben.AMARadio.cast.CastAwareActivity
+import net.ounben.AMARadio.service.PauseReason
+import net.ounben.AMARadio.service.PlayerServiceUtil
 
 private sealed class CastState {
     abstract fun setActivity(activity: CastAwareActivity?)
@@ -85,7 +85,7 @@ private class CastAvailable(val castContext: CastContext,
             PlayerServiceUtil.pause(PauseReason.USER)
 
             val station = PlayerServiceUtil.getCurrentStation()!!
-            play(station.Name, station.playableUrl, station.IconUrl)
+            play(station.Name, station.playableUrl ?: "", station.IconUrl)
         }
     }
 
@@ -121,6 +121,10 @@ private class CastAvailable(val castContext: CastContext,
 }
 
 public class CastHandler {
+
+    interface CastHandlerListener {
+        fun invalidateOptionsMenuForCast()
+    }
 
     companion object {
         private const val TAG = "CastHandler"

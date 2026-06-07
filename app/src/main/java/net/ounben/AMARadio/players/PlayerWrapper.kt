@@ -1,0 +1,29 @@
+package net.ounben.AMARadio.players
+
+import android.content.Context
+import net.ounben.AMARadio.station.live.ShoutcastInfo
+import net.ounben.AMARadio.station.live.StreamLiveInfo
+import net.ounben.AMARadio.recording.Recordable
+import okhttp3.OkHttpClient
+
+interface PlayerWrapper : Recordable {
+    interface PlayListener {
+        fun onStateChanged(state: PlayState)
+        fun onPlayerWarning(messageId: Int)
+        fun onPlayerError(messageId: Int)
+        fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo, isHls: Boolean)
+        fun onDataSourceStreamLiveInfo(liveInfo: StreamLiveInfo)
+    }
+
+    fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, isAlarm: Boolean)
+    fun pause()
+    fun stop()
+    fun isPlaying(): Boolean
+    val bufferedMs: Long
+    val audioSessionId: Int
+    val totalTransferredBytes: Long
+    val currentPlaybackTransferredBytes: Long
+    val isLocal: Boolean
+    fun setVolume(newVolume: Float)
+    fun setStateListener(listener: PlayListener?)
+}

@@ -97,6 +97,12 @@
         <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
     </style>
 
+    <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@android:color/black</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="IconButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">48dip</item>
         <item name="android:minWidth">48dip</item>

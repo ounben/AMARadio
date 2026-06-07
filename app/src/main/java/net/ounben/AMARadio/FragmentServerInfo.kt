@@ -1,0 +1,82 @@
+package net.ounben.AMARadio
+
+import android.content.Intent
+import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ListView
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import net.ounben.AMARadio.adapters.ItemAdapterStatistics
+import net.ounben.AMARadio.data.DataStatistics
+import net.ounben.AMARadio.interfaces.IFragmentRefreshable
+import kotlinx.coroutines.*
+
+class FragmentServerInfo : Fragment(), IFragmentRefreshable {
+    private var itemAdapterStatistics: ItemAdapterStatistics? = null
+    private var downloadJob: Job? = null
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.layout_statistics, null)
+
+        if (itemAdapterStatistics == null) {
+            itemAdapterStatistics = ItemAdapterStatistics(requireActivity(), R.layout.list_item_statistic)
+        }
+
+        val lv = view.findViewById<ListView>(R.id.listViewStatistics)
+        lv.adapter = itemAdapterStatistics
+
+        download(false)
+
+        return view
+    }
+
+    private fun download(forceUpdate: Boolean) {
+        val context = context ?: return
+        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+
+        val AMARadioApp = requireActivity().application as AMARadioApp
+        val httpClient = AMARadioApp.httpClient
+
+        downloadJob?.cancel()
+        downloadJob = scope.launch {
+            val result = withContext(Dispatchers.IO) {
+                Utils.downloadFeedRelative(httpClient, requireActivity(), "json/stats", forceUpdate, null)
+            }
+
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            
+            if (result != null) {
+                itemAdapterStatistics?.clear()
+                val items = DataStatistics.DecodeJson(result) ?: emptyArray()
+                for (item in items) {
+                    itemAdapterStatistics?.add(item)
+                }
+            } else {
+                try {
+                    Toast.makeText(context, resources.getText(R.string.error_list_update), Toast.LENGTH_SHORT).show()
+                } catch (e: Exception) {
+                    Log.e("ERR", e.toString())
+                }
+            }
+        }
+    }
+
+    override fun Refresh() {
+        download(true)
+    }
+
+    override fun onDestroyView() {
+        downloadJob?.cancel()
+        super.onDestroyView()
+    }
+
+    override fun onDestroy() {
+        scope.cancel()
+        super.onDestroy()
+    }
+}

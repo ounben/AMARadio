@@ -1,4 +1,4 @@
-package net.programmierecke.radiodroid2;
+package net.ounben.AMARadio;
 
 import android.content.Context;
 

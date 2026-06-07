@@ -35,7 +35,7 @@
     <string name="nav_item_alarm">Wecker</string>
     <string name="tab_player_recordings">Aufnahmen</string>
 
-    <string name="about_text">Diese App basiert auf dem freien Internetradio-Stationsverzeichnis https://www.radio-browser.info .\n\nDas Stationsverzeichnis funktioniert nach dem Wiki-Prinzip: jeder, auch Du, kann mithelfen, es aktuell zu halten.\n\nKontakt:\nsegler_alex@web.de\n\nSourcecode und Bugtracker:\nhttps://github.com/segler-alex/RadioDroid/issues\n\nIch freue mich immer über Mails mit Verbesserungsvorschlägen. Falls Du sonst irgendwie helfen willst: es gibt immer Bugs zu fixen :). Wenn Du Dein grafisches Talent einbringen möchtest, wäre ich besonders dankbar, speziell für schönere Icons, Hintergründe oder auch ein insgesamt besseres Design.\n\nDiese App wurde mit der GPLv3 https://www.gnu.org/licenses/gpl-3.0.html lizenziert.</string>
+    <string name="about_text">AMARadio ist zu 100% werbefrei und auf Privatsphäre ausgerichtet.\n\nIch habe diese App ursprünglich für meine Mutter entwickelt, um ihr ein einfaches, ehrliches Radioerlebnis ohne nervige Werbung oder Tracking zu ermöglichen. Deshalb wird AMARadio auch in Zukunft immer werbefrei bleiben – das ist mein Versprechen an sie, das ich gerne mit euch allen teile.\n\nDieses Projekt ist ein Fork des exzellenten RadioDroid von segler-alex. Die gesamte Codebasis wurde vollständig von Java auf Kotlin umgestellt, um sicherzustellen, dass die App modern bleibt und auch auf zukünftigen Android-Versionen bestens läuft.\n\nDiese App basiert auf dem freien Internetradio-Stationsverzeichnis https://www.radio-browser.info .\n\nDas Stationsverzeichnis funktioniert nach dem Wiki-Prinzip: jeder, auch Du, kann mithelfen, es aktuell zu halten.\n\nKontakt:\nsegler_alex@web.de\n\nSourcecode und Bugtracker:\nhttps://github.com/segler-alex/AMARadio/issues\n\nIch freue mich immer über Mails mit Verbesserungsvorschlägen. Falls Du sonst irgendwie helfen willst: es gibt immer Bugs zu fixen :). Wenn Du Dein grafisches Talent einbringen möchtest, wäre ich besonders dankbar, speziell für schönere Icons, Hintergründe oder auch ein insgesamt besseres Design.\n\nDiese App wurde mit der GPLv3 https://www.gnu.org/licenses/gpl-3.0.html lizenziert.</string>
     <string name="detail_star">Als Favorit setzen</string>
     <string name="detail_unstar">Als Favorit löschen</string>
     <string name="progress_loading">Lade...</string>
@@ -54,6 +54,7 @@
     <string name="settings_theme_selection_title">Thema</string>
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
+    <string name="theme_system">Systemstandard</string>
     <string name="settings_circular_icons">Runde Icons benutzen</string>
     <string name="settings_compact_style">Kompakter Modus</string>
 
@@ -102,7 +103,7 @@
     <string name="settings_lastfm_api_key">Last.fm API Schlüssel</string>
     <string name="settings_lastfm_api_key_desc">Mit Last.fm werden Album Bilder im Player angezeigt</string>
     <string name="settings_statistics">Statistik</string>
-    <string name="settings_about">Über RadioDroid</string>
+    <string name="settings_about">Über AMARadio</string>
 
     <string name="settings_connectivity">Konnektivität</string>
     <string name="settings_warn_no_wifi">WLAN-Verbindung</string>
@@ -209,7 +210,7 @@
     <string name="notify_paused">Angehalten</string>
     <string name="notify_pre_play">Verbinde</string>
     <string name="refresh">Aktualisierung</string>
-    <string name="settings_alarm_external_desc_off">Den Alarm mit RadioDroid abspielen.</string>
+    <string name="settings_alarm_external_desc_off">Den Alarm mit AMARadio abspielen.</string>
     <string name="settings_alarm_external_desc_on">Den Alarm mit einer externen Standard-App abspielen.</string>
     <string name="settings_bottom_navigation">Navigation unten</string>
     <string name="settings_click_trend_icon_visible">Trendsymbolanzeige</string>
@@ -229,7 +230,7 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetoothverbindung</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Die Wiedergabe wird bei Bluetoothwiederverbindung fortgesetzt.</string>
 
-    <string name="settings_play_external_desc_off">Stationen werden mit RadioDroid abgespielt.</string>
+    <string name="settings_play_external_desc_off">Stationen werden mit AMARadio abgespielt.</string>
     <string name="settings_play_external_desc_on">Stationen werden mit einem externem Player abspielt.</string>
     <string name="settings_proxy_action_test">Prüfung</string>
     <string name="settings_proxy_login">Nutzername</string>

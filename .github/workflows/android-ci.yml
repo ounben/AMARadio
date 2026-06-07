@@ -1,4 +1,4 @@
-name: RadioDroid CI
+name: AMARadio CI
 
 on:
   push:
