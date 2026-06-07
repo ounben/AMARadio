@@ -51,17 +51,8 @@
                 android:layout_height="30dp"
                 android:layout_gravity="top|start"
                 android:scaleType="fitCenter"
+                android:visibility="gone"
                 app:srcCompat="@drawable/ic_trending_flat_black_24dp" />
-
-            <ImageView
-                android:id="@+id/starredStatusIcon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:layout_gravity="top|end"
-                android:padding="9dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:scaleType="fitCenter"
-                app:srcCompat="@drawable/ic_star_transparent_with_border_24dp" />
 
         </FrameLayout>
 
@@ -118,6 +109,16 @@
                 android:padding="5dp"
                 app:tint="?attr/iconsInItemBackgroundColor"
                 app:srcCompat="@drawable/ic_expand_more_white_24dp" />
+
+        <ImageView
+            android:id="@+id/starredStatusIcon"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_gravity="top|end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="9dp"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/ic_star_transparent_with_border_24dp" />
     </LinearLayout>
 
     <ViewStub
