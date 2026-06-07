@@ -1,17 +1,10 @@
 name: AMARadio CI
 
 on:
-  push:
-    branches:
-      - '*'
+  workflow_dispatch:
   pull_request:
     branches:
       - master
-  # Also trigger on page_build, as well as release created events
-  page_build:
-  release:
-    types: # This configuration does not affect the page_build event above
-      - created
 
 jobs:
   test:
