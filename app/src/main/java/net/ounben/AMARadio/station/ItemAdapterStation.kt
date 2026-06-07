@@ -228,7 +228,14 @@ open class ItemAdapterStation(
         holder.textViewTags.text = station.TagsAll.replace(",", ", ")
 
         val inFavourites = favouriteManager.has(station.StationUuid)
-        holder.starredStatusIcon.visibility = if (inFavourites) View.VISIBLE else View.GONE
+        holder.starredStatusIcon.visibility = View.VISIBLE
+        if (inFavourites) {
+            holder.starredStatusIcon.setImageResource(R.drawable.ic_star_24dp)
+            holder.starredStatusIcon.alpha = 1.0f
+        } else {
+            holder.starredStatusIcon.setImageResource(R.drawable.ic_star_transparent_with_border_24dp)
+            holder.starredStatusIcon.alpha = 0.5f
+        }
         holder.starredStatusIcon.contentDescription = if (inFavourites) fragmentActivity.getString(R.string.action_favorite) else ""
 
         if (prefs.getBoolean("click_trend_icon_visible", true)) {
