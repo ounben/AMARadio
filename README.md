@@ -13,11 +13,7 @@ The codebase has been completely migrated from Java to Kotlin, ensuring better p
 > [!IMPORTANT]
 > **100% Ad-Free & Privacy-Focused**: This app was built with a simple goal: a clean, honest radio experience without annoying ads or tracking. **I originally developed AMARadio for my mother**, who wanted a simple way to listen to the radio without being interrupted by advertisements. This is why the app is and will always remain completely free of ads and bloatware. It's a promise kept for her, and shared with you.
 
-<p align="center">
-  <img src="google/Screenshot_stations.png" width="30%" />
-  <img src="google/Screenshot_station.png" width="30%" />
-  <img src="google/Screenshot_drawer.png" width="30%" />
-</p>
+
 
 ## ✨ Features
 
