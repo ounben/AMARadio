@@ -219,7 +219,7 @@ open class ItemAdapterStation(
         } else {
             // fragmentActivity.theme.resolveAttribute(R.attr.boxBackgroundColor, tv, true)
             holder.textViewTitle.typeface = holder.textViewShortDescription.typeface
-            fragmentActivity.theme.resolveAttribute(R.attr.iconsInItemBackgroundColor, tv, true)
+            fragmentActivity.theme.resolveAttribute(R.attr.menuTextColorDefault, tv, true)
             holder.textViewTitle.setTextColor(tv.data)
         }
 
