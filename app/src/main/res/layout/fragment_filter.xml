@@ -36,6 +36,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
+                        android:minHeight="56dp"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -53,6 +54,7 @@
                         android:layout_height="wrap_content"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
+                        android:minHeight="56dp"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -71,6 +73,7 @@
                         android:completionThreshold="1"
                         android:paddingStart="16dp"
                         android:paddingEnd="16dp"
+                        android:minHeight="56dp"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
