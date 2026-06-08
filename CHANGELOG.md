@@ -5,6 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.87] - 2026-06-08
+### Added
+- Dynamic UI Scaling: New setting to adjust font and button sizes for better accessibility.
+- Black Splash Screen: Modernized startup with a black design and "Ad-Free & Private" promise.
+- Accessibility: Scalable play buttons and navigation icons.
+- Personal touch: Integrated the story of AMARadio's origin (developed for the developer's mother) to ensure a trustworthy, ad-free promise.
+
+### Changed
+- Complete Codebase Migration: 100% of the project migrated from Java to Kotlin.
+- Improved Favorites: Redesigned star icon with a larger touch area and distinct visual states.
+- Documentation: Major update to GitHub README with store badges and clearer info.
+- Standards: Uniform project structure and file naming for better GitHub Workflow compatibility.
+
+### Fixed
+- Connectivity: Resolved a loop issue with metered connection warnings on mobile data.
+- UI Layout: Fixed small player being partially covered by the system navigation bar.
+- Build/Test: Resolved several resource naming conflicts and JUnit 5 test configuration issues.
+
 ## [0.86] - 2023-09-28
 ### Added
 - Auto stop support for auto start-play
