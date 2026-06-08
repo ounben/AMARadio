@@ -201,6 +201,17 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         }
     }
 
+    fun openFilterTab() {
+        if (viewPager != null && viewPager?.adapter is ViewPagerAdapter) {
+            val adapter = viewPager?.adapter as ViewPagerAdapter
+            val filterPosition = adapter.getPositionForTabId(IDX_FILTER)
+
+            if (filterPosition != -1) {
+                viewPager?.currentItem = filterPosition
+            }
+        }
+    }
+
     override fun Refresh() {
         val fragment = fragments[viewPager?.currentItem ?: 0]
         if (fragment is FragmentBase) {

@@ -93,6 +93,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var menuItemListView: MenuItem? = null
     private var menuItemAddAlarm: MenuItem? = null
     private var menuItemMpd: MenuItem? = null
+    private var menuItemFilter: MenuItem? = null
     private lateinit var sharedPref: SharedPreferences
     private var selectedMenuItem = 0
     private var instanceStateWasSaved = false
@@ -454,6 +455,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuItemIconsView = menu.findItem(R.id.action_icons_view)
         menuItemAddAlarm = menu.findItem(R.id.action_add_alarm)
         menuItemMpd = menu.findItem(R.id.action_mpd)
+        menuItemFilter = menu.findItem(R.id.action_filter_global)
         
         mSearchView = MenuItemCompat.getActionView(menuItemSearch!!) as? SearchView
         mSearchView?.setOnQueryTextListener(this)
@@ -479,6 +481,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuItemListView?.isVisible = false
         menuItemIconsView?.isVisible = false
         menuItemAddAlarm?.isVisible = false
+        menuItemFilter?.isVisible = true // Global filter access
 
         var mpdIsVisible = false
         val AMARadioApp = application as AMARadioApp
@@ -678,6 +681,10 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
                 return true
             }
+            R.id.action_filter_global -> {
+                openFilterTab()
+                return true
+            }
             R.id.action_list_view -> {
                 sharedPref.edit().putBoolean("icons_only_favorites_style", false).apply()
                 recreate()
@@ -824,6 +831,30 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
 
             f.Search(searchStyle, query)
+            selectedMenuItem = R.id.nav_item_stations
+            invalidateOptionsMenu()
+        }
+    }
+
+    private fun openFilterTab() {
+        val currentFragment = mFragmentManager.fragments.lastOrNull()
+        if (currentFragment is FragmentTabs) {
+            currentFragment.openFilterTab()
+        } else {
+            val backStackTag = R.id.nav_item_stations.toString()
+            val f = FragmentTabs()
+            val fragmentTransaction = mFragmentManager.beginTransaction()
+            if (Utils.bottomNavigationEnabled(this)) {
+                fragmentTransaction.replace(R.id.containerView, f).commit()
+                mBottomNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
+            } else {
+                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(backStackTag).commit()
+                mNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
+            }
+
+            // We need to wait for the fragment to be created to switch tabs
+            mFragmentManager.executePendingTransactions()
+            f.openFilterTab()
             selectedMenuItem = R.id.nav_item_stations
             invalidateOptionsMenu()
         }

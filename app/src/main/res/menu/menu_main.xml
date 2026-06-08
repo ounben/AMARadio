@@ -10,6 +10,12 @@
         app:showAsAction="always" />
 
     <item
+        android:id="@+id/action_filter_global"
+        android:title="@string/action_filter"
+        android:icon="@drawable/ic_filter_list_white_24dp"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/action_icons_view"
         android:title="@string/action_toggle_view"
         android:icon="@drawable/ic_view_icons_24dp"
