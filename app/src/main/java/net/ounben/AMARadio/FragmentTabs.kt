@@ -153,7 +153,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         // activeTabs.add(IDX_TAGS)
 
         activeTabs.add(IDX_COUNTRIES)
-        activeTabs.add(IDX_LANGUAGES)
+        // activeTabs.add(IDX_LANGUAGES)
         activeTabs.add(IDX_SEARCH)
 
         val m = childFragmentManager
