@@ -503,11 +503,6 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 menuItemLoad?.isVisible = true
                 menuItemSave?.setTitle(R.string.nav_item_save_playlist)
 
-                if (sharedPref.getBoolean("icons_only_favorites_style", false)) {
-                    menuItemListView?.isVisible = true
-                } else if (sharedPref.getBoolean("load_icons", false)) {
-                    menuItemIconsView?.isVisible = true
-                }
                 menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
                 menuItemDelete?.setTitle(R.string.action_delete_favorites)
                 myToolbar.setTitle(R.string.nav_item_starred)
