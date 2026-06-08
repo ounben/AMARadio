@@ -120,10 +120,14 @@ private class CastAvailable(val castContext: CastContext,
     }
 }
 
-public class CastHandler {
+public class CastHandler(private val context: Context) {
 
     interface CastHandlerListener {
         fun invalidateOptionsMenuForCast()
+    }
+
+    init {
+        onCreate(context)
     }
 
     companion object {
@@ -141,7 +145,7 @@ public class CastHandler {
     val isCastSessionAvailable: Boolean
         get() = (castState as? CastAvailable)?.castSession != null
 
-    fun onCreate(context: Context) {
+    private fun onCreate(context: Context) {
         if (castState is CastAvailable) {
             return
         }

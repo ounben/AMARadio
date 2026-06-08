@@ -20,7 +20,10 @@ class SplashActivity : AppCompatActivity() {
         // Show splash for a short time and then start ActivityMain
         Handler(Looper.getMainLooper()).postDelayed({
             val intent = Intent(this, ActivityMain::class.java)
-            intent.putExtras(getIntent())
+            val currentIntent = getIntent()
+            if (currentIntent != null && currentIntent.extras != null) {
+                intent.putExtras(currentIntent.extras!!)
+            }
             startActivity(intent)
             finish()
         }, 1500)

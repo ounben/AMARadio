@@ -23,12 +23,16 @@ object UiScaler {
     }
 
     fun wrapContext(context: Context): Context {
-        val factor = getScaleFactor(context)
-        if (factor == SCALE_STANDARD) return context
-        
-        val config = Configuration(context.resources.configuration)
-        config.fontScale = factor
-        return context.createConfigurationContext(config)
+        try {
+            val factor = getScaleFactor(context)
+            if (factor == SCALE_STANDARD) return context
+            
+            val config = Configuration(context.resources.configuration)
+            config.fontScale = factor
+            return context.createConfigurationContext(config)
+        } catch (e: Exception) {
+            return context
+        }
     }
 
     /**
