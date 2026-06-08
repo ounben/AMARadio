@@ -7,15 +7,12 @@ import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
-import android.view.View
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
-import com.bytehamster.lib.preferencesearch.SearchConfiguration
 import com.bytehamster.lib.preferencesearch.SearchPreference
 import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
@@ -23,6 +20,7 @@ import net.ounben.AMARadio.interfaces.IApplicationSelected
 import net.ounben.AMARadio.proxy.ProxySettingsDialog
 import net.ounben.AMARadio.utils.UiScaler
 import net.ounben.AMARadio.BuildConfig
+import androidx.core.content.edit
 
 class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
     IApplicationSelected, PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
@@ -52,7 +50,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     private fun refreshToolbar() {
         val activity = activity as? ActivityMain ?: return
-        val myToolbar = activity.findViewById<Toolbar>(R.id.my_awesome_toolbar) ?: return
+        val myToolbar = activity.findViewById<Toolbar>(R.id.my_awesome_toolbar)
         val screen = preferenceScreen
 
         if (myToolbar == null || screen == null) return
@@ -63,11 +61,11 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             if (isToplevel()) {
                 activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
                 activity.supportActionBar?.setDisplayShowHomeEnabled(false)
-                myToolbar.setNavigationOnClickListener { activity.onBackPressed() }
+                myToolbar.setNavigationOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
             } else {
                 activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 activity.supportActionBar?.setDisplayShowHomeEnabled(true)
-                myToolbar.setNavigationOnClickListener { activity.onBackPressed() }
+                myToolbar.setNavigationOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
             }
         }
     }
@@ -88,6 +86,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                     Toast.makeText(context, R.string.error_no_equalizer_found, Toast.LENGTH_SHORT).show()
                 } else {
                     intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+                    @Suppress("DEPRECATION")
                     startActivityForResult(intent, ActivityMain.LAUNCH_EQUALIZER_REQUEST)
                 }
                 false
@@ -98,11 +97,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 proxySettingsDialog.setCancelable(true)
                 proxySettingsDialog.show(parentFragmentManager, "")
                 false
-            }
-
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-                findPreference<Preference>("settings_retry_timeout")?.isVisible = false
-                findPreference<Preference>("settings_retry_delay")?.isVisible = false
             }
         } else if (s == "pref_category_mpd") {
             findPreference<Preference>("mpd_servers_viewer")?.setOnPreferenceClickListener {
@@ -129,16 +123,12 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
         if (batPref != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            updateBatteryPrefDescription(batPref)
+            batPref.setOnPreferenceClickListener {
+                val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+                startActivity(intent)
                 updateBatteryPrefDescription(batPref)
-                batPref.setOnPreferenceClickListener {
-                    val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
-                    startActivity(intent)
-                    updateBatteryPrefDescription(batPref)
-                    true
-                }
-            } else {
-                batPref.parent?.removePreference(batPref)
+                true
             }
         }
     }
@@ -150,7 +140,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         if (isToplevel()) refreshToplevelIcons()
         findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
-        if (batPref != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (batPref != null) {
             updateBatteryPrefDescription(batPref)
         }
     }
@@ -160,7 +150,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onPause()
     }
 
-    @RequiresApi(23)
     private fun updateBatteryPrefDescription(batPref: Preference) {
         val pm = requireContext().getSystemService(Context.POWER_SERVICE) as PowerManager
         if (pm.isIgnoringBatteryOptimizations(requireContext().packageName)) {
@@ -194,10 +183,10 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         if (BuildConfig.DEBUG) {
             Log.d("SEL", "selected: $packageName/$activityName")
         }
-        val ed = preferenceManager.sharedPreferences?.edit()
-        ed?.putString("shareapp_package", packageName)
-        ed?.putString("shareapp_activity", activityName)
-        ed?.apply()
+        preferenceManager.sharedPreferences?.edit {
+            putString("shareapp_package", packageName)
+            putString("shareapp_activity", activityName)
+        }
         findPreference<Preference>("shareapp_package")?.summary = packageName
     }
 

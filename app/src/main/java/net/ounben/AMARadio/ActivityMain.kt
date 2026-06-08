@@ -1,8 +1,6 @@
 package net.ounben.AMARadio
 
 import android.content.*
-import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,7 +10,6 @@ import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.NonNull
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -20,14 +17,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
-import androidx.core.view.MenuItemCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
@@ -49,7 +44,6 @@ import net.ounben.AMARadio.interfaces.IFragmentSearchable
 import net.ounben.AMARadio.players.PlayState
 import net.ounben.AMARadio.players.PlayStationTask
 import net.ounben.AMARadio.players.mpd.MPDClient
-import net.ounben.AMARadio.players.mpd.MPDServersRepository
 import net.ounben.AMARadio.cast.CastHandler
 import net.ounben.AMARadio.players.selector.PlayerType
 import net.ounben.AMARadio.service.MediaSessionCallback
@@ -59,13 +53,18 @@ import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.StationsFilter
 import net.ounben.AMARadio.BuildConfig
 import android.app.TimePickerDialog
+import android.content.pm.PackageManager
 import android.widget.TimePicker
+import androidx.activity.OnBackPressedCallback
+import androidx.core.content.IntentCompat
+import androidx.core.content.edit
+import com.google.android.material.navigation.NavigationBarView
 import java.io.*
 import java.util.*
 import net.ounben.AMARadio.utils.UiScaler
 
-class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
-    BottomNavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
+class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
+    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
     TimePickerDialog.OnTimeSetListener, FileDialog.OnFileSelectedListener,
     SearchPreferenceResultListener, CastHandler.CastHandlerListener, CastAwareActivity {
 
@@ -153,7 +152,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mBottomNavigationView = findViewById(R.id.bottom_navigation)
 
         if (Utils.bottomNavigationEnabled(this)) {
-            mBottomNavigationView.setOnNavigationItemSelectedListener(this)
+            mBottomNavigationView.setOnItemSelectedListener(this)
             mNavigationView.visibility = View.GONE
             mNavigationView.layoutParams.width = 0
         } else {
@@ -196,7 +195,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         coordinatorLayoutParams.behavior = appBarLayoutBehavior
 
         playerBottomSheet = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet))
-        playerBottomSheet.setBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        playerBottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             private var oldState = BottomSheetBehavior.STATE_COLLAPSED
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
@@ -250,6 +249,62 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         applyUiScaling()
         setupStartUpFragment()
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (playerBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
+                    playerBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+                    return
+                }
+
+                val backStackCount = mFragmentManager.backStackEntryCount
+                if (backStackCount > 0) {
+                    val backStackEntry = mFragmentManager.getBackStackEntryAt(backStackCount - 1)
+                    if (backStackEntry.name == "SearchPreferenceFragment") {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                        return
+                    }
+                    try {
+                        val parsedId = backStackEntry.name?.toInt() ?: -1
+                        if (parsedId == FRAGMENT_FROM_BACKSTACK) {
+                            isEnabled = false
+                            onBackPressedDispatcher.onBackPressed()
+                            isEnabled = true
+                            invalidateOptionsMenu()
+                            return
+                        }
+                    } catch (ignore: NumberFormatException) {}
+                }
+
+                if (Utils.bottomNavigationEnabled(this@ActivityMain)) {
+                    if (lastExitTry != null && Date().time < lastExitTry!!.time + 3000) {
+                        PlayerServiceUtil.shutdownService()
+                        finish()
+                    } else {
+                        Toast.makeText(this@ActivityMain, R.string.alert_press_back_to_exit, Toast.LENGTH_SHORT).show()
+                        lastExitTry = Date()
+                        return
+                    }
+                }
+
+                if (backStackCount > 1) {
+                    val backStackEntry = mFragmentManager.getBackStackEntryAt(backStackCount - 2)
+                    selectedMenuItem = backStackEntry.name?.toInt() ?: -1
+                    if (!Utils.bottomNavigationEnabled(this@ActivityMain)) {
+                        mNavigationView.setCheckedItem(selectedMenuItem)
+                    }
+                    invalidateOptionsMenu()
+                } else {
+                    finish()
+                    return
+                }
+                isEnabled = false
+                onBackPressedDispatcher.onBackPressed()
+                isEnabled = true
+            }
+        })
     }
 
     private fun applyUiScaling() {
@@ -283,54 +338,6 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {
         selectedMenuItem = menuItem.itemId
         return onNavigationItemSelectedInternal()
-    }
-
-    override fun onBackPressed() {
-        if (playerBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
-            playerBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
-            return
-        }
-
-        val backStackCount = mFragmentManager.backStackEntryCount
-        if (backStackCount > 0) {
-            val backStackEntry = mFragmentManager.getBackStackEntryAt(backStackCount - 1)
-            if (backStackEntry.name == "SearchPreferenceFragment") {
-                super.onBackPressed()
-                return
-            }
-            try {
-                val parsedId = backStackEntry.name?.toInt() ?: -1
-                if (parsedId == FRAGMENT_FROM_BACKSTACK) {
-                    super.onBackPressed()
-                    invalidateOptionsMenu()
-                    return
-                }
-            } catch (e: NumberFormatException) {}
-        }
-
-        if (Utils.bottomNavigationEnabled(this)) {
-            if (lastExitTry != null && Date().time < lastExitTry!!.time + 3000) {
-                PlayerServiceUtil.shutdownService()
-                finish()
-            } else {
-                Toast.makeText(this, R.string.alert_press_back_to_exit, Toast.LENGTH_SHORT).show()
-                lastExitTry = Date()
-                return
-            }
-        }
-
-        if (backStackCount > 1) {
-            val backStackEntry = mFragmentManager.getBackStackEntryAt(backStackCount - 2)
-            selectedMenuItem = backStackEntry.name?.toInt() ?: -1
-            if (!Utils.bottomNavigationEnabled(this)) {
-                mNavigationView.setCheckedItem(selectedMenuItem)
-            }
-            invalidateOptionsMenu()
-        } else {
-            finish()
-            return
-        }
-        super.onBackPressed()
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -372,7 +379,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onPause() {
-        sharedPref.edit().putInt("last_selectedMenuItem", selectedMenuItem).apply()
+        sharedPref.edit { putInt("last_selectedMenuItem", selectedMenuItem) }
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "PAUSED")
         }
@@ -386,7 +393,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         castHandler.setActivity(null)
     }
 
-    private fun handleIntent(@NonNull intent: Intent) {
+    private fun handleIntent(intent: Intent) {
         val action = intent.action
         val extras = intent.extras ?: return
 
@@ -457,7 +464,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         menuItemMpd = menu.findItem(R.id.action_mpd)
         menuItemFilter = menu.findItem(R.id.action_filter_global)
         
-        mSearchView = MenuItemCompat.getActionView(menuItemSearch!!) as? SearchView
+        mSearchView = menuItemSearch?.actionView as? SearchView
         mSearchView?.setOnQueryTextListener(this)
         mSearchView?.setOnQueryTextFocusChangeListener { v, hasFocus ->
             if (Utils.bottomNavigationEnabled(this)) {
@@ -534,12 +541,13 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.d(TAG, "Choosen save path: $uri")
                 val AMARadioApp = application as AMARadioApp
                 try {
-                    val os = contentResolver.openOutputStream(uri)
-                    val writer = OutputStreamWriter(os)
-                    if (selectedMenuItem == R.id.nav_item_starred) {
-                        AMARadioApp.favouriteManager.SaveM3UWriter(writer)
-                    } else if (selectedMenuItem == R.id.nav_item_history) {
-                        AMARadioApp.historyManager.SaveM3UWriter(writer)
+                    contentResolver.openOutputStream(uri)?.use { os ->
+                        val writer = OutputStreamWriter(os)
+                        if (selectedMenuItem == R.id.nav_item_starred) {
+                            AMARadioApp.favouriteManager.SaveM3UWriter(writer)
+                        } else if (selectedMenuItem == R.id.nav_item_history) {
+                            AMARadioApp.historyManager.SaveM3UWriter(writer)
+                        }
                     }
                 } catch (e: Exception) {
                     Log.e(TAG, "Unable to write to file $e")
@@ -551,9 +559,10 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 Log.d(TAG, "Choosen load path: $uri")
                 val AMARadioApp = application as AMARadioApp
                 try {
-                    val isStr = contentResolver.openInputStream(uri)
-                    val reader = InputStreamReader(isStr)
-                    AMARadioApp.favouriteManager.LoadM3USimple(reader)
+                    contentResolver.openInputStream(uri)?.use { isStr ->
+                        val reader = InputStreamReader(isStr)
+                        AMARadioApp.favouriteManager.LoadM3USimple(reader)
+                    }
                 } catch (e: Exception) {
                     Log.e(TAG, "Unable to load to file $e")
                 }
@@ -589,10 +598,12 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun SaveFavouritesSimple() {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "audio/x-mpegurl"
-        intent.putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "audio/x-mpegurl"
+            putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+        }
+        @Suppress("DEPRECATION")
         startActivityForResult(intent, ACTION_SAVE_FILE)
     }
 
@@ -606,10 +617,12 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun LoadFavouritesSimple() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        intent.type = "audio/x-mpegurl"
-        intent.putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            addCategory(Intent.CATEGORY_OPENABLE)
+            type = "audio/x-mpegurl"
+            putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+        }
+        @Suppress("DEPRECATION")
         startActivityForResult(intent, ACTION_LOAD_FILE)
     }
 
@@ -681,12 +694,12 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 return true
             }
             R.id.action_list_view -> {
-                sharedPref.edit().putBoolean("icons_only_favorites_style", false).apply()
+                sharedPref.edit { putBoolean("icons_only_favorites_style", false) }
                 recreate()
                 return true
             }
             R.id.action_icons_view -> {
-                sharedPref.edit().putBoolean("icons_only_favorites_style", true).apply()
+                sharedPref.edit { putBoolean("icons_only_favorites_style", true) }
                 recreate()
                 return true
             }
@@ -855,7 +868,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
 
-    fun SearchStations(@NonNull query: String) {
+    fun SearchStations(query: String) {
         Log.d("MAIN", "SearchStations() $query")
         val currentFragment = mFragmentManager.fragments.lastOrNull()
         if (currentFragment is IFragmentSearchable) {
@@ -872,7 +885,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun showMeteredConnectionDialog(@NonNull playFunc: Runnable) {
+    private fun showMeteredConnectionDialog(playFunc: Runnable) {
         val res = resources
         val title = res.getString(R.string.alert_metered_connection_title)
         val text = res.getString(R.string.alert_metered_connection_message)
@@ -904,7 +917,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                             meteredConnectionAlertDialog = null
                         }
 
-                        val playerType: PlayerType? = intent.getParcelableExtra(PlayerService.PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE)
+                        val playerType: PlayerType? = IntentCompat.getParcelableExtra(intent, PlayerService.PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, PlayerType::class.java)
 
                         when (playerType) {
                             PlayerType.AMARadio -> showMeteredConnectionDialog {
@@ -972,7 +985,7 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         seekDialog.setPositiveButton(R.string.sleep_timer_apply) { _, _ ->
             PlayerServiceUtil.clearTimer()
             PlayerServiceUtil.addTimer(seekBar.progress * 60)
-            sharedPref.edit().putInt("sleep_timer_default_minutes", seekBar.progress).apply()
+            sharedPref.edit { putInt("sleep_timer_default_minutes", seekBar.progress) }
         }
 
         seekDialog.setNegativeButton(R.string.sleep_timer_clear) { _, _ ->
@@ -985,10 +998,6 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun selectMPDServer() {
         val AMARadioApp = application as AMARadioApp
         Utils.showMpdServersDialog(AMARadioApp, supportFragmentManager, null)
-    }
-
-    fun getToolbar(): Toolbar? {
-        return findViewById(R.id.my_awesome_toolbar)
     }
 
     override fun onSearchResultClicked(result: SearchPreferenceResult) {
@@ -1011,8 +1020,6 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         const val ACTION_SHOW_LOADING = "net.ounben.AMARadio.show_loading"
         const val ACTION_HIDE_LOADING = "net.ounben.AMARadio.hide_loading"
         const val TAG = "AMARadio"
-        const val TAG_SEARCH_URL = "json/stations/bytagexact"
-        const val SAVE_LAST_MENU_ITEM = "LAST_MENU_ITEM"
         const val PERM_REQ_STORAGE_FAV_SAVE = 1
         const val PERM_REQ_STORAGE_FAV_LOAD = 2
         const val ACTION_SAVE_FILE = 1
