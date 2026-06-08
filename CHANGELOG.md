@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.88] - 2026-06-08
+### Added
+- **Advanced Filtering**: New dedicated "Filter" tab with search by Country (with flags/names), Language, and Tags.
+- **Search Persistence**: Filter settings are now saved and restored upon app restart.
+- **Global Filter Access**: Added a new filter icon in the top toolbar for quick access from any screen.
+- **Enhanced UI Components**: 
+    - Redesigned filter fields with "Clear" buttons and icons.
+    - Updated settings icon to a standard "gear" symbol across the app.
+    - Improved cursor visibility using the app's accent color in input fields.
+- **User Experience**: Station images now act as play buttons, while the star icon exclusively handles favorites to prevent accidental removals.
+- **Placeholders**: Added placeholder icons for stations without logos to ensure a stable and consistent layout.
+
+### Fixed
+- **Settings**: Fixed the "About AMARadio" link in settings which was previously non-responsive.
+- **Layout Integrity**: Resolved overlapping issues in the filter screen when using high UI scaling.
+- **CI/CD**: Fixed resource naming inconsistencies to ensure successful builds in GitHub Actions environments.
+
 ## [0.87] - 2026-06-08
 ### Added
 - Dynamic UI Scaling: New setting to adjust font and button sizes for better accessibility.
