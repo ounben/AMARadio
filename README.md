@@ -6,7 +6,7 @@
 
 **AMARadio** is a modern, open-source Android application for streaming radio stations from all over the world. It is powered by the community-driven [radio-browser.info](https://www.radio-browser.info/) database.
 
-AMARadio is a fork of the excellent [RadioDroid](https://github.com/segler-alex/RadioDroid) project, customized for a more focused and personal experience.
+AMARadio is a fork of the excellent [RadioDroid](https://github.com/ounben/RadioDroid) project, customized for a more focused and personal experience.
 
 The codebase has been completely migrated from Java to Kotlin, ensuring better performance, modern development standards, and full compatibility with future Android versions.
 
@@ -35,12 +35,12 @@ The codebase has been completely migrated from Java to Kotlin, ensuring better p
 You can download the app from:
 - [F-Droid](https://f-droid.org/repository/browse/?fdid=net.ounben.AMARadio)
 - [Google Play](https://play.google.com/store/apps/details?id=net.ounben.AMARadio)
-- [GitHub Releases](https://github.com/segler-alex/AMARadio/releases)
+- [GitHub Releases](https://github.com/ounben/AMARadio/releases)
 
 ### Building from source
 1. Clone the repository:
    ```bash
-   git clone https://github.com/segler-alex/AMARadio.git
+   git clone https://github.com/ounben/AMARadio.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project using Gradle:
@@ -51,7 +51,7 @@ You can download the app from:
 ## 🤝 Contributing
 
 Contributions are welcome! Whether it's fixing bugs, adding features, or improving translations.
-- Found a bug? [Open an issue](https://github.com/segler-alex/AMARadio/issues).
+- Found a bug? [Open an issue](https://github.com/ounben/AMARadio/issues).
 - Want to contribute code? Fork the repo and submit a pull request.
 - Translation help is always appreciated!
 

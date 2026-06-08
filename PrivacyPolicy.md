@@ -18,7 +18,7 @@ The app might require certain device permissions to function optimally, like [e.
 
 ## Open Source Nature
 
-As an open-source project, the source code of AMARadio is available for public view at [https://github.com/segler-alex/AMARadio]. This ensures a transparent operation where you can review the codebase to understand how the app functions.
+As an open-source project, the source code of AMARadio is available for public view at [https://github.com/ounben/AMARadio]. This ensures a transparent operation where you can review the codebase to understand how the app functions.
 
 ## Links to Other Websites
 
