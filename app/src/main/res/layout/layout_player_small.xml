@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/actionBarSize"
+    android:layout_height="?attr/listPreferredItemHeightLarge"
     android:background="?attr/colorPlayerBackground"
     android:clickable="true"
     android:focusable="true">
@@ -47,7 +47,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="?attr/colorAccent"
@@ -55,6 +54,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/textViewLiveInfo"
         app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/playerRadioImage"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Station name (Long long long long long long long long long long long long long text)" />
@@ -78,10 +78,9 @@
 
     <TextView
         android:id="@+id/textViewLiveInfoBig"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="290dp"
+        android:layout_height="38dp"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:ellipsize="marquee"
         android:singleLine="false"
         android:textColor="?attr/colorAccent"
@@ -101,15 +100,16 @@
 
     <ImageButton
         android:id="@+id/buttonPlay"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/detail_play"
+        android:scaleX="1.5"
+        android:scaleY="1.5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
