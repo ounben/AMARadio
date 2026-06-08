@@ -135,28 +135,59 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         (fragments[IDX_COUNTRIES] as FragmentCategories).SetBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
         (fragments[IDX_LANGUAGES] as FragmentCategories).SetBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
 
+        // Dynamische Liste der anzuzeigenden Tabs erstellen
+        val activeTabs = mutableListOf<Int>()
+
+        if (countryCode != null) {
+            activeTabs.add(IDX_LOCAL)
+        }
+        activeTabs.add(IDX_TOP_CLICK)
+        // activeTabs.add(IDX_TOP_VOTE)
+
+        // HIER AUSKOMMENTIEREN ZUM AUSBLENDEN:
+        // activeTabs.add(IDX_CHANGED_LATELY)
+
+        activeTabs.add(IDX_CURRENTLY_HEARD)
+
+        // HIER AUSKOMMENTIEREN ZUM AUSBLENDEN:
+        // activeTabs.add(IDX_TAGS)
+
+        activeTabs.add(IDX_COUNTRIES)
+        activeTabs.add(IDX_LANGUAGES)
+        activeTabs.add(IDX_SEARCH)
+
         val m = childFragmentManager
         val adapter = ViewPagerAdapter(m)
-        if (countryCode != null) {
-            adapter.addFragment(fragments[IDX_LOCAL]!!, R.string.action_local)
+
+        for (tabId in activeTabs) {
+            val titleRes = when (tabId) {
+                IDX_LOCAL -> R.string.action_local
+                IDX_TOP_CLICK -> R.string.action_top_click
+                IDX_TOP_VOTE -> R.string.action_top_vote
+                IDX_CHANGED_LATELY -> R.string.action_changed_lately
+                IDX_CURRENTLY_HEARD -> R.string.action_currently_playing
+                IDX_TAGS -> R.string.action_tags
+                IDX_COUNTRIES -> R.string.action_countries
+                IDX_LANGUAGES -> R.string.action_languages
+                IDX_SEARCH -> R.string.action_search
+                else -> 0
+            }
+            adapter.addFragment(fragments[tabId]!!, titleRes, tabId)
         }
-        adapter.addFragment(fragments[IDX_TOP_CLICK]!!, R.string.action_top_click)
-        adapter.addFragment(fragments[IDX_TOP_VOTE]!!, R.string.action_top_vote)
-        adapter.addFragment(fragments[IDX_CHANGED_LATELY]!!, R.string.action_changed_lately)
-        adapter.addFragment(fragments[IDX_CURRENTLY_HEARD]!!, R.string.action_currently_playing)
-        adapter.addFragment(fragments[IDX_TAGS]!!, R.string.action_tags)
-        adapter.addFragment(fragments[IDX_COUNTRIES]!!, R.string.action_countries)
-        adapter.addFragment(fragments[IDX_LANGUAGES]!!, R.string.action_languages)
-        adapter.addFragment(fragments[IDX_SEARCH]!!, R.string.action_search)
+
         viewPager.adapter = adapter
     }
 
     override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("TABS", "Search = $query searchStyle=$searchStyle")
-        if (viewPager != null) {
-            Log.d("TABS", "a Search = $query")
-            viewPager?.currentItem = IDX_SEARCH
-            (fragments[IDX_SEARCH] as IFragmentSearchable).Search(searchStyle, query)
+        if (viewPager != null && viewPager?.adapter is ViewPagerAdapter) {
+            val adapter = viewPager?.adapter as ViewPagerAdapter
+            val searchPosition = adapter.getPositionForTabId(IDX_SEARCH)
+
+            if (searchPosition != -1) {
+                viewPager?.currentItem = searchPosition
+                (fragments[IDX_SEARCH] as IFragmentSearchable).Search(searchStyle, query)
+            }
         } else {
             Log.d("TABS", "b Search = $query")
             queuedSearchQuery = query
@@ -174,6 +205,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
         private val mFragmentTitleList: MutableList<Int> = ArrayList()
+        private val mTabsMapping: MutableList<Int> = ArrayList()
 
         override fun getItem(position: Int): Fragment {
             return mFragmentList[position]
@@ -183,13 +215,18 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             return mFragmentList.size
         }
 
-        fun addFragment(fragment: Fragment, title: Int) {
+        fun addFragment(fragment: Fragment, title: Int, tabId: Int) {
             mFragmentList.add(fragment)
             mFragmentTitleList.add(title)
+            mTabsMapping.add(tabId)
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
             return resources.getString(mFragmentTitleList[position])
+        }
+
+        fun getPositionForTabId(tabId: Int): Int {
+            return mTabsMapping.indexOf(tabId)
         }
     }
 
