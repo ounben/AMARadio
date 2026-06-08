@@ -239,7 +239,10 @@ class FragmentFilter : FragmentBase() {
             if (isAdded) {
                 autoCountry.setAdapter(FilterDropdownAdapter(requireContext(), countryItems))
                 autoLanguage.setAdapter(FilterDropdownAdapter(requireContext(), languageItems))
-                autoTag.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags))
+                
+                val tagAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags)
+                autoTag.setAdapter(tagAdapter)
+                autoTag.threshold = 1
                 
                 // Refresh labels if they were just codes
                 if (selectedCountryCode.isNotEmpty()) {

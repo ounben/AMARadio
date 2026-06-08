@@ -24,56 +24,71 @@
                 android:padding="8dp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/filter_country"
-                    app:endIconMode="clear_text">
+                    app:hintTextColor="?attr/colorAccent"
+                    app:boxStrokeColor="?attr/colorAccent"
+                    app:cursorColor="?attr/colorAccent"
+                    app:startIconDrawable="@drawable/ic_list_24dp"
+                    app:startIconTint="?attr/colorAccent"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="?attr/colorAccent">
 
                     <AutoCompleteTextView
                         android:id="@+id/autoCountry"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
                         android:minHeight="56dp"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="@string/filter_language"
-                    app:endIconMode="clear_text">
+                    app:hintTextColor="?attr/colorAccent"
+                    app:boxStrokeColor="?attr/colorAccent"
+                    app:cursorColor="?attr/colorAccent"
+                    app:startIconDrawable="@drawable/ic_list_24dp"
+                    app:startIconTint="?attr/colorAccent"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="?attr/colorAccent">
 
                     <AutoCompleteTextView
                         android:id="@+id/autoLanguage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
                         android:minHeight="56dp"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:inputType="none" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:hint="@string/filter_tag"
-                    app:endIconMode="clear_text">
+                    app:hintTextColor="?attr/colorAccent"
+                    app:boxStrokeColor="?attr/colorAccent"
+                    app:cursorColor="?attr/colorAccent"
+                    app:startIconDrawable="@drawable/ic_poll_24dp"
+                    app:startIconTint="?attr/colorAccent"
+                    app:endIconMode="clear_text"
+                    app:endIconTint="?attr/colorAccent">
 
                     <AutoCompleteTextView
                         android:id="@+id/autoTag"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:completionThreshold="1"
-                        android:paddingStart="16dp"
-                        android:paddingEnd="16dp"
                         android:minHeight="56dp"
+                        android:textColor="?android:attr/textColorPrimary"
                         android:inputType="text" />
                 </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,9 +107,8 @@
 
                     <Spinner
                         android:id="@+id/spinnerSort"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:minHeight="48dp" />
                 </LinearLayout>
 
