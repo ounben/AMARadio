@@ -1,7 +1,10 @@
 package net.ounben.AMARadio
 
 import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,12 +26,39 @@ import java.net.URLEncoder
 import java.util.*
 
 class FragmentFilter : FragmentBase() {
+    
+    data class FilterItem(val code: String, val label: String, val icon: Drawable? = null) {
+        override fun toString(): String = label
+    }
+
+    private class FilterDropdownAdapter(context: android.content.Context, items: List<FilterItem>) 
+        : ArrayAdapter<FilterItem>(context, R.layout.list_item_filter_dropdown, items) {
+        
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+            val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_item_filter_dropdown, parent, false)
+            val item = getItem(position)
+            
+            view.findViewById<TextView>(R.id.textLabel).text = item?.label
+            val iconView = view.findViewById<ImageView>(R.id.imageIcon)
+            if (item?.icon != null) {
+                iconView.visibility = View.VISIBLE
+                iconView.setImageDrawable(item.icon)
+            } else {
+                iconView.visibility = View.GONE
+            }
+            return view
+        }
+    }
+
     private lateinit var autoCountry: AutoCompleteTextView
     private lateinit var autoLanguage: AutoCompleteTextView
     private lateinit var autoTag: AutoCompleteTextView
     private lateinit var spinnerSort: Spinner
     private lateinit var switchReverse: SwitchMaterial
     private lateinit var btnApply: Button
+    
+    private var selectedCountryCode: String = ""
+    private var selectedLanguage: String = ""
     
     private var rvStations: RecyclerView? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -62,6 +92,35 @@ class FragmentFilter : FragmentBase() {
         loadSavedFilters()
         setupAdapters()
 
+        autoCountry.setOnItemClickListener { parent, _, position, _ ->
+            val item = parent.getItemAtPosition(position) as FilterItem
+            selectedCountryCode = item.code
+            autoCountry.setText(item.label, false)
+        }
+        
+        autoLanguage.setOnItemClickListener { parent, _, position, _ ->
+            val item = parent.getItemAtPosition(position) as FilterItem
+            selectedLanguage = item.code
+            autoLanguage.setText(item.label, false)
+        }
+
+        val countryWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) selectedCountryCode = ""
+            }
+        }
+        val languageWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s.isNullOrEmpty()) selectedLanguage = ""
+            }
+        }
+        autoCountry.addTextChangedListener(countryWatcher)
+        autoLanguage.addTextChangedListener(languageWatcher)
+        
         autoCountry.setOnClickListener { autoCountry.showDropDown() }
         autoLanguage.setOnClickListener { autoLanguage.showDropDown() }
         autoTag.setOnClickListener { autoTag.showDropDown() }
@@ -130,9 +189,15 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun loadSavedFilters() {
-        autoCountry.setText(sharedPref?.getString("filter_country", ""))
-        autoLanguage.setText(sharedPref?.getString("filter_language", ""))
-        autoTag.setText(sharedPref?.getString("filter_tag", ""))
+        selectedCountryCode = sharedPref?.getString("filter_country_code", "") ?: ""
+        selectedLanguage = sharedPref?.getString("filter_language_code", "") ?: ""
+        
+        // Find and set labels for the codes
+        // Note: This might need the adapters to be loaded first, but we set technical code as fallback
+        autoCountry.setText(sharedPref?.getString("filter_country_label", selectedCountryCode), false)
+        autoLanguage.setText(sharedPref?.getString("filter_language_label", selectedLanguage), false)
+        
+        autoTag.setText(sharedPref?.getString("filter_tag", ""), false)
         val sortIdx = sortOptions.indexOf(sharedPref?.getString("filter_sort", "clickcount"))
         if (sortIdx != -1) spinnerSort.setSelection(sortIdx)
         switchReverse.isChecked = sharedPref?.getBoolean("filter_reverse", true) ?: true
@@ -140,8 +205,10 @@ class FragmentFilter : FragmentBase() {
 
     private fun saveFilters() {
         sharedPref?.edit()?.apply {
-            putString("filter_country", autoCountry.text.toString())
-            putString("filter_language", autoLanguage.text.toString())
+            putString("filter_country_code", selectedCountryCode)
+            putString("filter_country_label", autoCountry.text.toString())
+            putString("filter_language_code", selectedLanguage)
+            putString("filter_language_label", autoLanguage.text.toString())
             putString("filter_tag", autoTag.text.toString())
             putString("filter_sort", sortOptions[spinnerSort.selectedItemPosition])
             putBoolean("filter_reverse", switchReverse.isChecked)
@@ -150,27 +217,45 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun hasAnyFilter(): Boolean {
-        return autoCountry.text.isNotEmpty() || autoLanguage.text.isNotEmpty() || autoTag.text.isNotEmpty()
+        return selectedCountryCode.isNotEmpty() || selectedLanguage.isNotEmpty() || autoTag.text.isNotEmpty()
     }
 
     private fun setupAdapters() {
         scope.launch {
-            val countries = withContext(Dispatchers.IO) { fetchCategories("json/countrycodes") }
-            val languages = withContext(Dispatchers.IO) { fetchCategories("json/languages") }
-            val tags = withContext(Dispatchers.IO) { fetchCategories("json/tags") }
+            val countriesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/countrycodes") }
+            val languagesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/languages") }
+            val tags = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags").map { it.Name }.sorted() }
+            
+            val countryItems = countriesData.map { 
+                val countryName = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
+                val flag = CountryFlagsLoader.instance.getFlag(requireContext(), it.Name)
+                FilterItem(it.Name, "$countryName (${it.Name})", flag)
+            }.sortedBy { it.label }
+            
+            val languageItems = languagesData.map {
+                FilterItem(it.Name, it.Name.replaceFirstChar { char -> if (char.isLowerCase()) char.titlecase(Locale.ROOT) else char.toString() })
+            }.sortedBy { it.label }
             
             if (isAdded) {
-                autoCountry.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, countries))
-                autoLanguage.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, languages))
+                autoCountry.setAdapter(FilterDropdownAdapter(requireContext(), countryItems))
+                autoLanguage.setAdapter(FilterDropdownAdapter(requireContext(), languageItems))
                 autoTag.setAdapter(ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags))
+                
+                // Refresh labels if they were just codes
+                if (selectedCountryCode.isNotEmpty()) {
+                    countryItems.find { it.code == selectedCountryCode }?.let { autoCountry.setText(it.label, false) }
+                }
+                if (selectedLanguage.isNotEmpty()) {
+                    languageItems.find { it.code == selectedLanguage }?.let { autoLanguage.setText(it.label, false) }
+                }
             }
         }
     }
 
-    private fun fetchCategories(url: String): List<String> {
+    private fun fetchCategoriesRaw(url: String): List<DataCategory> {
         val AMARadioApp = requireActivity().application as AMARadioApp
         val result = Utils.downloadFeedRelative(AMARadioApp.httpClient, requireContext(), url, false, null)
-        return DataCategory.DecodeJson(result).map { it.Name }.sorted()
+        return DataCategory.DecodeJson(result).toList()
     }
 
     private fun performSearch() {
@@ -181,8 +266,8 @@ class FragmentFilter : FragmentBase() {
             val AMARadioApp = requireActivity().application as AMARadioApp
             
             val params = mutableMapOf<String, String>()
-            val country = autoCountry.text.toString()
-            val language = autoLanguage.text.toString()
+            val country = selectedCountryCode
+            val language = selectedLanguage
             val tag = autoTag.text.toString()
             
             if (country.isNotEmpty()) params["countrycode"] = country
