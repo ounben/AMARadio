@@ -18,6 +18,7 @@ import net.ounben.AMARadio.data.DataCategory
 import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.ItemAdapterStation
 import net.ounben.AMARadio.station.StationsFilter
+import net.ounben.AMARadio.utils.UiScaler
 import java.net.URLEncoder
 import java.util.*
 
@@ -94,7 +95,26 @@ class FragmentFilter : FragmentBase() {
             performSearch()
         }
 
+        applyUiScaling(view)
+
         return view
+    }
+
+    private fun applyUiScaling(view: View) {
+        val scale = UiScaler.getScaleFactor(requireContext())
+        if (scale == UiScaler.SCALE_STANDARD) return
+
+        val buttonSize = (48 * resources.displayMetrics.density * scale).toInt()
+        btnApply.layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+        btnApply.minimumHeight = buttonSize
+
+        // Ensure dropdowns are big enough
+        autoCountry.minimumHeight = buttonSize
+        autoLanguage.minimumHeight = buttonSize
+        autoTag.minimumHeight = buttonSize
+        
+        spinnerSort.minimumHeight = buttonSize
+        switchReverse.minimumHeight = buttonSize
     }
 
     private fun setupSortSpinner() {
