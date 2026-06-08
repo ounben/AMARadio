@@ -137,25 +137,23 @@ object Utils {
         Log.i("DOWN", "Url=$theURI (not cached)")
 
         try {
-            val url = theURI.toHttpUrlOrNull() ?: return null
-            val requestBuilder = Request.Builder().url(url)
-
+            val urlBuilder = theURI.toHttpUrlOrNull()?.newBuilder() ?: return null
+            
             if (dictParams != null) {
-                val jsonMediaType = "application/json; charset=utf-8".toMediaTypeOrNull()
-                val gson = Gson()
-                val json = gson.toJson(dictParams)
-                val requestBody = json.toRequestBody(jsonMediaType)
-                requestBuilder.post(requestBody)
-            } else {
-                requestBuilder.get()
+                for ((key, value) in dictParams) {
+                    urlBuilder.addQueryParameter(key, value)
+                }
             }
-
-            val request = requestBuilder.build()
+            
+            val url = urlBuilder.build()
+            Log.i("DOWN", "Final Url=$url")
+            val request = Request.Builder().url(url).get().build()
+            
             val response = httpClient.newCall(request).execute()
             val responseStr = response.body?.string() ?: ""
 
             if (!response.isSuccessful) {
-                Log.e("UTIL", "Unsuccessful response: ${response.message}\n$responseStr")
+                Log.e("UTIL", "Unsuccessful response: ${response.code} ${response.message}\n$responseStr")
                 return null
             }
 

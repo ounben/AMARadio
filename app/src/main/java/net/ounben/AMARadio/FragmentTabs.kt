@@ -31,7 +31,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private var queuedSearchQuery: String? = null
     private var queuedSearchStyle: StationsFilter.SearchStyle? = null
 
-    private val fragments = arrayOfNulls<Fragment>(9)
+    private val fragments = arrayOfNulls<Fragment>(10)
     private val addresses = arrayOf(
         itsAdressWWWLocal,
         itsAdressWWWTopClick,
@@ -41,6 +41,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         itsAdressWWWTags,
         itsAdressWWWCountries,
         itsAdressWWWLanguages,
+        "",
         ""
     )
 
@@ -118,8 +119,11 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         fragments[IDX_COUNTRIES] = FragmentCategories()
         fragments[IDX_LANGUAGES] = FragmentCategories()
         fragments[IDX_SEARCH] = FragmentStations()
+        fragments[IDX_FILTER] = FragmentFilter()
 
         for (i in fragments.indices) {
+            if (i == IDX_FILTER) continue // Filter handles its own setup
+
             val bundle = Bundle()
             bundle.putString("url", addresses[i])
 
@@ -141,6 +145,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         if (countryCode != null) {
             activeTabs.add(IDX_LOCAL)
         }
+        activeTabs.add(IDX_FILTER)
         activeTabs.add(IDX_TOP_CLICK)
         // activeTabs.add(IDX_TOP_VOTE)
 
@@ -170,6 +175,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 IDX_COUNTRIES -> R.string.action_countries
                 IDX_LANGUAGES -> R.string.action_languages
                 IDX_SEARCH -> R.string.action_search
+                IDX_FILTER -> R.string.action_filter
                 else -> 0
             }
             adapter.addFragment(fragments[tabId]!!, titleRes, tabId)
@@ -240,6 +246,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         private const val IDX_COUNTRIES = 6
         private const val IDX_LANGUAGES = 7
         private const val IDX_SEARCH = 8
+        private const val IDX_FILTER = 9
 
         @JvmStatic
         var viewPager: ViewPager? = null
