@@ -21,6 +21,7 @@ import com.mikepenz.iconics.typeface.library.community.material.CommunityMateria
 import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import net.ounben.AMARadio.interfaces.IApplicationSelected
 import net.ounben.AMARadio.proxy.ProxySettingsDialog
+import net.ounben.AMARadio.utils.UiScaler
 import net.ounben.AMARadio.BuildConfig
 
 class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
@@ -174,7 +175,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 newFragment.show(requireActivity().supportFragmentManager, "appPicker")
             }
         }
-        if (key == "theme_name" || key == "circular_icons" || key == "bottom_navigation") {
+        if (key == "theme_name" || key == "circular_icons" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
             if (key == "circular_icons") {
                 (requireActivity().application as AMARadioApp).favouriteManager.updateShortcuts()
             }

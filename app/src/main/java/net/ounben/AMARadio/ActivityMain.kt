@@ -21,6 +21,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.GravityCompat
 import androidx.core.view.MenuItemCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
@@ -60,11 +62,16 @@ import android.app.TimePickerDialog
 import android.widget.TimePicker
 import java.io.*
 import java.util.*
+import net.ounben.AMARadio.utils.UiScaler
 
 class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener,
     BottomNavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
     TimePickerDialog.OnTimeSetListener, FileDialog.OnFileSelectedListener,
     SearchPreferenceResultListener, CastHandler.CastHandlerListener, CastAwareActivity {
+
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(UiScaler.wrapContext(newBase))
+    }
 
     private var mSearchView: SearchView? = null
     private lateinit var appBarLayout: AppBarLayout
@@ -104,6 +111,12 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
 
         setContentView(R.layout.layout_main)
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            insets
+        }
 
         Log.d(TAG, "FilesDir: " + filesDir.absolutePath)
         Log.d(TAG, "CacheDir: " + cacheDir.absolutePath)
@@ -234,7 +247,36 @@ class ActivityMain : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         (application as AMARadioApp).castHandler.setActivity(this)
 
+        applyUiScaling()
         setupStartUpFragment()
+    }
+
+    private fun applyUiScaling() {
+        val scale = UiScaler.getScaleFactor(this)
+
+        val iconSize = (24 * resources.displayMetrics.density * scale).toInt()
+        mBottomNavigationView.itemIconSize = iconSize
+
+        // We use a fixed base height of 72dp to ensure it's never too small, 
+        // even in standard mode, and scale it from there.
+        val baseHeightDp = 72f
+        val scaledHeight = (baseHeightDp * resources.displayMetrics.density * scale).toInt()
+        
+        playerBottomSheet.peekHeight = scaledHeight
+        
+        val smallPlayerContainer = findViewById<View>(R.id.fragment_player_small)
+        val layoutParams = smallPlayerContainer?.layoutParams
+        if (layoutParams != null) {
+            layoutParams.height = scaledHeight
+            smallPlayerContainer.layoutParams = layoutParams
+        }
+        
+        val containerView = findViewById<View>(R.id.containerView)
+        val containerParams = containerView.layoutParams as? ViewGroup.MarginLayoutParams
+        if (containerParams != null) {
+            containerParams.bottomMargin = scaledHeight
+            containerView.layoutParams = containerParams
+        }
     }
 
     override fun onNavigationItemSelected(menuItem: MenuItem): Boolean {

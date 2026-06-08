@@ -213,6 +213,11 @@
     <string name="settings_alarm_external_desc_off">Den Alarm mit AMARadio abspielen.</string>
     <string name="settings_alarm_external_desc_on">Den Alarm mit einer externen Standard-App abspielen.</string>
     <string name="settings_bottom_navigation">Navigation unten</string>
+    <string name="settings_ui_scale">UI Skalierung</string>
+    <string name="ui_scale_compact">Kompakt</string>
+    <string name="ui_scale_standard">Systemstandard</string>
+    <string name="ui_scale_large">Groß</string>
+    <string name="ui_scale_extra_large">Sehr Groß</string>
     <string name="settings_click_trend_icon_visible">Trendsymbolanzeige</string>
     <string name="settings_click_trend_icon_visible_off">Es werden keine Trendsymbole angezeigt.</string>
     <string name="settings_click_trend_icon_visible_on">Es werden Trendsymbole angezeigt.</string>

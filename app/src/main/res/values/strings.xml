@@ -101,6 +101,11 @@
     <string name="settings_compact_style_desc_off">Large icon adopted with station details</string>
     <string name="settings_compact_style_desc_on">Small icon adopted without station details</string>
     <string name="settings_bottom_navigation">Bottom navigation</string>
+    <string name="settings_ui_scale">UI Scaling</string>
+    <string name="ui_scale_compact">Compact</string>
+    <string name="ui_scale_standard">System Standard</string>
+    <string name="ui_scale_large">Large</string>
+    <string name="ui_scale_extra_large">Very Large</string>
 
     <string name="settings_interaction">Interaction</string>
     <string name="settings_single_use_tags">Show rarely-used tags</string>

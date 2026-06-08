@@ -36,6 +36,7 @@ import net.ounben.AMARadio.station.live.metadata.*
 import net.ounben.AMARadio.utils.RefreshHandler
 import net.ounben.AMARadio.views.RecyclerAwareNestedScrollView
 import net.ounben.AMARadio.views.TagsView
+import net.ounben.AMARadio.utils.UiScaler
 import java.lang.ref.WeakReference
 import java.util.*
 
@@ -268,6 +269,32 @@ class FragmentPlayerFull : Fragment() {
                 StationActions.markAsFavourite(requireContext(), station)
             }
         }
+
+        applyUiScaling()
+    }
+
+    private fun applyUiScaling() {
+        val scale = UiScaler.getScaleFactor(requireContext())
+        if (scale == UiScaler.SCALE_STANDARD) return
+
+        // Scale buttons
+        val buttonSize = (64 * resources.displayMetrics.density * scale).toInt()
+        val smallButtonSize = (48 * resources.displayMetrics.density * scale).toInt()
+
+        btnPlay.layoutParams.width = buttonSize
+        btnPlay.layoutParams.height = buttonSize
+        
+        btnPrev.layoutParams.width = smallButtonSize
+        btnPrev.layoutParams.height = smallButtonSize
+        
+        btnNext.layoutParams.width = smallButtonSize
+        btnNext.layoutParams.height = smallButtonSize
+        
+        btnRecord.layoutParams.width = smallButtonSize
+        btnRecord.layoutParams.height = smallButtonSize
+        
+        btnFavourite.layoutParams.width = smallButtonSize
+        btnFavourite.layoutParams.height = smallButtonSize
     }
 
     override fun onHiddenChanged(hidden: Boolean) {

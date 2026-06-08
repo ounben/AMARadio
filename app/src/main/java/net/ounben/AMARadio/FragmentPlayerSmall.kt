@@ -18,6 +18,7 @@ import net.ounben.AMARadio.service.PlayerService
 import net.ounben.AMARadio.service.PlayerServiceUtil
 import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.StationActions
+import net.ounben.AMARadio.utils.UiScaler
 
 class FragmentPlayerSmall : Fragment() {
     private lateinit var trackHistoryRepository: TrackHistoryRepository
@@ -104,8 +105,37 @@ class FragmentPlayerSmall : Fragment() {
         }
 
         tryPlayAtStart()
+        applyUiScaling()
         fullUpdate()
         setupStationIcon()
+    }
+
+    private fun applyUiScaling() {
+        val scale = UiScaler.getScaleFactor(requireContext())
+
+        val layoutParams = view?.layoutParams
+        if (layoutParams != null) {
+            val baseHeightDp = 72f
+            val scaledHeight = (baseHeightDp * resources.displayMetrics.density * scale).toInt()
+            layoutParams.height = scaledHeight
+            view?.layoutParams = layoutParams
+        }
+
+        val iconSize = (36 * resources.displayMetrics.density * scale).toInt()
+        imageViewIcon.layoutParams.width = iconSize
+        imageViewIcon.layoutParams.height = iconSize
+
+        val transparentCircle = view?.findViewById<ImageView>(R.id.transparentCircle)
+        transparentCircle?.layoutParams?.width = iconSize
+        transparentCircle?.layoutParams?.height = iconSize
+
+        val playButtonSize = (48 * resources.displayMetrics.density * scale).toInt()
+        buttonPlay.layoutParams.width = playButtonSize
+        buttonPlay.layoutParams.height = playButtonSize
+        buttonPlay.scaleType = ImageView.ScaleType.FIT_CENTER
+
+        buttonMore.layoutParams.width = iconSize
+        buttonMore.layoutParams.height = iconSize
     }
 
     override fun onResume() {

@@ -36,6 +36,14 @@
             android:key="bottom_navigation"
             android:title="@string/settings_bottom_navigation" />
 
+        <ListPreference
+            android:defaultValue="standard"
+            android:entries="@array/ui_scale_entries"
+            android:entryValues="@array/ui_scale_values"
+            android:key="ui_scale_level"
+            android:title="@string/settings_ui_scale"
+            android:summary="%s"/>
+
     </PreferenceScreen>
 
     <PreferenceScreen android:title="@string/settings_startup_behaviour"

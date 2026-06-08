@@ -185,7 +185,11 @@ open class ItemAdapterStation(
                 holder.imageViewIcon.setImageDrawable(stationImagePlaceholder)
                 setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
             }
-            if (prefs.getBoolean("compact_style", false)) setupCompactStyle(holder)
+            if (prefs.getBoolean("compact_style", false)) {
+                setupCompactStyle(holder)
+            } else {
+                setupRegularStyle(holder)
+            }
             
             val isInFavorites = favouriteManager.has(station.StationUuid)
             val toggleFavoriteListener = View.OnClickListener {
@@ -286,6 +290,8 @@ open class ItemAdapterStation(
                 holder.buttonAddAlarm = holder.viewDetails!!.findViewById(R.id.buttonAddAlarm)
                 holder.buttonCreateShortcut = holder.viewDetails!!.findViewById(R.id.buttonCreateShortcut)
                 holder.buttonPlayInternalOrExternal = holder.viewDetails!!.findViewById(R.id.buttonPlayInAMARadio)
+                
+                applyScalingToExpandedDetails(holder)
             }
 
             holder.buttonVisitWebsite?.setOnClickListener { StationActions.openStationHomeUrl(fragmentActivity, station) }
@@ -379,15 +385,61 @@ open class ItemAdapterStation(
         }
     }
 
+    private fun applyScalingToExpandedDetails(holder: StationViewHolder) {
+        val scale = UiScaler.getScaleFactor(fragmentActivity)
+        if (scale == UiScaler.SCALE_STANDARD) return
+        
+        val buttonSize = (48 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        
+        listOf(
+            holder.buttonVisitWebsite,
+            holder.buttonShare,
+            holder.buttonBookmark,
+            holder.buttonAddAlarm,
+            holder.buttonCreateShortcut,
+            holder.buttonPlayInternalOrExternal
+        ).forEach { button ->
+            button?.layoutParams?.width = buttonSize
+            button?.layoutParams?.height = buttonSize
+            if (button is ImageButton) {
+                button.scaleType = ImageView.ScaleType.FIT_CENTER
+            }
+        }
+        
+        holder.viewTags?.let { tagsView ->
+            val tagHeight = (25 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+            // Note: TagsView uses custom attributes, we might need to expose them if we want deep scaling.
+            // For now, fontScale handles the text size inside TagsView.
+        }
+    }
+
+    private fun setupRegularStyle(holder: StationViewHolder) {
+        val scale = UiScaler.getScaleFactor(fragmentActivity)
+        if (scale == UiScaler.SCALE_STANDARD) return
+        
+        holder.layoutMain.minimumHeight = (90 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        holder.frameLayout.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.regular_style_icon_container_width) * scale).toInt()
+        
+        val iconSize = (70 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        holder.imageViewIcon.layoutParams.width = iconSize
+        holder.imageViewIcon.layoutParams.height = iconSize
+        
+        if (holder.transparentImageView.visibility == View.VISIBLE) {
+            holder.transparentImageView.layoutParams.width = iconSize
+            holder.transparentImageView.layoutParams.height = iconSize
+        }
+    }
+
     private fun setupCompactStyle(holder: StationViewHolder) {
-        holder.layoutMain.minimumHeight = fragmentActivity.resources.getDimension(R.dimen.compact_style_item_minimum_height).toInt()
-        holder.frameLayout.layoutParams.width = fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_container_width).toInt()
-        holder.imageViewIcon.layoutParams.width = fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width).toInt()
+        val scale = UiScaler.getScaleFactor(fragmentActivity)
+        holder.layoutMain.minimumHeight = (fragmentActivity.resources.getDimension(R.dimen.compact_style_item_minimum_height) * scale).toInt()
+        holder.frameLayout.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_container_width) * scale).toInt()
+        holder.imageViewIcon.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width) * scale).toInt()
         holder.textViewShortDescription.visibility = View.GONE
         if (holder.transparentImageView.visibility == View.VISIBLE) {
-            holder.transparentImageView.layoutParams.height = fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height).toInt()
-            holder.transparentImageView.layoutParams.width = fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width).toInt()
-            holder.imageViewIcon.layoutParams.height = fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height).toInt()
+            holder.transparentImageView.layoutParams.height = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height) * scale).toInt()
+            holder.transparentImageView.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width) * scale).toInt()
+            holder.imageViewIcon.layoutParams.height = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height) * scale).toInt()
         }
     }
 
