@@ -118,6 +118,13 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
                 false
             }
+            findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
+                (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_about)
+                val f = FragmentAbout()
+                val fragmentTransaction = parentFragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
+                false
+            }
         }
 
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
