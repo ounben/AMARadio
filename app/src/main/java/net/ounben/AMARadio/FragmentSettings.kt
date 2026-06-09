@@ -14,8 +14,6 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceScreen
 import com.bytehamster.lib.preferencesearch.SearchPreference
-import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import net.ounben.AMARadio.interfaces.IApplicationSelected
 import net.ounben.AMARadio.proxy.ProxySettingsDialog
 import net.ounben.AMARadio.utils.UiScaler
@@ -37,15 +35,15 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     private fun refreshToplevelIcons() {
         findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
-        findPreference<Preference>("pref_category_ui")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon2.cmd_monitor))
-        findPreference<Preference>("pref_category_startup")?.setIcon(Utils.IconicsIcon(requireContext(), GoogleMaterial.Icon.gmd_flight_takeoff))
-        findPreference<Preference>("pref_category_interaction")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon.cmd_gesture_tap))
-        findPreference<Preference>("pref_category_player")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon2.cmd_play))
-        findPreference<Preference>("pref_category_alarm")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon.cmd_clock_outline))
-        findPreference<Preference>("pref_category_connectivity")?.setIcon(Utils.IconicsIcon(requireContext(), GoogleMaterial.Icon.gmd_import_export))
-        findPreference<Preference>("pref_category_recordings")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon2.cmd_record_rec))
-        findPreference<Preference>("pref_category_mpd")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon2.cmd_speaker_wireless))
-        findPreference<Preference>("pref_category_other")?.setIcon(Utils.IconicsIcon(requireContext(), CommunityMaterial.Icon2.cmd_information_outline))
+        findPreference<Preference>("pref_category_ui")?.setIcon(R.drawable.ic_monitor_24dp)
+        findPreference<Preference>("pref_category_startup")?.setIcon(R.drawable.ic_flight_takeoff_24dp)
+        findPreference<Preference>("pref_category_interaction")?.setIcon(R.drawable.ic_touch_app_24dp)
+        findPreference<Preference>("pref_category_player")?.setIcon(R.drawable.ic_play_arrow_24dp)
+        findPreference<Preference>("pref_category_alarm")?.setIcon(R.drawable.ic_query_builder_black_24dp)
+        findPreference<Preference>("pref_category_connectivity")?.setIcon(R.drawable.ic_sync_black_24dp)
+        findPreference<Preference>("pref_category_recordings")?.setIcon(R.drawable.ic_fiber_manual_record_black_24dp)
+        findPreference<Preference>("pref_category_mpd")?.setIcon(R.drawable.ic_volume_up_24dp)
+        findPreference<Preference>("pref_category_other")?.setIcon(R.drawable.ic_live_help_24dp)
     }
 
     private fun refreshToolbar() {

@@ -9,10 +9,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import com.github.zawadz88.materialpopupmenu.MaterialPopupMenu
 import com.github.zawadz88.materialpopupmenu.popupMenu
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
-import com.mikepenz.iconics.utils.sizeDp
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.AMARadioApp
 import net.ounben.AMARadio.Utils
@@ -39,7 +35,7 @@ object StationPopupMenu {
                 } else {
                     item {
                         labelRes = R.string.context_menu_play_in_external_player
-                        iconDrawable = IconicsDrawable(context, CommunityMaterial.Icon2.cmd_play_box_outline).sizeDp(24)
+                        icon = R.drawable.ic_play_arrow_24dp
                         callback = {
                             Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, station,
                                     PlayerType.EXTERNAL) { PlayStationTask.playExternal(station, context).execute() }
@@ -48,7 +44,7 @@ object StationPopupMenu {
                 }
                 item {
                     labelRes = R.string.context_menu_visit_homepage
-                    iconDrawable = IconicsDrawable(context, GoogleMaterial.Icon.gmd_home).sizeDp(24)
+                    icon = R.drawable.ic_home_24dp
                     callback = {
                         StationActions.openStationHomeUrl(activity, station)
                     }

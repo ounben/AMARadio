@@ -4,12 +4,10 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.mikepenz.iconics.IconicsColor
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.IconicsSize
-import com.mikepenz.iconics.typeface.library.googlematerial.GoogleMaterial
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.Utils
 
@@ -25,14 +23,13 @@ open class RecyclerItemSwipeHelper<ViewHolderType : SwipeableViewHolder>(
     }
 
     private val swipeToDeleteIsEnabled: Boolean = ((swipeDirs and ItemTouchHelper.LEFT) > 0) || ((swipeDirs and ItemTouchHelper.RIGHT) > 0)
-    private var icon: IconicsDrawable? = null
+    private var icon: Drawable? = null
     private val background: ColorDrawable = ColorDrawable(Utils.themeAttributeToColor(R.attr.swipeDeleteBackgroundColor, context, Color.RED))
 
     init {
         if (swipeToDeleteIsEnabled) {
-            icon = IconicsDrawable(context, GoogleMaterial.Icon.gmd_delete_sweep)
-                .size(IconicsSize.dp(48))
-                .color(IconicsColor.colorInt(Utils.themeAttributeToColor(R.attr.swipeDeleteIconColor, context, Color.WHITE)))
+            icon = ContextCompat.getDrawable(context, R.drawable.ic_delete_sweep_24dp)?.mutate()
+            icon?.setTint(Utils.themeAttributeToColor(R.attr.swipeDeleteIconColor, context, Color.WHITE))
         }
     }
 
@@ -70,15 +67,16 @@ open class RecyclerItemSwipeHelper<ViewHolderType : SwipeableViewHolder>(
 
     private fun drawSwipeToDeleteBackground(c: Canvas, itemView: android.view.View, dX: Float, dY: Float) {
         val currentIcon = icon ?: return
-        val iconMargin = (itemView.height - currentIcon.intrinsicHeight) / 2
+        val iconSize = (48 * itemView.context.resources.displayMetrics.density).toInt()
+        val iconMargin = (itemView.height - iconSize) / 2
         val iconTop = itemView.top + iconMargin
-        val iconBottom = iconTop + currentIcon.intrinsicHeight
+        val iconBottom = iconTop + iconSize
 
         if (dX > 0) { // Swiping to the right
-            var iconRight = itemView.left + iconMargin + currentIcon.intrinsicWidth
+            var iconRight = itemView.left + iconMargin + iconSize
             var iconLeft = itemView.left + iconMargin
 
-            val magicConstraint = if (itemView.left + dX.toInt() < iconRight + iconMargin) dX.toInt() - currentIcon.intrinsicWidth - (iconMargin * 2) else 0
+            val magicConstraint = if (itemView.left + dX.toInt() < iconRight + iconMargin) dX.toInt() - iconSize - (iconMargin * 2) else 0
             iconLeft += magicConstraint
             iconRight += magicConstraint
             currentIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
@@ -90,9 +88,9 @@ open class RecyclerItemSwipeHelper<ViewHolderType : SwipeableViewHolder>(
             )
         } else if (dX < 0) { // Swiping to the left
             var iconRight = itemView.right - iconMargin
-            var iconLeft = itemView.right - iconMargin - currentIcon.intrinsicWidth
+            var iconLeft = itemView.right - iconMargin - iconSize
 
-            val magicConstraint = if (itemView.right + dX.toInt() > iconLeft - iconMargin) currentIcon.intrinsicWidth + (iconMargin * 2) + dX.toInt() else 0
+            val magicConstraint = if (itemView.right + dX.toInt() > iconLeft - iconMargin) iconSize + (iconMargin * 2) + dX.toInt() else 0
             iconLeft += magicConstraint
             iconRight += magicConstraint
             currentIcon.setBounds(iconLeft, iconTop, iconRight, iconBottom)

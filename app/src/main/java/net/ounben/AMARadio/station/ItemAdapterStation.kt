@@ -14,10 +14,6 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.IconicsSize
-import com.mikepenz.iconics.typeface.library.community.material.CommunityMaterial
-import com.mikepenz.iconics.view.IconicsImageButton
 import net.ounben.AMARadio.*
 import net.ounben.AMARadio.interfaces.IAdapterRefreshable
 import net.ounben.AMARadio.players.PlayStationTask
@@ -85,7 +81,7 @@ open class ItemAdapterStation(
         var stubDetails: ViewStub? = itemView.findViewById(R.id.stubDetails)
 
         var viewDetails: View? = null
-        var buttonVisitWebsite: IconicsImageButton? = null
+        var buttonVisitWebsite: ImageButton? = null
         var buttonBookmark: ImageButton? = null
         var buttonShare: ImageButton? = null
         var buttonAddAlarm: ImageButton? = null
@@ -324,7 +320,7 @@ open class ItemAdapterStation(
                 holder.buttonPlayInternalOrExternal?.setOnClickListener { StationActions.playInAMARadio(fragmentActivity, station) }
             } else {
                 holder.buttonPlayInternalOrExternal?.contentDescription = fragmentActivity.getString(R.string.detail_play_in_external_player)
-                holder.buttonPlayInternalOrExternal?.setImageDrawable(IconicsDrawable(fragmentActivity, CommunityMaterial.Icon2.cmd_play_box_outline).size(IconicsSize.dp(24)))
+                holder.buttonPlayInternalOrExternal?.setImageResource(R.drawable.ic_play_arrow_24dp)
                 holder.buttonPlayInternalOrExternal?.setOnClickListener {
                     Utils.playAndWarnIfMetered(fragmentActivity.application as AMARadioApp, station, PlayerType.EXTERNAL) {
                         PlayStationTask.playExternal(station, fragmentActivity).execute()

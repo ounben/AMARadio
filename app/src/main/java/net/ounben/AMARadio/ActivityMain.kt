@@ -35,7 +35,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import com.mikepenz.iconics.Iconics
 import kotlinx.coroutines.*
 import net.ounben.AMARadio.alarm.FragmentAlarm
 import net.ounben.AMARadio.alarm.TimePickerFragment
@@ -104,7 +103,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Utils.getThemeResId(this))
         enableEdgeToEdge()
-        Iconics.init(this)
         super.onCreate(savedInstanceState)
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)

@@ -27,10 +27,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
-import com.mikepenz.iconics.IconicsColor
-import com.mikepenz.iconics.IconicsDrawable
-import com.mikepenz.iconics.IconicsSize
-import com.mikepenz.iconics.typeface.IIcon
 import net.ounben.AMARadio.players.PlayStationTask
 import net.ounben.AMARadio.players.selector.PlayerSelectorDialog
 import net.ounben.AMARadio.players.selector.PlayerType
@@ -484,11 +480,6 @@ object Utils {
     }
 
     @JvmStatic
-    fun getIconColor(context: Context): Int {
-        return themeAttributeToColor(R.attr.menuTextColorDefault, context, Color.LTGRAY)
-    }
-
-    @JvmStatic
     fun getAccentColor(context: Context): Int {
         return themeAttributeToColor(androidx.appcompat.R.attr.colorAccent, context, Color.LTGRAY)
     }
@@ -525,11 +516,6 @@ object Utils {
                 resources.getResourcePackageName(resID) + '/' +
                 resources.getResourceTypeName(resID) + '/' +
                 resources.getResourceEntryName(resID))
-    }
-
-    @JvmStatic
-    fun IconicsIcon(context: Context, icon: IIcon): IconicsDrawable {
-        return IconicsDrawable(context, icon).size(IconicsSize.TOOLBAR_ICON_SIZE).padding(IconicsSize.TOOLBAR_ICON_PADDING).color(IconicsColor.colorInt(getIconColor(context)))
     }
 
     @JvmStatic
