@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.github.zawadz88.materialpopupmenu.MaterialPopupMenu
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.service.PlayerServiceUtil
@@ -22,7 +22,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
     RecyclerItemMoveAndSwipeHelper.MoveAndSwipeCallback<ItemAdapterStation.StationViewHolder> {
 
     inner class IconOnlyStationViewHolder(itemView: View) : ItemAdapterStation.StationViewHolder(itemView), View.OnCreateContextMenuListener, SwipeableViewHolder {
-        private var contextMenu: MaterialPopupMenu? = null
+        private var contextMenu: PopupMenu? = null
 
         init {
             itemView.findViewById<View>(R.id.station_icon_foreground)?.let { viewForeground = it }
@@ -45,7 +45,6 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             contextMenu = StationPopupMenu.open(v, fragmentActivity, fragmentActivity, station, this@ItemAdapterIconOnlyStation)
             contextMenu?.setOnDismissListener {
                 dismissContextMenu()
-                null
             }
         }
     }

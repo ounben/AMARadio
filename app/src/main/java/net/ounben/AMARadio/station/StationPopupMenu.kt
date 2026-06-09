@@ -5,10 +5,9 @@ import android.content.pm.ShortcutManager
 import android.os.Build
 import android.view.Gravity
 import android.view.View
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
-import com.github.zawadz88.materialpopupmenu.MaterialPopupMenu
-import com.github.zawadz88.materialpopupmenu.popupMenu
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.AMARadioApp
 import net.ounben.AMARadio.Utils
@@ -16,77 +15,80 @@ import net.ounben.AMARadio.players.PlayStationTask
 import net.ounben.AMARadio.players.selector.PlayerType
 
 object StationPopupMenu {
-    fun open(view: View, context: Context, activity: FragmentActivity, station: DataRadioStation, itemAdapterStation: ItemAdapterStation): MaterialPopupMenu {
+    fun open(view: View, context: Context, activity: FragmentActivity, station: DataRadioStation, itemAdapterStation: ItemAdapterStation): PopupMenu {
         val rootView = view.rootView
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity.applicationContext)
         val play_external = sharedPref.getBoolean("play_external", false)
         val gravity = if (view.y + view.height > view.rootView.height / 2) Gravity.TOP else Gravity.BOTTOM
-        val popupMenu = popupMenu {
-            dropdownGravity = gravity
-            section {
-                if (play_external) {
-                    item {
-                        labelRes = R.string.context_menu_play_in_AMARadio
-                        icon = R.drawable.ic_play_in_amaradio_24dp
-                        callback = {
-                            StationActions.playInAMARadio(context, station)
-                        }
-                    }
-                } else {
-                    item {
-                        labelRes = R.string.context_menu_play_in_external_player
-                        icon = R.drawable.ic_play_arrow_24dp
-                        callback = {
-                            Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, station,
-                                    PlayerType.EXTERNAL) { PlayStationTask.playExternal(station, context).execute() }
-                        }
-                    }
+
+        val popup = PopupMenu(context, view, gravity)
+        popup.menuInflater.inflate(R.menu.station_popup_menu, popup.menu)
+
+        // Show icons using reflection
+        try {
+            val fields = popup.javaClass.getDeclaredFields()
+            for (field in fields) {
+                if ("mPopup" == field.name) {
+                    field.isAccessible = true
+                    val menuPopupHelper = field.get(popup)
+                    val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
+                    val setForceShowIcon = classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
+                    setForceShowIcon.invoke(menuPopupHelper, true)
+                    break
                 }
-                item {
-                    labelRes = R.string.context_menu_visit_homepage
-                    icon = R.drawable.ic_home_24dp
-                    callback = {
-                        StationActions.openStationHomeUrl(activity, station)
-                    }
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        // Dynamic visibility
+        popup.menu.findItem(R.id.action_play_in_amaradio).isVisible = play_external
+        popup.menu.findItem(R.id.action_play_in_external_player).isVisible = !play_external
+        popup.menu.findItem(R.id.action_create_shortcut).isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
+
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.action_play_in_amaradio -> {
+                    StationActions.playInAMARadio(context, station)
+                    true
                 }
-                item {
-                    labelRes = R.string.context_menu_share
-                    icon = R.drawable.ic_share_24dp
-                    callback = {
-                        StationActions.share(context, station)
-                    }
+                R.id.action_play_in_external_player -> {
+                    Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, station,
+                        PlayerType.EXTERNAL) { PlayStationTask.playExternal(station, context).execute() }
+                    true
                 }
-                item {
-                    labelRes = R.string.context_menu_add_alarm
-                    icon = R.drawable.ic_add_alarm_black_24dp
-                    callback = {
-                        StationActions.setAsAlarm(activity, station)
-                    }
+                R.id.action_visit_homepage -> {
+                    StationActions.openStationHomeUrl(activity, station)
+                    true
                 }
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                    item {
-                        labelRes = R.string.context_menu_create_shortcut
-                        icon = R.drawable.ic_back_arrow_24dp
-                        callback = {
-                            station.prepareShortcut(context) { shortcut ->
-                                val sm = context.getSystemService(ShortcutManager::class.java)
-                                if (sm != null && sm.isRequestPinShortcutSupported) {
-                                    sm.requestPinShortcut(shortcut, null)
-                                }
+                R.id.action_share -> {
+                    StationActions.share(context, station)
+                    true
+                }
+                R.id.action_add_alarm -> {
+                    StationActions.setAsAlarm(activity, station)
+                    true
+                }
+                R.id.action_create_shortcut -> {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+                        station.prepareShortcut(context) { shortcut ->
+                            val sm = context.getSystemService(ShortcutManager::class.java)
+                            if (sm != null && sm.isRequestPinShortcutSupported) {
+                                sm.requestPinShortcut(shortcut, null)
                             }
                         }
                     }
+                    true
                 }
-                item {
-                    labelRes = R.string.context_menu_delete
-                    icon = R.drawable.ic_delete_black_24dp
-                    callback = {
-                        StationActions.removeFromFavourites(context, rootView, station)
-                    }
+                R.id.action_delete -> {
+                    StationActions.removeFromFavourites(context, rootView, station)
+                    true
                 }
+                else -> false
             }
         }
-        popupMenu.show(context, view)
-        return popupMenu
+
+        popup.show()
+        return popup
     }
 }
