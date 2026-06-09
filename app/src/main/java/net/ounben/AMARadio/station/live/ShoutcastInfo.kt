@@ -1,11 +1,13 @@
 package net.ounben.AMARadio.station.live
 
 import android.os.Parcelable
-import com.google.android.exoplayer2.metadata.icy.IcyHeaders
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.extractor.metadata.icy.IcyHeaders
 import kotlinx.parcelize.Parcelize
 import net.ounben.AMARadio.Utils.parseIntWithDefault
 import okhttp3.Response
 
+@UnstableApi
 @Parcelize
 class ShoutcastInfo(
     @JvmField var metadataOffset: Int = 0,

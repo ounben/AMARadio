@@ -1,9 +1,11 @@
 package net.ounben.AMARadio.players.exoplayer
 
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.TransferListener
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.TransferListener
 import okhttp3.OkHttpClient
 
+@UnstableApi
 class RadioDataSourceFactory(
     private val httpClient: OkHttpClient,
     private val transferListener: TransferListener,

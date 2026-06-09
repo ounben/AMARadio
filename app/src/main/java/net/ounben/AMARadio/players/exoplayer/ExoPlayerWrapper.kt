@@ -7,17 +7,18 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.preference.PreferenceManager
-import com.google.android.exoplayer2.*
-import com.google.android.exoplayer2.metadata.Metadata
-import com.google.android.exoplayer2.metadata.icy.IcyHeaders
-import com.google.android.exoplayer2.metadata.icy.IcyInfo
-import com.google.android.exoplayer2.source.MediaSource
-import com.google.android.exoplayer2.source.ProgressiveMediaSource
-import com.google.android.exoplayer2.source.hls.HlsMediaSource
-import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
-import com.google.android.exoplayer2.upstream.DefaultLoadErrorHandlingPolicy
-import com.google.android.exoplayer2.upstream.HttpDataSource
-import com.google.android.exoplayer2.upstream.LoadErrorHandlingPolicy
+import androidx.media3.common.*
+import androidx.media3.extractor.metadata.icy.IcyHeaders
+import androidx.media3.extractor.metadata.icy.IcyInfo
+import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.source.MediaSource
+import androidx.media3.exoplayer.source.ProgressiveMediaSource
+import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
+import androidx.media3.exoplayer.upstream.DefaultLoadErrorHandlingPolicy
+import androidx.media3.datasource.HttpDataSource
+import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
+import androidx.media3.common.util.UnstableApi
 import net.ounben.AMARadio.BuildConfig
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.Utils
@@ -28,6 +29,7 @@ import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 
+@UnstableApi
 class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     private var player: ExoPlayer? = null
     private var stateListener: PlayerWrapper.PlayListener? = null
@@ -76,7 +78,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
             cancelStopTask()
             if (player == null) {
                 player = ExoPlayer.Builder(context).build().apply {
-                    val audioAttributes = com.google.android.exoplayer2.audio.AudioAttributes.Builder()
+                    val audioAttributes = AudioAttributes.Builder()
                         .setUsage(if (isAlarm) C.USAGE_ALARM else C.USAGE_MEDIA)
                         .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
                         .build()

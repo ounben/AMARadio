@@ -1,8 +1,9 @@
 package net.ounben.AMARadio.players.exoplayer
 
-import com.google.android.exoplayer2.upstream.DataSource
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.TransferListener
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSource
+import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.TransferListener
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
@@ -11,6 +12,7 @@ import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
+@UnstableApi
 internal class IcyDataSourceTest {
 
     @BeforeEach

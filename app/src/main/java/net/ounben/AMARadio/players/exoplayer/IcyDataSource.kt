@@ -1,9 +1,11 @@
 package net.ounben.AMARadio.players.exoplayer
 
 import android.net.Uri
-import com.google.android.exoplayer2.upstream.DataSpec
-import com.google.android.exoplayer2.upstream.HttpDataSource
-import com.google.android.exoplayer2.upstream.TransferListener
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSpec
+import androidx.media3.datasource.HttpDataSource
+import androidx.media3.datasource.TransferListener
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
@@ -15,6 +17,7 @@ import okhttp3.internal.closeQuietly
 import java.io.IOException
 import java.util.*
 
+@UnstableApi
 class IcyDataSource(
     private val httpClient: OkHttpClient,
     private val transferListener: TransferListener,
@@ -56,11 +59,11 @@ class IcyDataSource(
         val response = try {
             httpClient.newCall(request).execute()
         } catch (e: IOException) {
-            throw HttpDataSource.HttpDataSourceException("Unable to connect to ${dataSpec!!.uri}", e, dataSpec!!, HttpDataSource.HttpDataSourceException.TYPE_OPEN)
+            throw HttpDataSource.HttpDataSourceException("Unable to connect to ${dataSpec!!.uri}", e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_OPEN)
         }
 
         if (!response.isSuccessful) {
-            throw HttpDataSource.InvalidResponseCodeException(response.code, request.headers.toMultimap(), dataSpec!!)
+            throw HttpDataSource.InvalidResponseCodeException(response.code, response.message, null, response.headers.toMultimap(), dataSpec!!, ByteArray(0))
         }
 
         responseBody = response.body
@@ -138,13 +141,13 @@ class IcyDataSource(
 
     private fun readInternal(buffer: ByteArray, offset: Int, readLength: Int): Int {
         if (responseBody == null) {
-            throw HttpDataSource.HttpDataSourceException(dataSpec!!, HttpDataSource.HttpDataSourceException.TYPE_READ)
+            throw HttpDataSource.HttpDataSourceException(dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_READ)
         }
         val stream = responseBody!!.byteStream()
         val bytesRead = try {
             stream.read(buffer, offset, readLength)
         } catch (e: IOException) {
-            throw HttpDataSource.HttpDataSourceException(e, dataSpec!!, HttpDataSource.HttpDataSourceException.TYPE_READ)
+            throw HttpDataSource.HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_READ)
         }
         if (bytesRead != -1) {
             sendToDataSourceListenersWithoutMetadata(buffer, offset, bytesRead)
