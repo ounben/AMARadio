@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.9] - 2026-06-09
+### Changed
+- **Official Material Icons**: Completely replaced the third-party `Android-Iconics` library with official Google Material Icons (Vector Drawables). This results in faster app startup and a smaller APK size.
+- **UI Standardization**: Replaced all custom icon components with native Android `ImageButton` and `ImageView` components for better system compatibility and performance.
+- **Enhanced Animations**: Modernized the "swipe-to-delete" visual feedback using native Material drawables.
+
 ## [0.89] - 2026-06-09
 ### Changed
 - **Migration to AndroidX Media3**: Upgraded the streaming engine to the latest `androidx.media3:media3-exoplayer` (v1.5.1). This provides better performance, improved stream stability, and full compatibility with the latest Android standards.
