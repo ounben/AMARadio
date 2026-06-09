@@ -6,28 +6,24 @@
 
 **AMARadio** is a modern, open-source Android application for streaming radio stations from all over the world. It is powered by the community-driven [radio-browser.info](https://www.radio-browser.info/) database.
 
-AMARadio is a fork of the excellent [RadioDroid](https://github.com/ounben/RadioDroid) project, customized for a more focused and personal experience.
+AMARadio is a fork of the excellent [RadioDroid](https://github.com/ounben/RadioDroid) project, customized for a more focused, accessible, and personal experience.
 
-The codebase has been completely migrated from Java to Kotlin, ensuring better performance, modern development standards, and full compatibility with future Android versions.
+The codebase has been completely migrated from Java to **100% Kotlin**, ensuring better performance, modern development standards, and full compatibility with the latest Android versions (Android 14/15+).
 
 > [!IMPORTANT]
 > **100% Ad-Free & Privacy-Focused**: This app was built with a simple goal: a clean, honest radio experience without annoying ads or tracking. **I originally developed AMARadio for my mother**, who wanted a simple way to listen to the radio without being interrupted by advertisements. This is why the app is and will always remain completely free of ads and bloatware. It's a promise kept for her, and shared with you.
 
+## ✨ Key Features
 
-
-## ✨ Features
-
-- **Massive Database**: Access thousands of radio stations via the Radio Browser API.
-- **Recording**: Record your favorite radio shows directly to your device.
-- **Chromecast Support**: Stream music to your TV or smart speakers.
-- **Alarm & Sleep Timer**: Wake up to your favorite station or fall asleep while listening.
-- **Favorites & History**: Easily manage your top stations and see what you've listened to.
-- **Track History**: View the history of songs played on a station (if supported by the stream).
-- **MPD Integration**: Control your Music Player Daemon (MPD) servers.
-- **Themeable**: Full support for Light and Dark modes with a clean Material Design.
-- **Android TV Support**: Optimized UI for the big screen.
-- **100% Ad-Free & Private**: No ads, no tracking, no bloatware. Just pure radio, now and forever.
-- **Privacy First**: No unnecessary permissions or data collection.
+- **Advanced Filtering**: Dedicated "Filter" tab to find stations by Country (with flags), Language, and Tags. Your filter settings are saved even after restarting the app.
+- **Dynamic UI Scaling**: Built-in accessibility setting to adjust font and button sizes (from Compact to Very Large), ensuring the app is usable for everyone.
+- **Massive Database**: Access thousands of radio stations via the community-driven Radio Browser API.
+- **Recording**: Record your favorite radio shows directly to your device for offline listening.
+- **Chromecast Support**: Stream music seamlessly to your TV or smart speakers.
+- **Favorites & History**: Manage your top stations easily. Mark favorites with a single tap on the star icon.
+- **Privacy & Safety**: No ads, no tracking, and smart warnings when using metered (mobile) connections to save your data.
+- **Modern Design**: Clean Material UI with a specialized black splash screen and full support for Dark and Light modes.
+- **Android TV Support**: A UI optimized for the big screen experience.
 
 ## 🚀 Getting Started
 
@@ -35,12 +31,12 @@ The codebase has been completely migrated from Java to Kotlin, ensuring better p
 You can download the app from:
 - [F-Droid](https://f-droid.org/repository/browse/?fdid=net.ounben.AMARadio)
 - [Google Play](https://play.google.com/store/apps/details?id=net.ounben.AMARadio)
-- [GitHub Releases](https://github.com/ounben/AMARadio/releases)
+- [GitHub Releases](https://github.com/segler-alex/AMARadio/releases)
 
 ### Building from source
 1. Clone the repository:
    ```bash
-   git clone https://github.com/ounben/AMARadio.git
+   git clone https://github.com/segler-alex/AMARadio.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project using Gradle:
@@ -48,10 +44,17 @@ You can download the app from:
    ./gradlew assembleDebug
    ```
 
+## 🛠 Technical Details
+- **Language**: 100% Kotlin
+- **Architecture**: Modern Android Architecture Components (Lifecycle, ViewModel, ViewBinding)
+- **Database**: Room for local storage (Favorites, History)
+- **Network**: OkHttp3 & Picasso for image loading
+- **Target SDK**: 37 (Android 15)
+
 ## 🤝 Contributing
 
 Contributions are welcome! Whether it's fixing bugs, adding features, or improving translations.
-- Found a bug? [Open an issue](https://github.com/ounben/AMARadio/issues).
+- Found a bug? [Open an issue](https://github.com/segler-alex/AMARadio/issues).
 - Want to contribute code? Fork the repo and submit a pull request.
 - Translation help is always appreciated!
 
