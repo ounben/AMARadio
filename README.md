@@ -1,8 +1,7 @@
 # AMARadio 📻
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
-[![F-Droid](https://img.shields.io/f-droid/v/net.ounben.AMARadio.svg)](https://f-droid.org/repository/browse/?fdid=net.ounben.AMARadio)
-[![Google Play](https://img.shields.io/badge/Google%20Play-Get%20it-green.svg)](https://play.google.com/store/apps/details?id=net.ounben.AMARadio)
+
 
 **AMARadio** is a modern, open-source Android application for streaming radio stations from all over the world. It is powered by the community-driven [radio-browser.info](https://www.radio-browser.info/) database.
 
@@ -43,14 +42,12 @@ The codebase has been completely migrated from Java to **100% Kotlin**, ensuring
 
 ### Download
 You can download the app from:
-- [F-Droid](https://f-droid.org/repository/browse/?fdid=net.ounben.AMARadio)
-- [Google Play](https://play.google.com/store/apps/details?id=net.ounben.AMARadio)
-- [GitHub Releases](https://github.com/segler-alex/AMARadio/releases)
+
 
 ### Building from source
 1. Clone the repository:
    ```bash
-   git clone https://github.com/segler-alex/AMARadio.git
+   git clone https://github.com/ounben/AMARadio.git
    ```
 2. Open the project in **Android Studio**.
 3. Build the project using Gradle:
