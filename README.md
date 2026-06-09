@@ -13,6 +13,20 @@ The codebase has been completely migrated from Java to **100% Kotlin**, ensuring
 > [!IMPORTANT]
 > **100% Ad-Free & Privacy-Focused**: This app was built with a simple goal: a clean, honest radio experience without annoying ads or tracking. **I originally developed AMARadio for my mother**, who wanted a simple way to listen to the radio without being interrupted by advertisements. This is why the app is and will always remain completely free of ads and bloatware. It's a promise kept for her, and shared with you.
 
+## 📸 Screenshots
+
+<p align="center">
+  <img src="screenshots/Screenshot_20260609_021827.png" width="24%" />
+  <img src="screenshots/Screenshot_20260609_022031.png" width="24%" />
+  <img src="screenshots/Screenshot_20260609_022052.png" width="24%" />
+  <img src="screenshots/Screenshot_20260609_022112.png" width="24%" />
+</p>
+<p align="center">
+  <img src="screenshots/Screenshot_20260609_022219.png" width="24%" />
+  <img src="screenshots/Screenshot_20260609_022236.png" width="24%" />
+  <img src="screenshots/Screenshot_20260609_022322.png" width="24%" />
+</p>
+
 ## ✨ Key Features
 
 - **Advanced Filtering**: Dedicated "Filter" tab to find stations by Country (with flags), Language, and Tags. Your filter settings are saved even after restarting the app.
