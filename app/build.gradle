@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'kotlin-parcelize'
 
 def getAvailableLocales() {
@@ -44,10 +45,8 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
-            }
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
         }
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
@@ -117,10 +116,11 @@ dependencies {
     implementation 'com.github.ByteHamster:SearchPreference:v2.3.0'
 
     implementation 'androidx.room:room-runtime:2.8.4'
-    kapt 'androidx.room:room-compiler:2.8.4'
+    //kapt 'androidx.room:room-compiler:2.8.4'
     implementation 'androidx.room:room-ktx:2.8.4'
-    implementation 'androidx.room:room-paging:2.8.4'
-
+    //implementation 'androidx.room:room-paging:2.8.4'
+    ksp 'androidx.room:room-compiler:2.8.4'
+    implementation 'androidx.room:room-ktx:2.8.4'
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.8.7"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.8.7"
