@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.89] - 2026-06-09
+### Changed
+- **Migration to AndroidX Media3**: Upgraded the streaming engine to the latest `androidx.media3:media3-exoplayer` (v1.5.1). This provides better performance, improved stream stability, and full compatibility with the latest Android standards.
+- **Dependency Refresh**: Updated core libraries (AppCompat, Material, Lifecycle, OkHttp) to their latest stable versions.
+- **Android SDK Update**: Now targeting Android 15 (API 37) to ensure maximum security and support for new devices.
+- **Code Modernization**: Replaced deprecated navigation and back-button logic with modern Android Architecture components (`OnBackPressedDispatcher`).
+
+### Fixed
+- **Build System**: Resolved several compilation errors and warnings related to library updates and Kotlin 1.9 compatibility.
+- **Stability**: Fixed potential crashes when handling intents and improved null-safety in the ExoPlayer wrapper.
+
 ## [0.88] - 2026-06-08
 ### Added
 - **Advanced Filtering**: New dedicated "Filter" tab with search by Country (with flags/names), Language, and Tags.
