@@ -230,7 +230,7 @@ class FragmentPlayerSmall : Fragment() {
             PlayerServiceUtil.getStationIcon(imageViewIcon, station.IconUrl)
         } else {
             imageViewIcon.visibility = View.VISIBLE
-            imageViewIcon.setImageDrawable(null)
+            imageViewIcon.setImageDrawable(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp))
         }
 
         if (role == Role.PLAYER) {

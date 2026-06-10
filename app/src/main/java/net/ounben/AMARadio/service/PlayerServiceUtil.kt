@@ -249,7 +249,7 @@ object PlayerServiceUtil {
     @JvmStatic
     fun getStationIcon(holder: ImageView, fromUrl: String?) {
         if (fromUrl.isNullOrBlank()) {
-            holder.setImageDrawable(null)
+            holder.setImageResource(R.drawable.ic_radio_24dp)
             return
         }
         val context = mainContext ?: return
@@ -261,6 +261,8 @@ object PlayerServiceUtil {
             override fun onError(e: Exception) {
                 Picasso.get()
                     .load(fromUrl)
+                    .placeholder(R.drawable.ic_radio_24dp)
+                    .error(R.drawable.ic_radio_24dp)
                     .resize(px.toInt(), 0)
                     .networkPolicy(NetworkPolicy.NO_CACHE)
                     .into(holder)
@@ -269,6 +271,8 @@ object PlayerServiceUtil {
 
         Picasso.get()
             .load(fromUrl)
+            .placeholder(R.drawable.ic_radio_24dp)
+            .error(R.drawable.ic_radio_24dp)
             .resize(px.toInt(), 0)
             .networkPolicy(NetworkPolicy.OFFLINE)
             .into(holder, imageLoadCallback)

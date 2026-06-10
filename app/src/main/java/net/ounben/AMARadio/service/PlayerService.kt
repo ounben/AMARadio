@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothHeadset
 import android.content.*
 import android.content.res.Resources
 import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.media.AudioManager
@@ -609,11 +610,20 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     private fun downloadRadioIcon() {
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, resources.displayMetrics)
         if (itsCurrentStation?.hasIcon() != true) {
-            radioIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null) as BitmapDrawable
+            radioIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_radio_24dp, null)?.let { drawable ->
+                val bitmap = Bitmap.createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight, Bitmap.Config.ARGB_8888)
+                val canvas = Canvas(bitmap)
+                drawable.setBounds(0, 0, canvas.width, canvas.height)
+                drawable.draw(canvas)
+                BitmapDrawable(resources, bitmap)
+            }
             updateNotification()
             return
         }
-        Picasso.get().load(itsCurrentStation?.IconUrl).resize(px.toInt(), 0).into(object : Target {
+        Picasso.get().load(itsCurrentStation?.IconUrl)
+            .placeholder(R.drawable.ic_radio_24dp)
+            .error(R.drawable.ic_radio_24dp)
+            .resize(px.toInt(), 0).into(object : Target {
             override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
                 radioIcon = BitmapDrawable(resources, bitmap)
                 updateNotification()

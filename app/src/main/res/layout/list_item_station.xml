@@ -30,6 +30,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
+                android:scaleType="fitCenter"
                 android:contentDescription="@null" />
 
         </FrameLayout>

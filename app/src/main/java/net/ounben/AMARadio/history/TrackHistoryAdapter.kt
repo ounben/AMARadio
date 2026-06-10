@@ -28,7 +28,7 @@ class TrackHistoryAdapter(private val activity: FragmentActivity) : PagedListAda
 
     private val context: Context = activity
     private var shouldLoadIcons = false
-    private val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(context, R.drawable.ic_photo_24dp)
+    private val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(context, R.drawable.ic_radio_24dp)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackHistoryItemViewHolder {
         val inflater = LayoutInflater.from(context)

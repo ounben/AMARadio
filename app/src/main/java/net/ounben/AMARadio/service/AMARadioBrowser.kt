@@ -132,7 +132,7 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
                     val url = if (iconUrl.startsWith("http:")) iconUrl.replace("http:", "https:") else iconUrl
                     mediaItem.setIconUri(Uri.parse(url))
                 } else {
-                    mediaItem.setIconUri(Utils.resourceToUri(resources, R.drawable.ic_photo_24dp))
+                    mediaItem.setIconUri(Utils.resourceToUri(resources, R.drawable.ic_radio_24dp))
                 }
                 mediaItems.add(MediaBrowserCompat.MediaItem(mediaItem.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE))
             }

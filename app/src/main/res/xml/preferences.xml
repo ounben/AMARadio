@@ -87,7 +87,7 @@
             android:summaryOff="@string/settings_load_icons_off"
             android:summaryOn="@string/settings_load_icons_on"
             android:title="@string/settings_load_icons"
-            android:icon="@drawable/ic_photo_24dp" />
+            android:icon="@drawable/ic_radio_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"

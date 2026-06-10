@@ -41,7 +41,7 @@ class TrackHistoryInfoDialog(private val historyEntry: TrackHistoryEntry) : Bott
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, resource.displayMetrics)
         Picasso.get()
                 .load(historyEntry.artUrl)
-                .placeholder(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_photo_24dp)!!)
+                .placeholder(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp)!!)
                 .resize(px.toInt(), 0)
                 .into(imageViewTrackArt)
 

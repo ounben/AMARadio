@@ -456,7 +456,7 @@ class FragmentPlayerFull : Fragment() {
             if (station.hasIcon()) {
                 Picasso.get().load(station.IconUrl).into(artAndInfoPagerAdapter.imageViewArt)
             } else {
-                artAndInfoPagerAdapter.imageViewArt.setImageDrawable(null)
+                artAndInfoPagerAdapter.imageViewArt.setImageDrawable(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp))
             }
             return
         }

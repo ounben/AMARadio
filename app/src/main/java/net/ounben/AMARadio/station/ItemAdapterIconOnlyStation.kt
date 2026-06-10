@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -59,7 +60,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             setupIcon(holder.imageViewIcon)
             PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
         } else {
-            holder.imageViewIcon.setImageDrawable(null)
+            holder.imageViewIcon.setImageDrawable(AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp))
         }
         val tv = TypedValue()
         if (playingStationPosition == position) {

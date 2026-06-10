@@ -54,7 +54,7 @@ open class ItemAdapterStation(
     private var updateUIReceiver: BroadcastReceiver? = null
     private var expandedPosition = -1
     var playingStationPosition = -1
-    protected val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_photo_24dp)
+    protected val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp)
     private val favouriteManager: FavouriteManager = (fragmentActivity.application as AMARadioApp).favouriteManager
     private var filter: StationsFilter? = null
 
