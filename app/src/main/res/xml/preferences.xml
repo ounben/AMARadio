@@ -90,15 +90,6 @@
             android:icon="@drawable/ic_photo_24dp" />
 
         <CheckBoxPreference
-            android:defaultValue="true"
-            android:dependency="load_icons"
-            android:key="icon_click_toggles_favorite"
-            android:summaryOff="@string/settings_icon_click_toggles_favorite_off"
-            android:summaryOn="@string/settings_icon_click_toggles_favorite_on"
-            android:title="@string/settings_icon_click_toggles_favorite"
-            android:icon="@drawable/ic_star_24dp" />
-
-        <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_favorite"
             android:summaryOff="@string/settings_auto_favorite_off"

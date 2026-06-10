@@ -87,10 +87,6 @@
     <string name="settings_auto_favorite_on">Stationen werden beim Abspielen automatisch als Favoriten gesetzt.</string>
     <string name="settings_auto_favorite_off">Stationen werden beim Abspielen nicht automatisch als Favoriten gesetzt.</string>
 
-    <string name="settings_icon_click_toggles_favorite">Klickverhalten</string>
-    <string name="settings_icon_click_toggles_favorite_on">Ein Klick auf das Stationslogo setzt oder löscht die Station als Favorit.</string>
-    <string name="settings_icon_click_toggles_favorite_off">Ein Klick auf das Stationslogo startet das Abspielen.</string>
-
     <string name="settings_alarm">Wecker</string>
     <string name="settings_alarm_external">Interner/externer Alarmspieler</string>
     <string name="settings_alarm_audio_player">Audio-Abspieler</string>
@@ -231,9 +227,7 @@
     <string name="ui_scale_standard">Systemstandard</string>
     <string name="ui_scale_large">Groß</string>
     <string name="ui_scale_extra_large">Sehr Groß</string>
-    <string name="settings_click_trend_icon_visible">Trendsymbolanzeige</string>
-    <string name="settings_click_trend_icon_visible_off">Es werden keine Trendsymbole angezeigt.</string>
-    <string name="settings_click_trend_icon_visible_on">Es werden Trendsymbole angezeigt.</string>
+
     <string name="settings_compact_style_desc_off">Es werden große Symbole mit den Stationsdetails angezeigt.</string>
     <string name="settings_compact_style_desc_on">Es werden kleine Symbole ohne Stationsdetails angezeigt.</string>
     <string name="settings_connect_timeout">Verbindungszeitüberschreitung</string>
