@@ -25,8 +25,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
-import com.bytehamster.lib.preferencesearch.SearchPreferenceResult
-import com.bytehamster.lib.preferencesearch.SearchPreferenceResultListener
 import com.rustamg.filedialogs.FileDialog
 import com.rustamg.filedialogs.OpenFileDialog
 import com.rustamg.filedialogs.SaveFileDialog
@@ -65,7 +63,7 @@ import net.ounben.AMARadio.utils.UiScaler
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
     TimePickerDialog.OnTimeSetListener, FileDialog.OnFileSelectedListener,
-    SearchPreferenceResultListener, CastHandler.CastHandlerListener, CastAwareActivity {
+    CastHandler.CastHandlerListener, CastAwareActivity {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(UiScaler.wrapContext(newBase))
@@ -258,12 +256,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 val backStackCount = mFragmentManager.backStackEntryCount
                 if (backStackCount > 0) {
                     val backStackEntry = mFragmentManager.getBackStackEntryAt(backStackCount - 1)
-                    if (backStackEntry.name == "SearchPreferenceFragment") {
-                        isEnabled = false
-                        onBackPressedDispatcher.onBackPressed()
-                        isEnabled = true
-                        return
-                    }
                     try {
                         val parsedId = backStackEntry.name?.toInt() ?: -1
                         if (parsedId == FRAGMENT_FROM_BACKSTACK) {
@@ -996,13 +988,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun selectMPDServer() {
         val AMARadioApp = application as AMARadioApp
         Utils.showMpdServersDialog(AMARadioApp, supportFragmentManager, null)
-    }
-
-    override fun onSearchResultClicked(result: SearchPreferenceResult) {
-        result.closeSearchPage(this)
-        supportFragmentManager.popBackStack()
-        val f = FragmentSettings.openNewSettingsSubFragment(this, result.screen)
-        result.highlight(f)
     }
 
     override fun invalidateOptionsMenuForCast() {

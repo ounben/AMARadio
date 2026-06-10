@@ -2,22 +2,16 @@ package net.ounben.AMARadio
 
 import android.content.*
 import android.media.audiofx.AudioEffect
-import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
-import androidx.preference.Preference
-import androidx.preference.PreferenceFragmentCompat
-import androidx.preference.PreferenceScreen
-import com.bytehamster.lib.preferencesearch.SearchPreference
+import androidx.preference.*
 import net.ounben.AMARadio.interfaces.IApplicationSelected
 import net.ounben.AMARadio.proxy.ProxySettingsDialog
 import net.ounben.AMARadio.utils.UiScaler
-import net.ounben.AMARadio.BuildConfig
 import androidx.core.content.edit
 
 class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
@@ -30,7 +24,8 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     private fun isToplevel(): Boolean {
-        return preferenceScreen == null || preferenceScreen.key == "pref_toplevel"
+        val rootKey = arguments?.getString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT)
+        return rootKey == null || rootKey == "pref_toplevel"
     }
 
     private fun refreshToplevelIcons() {
@@ -73,10 +68,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         refreshToolbar()
         if (s == null) {
             refreshToplevelIcons()
-            val searchPreference = findPreference<SearchPreference>("searchPreference")
-            val config = searchPreference?.searchConfiguration
-            config?.setActivity(activity as AppCompatActivity)
-            config?.index(R.xml.preferences)
         } else if (s == "pref_category_player") {
             findPreference<Preference>("equalizer")?.setOnPreferenceClickListener {
                 val intent = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
