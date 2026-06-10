@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.91] - 2026-06-09
+### Changed
+- **Migration to KSP**: Migrated the entire project from `kapt` to `Kotlin Symbol Processing (KSP)`. This results in faster build times and better Kotlin compatibility for the Room database.
+- **Native UI Components**: Replaced third-party libraries `MaterialPopupMenu` and `SearchPreference` with native AndroidX components for better performance and system integration.
+- **Settings Overhaul**: 
+    - Flattened the settings structure to a single, easily scrollable page.
+    - Added Material icons to every individual setting for better visual guidance.
+    - Implemented automatic icon tinting that adapts to the current theme (Light/Dark).
+    - Unified the "Compact mode" setting into the "UI Scaling" selection.
+- **User Experience**: 
+    - Station icons now consistently trigger playback when clicked.
+    - Favoriting stations is now exclusively handled by the dedicated star icon to prevent accidental triggers.
+    - Standardized all settings icons to a uniform size (24dp).
+
+### Fixed
+- **Settings Stability**: Fixed issues where selection menus (Theme, UI Scaling) would not appear on certain devices.
+- **UI Scaling**: Improved the reliability of the "recreate" logic when changing UI scale or themes, preventing potential app freezes.
+- **Dark Mode Visibility**: Fixed invisible icons in settings when using Dark Mode.
+
 ## [0.9] - 2026-06-09
 ### Changed
 - **Official Material Icons**: Completely replaced the third-party `Android-Iconics` library with official Google Material Icons (Vector Drawables). This results in faster app startup and a smaller APK size.
