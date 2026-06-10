@@ -521,19 +521,19 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             .setWhen(System.currentTimeMillis())
             .setTicker(theTicker)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.ic_play_arrow_white_24dp)
+            .setSmallIcon(R.drawable.ic_play_arrow_24dp)
             .setLargeIcon(radioIcon?.bitmap)
-            .addAction(R.drawable.ic_stop_white_24dp, getString(R.string.action_stop), pendingIntentStop)
+            .addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
             .addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
         if (playState == PlayState.Playing || playState == PlayState.PrePlaying) {
             val pauseIntent = Intent(itsContext, PlayerService::class.java).apply { action = ACTION_PAUSE }
             val pendingIntentPause = PendingIntent.getService(itsContext, 0, pauseIntent, pendingIntentFlag)
-            builder.addAction(R.drawable.ic_pause_white_24dp, getString(R.string.action_pause), pendingIntentPause)
+            builder.addAction(R.drawable.ic_pause_24dp, getString(R.string.action_pause), pendingIntentPause)
             builder.setUsesChronometer(true).setOngoing(true)
         } else if (playState == PlayState.Paused || playState == PlayState.Idle) {
             val resumeIntent = Intent(itsContext, PlayerService::class.java).apply { action = ACTION_RESUME }
             val pendingIntentResume = PendingIntent.getService(itsContext, 0, resumeIntent, pendingIntentFlag)
-            builder.addAction(R.drawable.ic_play_arrow_white_24dp, getString(R.string.action_resume), pendingIntentResume)
+            builder.addAction(R.drawable.ic_play_arrow_24dp, getString(R.string.action_resume), pendingIntentResume)
             builder.setUsesChronometer(false).setDeleteIntent(pendingIntentStop).setOngoing(false)
         }
         builder.addAction(R.drawable.ic_skip_next_24dp, getString(R.string.action_skip_to_next), pendingIntentNext)
