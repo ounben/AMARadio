@@ -375,8 +375,8 @@ class FragmentPlayerFull : Fragment() {
             val flag = CountryFlagsLoader.instance.getFlag(requireContext(), station.CountryCode)
             flag?.let {
                 val k = it.intrinsicWidth.toFloat() / it.intrinsicHeight.toFloat()
-                val viewHeight = artAndInfoPagerAdapter.textViewStationDescription.textSize
-                it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight.toInt())
+                val viewHeight = (artAndInfoPagerAdapter.textViewStationDescription.textSize * 1.3f).toInt()
+                it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
             }
             artAndInfoPagerAdapter.textViewStationDescription.setCompoundDrawablesRelative(flag, null, null, null)
             artAndInfoPagerAdapter.textViewStationDescription.text = station.getLongDetails(requireContext())

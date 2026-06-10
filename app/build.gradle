@@ -57,9 +57,6 @@ android {
         buildConfigField "java.util.concurrent.atomic.AtomicBoolean", "IS_TESTING", "new java.util.concurrent.atomic.AtomicBoolean(false)"
     }
 
-    sourceSets {
-        main.res.srcDirs += ["src/main/res/drawable/flags"]
-    }
 
     buildTypes {
         release {

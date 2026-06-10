@@ -244,8 +244,8 @@ open class ItemAdapterStation(
         val flag = CountryFlagsLoader.instance.getFlag(fragmentActivity, station.CountryCode)
         flag?.let {
             val k = it.intrinsicWidth.toFloat() / it.intrinsicHeight.toFloat()
-            val viewHeight = holder.textViewShortDescription.textSize
-            it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight.toInt())
+            val viewHeight = (holder.textViewShortDescription.textSize * 1.3f).toInt()
+            it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             holder.textViewShortDescription.setCompoundDrawablesRelative(flag, null, null, null)
