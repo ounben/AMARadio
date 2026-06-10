@@ -244,24 +244,7 @@ open class ItemAdapterStation(
         }
         holder.starredStatusIcon.contentDescription = if (inFavourites) fragmentActivity.getString(R.string.action_favorite) else ""
 
-        if (prefs.getBoolean("click_trend_icon_visible", true)) {
-            when {
-                station.ClickTrend < 0 -> {
-                    holder.imageTrend.setImageResource(R.drawable.ic_trending_down_black_24dp)
-                    holder.imageTrend.contentDescription = fragmentActivity.getString(R.string.icon_click_trend_decreasing)
-                }
-                station.ClickTrend > 0 -> {
-                    holder.imageTrend.setImageResource(R.drawable.ic_trending_up_black_24dp)
-                    holder.imageTrend.contentDescription = fragmentActivity.getString(R.string.icon_click_trend_increasing)
-                }
-                else -> {
-                    holder.imageTrend.setImageResource(R.drawable.ic_trending_flat_black_24dp)
-                    holder.imageTrend.contentDescription = fragmentActivity.getString(R.string.icon_click_trend_stable)
-                }
-            }
-        } else {
-            holder.imageTrend.visibility = View.GONE
-        }
+        holder.imageTrend.visibility = View.GONE
 
         val flag = CountryFlagsLoader.instance.getFlag(fragmentActivity, station.CountryCode)
         flag?.let {
