@@ -19,7 +19,7 @@
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:textCursorDrawable">@null</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/MyPreferenceThemeOverlay</item>
 
         <item name="colorPlayerBackground">@color/colorPlayerBackground</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadow</item>
@@ -66,7 +66,7 @@
         <item name="colorControlActivated">@color/colorAccentDark</item>
         <item name="android:textCursorDrawable">@null</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/MyPreferenceThemeOverlay.Dark</item>
 
         <item name="colorPlayerBackground">@color/colorPlayerBackgroundDark</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadowDark</item>
@@ -99,6 +99,18 @@
         <item name="colorAccentMy">@color/colorAccentDark</item>
 
         <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+    </style>
+
+    <style name="MyPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceCategoryStyle">@style/MyPreferenceCategory</item>
+    </style>
+
+    <style name="MyPreferenceThemeOverlay.Dark" parent="@style/PreferenceThemeOverlay.v14.Material">
+        <item name="preferenceCategoryStyle">@style/MyPreferenceCategory</item>
+    </style>
+
+    <style name="MyPreferenceCategory" parent="Preference.Category.Material">
+        <item name="android:layout">@layout/preference_category_material_native</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">

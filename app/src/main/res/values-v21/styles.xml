@@ -28,7 +28,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/MyPreferenceThemeOverlay</item>
 
         <item name="colorPlayerBackground">@color/colorPlayerBackground</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadow</item>
@@ -74,7 +74,7 @@
         <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccentDark</item>
 
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+        <item name="preferenceTheme">@style/MyPreferenceThemeOverlay.Dark</item>
 
         <item name="colorPlayerBackground">@color/colorPlayerBackgroundDark</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadowDark</item>

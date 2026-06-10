@@ -411,31 +411,58 @@ open class ItemAdapterStation(
 
     private fun setupRegularStyle(holder: StationViewHolder) {
         val scale = UiScaler.getScaleFactor(fragmentActivity)
+        holder.textViewShortDescription.visibility = View.VISIBLE
         if (scale == UiScaler.SCALE_STANDARD) return
         
-        holder.layoutMain.minimumHeight = (90 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
-        holder.frameLayout.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.regular_style_icon_container_width) * scale).toInt()
+        val lpMain = holder.layoutMain.layoutParams
+        lpMain.height = (90 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        holder.layoutMain.layoutParams = lpMain
+        holder.layoutMain.minimumHeight = lpMain.height
+        
+        val lpFrame = holder.frameLayout.layoutParams
+        lpFrame.width = (fragmentActivity.resources.getDimension(R.dimen.regular_style_icon_container_width) * scale).toInt()
+        holder.frameLayout.layoutParams = lpFrame
         
         val iconSize = (70 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
-        holder.imageViewIcon.layoutParams.width = iconSize
-        holder.imageViewIcon.layoutParams.height = iconSize
+        val lpIcon = holder.imageViewIcon.layoutParams
+        lpIcon.width = iconSize
+        lpIcon.height = iconSize
+        holder.imageViewIcon.layoutParams = lpIcon
         
         if (holder.transparentImageView.visibility == View.VISIBLE) {
-            holder.transparentImageView.layoutParams.width = iconSize
-            holder.transparentImageView.layoutParams.height = iconSize
+            val lpTrans = holder.transparentImageView.layoutParams
+            lpTrans.width = iconSize
+            lpTrans.height = iconSize
+            holder.transparentImageView.layoutParams = lpTrans
         }
     }
 
     private fun setupCompactStyle(holder: StationViewHolder) {
         val scale = UiScaler.getScaleFactor(fragmentActivity)
-        holder.layoutMain.minimumHeight = (fragmentActivity.resources.getDimension(R.dimen.compact_style_item_minimum_height) * scale).toInt()
-        holder.frameLayout.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_container_width) * scale).toInt()
-        holder.imageViewIcon.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width) * scale).toInt()
         holder.textViewShortDescription.visibility = View.GONE
+        
+        val lpMain = holder.layoutMain.layoutParams
+        lpMain.height = (fragmentActivity.resources.getDimension(R.dimen.compact_style_item_minimum_height) * scale).toInt()
+        holder.layoutMain.layoutParams = lpMain
+        holder.layoutMain.minimumHeight = lpMain.height
+        
+        val lpFrame = holder.frameLayout.layoutParams
+        lpFrame.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_container_width) * scale).toInt()
+        holder.frameLayout.layoutParams = lpFrame
+        
+        val iconSize = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height) * scale).toInt()
+        val iconWidth = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width) * scale).toInt()
+        
+        val lpIcon = holder.imageViewIcon.layoutParams
+        lpIcon.width = iconWidth
+        lpIcon.height = iconSize
+        holder.imageViewIcon.layoutParams = lpIcon
+        
         if (holder.transparentImageView.visibility == View.VISIBLE) {
-            holder.transparentImageView.layoutParams.height = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height) * scale).toInt()
-            holder.transparentImageView.layoutParams.width = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_width) * scale).toInt()
-            holder.imageViewIcon.layoutParams.height = (fragmentActivity.resources.getDimension(R.dimen.compact_style_icon_height) * scale).toInt()
+            val lpTrans = holder.transparentImageView.layoutParams
+            lpTrans.height = iconSize
+            lpTrans.width = iconWidth
+            holder.transparentImageView.layoutParams = lpTrans
         }
     }
 

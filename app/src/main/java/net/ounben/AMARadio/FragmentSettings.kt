@@ -8,6 +8,7 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.DialogFragment
 import androidx.preference.*
 import net.ounben.AMARadio.interfaces.IApplicationSelected
 import net.ounben.AMARadio.proxy.ProxySettingsDialog
@@ -15,30 +16,36 @@ import net.ounben.AMARadio.utils.UiScaler
 import androidx.core.content.edit
 
 class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
-    IApplicationSelected, PreferenceFragmentCompat.OnPreferenceStartScreenCallback {
-
-    override fun onPreferenceStartScreen(preferenceFragmentCompat: PreferenceFragmentCompat,
-                                         preferenceScreen: PreferenceScreen): Boolean {
-        openNewSettingsSubFragment(activity as ActivityMain, preferenceScreen.key)
-        return true
-    }
-
-    private fun isToplevel(): Boolean {
-        val rootKey = arguments?.getString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT)
-        return rootKey == null || rootKey == "pref_toplevel"
-    }
+    IApplicationSelected {
 
     private fun refreshToplevelIcons() {
+        val color = Utils.getAccentColor(requireContext())
+        val screen = preferenceScreen ?: return
+
+        fun tintPreference(pref: Preference) {
+            pref.icon?.mutate()?.setTint(color)
+            if (pref is PreferenceGroup) {
+                for (i in 0 until pref.preferenceCount) {
+                    tintPreference(pref.getPreference(i))
+                }
+            }
+        }
+
         findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
-        findPreference<Preference>("pref_category_ui")?.setIcon(R.drawable.ic_monitor_24dp)
-        findPreference<Preference>("pref_category_startup")?.setIcon(R.drawable.ic_flight_takeoff_24dp)
-        findPreference<Preference>("pref_category_interaction")?.setIcon(R.drawable.ic_touch_app_24dp)
-        findPreference<Preference>("pref_category_player")?.setIcon(R.drawable.ic_play_arrow_24dp)
-        findPreference<Preference>("pref_category_alarm")?.setIcon(R.drawable.ic_query_builder_black_24dp)
-        findPreference<Preference>("pref_category_connectivity")?.setIcon(R.drawable.ic_sync_black_24dp)
-        findPreference<Preference>("pref_category_recordings")?.setIcon(R.drawable.ic_fiber_manual_record_black_24dp)
-        findPreference<Preference>("pref_category_mpd")?.setIcon(R.drawable.ic_volume_up_24dp)
-        findPreference<Preference>("pref_category_other")?.setIcon(R.drawable.ic_live_help_24dp)
+        
+        // Initial setup for categories (if icons are not in XML yet, though they should be)
+        findPreference<PreferenceCategory>("pref_category_ui")?.setIcon(R.drawable.ic_monitor_24dp)
+        findPreference<PreferenceCategory>("pref_category_startup")?.setIcon(R.drawable.ic_flight_takeoff_24dp)
+        findPreference<PreferenceCategory>("pref_category_interaction")?.setIcon(R.drawable.ic_touch_app_24dp)
+        findPreference<PreferenceCategory>("pref_category_player")?.setIcon(R.drawable.ic_play_arrow_24dp)
+        findPreference<PreferenceCategory>("pref_category_alarm")?.setIcon(R.drawable.ic_query_builder_black_24dp)
+        findPreference<PreferenceCategory>("pref_category_connectivity")?.setIcon(R.drawable.ic_sync_black_24dp)
+        findPreference<PreferenceCategory>("pref_category_recordings")?.setIcon(R.drawable.ic_fiber_manual_record_black_24dp)
+        findPreference<PreferenceCategory>("pref_category_mpd")?.setIcon(R.drawable.ic_volume_up_24dp)
+        findPreference<PreferenceCategory>("pref_category_other")?.setIcon(R.drawable.ic_live_help_24dp)
+
+        // Tint everything
+        tintPreference(screen)
     }
 
     private fun refreshToolbar() {
@@ -51,63 +58,68 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         myToolbar.title = screen.title
 
         if (Utils.bottomNavigationEnabled(activity)) {
-            if (isToplevel()) {
-                activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-                activity.supportActionBar?.setDisplayShowHomeEnabled(false)
-                myToolbar.setNavigationOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
-            } else {
-                activity.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                activity.supportActionBar?.setDisplayShowHomeEnabled(true)
-                myToolbar.setNavigationOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
-            }
+            activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            activity.supportActionBar?.setDisplayShowHomeEnabled(false)
+            myToolbar.setNavigationOnClickListener { activity.onBackPressedDispatcher.onBackPressed() }
         }
     }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         setPreferencesFromResource(R.xml.preferences, s)
+        
+        // Explicitly set summary providers for all list preferences
+        val listPrefs = listOf("theme_name", "ui_scale_level", "startup_action", "auto_off_timeout", "alarm_timeout", "record_name_formatting")
+        listPrefs.forEach { key ->
+            findPreference<ListPreference>(key)?.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
+        }
+
         refreshToolbar()
-        if (s == null) {
-            refreshToplevelIcons()
-        } else if (s == "pref_category_player") {
-            findPreference<Preference>("equalizer")?.setOnPreferenceClickListener {
-                val intent = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
-                if (requireContext().packageManager.resolveActivity(intent, 0) == null) {
-                    Toast.makeText(context, R.string.error_no_equalizer_found, Toast.LENGTH_SHORT).show()
-                } else {
-                    intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-                    @Suppress("DEPRECATION")
-                    startActivityForResult(intent, ActivityMain.LAUNCH_EQUALIZER_REQUEST)
-                }
-                false
+        refreshToplevelIcons()
+
+        // Equalizer
+        findPreference<Preference>("equalizer")?.setOnPreferenceClickListener {
+            val intent = Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL)
+            if (requireContext().packageManager.resolveActivity(intent, 0) == null) {
+                Toast.makeText(context, R.string.error_no_equalizer_found, Toast.LENGTH_SHORT).show()
+            } else {
+                intent.putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
+                @Suppress("DEPRECATION")
+                startActivityForResult(intent, ActivityMain.LAUNCH_EQUALIZER_REQUEST)
             }
-        } else if (s == "pref_category_connectivity") {
-            findPreference<Preference>("settings_proxy")?.setOnPreferenceClickListener {
-                val proxySettingsDialog = ProxySettingsDialog()
-                proxySettingsDialog.setCancelable(true)
-                proxySettingsDialog.show(parentFragmentManager, "")
-                false
-            }
-        } else if (s == "pref_category_mpd") {
-            findPreference<Preference>("mpd_servers_viewer")?.setOnPreferenceClickListener {
-                val AMARadioApp = requireActivity().application as AMARadioApp
-                Utils.showMpdServersDialog(AMARadioApp, requireActivity().supportFragmentManager, null)
-                false
-            }
-        } else if (s == "pref_category_other") {
-            findPreference<Preference>("show_statistics")?.setOnPreferenceClickListener {
-                (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_statistics)
-                val f = FragmentServerInfo()
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
-                false
-            }
-            findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
-                (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_about)
-                val f = FragmentAbout()
-                val fragmentTransaction = parentFragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
-                false
-            }
+            false
+        }
+
+        // Proxy
+        findPreference<Preference>("settings_proxy")?.setOnPreferenceClickListener {
+            val proxySettingsDialog = ProxySettingsDialog()
+            proxySettingsDialog.setCancelable(true)
+            proxySettingsDialog.show(parentFragmentManager, "")
+            false
+        }
+
+        // MPD
+        findPreference<Preference>("mpd_servers_viewer")?.setOnPreferenceClickListener {
+            val AMARadioApp = requireActivity().application as AMARadioApp
+            Utils.showMpdServersDialog(AMARadioApp, requireActivity().supportFragmentManager, null)
+            false
+        }
+
+        // Statistics
+        findPreference<Preference>("show_statistics")?.setOnPreferenceClickListener {
+            (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_statistics)
+            val f = FragmentServerInfo()
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
+            false
+        }
+
+        // About
+        findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
+            (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_about)
+            val f = FragmentAbout()
+            val fragmentTransaction = parentFragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
+            false
         }
 
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
@@ -122,11 +134,31 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
+    override fun onDisplayPreferenceDialog(preference: Preference) {
+        if (parentFragmentManager.findFragmentByTag("androidx.preference.PreferenceFragment.DIALOG") != null) {
+            return
+        }
+
+        val f: DialogFragment? = when (preference) {
+            is ListPreference -> ListPreferenceDialogFragmentCompat.newInstance(preference.key)
+            is EditTextPreference -> EditTextPreferenceDialogFragmentCompat.newInstance(preference.key)
+            else -> null
+        }
+
+        if (f != null) {
+            @Suppress("DEPRECATION")
+            f.setTargetFragment(this, 0)
+            f.show(parentFragmentManager, "androidx.preference.PreferenceFragment.DIALOG")
+        } else {
+            super.onDisplayPreferenceDialog(preference)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
         refreshToolbar()
-        if (isToplevel()) refreshToplevelIcons()
+        refreshToplevelIcons()
         findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
         if (batPref != null) {
@@ -160,11 +192,18 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 newFragment.show(requireActivity().supportFragmentManager, "appPicker")
             }
         }
-        if (key == "theme_name" || key == "circular_icons" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
+        if (key == "theme_name" || key == "circular_icons" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE || key == "compact_style") {
             if (key == "circular_icons") {
                 (requireActivity().application as AMARadioApp).favouriteManager.updateShortcuts()
             }
-            activity?.recreate()
+            
+            if (isResumed && activity != null && activity?.isFinishing == false) {
+                view?.post {
+                    if (activity != null && activity?.isFinishing == false) {
+                        activity?.recreate()
+                    }
+                }
+            }
         }
     }
 
@@ -177,17 +216,5 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             putString("shareapp_activity", activityName)
         }
         findPreference<Preference>("shareapp_package")?.summary = packageName
-    }
-
-    companion object {
-        fun openNewSettingsSubFragment(activity: ActivityMain, key: String): FragmentSettings {
-            val f = FragmentSettings()
-            val args = Bundle()
-            args.putString(PreferenceFragmentCompat.ARG_PREFERENCE_ROOT, key)
-            f.arguments = args
-            val fragmentTransaction = activity.supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
-            return f
-        }
     }
 }

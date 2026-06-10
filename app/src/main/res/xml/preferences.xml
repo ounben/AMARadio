@@ -3,61 +3,72 @@
     android:title="@string/nav_item_settings"
     android:key="pref_toplevel">
 
-  <PreferenceScreen android:title="@string/settings_appearance"
-        android:key="pref_category_ui">
+    <ListPreference
+        android:defaultValue="system"
+        android:entries="@array/theme_entries"
+        android:entryValues="@array/theme_values"
+        android:key="theme_name"
+        android:title="@string/settings_theme_selection_title"
+        android:summary="%s"
+        android:icon="@drawable/ic_monitor_24dp"
+        android:order="1" />
 
-        <ListPreference
-            android:defaultValue="system"
-            android:entries="@array/theme_entries"
-            android:entryValues="@array/theme_values"
-            android:key="theme_name"
-            android:title="@string/settings_theme_selection_title"
-            android:summary="%s"/>
+    <ListPreference
+        android:defaultValue="standard"
+        android:entries="@array/ui_scale_entries"
+        android:entryValues="@array/ui_scale_values"
+        android:key="ui_scale_level"
+        android:title="@string/settings_ui_scale"
+        android:summary="%s"
+        android:icon="@drawable/ic_format_size_24dp"
+        android:order="2" />
+
+    <PreferenceCategory android:title="@string/settings_appearance"
+        android:key="pref_category_ui"
+        android:order="3">
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="circular_icons"
-            android:title="@string/settings_circular_icons" />
+            android:title="@string/settings_circular_icons"
+            android:icon="@drawable/ic_circle_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="compact_style"
             android:summaryOff="@string/settings_compact_style_desc_off"
             android:summaryOn="@string/settings_compact_style_desc_on"
-            android:title="@string/settings_compact_style" />
+            android:title="@string/settings_compact_style"
+            android:icon="@drawable/ic_list_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="bottom_navigation"
-            android:title="@string/settings_bottom_navigation" />
+            android:title="@string/settings_bottom_navigation"
+            android:icon="@drawable/ic_back_arrow_24dp" />
 
-        <ListPreference
-            android:defaultValue="standard"
-            android:entries="@array/ui_scale_entries"
-            android:entryValues="@array/ui_scale_values"
-            android:key="ui_scale_level"
-            android:title="@string/settings_ui_scale"
-            android:summary="%s"/>
+    </PreferenceCategory>
 
-    </PreferenceScreen>
-
-    <PreferenceScreen android:title="@string/settings_startup_behaviour"
-        android:key="pref_category_startup">
+    <PreferenceCategory android:title="@string/settings_startup_behaviour"
+        android:key="pref_category_startup"
+        android:order="4">
 
         <ListPreference
             android:defaultValue="@string/startup_show_history"
             android:entries="@array/startup_action_entries"
             android:entryValues="@array/startup_action_entryvalues"
             android:key="startup_action"
-            android:summary="@string/startup_action_title_desc"
-            android:title="@string/startup_action_title" />
+            android:summary="%s"
+            android:title="@string/startup_action_title"
+            android:icon="@drawable/ic_home_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_play_on_startup"
             android:summaryOff="@string/settings_auto_play_on_startup_off"
             android:summaryOn="@string/settings_auto_play_on_startup_on"
-            android:title="@string/settings_auto_play_on_startup" />
+            android:title="@string/settings_auto_play_on_startup"
+            android:icon="@drawable/ic_play_arrow_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -65,7 +76,8 @@
             android:dependency="auto_play_on_startup"
             android:summaryOff="@string/settings_auto_off_on_startup_off"
             android:summaryOn="@string/settings_auto_off_on_startup_on"
-            android:title="@string/settings_auto_off_on_startup" />
+            android:title="@string/settings_auto_off_on_startup"
+            android:icon="@drawable/ic_stop_24dp" />
 
         <ListPreference
             android:defaultValue="10"
@@ -74,19 +86,22 @@
             android:entryValues="@array/timeout_minutes_values"
             android:key="auto_off_timeout"
             android:summary="@string/settings_auto_off_sleep_timer_desc"
-            android:title="@string/settings_auto_off_sleep_timer" />
+            android:title="@string/settings_auto_off_sleep_timer"
+            android:icon="@drawable/ic_query_builder_black_24dp" />
 
-    </PreferenceScreen>
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_interaction"
-        android:key="pref_category_interaction">
+    <PreferenceCategory android:title="@string/settings_interaction"
+        android:key="pref_category_interaction"
+        android:order="5">
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="load_icons"
             android:summaryOff="@string/settings_load_icons_off"
             android:summaryOn="@string/settings_load_icons_on"
-            android:title="@string/settings_load_icons" />
+            android:title="@string/settings_load_icons"
+            android:icon="@drawable/ic_photo_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -94,93 +109,108 @@
             android:key="icon_click_toggles_favorite"
             android:summaryOff="@string/settings_icon_click_toggles_favorite_off"
             android:summaryOn="@string/settings_icon_click_toggles_favorite_on"
-            android:title="@string/settings_icon_click_toggles_favorite" />
+            android:title="@string/settings_icon_click_toggles_favorite"
+            android:icon="@drawable/ic_star_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_favorite"
             android:summaryOff="@string/settings_auto_favorite_off"
             android:summaryOn="@string/settings_auto_favorite_on"
-            android:title="@string/settings_auto_favorite" />
+            android:title="@string/settings_auto_favorite"
+            android:icon="@drawable/ic_star_border_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="show_broken"
             android:summaryOff="@string/settings_show_broken_off"
             android:summaryOn="@string/settings_show_broken_on"
-            android:title="@string/settings_show_broken" />
+            android:title="@string/settings_show_broken"
+            android:icon="@drawable/ic_warning_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="click_trend_icon_visible"
             android:summaryOff="@string/settings_click_trend_icon_visible_off"
             android:summaryOn="@string/settings_click_trend_icon_visible_on"
-            android:title="@string/settings_click_trend_icon_visible" />
+            android:title="@string/settings_click_trend_icon_visible"
+            android:icon="@drawable/ic_trending_up_black_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="single_use_tags"
             android:summaryOff="@string/settings_single_use_tags_desc_off"
             android:summaryOn="@string/settings_single_use_tags_desc_on"
-            android:title="@string/settings_single_use_tags" />
+            android:title="@string/settings_single_use_tags"
+            android:icon="@android:drawable/ic_menu_agenda" />
 
-    </PreferenceScreen>
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_play"
-        android:key="pref_category_player">
+    <PreferenceCategory android:title="@string/settings_play"
+        android:key="pref_category_player"
+        android:order="6">
 
         <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="play_external"
             android:summaryOff="@string/settings_play_external_desc_off"
             android:summaryOn="@string/settings_play_external_desc_on"
-            android:title="@string/settings_play_external" />
+            android:title="@string/settings_play_external"
+            android:icon="@android:drawable/ic_menu_share" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="warn_no_wifi"
             android:summaryOff="@string/settings_warn_no_wifi_off"
             android:summaryOn="@string/settings_warn_no_wifi_on"
-            android:title="@string/settings_warn_no_wifi" />
+            android:title="@string/settings_warn_no_wifi"
+            android:icon="@android:drawable/stat_sys_warning" />
 
         <CheckBoxPreference
             android:defaultValue="true"
             android:key="pause_when_noisy"
-            android:title="@string/settings_pause_when_noisy" />
+            android:title="@string/settings_pause_when_noisy"
+            android:icon="@drawable/ic_volume_down_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_resume_on_wired_headset_connection"
             android:summaryOff="@string/settings_auto_resume_do_not_resume"
             android:summaryOn="@string/settings_auto_resume_on_wired_headset_connected_on"
-            android:title="@string/settings_auto_resume_on_wired_headset_connected" />
+            android:title="@string/settings_auto_resume_on_wired_headset_connected"
+            android:icon="@android:drawable/ic_menu_call" />
 
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="auto_resume_on_bluetooth_a2dp_connection"
             android:summaryOff="@string/settings_auto_resume_do_not_resume"
             android:summaryOn="@string/settings_auto_resume_on_bluetooth_a2dp_connected_on"
-            android:title="@string/settings_auto_resume_on_bluetooth_a2dp_connected" />
+            android:title="@string/settings_auto_resume_on_bluetooth_a2dp_connected"
+            android:icon="@android:drawable/stat_sys_data_bluetooth" />
 
         <Preference
             android:key="equalizer"
-            android:title="@string/settings_equalizer" />
-    </PreferenceScreen>
+            android:title="@string/settings_equalizer"
+            android:icon="@drawable/ic_tune_24dp" />
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_alarm"
-        android:key="pref_category_alarm">
+    <PreferenceCategory android:title="@string/settings_alarm"
+        android:key="pref_category_alarm"
+        android:order="7">
 
         <CheckBoxPreference
             android:disableDependentsState="true"
             android:key="alarm_external"
             android:summaryOff="@string/settings_alarm_external_desc_off"
             android:summaryOn="@string/settings_alarm_external_desc_on"
-            android:title="@string/settings_alarm_external" />
+            android:title="@string/settings_alarm_external"
+            android:icon="@drawable/ic_add_alarm_black_24dp" />
 
         <Preference
             android:enabled="false"
             android:key="shareapp_package"
-            android:title="@string/settings_alarm_audio_player" />
+            android:title="@string/settings_alarm_audio_player"
+            android:icon="@android:drawable/ic_menu_view" />
 
         <ListPreference
             android:defaultValue="10"
@@ -189,89 +219,106 @@
             android:entryValues="@array/timeout_minutes_values"
             android:key="alarm_timeout"
             android:summary="@string/settings_alarm_sleep_timer_desc"
-            android:title="@string/settings_alarm_sleep_timer" />
+            android:title="@string/settings_alarm_sleep_timer"
+            android:icon="@drawable/ic_hourglass_empty_black_24dp" />
 
-    </PreferenceScreen>
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_recordings"
-        android:key="pref_category_recordings">
+    <PreferenceCategory android:title="@string/settings_recordings"
+        android:key="pref_category_recordings"
+        android:order="8">
         <ListPreference
             android:defaultValue="@string/settings_record_name_formatting_default"
             android:entries="@array/settings_record_name_formatting_list_display"
             android:entryValues="@array/settings_record_name_formatting_list"
             android:key="record_name_formatting"
             android:summary="%s"
-            android:title="@string/settings_record_name_formatting" />
-    </PreferenceScreen>
+            android:title="@string/settings_record_name_formatting"
+            android:icon="@drawable/ic_edit_24dp" />
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_mpd"
-        android:key="pref_category_mpd">
+    <PreferenceCategory android:title="@string/settings_mpd"
+        android:key="pref_category_mpd"
+        android:order="9">
         <Preference
             android:key="mpd_servers_viewer"
-            android:title="@string/settings_view_mpd_servers" />
-    </PreferenceScreen>
+            android:title="@string/settings_view_mpd_servers"
+            android:icon="@drawable/ic_mpd_connected_24dp" />
+    </PreferenceCategory>
 
-    <PreferenceScreen
+    <PreferenceCategory
         android:key="pref_category_connectivity"
-        android:title="@string/settings_connectivity">
+        android:title="@string/settings_connectivity"
+        android:order="10">
 
         <net.ounben.AMARadio.views.IntEditTextPreference
             android:defaultValue="5"
             android:key="stream_connect_timeout"
             android:maxLength="2"
             android:summary="@string/settings_seconds_format"
-            android:title="@string/settings_connect_timeout" />
+            android:title="@string/settings_connect_timeout"
+            android:icon="@drawable/ic_sync_black_24dp" />
         <net.ounben.AMARadio.views.IntEditTextPreference
             android:defaultValue="10"
             android:key="stream_read_timeout"
             android:maxLength="2"
             android:summary="@string/settings_seconds_format"
-            android:title="@string/settings_read_timeout" />
+            android:title="@string/settings_read_timeout"
+            android:icon="@drawable/ic_sync_black_24dp" />
         <net.ounben.AMARadio.views.IntEditTextPreference
             android:defaultValue="10"
             android:key="settings_retry_timeout"
             android:maxLength="2"
             android:summary="@string/settings_seconds_format"
-            android:title="@string/settings_retry_timeout" />
+            android:title="@string/settings_retry_timeout"
+            android:icon="@drawable/ic_sync_black_24dp" />
         <net.ounben.AMARadio.views.IntEditTextPreference
             android:defaultValue="100"
             android:key="settings_retry_delay"
             android:maxLength="8"
             android:summary="@string/settings_milliseconds_format"
-            android:title="@string/settings_retry_delay" />
+            android:title="@string/settings_retry_delay"
+            android:icon="@drawable/ic_sync_black_24dp" />
         <net.ounben.AMARadio.views.IntEditTextPreference
             android:defaultValue="60"
             android:key="settings_resume_within"
             android:maxLength="3"
             android:summary="@string/settings_seconds_format"
-            android:title="@string/settings_resume_timeout" />
+            android:title="@string/settings_resume_timeout"
+            android:icon="@drawable/ic_restore_black_24dp" />
         <Preference
             android:key="settings_proxy"
-            android:title="@string/settings_proxy" />
-    </PreferenceScreen>
+            android:title="@string/settings_proxy"
+            android:icon="@android:drawable/ic_lock_lock" />
+    </PreferenceCategory>
 
-    <PreferenceScreen android:title="@string/settings_other"
-        android:key="pref_category_other">
+    <PreferenceCategory android:title="@string/settings_other"
+        android:key="pref_category_other"
+        android:order="11">
 
         <EditTextPreference
             android:key="last_fm_api_key"
             android:title="@string/settings_lastfm_api_key"
-            android:summary="@string/settings_lastfm_api_key_desc"/>
+            android:summary="@string/settings_lastfm_api_key_desc"
+            android:icon="@drawable/ic_poll_24dp" />
 
         <Preference
             android:defaultValue="false"
             android:key="@string/key_ignore_battery_optimization"
             android:summaryOff="@string/settings_ignore_battery_optimization_summary_off"
             android:summaryOn= "@string/settings_ignore_battery_optimization_summary_on"
-            android:title="@string/settings_disable_battery_optimization" />
+            android:title="@string/settings_disable_battery_optimization"
+            android:icon="@android:drawable/ic_lock_power_off" />
 
         <Preference
             android:key="show_statistics"
-            android:title="@string/settings_statistics" />
+            android:title="@string/settings_statistics"
+            android:icon="@drawable/ic_poll_24dp" />
 
         <Preference
             android:key="show_about"
-            android:title="@string/settings_about" />
+            android:title="@string/settings_about"
+            android:icon="@drawable/ic_live_help_24dp" />
 
-    </PreferenceScreen>
+    </PreferenceCategory>
 </PreferenceScreen>
