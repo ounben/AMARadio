@@ -181,7 +181,7 @@ open class ItemAdapterStation(
                 holder.imageViewIcon.setImageDrawable(stationImagePlaceholder)
                 setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
             }
-            if (prefs.getBoolean("compact_style", false)) {
+            if (UiScaler.getScaleFactor(fragmentActivity) == UiScaler.SCALE_COMPACT) {
                 setupCompactStyle(holder)
             } else {
                 setupRegularStyle(holder)

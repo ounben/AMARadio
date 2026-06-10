@@ -34,14 +34,6 @@
             android:icon="@drawable/ic_circle_24dp" />
 
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="compact_style"
-            android:summaryOff="@string/settings_compact_style_desc_off"
-            android:summaryOn="@string/settings_compact_style_desc_on"
-            android:title="@string/settings_compact_style"
-            android:icon="@drawable/ic_list_24dp" />
-
-        <CheckBoxPreference
             android:defaultValue="true"
             android:key="bottom_navigation"
             android:title="@string/settings_bottom_navigation"
