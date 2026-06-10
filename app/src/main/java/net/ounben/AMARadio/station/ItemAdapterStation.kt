@@ -71,8 +71,6 @@ open class ItemAdapterStation(
         var layoutMain: LinearLayout = itemView.findViewById(R.id.layoutMain)
         var frameLayout: FrameLayout = itemView.findViewById(R.id.frameLayout)
         var imageViewIcon: ImageView = itemView.findViewById(R.id.imageViewIcon)
-        var imageTrend: ImageView = itemView.findViewById(R.id.trendStatusIcon)
-        var transparentImageView: ImageView = itemView.findViewById(R.id.transparentCircle)
         var starredStatusIcon: ImageView = itemView.findViewById(R.id.starredStatusIcon)
         var textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
         var textViewShortDescription: TextView = itemView.findViewById(R.id.textViewShortDescription)
@@ -163,7 +161,6 @@ open class ItemAdapterStation(
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = filteredStationsList[position]
         val prefs = PreferenceManager.getDefaultSharedPreferences(fragmentActivity.applicationContext)
-        val useCircularIcons = Utils.useCircularIcons(fragmentActivity)
         
         when {
             station.DeletedOnServer -> holder.itemView.setBackgroundColor(-0x10000)
@@ -175,11 +172,11 @@ open class ItemAdapterStation(
             holder.imageViewIcon.visibility = View.GONE
         } else {
             if (station.hasIcon()) {
-                setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
+                setupIcon(holder.imageViewIcon)
                 PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
             } else {
                 holder.imageViewIcon.setImageDrawable(stationImagePlaceholder)
-                setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
+                setupIcon(holder.imageViewIcon)
             }
             if (UiScaler.getScaleFactor(fragmentActivity) == UiScaler.SCALE_COMPACT) {
                 setupCompactStyle(holder)
@@ -243,8 +240,6 @@ open class ItemAdapterStation(
             holder.starredStatusIcon.alpha = 0.5f
         }
         holder.starredStatusIcon.contentDescription = if (inFavourites) fragmentActivity.getString(R.string.action_favorite) else ""
-
-        holder.imageTrend.visibility = View.GONE
 
         val flag = CountryFlagsLoader.instance.getFlag(fragmentActivity, station.CountryCode)
         flag?.let {
@@ -356,12 +351,8 @@ open class ItemAdapterStation(
         return filter!!
     }
 
-    fun setupIcon(useCircularIcons: Boolean, imageView: ImageView, transparentImageView: ImageView) {
-        if (useCircularIcons) {
-            transparentImageView.visibility = View.VISIBLE
-            imageView.layoutParams.height = imageView.layoutParams.width
-            imageView.setBackgroundColor(androidx.core.content.ContextCompat.getColor(fragmentActivity, android.R.color.black))
-        }
+    fun setupIcon(imageView: ImageView) {
+        // No-op
     }
 
     private fun applyScalingToExpandedDetails(holder: StationViewHolder) {
@@ -411,13 +402,6 @@ open class ItemAdapterStation(
         lpIcon.width = iconSize
         lpIcon.height = iconSize
         holder.imageViewIcon.layoutParams = lpIcon
-        
-        if (holder.transparentImageView.visibility == View.VISIBLE) {
-            val lpTrans = holder.transparentImageView.layoutParams
-            lpTrans.width = iconSize
-            lpTrans.height = iconSize
-            holder.transparentImageView.layoutParams = lpTrans
-        }
     }
 
     private fun setupCompactStyle(holder: StationViewHolder) {
@@ -440,13 +424,6 @@ open class ItemAdapterStation(
         lpIcon.width = iconWidth
         lpIcon.height = iconSize
         holder.imageViewIcon.layoutParams = lpIcon
-        
-        if (holder.transparentImageView.visibility == View.VISIBLE) {
-            val lpTrans = holder.transparentImageView.layoutParams
-            lpTrans.height = iconSize
-            lpTrans.width = iconWidth
-            holder.transparentImageView.layoutParams = lpTrans
-        }
     }
 
     private fun highlightCurrentStation() {

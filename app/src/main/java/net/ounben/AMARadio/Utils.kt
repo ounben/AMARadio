@@ -377,12 +377,6 @@ object Utils {
         return if (getThemeResId(context) == R.style.MyMaterialTheme_Dark) R.style.DialogTheme_Dark else R.style.DialogTheme
     }
 
-    @JvmStatic
-    fun useCircularIcons(context: Context): Boolean {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPref.getBoolean("circular_icons", false)
-    }
-
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )

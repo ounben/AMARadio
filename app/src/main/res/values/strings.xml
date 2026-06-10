@@ -96,7 +96,6 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_system">Follow system</string>
-    <string name="settings_circular_icons">Use circular icons</string>
     <string name="settings_compact_style">Compact mode</string>
     <string name="settings_compact_style_desc_off">Large icon adopted with station details</string>
     <string name="settings_compact_style_desc_on">Small icon adopted without station details</string>

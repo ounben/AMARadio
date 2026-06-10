@@ -28,12 +28,6 @@
         android:order="3">
 
         <CheckBoxPreference
-            android:defaultValue="false"
-            android:key="circular_icons"
-            android:title="@string/settings_circular_icons"
-            android:icon="@drawable/ic_circle_24dp" />
-
-        <CheckBoxPreference
             android:defaultValue="true"
             android:key="bottom_navigation"
             android:title="@string/settings_bottom_navigation"
@@ -126,7 +120,7 @@
             android:summaryOff="@string/settings_single_use_tags_desc_off"
             android:summaryOn="@string/settings_single_use_tags_desc_on"
             android:title="@string/settings_single_use_tags"
-            android:icon="@android:drawable/ic_menu_agenda" />
+            android:icon="@drawable/ic_list_24dp" />
 
     </PreferenceCategory>
 
@@ -140,7 +134,7 @@
             android:summaryOff="@string/settings_play_external_desc_off"
             android:summaryOn="@string/settings_play_external_desc_on"
             android:title="@string/settings_play_external"
-            android:icon="@android:drawable/ic_menu_share" />
+            android:icon="@drawable/ic_share_external_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -148,7 +142,7 @@
             android:summaryOff="@string/settings_warn_no_wifi_off"
             android:summaryOn="@string/settings_warn_no_wifi_on"
             android:title="@string/settings_warn_no_wifi"
-            android:icon="@android:drawable/stat_sys_warning" />
+            android:icon="@drawable/ic_warning_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="true"
@@ -162,7 +156,7 @@
             android:summaryOff="@string/settings_auto_resume_do_not_resume"
             android:summaryOn="@string/settings_auto_resume_on_wired_headset_connected_on"
             android:title="@string/settings_auto_resume_on_wired_headset_connected"
-            android:icon="@android:drawable/ic_menu_call" />
+            android:icon="@drawable/ic_headset_24dp" />
 
         <CheckBoxPreference
             android:defaultValue="false"
@@ -170,7 +164,7 @@
             android:summaryOff="@string/settings_auto_resume_do_not_resume"
             android:summaryOn="@string/settings_auto_resume_on_bluetooth_a2dp_connected_on"
             android:title="@string/settings_auto_resume_on_bluetooth_a2dp_connected"
-            android:icon="@android:drawable/stat_sys_data_bluetooth" />
+            android:icon="@drawable/ic_bluetooth_24dp" />
 
         <Preference
             android:key="equalizer"
@@ -194,7 +188,7 @@
             android:enabled="false"
             android:key="shareapp_package"
             android:title="@string/settings_alarm_audio_player"
-            android:icon="@android:drawable/ic_menu_view" />
+            android:icon="@drawable/ic_launcher_foreground" />
 
         <ListPreference
             android:defaultValue="10"
@@ -273,7 +267,7 @@
         <Preference
             android:key="settings_proxy"
             android:title="@string/settings_proxy"
-            android:icon="@android:drawable/ic_lock_lock" />
+            android:icon="@drawable/ic_lock_24dp" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_other"
@@ -292,7 +286,7 @@
             android:summaryOff="@string/settings_ignore_battery_optimization_summary_off"
             android:summaryOn= "@string/settings_ignore_battery_optimization_summary_on"
             android:title="@string/settings_disable_battery_optimization"
-            android:icon="@android:drawable/ic_lock_power_off" />
+            android:icon="@drawable/ic_battery_optimization_24dp" />
 
         <Preference
             android:key="show_statistics"

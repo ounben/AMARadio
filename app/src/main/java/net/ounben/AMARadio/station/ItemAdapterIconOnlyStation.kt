@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import net.ounben.AMARadio.R
-import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.service.PlayerServiceUtil
 import net.ounben.AMARadio.utils.RecyclerItemMoveAndSwipeHelper
 import net.ounben.AMARadio.utils.SwipeableViewHolder
@@ -28,7 +27,6 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             itemView.findViewById<View>(R.id.station_icon_foreground)?.let { viewForeground = it }
             itemView.findViewById<FrameLayout>(R.id.stationIconFrameLayout)?.let { frameLayout = it }
             itemView.findViewById<ImageView>(R.id.iconImageViewIcon)?.let { imageViewIcon = it }
-            itemView.findViewById<ImageView>(R.id.iconTransparentCircle)?.let { transparentImageView = it }
             itemView.setOnCreateContextMenuListener(this)
         }
 
@@ -57,9 +55,8 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
 
     override fun onBindViewHolder(holder: ItemAdapterStation.StationViewHolder, position: Int) {
         val station = filteredStationsList[position]
-        val useCircularIcons = Utils.useCircularIcons(fragmentActivity)
         if (station.hasIcon()) {
-            setupIcon(useCircularIcons, holder.imageViewIcon, holder.transparentImageView)
+            setupIcon(holder.imageViewIcon)
             PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
         } else {
             holder.imageViewIcon.setImageDrawable(null)
@@ -68,7 +65,6 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         if (playingStationPosition == position) {
             fragmentActivity.theme.resolveAttribute(androidx.appcompat.R.attr.colorAccent, tv, true)
             holder.frameLayout.setBackgroundColor(tv.data)
-            holder.transparentImageView.setColorFilter(tv.data)
         } else {
             fragmentActivity.theme.resolveAttribute(R.attr.iconsInItemBackgroundColor, tv, true)
             holder.frameLayout.setBackgroundColor(tv.data)

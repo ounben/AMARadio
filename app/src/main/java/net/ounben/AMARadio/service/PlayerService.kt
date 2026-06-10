@@ -615,12 +615,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         }
         Picasso.get().load(itsCurrentStation?.IconUrl).resize(px.toInt(), 0).into(object : Target {
             override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                if (!Utils.useCircularIcons(itsContext!!)) radioIcon = BitmapDrawable(resources, bitmap)
-                else {
-                    val rb = RoundedBitmapDrawableFactory.create(resources, bitmap)
-                    rb.isCircular = true
-                    radioIcon = BitmapDrawable(resources, rb.bitmap)
-                }
+                radioIcon = BitmapDrawable(resources, bitmap)
                 updateNotification()
             }
             override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {}

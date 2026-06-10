@@ -102,7 +102,6 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
                         Picasso.get().load(url)
                             .transform(CropSquareTransformation())
                             .error(R.drawable.ic_launcher)
-                            .transform(if (Utils.useCircularIcons(AMARadioApp)) CropCircleTransformation() else CropSquareTransformation())
                             .transform(RoundedCornersTransformation(12))
                             .resize(128, 128)
                             .into(imageLoadTarget)

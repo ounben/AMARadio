@@ -107,7 +107,6 @@ class FragmentPlayerSmall : Fragment() {
         tryPlayAtStart()
         applyUiScaling()
         fullUpdate()
-        setupStationIcon()
     }
 
     private fun applyUiScaling() {
@@ -124,10 +123,6 @@ class FragmentPlayerSmall : Fragment() {
         val iconSize = (36 * resources.displayMetrics.density * scale).toInt()
         imageViewIcon.layoutParams.width = iconSize
         imageViewIcon.layoutParams.height = iconSize
-
-        val transparentCircle = view?.findViewById<ImageView>(R.id.transparentCircle)
-        transparentCircle?.layoutParams?.width = iconSize
-        transparentCircle?.layoutParams?.height = iconSize
 
         val playButtonSize = (48 * resources.displayMetrics.density * scale).toInt()
         buttonPlay.layoutParams.width = playButtonSize
@@ -199,16 +194,6 @@ class FragmentPlayerSmall : Fragment() {
             }
             playLastFromHistory()
         }
-    }
-
-    private fun setupStationIcon() {
-        val useCircularIcons = PreferenceManager.getDefaultSharedPreferences(requireContext().applicationContext).getBoolean("circular_icons", false)
-        if (useCircularIcons) {
-            imageViewIcon.setBackgroundColor(requireContext().resources.getColor(android.R.color.black, null))
-        }
-
-        val transparentCircle = requireView().findViewById<ImageView>(R.id.transparentCircle)
-        transparentCircle.visibility = if (useCircularIcons) View.VISIBLE else View.GONE
     }
 
     private fun fullUpdate() {

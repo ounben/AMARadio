@@ -55,7 +55,6 @@
     <string name="theme_light">Hell</string>
     <string name="theme_dark">Dunkel</string>
     <string name="theme_system">Systemstandard</string>
-    <string name="settings_circular_icons">Runde Icons benutzen</string>
     <string name="settings_compact_style">Kompakter Modus</string>
 
     <string name="settings_interaction">Interaktion</string>

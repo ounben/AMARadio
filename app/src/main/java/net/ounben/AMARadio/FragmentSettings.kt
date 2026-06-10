@@ -192,11 +192,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 newFragment.show(requireActivity().supportFragmentManager, "appPicker")
             }
         }
-        if (key == "theme_name" || key == "circular_icons" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
-            if (key == "circular_icons") {
-                (requireActivity().application as AMARadioApp).favouriteManager.updateShortcuts()
-            }
-            
+        if (key == "theme_name" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
             if (isResumed && activity != null && activity?.isFinishing == false) {
                 view?.post {
                     if (activity != null && activity?.isFinishing == false) {

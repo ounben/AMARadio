@@ -184,7 +184,7 @@ class DataRadioStation : Parcelable {
         Picasso.get()
             .load(url)
             .error(R.drawable.ic_launcher)
-            .transform(if (Utils.useCircularIcons(context)) CropCircleTransformation() else CropSquareTransformation())
+            .transform(CropSquareTransformation())
             .transform(RoundedCornersTransformation(12))
             .into(RadioIconTarget(context, this, cb))
     }
