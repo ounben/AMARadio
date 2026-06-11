@@ -55,7 +55,8 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         if (myToolbar == null || screen == null) return
 
-        myToolbar.title = screen.title
+        // myToolbar.title = screen.title // Remove this to avoid double title
+        (activity as? ActivityMain)?.setToolbarTitle(screen.title)
 
         if (Utils.bottomNavigationEnabled(activity)) {
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)

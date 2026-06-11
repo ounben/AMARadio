@@ -134,6 +134,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         val myToolbar: Toolbar = findViewById(R.id.my_awesome_toolbar)
         setSupportActionBar(myToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         PlayerServiceUtil.startService(applicationContext)
 
@@ -492,7 +493,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             R.id.nav_item_stations -> {
                 menuItemSleepTimer?.isVisible = true
                 menuItemSearch?.isVisible = true
-                myToolbar.setTitle(R.string.nav_item_stations)
+                setToolbarTitle(R.string.nav_item_stations)
             }
             R.id.nav_item_starred -> {
                 menuItemSleepTimer?.isVisible = true
@@ -502,7 +503,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                 menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
                 menuItemDelete?.setTitle(R.string.action_delete_favorites)
-                myToolbar.setTitle(R.string.nav_item_starred)
+                setToolbarTitle(R.string.nav_item_starred)
             }
             R.id.nav_item_history -> {
                 menuItemSleepTimer?.isVisible = true
@@ -511,11 +512,11 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                 menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
                 menuItemDelete?.setTitle(R.string.action_delete_history)
-                myToolbar.setTitle(R.string.nav_item_history)
+                setToolbarTitle(R.string.nav_item_history)
             }
             R.id.nav_item_alarm -> {
                 menuItemAddAlarm?.isVisible = true
-                myToolbar.setTitle(R.string.nav_item_alarm)
+                setToolbarTitle(R.string.nav_item_alarm)
             }
         }
 
@@ -868,6 +869,14 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
+    }
+
+    fun setToolbarTitle(title: CharSequence?) {
+        findViewById<TextView>(R.id.toolbar_custom_title)?.text = title
+    }
+
+    fun setToolbarTitle(titleRes: Int) {
+        findViewById<TextView>(R.id.toolbar_custom_title)?.setText(titleRes)
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {

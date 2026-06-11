@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- The cat face centered -->
+    <item
+        android:drawable="@drawable/ic_cat_face"
+        android:gravity="center"
+        android:width="84dp"
+        android:height="84dp" />
+
+    <!-- The radio icon in the bottom right corner, tinted to amber -->
+    <item
+        android:drawable="@drawable/ic_radio_24dp"
+        android:gravity="bottom|end"
+        android:width="28dp"
+        android:height="28dp"
+        android:bottom="10dp"
+        android:right="10dp"
+        android:tint="#FFB74D" />
+</layer-list>

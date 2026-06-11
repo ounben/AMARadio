@@ -48,12 +48,36 @@
                             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/toolbar_cat_icon"
+                                    android:layout_width="40dp"
+                                    android:layout_height="40dp"
+                                    android:src="@drawable/ic_cat_face"
+                                    android:contentDescription="@null" />
+
+                                <TextView
+                                    android:id="@+id/toolbar_custom_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="8dp"
+                                    android:textColor="@android:color/white"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold"
+                                    tools:text="AMARadio" />
+                            </LinearLayout>
+
                             <ProgressBar
                                 android:id="@+id/progressBarLoading"
                                 android:layout_width="34dp"
                                 android:layout_height="34dp"
-                                android:layout_marginStart="22dp"
-                                android:layout_marginLeft="22dp"
+                                android:layout_gravity="end"
+                                android:layout_marginEnd="16dp"
                                 android:indeterminate="true"
                                 android:theme="@style/ProgressBarCircle"
                                 android:visibility="gone" />
