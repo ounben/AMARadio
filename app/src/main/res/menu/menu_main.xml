@@ -12,7 +12,7 @@
     <item
         android:id="@+id/action_filter_global"
         android:title="@string/action_filter"
-        android:icon="@drawable/ic_filter_list_white_24dp"
+        android:icon="@drawable/ic_filter_list_24dp"
         app:showAsAction="always" />
 
     <item
