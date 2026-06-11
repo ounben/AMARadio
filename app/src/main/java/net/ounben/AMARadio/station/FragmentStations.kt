@@ -90,7 +90,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         layoutError = view.findViewById(R.id.layoutError)
         btnRetry = view.findViewById(R.id.btnRefresh)
 
-        val adapter = ItemAdapterStation(requireActivity(), R.layout.list_item_station, StationsFilter.FilterType.GLOBAL)
+        val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.GLOBAL)
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
                 this@FragmentStations.onStationClick(station, pos)
@@ -129,14 +129,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
             btnRetry?.setOnClickListener { Search(lastSearchStyle, lastQuery ?: "") }
         }
 
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-
-        rvStations?.layoutManager = llm
-        rvStations?.adapter = adapter
-
-        val dividerItemDecoration = DividerItemDecoration(rvStations?.context, llm.orientation)
-        rvStations?.addItemDecoration(dividerItemDecoration)
+        rvStations?.let { Utils.setupStationRecyclerView(requireContext(), it, adapter) }
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {

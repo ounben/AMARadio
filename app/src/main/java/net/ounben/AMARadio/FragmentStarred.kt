@@ -60,27 +60,12 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, Observer {
         val view = inflater.inflate(R.layout.fragment_stations, container, false)
         rvStations = view.findViewById(R.id.recyclerViewStations)
 
-        val adapter: ItemAdapterStation
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        if (sharedPref.getBoolean("load_icons", false) && sharedPref.getBoolean("icons_only_favorites_style", false)) {
-            adapter = ItemAdapterIconOnlyStation(requireActivity(), R.layout.list_item_icon_only_station, StationsFilter.FilterType.LOCAL)
-            val ctx = requireContext()
-            val displayMetrics = ctx.resources.displayMetrics
-            val itemWidth = ctx.resources.getDimension(R.dimen.regular_style_icon_container_width).toInt()
-            val noOfColumns = displayMetrics.widthPixels / itemWidth
-            val glm = GridLayoutManager(ctx, noOfColumns)
-            rvStations.adapter = adapter
-            rvStations.layoutManager = glm
-            (adapter as ItemAdapterIconOnlyStation).enableItemMove(rvStations)
+        val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.LOCAL)
+        Utils.setupStationRecyclerView(requireContext(), rvStations, adapter)
+        
+        if (adapter is ItemAdapterIconOnlyStation) {
+            adapter.enableItemMove(rvStations)
         } else {
-            adapter = ItemAdapterStation(requireActivity(), R.layout.list_item_station, StationsFilter.FilterType.LOCAL)
-            val llm = LinearLayoutManager(context)
-            llm.orientation = RecyclerView.VERTICAL
-
-            rvStations.adapter = adapter
-            rvStations.layoutManager = llm
-            val dividerItemDecoration = DividerItemDecoration(rvStations.context, llm.orientation)
-            rvStations.addItemDecoration(dividerItemDecoration)
             adapter.enableItemMoveAndRemoval(rvStations)
         }
 

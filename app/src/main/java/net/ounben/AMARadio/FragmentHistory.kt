@@ -53,7 +53,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable {
         val AMARadioApp = requireActivity().application as AMARadioApp
         historyManager = AMARadioApp.historyManager
 
-        val adapter = ItemAdapterStation(requireActivity(), R.layout.list_item_station, StationsFilter.FilterType.LOCAL)
+        val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.LOCAL)
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
                 this@FragmentHistory.onStationClick(station)
@@ -81,15 +81,8 @@ class FragmentHistory : Fragment(), IAdapterRefreshable {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stations, container, false)
 
-        val llm = LinearLayoutManager(context)
-        llm.orientation = LinearLayoutManager.VERTICAL
-
         rvStations = view.findViewById(R.id.recyclerViewStations)
-        rvStations.adapter = adapter
-        rvStations.layoutManager = llm
-        val dividerItemDecoration = DividerItemDecoration(rvStations.context,
-                llm.orientation)
-        rvStations.addItemDecoration(dividerItemDecoration)
+        Utils.setupStationRecyclerView(requireContext(), rvStations, adapter)
 
         adapter.enableItemRemoval(rvStations)
 

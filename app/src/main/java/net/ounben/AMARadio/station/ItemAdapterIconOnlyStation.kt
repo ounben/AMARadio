@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
@@ -16,6 +17,7 @@ import net.ounben.AMARadio.R
 import net.ounben.AMARadio.service.PlayerServiceUtil
 import net.ounben.AMARadio.utils.RecyclerItemMoveAndSwipeHelper
 import net.ounben.AMARadio.utils.SwipeableViewHolder
+import net.ounben.AMARadio.utils.UiScaler
 
 class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId: Int, filterType: StationsFilter.FilterType) : 
     ItemAdapaterContextMenuStation(fragmentActivity, resourceId, filterType),
@@ -25,9 +27,11 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         private var contextMenu: PopupMenu? = null
 
         init {
-            itemView.findViewById<View>(R.id.station_icon_foreground)?.let { viewForeground = it }
+            itemView.findViewById<View>(R.id.station_foreground)?.let { viewForeground = it }
             itemView.findViewById<FrameLayout>(R.id.stationIconFrameLayout)?.let { frameLayout = it }
             itemView.findViewById<ImageView>(R.id.iconImageViewIcon)?.let { imageViewIcon = it }
+            itemView.findViewById<ImageView>(R.id.starredStatusIcon)?.let { starredStatusIcon = it }
+            itemView.findViewById<TextView>(R.id.textViewTitle)?.let { textViewTitle = it }
             itemView.setOnCreateContextMenuListener(this)
         }
 
@@ -56,20 +60,51 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
 
     override fun onBindViewHolder(holder: ItemAdapterStation.StationViewHolder, position: Int) {
         val station = filteredStationsList[position]
+        
+        // Bind Icon
         if (station.hasIcon()) {
             setupIcon(holder.imageViewIcon)
             PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
         } else {
-            holder.imageViewIcon.setImageDrawable(AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp))
+            holder.imageViewIcon.setImageResource(R.drawable.ic_radio_24dp)
         }
+        
+        // Bind Name
+        holder.textViewTitle.text = station.Name
+        
+        // Bind Star
+        val isInFavorites = (fragmentActivity.application as net.ounben.AMARadio.AMARadioApp).favouriteManager.has(station.StationUuid)
+        holder.starredStatusIcon.setImageResource(if (isInFavorites) R.drawable.ic_star_24dp else R.drawable.ic_star_border_24dp)
+        holder.starredStatusIcon.setOnClickListener {
+            if ((fragmentActivity.application as net.ounben.AMARadio.AMARadioApp).favouriteManager.has(station.StationUuid)) {
+                StationActions.removeFromFavourites(fragmentActivity, it, station)
+            } else {
+                StationActions.markAsFavourite(fragmentActivity, station)
+            }
+            notifyItemChanged(holder.adapterPosition)
+        }
+
+        // Highlight playing station
         val tv = TypedValue()
         if (playingStationPosition == position) {
             fragmentActivity.theme.resolveAttribute(androidx.appcompat.R.attr.colorAccent, tv, true)
-            holder.frameLayout.setBackgroundColor(tv.data)
+            holder.itemView.setBackgroundColor(tv.data)
         } else {
-            fragmentActivity.theme.resolveAttribute(R.attr.iconsInItemBackgroundColor, tv, true)
-            holder.frameLayout.setBackgroundColor(tv.data)
+            holder.itemView.setBackgroundColor(0)
         }
+        
+        applyScaling(holder)
+    }
+
+    private fun applyScaling(holder: ItemAdapterStation.StationViewHolder) {
+        val factor = UiScaler.getScaleFactor(fragmentActivity)
+        val baseSize = 80f // dp
+        val pxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, baseSize * factor, fragmentActivity.resources.displayMetrics).toInt()
+        
+        holder.frameLayout.layoutParams.width = pxSize
+        holder.frameLayout.layoutParams.height = pxSize
+        
+        holder.textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f * factor)
     }
 
     fun enableItemMove(recyclerView: RecyclerView) {

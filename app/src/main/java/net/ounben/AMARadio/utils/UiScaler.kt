@@ -53,4 +53,12 @@ object UiScaler {
     fun scaleValue(context: Context, value: Float): Float {
         return value * getScaleFactor(context)
     }
+
+    fun getGridColumnCount(context: Context): Int {
+        val factor = getScaleFactor(context)
+        val displayMetrics = context.resources.displayMetrics
+        val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
+        val itemWidthDp = 100f * factor // base item width + padding
+        return (screenWidthDp / itemWidthDp).toInt().coerceAtLeast(2)
+    }
 }

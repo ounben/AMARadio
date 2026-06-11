@@ -125,7 +125,7 @@ class FragmentFilter : FragmentBase() {
         autoLanguage.setOnClickListener { autoLanguage.showDropDown() }
         autoTag.setOnClickListener { autoTag.showDropDown() }
         
-        val adapter = ItemAdapterStation(requireActivity(), R.layout.list_item_station, StationsFilter.FilterType.GLOBAL)
+        val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.GLOBAL)
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
                 val AMARadioApp = requireActivity().application as AMARadioApp
@@ -136,9 +136,7 @@ class FragmentFilter : FragmentBase() {
             override fun onStationMoveFinished() {}
         }
         
-        rvStations?.layoutManager = LinearLayoutManager(context)
-        rvStations?.adapter = adapter
-        rvStations?.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+        rvStations?.let { Utils.setupStationRecyclerView(requireContext(), it, adapter) }
         
         btnApply.setOnClickListener {
             saveFilters()

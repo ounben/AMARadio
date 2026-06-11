@@ -105,7 +105,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
-
         setContentView(R.layout.layout_main)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content)) { v, insets ->
@@ -476,8 +475,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemDelete?.isVisible = false
         menuItemSave?.isVisible = false
         menuItemLoad?.isVisible = false
-        menuItemListView?.isVisible = false
-        menuItemIconsView?.isVisible = false
+        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false)
+        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false)
         menuItemAddAlarm?.isVisible = false
         menuItemFilter?.isVisible = true // Global filter access
 
@@ -685,12 +684,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_list_view -> {
-                sharedPref.edit { putBoolean("icons_only_favorites_style", false) }
+                sharedPref.edit(commit = true) { putBoolean("icons_only_favorites_style", false) }
                 recreate()
                 return true
             }
             R.id.action_icons_view -> {
-                sharedPref.edit { putBoolean("icons_only_favorites_style", true) }
+                sharedPref.edit(commit = true) { putBoolean("icons_only_favorites_style", true) }
                 recreate()
                 return true
             }
