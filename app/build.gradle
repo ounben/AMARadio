@@ -41,7 +41,7 @@ android {
         targetSdkVersion 37
 
         versionCode 100
-        versionName "0.92"
+        versionName "0.93"
 
         vectorDrawables.useSupportLibrary = true
 

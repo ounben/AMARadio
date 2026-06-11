@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.93] - 2026-06-11
+### Added
+- **New Grid View**: 
+    - Introduced a modern grid-based layout for station lists (Stations, Favorites, and History).
+    - Added a Grid/List toggle in the top toolbar using official Material Design icons.
+    - Integrated a clickable favorite star directly onto station images in the grid view.
+- **Dynamic Grid Scaling**: Grid layout automatically adjusts column counts and item sizes based on the "UI Scaling" preference.
+
+### Changed
+- **Toolbar Refinement**: Optimized the top toolbar to feature the cat logo and dynamic title on the left, with the loading progress bar and menu actions on the right.
+- **Unified View Management**: Replaced legacy "icons only" favorites style with a global view mode that persists across the entire app.
+
 ## [0.92] - 2026-06-11
 ### Added
 - **New Branding "Radio Cat"**:
