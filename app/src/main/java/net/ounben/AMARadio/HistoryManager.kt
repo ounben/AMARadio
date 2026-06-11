@@ -17,7 +17,7 @@ class HistoryManager(ctx: Context) : StationSaveManager(ctx) {
         if (stationFromHistory != null) {
             listStations.remove(stationFromHistory)
             listStations.add(0, stationFromHistory)
-            Save()
+            save()
             return
         }
 

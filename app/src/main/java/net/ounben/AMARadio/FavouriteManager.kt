@@ -41,13 +41,13 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
         }
     }
 
-    override fun Load() {
-        super.Load()
+    override fun load() {
+        super.load()
         updateShortcuts()
     }
 
-    override fun Save() {
-        super.Save()
+    override fun save() {
+        super.save()
         updateShortcuts()
     }
 

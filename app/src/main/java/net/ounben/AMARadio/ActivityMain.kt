@@ -25,9 +25,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
-import com.rustamg.filedialogs.FileDialog
-import com.rustamg.filedialogs.OpenFileDialog
-import com.rustamg.filedialogs.SaveFileDialog
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -62,7 +59,7 @@ import net.ounben.AMARadio.utils.UiScaler
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
-    TimePickerDialog.OnTimeSetListener, FileDialog.OnFileSelectedListener,
+    TimePickerDialog.OnTimeSetListener,
     CastHandler.CastHandlerListener, CastAwareActivity {
 
     override fun attachBaseContext(newBase: Context) {
@@ -342,20 +339,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERM_REQ_STORAGE_FAV_LOAD -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    LoadFavourites()
-                } else {
-                    Log.w(TAG, "permission not granted -> simple load")
-                    LoadFavouritesSimple()
-                }
+                LoadFavourites()
             }
             PERM_REQ_STORAGE_FAV_SAVE -> {
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    SaveFavourites()
-                } else {
-                    Log.w(TAG, "permission not granted -> simple save")
-                    SaveFavouritesSimple()
-                }
+                SaveFavourites()
             }
         }
     }
@@ -528,66 +515,62 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         if (requestCode == ACTION_SAVE_FILE && resultCode == RESULT_OK) {
             resultData?.data?.let { uri ->
-                Log.d(TAG, "Choosen save path: $uri")
-                val AMARadioApp = application as AMARadioApp
-                try {
-                    contentResolver.openOutputStream(uri)?.use { os ->
-                        val writer = OutputStreamWriter(os)
-                        if (selectedMenuItem == R.id.nav_item_starred) {
-                            AMARadioApp.favouriteManager.SaveM3UWriter(writer)
-                        } else if (selectedMenuItem == R.id.nav_item_history) {
-                            AMARadioApp.historyManager.SaveM3UWriter(writer)
+                Log.d(TAG, "Chosen save path: $uri")
+                val app = application as AMARadioApp
+                scope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openOutputStream(uri)?.use { os ->
+                                val writer = BufferedWriter(OutputStreamWriter(os))
+                                val manager = if (selectedMenuItem == R.id.nav_item_starred) app.favouriteManager else app.historyManager
+                                manager.exportM3U(writer)
+                            } ?: false
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Unable to write to file $e")
+                            false
                         }
                     }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Unable to write to file $e")
+                    if (success) {
+                        Toast.makeText(this@ActivityMain, R.string.notify_save_playlist_ok, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@ActivityMain, R.string.notify_save_playlist_nok, Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
         if (requestCode == ACTION_LOAD_FILE && resultCode == RESULT_OK) {
             resultData?.data?.let { uri ->
-                Log.d(TAG, "Choosen load path: $uri")
-                val AMARadioApp = application as AMARadioApp
-                try {
-                    contentResolver.openInputStream(uri)?.use { isStr ->
-                        val reader = InputStreamReader(isStr)
-                        AMARadioApp.favouriteManager.LoadM3USimple(reader)
+                Log.d(TAG, "Chosen load path: $uri")
+                val app = application as AMARadioApp
+                Toast.makeText(this, R.string.notify_load_playlist_now, Toast.LENGTH_SHORT).show()
+                scope.launch {
+                    val loadedStations = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openInputStream(uri)?.use { isStr ->
+                                app.favouriteManager.importM3U(InputStreamReader(isStr))
+                            }
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Unable to load file $e")
+                            null
+                        }
                     }
-                } catch (e: Exception) {
-                    Log.e(TAG, "Unable to load to file $e")
+                    
+                    if (loadedStations != null) {
+                        if (loadedStations.isNotEmpty()) {
+                            app.favouriteManager.addMultiple(loadedStations)
+                            Toast.makeText(this@ActivityMain, getString(R.string.notify_load_playlist_ok, loadedStations.size, "", ""), Toast.LENGTH_LONG).show()
+                        } else {
+                            Toast.makeText(this@ActivityMain, "No valid stations found in file", Toast.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Toast.makeText(this@ActivityMain, R.string.notify_load_playlist_nok, Toast.LENGTH_LONG).show()
+                    }
                 }
             }
-        }
-    }
-
-    override fun onFileSelected(dialog: FileDialog, file: File) {
-        try {
-            Log.i("MAIN", "save to ${file.parent}/${file.name}")
-            val AMARadioApp = application as AMARadioApp
-            if (dialog is SaveFileDialog) {
-                if (selectedMenuItem == R.id.nav_item_starred) {
-                    AMARadioApp.favouriteManager.SaveM3U(file.parent!!, file.name)
-                } else if (selectedMenuItem == R.id.nav_item_history) {
-                    AMARadioApp.historyManager.SaveM3U(file.parent!!, file.name)
-                }
-            } else if (dialog is OpenFileDialog) {
-                AMARadioApp.favouriteManager.LoadM3U(file.parent!!, file.name)
-            }
-        } catch (e: Exception) {
-            Log.e("MAIN", e.toString())
         }
     }
 
     private fun SaveFavourites() {
-        val dialog = SaveFileDialog()
-        dialog.setStyle(DialogFragment.STYLE_NO_TITLE, Utils.getThemeResId(this))
-        val args = Bundle()
-        args.putString(FileDialog.EXTENSION, ".m3u")
-        dialog.arguments = args
-        dialog.show(supportFragmentManager, SaveFileDialog::class.java.name)
-    }
-
-    private fun SaveFavouritesSimple() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "audio/x-mpegurl"
@@ -598,15 +581,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun LoadFavourites() {
-        val dialogOpen = OpenFileDialog()
-        dialogOpen.setStyle(DialogFragment.STYLE_NO_TITLE, Utils.getThemeResId(this))
-        val argsOpen = Bundle()
-        argsOpen.putString(FileDialog.EXTENSION, ".m3u")
-        dialogOpen.arguments = argsOpen
-        dialogOpen.show(supportFragmentManager, OpenFileDialog::class.java.name)
-    }
-
-    private fun LoadFavouritesSimple() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "audio/x-mpegurl"
@@ -624,9 +598,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_save -> {
                 try {
-                    if (Utils.verifyStoragePermissions(this, PERM_REQ_STORAGE_FAV_SAVE)) {
-                        SaveFavourites()
-                    }
+                    SaveFavourites()
                 } catch (e: Exception) {
                     Log.e("MAIN", e.toString())
                 }
@@ -634,9 +606,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_load -> {
                 try {
-                    if (Utils.verifyStoragePermissions(this, PERM_REQ_STORAGE_FAV_LOAD)) {
-                        LoadFavourites()
-                    }
+                    LoadFavourites()
                 } catch (e: Exception) {
                     Log.e("MAIN", e.toString())
                 }

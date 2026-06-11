@@ -41,10 +41,6 @@
         <item name="android:itemBackground">@color/windowBackground</item>
         <item name="iconsInItemBackgroundColor">@color/iconsInItemBackgroundColor</item>
 
-        <item name="met_baseColor">?android:textColorPrimary</item>
-        <item name="met_textColorHint">?android:textColorHint</item>
-        <item name="met_primaryColor">?android:colorPrimary</item>
-
         <item name="snackbarButtonStyle">@style/SnackBarButton</item>
 
         <!-- workaround for lower API -->
@@ -88,10 +84,6 @@
 
         <item name="android:itemBackground">@color/windowBackgroundDark</item>
         <item name="iconsInItemBackgroundColor">@color/iconsInItemBackgroundColorDark</item>
-
-        <item name="met_baseColor">?android:textColorPrimary</item>
-        <item name="met_textColorHint">?android:textColorHint</item>
-        <item name="met_primaryColor">?android:colorPrimaryDark</item>
 
         <item name="snackbarButtonStyle">@style/SnackBarButtonDark</item>
 

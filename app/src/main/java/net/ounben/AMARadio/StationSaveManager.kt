@@ -2,10 +2,6 @@ package net.ounben.AMARadio
 
 import android.content.Context
 import android.content.Intent
-import android.media.MediaScannerConnection
-import android.net.Uri
-import android.os.Build
-import android.os.Environment
 import androidx.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
@@ -26,10 +22,10 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     var listStations: MutableList<DataRadioStation> = ArrayList()
     protected var stationStatusListener: StationStatusListener? = null
 
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    protected val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
-        Load()
+        load()
     }
 
     protected open fun getSaveId(): String {
@@ -39,31 +35,31 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     open fun add(station: DataRadioStation) {
         if (station.queue == null) station.queue = this
         listStations.add(station)
-        Save()
+        save()
         setChanged()
         notifyObservers()
         stationStatusListener?.onStationStatusChanged(station, true)
     }
 
     fun addMultiple(stations: List<DataRadioStation>) {
-        for (station_new in stations) {
-            listStations.add(station_new)
+        for (stationNew in stations) {
+            listStations.add(stationNew)
         }
-        Save()
+        save()
         setChanged()
         notifyObservers()
     }
 
-    fun replaceList(stations_new: List<DataRadioStation>) {
-        for (station_new in stations_new) {
+    fun replaceList(stationsNew: List<DataRadioStation>) {
+        for (stationNew in stationsNew) {
             for (i in listStations.indices) {
-                if (listStations[i].StationUuid == station_new.StationUuid) {
-                    listStations[i] = station_new
+                if (listStations[i].StationUuid == stationNew.StationUuid) {
+                    listStations[i] = stationNew
                     break
                 }
             }
         }
-        Save()
+        save()
         setChanged()
         notifyObservers()
     }
@@ -71,7 +67,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     fun addFront(station: DataRadioStation) {
         if (station.queue == null) station.queue = this
         listStations.add(0, station)
-        Save()
+        save()
         setChanged()
         notifyObservers()
         stationStatusListener?.onStationStatusChanged(station, true)
@@ -121,7 +117,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     }
 
     fun moveWithoutNotify(fromPos: Int, toPos: Int) {
-        Collections.rotate(listStations.subList(Math.min(fromPos, toPos), Math.max(fromPos, toPos) + 1), Integer.signum(fromPos - toPos))
+        Collections.rotate(listStations.subList(minOf(fromPos, toPos), maxOf(fromPos, toPos) + 1), Integer.signum(fromPos - toPos))
     }
 
     fun move(fromPos: Int, toPos: Int) {
@@ -150,7 +146,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             val station = listStations[i]
             if (station.StationUuid == id) {
                 listStations.removeAt(i)
-                Save()
+                save()
                 setChanged()
                 notifyObservers()
                 stationStatusListener?.onStationStatusChanged(station, false)
@@ -163,7 +159,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     open fun restore(station: DataRadioStation, pos: Int) {
         station.queue = this
         listStations.add(pos, station)
-        Save()
+        save()
         setChanged()
         notifyObservers()
         stationStatusListener?.onStationStatusChanged(station, false)
@@ -172,7 +168,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     fun clear() {
         val oldStation = listStations
         listStations = ArrayList()
-        Save()
+        save()
         setChanged()
         notifyObservers()
         if (stationStatusListener != null) {
@@ -182,6 +178,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun hasChanged(): Boolean {
         return true
     }
@@ -213,8 +210,8 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     }
 
     private fun refreshStationsFromServer() {
-        val AMARadioApp = context.applicationContext as AMARadioApp
-        val httpClient = AMARadioApp.httpClient
+        val app = context.applicationContext as AMARadioApp
+        val httpClient = app.httpClient
         LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
 
         scope.launch {
@@ -230,14 +227,14 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             }
 
             listStations.removeAll(stationsToRemove)
-            Save()
+            save()
             setChanged()
             notifyObservers()
             LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
         }
     }
 
-    open fun Load() {
+    open fun load() {
         listStations.clear()
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val str = sharedPref.getString(getSaveId(), null)
@@ -253,182 +250,79 @@ open class StationSaveManager(protected val context: Context) : Observable() {
                 }
             }
         } else {
-            Log.w("SAVE", "Load() no stations to load")
+            Log.w("SAVE", "load() no stations to load")
         }
     }
 
-    open fun Save() {
+    open fun save() {
         val arr = JSONArray()
         for (station in listStations) {
             arr.put(station.toJson())
         }
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = sharedPref.edit()
         val str = arr.toString()
         if (BuildConfig.DEBUG) {
             Log.d("SAVE", "wrote: $str")
         }
-        editor.putString(getSaveId(), str)
-        editor.apply()
+        sharedPref.edit().putString(getSaveId(), str).apply()
     }
 
-    fun SaveM3U(filePath: String, fileName: String) {
-        Toast.makeText(context, context.resources.getString(R.string.notify_save_playlist_now, filePath, fileName), Toast.LENGTH_LONG).show()
-        scope.launch {
-            val result = withContext(Dispatchers.IO) {
-                SaveM3UInternal(filePath, fileName)
-            }
-            if (result) {
-                Log.i("SAVE", "OK")
-                Toast.makeText(context, context.resources.getString(R.string.notify_save_playlist_ok, filePath, fileName), Toast.LENGTH_LONG).show()
-            } else {
-                Log.i("SAVE", "NOK")
-                Toast.makeText(context, context.resources.getString(R.string.notify_save_playlist_nok, filePath, fileName), Toast.LENGTH_LONG).show()
-            }
-        }
-    }
-
-    fun SaveM3USimple(filePath: String, fileName: String) {
-        SaveM3U(filePath, fileName)
-    }
-
-    fun LoadM3U(filePath: String, fileName: String) {
-        Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_now, filePath, fileName), Toast.LENGTH_LONG).show()
-        scope.launch {
-            val result = withContext(Dispatchers.IO) {
-                LoadM3UInternal(filePath, fileName)
-            }
-            if (result != null) {
-                Log.i("LOAD", "Loaded " + result.size + "stations")
-                addMultiple(result)
-                Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_ok, result.size, filePath, fileName), Toast.LENGTH_LONG).show()
-            } else {
-                Log.e("LOAD", "Load failed")
-                Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_nok, filePath, fileName), Toast.LENGTH_LONG).show()
-            }
-            setChanged()
-            notifyObservers()
-        }
-    }
-
-    fun LoadM3USimple(reader: Reader) {
-        Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_now, "", ""), Toast.LENGTH_LONG).show()
-        scope.launch {
-            val result = withContext(Dispatchers.IO) {
-                LoadM3UReader(reader)
-            }
-            if (result != null) {
-                Log.i("LOAD", "Loaded " + result.size + "stations")
-                addMultiple(result)
-                Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_ok, result.size, "", ""), Toast.LENGTH_LONG).show()
-            } else {
-                Log.e("LOAD", "Load failed")
-                Toast.makeText(context, context.resources.getString(R.string.notify_load_playlist_nok, "", ""), Toast.LENGTH_LONG).show()
-            }
-            setChanged()
-            notifyObservers()
-        }
-    }
-
-    protected val M3U_PREFIX = "#RADIOBROWSERUUID:"
-
-    private fun SaveM3UInternal(filePath: String, fileName: String): Boolean {
-        try {
-            val f = File(filePath, fileName)
-            val bw = BufferedWriter(FileWriter(f, false))
-            val r = SaveM3UWriter(bw)
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
-                context.sendBroadcast(Intent(Intent.ACTION_MEDIA_MOUNTED, Uri.parse("file://" + Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC))))
-            } else {
-                MediaScannerConnection.scanFile(context, arrayOf(f.absolutePath), null, null)
-            }
-            return r
-        } catch (e: Exception) {
-            Log.e("Exception", "File write failed: $e")
-            return false
-        }
-    }
-
-    fun SaveM3UWriter(bw: Writer): Boolean {
-        try {
-            bw.write("#EXTM3U\n")
-            for (station in listStations) {
-                bw.write(M3U_PREFIX + station.StationUuid + "\n")
-                bw.write("#EXTINF:-1," + station.Name + "\n")
-                bw.write(station.StreamUrl + "\n\n")
-            }
-            bw.flush()
-            bw.close()
-            return true
-        } catch (e: Exception) {
-            Log.e("Exception", "File write failed: $e")
-            return false
-        }
-    }
-
-    private fun LoadM3UInternal(filePath: String, fileName: String): List<DataRadioStation>? {
+    /**
+     * Schreibt die aktuelle Liste im M3U-Format in den Writer.
+     * Schließt den Writer NICHT (überlassen wir dem Aufrufer/use-Block).
+     */
+    fun exportM3U(writer: Writer): Boolean {
         return try {
-            val f = File(filePath, fileName)
-            val fr = FileReader(f)
-            LoadM3UReader(fr)
+            writer.write("#EXTM3U\n")
+            for (station in listStations) {
+                writer.write(M3U_PREFIX + station.StationUuid + "\n")
+                writer.write("#EXTINF:-1," + station.Name + "\n")
+                writer.write(station.StreamUrl + "\n\n")
+            }
+            writer.flush()
+            true
         } catch (e: Exception) {
-            Log.e("LOAD", "File read failed: $e")
-            null
+            Log.e("SAVE", "M3U Export failed: $e")
+            false
         }
     }
 
-    fun LoadM3UReader(reader: Reader): List<DataRadioStation>? {
+    /**
+     * Liest Stationen aus einem Reader (M3U-Format) ein.
+     * Synchroner Aufruf, muss in einem Hintergrund-Thread erfolgen.
+     */
+    fun importM3U(reader: Reader): List<DataRadioStation>? {
         try {
-            var line: String?
-            val AMARadioApp = context.applicationContext as AMARadioApp
-            val httpClient = AMARadioApp.httpClient
             val listUuids = ArrayList<String>()
-
             val br = BufferedReader(reader)
+            var line: String?
             while (br.readLine().also { line = it } != null) {
-                Log.v("LOAD", "line: $line")
-                if (line!!.startsWith(M3U_PREFIX)) {
-                    try {
-                        val uuid = line!!.substring(M3U_PREFIX.length).trim { it <= ' ' }
+                if (line?.startsWith(M3U_PREFIX) == true) {
+                    val uuid = line!!.substring(M3U_PREFIX.length).trim()
+                    if (uuid.isNotEmpty()) {
                         listUuids.add(uuid)
-                    } catch (e: Exception) {
-                        Log.e("LOAD", e.toString())
                     }
                 }
             }
-            br.close()
+            
+            if (listUuids.isEmpty()) return emptyList()
 
-            val listStationsNew = Utils.getStationsByUuid(httpClient, context, listUuids) ?: return null
+            val app = context.applicationContext as AMARadioApp
+            val listStationsNew = Utils.getStationsByUuid(app.httpClient, context, listUuids) ?: return null
 
-            // sort list to have the same order as the initial save file
+            // Sortierung beibehalten
             val listStationsSorted = ArrayList<DataRadioStation>()
             for (uuid in listUuids) {
-                for (s in listStationsNew) {
-                    if (uuid == s.StationUuid) {
-                        listStationsSorted.add(s)
-                        break
-                    }
+                listStationsNew.find { it.StationUuid == uuid }?.let { 
+                    listStationsSorted.add(it)
                 }
             }
             return listStationsSorted
         } catch (e: Exception) {
-            Log.e("LOAD", "File read failed: $e")
+            Log.e("LOAD", "M3U Import failed: $e")
             return null
         }
     }
 
-    companion object {
-        @JvmStatic
-        val saveDir: String
-            get() {
-                val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).toString() + ""
-                val folder = File(path)
-                if (!folder.exists()) {
-                    if (!folder.mkdirs()) {
-                        Log.e("SAVE", "could not create dir:$path")
-                    }
-                }
-                return path
-            }
-    }
+    protected val M3U_PREFIX = "#RADIOBROWSERUUID:"
 }

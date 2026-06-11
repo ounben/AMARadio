@@ -31,7 +31,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private var queuedSearchQuery: String? = null
     private var queuedSearchStyle: StationsFilter.SearchStyle? = null
 
-    private val fragments = arrayOfNulls<Fragment>(10)
+    private val fragments = arrayOfNulls<Fragment>(11)
     private val addresses = arrayOf(
         itsAdressWWWLocal,
         itsAdressWWWTopClick,
@@ -41,6 +41,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         itsAdressWWWTags,
         itsAdressWWWCountries,
         itsAdressWWWLanguages,
+        "",
         "",
         ""
     )

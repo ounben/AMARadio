@@ -85,7 +85,7 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, Observer {
             override fun onStationMoveFinished() {
                 // We don't want to update RecyclerView during its layout process
                 requireView().post {
-                    favouriteManager.Save()
+                    favouriteManager.save()
                     favouriteManager.notifyObservers()
                 }
             }
