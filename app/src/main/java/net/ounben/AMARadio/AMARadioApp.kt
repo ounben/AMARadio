@@ -7,8 +7,8 @@ import android.content.res.Configuration
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
-import com.squareup.picasso.OkHttp3Downloader
-import com.squareup.picasso.Picasso
+import coil.ImageLoader
+import coil.ImageLoaderFactory
 import net.ounben.AMARadio.alarm.RadioAlarmManager
 import net.ounben.AMARadio.history.TrackHistoryRepository
 import net.ounben.AMARadio.players.mpd.MPDClient
@@ -26,7 +26,7 @@ import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
-class AMARadioApp : Application() {
+class AMARadioApp : Application(), ImageLoaderFactory {
 
     lateinit var historyManager: HistoryManager
         private set
@@ -82,11 +82,6 @@ class AMARadioApp : Application() {
         connectionPool = ConnectionPool()
 
         rebuildHttpClient()
-
-        val builder = Picasso.Builder(this)
-        builder.downloader(OkHttp3Downloader(newHttpClientForPicasso()))
-        val picassoInstance = builder.build()
-        Picasso.setSingletonInstance(picassoInstance)
 
         CountryCodeDictionary.instance.load(this)
         CountryFlagsLoader.instance
@@ -161,22 +156,9 @@ class AMARadioApp : Application() {
         return true
     }
 
-    private fun newHttpClientForPicasso(): OkHttpClient {
-        val cache = File(cacheDir, "picasso-cache")
-        if (!cache.exists()) {
-            cache.mkdirs()
-        }
-
-        val builder = OkHttpClient.Builder()
-            .addInterceptor(UserAgentInterceptor("AMARadio/" + BuildConfig.VERSION_NAME))
-            .cache(Cache(cache, Int.MAX_VALUE.toLong()))
-
-        testsInterceptor?.let {
-            builder.addInterceptor(it)
-        }
-
-        setCurrentOkHttpProxy(builder)
-
-        return builder.build()
+    override fun newImageLoader(): ImageLoader {
+        return ImageLoader.Builder(this)
+            .okHttpClient { httpClient }
+            .build()
     }
 }

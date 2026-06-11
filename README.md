@@ -59,7 +59,7 @@ You can download the app from:
 - **Language**: 100% Kotlin
 - **Architecture**: Modern Android Architecture Components (Lifecycle, ViewModel, ViewBinding)
 - **Database**: Room for local storage (Favorites, History)
-- **Network**: OkHttp3 & Picasso for image loading
+- **Network**: OkHttp3 & Coil for image loading
 - **Target SDK**: 37 (Android 15)
 
 ## 🤝 Contributing

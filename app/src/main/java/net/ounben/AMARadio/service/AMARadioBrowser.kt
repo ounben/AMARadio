@@ -16,11 +16,10 @@ import android.util.Log
 import androidx.media.MediaBrowserServiceCompat
 import androidx.media.utils.MediaConstants.*
 import androidx.preference.PreferenceManager
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
-import jp.wasabeef.transformers.picasso.CropCircleTransformation
-import jp.wasabeef.transformers.picasso.CropSquareTransformation
-import jp.wasabeef.transformers.picasso.RoundedCornersTransformation
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
+import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.*
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.AMARadioApp
@@ -74,44 +73,25 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
     private fun retrieveStationsIconAndSendResult(result: MediaBrowserServiceCompat.Result<List<MediaBrowserCompat.MediaItem>>, stations: List<DataRadioStation>) {
         scope.launch {
             val stationIdToIcon = HashMap<String, Bitmap>()
-            val imageLoadTargets = ArrayList<Target>()
             val resources = AMARadioApp.resources
-            val countDownLatch = CountDownLatch(stations.size)
 
             withContext(Dispatchers.IO) {
                 for (station in stations) {
-                    val imageLoadTarget = object : Target {
-                        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                            stationIdToIcon[station.StationUuid] = bitmap
-                            countDownLatch.countDown()
-                        }
-
-                        override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
-                            if (errorDrawable is BitmapDrawable) {
-                                stationIdToIcon[station.StationUuid] = errorDrawable.bitmap
-                            }
-                            countDownLatch.countDown()
-                        }
-
-                        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-                    }
-                    imageLoadTargets.add(imageLoadTarget)
+                    val url = if (!station.hasIcon()) Utils.resourceToUri(resources, R.drawable.ic_launcher).toString() else station.IconUrl
+                    val request = ImageRequest.Builder(AMARadioApp)
+                        .data(url)
+                        .size(128, 128)
+                        .transformations(RoundedCornersTransformation(12f))
+                        .build()
                     
-                    withContext(Dispatchers.Main) {
-                        val url = if (!station.hasIcon()) Utils.resourceToUri(resources, R.drawable.ic_launcher).toString() else station.IconUrl
-                        Picasso.get().load(url)
-                            .transform(CropSquareTransformation())
-                            .error(R.drawable.ic_launcher)
-                            .transform(RoundedCornersTransformation(12))
-                            .resize(128, 128)
-                            .into(imageLoadTarget)
+                    val imageResult = AMARadioApp.imageLoader.execute(request)
+                    if (imageResult is SuccessResult) {
+                        val bitmap = (imageResult.drawable as? BitmapDrawable)?.bitmap
+                        if (bitmap != null) {
+                            stationIdToIcon[station.StationUuid] = bitmap
+                        }
                     }
                 }
-                countDownLatch.await(IMAGE_LOAD_TIMEOUT_MS.toLong(), TimeUnit.MILLISECONDS)
-            }
-
-            for (target in imageLoadTargets) {
-                Picasso.get().cancelRequest(target)
             }
 
             val mediaItems = ArrayList<MediaBrowserCompat.MediaItem>()

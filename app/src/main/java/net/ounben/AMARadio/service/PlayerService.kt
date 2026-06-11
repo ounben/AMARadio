@@ -33,8 +33,10 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media.app.NotificationCompat.MediaStyle
 import androidx.media.session.MediaButtonReceiver
 import androidx.preference.PreferenceManager
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
+import kotlinx.coroutines.*
 import net.ounben.AMARadio.*
 import net.ounben.AMARadio.history.TrackHistoryEntry
 import net.ounben.AMARadio.history.TrackHistoryRepository
@@ -620,17 +622,21 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             updateNotification()
             return
         }
-        Picasso.get().load(itsCurrentStation?.IconUrl)
-            .placeholder(R.drawable.ic_radio_24dp)
-            .error(R.drawable.ic_radio_24dp)
-            .resize(px.toInt(), 0).into(object : Target {
-            override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-                radioIcon = BitmapDrawable(resources, bitmap)
+        
+        CoroutineScope(Dispatchers.IO).launch {
+            val request = ImageRequest.Builder(this@PlayerService)
+                .data(itsCurrentStation?.IconUrl)
+                .placeholder(R.drawable.ic_radio_24dp)
+                .error(R.drawable.ic_radio_24dp)
+                .size(px.toInt(), px.toInt())
+                .build()
+            
+            val result = imageLoader.execute(request)
+            if (result is SuccessResult) {
+                radioIcon = result.drawable as? BitmapDrawable
                 updateNotification()
             }
-            override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {}
-            override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
-        })
+        }
     }
 
     fun warnAboutMeteredConnection(playerType: PlayerType) {

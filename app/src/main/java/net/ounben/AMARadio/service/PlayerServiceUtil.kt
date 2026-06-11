@@ -11,9 +11,8 @@ import android.util.TypedValue
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.squareup.picasso.Callback
-import com.squareup.picasso.NetworkPolicy
-import com.squareup.picasso.Picasso
+import coil.load
+import coil.request.CachePolicy
 import net.ounben.AMARadio.BuildConfig
 import net.ounben.AMARadio.IPlayerService
 import net.ounben.AMARadio.R
@@ -256,26 +255,15 @@ object PlayerServiceUtil {
         val r = context.resources
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, r.displayMetrics)
 
-        val imageLoadCallback = object : Callback {
-            override fun onSuccess() {}
-            override fun onError(e: Exception) {
-                Picasso.get()
-                    .load(fromUrl)
-                    .placeholder(R.drawable.ic_radio_24dp)
-                    .error(R.drawable.ic_radio_24dp)
-                    .resize(px.toInt(), 0)
-                    .networkPolicy(NetworkPolicy.NO_CACHE)
-                    .into(holder)
+        holder.load(fromUrl) {
+            placeholder(R.drawable.ic_radio_24dp)
+            error(R.drawable.ic_radio_24dp)
+            if (px > 0) {
+                size(px.toInt(), px.toInt())
             }
+            diskCachePolicy(CachePolicy.ENABLED)
+            networkCachePolicy(CachePolicy.ENABLED)
         }
-
-        Picasso.get()
-            .load(fromUrl)
-            .placeholder(R.drawable.ic_radio_24dp)
-            .error(R.drawable.ic_radio_24dp)
-            .resize(px.toInt(), 0)
-            .networkPolicy(NetworkPolicy.OFFLINE)
-            .into(holder, imageLoadCallback)
     }
 
     @JvmStatic

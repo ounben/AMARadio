@@ -10,11 +10,11 @@ import android.os.Parcelable
 import android.text.TextUtils
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.squareup.picasso.Picasso
-import com.squareup.picasso.Target
-import jp.wasabeef.transformers.picasso.CropCircleTransformation
-import jp.wasabeef.transformers.picasso.CropSquareTransformation
-import jp.wasabeef.transformers.picasso.RoundedCornersTransformation
+import coil.imageLoader
+import coil.request.ImageRequest
+import coil.request.SuccessResult
+import coil.transform.RoundedCornersTransformation
+import kotlinx.coroutines.*
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
 import net.ounben.AMARadio.R
@@ -181,28 +181,25 @@ class DataRadioStation : Parcelable {
             IconUrl
         }
 
-        Picasso.get()
-            .load(url)
-            .error(R.drawable.ic_launcher)
-            .transform(CropSquareTransformation())
-            .transform(RoundedCornersTransformation(12))
-            .into(RadioIconTarget(context, this, cb))
-    }
-
-    private class RadioIconTarget(private val ctx: Context, private val station: DataRadioStation, private val cb: ShortcutReadyListener) : Target {
-        override fun onBitmapLoaded(bitmap: Bitmap, from: Picasso.LoadedFrom) {
-            if (Build.VERSION.SDK_INT >= 25) {
-                cb.onShortcutReadyListener(Utils.createShortcut(ctx, station, bitmap))
+        CoroutineScope(Dispatchers.IO).launch {
+            val request = ImageRequest.Builder(context)
+                .data(url)
+                .error(R.drawable.ic_launcher)
+                .size(128, 128)
+                .transformations(RoundedCornersTransformation(12f))
+                .build()
+            
+            val imageResult = context.imageLoader.execute(request)
+            if (imageResult is SuccessResult) {
+                val bitmap = (imageResult.drawable as? BitmapDrawable)?.bitmap
+                if (bitmap != null && Build.VERSION.SDK_INT >= 25) {
+                    val shortcut = Utils.createShortcut(context, this@DataRadioStation, bitmap)
+                    withContext(Dispatchers.Main) {
+                        cb.onShortcutReadyListener(shortcut)
+                    }
+                }
             }
         }
-
-        override fun onBitmapFailed(e: Exception, errorDrawable: Drawable?) {
-            if (errorDrawable is BitmapDrawable) {
-                onBitmapLoaded(errorDrawable.bitmap, Picasso.LoadedFrom.DISK)
-            }
-        }
-
-        override fun onPrepareLoad(placeHolderDrawable: Drawable?) {}
     }
 
     companion object {

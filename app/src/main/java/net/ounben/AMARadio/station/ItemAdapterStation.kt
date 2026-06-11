@@ -20,7 +20,6 @@ import net.ounben.AMARadio.players.PlayStationTask
 import net.ounben.AMARadio.players.selector.PlayerType
 import net.ounben.AMARadio.service.PlayerService
 import net.ounben.AMARadio.service.PlayerServiceUtil
-import jp.wasabeef.transformers.picasso.RoundedCornersTransformation
 import net.ounben.AMARadio.utils.*
 import net.ounben.AMARadio.views.TagsView
 import java.util.*

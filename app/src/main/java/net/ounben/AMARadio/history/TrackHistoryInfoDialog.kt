@@ -19,7 +19,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatImageView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.squareup.picasso.Picasso
+import coil.load
 import net.ounben.AMARadio.R
 import java.text.DateFormat
 
@@ -39,11 +39,10 @@ class TrackHistoryInfoDialog(private val historyEntry: TrackHistoryEntry) : Bott
 
         val resource = requireContext().resources
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200f, resource.displayMetrics)
-        Picasso.get()
-                .load(historyEntry.artUrl)
-                .placeholder(AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp)!!)
-                .resize(px.toInt(), 0)
-                .into(imageViewTrackArt)
+        imageViewTrackArt.load(historyEntry.artUrl) {
+            placeholder(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp)!!)
+            size(px.toInt(), 0)
+        }
 
         textViewDate.text = DateFormat.getDateInstance().format(historyEntry.startTime)
 

@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.squareup.picasso.Picasso
+import coil.load
 import net.ounben.AMARadio.history.*
 import net.ounben.AMARadio.recording.*
 import net.ounben.AMARadio.service.PauseReason
@@ -454,7 +454,7 @@ class FragmentPlayerFull : Fragment() {
 
         if (TextUtils.isEmpty(liveInfo.artist) || TextUtils.isEmpty(liveInfo.track) || lastFMApiKey.isEmpty()) {
             if (station.hasIcon()) {
-                Picasso.get().load(station.IconUrl).into(artAndInfoPagerAdapter.imageViewArt)
+                artAndInfoPagerAdapter.imageViewArt.load(station.IconUrl)
             } else {
                 artAndInfoPagerAdapter.imageViewArt.setImageDrawable(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp))
             }
@@ -515,7 +515,7 @@ class FragmentPlayerFull : Fragment() {
                 fragment.trackMetadataLastFailureType = failureType
                 val station = Utils.getCurrentOrLastStation(fragment.requireContext())
                 if (station != null && station.hasIcon()) {
-                    Picasso.get().load(station.IconUrl).into(fragment.artAndInfoPagerAdapter.imageViewArt)
+                    fragment.artAndInfoPagerAdapter.imageViewArt.load(station.IconUrl)
                 } else {
                     fragment.artAndInfoPagerAdapter.imageViewArt.setImageDrawable(null)
                 }
@@ -531,7 +531,7 @@ class FragmentPlayerFull : Fragment() {
                 if (!albumArts.isNullOrEmpty()) {
                     val albumArtUrl = albumArts[0].url
                     if (!TextUtils.isEmpty(albumArtUrl)) {
-                        Picasso.get().load(albumArtUrl).into(fragment.artAndInfoPagerAdapter.imageViewArt)
+                        fragment.artAndInfoPagerAdapter.imageViewArt.load(albumArtUrl)
                         if (albumArtUrl != trackHistoryEntry.stationIconUrl) {
                             fragment.trackHistoryRepository.setTrackArtUrl(trackHistoryEntry.uid, albumArtUrl)
                         }
