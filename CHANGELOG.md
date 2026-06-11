@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.92] - 2026-06-11
+### Added
+- **New Branding "Radio Cat"**:
+    - Completely redesigned the app icon featuring a cat image combined with a modern radio symbol.
+    - Integrated the cat image as a permanent logo in the top-left of the toolbar.
+- **Emoji Flags**: Replaced all 250+ country flag PNG graphics with native Unicode emojis. This reduces APK size and ensures sharp rendering at any zoom level.
+- **Material Design Placeholders**: Stations without a logo now feature a sleek Material radio vector icon instead of the old photo symbol.
+
+### Changed
+- **Vector Migration**: Deleted all legacy PNG icons (Play, Pause, Stop, Skip, View mode, Filter) and replaced them with official Google Material vector drawables.
+- **UI Optimization**: Flag emoji size now automatically adapts to station text size (130% scaling for visual balance).
+- **Clean Toolbar**: Repositioned the loading progress bar to accommodate the new cat logo and fixed the double title issue in Settings.
+
 ## [0.91] - 2026-06-09
 ### Changed
 - **Migration to KSP**: Migrated the entire project from `kapt` to `Kotlin Symbol Processing (KSP)`. This results in faster build times and better Kotlin compatibility for the Room database.
