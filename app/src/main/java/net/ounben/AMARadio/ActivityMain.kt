@@ -87,11 +87,13 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var menuItemAddAlarm: MenuItem? = null
     private var menuItemMpd: MenuItem? = null
     private var menuItemFilter: MenuItem? = null
+    private var menuItemCast: MenuItem? = null
     private lateinit var sharedPref: SharedPreferences
     private var selectedMenuItem = 0
     private var instanceStateWasSaved = false
     private var lastExitTry: Date? = null
     private var meteredConnectionAlertDialog: AlertDialog? = null
+    private var isSearchExpanded = false
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -106,7 +108,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
@@ -442,7 +444,23 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemFilter = menu.findItem(R.id.action_filter_global)
         
         mSearchView = menuItemSearch?.actionView as? SearchView
+        mSearchView?.maxWidth = Int.MAX_VALUE
         mSearchView?.setOnQueryTextListener(this)
+        
+        menuItemSearch?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                isSearchExpanded = true
+                invalidateOptionsMenu()
+                return true
+            }
+
+            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                isSearchExpanded = false
+                invalidateOptionsMenu()
+                return true
+            }
+        })
+
         mSearchView?.setOnQueryTextFocusChangeListener { v, hasFocus ->
             if (Utils.bottomNavigationEnabled(this)) {
                 mBottomNavigationView.visibility = if (hasFocus) View.GONE else View.VISIBLE
@@ -458,55 +476,75 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         menuItemSleepTimer?.isVisible = false
-        menuItemSearch?.isVisible = false
+        menuItemSearch?.isVisible = !isSearchExpanded
         menuItemDelete?.isVisible = false
         menuItemSave?.isVisible = false
         menuItemLoad?.isVisible = false
-        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false)
-        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false)
+        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearchExpanded
+        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearchExpanded
         menuItemAddAlarm?.isVisible = false
-        menuItemFilter?.isVisible = true // Global filter access
+        menuItemFilter?.isVisible = !isSearchExpanded // Global filter access
 
         var mpdIsVisible = false
         val AMARadioApp = application as AMARadioApp
         val mpdClient = AMARadioApp.mpdClient
         val repository = mpdClient.mpdServersRepository
-        mpdIsVisible = !repository.isEmpty
+        mpdIsVisible = !repository.isEmpty && !isSearchExpanded
 
         menuItemMpd?.isVisible = mpdIsVisible
 
-        when (selectedMenuItem) {
-            R.id.nav_item_stations -> {
-                menuItemSleepTimer?.isVisible = true
-                menuItemSearch?.isVisible = true
-                setToolbarTitle(R.string.nav_item_stations)
-            }
-            R.id.nav_item_starred -> {
-                menuItemSleepTimer?.isVisible = true
-                menuItemSave?.isVisible = true
-                menuItemLoad?.isVisible = true
-                menuItemSave?.setTitle(R.string.nav_item_save_playlist)
+        if (isSearchExpanded) {
+            menuItemSearch?.isVisible = true
+        } else {
+            when (selectedMenuItem) {
+                R.id.nav_item_stations -> {
+                    menuItemSleepTimer?.isVisible = true
+                    menuItemSearch?.isVisible = true
+                    setToolbarTitle(R.string.nav_item_stations)
+                }
+                R.id.nav_item_starred -> {
+                    menuItemSleepTimer?.isVisible = true
+                    menuItemSave?.isVisible = true
+                    menuItemLoad?.isVisible = true
+                    menuItemSave?.setTitle(R.string.nav_item_save_playlist)
 
-                menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
-                menuItemDelete?.setTitle(R.string.action_delete_favorites)
-                setToolbarTitle(R.string.nav_item_starred)
-            }
-            R.id.nav_item_history -> {
-                menuItemSleepTimer?.isVisible = true
-                menuItemSave?.isVisible = true
-                menuItemSave?.setTitle(R.string.nav_item_save_history_playlist)
+                    menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
+                    menuItemDelete?.setTitle(R.string.action_delete_favorites)
+                    setToolbarTitle(R.string.nav_item_starred)
+                }
+                R.id.nav_item_history -> {
+                    menuItemSleepTimer?.isVisible = true
+                    menuItemSave?.isVisible = true
+                    menuItemSave?.setTitle(R.string.nav_item_save_history_playlist)
 
-                menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
-                menuItemDelete?.setTitle(R.string.action_delete_history)
-                setToolbarTitle(R.string.nav_item_history)
-            }
-            R.id.nav_item_alarm -> {
-                menuItemAddAlarm?.isVisible = true
-                setToolbarTitle(R.string.nav_item_alarm)
+                    menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
+                    menuItemDelete?.setTitle(R.string.action_delete_history)
+                    setToolbarTitle(R.string.nav_item_history)
+                }
+                R.id.nav_item_alarm -> {
+                    menuItemAddAlarm?.isVisible = true
+                    setToolbarTitle(R.string.nav_item_alarm)
+                }
             }
         }
 
-        (application as AMARadioApp).castHandler.getRouteItem(applicationContext, menu)
+        menuItemCast = (application as AMARadioApp).castHandler.getRouteItem(applicationContext, menu)
+        if (isSearchExpanded) {
+            menuItemCast?.isVisible = false
+        }
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        super.onPrepareOptionsMenu(menu)
+        if (isSearchExpanded) {
+            for (i in 0 until menu.size()) {
+                val item = menu.getItem(i)
+                if (item.itemId != R.id.action_search) {
+                    item.isVisible = false
+                }
+            }
+        }
         return true
     }
 
