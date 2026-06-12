@@ -3,7 +3,7 @@ package net.ounben.AMARadio.station
 import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
-import me.xdrop.fuzzywuzzy.FuzzySearch
+import org.apache.commons.text.similarity.JaroWinklerSimilarity
 import net.ounben.AMARadio.AMARadioApp
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.utils.CustomFilter
@@ -116,8 +116,10 @@ class StationsFilter(private val context: Context, private val filterType: Filte
             if (needsFiltering) {
                 Log.d("FILTER", "performFiltering() 4a $query")
                 val filteredStations = ArrayList<WeightedStation>()
+                val jaroWinkler = JaroWinklerSimilarity()
                 for (station in stationsToFilter) {
-                    val weight = FuzzySearch.partialRatio(query, station.Name.lowercase(Locale.ROOT))
+                    val similarity = jaroWinkler.apply(query, station.Name.lowercase(Locale.ROOT))
+                    val weight = (similarity * 100).toInt()
                     if (weight > FUZZY_SEARCH_THRESHOLD) {
                         val compressedWeight = weight / 4
                         filteredStations.add(WeightedStation(station, compressedWeight))

@@ -108,8 +108,7 @@ dependencies {
     implementation libs.androidx.media3.ui
     implementation libs.androidx.media3.common
 
-    implementation libs.java.string.similarity
-    implementation libs.fuzzywuzzy
+    implementation libs.apache.commons.text
 
     implementation libs.androidx.room.runtime
     ksp libs.androidx.room.compiler

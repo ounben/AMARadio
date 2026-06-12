@@ -11,7 +11,7 @@ import net.ounben.AMARadio.BuildConfig
 import org.json.JSONArray
 import java.io.*
 import java.util.*
-import info.debatty.java.stringsimilarity.Cosine
+import org.apache.commons.text.similarity.CosineSimilarity
 import kotlinx.coroutines.*
 
 open class StationSaveManager(protected val context: Context) : Observable() {
@@ -129,13 +129,22 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     fun getBestNameMatch(query: String): DataRadioStation? {
         var bestStation: DataRadioStation? = null
         val upperQuery = query.uppercase(Locale.ROOT)
-        var smallesDistance = Double.MAX_VALUE
-        val distMeasure = Cosine()
+        var maxSimilarity = 0.0
+        val simMeasure = CosineSimilarity()
+        
+        // Helper to convert string to Map<CharSequence, Int> for CosineSimilarity
+        fun String.getTermFrequencies(): Map<CharSequence, Int> {
+            return this.toCharArray().groupBy { it.toString() as CharSequence }.mapValues { it.value.size }
+        }
+
+        val queryTerms = upperQuery.getTermFrequencies()
+
         for (station in listStations) {
-            val distance = distMeasure.distance(station.Name.uppercase(Locale.ROOT), upperQuery)
-            if (distance < smallesDistance) {
+            val stationName = station.Name.uppercase(Locale.ROOT)
+            val similarity = simMeasure.cosineSimilarity(stationName.getTermFrequencies(), queryTerms)
+            if (similarity > maxSimilarity) {
                 bestStation = station
-                smallesDistance = distance
+                maxSimilarity = similarity
             }
         }
         return bestStation
