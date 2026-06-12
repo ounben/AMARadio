@@ -5,6 +5,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.94] - 2026-06-12
+### Added
+- **Storage Access Framework (SAF)**: Replaced custom file dialogs with the native Android Storage Access Framework for better security and system integration.
+
+### Changed
+- **Image Loading**: Switched from Picasso to Coil for more efficient and modern image loading.
+- **String Matching**: Replaced `fuzzywuzzy` with Apache Commons Text for improved search and similarity calculations.
+- **Dependency Cleanup**: Removed deprecated `legacy-support-v4` library.
+- **Build System**: Updated Gradle to the latest version.
+
 ## [0.93] - 2026-06-11
 ### Added
 - **New Grid View**: 
