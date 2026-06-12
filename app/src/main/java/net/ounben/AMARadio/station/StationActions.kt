@@ -1,5 +1,6 @@
 package net.ounben.AMARadio.station
 
+import android.app.Activity
 import android.content.*
 import android.net.Uri
 import android.text.TextUtils
@@ -77,12 +78,12 @@ object StationActions {
                 if (clipboard != null) {
                     val clip = ClipData.newPlainText("Stream Url", result)
                     clipboard.setPrimaryClip(clip)
-                    Toast.makeText(ctx.applicationContext, R.string.notify_stream_url_copied, Toast.LENGTH_SHORT).show()
+                    (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.notify_stream_url_copied) }
                 } else {
                     Log.e(TAG, "Clipboard is NULL!")
                 }
             } else {
-                Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
+                (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.error_station_load) }
             }
         }
     }
@@ -91,7 +92,7 @@ object StationActions {
     fun markAsFavourite(context: Context, station: DataRadioStation) {
         val AMARadioApp = context.applicationContext as AMARadioApp
         AMARadioApp.favouriteManager.add(station)
-        Toast.makeText(context, R.string.notify_starred, Toast.LENGTH_SHORT).show()
+        (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_starred) }
         vote(context, station)
     }
 
@@ -137,7 +138,7 @@ object StationActions {
                 val chooser = Intent.createChooser(share, title)
                 ctx.startActivity(chooser)
             } else {
-                Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
+                (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.error_station_load) }
             }
         }
     }

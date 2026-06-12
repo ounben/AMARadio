@@ -53,10 +53,6 @@ class FragmentPlayerFull : Fragment() {
     private val refreshHandler = RefreshHandler()
     private val timedUpdateTask = TimedUpdateTask(this)
     
-    private var trackMetadataCallback: PlayerTrackMetadataCallback? = null
-    private var trackMetadataLastFailureType: TrackMetadataCallback.FailureType? = null
-    private var lastLiveInfoForTrackMetadata: StreamLiveInfo? = null
-
     private lateinit var recordingsManager: RecordingsManager
     private var recordingsObserver: Observer? = null
 
@@ -69,8 +65,9 @@ class FragmentPlayerFull : Fragment() {
 
     private var storagePermissionsDenied = false
     private lateinit var scrollViewContent: RecyclerAwareNestedScrollView
-    private lateinit var pagerArtAndInfo: ViewPager
-    private lateinit var artAndInfoPagerAdapter: ArtAndInfoPagerAdapter
+    
+    private lateinit var textViewStationDescription: TextView
+    private lateinit var viewTags: TagsView
 
     private lateinit var textViewGeneralInfo: TextView
     private lateinit var textViewTimePlayed: TextView
@@ -122,39 +119,9 @@ class FragmentPlayerFull : Fragment() {
 
         val view = inflater.inflate(R.layout.layout_player_full, container, false)
         scrollViewContent = view.findViewById(R.id.scrollViewContent)
-        pagerArtAndInfo = view.findViewById(R.id.pagerArtAndInfo)
-        artAndInfoPagerAdapter = ArtAndInfoPagerAdapter(requireContext(), pagerArtAndInfo)
-        pagerArtAndInfo.adapter = artAndInfoPagerAdapter
-
-        pagerArtAndInfo.setOnTouchListener(object : View.OnTouchListener {
-            private val DRAG_THRESHOLD = 30
-            private var downX = 0
-            private var downY = 0
-
-            override fun onTouch(v: View, event: MotionEvent): Boolean {
-                when (event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        downX = event.rawX.toInt()
-                        downY = event.rawY.toInt()
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        val distanceX = Math.abs(event.rawX.toInt() - downX)
-                        val distanceY = Math.abs(event.rawY.toInt() - downY)
-                        if (distanceX > distanceY && distanceX > DRAG_THRESHOLD) {
-                            pagerArtAndInfo.parent.requestDisallowInterceptTouchEvent(true)
-                            scrollViewContent.parent.requestDisallowInterceptTouchEvent(false)
-                            touchInterceptListener?.requestDisallowInterceptTouchEvent(true)
-                        }
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        scrollViewContent.parent.requestDisallowInterceptTouchEvent(false)
-                        pagerArtAndInfo.parent.requestDisallowInterceptTouchEvent(false)
-                        touchInterceptListener?.requestDisallowInterceptTouchEvent(false)
-                    }
-                }
-                return false
-            }
-        })
+        
+        textViewStationDescription = view.findViewById(R.id.textViewStationDescription)
+        viewTags = view.findViewById(R.id.viewTags)
 
         textViewGeneralInfo = view.findViewById(R.id.textViewGeneralInfo)
         textViewTimePlayed = view.findViewById(R.id.textViewTimePlayed)
@@ -336,7 +303,6 @@ class FragmentPlayerFull : Fragment() {
     private fun stopUpdating() {
         if (view == null) return
         refreshHandler.cancel()
-        trackMetadataCallback?.cancel()
         LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateUIReceiver!!)
         recordingsManager.savedRecordingsObservable.deleteObserver(recordingsObserver)
         favouriteManager.deleteObserver(favouritesObserver)
@@ -375,17 +341,16 @@ class FragmentPlayerFull : Fragment() {
             val flag = CountryFlagsLoader.instance.getFlag(requireContext(), station.CountryCode)
             flag?.let {
                 val k = it.intrinsicWidth.toFloat() / it.intrinsicHeight.toFloat()
-                val viewHeight = (artAndInfoPagerAdapter.textViewStationDescription.textSize * 1.3f).toInt()
+                val viewHeight = (textViewStationDescription.textSize * 1.3f).toInt()
                 it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
             }
-            artAndInfoPagerAdapter.textViewStationDescription.setCompoundDrawablesRelative(flag, null, null, null)
-            artAndInfoPagerAdapter.textViewStationDescription.text = station.getLongDetails(requireContext())
+            textViewStationDescription.setCompoundDrawablesRelative(flag, null, null, null)
+            textViewStationDescription.text = station.getLongDetails(requireContext())
 
             val tags = station.TagsAll.split(",").toTypedArray()
-            artAndInfoPagerAdapter.viewTags.setTags(tags.toList())
+            viewTags.setTags(tags.toList())
         }
 
-        updateAlbumArt()
         updateRecordings()
         updatePlaybackButtons(PlayerServiceUtil.isPlaying(), PlayerServiceUtil.isRecording())
         updateFavouriteButton()
@@ -438,52 +403,6 @@ class FragmentPlayerFull : Fragment() {
         }
     }
 
-    private fun updateAlbumArt() {
-        val station = PlayerServiceUtil.getCurrentStation() ?: return
-        val liveInfo = PlayerServiceUtil.getMetadataLive()
-        if (lastLiveInfoForTrackMetadata != null &&
-            TextUtils.equals(lastLiveInfoForTrackMetadata?.artist, liveInfo.artist) &&
-            TextUtils.equals(lastLiveInfoForTrackMetadata?.track, liveInfo.track) &&
-            trackMetadataLastFailureType != TrackMetadataCallback.FailureType.RECOVERABLE) {
-            return
-        }
-
-        val AMARadioApp = requireActivity().application as AMARadioApp
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext())
-        val lastFMApiKey = sharedPref.getString("last_fm_api_key", "") ?: ""
-
-        if (TextUtils.isEmpty(liveInfo.artist) || TextUtils.isEmpty(liveInfo.track) || lastFMApiKey.isEmpty()) {
-            if (station.hasIcon()) {
-                artAndInfoPagerAdapter.imageViewArt.load(station.IconUrl)
-            } else {
-                artAndInfoPagerAdapter.imageViewArt.setImageDrawable(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp))
-            }
-            return
-        }
-
-        trackMetadataLastFailureType = null
-        lastLiveInfoForTrackMetadata = liveInfo
-        trackMetadataCallback?.cancel()
-
-        val trackMetadataSearcher = AMARadioApp.trackMetadataSearcher
-        val fragmentWeakReference = WeakReference(this)
-        trackHistoryRepository.getLastInsertedHistoryItem { trackHistoryEntry, _ ->
-            if (trackHistoryEntry == null) {
-                Log.e(TAG, "trackHistoryEntry is null in updateAlbumArt which should not happen.")
-                return@getLastInsertedHistoryItem
-            }
-            if (!TextUtils.isEmpty(trackHistoryEntry.artUrl)) return@getLastInsertedHistoryItem
-
-            val fragment = fragmentWeakReference.get()
-            fragment?.requireActivity()?.runOnUiThread {
-                if (fragment.isResumed) {
-                    fragment.trackMetadataCallback = PlayerTrackMetadataCallback(fragmentWeakReference, trackHistoryEntry)
-                    trackMetadataSearcher.fetchTrackMetadata(lastFMApiKey, liveInfo.artist, liveInfo.track, fragment.trackMetadataCallback!!)
-                }
-            }
-        }
-    }
-
     private fun updateFavouriteButton() {
         val station = Utils.getCurrentOrLastStation(requireContext())
         if (station != null && favouriteManager.has(station.StationUuid)) {
@@ -499,84 +418,6 @@ class FragmentPlayerFull : Fragment() {
         override fun update(o: Observable?, arg: Any?) {
             updateFavouriteButton()
         }
-    }
-
-    private class PlayerTrackMetadataCallback(
-        private val fragmentWeakReference: WeakReference<FragmentPlayerFull>,
-        private val trackHistoryEntry: TrackHistoryEntry
-    ) : TrackMetadataCallback {
-        private var canceled = false
-        fun cancel() { canceled = true }
-
-        override fun onFailure(failureType: TrackMetadataCallback.FailureType) {
-            val fragment = fragmentWeakReference.get()
-            fragment?.requireActivity()?.runOnUiThread {
-                if (canceled) return@runOnUiThread
-                fragment.trackMetadataLastFailureType = failureType
-                val station = Utils.getCurrentOrLastStation(fragment.requireContext())
-                if (station != null && station.hasIcon()) {
-                    fragment.artAndInfoPagerAdapter.imageViewArt.load(station.IconUrl)
-                } else {
-                    fragment.artAndInfoPagerAdapter.imageViewArt.setImageDrawable(null)
-                }
-                fragment.trackMetadataCallback = null
-            }
-        }
-
-        override fun onSuccess(trackMetadata: TrackMetadata) {
-            val fragment = fragmentWeakReference.get()
-            fragment?.requireActivity()?.runOnUiThread {
-                if (canceled) return@runOnUiThread
-                val albumArts = trackMetadata.albumArts
-                if (!albumArts.isNullOrEmpty()) {
-                    val albumArtUrl = albumArts[0].url
-                    if (!TextUtils.isEmpty(albumArtUrl)) {
-                        fragment.artAndInfoPagerAdapter.imageViewArt.load(albumArtUrl)
-                        if (albumArtUrl != trackHistoryEntry.stationIconUrl) {
-                            fragment.trackHistoryRepository.setTrackArtUrl(trackHistoryEntry.uid, albumArtUrl)
-                        }
-                        fragment.trackMetadataCallback = null
-                        return@runOnUiThread
-                    }
-                }
-                onFailure(TrackMetadataCallback.FailureType.UNRECOVERABLE)
-            }
-        }
-    }
-
-    private inner class ArtAndInfoPagerAdapter(context: Context, parent: ViewGroup) : PagerAdapter() {
-        private val layoutAlbumArt: ViewGroup
-        private val layoutStationInfo: ViewGroup
-        private val titles: Array<String>
-        val imageViewArt: ImageView
-        val textViewStationDescription: TextView
-        val viewTags: TagsView
-
-        init {
-            val inflater = LayoutInflater.from(context)
-            layoutAlbumArt = inflater.inflate(R.layout.page_player_album_art, parent, false) as ViewGroup
-            layoutStationInfo = inflater.inflate(R.layout.page_player_station_info, parent, false) as ViewGroup
-            titles = arrayOf(resources.getString(R.string.tab_player_art), resources.getString(R.string.tab_player_info))
-            imageViewArt = layoutAlbumArt.findViewById(R.id.imageViewArt)
-            textViewStationDescription = layoutStationInfo.findViewById(R.id.textViewStationDescription)
-            viewTags = layoutStationInfo.findViewById(R.id.viewTags)
-        }
-
-        override fun instantiateItem(collection: ViewGroup, position: Int): Any {
-            val layout = if (position == 0) layoutAlbumArt else layoutStationInfo
-            collection.addView(layout)
-            return layout
-        }
-
-        override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-            container.removeView(`object` as View)
-        }
-
-        override fun getCount(): Int = 2
-
-        override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
-
-        override fun getPageTitle(position: Int): CharSequence? = titles[position]
     }
 
     private inner class HistoryAndRecordsPagerAdapter(context: Context, parent: ViewGroup) : PagerAdapter() {
@@ -639,7 +480,7 @@ class FragmentPlayerFull : Fragment() {
                 PlayerServiceUtil.startRecording()
             } else {
                 storagePermissionsDenied = true
-                Toast.makeText(activity, resources.getString(R.string.error_record_needs_write), Toast.LENGTH_SHORT).show()
+                activity?.let { Utils.showModernToast(it, R.string.error_record_needs_write) }
             }
             updatePlaybackButtons(PlayerServiceUtil.isPlaying(), PlayerServiceUtil.isRecording())
             updateRecordings()

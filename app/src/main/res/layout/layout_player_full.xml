@@ -74,20 +74,39 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Info" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:id="@+id/pagerArtAndInfo"
+            <LinearLayout
+                android:id="@+id/layoutStationInfo"
                 android:layout_width="match_parent"
-                android:layout_height="215dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp"
                 app:layout_constraintBottom_toTopOf="@+id/space"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewGeneralInfo">
 
-                <androidx.viewpager.widget.PagerTabStrip
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/textViewStationDescription"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="top" />
-            </androidx.viewpager.widget.ViewPager>
+                    android:drawablePadding="4sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+
+                <net.ounben.AMARadio.views.TagsView
+                    android:id="@+id/viewTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1"
+                    android:textSize="16sp"
+                    app:cornerRadius="8dp"
+                    app:tagBackgroundColor="?attr/tagBackgroundColor"
+                    app:tagHeight="25sp"
+                    app:textHorizontalPadding="8dp"
+                    app:textVerticalMargin="4dp" />
+            </LinearLayout>
 
             <Space
                 android:id="@+id/space"
@@ -97,7 +116,7 @@
                 android:layout_marginEnd="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pagerArtAndInfo" />
+                app:layout_constraintTop_toBottomOf="@+id/layoutStationInfo" />
 
             <TextView
                 android:id="@+id/textViewTimePlayed"

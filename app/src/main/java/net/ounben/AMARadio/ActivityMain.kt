@@ -270,7 +270,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         PlayerServiceUtil.shutdownService()
                         finish()
                     } else {
-                        Toast.makeText(this@ActivityMain, R.string.alert_press_back_to_exit, Toast.LENGTH_SHORT).show()
+                        Utils.showModernToast(this@ActivityMain, R.string.alert_press_back_to_exit)
                         lastExitTry = Date()
                         return
                     }
@@ -531,9 +531,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         }
                     }
                     if (success) {
-                        Toast.makeText(this@ActivityMain, R.string.notify_save_playlist_ok, Toast.LENGTH_SHORT).show()
+                        Utils.showModernToast(this@ActivityMain, R.string.notify_save_playlist_ok)
                     } else {
-                        Toast.makeText(this@ActivityMain, R.string.notify_save_playlist_nok, Toast.LENGTH_SHORT).show()
+                        Utils.showModernToast(this@ActivityMain, R.string.notify_save_playlist_nok)
                     }
                 }
             }
@@ -542,7 +542,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             resultData?.data?.let { uri ->
                 Log.d(TAG, "Chosen load path: $uri")
                 val app = application as AMARadioApp
-                Toast.makeText(this, R.string.notify_load_playlist_now, Toast.LENGTH_SHORT).show()
+                Utils.showModernToast(this, R.string.notify_load_playlist_now)
                 scope.launch {
                     val loadedStations = withContext(Dispatchers.IO) {
                         try {
@@ -558,12 +558,13 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     if (loadedStations != null) {
                         if (loadedStations.isNotEmpty()) {
                             app.favouriteManager.addMultiple(loadedStations)
-                            Toast.makeText(this@ActivityMain, getString(R.string.notify_load_playlist_ok, loadedStations.size, "", ""), Toast.LENGTH_LONG).show()
+                            val msg = getString(R.string.notify_load_playlist_ok, loadedStations.size, "", "")
+                            Utils.showSnackbar(findViewById(android.R.id.content), msg)
                         } else {
-                            Toast.makeText(this@ActivityMain, "No valid stations found in file", Toast.LENGTH_SHORT).show()
+                            Utils.showSnackbar(findViewById(android.R.id.content), "No valid stations found in file")
                         }
                     } else {
-                        Toast.makeText(this@ActivityMain, R.string.notify_load_playlist_nok, Toast.LENGTH_LONG).show()
+                        Utils.showModernToast(this@ActivityMain, R.string.notify_load_playlist_nok)
                     }
                 }
             }
@@ -628,7 +629,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .setPositiveButton(getString(R.string.yes)) { _, _ ->
                             val AMARadioApp = application as AMARadioApp
                             AMARadioApp.historyManager.clear()
-                            Toast.makeText(applicationContext, getString(R.string.notify_deleted_history), Toast.LENGTH_SHORT).show()
+                            Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_history)
                             recreate()
                         }
                         .setNegativeButton(getString(R.string.no), null)
@@ -641,7 +642,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .setPositiveButton(getString(R.string.yes)) { _, _ ->
                             val AMARadioApp = application as AMARadioApp
                             AMARadioApp.favouriteManager.clear()
-                            Toast.makeText(applicationContext, getString(R.string.notify_deleted_favorites), Toast.LENGTH_SHORT).show()
+                            Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_favorites)
                             recreate()
                         }
                         .setNegativeButton(getString(R.string.no), null)

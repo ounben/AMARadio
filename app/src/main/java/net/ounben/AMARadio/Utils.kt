@@ -19,6 +19,7 @@ import android.os.Build
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.webkit.MimeTypeMap
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
@@ -477,6 +478,25 @@ object Utils {
     @JvmStatic
     fun getAccentColor(context: Context): Int {
         return themeAttributeToColor(androidx.appcompat.R.attr.colorAccent, context, Color.LTGRAY)
+    }
+
+    @JvmStatic
+    fun showSnackbar(view: View, message: String) {
+        val snackbar = com.google.android.material.snackbar.Snackbar.make(view, message, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
+        snackbar.setBackgroundTint(getAccentColor(view.context))
+        snackbar.setTextColor(Color.WHITE)
+        snackbar.show()
+    }
+
+    @JvmStatic
+    fun showSnackbar(view: View, resId: Int) {
+        showSnackbar(view, view.context.getString(resId))
+    }
+
+    @JvmStatic
+    fun showModernToast(activity: Activity, resId: Int) {
+        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
+        showSnackbar(view, resId)
     }
 
     @JvmStatic
