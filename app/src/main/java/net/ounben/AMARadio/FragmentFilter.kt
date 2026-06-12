@@ -31,8 +31,61 @@ class FragmentFilter : FragmentBase() {
         override fun toString(): String = label
     }
 
+    /**
+     * A specialized adapter that supports "contains" filtering instead of just "starts with".
+     */
+    private open class ContainsFilterAdapter<T>(context: android.content.Context, resource: Int, private val allItems: List<T>) 
+        : ArrayAdapter<T>(context, resource, allItems) {
+        
+        private var filteredItems: List<T> = allItems
+
+        override fun getCount(): Int = filteredItems.size
+        override fun getItem(position: Int): T? = filteredItems[position]
+
+        override fun getFilter(): Filter {
+            return object : Filter() {
+                override fun performFiltering(constraint: CharSequence?): FilterResults {
+                    val results = FilterResults()
+                    if (constraint.isNullOrEmpty()) {
+                        results.values = allItems
+                        results.count = allItems.size
+                    } else {
+                        val filterPattern = constraint.toString().lowercase(Locale.ROOT).trim()
+                        
+                        // Filter and sort by relevance: 
+                        val match = allItems.filter { 
+                            it.toString().lowercase(Locale.ROOT).contains(filterPattern) 
+                        }.sortedByDescending { 
+                            val itemStr = it.toString().lowercase(Locale.ROOT)
+                            var score = 0
+                            if (itemStr == filterPattern) score = 1000
+                            else if (itemStr.startsWith(filterPattern)) score = 500
+                            else if (itemStr.contains(" $filterPattern")) score = 250
+                            else score = 100
+                            score
+                        }
+
+                        results.values = match
+                        results.count = match.size
+                    }
+                    return results
+                }
+
+                @Suppress("UNCHECKED_CAST")
+                override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                    filteredItems = results?.values as? List<T> ?: allItems
+                    if (results != null && results.count > 0) {
+                        notifyDataSetChanged()
+                    } else {
+                        notifyDataSetInvalidated()
+                    }
+                }
+            }
+        }
+    }
+
     private class FilterDropdownAdapter(context: android.content.Context, items: List<FilterItem>) 
-        : ArrayAdapter<FilterItem>(context, R.layout.list_item_filter_dropdown, items) {
+        : ContainsFilterAdapter<FilterItem>(context, R.layout.list_item_filter_dropdown, items) {
         
         override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
             val view = convertView ?: LayoutInflater.from(context).inflate(R.layout.list_item_filter_dropdown, parent, false)
@@ -50,6 +103,7 @@ class FragmentFilter : FragmentBase() {
         }
     }
 
+    private lateinit var autoName: AutoCompleteTextView
     private lateinit var autoCountry: AutoCompleteTextView
     private lateinit var autoLanguage: AutoCompleteTextView
     private lateinit var autoTag: AutoCompleteTextView
@@ -75,6 +129,7 @@ class FragmentFilter : FragmentBase() {
         
         sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext())
         
+        autoName = view.findViewById(R.id.autoName)
         autoCountry = view.findViewById(R.id.autoCountry)
         autoLanguage = view.findViewById(R.id.autoLanguage)
         autoTag = view.findViewById(R.id.autoTag)
@@ -166,6 +221,7 @@ class FragmentFilter : FragmentBase() {
         btnApply.minimumHeight = buttonSize
 
         // Ensure dropdowns are big enough
+        autoName.minimumHeight = buttonSize
         autoCountry.minimumHeight = buttonSize
         autoLanguage.minimumHeight = buttonSize
         autoTag.minimumHeight = buttonSize
@@ -187,6 +243,7 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun loadSavedFilters() {
+        autoName.setText(sharedPref?.getString("filter_name", ""), false)
         selectedCountryCode = sharedPref?.getString("filter_country_code", "") ?: ""
         selectedLanguage = sharedPref?.getString("filter_language_code", "") ?: ""
         
@@ -203,6 +260,7 @@ class FragmentFilter : FragmentBase() {
 
     private fun saveFilters() {
         sharedPref?.edit()?.apply {
+            putString("filter_name", autoName.text.toString())
             putString("filter_country_code", selectedCountryCode)
             putString("filter_country_label", autoCountry.text.toString())
             putString("filter_language_code", selectedLanguage)
@@ -215,14 +273,15 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun hasAnyFilter(): Boolean {
-        return selectedCountryCode.isNotEmpty() || selectedLanguage.isNotEmpty() || autoTag.text.isNotEmpty()
+        return autoName.text.isNotEmpty() || selectedCountryCode.isNotEmpty() || selectedLanguage.isNotEmpty() || autoTag.text.isNotEmpty()
     }
 
     private fun setupAdapters() {
         scope.launch {
             val countriesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/countrycodes") }
             val languagesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/languages") }
-            val tags = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags").map { it.Name }.sorted() }
+            // Load a very large number of tags to ensure specialized genres like "phonk" are included
+            val tags = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags?limit=10000").map { it.Name }.sorted() }
             
             val countryItems = countriesData.map { 
                 val countryName = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
@@ -238,7 +297,8 @@ class FragmentFilter : FragmentBase() {
                 autoCountry.setAdapter(FilterDropdownAdapter(requireContext(), countryItems))
                 autoLanguage.setAdapter(FilterDropdownAdapter(requireContext(), languageItems))
                 
-                val tagAdapter = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags)
+                // Use the custom "contains" adapter for tags too
+                val tagAdapter = ContainsFilterAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags)
                 autoTag.setAdapter(tagAdapter)
                 autoTag.threshold = 1
                 
@@ -267,10 +327,12 @@ class FragmentFilter : FragmentBase() {
             val AMARadioApp = requireActivity().application as AMARadioApp
             
             val params = mutableMapOf<String, String>()
+            val name = autoName.text.toString()
             val country = selectedCountryCode
             val language = selectedLanguage
             val tag = autoTag.text.toString()
             
+            if (name.isNotEmpty()) params["name"] = name
             if (country.isNotEmpty()) params["countrycode"] = country
             if (language.isNotEmpty()) params["language"] = language
             if (tag.isNotEmpty()) params["tag"] = tag

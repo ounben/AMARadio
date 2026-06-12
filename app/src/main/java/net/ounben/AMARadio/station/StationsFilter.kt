@@ -48,6 +48,7 @@ class StationsFilter(private val context: Context, private val filterType: Filte
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(this.context)
         val showBroken = sharedPref.getBoolean("show_broken", false)
         val p = HashMap<String, String>()
+        
         p["order"] = "clickcount"
         p["reverse"] = "true"
         p["hidebroken"] = (!showBroken).toString()
@@ -60,19 +61,18 @@ class StationsFilter(private val context: Context, private val filterType: Filte
                 SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$queryEncoded"
                 SearchStyle.ByTagExact -> "json/stations/bytagexact/$queryEncoded"
             }
-            Log.d("FILTER", "searchGlobal 2:$query")
+            
+            Log.d("FILTER", "searchGlobal 2:$query URL:$searchUrl")
             val resultString = Utils.downloadFeedRelative(httpClient, context, searchUrl, false, p)
             if (resultString != null) {
-                Log.d("FILTER", "searchGlobal 3a:$query")
                 val result = DataRadioStation.DecodeJson(resultString) ?: emptyList()
                 lastRemoteSearchStatus = SearchStatus.SUCCESS
                 result
             } else {
-                Log.d("FILTER", "searchGlobal 3b:$query")
                 lastRemoteSearchStatus = SearchStatus.ERROR
                 ArrayList()
             }
-        } catch (e: UnsupportedEncodingException) {
+        } catch (e: Exception) {
             e.printStackTrace()
             lastRemoteSearchStatus = SearchStatus.ERROR
             ArrayList()
@@ -87,60 +87,65 @@ class StationsFilter(private val context: Context, private val filterType: Filte
     override fun performFiltering(constraint: CharSequence?): FilterResults {
         val query = constraint?.toString()?.lowercase(Locale.ROOT) ?: ""
         Log.d("FILTER", "performFiltering() $query")
+        
         if (searchStyle == SearchStyle.ByName && (query.isEmpty() || (query.length < 2 && filterType == FilterType.GLOBAL))) {
-            Log.d("FILTER", "performFiltering() 2 $query")
             filteredStationsList = dataProvider.getOriginalStationList()
             lastRemoteQuery = ""
         } else {
-            Log.d("FILTER", "performFiltering() 3 $query")
-            val stationsToFilter: List<DataRadioStation>
-            var needsFiltering = false
-            if (lastRemoteQuery.isNotEmpty() && query.startsWith(lastRemoteQuery) && lastRemoteSearchStatus != SearchStatus.ERROR) {
-                Log.d("FILTER", "performFiltering() 3a $query lastRemoteQuery=$lastRemoteQuery")
-                stationsToFilter = filteredStationsList ?: emptyList()
-                needsFiltering = true
-            } else {
-                Log.d("FILTER", "performFiltering() 3b $query")
-                when (filterType) {
-                    FilterType.LOCAL -> {
-                        stationsToFilter = dataProvider.getOriginalStationList()
-                        needsFiltering = true
+            when (filterType) {
+                FilterType.LOCAL -> {
+                    val stationsToFilter = dataProvider.getOriginalStationList()
+                    val filteredStations = ArrayList<WeightedStation>()
+                    val jaroWinkler = JaroWinklerSimilarity()
+                    for (station in stationsToFilter) {
+                        val similarity = jaroWinkler.apply(query, station.Name.lowercase(Locale.ROOT))
+                        val weight = (similarity * 100).toInt()
+                        if (weight > FUZZY_SEARCH_THRESHOLD) {
+                            filteredStations.add(WeightedStation(station, weight / 4))
+                        }
                     }
-                    FilterType.GLOBAL -> {
-                        stationsToFilter = searchGlobal(query)
-                        needsFiltering = false
-                        lastRemoteQuery = query
+                    filteredStations.sortWith { x, y ->
+                        if (x.weight == y.weight) y.station.ClickCount.compareTo(x.station.ClickCount)
+                        else y.weight.compareTo(x.weight)
                     }
+                    filteredStationsList = filteredStations.map { it.station }
                 }
-            }
-            if (needsFiltering) {
-                Log.d("FILTER", "performFiltering() 4a $query")
-                val filteredStations = ArrayList<WeightedStation>()
-                val jaroWinkler = JaroWinklerSimilarity()
-                for (station in stationsToFilter) {
-                    val similarity = jaroWinkler.apply(query, station.Name.lowercase(Locale.ROOT))
-                    val weight = (similarity * 100).toInt()
-                    if (weight > FUZZY_SEARCH_THRESHOLD) {
-                        val compressedWeight = weight / 4
-                        filteredStations.add(WeightedStation(station, compressedWeight))
+                FilterType.GLOBAL -> {
+                    // Für globale Suche: Den Server fragen
+                    val remoteStations = searchGlobal(query)
+                    lastRemoteQuery = query
+                    
+                    // Ergebnisse lokal nach Relevanz nachsortieren
+                    val filteredStations = ArrayList<WeightedStation>()
+                    val lowerQuery = query.lowercase(Locale.ROOT)
+                    
+                    for (station in remoteStations) {
+                        val nameLower = station.Name.lowercase(Locale.ROOT)
+                        var score = 0
+                        
+                        if (nameLower == lowerQuery) {
+                            score = 10000 // Exakter Treffer
+                        } else if (nameLower.startsWith(lowerQuery)) {
+                            score = 5000  // Beginnt mit Query
+                        } else if (nameLower.contains(" $lowerQuery")) {
+                            score = 2500  // Ein Wort beginnt mit Query
+                        } else if (nameLower.contains(lowerQuery)) {
+                            score = 1000  // Enthält Query irgendwo
+                        }
+                        
+                        // Klicks als Tie-Breaker (max 500 Punkte Bonus)
+                        val clickBonus = Math.min(station.ClickCount / 100, 500)
+                        filteredStations.add(WeightedStation(station, score + clickBonus))
                     }
+                    
+                    // Nach Score absteigend sortieren
+                    filteredStations.sortByDescending { it.weight }
+                    
+                    filteredStationsList = filteredStations.map { it.station }
                 }
-                filteredStations.sortWith { x, y ->
-                    if (x.weight == y.weight) {
-                        return@sortWith y.station.ClickCount.compareTo(x.station.ClickCount)
-                    }
-                    y.weight.compareTo(x.weight)
-                }
-                val resultList = ArrayList<DataRadioStation>()
-                for (weightedStation in filteredStations) {
-                    resultList.add(weightedStation.station)
-                }
-                filteredStationsList = resultList
-            } else {
-                Log.d("FILTER", "performFiltering() 4b $query")
-                filteredStationsList = stationsToFilter
             }
         }
+
         val filterResults = FilterResults()
         filterResults.values = filteredStationsList
         return filterResults
