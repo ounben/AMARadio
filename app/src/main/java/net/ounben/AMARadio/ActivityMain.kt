@@ -570,13 +570,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             menuItemCast?.isVisible = false
         }
         
-        updateToolbarTitleMargin()
-        updateToolbarTitleMargin()
         return true
-    }
-
-    private fun updateToolbarTitleMargin() {
-        // We let the themes and layout handle the spacing now
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
@@ -893,22 +887,16 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (currentFragment is FragmentTabs) {
             currentFragment.openFilterTab()
         } else {
-            val backStackTag = R.id.nav_item_stations.toString()
-            val f = FragmentTabs()
-            val fragmentTransaction = mFragmentManager.beginTransaction()
-            if (Utils.bottomNavigationEnabled(this)) {
-                fragmentTransaction.replace(R.id.containerView, f).commit()
-                mBottomNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
-            } else {
-                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(backStackTag).commit()
-                mNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
-            }
-
-            // We need to wait for the fragment to be created to switch tabs
-            mFragmentManager.executePendingTransactions()
-            f.openFilterTab()
             selectedMenuItem = R.id.nav_item_stations
-            invalidateOptionsMenu()
+            onNavigationItemSelectedInternal()
+            // We need to wait for the fragment to be created/resumed
+            val container = findViewById<View>(R.id.containerView)
+            container.post {
+                val newFragment = supportFragmentManager.findFragmentById(R.id.containerView)
+                if (newFragment is FragmentTabs) {
+                    newFragment.openFilterTab()
+                }
+            }
         }
     }
 
@@ -925,14 +913,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        updateToolbarTitleMargin()
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
         lastSearchQuery = newText
         SearchStations(newText ?: "")
-        updateToolbarTitleMargin()
         return true
     }
 

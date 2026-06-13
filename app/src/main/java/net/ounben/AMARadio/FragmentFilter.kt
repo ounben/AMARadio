@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.switchmaterial.SwitchMaterial
 import kotlinx.coroutines.*
 import net.ounben.AMARadio.data.DataCategory
@@ -110,6 +111,7 @@ class FragmentFilter : FragmentBase() {
     private lateinit var spinnerSort: Spinner
     private lateinit var switchReverse: SwitchMaterial
     private lateinit var btnApply: Button
+    private lateinit var appBarLayout: AppBarLayout
     
     private var selectedCountryCode: String = ""
     private var selectedLanguage: String = ""
@@ -148,6 +150,7 @@ class FragmentFilter : FragmentBase() {
         spinnerSort = view.findViewById(R.id.spinnerSort)
         switchReverse = view.findViewById(R.id.switchReverse)
         btnApply = view.findViewById(R.id.btnApply)
+        appBarLayout = view.findViewById(R.id.appBarLayout)
         
         rvStations = view.findViewById(R.id.recyclerViewStations)
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
@@ -207,21 +210,34 @@ class FragmentFilter : FragmentBase() {
         
         btnApply.setOnClickListener {
             saveFilters()
-            performSearch()
+            performSearch(true)
         }
         
         swipeRefreshLayout?.setOnRefreshListener {
-            performSearch()
+            performSearch(false)
         }
         
-        // Initial search if we have saved filters
+        // Initial search if we have saved filters - but keep menu expanded
         if (hasAnyFilter()) {
-            performSearch()
+            performSearch(false)
         }
 
         applyUiScaling(view)
 
         return view
+    }
+
+    override fun onResume() {
+        super.onResume()
+        expandFilter()
+    }
+
+    fun expandFilter() {
+        view?.post {
+            if (::appBarLayout.isInitialized) {
+                appBarLayout.setExpanded(true, true)
+            }
+        }
     }
 
     private fun applyUiScaling(view: View) {
@@ -331,9 +347,14 @@ class FragmentFilter : FragmentBase() {
         return DataCategory.DecodeJson(result).toList()
     }
 
-    private fun performSearch() {
+    private fun performSearch(collapseMenu: Boolean = false) {
         searchJob?.cancel()
         searchJob = scope.launch {
+            // Programmatically collapse the filter menu only if requested (e.g. by Apply button)
+            if (collapseMenu && ::appBarLayout.isInitialized) {
+                appBarLayout.setExpanded(false, true)
+            }
+
             swipeRefreshLayout?.isRefreshing = true
             layoutError?.visibility = View.GONE
             val AMARadioApp = requireActivity().application as AMARadioApp

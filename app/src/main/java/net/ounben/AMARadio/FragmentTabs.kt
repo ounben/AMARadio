@@ -229,6 +229,8 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
 
             if (filterPosition != -1) {
                 viewPager?.currentItem = filterPosition
+                // Explicitly tell the fragment to expand when the menu icon is clicked
+                (fragments[IDX_FILTER] as? FragmentFilter)?.expandFilter()
             }
         }
     }
