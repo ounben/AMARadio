@@ -226,7 +226,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             val app = application as AMARadioApp
             itsCurrentStation = app.historyManager.first ?: app.favouriteManager.first
         }
-        var showNotification = true
+        
         intent?.let {
             it.action?.let { action ->
                 when (action) {
@@ -248,29 +248,13 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                 }
             }
             MediaButtonReceiver.handleIntent(mediaSession, it)
-            showNotification = !it.getBooleanExtra(PLAYER_SERVICE_NO_NOTIFICATION_EXTRA, false)
         }
-        if (showNotification && !notificationIsActive) {
-            if (itsCurrentStation == null) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "Temporary", NotificationManager.IMPORTANCE_DEFAULT)
-                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
-                    val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID).setContentTitle("").setContentText("").build()
-                    try {
-                        // On Android 12+, we shouldn't call startForeground if we are in background and don't need to
-                        // The temporary service start was a workaround that might now cause issues.
-                        // We only start foreground if we really have something to show.
-                    } catch (e: Exception) {
-                        Log.e(TAG, "Failed to start temporary foreground service", e)
-                    }
-                } else {
-                    stopSelf()
-                    return START_NOT_STICKY
-                }
-            } else {
-                updateNotification(PlayState.Paused)
-            }
+
+        // Only enter foreground if we have a station and the player isn't completely idle
+        if (itsCurrentStation != null && radioPlayer?.playState != PlayState.Idle) {
+            updateNotification(radioPlayer?.playState ?: PlayState.Paused)
         }
+
         return START_STICKY
     }
 
@@ -310,7 +294,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             acquireWakeLockAndWifiLock()
             radioPlayer?.setVolume(FULL_VOLUME)
             
-            // Force a notification update to enter foreground immediately while loading
+            // Force entering foreground immediately
             updateNotification(PlayState.PrePlaying)
             
             itsCurrentStation?.let { radioPlayer?.play(it, isAlarm) }
@@ -532,22 +516,24 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                 .setShowCancelButton(true))
         val notification = builder.build()
         try {
-            if (playState == PlayState.Playing || playState == PlayState.PrePlaying || (playState == PlayState.Paused && notificationIsActive)) {
+            if (playState == PlayState.Playing || playState == PlayState.PrePlaying || playState == PlayState.Paused) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
                     startForeground(NOTIFY_ID, notification)
                 }
+                notificationIsActive = true
             } else {
                 if (notificationIsActive) {
-                    stopForeground(false)
+                    stopForeground(true)
+                    notificationIsActive = false
+                } else {
+                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
                 }
-                (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update foreground state", e)
         }
-        notificationIsActive = true
     }
 
     private fun toastOnUi(messageId: Int) {

@@ -40,7 +40,8 @@ open class FragmentBase : Fragment() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("urlResult", urlResult)
+        // We do NOT save urlResult here because it can be huge (TransactionTooLargeException).
+        // The data will be reloaded from cache or network when restored.
     }
 
     override fun onDestroy() {

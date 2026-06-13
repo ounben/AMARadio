@@ -170,13 +170,10 @@ open class ItemAdapterStation(
         if (!shouldLoadIcons) {
             holder.imageViewIcon.visibility = View.GONE
         } else {
-            if (station.hasIcon()) {
-                setupIcon(holder.imageViewIcon)
-                PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
-            } else {
-                holder.imageViewIcon.setImageDrawable(stationImagePlaceholder)
-                setupIcon(holder.imageViewIcon)
-            }
+            holder.imageViewIcon.visibility = View.VISIBLE
+            PlayerServiceUtil.getStationIcon(holder.imageViewIcon, if (station.hasIcon()) station.IconUrl else null)
+            setupIcon(holder.imageViewIcon)
+
             if (UiScaler.getScaleFactor(fragmentActivity) == UiScaler.SCALE_COMPACT) {
                 setupCompactStyle(holder)
             } else {
@@ -442,13 +439,17 @@ open class ItemAdapterStation(
     }
 
     private fun highlightCurrentStation() {
-        if (!PlayerServiceUtil.isPlaying()) return
         val currentStationUuid = PlayerServiceUtil.getStationId()
         val oldPos = playingStationPosition
-        playingStationPosition = filteredStationsList.indexOfFirst { it.StationUuid == currentStationUuid }
+        playingStationPosition = if (PlayerServiceUtil.isPlaying()) {
+            filteredStationsList.indexOfFirst { it.StationUuid == currentStationUuid }
+        } else {
+            -1
+        }
+        
         if (playingStationPosition != oldPos) {
-            if (oldPos > -1) notifyItemChanged(oldPos)
-            if (playingStationPosition > -1) notifyItemChanged(playingStationPosition)
+            if (oldPos > -1 && oldPos < itemCount) notifyItemChanged(oldPos)
+            if (playingStationPosition > -1 && playingStationPosition < itemCount) notifyItemChanged(playingStationPosition)
         }
     }
 

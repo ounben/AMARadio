@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import net.ounben.AMARadio.R
+import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.service.PlayerServiceUtil
 import net.ounben.AMARadio.utils.RecyclerItemMoveAndSwipeHelper
 import net.ounben.AMARadio.utils.SwipeableViewHolder
@@ -62,13 +63,18 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
 
     override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = filteredStationsList[position]
+        val shouldLoadIcons = Utils.shouldLoadIcons(fragmentActivity)
         
         // Bind Icon
-        if (station.hasIcon()) {
-            setupIcon(holder.imageViewIcon)
-            PlayerServiceUtil.getStationIcon(holder.imageViewIcon, station.IconUrl)
+        if (!shouldLoadIcons) {
+            holder.frameLayout.visibility = View.GONE
         } else {
-            holder.imageViewIcon.setImageResource(R.drawable.ic_radio_24dp)
+            holder.frameLayout.visibility = View.VISIBLE
+            PlayerServiceUtil.getStationIcon(holder.imageViewIcon, if (station.hasIcon()) station.IconUrl else null)
+            
+            val playListener = View.OnClickListener { holder.onClick(it) }
+            holder.imageViewIcon.setOnClickListener(playListener)
+            holder.frameLayout.setOnClickListener(playListener)
         }
         
         // Bind Name

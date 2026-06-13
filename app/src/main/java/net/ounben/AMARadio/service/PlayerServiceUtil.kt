@@ -32,14 +32,18 @@ object PlayerServiceUtil {
 
     @JvmStatic
     fun startService(context: Context) {
-        if (mBound) return
-        val anIntent = Intent(context, PlayerService::class.java)
-        anIntent.putExtra(PlayerService.PLAYER_SERVICE_NO_NOTIFICATION_EXTRA, true)
         mainContext = context
-        serviceConnection = getServiceConnection()
+        val anIntent = Intent(context, PlayerService::class.java)
+        
+        // Use regular startService to avoid background-start restrictions during app launch.
+        // The service will promote itself to foreground only when playback starts.
         context.startService(anIntent)
-        context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
-        mBound = true
+
+        if (!mBound) {
+            serviceConnection = getServiceConnection()
+            context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
+            mBound = true
+        }
     }
 
     @JvmStatic
@@ -250,13 +254,17 @@ object PlayerServiceUtil {
 
     @JvmStatic
     fun getStationIcon(holder: ImageView, fromUrl: String?) {
-        if (fromUrl.isNullOrBlank()) {
-            holder.setImageResource(R.drawable.ic_radio_24dp)
-            return
-        }
-        val context = mainContext ?: return
+        val context = mainContext ?: holder.context
         val r = context.resources
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, r.displayMetrics)
+
+        if (fromUrl.isNullOrBlank() || fromUrl == "null") {
+            holder.load(R.drawable.ic_radio_24dp) {
+                size(px.toInt(), px.toInt())
+                crossfade(true)
+            }
+            return
+        }
 
         holder.load(fromUrl) {
             placeholder(R.drawable.ic_radio_24dp)
@@ -264,6 +272,7 @@ object PlayerServiceUtil {
             if (px > 0) {
                 size(px.toInt(), px.toInt())
             }
+            crossfade(true)
             diskCachePolicy(CachePolicy.ENABLED)
             networkCachePolicy(CachePolicy.ENABLED)
         }
