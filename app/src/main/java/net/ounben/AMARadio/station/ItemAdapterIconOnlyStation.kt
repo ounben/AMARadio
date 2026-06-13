@@ -113,6 +113,12 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         holder.frameLayout.layoutParams.height = pxSize
         
         holder.textViewTitle.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12f * factor)
+
+        // Scale the favorite star
+        val starBaseSize = 32f // dp
+        val starPxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, starBaseSize * factor, fragmentActivity.resources.displayMetrics).toInt()
+        holder.starredStatusIcon.layoutParams.width = starPxSize
+        holder.starredStatusIcon.layoutParams.height = starPxSize
     }
 
     fun enableItemMove(recyclerView: RecyclerView) {

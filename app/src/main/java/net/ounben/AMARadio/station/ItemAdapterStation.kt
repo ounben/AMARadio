@@ -401,6 +401,14 @@ open class ItemAdapterStation(
         lpIcon.width = iconSize
         lpIcon.height = iconSize
         holder.imageViewIcon.layoutParams = lpIcon
+
+        val starSize = (48 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        val lpStar = holder.starredStatusIcon.layoutParams
+        lpStar.width = starSize
+        lpStar.height = starSize
+        holder.starredStatusIcon.layoutParams = lpStar
+        
+        holder.starredStatusIcon.setPadding(0, 0, 0, 0)
     }
 
     private fun setupCompactStyle(holder: StationViewHolder) {
@@ -423,6 +431,14 @@ open class ItemAdapterStation(
         lpIcon.width = iconWidth
         lpIcon.height = iconSize
         holder.imageViewIcon.layoutParams = lpIcon
+
+        val starSize = (36 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
+        val lpStar = holder.starredStatusIcon.layoutParams
+        lpStar.width = starSize
+        lpStar.height = starSize
+        holder.starredStatusIcon.layoutParams = lpStar
+
+        holder.starredStatusIcon.setPadding(0, 0, 0, 0)
     }
 
     private fun highlightCurrentStation() {

@@ -84,8 +84,8 @@
                 android:layout_gravity="center"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/image_button_more"
-                android:minWidth="50dp"
-                android:padding="5dp"
+                android:minWidth="0dp"
+                android:padding="0dp"
                 app:tint="?attr/iconsInItemBackgroundColor"
                 app:srcCompat="@drawable/ic_expand_more_white_24dp" />
 
@@ -93,7 +93,7 @@
             android:id="@+id/starredStatusIcon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_gravity="top|end"
+            android:layout_gravity="center_vertical|end"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:padding="9dp"
             android:scaleType="fitCenter"
