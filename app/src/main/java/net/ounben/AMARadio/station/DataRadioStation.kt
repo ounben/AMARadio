@@ -17,6 +17,7 @@ import coil.transform.RoundedCornersTransformation
 import kotlinx.coroutines.*
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import net.ounben.AMARadio.CountryCodeDictionary
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.StationSaveManager
 import net.ounben.AMARadio.Utils
@@ -93,7 +94,14 @@ class DataRadioStation : Parcelable {
         if (Votes > 0) {
             list.add(context.getString(R.string.station_details_votes, Votes))
         }
-        if (!TextUtils.isEmpty(Country)) {
+        if (!TextUtils.isEmpty(CountryCode)) {
+            val localizedCountry = CountryCodeDictionary.instance.getCountryByCode(CountryCode)
+            if (!localizedCountry.isNullOrEmpty()) {
+                list.add(localizedCountry)
+            } else if (!TextUtils.isEmpty(Country)) {
+                list.add(Country)
+            }
+        } else if (!TextUtils.isEmpty(Country)) {
             list.add(Country)
         }
         if (!TextUtils.isEmpty(State)) {

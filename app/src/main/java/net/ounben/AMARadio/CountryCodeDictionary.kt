@@ -34,6 +34,15 @@ class CountryCodeDictionary private constructor() {
     }
 
     fun getCountryByCode(code: String): String? {
+        val locale = try {
+            Locale.Builder().setRegion(code).build()
+        } catch (e: Exception) {
+            Locale("", code)
+        }
+        val displayCountry = locale.getDisplayCountry(Locale.getDefault())
+        if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {
+            return displayCountry
+        }
         return codeToCountry[code.lowercase(Locale.ENGLISH)]
     }
 
