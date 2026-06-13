@@ -132,8 +132,8 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                 radioPlayer?.setVolume(FULL_VOLUME)
             }
             AudioManager.AUDIOFOCUS_LOSS -> {
-                Log.d(TAG, "audio focus loss (ignored for testing)")
-                // if (radioPlayer?.isPlaying() == true) pause(PauseReason.FOCUS_LOSS)
+                Log.d(TAG, "audio focus loss")
+                if (radioPlayer?.isPlaying() == true) pause(PauseReason.FOCUS_LOSS)
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 Log.d(TAG, "audio focus loss transient")
@@ -257,12 +257,9 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                     (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
                     val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID).setContentTitle("").setContentText("").build()
                     try {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                            startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
-                        } else {
-                            startForeground(NOTIFY_ID, notification)
-                        }
-                        stopForeground(true)
+                        // On Android 12+, we shouldn't call startForeground if we are in background and don't need to
+                        // The temporary service start was a workaround that might now cause issues.
+                        // We only start foreground if we really have something to show.
                     } catch (e: Exception) {
                         Log.e(TAG, "Failed to start temporary foreground service", e)
                     }
@@ -301,14 +298,23 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         val maxVol = audioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC) ?: -1
         val isMuted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) audioManager?.isStreamMute(AudioManager.STREAM_MUSIC) else false
         Log.d(TAG, "playCurrentStation: current music volume=$currentVol, max volume=$maxVol, isMuted=$isMuted")
-        // if (acquireAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+        
+        // Clear error and pause reason before starting
+        lastErrorFromPlayer = -1
+        this.pauseReason = PauseReason.NONE
+        
+        if (acquireAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             enableMediaSession()
             liveInfo = StreamLiveInfo(null)
             streamInfo = null
             acquireWakeLockAndWifiLock()
             radioPlayer?.setVolume(FULL_VOLUME)
+            
+            // Force a notification update to enter foreground immediately while loading
+            updateNotification(PlayState.PrePlaying)
+            
             itsCurrentStation?.let { radioPlayer?.play(it, isAlarm) }
-        // }
+        }
     }
 
     fun pause(reason: PauseReason) {
@@ -526,7 +532,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                 .setShowCancelButton(true))
         val notification = builder.build()
         try {
-            if (playState == PlayState.Playing || playState == PlayState.PrePlaying) {
+            if (playState == PlayState.Playing || playState == PlayState.PrePlaying || (playState == PlayState.Paused && notificationIsActive)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
@@ -673,7 +679,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                     }
                 }
                 else -> {
-                    if (state != PlayState.PrePlaying) disableMediaSession()
+                    if (state != PlayState.PrePlaying && state != PlayState.Paused) disableMediaSession()
                     if (audioSessionId > 0) {
                         val i = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
                             putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)

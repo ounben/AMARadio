@@ -80,7 +80,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
                         .setUsage(if (isAlarm) C.USAGE_ALARM else C.USAGE_MEDIA)
                         .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
                         .build()
-                    setAudioAttributes(audioAttributes, true)
+                    setAudioAttributes(audioAttributes, false)
                     volume = currentVolume
                     addListener(PlayerEventListener())
                     Log.d("ExoPlayerWrapper", "Player created. Volume: $volume, AudioAttributes usage: ${audioAttributes.usage}")

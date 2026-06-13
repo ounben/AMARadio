@@ -4,6 +4,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
@@ -36,14 +37,15 @@ object PlayerServiceUtil {
         anIntent.putExtra(PlayerService.PLAYER_SERVICE_NO_NOTIFICATION_EXTRA, true)
         mainContext = context
         serviceConnection = getServiceConnection()
+        context.startService(anIntent)
         context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
         mBound = true
     }
 
     @JvmStatic
     fun bindService(context: Context) {
-        if (mBound) return
         mainContext = context
+        if (mBound) return
         serviceConnection = getServiceConnection()
         val anIntent = Intent(context, PlayerService::class.java)
         context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
