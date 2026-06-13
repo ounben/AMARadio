@@ -42,6 +42,10 @@
                             android:layout_height="?attr/actionBarSize"
                             android:background="?attr/colorPrimary"
                             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                            app:contentInsetEnd="0dp"
+                            app:contentInsetLeft="0dp"
+                            app:contentInsetStart="4dp"
+                            app:contentInsetStartWithNavigation="0dp"
                             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                             <LinearLayout
@@ -52,8 +56,8 @@
 
                                 <ImageView
                                     android:id="@+id/toolbar_cat_icon"
-                                    android:layout_width="40dp"
-                                    android:layout_height="40dp"
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
                                     android:src="@drawable/ic_cat_face"
                                     android:contentDescription="@null" />
 
@@ -61,19 +65,22 @@
                                     android:id="@+id/toolbar_custom_title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
+                                    android:layout_marginStart="4dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="1"
+                                    android:singleLine="true"
+                                    android:text="AMARadio"
                                     android:textColor="@android:color/white"
-                                    android:textSize="20sp"
-                                    android:textStyle="bold"
-                                    tools:text="AMARadio" />
+                                    android:textSize="16dp"
+                                    android:textStyle="bold" />
                             </LinearLayout>
 
                             <ProgressBar
                                 android:id="@+id/progressBarLoading"
-                                android:layout_width="34dp"
-                                android:layout_height="34dp"
+                                android:layout_width="28dp"
+                                android:layout_height="28dp"
                                 android:layout_gravity="end"
-                                android:layout_marginEnd="16dp"
+                                android:layout_marginEnd="4dp"
                                 android:indeterminate="true"
                                 android:theme="@style/ProgressBarCircle"
                                 android:visibility="gone" />

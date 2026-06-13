@@ -43,6 +43,8 @@
 
         <item name="snackbarButtonStyle">@style/SnackBarButton</item>
 
+        <item name="actionButtonStyle">@style/CompactActionButton</item>
+
         <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccent</item>
 
@@ -86,6 +88,8 @@
         <item name="iconsInItemBackgroundColor">@color/iconsInItemBackgroundColorDark</item>
 
         <item name="snackbarButtonStyle">@style/SnackBarButtonDark</item>
+
+        <item name="actionButtonStyle">@style/CompactActionButton</item>
 
         <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccentDark</item>
@@ -165,5 +169,11 @@
 
     <style name="SnackBarButtonDark" parent="@style/Widget.MaterialComponents.Button.TextButton.Snackbar">
         <item name="android:textColor">@color/snackBarButtonColor</item>
+    </style>
+
+    <style name="CompactActionButton" parent="Widget.AppCompat.ActionButton">
+        <item name="android:minWidth">20dp</item>
+        <item name="android:paddingStart">2dp</item>
+        <item name="android:paddingEnd">2dp</item>
     </style>
 </resources>

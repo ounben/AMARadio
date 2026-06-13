@@ -55,9 +55,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         if (myToolbar == null || screen == null) return
 
-        // myToolbar.title = screen.title // Remove this to avoid double title
-        (activity as? ActivityMain)?.setToolbarTitle(screen.title)
-
         if (Utils.bottomNavigationEnabled(activity)) {
             activity.supportActionBar?.setDisplayHomeAsUpEnabled(false)
             activity.supportActionBar?.setDisplayShowHomeEnabled(false)
@@ -107,7 +104,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         // Statistics
         findPreference<Preference>("show_statistics")?.setOnPreferenceClickListener {
-            (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_statistics)
             val f = FragmentServerInfo()
             val fragmentTransaction = parentFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
@@ -116,7 +112,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         // About
         findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
-            (activity as ActivityMain).findViewById<Toolbar>(R.id.my_awesome_toolbar)?.setTitle(R.string.settings_about)
             val f = FragmentAbout()
             val fragmentTransaction = parentFragmentManager.beginTransaction()
             fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()

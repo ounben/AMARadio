@@ -93,7 +93,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var instanceStateWasSaved = false
     private var lastExitTry: Date? = null
     private var meteredConnectionAlertDialog: AlertDialog? = null
-    private var isSearchExpanded = false
+    private var isSearchActive = false
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -133,6 +133,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val myToolbar: Toolbar = findViewById(R.id.my_awesome_toolbar)
         setSupportActionBar(myToolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        if (Utils.isDarkTheme(this)) {
+            findViewById<TextView>(R.id.toolbar_custom_title)?.setTextColor(androidx.core.content.ContextCompat.getColor(this, R.color.colorPrimary))
+        }
 
         PlayerServiceUtil.startService(applicationContext)
 
@@ -449,13 +453,13 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         
         menuItemSearch?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                isSearchExpanded = true
+                isSearchActive = true
                 invalidateOptionsMenu()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                isSearchExpanded = false
+                isSearchActive = false
                 invalidateOptionsMenu()
                 return true
             }
@@ -475,32 +479,33 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
+        val isSearching = menuItemSearch?.isActionViewExpanded == true
+
         menuItemSleepTimer?.isVisible = false
-        menuItemSearch?.isVisible = !isSearchExpanded
+        menuItemSearch?.isVisible = !isSearching
         menuItemDelete?.isVisible = false
         menuItemSave?.isVisible = false
         menuItemLoad?.isVisible = false
-        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearchExpanded
-        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearchExpanded
+        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearching
+        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearching
         menuItemAddAlarm?.isVisible = false
-        menuItemFilter?.isVisible = !isSearchExpanded // Global filter access
+        menuItemFilter?.isVisible = !isSearching // Global filter access
 
         var mpdIsVisible = false
         val AMARadioApp = application as AMARadioApp
         val mpdClient = AMARadioApp.mpdClient
         val repository = mpdClient.mpdServersRepository
-        mpdIsVisible = !repository.isEmpty && !isSearchExpanded
+        mpdIsVisible = !repository.isEmpty && !isSearching
 
         menuItemMpd?.isVisible = mpdIsVisible
 
-        if (isSearchExpanded) {
+        if (isSearching) {
             menuItemSearch?.isVisible = true
         } else {
             when (selectedMenuItem) {
                 R.id.nav_item_stations -> {
                     menuItemSleepTimer?.isVisible = true
                     menuItemSearch?.isVisible = true
-                    setToolbarTitle(R.string.nav_item_stations)
                 }
                 R.id.nav_item_starred -> {
                     menuItemSleepTimer?.isVisible = true
@@ -510,7 +515,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                     menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
                     menuItemDelete?.setTitle(R.string.action_delete_favorites)
-                    setToolbarTitle(R.string.nav_item_starred)
                 }
                 R.id.nav_item_history -> {
                     menuItemSleepTimer?.isVisible = true
@@ -519,17 +523,15 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                     menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
                     menuItemDelete?.setTitle(R.string.action_delete_history)
-                    setToolbarTitle(R.string.nav_item_history)
                 }
                 R.id.nav_item_alarm -> {
                     menuItemAddAlarm?.isVisible = true
-                    setToolbarTitle(R.string.nav_item_alarm)
                 }
             }
         }
 
         menuItemCast = (application as AMARadioApp).castHandler.getRouteItem(applicationContext, menu)
-        if (isSearchExpanded) {
+        if (isSearching) {
             menuItemCast?.isVisible = false
         }
         return true
@@ -537,7 +539,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         super.onPrepareOptionsMenu(menu)
-        if (isSearchExpanded) {
+        val searchItem = menu.findItem(R.id.action_search)
+        if (searchItem?.isActionViewExpanded == true) {
             for (i in 0 until menu.size()) {
                 val item = menu.getItem(i)
                 if (item.itemId != R.id.action_search) {
@@ -877,14 +880,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
-    }
-
-    fun setToolbarTitle(title: CharSequence?) {
-        findViewById<TextView>(R.id.toolbar_custom_title)?.text = title
-    }
-
-    fun setToolbarTitle(titleRes: Int) {
-        findViewById<TextView>(R.id.toolbar_custom_title)?.setText(titleRes)
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
