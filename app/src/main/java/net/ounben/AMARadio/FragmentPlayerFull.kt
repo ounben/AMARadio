@@ -231,10 +231,11 @@ class FragmentPlayerFull : Fragment() {
         btnFavourite.setOnClickListener {
             val station = Utils.getCurrentOrLastStation(requireContext()) ?: return@setOnClickListener
             if (favouriteManager.has(station.StationUuid)) {
-                StationActions.removeFromFavourites(requireContext(), null, station)
+                StationActions.removeFromFavourites(requireContext(), it, station)
             } else {
                 StationActions.markAsFavourite(requireContext(), station)
             }
+            updateFavouriteButton()
         }
 
         applyUiScaling()
@@ -407,16 +408,22 @@ class FragmentPlayerFull : Fragment() {
         val station = Utils.getCurrentOrLastStation(requireContext())
         if (station != null && favouriteManager.has(station.StationUuid)) {
             btnFavourite.setImageResource(R.drawable.ic_star_24dp)
+            btnFavourite.alpha = 1.0f
             btnFavourite.contentDescription = requireContext().applicationContext.getString(R.string.detail_unstar)
         } else {
-            btnFavourite.setImageResource(R.drawable.ic_star_border_24dp)
+            btnFavourite.setImageResource(R.drawable.ic_star_transparent_with_border_24dp)
+            btnFavourite.alpha = 0.5f
             btnFavourite.contentDescription = requireContext().applicationContext.getString(R.string.detail_star)
         }
     }
 
     private inner class FavouritesObserver : Observer {
         override fun update(o: Observable?, arg: Any?) {
-            updateFavouriteButton()
+            if (isAdded) {
+                requireActivity().runOnUiThread {
+                    updateFavouriteButton()
+                }
+            }
         }
     }
 
