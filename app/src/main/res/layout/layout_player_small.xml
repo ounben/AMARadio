@@ -76,13 +76,14 @@
 
     <TextView
         android:id="@+id/textViewLiveInfoBig"
-        android:layout_width="290dp"
-        android:layout_height="38dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:ellipsize="marquee"
-        android:singleLine="false"
+        android:singleLine="true"
         android:textColor="?attr/colorAccent"
         android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
         app:layout_constraintStart_toEndOf="@id/playerRadioImage"

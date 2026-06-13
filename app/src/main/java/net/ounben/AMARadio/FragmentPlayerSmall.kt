@@ -97,6 +97,10 @@ class FragmentPlayerSmall : Fragment() {
             showPlayerMenu(station, isInFavorites)
         }
 
+        imageViewIcon.setOnClickListener {
+            callback?.onToggle()
+        }
+
         view.setOnClickListener {
             callback?.onToggle()
         }
@@ -222,12 +226,9 @@ class FragmentPlayerSmall : Fragment() {
 
         if (!Utils.shouldLoadIcons(requireContext())) {
             imageViewIcon.visibility = View.GONE
-        } else if (station != null && station.hasIcon()) {
-            imageViewIcon.visibility = View.VISIBLE
-            PlayerServiceUtil.getStationIcon(imageViewIcon, station.IconUrl)
         } else {
             imageViewIcon.visibility = View.VISIBLE
-            imageViewIcon.setImageDrawable(androidx.appcompat.content.res.AppCompatResources.getDrawable(requireContext(), R.drawable.ic_radio_24dp))
+            PlayerServiceUtil.getStationIcon(imageViewIcon, if (station?.hasIcon() == true) station.IconUrl else null)
         }
 
         if (role == Role.PLAYER) {

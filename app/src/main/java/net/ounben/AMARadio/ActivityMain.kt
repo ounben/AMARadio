@@ -220,37 +220,32 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     }
                 }
 
+                val transaction = mFragmentManager.beginTransaction()
+
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    if (smallPlayerFragment?.context == null) return
-
-                    appBarLayout.setExpanded(false)
-                    smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.HEADER)
-
-                    val fragmentTransaction = mFragmentManager.beginTransaction()
-                    mFragmentManager.findFragmentById(R.id.containerView)?.let { fragmentTransaction.hide(it) }
-                    fragmentTransaction.commit()
+                    if (smallPlayerFragment?.context != null) {
+                        appBarLayout.setExpanded(false)
+                        smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.HEADER)
+                        mFragmentManager.findFragmentById(R.id.containerView)?.let { transaction.hide(it) }
+                    }
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     appBarLayout.setExpanded(true)
                     smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.PLAYER)
                     fullPlayerFragment?.resetScroll()
+                    fullPlayerFragment?.let { transaction.hide(it) }
+                }
 
-                    val fragmentTransaction = mFragmentManager.beginTransaction()
-                    fullPlayerFragment?.let { fragmentTransaction.hide(it) }
-                    fragmentTransaction.commit()
+                if (newState != BottomSheetBehavior.STATE_COLLAPSED) {
+                    fullPlayerFragment?.init()
+                    fullPlayerFragment?.let { transaction.show(it) }
                 }
 
                 if (oldState == BottomSheetBehavior.STATE_EXPANDED && newState != BottomSheetBehavior.STATE_EXPANDED) {
-                    val fragmentTransaction = mFragmentManager.beginTransaction()
-                    mFragmentManager.findFragmentById(R.id.containerView)?.let { fragmentTransaction.show(it) }
-                    fragmentTransaction.commit()
+                    mFragmentManager.findFragmentById(R.id.containerView)?.let { transaction.show(it) }
                 }
 
-                if (oldState == BottomSheetBehavior.STATE_COLLAPSED && newState != oldState) {
-                    fullPlayerFragment?.init()
-
-                    val fragmentTransaction = mFragmentManager.beginTransaction()
-                    fullPlayerFragment?.let { fragmentTransaction.show(it) }
-                    fragmentTransaction.commit()
+                if (!transaction.isEmpty) {
+                    transaction.commitAllowingStateLoss()
                 }
 
                 oldState = newState
