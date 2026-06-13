@@ -5,6 +5,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.95] - 2026-06-12
+### Added
+- **Integrated Station Search in Filter**: You can now search for station names directly within the Advanced Filter tab, combining it with Country, Language, and Tag filters.
+- **Improved Tag Support**: Expanded the local tag database to **10,000 entries**, ensuring specialized genres like "Phonk" are easily found.
+- **Smart Suggestions**: Added "contains" search logic to all filter dropdowns (Country, Language, Tag). Results are now ranked by relevance, prioritizing exact matches and word starts.
+- **UI Drag Handles**: Added visual drag handles to the mini-player and track detail dialogs to indicate they can be swiped.
+- **Enhanced Track Details**: The track history info dialog now displays Title, Artist, and Duration in a modern, structured layout.
+
+### Changed
+- **Modernized Notifications**: Replaced old-style gray Toasts with sleek, theme-colored Material Snackbars.
+- **Optimized Full Screen Player**: Removed unused album art to provide immediate focus on station details and tags.
+- **Toolbar Refinement**: 
+    - Fixed the title to a static "AMARadio" across all tabs and languages for better branding.
+    - Improved title visibility in Dark Mode (now uses brand orange).
+    - Maximized search field space by automatically hiding all other icons during search.
+    - Compacted icon spacing for a cleaner look on all screen sizes.
+- **System Integration**: Fixed layout issues where the app was partially covered by system bars (YouTube-style). The toolbar now remains fixed at the top for a smoother scrolling experience.
+- **Navigation Icon**: Updated the stations list icon in the bottom menu to a radio symbol for better clarity.
+
+### Fixed
+- **Search Reliability**: Resolved an issue where specific stations (like "Tlemcen") were buried by mid-word matches. Search results are now intelligently ranked.
+- **Stability**: Removed the crash-prone Lyrics feature and fixed image loading errors.
+- **Build Quality**: Resolved over 150 Android Lint errors and modernized project configurations.
+
+### Security
+- **Increased Minimum SDK**: Now targeting Android 8.0 (API 26) as the minimum version to support modern security and performance features.
+- **Privacy**: Removed Last.fm integration and related API key settings.
+
 ## [0.94] - 2026-06-12
 ### Added
 - **Storage Access Framework (SAF)**: Replaced custom file dialogs with the native Android Storage Access Framework for better security and system integration.
