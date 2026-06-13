@@ -70,9 +70,6 @@ class FragmentPlayerFull : Fragment() {
     private lateinit var viewTags: TagsView
 
     private lateinit var textViewGeneralInfo: TextView
-    private lateinit var textViewTimePlayed: TextView
-    private lateinit var textViewNetworkUsageInfo: TextView
-    private lateinit var textViewTimeCached: TextView
 
     private lateinit var groupRecordings: Group
     private lateinit var imgRecordingIcon: ImageView
@@ -124,9 +121,6 @@ class FragmentPlayerFull : Fragment() {
         viewTags = view.findViewById(R.id.viewTags)
 
         textViewGeneralInfo = view.findViewById(R.id.textViewGeneralInfo)
-        textViewTimePlayed = view.findViewById(R.id.textViewTimePlayed)
-        textViewNetworkUsageInfo = view.findViewById(R.id.textViewNetworkUsageInfo)
-        textViewTimeCached = view.findViewById(R.id.textViewTimeCached)
 
         groupRecordings = view.findViewById(R.id.group_recording_info)
         imgRecordingIcon = view.findViewById(R.id.imgRecordingIcon)
@@ -463,19 +457,7 @@ class FragmentPlayerFull : Fragment() {
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     private class TimedUpdateTask(obj: FragmentPlayerFull) : RefreshHandler.ObjectBoundRunnable<FragmentPlayerFull>(obj) {
         override fun run(fragmentPlayerFull: FragmentPlayerFull) {
-            val shoutcastInfo = PlayerServiceUtil.getShoutcastInfo()
             if (PlayerServiceUtil.isPlaying()) {
-                var networkUsageInfo = Utils.getReadableBytes(PlayerServiceUtil.getTransferredBytes().toDouble())
-                if (shoutcastInfo != null && shoutcastInfo.bitrate > 0) {
-                    networkUsageInfo += " (${shoutcastInfo.bitrate} kbps)"
-                }
-                fragmentPlayerFull.textViewNetworkUsageInfo.text = networkUsageInfo
-                val now = System.currentTimeMillis()
-                val startTime = PlayerServiceUtil.getLastPlayStartTime()
-                var deltaSeconds = if (startTime > 0) (now - startTime) / 1000 else 0
-                deltaSeconds = Math.max(deltaSeconds, 0)
-                fragmentPlayerFull.textViewTimePlayed.text = DateUtils.formatElapsedTime(deltaSeconds)
-                fragmentPlayerFull.textViewTimeCached.text = DateUtils.formatElapsedTime(PlayerServiceUtil.getBufferedSeconds())
                 fragmentPlayerFull.updateRunningRecording()
             }
         }
