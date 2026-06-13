@@ -66,13 +66,13 @@
             android:layout_gravity="center"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/image_button_delete"
-            app:tint="?attr/iconsInItemBackgroundColor" />
+            app:tint="?attr/colorAccent" />
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/checkboxRepeating"
-            app:tint="?attr/iconsInItemBackgroundColor"
+            app:tint="?attr/colorAccent"
             app:srcCompat="@drawable/ic_refresh_black_24dp"
             android:layout_gravity="center"
             android:background="?attr/selectableItemBackgroundBorderless"
