@@ -37,7 +37,7 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
         fun removeServer(mpdServerData: MPDServerData)
     }
 
-    private inner class MPDServerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class MPDServerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgConnectionStatus: ImageView = itemView.findViewById(R.id.imgConnectionStatus)
         val textViewServerName: TextView = itemView.findViewById(R.id.textViewMPDName)
         val btnPlay: ImageButton = itemView.findViewById(R.id.buttonPlay)
@@ -50,7 +50,7 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
         var mpdServerData: MPDServerData? = null
     }
 
-    private inner class PlayerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    private class PlayerItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textViewDescription: TextView = itemView.findViewById(R.id.textViewDescription)
         val btnPlay: ImageButton = itemView.findViewById(R.id.buttonPlay)
     }

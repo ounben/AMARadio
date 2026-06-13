@@ -19,7 +19,7 @@ import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.service.PlayerServiceUtil
 
 class TrackHistoryAdapter(private val activity: FragmentActivity) : PagedListAdapter<TrackHistoryEntry, TrackHistoryAdapter.TrackHistoryItemViewHolder>(DIFF_CALLBACK) {
-    inner class TrackHistoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class TrackHistoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val rootview: View = itemView
         val imageViewStationIcon: ImageView = itemView.findViewById(R.id.imageViewStationIcon)
         val textViewTrackName: TextView = itemView.findViewById(R.id.textViewTrackName)

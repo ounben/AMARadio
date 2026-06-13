@@ -23,7 +23,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
     ItemAdapaterContextMenuStation(fragmentActivity, resourceId, filterType),
     RecyclerItemMoveAndSwipeHelper.MoveAndSwipeCallback<ItemAdapterStation.StationViewHolder> {
 
-    inner class IconOnlyStationViewHolder(itemView: View) : ItemAdapterStation.StationViewHolder(itemView), View.OnCreateContextMenuListener, SwipeableViewHolder {
+    inner class IconOnlyStationViewHolder(itemView: View) : StationViewHolder(itemView), View.OnCreateContextMenuListener, SwipeableViewHolder {
         private var contextMenu: PopupMenu? = null
 
         init {
@@ -58,7 +58,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         return IconOnlyStationViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: ItemAdapterStation.StationViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: StationViewHolder, position: Int) {
         val station = filteredStationsList[position]
         
         // Bind Icon
@@ -96,7 +96,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         applyScaling(holder)
     }
 
-    private fun applyScaling(holder: ItemAdapterStation.StationViewHolder) {
+    private fun applyScaling(holder: StationViewHolder) {
         val factor = UiScaler.getScaleFactor(fragmentActivity)
         val baseSize = 80f // dp
         val pxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, baseSize * factor, fragmentActivity.resources.displayMetrics).toInt()

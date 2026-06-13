@@ -19,7 +19,7 @@ import net.ounben.AMARadio.R
 import java.io.File
 
 class RecordingsAdapter(private val context: Context) : RecyclerView.Adapter<RecordingsAdapter.RecordingItemViewHolder>() {
-    inner class RecordingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class RecordingItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val viewRoot: ViewGroup = itemView as ViewGroup
         val textViewTitle: TextView = itemView.findViewById(R.id.textViewTitle)
         val textViewTime: TextView = itemView.findViewById(R.id.textViewTime)
@@ -63,7 +63,7 @@ class RecordingsAdapter(private val context: Context) : RecyclerView.Adapter<Rec
         if (BuildConfig.DEBUG) {
             Log.d(TAG, "play: $path")
         }
-        val i = Intent(android.content.Intent.ACTION_VIEW)
+        val i = Intent(Intent.ACTION_VIEW)
         val file = File(path)
         val fileUri = FileProvider.getUriForFile(context, context.packageName + ".fileprovider", file)
         i.setDataAndType(fileUri, "audio/*")

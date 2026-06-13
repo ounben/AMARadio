@@ -17,7 +17,7 @@ class RadioAlarmManager(private val context: Context) {
     private val list = ArrayList<DataRadioStationAlarm>()
     private val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
 
-    inner class AlarmsObservable : Observable() {
+    class AlarmsObservable : Observable() {
         override fun hasChanged(): Boolean {
             return true
         }

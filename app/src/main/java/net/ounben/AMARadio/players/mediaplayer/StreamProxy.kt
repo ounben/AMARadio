@@ -19,6 +19,7 @@ import java.net.Socket
 import java.net.SocketTimeoutException
 import java.util.*
 
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class StreamProxy(private val httpClient: OkHttpClient, private val uri: String, private val callback: StreamProxyListener) : Recordable {
     private val TAG = "PROXY"
     private var recordableListener: RecordableListener? = null

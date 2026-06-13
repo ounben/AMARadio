@@ -209,7 +209,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
         }
     }
 
-    private inner class CustomLoadErrorHandlingPolicy(context: Context) : DefaultLoadErrorHandlingPolicy() {
+    private class CustomLoadErrorHandlingPolicy(context: Context) : DefaultLoadErrorHandlingPolicy() {
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         
         override fun getRetryDelayMsFor(loadErrorInfo: LoadErrorHandlingPolicy.LoadErrorInfo): Long {

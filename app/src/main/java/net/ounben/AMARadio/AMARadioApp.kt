@@ -59,7 +59,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
     private var testsInterceptor: Interceptor? = null
 
-    inner class UserAgentInterceptor(private val userAgent: String) : Interceptor {
+    class UserAgentInterceptor(private val userAgent: String) : Interceptor {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain): Response {
             val originalRequest = chain.request()
@@ -92,7 +92,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         recordingsManager = RecordingsManager()
         alarmManager = RadioAlarmManager(this)
 
-        val uiModeManager = getSystemService(Context.UI_MODE_SERVICE) as UiModeManager
+        val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
         if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             tvChannelManager = TvChannelManager(this)
             favouriteManager.addObserver(tvChannelManager)

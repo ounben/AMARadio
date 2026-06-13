@@ -22,11 +22,12 @@ import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 object PlayerServiceUtil {
     private var mainContext: Context? = null
     private var mBound = false
     private var serviceConnection: ServiceConnection? = null
-    private var itsPlayerService: net.ounben.AMARadio.IPlayerService? = null
+    private var itsPlayerService: IPlayerService? = null
 
     @JvmStatic
     fun startService(context: Context) {
@@ -84,7 +85,7 @@ object PlayerServiceUtil {
                 if (BuildConfig.DEBUG) {
                     Log.d("PLAYER", "Service came online")
                 }
-                itsPlayerService = net.ounben.AMARadio.IPlayerService.Stub.asInterface(binder)
+                itsPlayerService = IPlayerService.Stub.asInterface(binder)
                 val local = Intent()
                 local.action = PlayerService.PLAYER_SERVICE_BOUND
                 mainContext?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(local) }

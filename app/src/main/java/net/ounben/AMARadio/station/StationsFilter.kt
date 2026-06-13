@@ -34,7 +34,7 @@ class StationsFilter(private val context: Context, private val filterType: Filte
     private var lastRemoteSearchStatus = SearchStatus.SUCCESS
     private var searchStyle = SearchStyle.ByName
 
-    private inner class WeightedStation(val station: DataRadioStation, val weight: Int)
+    private class WeightedStation(val station: DataRadioStation, val weight: Int)
 
     fun setSearchStyle(searchStyle: SearchStyle) {
         Log.d("FILTER", "Changed search style:$searchStyle")

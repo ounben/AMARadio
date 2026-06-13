@@ -17,6 +17,7 @@ import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import java.util.concurrent.TimeUnit
 
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener, Recordable {
     private val TAG = "RadioPlayer"
 

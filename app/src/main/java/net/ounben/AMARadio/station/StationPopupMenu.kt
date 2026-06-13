@@ -26,7 +26,7 @@ object StationPopupMenu {
 
         // Show icons using reflection
         try {
-            val fields = popup.javaClass.getDeclaredFields()
+            val fields = popup.javaClass.declaredFields
             for (field in fields) {
                 if ("mPopup" == field.name) {
                     field.isAccessible = true

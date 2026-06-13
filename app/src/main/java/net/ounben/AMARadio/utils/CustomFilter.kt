@@ -56,8 +56,7 @@ abstract class CustomFilter {
 
     private inner class RequestHandler(looper: Looper) : Handler(looper) {
         override fun handleMessage(msg: Message) {
-            val what = msg.what
-            when (what) {
+            when (val what = msg.what) {
                 FILTER_TOKEN -> {
                     val args = msg.obj as RequestArguments
                     try {

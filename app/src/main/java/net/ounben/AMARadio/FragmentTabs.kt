@@ -239,7 +239,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             mTabsMapping.add(tabId)
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence {
             return resources.getString(mFragmentTitleList[position])
         }
 

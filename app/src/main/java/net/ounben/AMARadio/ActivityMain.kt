@@ -427,7 +427,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         intent?.let {
             handleIntent(it)
-            setIntent(null)
+            intent = null
         }
     }
 
@@ -810,7 +810,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(ACTION_HIDE_LOADING))
         invalidateOptionsMenu()
         checkMenuItems()
 

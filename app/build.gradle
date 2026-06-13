@@ -27,6 +27,7 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+        freeCompilerArgs += ["-opt-in=androidx.media3.common.util.UnstableApi"]
     }
 
     buildFeatures {
@@ -37,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId "ch.ounben.AMARadio"
-        minSdkVersion 23
+        minSdkVersion 26
         targetSdkVersion 37
 
         versionCode 101
@@ -71,6 +72,7 @@ android {
 
     lint {
         abortOnError true
+        lintConfig = file("lint.xml")
     }
 
     testOptions {

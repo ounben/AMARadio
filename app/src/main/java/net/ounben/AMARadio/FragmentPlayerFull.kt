@@ -450,9 +450,10 @@ class FragmentPlayerFull : Fragment() {
 
         override fun isViewFromObject(view: View, `object`: Any): Boolean = view === `object`
 
-        override fun getPageTitle(position: Int): CharSequence? = titles[position]
+        override fun getPageTitle(position: Int): CharSequence = titles[position]
     }
 
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     private class TimedUpdateTask(obj: FragmentPlayerFull) : RefreshHandler.ObjectBoundRunnable<FragmentPlayerFull>(obj) {
         override fun run(fragmentPlayerFull: FragmentPlayerFull) {
             val shoutcastInfo = PlayerServiceUtil.getShoutcastInfo()

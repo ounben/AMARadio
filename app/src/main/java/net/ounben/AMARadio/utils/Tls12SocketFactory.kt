@@ -22,27 +22,27 @@ class Tls12SocketFactory(private val delegate: SSLSocketFactory) : SSLSocketFact
     override fun getSupportedCipherSuites(): Array<String> = delegate.supportedCipherSuites
 
     @Throws(IOException::class)
-    override fun createSocket(s: Socket, host: String, port: Int, autoClose: Boolean): Socket? {
+    override fun createSocket(s: Socket, host: String, port: Int, autoClose: Boolean): Socket {
         return patch(delegate.createSocket(s, host, port, autoClose))
     }
 
     @Throws(IOException::class, UnknownHostException::class)
-    override fun createSocket(host: String, port: Int): Socket? {
+    override fun createSocket(host: String, port: Int): Socket {
         return patch(delegate.createSocket(host, port))
     }
 
     @Throws(IOException::class, UnknownHostException::class)
-    override fun createSocket(host: String, port: Int, localHost: InetAddress, localPort: Int): Socket? {
+    override fun createSocket(host: String, port: Int, localHost: InetAddress, localPort: Int): Socket {
         return patch(delegate.createSocket(host, port, localHost, localPort))
     }
 
     @Throws(IOException::class)
-    override fun createSocket(host: InetAddress, port: Int): Socket? {
+    override fun createSocket(host: InetAddress, port: Int): Socket {
         return patch(delegate.createSocket(host, port))
     }
 
     @Throws(IOException::class)
-    override fun createSocket(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int): Socket? {
+    override fun createSocket(address: InetAddress, port: Int, localAddress: InetAddress, localPort: Int): Socket {
         return patch(delegate.createSocket(address, port, localAddress, localPort))
     }
 

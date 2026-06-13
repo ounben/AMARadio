@@ -11,7 +11,9 @@ interface PlayerWrapper : Recordable {
         fun onStateChanged(state: PlayState)
         fun onPlayerWarning(messageId: Int)
         fun onPlayerError(messageId: Int)
+        @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
         fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo, isHls: Boolean)
+        @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
         fun onDataSourceStreamLiveInfo(liveInfo: StreamLiveInfo)
     }
 

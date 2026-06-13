@@ -18,7 +18,7 @@ class RecordingsManager {
     private val dateFormatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     private val timeFormatter = SimpleDateFormat("HH-mm", Locale.US)
 
-    inner class RecordingsObservable : Observable() {
+    class RecordingsObservable : Observable() {
         override fun hasChanged(): Boolean {
             return true
         }

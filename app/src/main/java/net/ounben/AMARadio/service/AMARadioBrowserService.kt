@@ -51,7 +51,7 @@ class AMARadioBrowserService : MediaBrowserServiceCompat() {
                 playerService = null
             }
         }
-        bindService(anIntent, playerServiceConnection!!, Context.BIND_AUTO_CREATE)
+        bindService(anIntent, playerServiceConnection!!, BIND_AUTO_CREATE)
         val filter = IntentFilter()
         filter.addAction(MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID)
         LocalBroadcastManager.getInstance(this).registerReceiver(playStationFromIdReceiver, filter)
@@ -62,7 +62,7 @@ class AMARadioBrowserService : MediaBrowserServiceCompat() {
         playerServiceConnection?.let { unbindService(it) }
     }
 
-    override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot? {
+    override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot {
         return AMARadioBrowser.onGetRoot(clientPackageName, clientUid, rootHints)
     }
 

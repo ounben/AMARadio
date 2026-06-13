@@ -147,10 +147,12 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
 
     override fun getExtension(): String = proxy?.getExtension() ?: "mp3"
 
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     override fun onFoundShoutcastStream(shoutcastInfo: ShoutcastInfo, isHls: Boolean) {
         stateListener?.onDataSourceShoutcastInfo(shoutcastInfo, isHls)
     }
 
+    @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     override fun onFoundLiveStreamInfo(liveInfo: StreamLiveInfo) {
         stateListener?.onDataSourceStreamLiveInfo(liveInfo)
     }

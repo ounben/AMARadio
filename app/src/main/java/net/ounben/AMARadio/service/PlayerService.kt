@@ -49,6 +49,7 @@ import net.ounben.AMARadio.station.live.StreamLiveInfo
 import java.util.*
 import android.content.pm.ServiceInfo
 
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class PlayerService : Service(), RadioPlayer.PlayerListener {
     private val TAG = "PLAY"
     private var sharedPref: SharedPreferences? = null
@@ -87,7 +88,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         LocalBroadcastManager.getInstance(itsContext!!).sendBroadcast(local)
     }
 
-    private val itsBinder: net.ounben.AMARadio.IPlayerService.Stub = object : net.ounben.AMARadio.IPlayerService.Stub() {
+    private val itsBinder: IPlayerService.Stub = object : IPlayerService.Stub() {
         override fun SetStation(station: DataRadioStation) {
             this@PlayerService.setStation(station)
         }
@@ -197,15 +198,15 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         }.start()
     }
 
-    override fun onBind(intent: Intent): IBinder? = itsBinder
+    override fun onBind(intent: Intent): IBinder = itsBinder
 
     override fun onCreate() {
         super.onCreate()
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         handler = Handler(mainLooper)
         itsContext = this
-        powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        powerManager = getSystemService(POWER_SERVICE) as PowerManager
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         radioIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null) as BitmapDrawable
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
         mediaSession = MediaSessionCompat(baseContext, baseContext.packageName).apply {
@@ -274,7 +275,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             if (itsCurrentStation == null) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                     val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "Temporary", NotificationManager.IMPORTANCE_DEFAULT)
-                    (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
+                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).createNotificationChannel(channel)
                     val notification = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID).setContentTitle("").setContentText("").build()
                     try {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -481,7 +482,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         if (BuildConfig.DEBUG) Log.d(TAG, "acquiring wake lock and wifi lock.")
         if (wakeLock == null) wakeLock = powerManager!!.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "PlayerService:")
         if (!wakeLock!!.isHeld) wakeLock!!.acquire()
-        val wm = itsContext!!.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager?
+        val wm = itsContext!!.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager?
         wm?.let {
             if (wifiLock == null) {
                 wifiLock = it.createWifiLock(WifiManager.WIFI_MODE_FULL_HIGH_PERF, "PlayerService")
@@ -556,7 +557,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
                 if (notificationIsActive) {
                     stopForeground(false)
                 }
-                (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
+                (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
             }
         } catch (e: Exception) {
             Log.e(TAG, "Failed to update foreground state", e)

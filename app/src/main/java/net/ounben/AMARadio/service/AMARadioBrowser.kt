@@ -32,7 +32,7 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): MediaBrowserServiceCompat.BrowserRoot? {
+    fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): MediaBrowserServiceCompat.BrowserRoot {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(AMARadioApp)
         val extras = Bundle()
         extras.putInt(DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE, DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM)
