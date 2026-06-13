@@ -566,7 +566,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun setupStationRecyclerView(context: Context, rv: RecyclerView, adapter: net.ounben.AMARadio.station.ItemAdapterStation) {
+    fun setupStationRecyclerView(context: Context, rv: RecyclerView, adapter: RecyclerView.Adapter<*>) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
         

@@ -44,6 +44,7 @@
         <item name="snackbarButtonStyle">@style/SnackBarButton</item>
 
         <item name="actionButtonStyle">@style/CompactActionButton</item>
+        <item name="android:itemPadding">0dp</item>
 
         <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccent</item>
@@ -90,6 +91,7 @@
         <item name="snackbarButtonStyle">@style/SnackBarButtonDark</item>
 
         <item name="actionButtonStyle">@style/CompactActionButton</item>
+        <item name="android:itemPadding">0dp</item>
 
         <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccentDark</item>
@@ -113,6 +115,12 @@
         <item name="android:windowBackground">@android:color/black</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="actionButtonStyle">@style/CompactActionButton</item>
+        <item name="android:actionButtonStyle">@style/CompactActionButton</item>
+        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
     </style>
 
     <style name="IconButton" parent="Widget.MaterialComponents.Button.TextButton">
@@ -172,8 +180,10 @@
     </style>
 
     <style name="CompactActionButton" parent="Widget.AppCompat.ActionButton">
-        <item name="android:minWidth">20dp</item>
-        <item name="android:paddingStart">2dp</item>
-        <item name="android:paddingEnd">2dp</item>
+        <item name="android:minWidth">32dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:paddingStart">4dp</item>
+        <item name="android:paddingEnd">4dp</item>
+        <item name="android:layout_margin">0dp</item>
     </style>
 </resources>

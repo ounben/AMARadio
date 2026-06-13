@@ -32,6 +32,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private var queuedSearchStyle: StationsFilter.SearchStyle? = null
 
     private val fragments = arrayOfNulls<Fragment>(11)
+    private var viewPager: ViewPager? = null
     private val addresses = arrayOf(
         itsAdressWWWLocal,
         itsAdressWWWTopClick,
@@ -46,23 +47,48 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         ""
     )
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            val styleIdx = savedInstanceState.getInt("queuedSearchStyle", -1)
+            if (styleIdx != -1) {
+                queuedSearchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+            }
+            queuedSearchQuery = savedInstanceState.getString("queuedSearchQuery")
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("activeTabPosition", viewPager?.currentItem ?: 0)
+        queuedSearchStyle?.let { outState.putInt("queuedSearchStyle", it.ordinal) }
+        outState.putString("queuedSearchQuery", queuedSearchQuery)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val x = inflater.inflate(R.layout.layout_tabs, null)
         val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
-        viewPager = x.findViewById(R.id.viewpager)
+        val vp = x.findViewById<ViewPager>(R.id.viewpager)
+        viewPager = vp
 
-        setupViewPager(viewPager!!)
+        setupViewPager(vp)
 
-        queuedSearchQuery?.let {
-            Log.d("TABS", "do queued search by name: $it")
-            Search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
-            queuedSearchQuery = null
-            queuedSearchStyle = StationsFilter.SearchStyle.ByName
+        val activePos = savedInstanceState?.getInt("activeTabPosition", 0) ?: 0
+        vp.post {
+            if (activePos > 0 && activePos < (vp.adapter?.count ?: 0)) {
+                vp.currentItem = activePos
+            }
+            
+            queuedSearchQuery?.let {
+                Log.d("TABS", "do queued search: $it")
+                Search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
+                // We keep the query for potential recreates, but clear it if search is complete
+            }
         }
 
         tabLayout.post {
             if (context != null) {
-                tabLayout.setupWithViewPager(viewPager)
+                tabLayout.setupWithViewPager(vp)
             }
         }
 
@@ -111,61 +137,50 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             addresses[IDX_LOCAL] = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
         }
 
-        fragments[IDX_LOCAL] = FragmentStations()
-        fragments[IDX_TOP_CLICK] = FragmentStations()
-        fragments[IDX_TOP_VOTE] = FragmentStations()
-        fragments[IDX_CHANGED_LATELY] = FragmentStations()
-        fragments[IDX_CURRENTLY_HEARD] = FragmentStations()
-        fragments[IDX_TAGS] = FragmentCategories()
-        fragments[IDX_COUNTRIES] = FragmentCategories()
-        fragments[IDX_LANGUAGES] = FragmentCategories()
-        fragments[IDX_SEARCH] = FragmentStations()
-        fragments[IDX_FILTER] = FragmentFilter()
+        // Create new instances first
+        val newFragments = arrayOfNulls<Fragment>(11)
+        newFragments[IDX_LOCAL] = FragmentStations()
+        newFragments[IDX_TOP_CLICK] = FragmentStations()
+        newFragments[IDX_TOP_VOTE] = FragmentStations()
+        newFragments[IDX_CHANGED_LATELY] = FragmentStations()
+        newFragments[IDX_CURRENTLY_HEARD] = FragmentStations()
+        newFragments[IDX_TAGS] = FragmentCategories()
+        newFragments[IDX_COUNTRIES] = FragmentCategories()
+        newFragments[IDX_LANGUAGES] = FragmentCategories()
+        newFragments[IDX_SEARCH] = FragmentStations()
+        newFragments[IDX_FILTER] = FragmentFilter()
 
-        for (i in fragments.indices) {
-            if (i == IDX_FILTER) continue // Filter handles its own setup
-
+        // Setup arguments for all possible fragments
+        for (i in newFragments.indices) {
+            if (i == IDX_FILTER) continue
             val bundle = Bundle()
             bundle.putString("url", addresses[i])
-
-            if (i == IDX_SEARCH) {
-                bundle.putBoolean(FragmentStations.KEY_SEARCH_ENABLED, true)
-            }
-
-            fragments[i]?.arguments = bundle
+            if (i == IDX_SEARCH) bundle.putBoolean(FragmentStations.KEY_SEARCH_ENABLED, true)
+            if (i == IDX_TAGS) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByTagExact.ordinal)
+            if (i == IDX_COUNTRIES) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByCountryCodeExact.ordinal)
+            if (i == IDX_LANGUAGES) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByLanguageExact.ordinal)
+            newFragments[i]?.arguments = bundle
         }
 
-        (fragments[IDX_TAGS] as FragmentCategories).EnableSingleUseFilter(true)
-        (fragments[IDX_TAGS] as FragmentCategories).SetBaseSearchLink(StationsFilter.SearchStyle.ByTagExact)
-        (fragments[IDX_COUNTRIES] as FragmentCategories).SetBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
-        (fragments[IDX_LANGUAGES] as FragmentCategories).SetBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
-
-        // Dynamische Liste der anzuzeigenden Tabs erstellen
         val activeTabs = mutableListOf<Int>()
-
-        if (countryCode != null) {
-            activeTabs.add(IDX_LOCAL)
-        }
+        if (countryCode != null) activeTabs.add(IDX_LOCAL)
         activeTabs.add(IDX_FILTER)
         activeTabs.add(IDX_TOP_CLICK)
-        // activeTabs.add(IDX_TOP_VOTE)
-
-        // HIER AUSKOMMENTIEREN ZUM AUSBLENDEN:
-        // activeTabs.add(IDX_CHANGED_LATELY)
-
         activeTabs.add(IDX_CURRENTLY_HEARD)
-
-        // HIER AUSKOMMENTIEREN ZUM AUSBLENDEN:
-        // activeTabs.add(IDX_TAGS)
-
         activeTabs.add(IDX_COUNTRIES)
-        // activeTabs.add(IDX_LANGUAGES)
         activeTabs.add(IDX_SEARCH)
 
-        val m = childFragmentManager
-        val adapter = ViewPagerAdapter(m)
+        val fm = childFragmentManager
+        val adapter = ViewPagerAdapter(fm)
 
         for (tabId in activeTabs) {
+            // ViewPager uses positions 0, 1, 2... for its tags in the adapter
+            val position = adapter.count
+            val tag = "android:switcher:${R.id.viewpager}:$position"
+            val existing = fm.findFragmentByTag(tag)
+            val fragment = existing ?: newFragments[tabId]!!
+            fragments[tabId] = fragment
+            
             val titleRes = when (tabId) {
                 IDX_LOCAL -> R.string.action_local
                 IDX_TOP_CLICK -> R.string.action_top_click
@@ -179,8 +194,13 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 IDX_FILTER -> R.string.action_filter
                 else -> 0
             }
-            adapter.addFragment(fragments[tabId]!!, titleRes, tabId)
+            adapter.addFragment(fragment, titleRes, tabId)
         }
+
+        (fragments[IDX_TAGS] as? FragmentCategories)?.EnableSingleUseFilter(true)
+        (fragments[IDX_TAGS] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByTagExact)
+        (fragments[IDX_COUNTRIES] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
+        (fragments[IDX_LANGUAGES] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
 
         viewPager.adapter = adapter
     }
@@ -259,8 +279,5 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         private const val IDX_LANGUAGES = 7
         private const val IDX_SEARCH = 8
         private const val IDX_FILTER = 9
-
-        @JvmStatic
-        var viewPager: ViewPager? = null
     }
 }

@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.ounben.AMARadio.data.DataCategory
 import net.ounben.AMARadio.R
+import java.util.Locale
 
 class ItemAdapterCategory(private val resourceId: Int) : RecyclerView.Adapter<ItemAdapterCategory.CategoryViewHolder>() {
 
@@ -51,9 +52,11 @@ class ItemAdapterCategory(private val resourceId: Int) : RecyclerView.Adapter<It
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
         val category = categoriesList!![position]
-        holder.textViewName.text = category.Label ?: category.Name
+        holder.textViewName.text = category.Label ?: category.Name.uppercase(Locale.ROOT)
         if (category.Icon != null) {
             holder.iconView.setImageDrawable(category.Icon)
+        } else {
+            holder.iconView.setImageResource(R.drawable.ic_radio_24dp)
         }
         holder.textViewCount.text = category.UsedCount.toString()
     }

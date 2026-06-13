@@ -11,14 +11,22 @@ import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import net.ounben.AMARadio.R
 import net.ounben.AMARadio.AMARadioApp
+import net.ounben.AMARadio.interfaces.IFragmentSearchable
+import net.ounben.AMARadio.station.StationsFilter
 import java.util.*
 
-class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener {
+class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentSearchable {
     var ram: RadioAlarmManager? = null
         private set
     private var adapterRadioAlarm: ItemAdapterRadioAlarm? = null
     private var lvAlarms: ListView? = null
     private var alarmsObserver: Observer? = null
+    private var lastQuery: String = ""
+
+    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+        lastQuery = query
+        refreshListAndView()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val AMARadioApp = requireActivity().application as AMARadioApp
@@ -51,7 +59,17 @@ class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener {
 
     private fun refreshListAndView() {
         adapterRadioAlarm?.clear()
-        adapterRadioAlarm?.addAll(*ram?.getList() ?: emptyArray())
+        val allAlarms = ram?.getList() ?: emptyArray()
+        
+        if (lastQuery.isEmpty()) {
+            adapterRadioAlarm?.addAll(*allAlarms)
+        } else {
+            val lowerQuery = lastQuery.lowercase(Locale.ROOT)
+            val filtered = allAlarms.filter { 
+                it.station?.Name?.lowercase(Locale.ROOT)?.contains(lowerQuery) == true
+            }
+            adapterRadioAlarm?.addAll(*filtered.toTypedArray())
+        }
     }
 
     private var clickedAlarm: DataRadioStationAlarm? = null

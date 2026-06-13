@@ -88,27 +88,39 @@ class StationsFilter(private val context: Context, private val filterType: Filte
         val query = constraint?.toString()?.lowercase(Locale.ROOT) ?: ""
         Log.d("FILTER", "performFiltering() $query")
         
+        var results: List<DataRadioStation> = emptyList()
+        
         if (searchStyle == SearchStyle.ByName && (query.isEmpty() || (query.length < 2 && filterType == FilterType.GLOBAL))) {
-            filteredStationsList = dataProvider.getOriginalStationList()
+            results = dataProvider.getOriginalStationList()
             lastRemoteQuery = ""
         } else {
             when (filterType) {
                 FilterType.LOCAL -> {
                     val stationsToFilter = dataProvider.getOriginalStationList()
                     val filteredStations = ArrayList<WeightedStation>()
-                    val jaroWinkler = JaroWinklerSimilarity()
+                    val lowerQuery = query.lowercase(Locale.ROOT)
+                    
                     for (station in stationsToFilter) {
-                        val similarity = jaroWinkler.apply(query, station.Name.lowercase(Locale.ROOT))
-                        val weight = (similarity * 100).toInt()
-                        if (weight > FUZZY_SEARCH_THRESHOLD) {
-                            filteredStations.add(WeightedStation(station, weight / 4))
+                        val nameLower = station.Name.lowercase(Locale.ROOT)
+                        var score = 0
+                        
+                        if (nameLower == lowerQuery) {
+                            score = 10000
+                        } else if (nameLower.startsWith(lowerQuery)) {
+                            score = 5000
+                        } else if (nameLower.contains(" $lowerQuery")) {
+                            score = 2500
+                        } else if (nameLower.contains(lowerQuery)) {
+                            score = 1000
+                        }
+                        
+                        if (score > 0) {
+                            filteredStations.add(WeightedStation(station, score))
                         }
                     }
-                    filteredStations.sortWith { x, y ->
-                        if (x.weight == y.weight) y.station.ClickCount.compareTo(x.station.ClickCount)
-                        else y.weight.compareTo(x.weight)
-                    }
-                    filteredStationsList = filteredStations.map { it.station }
+                    
+                    filteredStations.sortByDescending { it.weight }
+                    results = filteredStations.map { it.station }
                 }
                 FilterType.GLOBAL -> {
                     // Für globale Suche: Den Server fragen
@@ -141,13 +153,15 @@ class StationsFilter(private val context: Context, private val filterType: Filte
                     // Nach Score absteigend sortieren
                     filteredStations.sortByDescending { it.weight }
                     
-                    filteredStationsList = filteredStations.map { it.station }
+                    results = filteredStations.map { it.station }
                 }
             }
         }
 
+        filteredStationsList = results
         val filterResults = FilterResults()
-        filterResults.values = filteredStationsList
+        filterResults.values = results
+        filterResults.count = results.size
         return filterResults
     }
 

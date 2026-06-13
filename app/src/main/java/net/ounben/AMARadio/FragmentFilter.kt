@@ -124,7 +124,19 @@ class FragmentFilter : FragmentBase() {
 
     private val sortOptions = arrayOf("name", "votes", "clickcount", "lastchangetime")
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("selectedCountryCode", selectedCountryCode)
+        outState.putString("selectedLanguage", selectedLanguage)
+        // AutoCompleteTextViews usually save their own text if they have an ID, 
+        // but we can be explicit if needed.
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        if (savedInstanceState != null) {
+            selectedCountryCode = savedInstanceState.getString("selectedCountryCode", "")
+            selectedLanguage = savedInstanceState.getString("selectedLanguage", "")
+        }
         val view = inflater.inflate(R.layout.fragment_filter, container, false)
         
         sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext())

@@ -35,6 +35,21 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
     private var lastQuery: String? = ""
     private var queue: StationSaveManager? = null
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("lastQuery", lastQuery)
+        outState.putInt("lastSearchStyle", lastSearchStyle.ordinal)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (savedInstanceState != null) {
+            lastQuery = savedInstanceState.getString("lastQuery", "")
+            val styleIdx = savedInstanceState.getInt("lastSearchStyle", 0)
+            lastSearchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+        }
+    }
+
     private fun onStationClick(theStation: DataRadioStation, pos: Int) {
         val AMARadioApp = requireActivity().application as AMARadioApp
         Utils.showPlaySelection(AMARadioApp, theStation, requireActivity().supportFragmentManager)
@@ -42,6 +57,13 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
 
     override fun RefreshListGui() {
         val rv = rvStations ?: return
+        
+        // Caching is disabled for Search fragments to ensure fresh results when selecting different countries/tags
+        if (searchEnabled && !hasUrl()) {
+            stationsFilter?.filter(lastQuery ?: "")
+            return
+        }
+
         if (!hasUrl()) return
 
         if (BuildConfig.DEBUG) Log.d(TAG, "refreshing the stations list.")
@@ -69,8 +91,10 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         val adapter = rv.adapter as? ItemAdapterStation
         if (adapter != null) {
             adapter.updateList(null, filteredStationsList)
-            if (searchEnabled) {
+            if (searchEnabled && lastQuery.isNullOrEmpty()) {
                 stationsFilter?.filter("")
+            } else if (searchEnabled && !lastQuery.isNullOrEmpty()) {
+                stationsFilter?.filter(lastQuery)
             }
         }
     }

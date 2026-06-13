@@ -22,11 +22,25 @@ open class FragmentBase : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         isCreated = true
+        if (savedInstanceState != null) {
+            urlResult = savedInstanceState.getString("urlResult")
+        }
         if (relativeUrl == null) {
             val bundle = this.arguments
             relativeUrl = bundle?.getString("url")
         }
-        DownloadUrl(false)
+        
+        // Don't call DownloadUrl if we have a preserved result OR if we are a search fragment (url is null)
+        if (urlResult == null && !relativeUrl.isNullOrBlank()) {
+            DownloadUrl(false)
+        } else if (urlResult != null) {
+            RefreshListGui()
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("urlResult", urlResult)
     }
 
     override fun onDestroy() {

@@ -20,19 +20,22 @@ import net.ounben.AMARadio.station.ItemAdapterStation
 import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.ItemAdapterIconOnlyStation
 import net.ounben.AMARadio.interfaces.IAdapterRefreshable
+import net.ounben.AMARadio.interfaces.IFragmentSearchable
 import net.ounben.AMARadio.station.StationActions
 import net.ounben.AMARadio.station.StationsFilter
 import net.ounben.AMARadio.BuildConfig
 import kotlinx.coroutines.*
 import java.util.*
 
-class FragmentStarred : Fragment(), IAdapterRefreshable, Observer {
+class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable, Observer {
     private lateinit var rvStations: RecyclerView
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var downloadJob: Job? = null
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private lateinit var favouriteManager: FavouriteManager
+    private var stationsFilter: StationsFilter? = null
+    private var lastQuery: String = ""
 
     private fun onStationClick(theStation: DataRadioStation) {
         val AMARadioApp = requireActivity().application as AMARadioApp
@@ -47,6 +50,17 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, Observer {
         if (BuildConfig.DEBUG) Log.d(TAG, "stations count: ${favouriteManager.listStations.size}")
 
         adapter?.updateList(this, favouriteManager.listStations)
+        if (lastQuery.isNotEmpty()) {
+            stationsFilter?.filter(lastQuery)
+        }
+    }
+
+    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+        lastQuery = query
+        stationsFilter?.setDelayer(object : net.ounben.AMARadio.utils.CustomFilter.Delayer {
+            override fun getPostingDelay(constraint: CharSequence?): Long = 300
+        })
+        stationsFilter?.filter(query)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -63,6 +77,8 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, Observer {
         val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.LOCAL)
         Utils.setupStationRecyclerView(requireContext(), rvStations, adapter)
         
+        stationsFilter = adapter.getFilter()
+
         if (adapter is ItemAdapterIconOnlyStation) {
             adapter.enableItemMove(rvStations)
         } else {

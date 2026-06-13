@@ -17,18 +17,21 @@ import com.google.android.material.snackbar.Snackbar
 import net.ounben.AMARadio.station.ItemAdapterStation
 import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.interfaces.IAdapterRefreshable
+import net.ounben.AMARadio.interfaces.IFragmentSearchable
 import net.ounben.AMARadio.station.StationsFilter
 import net.ounben.AMARadio.BuildConfig
 import kotlinx.coroutines.*
 import java.util.*
 
-class FragmentHistory : Fragment(), IAdapterRefreshable {
+class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private lateinit var rvStations: RecyclerView
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var downloadJob: Job? = null
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private lateinit var historyManager: HistoryManager
+    private var stationsFilter: StationsFilter? = null
+    private var lastQuery: String = ""
 
     private fun onStationClick(theStation: DataRadioStation) {
         val AMARadioApp = requireActivity().application as AMARadioApp
@@ -46,6 +49,17 @@ class FragmentHistory : Fragment(), IAdapterRefreshable {
         if (BuildConfig.DEBUG) Log.d(TAG, "stations count: ${historyManager.listStations.size}")
 
         adapter?.updateList(null, historyManager.listStations)
+        if (lastQuery.isNotEmpty()) {
+            stationsFilter?.filter(lastQuery)
+        }
+    }
+
+    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+        lastQuery = query
+        stationsFilter?.setDelayer(object : net.ounben.AMARadio.utils.CustomFilter.Delayer {
+            override fun getPostingDelay(constraint: CharSequence?): Long = 300
+        })
+        stationsFilter?.filter(query)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -54,6 +68,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable {
         historyManager = AMARadioApp.historyManager
 
         val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.LOCAL)
+        stationsFilter = adapter.getFilter()
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
                 this@FragmentHistory.onStationClick(station)

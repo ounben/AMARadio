@@ -94,6 +94,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var lastExitTry: Date? = null
     private var meteredConnectionAlertDialog: AlertDialog? = null
     private var isSearchActive = false
+    private var lastSearchQuery: String? = null
 
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -101,6 +102,11 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         setTheme(Utils.getThemeResId(this))
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+
+        if (savedInstanceState != null) {
+            isSearchActive = savedInstanceState.getBoolean("isSearchActive", false)
+            lastSearchQuery = savedInstanceState.getString("lastSearchQuery")
+        }
 
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false)
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
@@ -353,6 +359,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putBoolean("isSearchActive", isSearchActive)
+        outState.putString("lastSearchQuery", lastSearchQuery)
+    }
+
     override fun onDestroy() {
         scope.cancel()
         super.onDestroy()
@@ -451,24 +463,46 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mSearchView?.maxWidth = Int.MAX_VALUE
         mSearchView?.setOnQueryTextListener(this)
         
+        // Ensure search view has enough height
+        mSearchView?.post {
+            val searchPlate = mSearchView?.findViewById<View>(androidx.appcompat.R.id.search_plate)
+            searchPlate?.layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
+            mSearchView?.layoutParams?.height = ViewGroup.LayoutParams.MATCH_PARENT
+            
+            // Also ensure the query text view is centered
+            val searchText = mSearchView?.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
+            searchText?.gravity = android.view.Gravity.CENTER_VERTICAL
+        }
+
+        if (isSearchActive) {
+            menuItemSearch?.expandActionView()
+            mSearchView?.setQuery(lastSearchQuery ?: "", false)
+            findViewById<View>(R.id.toolbar_title_container)?.visibility = View.GONE
+        }
+        
         menuItemSearch?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
             override fun onMenuItemActionExpand(item: MenuItem): Boolean {
                 isSearchActive = true
+                findViewById<View>(R.id.toolbar_title_container)?.visibility = View.GONE
                 invalidateOptionsMenu()
                 return true
             }
 
             override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
                 isSearchActive = false
+                lastSearchQuery = ""
+                findViewById<View>(R.id.toolbar_title_container)?.visibility = View.VISIBLE
+                // Switch back to search by name if we were searching something else
+                val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
+                if (currentFragment is IFragmentSearchable) {
+                    currentFragment.Search(StationsFilter.SearchStyle.ByName, "")
+                }
                 invalidateOptionsMenu()
                 return true
             }
         })
 
         mSearchView?.setOnQueryTextFocusChangeListener { v, hasFocus ->
-            if (Utils.bottomNavigationEnabled(this)) {
-                mBottomNavigationView.visibility = if (hasFocus) View.GONE else View.VISIBLE
-            }
             if (hasFocus) {
                 val prevTabsVisibility = tabsView.visibility
                 tabsView.visibility = View.GONE
@@ -479,17 +513,20 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        val isSearching = menuItemSearch?.isActionViewExpanded == true
+        val isSearching = isSearchActive
 
-        menuItemSleepTimer?.isVisible = false
-        menuItemSearch?.isVisible = !isSearching
-        menuItemDelete?.isVisible = false
-        menuItemSave?.isVisible = false
-        menuItemLoad?.isVisible = false
-        menuItemListView?.isVisible = sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearching
-        menuItemIconsView?.isVisible = !sharedPref.getBoolean("icons_only_favorites_style", false) && !isSearching
-        menuItemAddAlarm?.isVisible = false
-        menuItemFilter?.isVisible = !isSearching // Global filter access
+        menuItemSleepTimer?.isVisible = !isSearching
+        menuItemSearch?.isVisible = true
+        menuItemDelete?.isVisible = !isSearching
+        menuItemSave?.isVisible = !isSearching
+        menuItemLoad?.isVisible = !isSearching
+        
+        val isIconsStyle = sharedPref.getBoolean("icons_only_favorites_style", false)
+        menuItemListView?.isVisible = isIconsStyle && !isSearching
+        menuItemIconsView?.isVisible = !isIconsStyle && !isSearching
+        
+        menuItemAddAlarm?.isVisible = !isSearching
+        menuItemFilter?.isVisible = !isSearching
 
         var mpdIsVisible = false
         val AMARadioApp = application as AMARadioApp
@@ -499,9 +536,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         menuItemMpd?.isVisible = mpdIsVisible
 
-        if (isSearching) {
-            menuItemSearch?.isVisible = true
-        } else {
+        if (!isSearching) {
             when (selectedMenuItem) {
                 R.id.nav_item_stations -> {
                     menuItemSleepTimer?.isVisible = true
@@ -534,13 +569,24 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (isSearching) {
             menuItemCast?.isVisible = false
         }
+        
+        updateToolbarTitleMargin()
+        updateToolbarTitleMargin()
         return true
+    }
+
+    private fun updateToolbarTitleMargin() {
+        // We let the themes and layout handle the spacing now
     }
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         super.onPrepareOptionsMenu(menu)
         val searchItem = menu.findItem(R.id.action_search)
-        if (searchItem?.isActionViewExpanded == true) {
+        val isSearching = isSearchActive || searchItem?.isActionViewExpanded == true
+        
+        findViewById<View>(R.id.toolbar_title_container)?.visibility = if (isSearching) View.GONE else View.VISIBLE
+        
+        if (isSearching) {
             for (i in 0 until menu.size()) {
                 val item = menu.getItem(i)
                 if (item.itemId != R.id.action_search) {
@@ -825,24 +871,20 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("MAIN", "Search() searchstyle=$searchStyle query=$query")
-        val currentFragment = mFragmentManager.fragments.lastOrNull()
+        val currentFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
         if (currentFragment is FragmentTabs) {
             currentFragment.Search(searchStyle, query)
         } else {
-            val backStackTag = R.id.nav_item_stations.toString()
-            val f = FragmentTabs()
-            val fragmentTransaction = mFragmentManager.beginTransaction()
-            if (Utils.bottomNavigationEnabled(this)) {
-                fragmentTransaction.replace(R.id.containerView, f).commit()
-                mBottomNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
-            } else {
-                fragmentTransaction.replace(R.id.containerView, f).addToBackStack(backStackTag).commit()
-                mNavigationView.menu.findItem(R.id.nav_item_stations)?.isChecked = true
-            }
-
-            f.Search(searchStyle, query)
             selectedMenuItem = R.id.nav_item_stations
-            invalidateOptionsMenu()
+            onNavigationItemSelectedInternal()
+            // Important: we post the search to ensure the Fragment is created and attached
+            val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
+            mainHandler.post {
+                val newFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
+                if (newFragment is FragmentTabs) {
+                    newFragment.Search(searchStyle, query)
+                }
+            }
         }
     }
 
@@ -872,18 +914,25 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun SearchStations(query: String) {
         Log.d("MAIN", "SearchStations() $query")
-        val currentFragment = mFragmentManager.fragments.lastOrNull()
-        if (currentFragment is IFragmentSearchable) {
-            currentFragment.Search(StationsFilter.SearchStyle.ByName, query)
+        val container = findViewById<View>(R.id.containerView)
+        // Ensure fragment is ready and search happens on main thread
+        container.post {
+            val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
+            if (currentFragment is IFragmentSearchable) {
+                currentFragment.Search(StationsFilter.SearchStyle.ByName, query)
+            }
         }
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
+        updateToolbarTitleMargin()
         return true
     }
 
     override fun onQueryTextChange(newText: String?): Boolean {
+        lastSearchQuery = newText
         SearchStations(newText ?: "")
+        updateToolbarTitleMargin()
         return true
     }
 

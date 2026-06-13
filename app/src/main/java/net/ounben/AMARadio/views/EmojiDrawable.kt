@@ -8,23 +8,29 @@ class EmojiDrawable(private val emoji: String) : Drawable() {
     private val paint = TextPaint().apply {
         isAntiAlias = true
         textAlign = Paint.Align.CENTER
+        color = Color.BLACK // Default
     }
 
     override fun draw(canvas: Canvas) {
         val bounds = bounds
         if (bounds.isEmpty) return
         
-        // Use full height for text size
-        paint.textSize = bounds.height().toFloat()
+        // Use a bit less than full height to avoid clipping
+        paint.textSize = bounds.height().toFloat() * 0.8f
+        
+        // Ensure color is visible based on theme if not set
+        // But better: let the caller set it or use a default
         
         val metrics = paint.fontMetrics
-        val textHeight = metrics.descent - metrics.ascent
-        val yOffset = textHeight / 2 - metrics.descent
-        
         val x = bounds.centerX().toFloat()
-        val y = bounds.centerY().toFloat() + yOffset
+        // Center vertically
+        val y = bounds.centerY().toFloat() - (metrics.ascent + metrics.descent) / 2
         
         canvas.drawText(emoji, x, y, paint)
+    }
+
+    fun setColor(color: Int) {
+        paint.color = color
     }
 
     override fun setAlpha(alpha: Int) {
