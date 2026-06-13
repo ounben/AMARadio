@@ -81,7 +81,10 @@ class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentS
     }
 
     override fun onTimeSet(view: TimePicker, hourOfDay: Int, minute: Int) {
-        ram?.changeTime(clickedAlarm!!.id, hourOfDay, minute)
-        view.invalidate()
+        val alarm = clickedAlarm
+        if (alarm != null) {
+            ram?.changeTime(alarm.id, hourOfDay, minute)
+            clickedAlarm = null
+        }
     }
 }

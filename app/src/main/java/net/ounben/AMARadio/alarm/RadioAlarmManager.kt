@@ -39,9 +39,10 @@ class RadioAlarmManager(private val context: Context) {
         alarm.minute = minute
         alarm.weekDays = ArrayList()
         alarm.id = getFreeId()
+        alarm.enabled = true
         list.add(alarm)
         save()
-        setEnabled(alarm.id, true)
+        start(alarm.id)
     }
 
     fun getList(): Array<DataRadioStationAlarm> {

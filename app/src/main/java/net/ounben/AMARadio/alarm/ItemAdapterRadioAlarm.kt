@@ -31,14 +31,16 @@ class ItemAdapterRadioAlarm(context: Context?) : ArrayAdapter<DataRadioStationAl
         val b = v.findViewById<ImageButton>(R.id.buttonDeleteAlarm)
         val buttonRepeating = v.findViewById<ImageButton>(R.id.checkboxRepeating)
         val repeatDaysView = v.findViewById<LinearLayout>(R.id.repeatDaysView)
-        if (repeatDaysView.childCount < 1) {
-            populateWeekDayButtons(aData, vi, repeatDaysView)
-        }
+        
+        repeatDaysView.removeAllViews()
+        populateWeekDayButtons(aData, vi, repeatDaysView)
+
         buttonRepeating.setOnClickListener { ram?.toggleRepeating(aData.id) }
         b?.setOnClickListener { ram?.remove(aData.id) }
         tvStation?.text = aData.station?.Name
         tvTime?.text = String.format(Locale.getDefault(), "%02d:%02d", aData.hour, aData.minute)
         if (s != null) {
+            s.setOnCheckedChangeListener(null)
             s.isChecked = aData.enabled
             s.setOnCheckedChangeListener { _, isChecked ->
                 if (BuildConfig.DEBUG) {

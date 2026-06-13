@@ -765,11 +765,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         val AMARadioApp = application as AMARadioApp
-        val historyManager = AMARadioApp.historyManager
-        val currentFragment = mFragmentManager.fragments.getOrNull(mFragmentManager.fragments.size - 2)
-        if (historyManager.size() > 0 && currentFragment is FragmentAlarm) {
-            val station = historyManager.getList()[0]
-            currentFragment.ram?.add(station, hourOfDay, minute)
+        
+        // Create a NEW alarm for the current station
+        val station = Utils.getCurrentOrLastStation(this)
+        if (station != null) {
+            AMARadioApp.alarmManager.add(station, hourOfDay, minute)
+            Utils.showModernToast(this, R.string.alert_alarm_working)
         }
     }
 
