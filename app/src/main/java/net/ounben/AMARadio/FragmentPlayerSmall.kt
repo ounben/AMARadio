@@ -82,9 +82,6 @@ class FragmentPlayerSmall : Fragment() {
 
         buttonPlay.setOnClickListener {
             if (PlayerServiceUtil.isPlaying()) {
-                if (PlayerServiceUtil.isRecording()) {
-                    PlayerServiceUtil.stopRecording()
-                }
                 PlayerServiceUtil.pause(PauseReason.USER)
             } else {
                 playLastFromHistory()

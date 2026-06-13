@@ -13,7 +13,6 @@ import net.ounben.AMARadio.alarm.RadioAlarmManager
 import net.ounben.AMARadio.history.TrackHistoryRepository
 import net.ounben.AMARadio.players.mpd.MPDClient
 import net.ounben.AMARadio.proxy.ProxySettings
-import net.ounben.AMARadio.recording.RecordingsManager
 import net.ounben.AMARadio.station.live.metadata.TrackMetadataSearcher
 import net.ounben.AMARadio.utils.TvChannelManager
 import net.ounben.AMARadio.cast.CastHandler
@@ -31,8 +30,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
     lateinit var historyManager: HistoryManager
         private set
     lateinit var favouriteManager: FavouriteManager
-        private set
-    lateinit var recordingsManager: RecordingsManager
         private set
     lateinit var fallbackStationsManager: FallbackStationsManager
         private set
@@ -89,7 +86,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         historyManager = HistoryManager(this)
         favouriteManager = FavouriteManager(this)
         fallbackStationsManager = FallbackStationsManager(this)
-        recordingsManager = RecordingsManager()
         alarmManager = RadioAlarmManager(this)
 
         val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
@@ -105,7 +101,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         castHandler = CastHandler(this)
 
         trackMetadataSearcher = TrackMetadataSearcher(httpClient)
-        recordingsManager.updateRecordingsList()
     }
 
     fun setTestsInterceptor(testsInterceptor: Interceptor?) {

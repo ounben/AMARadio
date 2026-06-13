@@ -42,10 +42,9 @@
   <string name="action_changed_lately">Nylig endret</string>
   <string name="action_currently_playing">Spilles av</string>
   <string name="action_tags">Merkelapper</string>
-  <string name="action_countries">Land</string>
+  <string name="action_countries">Land/Regioner</string>
   <string name="action_languages">Språk</string>
   <string name="action_edit">Rediger</string>
-  <string name="action_lyrics">Tekster</string>
   <string name="action_copy_info">Kopier info</string>
   <string name="error_station_load">Klarte ikke koble til kanalen</string>
   <string name="error_list_update">Klarte ikke koble til radio-browser-serveren</string>
@@ -58,7 +57,7 @@
   <string name="nav_item_settings">Innstillinger</string>
   <string name="nav_item_alarm">Alarm</string>
 
-  <string name="about_text">Denne appen bruker radiokanaloversikten til\nhttps://www.radio-browser.info/\nAlle kan legge til nye radiokanaler eller oppdatere informasjonen om kanaler som finnes fra før. Nettsiden fungerer som en wiki om nettbaserte radiokanaler.\n\nKontakt:\nsegler_alex\@web.de\n\nMeld om feil:\nhttps://github.com/ounben/AMARadio/issues\n\nHvis du liker appen og ønsker å hjelpe til, ta gjerne kontakt med meg på e-post. Jeg trenger virkelig noen med designkompetanse for å gjøre appen finere. :) Kanskje noen som kan tegne ikoner, bilder osv. Men og utviklere som kan rette feil eller legge til ny funksjonalitet.\nForslag til nye funksjoner blir også satt pris på!\n\nDenne appen er fri programvare tilgjengelig under GPLv3-lisensen:\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+  <string name="about_text">AMARadio er 100%% reklamefri og personvernfokusert.\n\nJeg utviklet opprinnelig denne appen for moren min for å gi henne en enkel, ærlig radioopplevelse uten irriterende reklame eller sporing. Det er derfor AMARadio alltid vil forbli reklamefri – det er et løfte til henne, delt med dere alle.\n\nDette prosjektet er en fork av den utmerkede RadioDroid av ounben. Hele kodebasen har blitt migrert fra Java til Kotlin for å sikre at appen forblir moderne og kompatibel med fremtidige Android-versjoner.\n\nDenne appen bruker radiokanaloversikten til https://www.radio-browser.info .\nAlle kan legge til nye radiokanaler. Nettsiden fungerer som en wiki om nettbaserte radiokanaler.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nHvis du liker appen og ønsker å hjelpe til, ta gjerne kontakt med meg på e-post. Jeg trenger virkelig noen med designkompetanse for å gjøre appen finere. :) Kanskje noen som kan tegne ikoner, bilder osv. Men og utviklere som kan rette feil eller legge til ny funksjonalitet!\nForslag til nye funksjoner blir også satt pris på!\n\nDenne appen er fri programvare tilgjengelig under GPLv3-lisensen. https://www.gnu.org/licenses/gpl-3.0.html</string>
   <string name="about_version">Versjon: %1$s</string>
   <string name="detail_star">Legg til som favoritt</string>
   <string name="detail_unstar">Fjern fra favoritter</string>
@@ -95,12 +94,17 @@
   <string name="settings_theme_selection_title">Tema</string>
   <string name="theme_light">Lyst</string>
   <string name="theme_dark">Mørkt</string>
-  <string name="settings_circular_icons">Bruk runde ikoner</string>
+  <string name="theme_system">Følg systemet</string>
   <string name="settings_compact_style">Kompakt visning</string>
   <string name="settings_compact_style_desc_off">Store ikoner med kanaldetaljer</string>
   <string name="settings_compact_style_desc_on">Små ikoner uten kanaldetaljer</string>
   <string name="settings_bottom_navigation">Navigering nederst</string>
-  
+  <string name="settings_ui_scale">UI-skalering</string>
+  <string name="ui_scale_compact">Kompakt</string>
+  <string name="ui_scale_standard">Systemstandard</string>
+  <string name="ui_scale_large">Stor</string>
+  <string name="ui_scale_extra_large">Veldig stor</string>
+
   <string name="settings_interaction">Samhandling</string>
   <string name="settings_single_use_tags">Vis sjeldne tagger</string>
   <string name="settings_single_use_tags_desc_off">Sjeldne tagger blir ikke vist</string>
@@ -111,6 +115,9 @@
   <string name="settings_show_broken_off">Ikke vis kanaler med brutte koblinger i lister</string>
   
   <string name="settings_startup_behaviour">Oppførsel ved oppstart</string>
+  <string name="action_grid_view">Rutenettvisning</string>
+  <string name="action_list_view">Listevisning</string>
+
   <string name="startup_action_title">Vis ved oppstart</string>
   <string name="startup_action_title_desc">%s</string>
   <string name="startup_show_all_stations">Vis alle kanaler</string>
@@ -125,15 +132,7 @@
   <string name="settings_auto_favorite">Legg til automatisk som favoritter</string>
   <string name="settings_auto_favorite_on">Legg til kanaler automatisk som favoritter ved avspilling</string>
   <string name="settings_auto_favorite_off">Ikke legg til kanaler automatisk som favoritter ved avspilling</string>
-  
-  <string name="settings_icon_click_toggles_favorite">Trykk på kanalikoner</string>
-  <string name="settings_icon_click_toggles_favorite_on">Trykk på kanalikoner for å for å legge til og fjerne fra favoritter</string>
-  <string name="settings_icon_click_toggles_favorite_off">Trykk på kanalikoner for å starte avspilling</string>
-  
-  <string name="settings_click_trend_icon_visible">Vis ikon for klikktrend</string>
-  <string name="settings_click_trend_icon_visible_on">Ikonet blir vist</string>
-  <string name="settings_click_trend_icon_visible_off">Ikonet blir skjult</string>
-  
+
   <string name="settings_alarm">Alarm</string>
   <string name="settings_alarm_external">Åpne i ekstern app</string>
   <string name="settings_alarm_external_desc_on">Åpne alarmen i standard ekstern app</string>
@@ -145,6 +144,11 @@
   <string name="settings_auto_play_on_startup">Automatisk avspilling</string>
   <string name="settings_auto_play_on_startup_on">Spill av siste kanal ved oppstart</string>
   <string name="settings_auto_play_on_startup_off">Spill ikke av siste kanal ved oppstart</string>
+  <string name="settings_auto_off_on_startup">Auto-stopp</string>
+  <string name="settings_auto_off_on_startup_on">Bruk auto-stopp timer med auto-play</string>
+  <string name="settings_auto_off_on_startup_off">Ikke bruk auto-stopp timer med auto-play</string>
+  <string name="settings_auto_off_sleep_timer">Auto-stopp timer</string>
+  <string name="settings_auto_off_sleep_timer_desc">Stopp avspilling etter %1$s minutter</string>
   <string name="settings_play_external">Åpne i ekstern app</string>
   <string name="settings_play_external_desc_on">Spill kanaler i ekstern avspiller</string>
   <string name="settings_play_external_desc_off">Spill kanaler i AMARadio</string>
@@ -180,20 +184,7 @@
   <string name="settings_warn_no_wifi">Vis advarsel når ikke tilkoblet wifi</string>
   <string name="settings_warn_no_wifi_on">Vis advarsel ved avspilling uten wifi tilkobling</string>
   <string name="settings_warn_no_wifi_off">Vis ikke advarsel ved avspilling uten wifi tilkobling</string>
-  
-  <string name="settings_recordings">Opptak</string>
-  <string name="settings_record_name_formatting">Navneformat</string>
-  
-  <string name="settings_record_name_formatting_default" translatable="false">${station}_${artist}_${track}_${date}_${time}</string>
-  <string name="settings_record_name_formatting_1" translatable="false">${station}_${artist}_${track}</string>
-  <string name="settings_record_name_formatting_2" translatable="false">${station}_${date}_${time}</string>
-  <string name="settings_record_name_formatting_3" translatable="false">${index}_${station}_${date}</string>
-  
-  <string name="settings_record_name_formatting_default_display">kanal_artist_spor_\u200bdato_\u200btid</string>
-  <string name="settings_record_name_formatting_1_display">kanal_artist_\u200bspor</string>
-  <string name="settings_record_name_formatting_2_display">kanal_dato_\u200btid</string>
-  <string name="settings_record_name_formatting_3_display">indeks_kanal_\u200bdato</string>
-  
+
   <string name="notify_pre_play">Kobler til</string>
   <string name="notify_play">Spiller av</string>
   <string name="notify_paused">Pause</string>
@@ -209,9 +200,7 @@
   
   <string name="notify_station_removed_from_list">1 fjernet</string>
   <string name="action_station_removed_from_list_undo">ANGRE</string>
-  
-  <string name="alert_install_lyrics_app">QuickLyric er ikke installert på enheten. Laste ned fra Google Play Store?</string>
-  
+
   <string name="alert_delete_history">Tømme historikken?</string>
   <string name="alert_delete_favorites">Slette favorittene?</string>
   <string name="yes">Ja</string>
@@ -240,7 +229,6 @@
   <string name="warning_no_network_trying_resume">Nettverk mangler. Gjenoppta når enheten er tilkoblet igjen.</string>
   <string name="giving_up_resume">Gir opp forsøk på å gjenoppta avspilling</string>
 	
-  <string name="error_record_needs_write">Skrivetillatelse behøves for å kunne lagre opptak</string>
   <string name="error_grant_audiofocus">Forespørsel om lydfokus ble avvist av systemet</string>
   
   <string name="error_no_equalizer_found">Fant ingen equalizer app</string>
@@ -248,38 +236,34 @@
   <string name="player_info_status">Status:&#160;</string>
   <string name="player_info_status_stopped">stoppet</string>
   <string name="player_info_status_playing">spiller av</string>
-  <string name="player_info_status_recording">tar opp</string>
-  <string name="player_info_status_playing_and_recording">spiller av og tar opp</string>
   <string name="player_info_transferred">Data overført: %1$s</string>
-  <string name="player_info_recording_to">Tar opp til:\n%1$s</string>
-  <string name="player_info_recorded_to">Siste opptak:\n%1$s</string>
-  
+
   <string name="tab_player_art">Albumgrafikk</string>
   <string name="tab_player_info">Info</string>
   <string name="tab_player_history">Sporhistorikk</string>
-  <string name="tab_player_recordings">Opptak</string>
 
   <string name="station_detail_bitrate">%1$1d kbps</string>
   <string name="station_detail_broken">BRUTT</string>
   <string name="station_detail_deleted_on_server">SLETTET</string>
 	  
+  <string name="station_details_clicks">%1$d klikk</string>
+  <string name="station_details_votes">%1$d stemmer</string>
+
   <string name="image_button_disable">Slå av</string>
-  <string name="image_button_record">Ta opp</string>
-  <string name="image_button_record_request_permission">Be om tillatelse for opptak</string>
-  <string name="image_button_recordings">Opptak</string>
   <string name="image_button_delete">Slett</string>
   <string name="image_button_more">Mer</string>
   <string name="image_button_less">Mindre</string>
   <string name="image_button_repeat">Gjenta</string>
   <string name="image_button_dont_repeat">Ikke gjenta</string>
-  <string name="icon_click_trend_decreasing">Økende popularitet</string>
-  <string name="icon_click_trend_increasing">Minkende popularitet</string>
+  <string name="icon_click_trend_decreasing">Minkende popularitet</string>
+  <string name="icon_click_trend_increasing">Økende popularitet</string>
   <string name="icon_click_trend_stable">Stabil popularitet</string>
   
   <string name="media_route_menu_title">GoogleCast</string>
   <string name="app_id">5A97BAE4</string>
   <string name="app_name">AMARadio</string>
-	  
+  <string name="ad_free_promise">100%% reklamefri &amp; privat</string>
+
   <string name="settings_mpd">Musikkavspillingstjeneste</string>
   <string name="settings_mpd_port">MPD port</string>
   <string name="settings_view_mpd_servers">Dine servere</string>
@@ -295,8 +279,6 @@
   <string name="action_play_in_external">Spill av i ekstern avspiller</string>
   <string name="action_choose_external_player">Velg ekstern avspiller</string>
 
-  <string name="settings_lastfm_api_key">Last.fm API nøkkel</string>
-  <string name="settings_lastfm_api_key_desc">Angi API nøkkel for å spå på albumgrafikk i fullskjermspiller</string>
   <string name="settings_other">Annet</string>
   <string name="settings_statistics">Statistikk</string>
   <string name="settings_about">Om AMARadio</string>
@@ -329,10 +311,24 @@
   <string name="nav_item_statistics">Statistikk</string>
   <string name="nav_item_about">Om</string>
   <string name="refresh">Oppdater</string>
-  
-  <string name="alarm_backup">Alternative Alarm</string>
-    <string name="alarm_fallback_info">System alarm adopted as selected radio station failed to load</string>
-    <string name="alarm_back_desc">Alternative system alarm adopted when the radio station fails to load</string>
+  <string name="action_filter">Filter</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_tag">Merkelapp</string>
+    <string name="filter_language">Språk</string>
+    <string name="filter_sort_by">Sorter etter</string>
+    <string name="filter_reverse">Omvendt rekkefølge</string>
+    <string name="filter_apply">Bruk filter</string>
+    <string name="sort_name">Navn</string>
+    <string name="sort_votes">Stemmer</string>
+    <string name="sort_clicks">Klikk</string>
+    <string name="sort_lastchange">Siste endring</string>
+    <string name="filter_select_country">Velg land</string>
+    <string name="filter_select_language">Velg språk</string>
+    <string name="filter_type_tag">Skriv inn merkelapp…</string>
+
+  <string name="alarm_backup">Reservealarm</string>
+    <string name="alarm_fallback_info">Systemalarm valgt siden den valgte radiostasjonen ikke kunne lastes inn</string>
+    <string name="alarm_back_desc">Alternativ systemalarm valgt når radiostasjonen ikke lastes inn</string>
 
   <string name="context_menu_share">@string/detail_share</string>
   <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

@@ -268,54 +268,6 @@ object PlayerServiceUtil {
     }
 
     @JvmStatic
-    fun getShoutcastInfo(): ShoutcastInfo? {
-        return try {
-            itsPlayerService?.getShoutcastInfo()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            null
-        }
-    }
-
-    @JvmStatic
-    fun startRecording() {
-        try {
-            itsPlayerService?.startRecording()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
-    fun stopRecording() {
-        try {
-            itsPlayerService?.stopRecording()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
-    fun isRecording(): Boolean {
-        return try {
-            itsPlayerService?.isRecording() ?: false
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            false
-        }
-    }
-
-    @JvmStatic
-    fun getCurrentRecordFileName(): String? {
-        return try {
-            itsPlayerService?.getCurrentRecordFileName()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            null
-        }
-    }
-
-    @JvmStatic
     fun getIsHls(): Boolean {
         return try {
             itsPlayerService?.getIsHls() ?: false

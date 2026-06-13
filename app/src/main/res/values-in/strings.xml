@@ -33,7 +33,7 @@
     <string name="action_delete">Hapus</string>
     <string name="action_delete_history">Hapus riwayat</string>
     <string name="action_delete_favorites">Hapus favorit</string>
-    <string name="action_delete_stream_history">Hapus riwayat stream</string>
+    <string name="action_delete_stream_history">Hapus riwayat trek</string>
     <string name="action_ok">OKE</string>
     <string name="action_cancel">Batal</string>
     <string name="action_top_click">Top Klik</string>
@@ -42,13 +42,12 @@
     <string name="action_changed_lately">Berubah baru</string>
     <string name="action_currently_playing">Diputar</string>
     <string name="action_tags">Tag</string>
-    <string name="action_countries">Negara</string>
+    <string name="action_countries">Negara/Wilayah</string>
     <string name="action_languages">Bahasa</string>
     <string name="action_edit">Sunting</string>
-    <string name="action_lyrics">Lirik</string>
     <string name="action_copy_info">Salin Info</string>
     <string name="error_station_load">Tidak bisa menyambung ke stasiun</string>
-    <string name="error_list_update">Tidak bisa menyambung ke server peramban radio</string>
+    <string name="error_list_update">Tidak bisa menyambung ke server radio browser</string>
 
     <string name="share_action">Bagikan tautan stasiun dengan..</string>
 
@@ -58,7 +57,7 @@
     <string name="nav_item_settings">Pengaturan</string>
     <string name="nav_item_alarm">Alarm</string>
 
-    <string name="about_text">Aplikasi ini menggunakan direktori radio gratis di \nhttps://www.radio-browser.info\nSemua orang bisa menambahkan stasiun radio atau menyunting stasiun yang sudah ada. Bekerja seperti wiki untuk stasiun radio daring (streaming).\n\nKontak:\ben@ounben.com\n\nPelacak bug:\nhttps://github.com/ounben/AMARadio/issues\n\nJuka anda menyukai aplikasi ini dan ingin membantu, jangan sungkan untuk mengirim surel. Saya sangat membutuhkan seseorang dengan keahlian grafis untuk membuat desain aplikasi ini menjadi lebih baik :) Mungkin seseorang yang bisa menggambar ikon, aset gambar...tetapi juga programer yang bisa memperbaiki bug, atau mengimplementasikan fitur baru.\nSaran ide-ide baru juga selalu kami hargai!\n\nAplikasi ini adalah perangkat lunak bebas dibawah naungan lisensi GPLv3.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio adalah 100%% bebas iklan dan berfokus pada privasi.\n\nSaya awalnya mengembangkan aplikasi ini untuk ibu saya untuk memberinya pengalaman radio yang sederhana dan jujur tanpa iklan yang mengganggu atau pelacakan. Itulah sebabnya AMARadio akan selalu bebas iklan – itu adalah janji kepadanya, yang dibagikan kepada Anda semua.\n\nProyek ini adalah fork dari RadioDroid yang sangat bagus oleh ounben. Seluruh basis kode telah dimigrasikan dari Java ke Kotlin untuk memastikan aplikasi tetap modern dan kompatibel dengan versi Android di masa mendatang.\n\nAplikasi ini menggunakan direktori radio gratis di https://www.radio-browser.info .\nSemua orang bisa menambahkan stasiun radio. Bekerja seperti wiki untuk stasiun radio daring (streaming).\n\nKontak: ben@ounben.com\n\nPelacak bug: https://github.com/ounben/AMARadio/issues\n\nJika anda menyukai aplikasi ini dan ingin membantu, jangan sungkan untuk mengirim surel. Saya sangat membutuhkan seseorang dengan keahlian grafis untuk membuat desain aplikasi ini menjadi lebih baik :) Mungkin seseorang yang bisa menggambar ikon, aset gambar... tetapi juga pemrogram yang bisa memperbaiki bug, atau mengimplementasikan fitur baru!\nSaran ide-ide baru juga selalu kami hargai!\n\nAplikasi ini adalah perangkat lunak bebas di bawah naungan lisensi GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versi: %1$s</string>
     <string name="detail_star">Tambahkan ke favorit</string>
     <string name="detail_unstar">Hapus dari favorit</string>
@@ -86,6 +85,7 @@
     <string name="notify_save_playlist_nok">Tidak bisa mengekspor ke %1$s&#47;%2$s</string>
     <string name="notify_save_playlist_now">Mengekspor ke %1$s&#47;%2$s, silakan tunggu.</string>
     <string name="notify_save_playlist_ok">Berhasil mengekspor ke %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d dari %2$d stasiun lokal di daftar ditandai tidak ada di server</string>
 
     <string name="searchpreference_clear_history">Hapus riwayat</string>
     <string name="searchpreference_no_results">Tidak ada hasil</string>
@@ -94,11 +94,16 @@
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Terang</string>
     <string name="theme_dark">Gelap</string>
-    <string name="settings_circular_icons">Gunakan ikon bundar</string>
+    <string name="theme_system">Ikuti sistem</string>
     <string name="settings_compact_style">Mode ringkas</string>
     <string name="settings_compact_style_desc_off">Ikon besar dengan detail stasiun</string>
     <string name="settings_compact_style_desc_on">Ikon kecil tanpa detail stasiun</string>
     <string name="settings_bottom_navigation">Navigasi bawah</string>
+    <string name="settings_ui_scale">Skala UI</string>
+    <string name="ui_scale_compact">Ringkas</string>
+    <string name="ui_scale_standard">Standar Sistem</string>
+    <string name="ui_scale_large">Besar</string>
+    <string name="ui_scale_extra_large">Sangat Besar</string>
 
     <string name="settings_interaction">Interaksi</string>
     <string name="settings_single_use_tags">Tampilkan tag yang jarang digunakan</string>
@@ -110,6 +115,9 @@
     <string name="settings_show_broken_off">Menyembunyikan stasiun yang rusak di dalam daftar</string>
 
     <string name="settings_startup_behaviour">Perilaku Mulai</string>
+    <string name="action_grid_view">Tampilan kisi</string>
+    <string name="action_list_view">Tampilan daftar</string>
+
     <string name="startup_action_title">Tindakan mulai</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Tampilkan semua stasiun</string>
@@ -125,14 +133,6 @@
     <string name="settings_auto_favorite_on">Menambahkan stasiun secara otomatis ke favorit saat memutar</string>
     <string name="settings_auto_favorite_off">Tidak menambahkan stasiun secara otomatis ke favorit saat memutar</string>
 
-    <string name="settings_icon_click_toggles_favorite">Klik favorit</string>
-    <string name="settings_icon_click_toggles_favorite_on">Klik ikon stasiun untuk menambahkan atau menghapus stasiun favorit</string>
-    <string name="settings_icon_click_toggles_favorite_off">Klik ikon stasiun untuk memulai pemutaran</string>
-
-    <string name="settings_click_trend_icon_visible">Klik ikon tren</string>
-    <string name="settings_click_trend_icon_visible_on">Ikon akan ditampilkan</string>
-    <string name="settings_click_trend_icon_visible_off">Ikon akan disembunyikan</string>
-
     <string name="settings_alarm">Alarm</string>
     <string name="settings_alarm_external">Aktifkan aplikasi eksternal</string>
     <string name="settings_alarm_external_desc_on">Buka alarm dengan aplikasi eksternal bawaan</string>
@@ -144,6 +144,11 @@
     <string name="settings_auto_play_on_startup">Putar otomatis</string>
     <string name="settings_auto_play_on_startup_on">Putar stasiun terakhir saat memulai</string>
     <string name="settings_auto_play_on_startup_off">Jangan putar stasiun terakhir saat memulai</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Gunakan timer auto-stop dengan auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Jangan gunakan timer auto-stop dengan auto-play</string>
+    <string name="settings_auto_off_sleep_timer">Timer auto-stop</string>
+    <string name="settings_auto_off_sleep_timer_desc">Setop pemutaran setelah %1$s menit</string>
     <string name="settings_play_external">Aktifkan pemutar eksternal</string>
     <string name="settings_play_external_desc_on">Putar stasiun dengan pemutar eksternal</string>
     <string name="settings_play_external_desc_off">Putar stasiun dengan AMARadio</string>
@@ -180,14 +185,6 @@
     <string name="settings_warn_no_wifi_on">Peringatkan saat memutar tanpa koneksi Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Jangan peringatkan saat memutar tanpa koneksi Wi-Fi</string>
 
-    <string name="settings_recordings">Rekaman</string>
-    <string name="settings_record_name_formatting">Format nama</string>
-
-    <string name="settings_record_name_formatting_default_display">stasiun_artis_jalur_\u200btanggal_\u200bwaktu</string>
-    <string name="settings_record_name_formatting_1_display">stasiun_artis_\u200bjalur</string>
-    <string name="settings_record_name_formatting_2_display">stasiun_tanggal_\u200bwaktu</string>
-    <string name="settings_record_name_formatting_3_display">indeks_stasiun_\u200btanggal</string>
-
     <string name="notify_pre_play">Menyambung</string>
     <string name="notify_play">Memutar</string>
     <string name="notify_paused">Dijeda</string>
@@ -203,8 +200,6 @@
 
     <string name="notify_station_removed_from_list">1 Dibuang</string>
     <string name="action_station_removed_from_list_undo">URUNG</string>
-
-    <string name="alert_install_lyrics_app">QuickLyric tidak dipasang pada perangkat anda. Apakah anda ingin mengunduhnya dari Toko Google Play?</string>
 
     <string name="alert_delete_history">Apakah anda yakin ingin menghapus riwayat?</string>
     <string name="alert_delete_favorites">Apakah anda yakin ingin menghapus semua favorit?</string>
@@ -234,7 +229,6 @@
     <string name="warning_no_network_trying_resume">Tidak ada koneksi jaringan. Mencoba melanjutkan saat koneksi kembali tersambung.</string>
     <string name="giving_up_resume">Menyerah dalam mencoba melanjutkan pemutaran</string>
 
-    <string name="error_record_needs_write">Membutuhkan izin akses penyimpanan untuk merekam</string>
     <string name="error_grant_audiofocus">Permintaan fokus audio tidak diberikan oleh sistem</string>
 
     <string name="error_no_equalizer_found">Tidak ada aplikasi equalizer yang ditemukan</string>
@@ -242,36 +236,33 @@
     <string name="player_info_status">Status:&#160;</string>
     <string name="player_info_status_stopped">disetop</string>
     <string name="player_info_status_playing">memutar</string>
-    <string name="player_info_status_recording">merekam</string>
-    <string name="player_info_status_playing_and_recording">memutar dan merekam</string>
     <string name="player_info_transferred">Data ditransfer: %1$s</string>
-    <string name="player_info_recording_to">Merekam ke:\n%1$s</string>
-    <string name="player_info_recorded_to">Rekaman terakhir:\n%1$s</string>
 
     <string name="tab_player_art">Kover album</string>
     <string name="tab_player_info">Info</string>
     <string name="tab_player_history">Riwayat trek</string>
-    <string name="tab_player_recordings">Rekaman</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">RUSAK</string>
+    <string name="station_detail_deleted_on_server">DIHAPUS</string>
+
+    <string name="station_details_clicks">%1$d klik</string>
+    <string name="station_details_votes">%1$d suara</string>
 
     <string name="image_button_disable">Nonaktifkan</string>
-    <string name="image_button_record">Rekam</string>
-    <string name="image_button_record_request_permission">Minta izin untuk merekam</string>
-    <string name="image_button_recordings">Rekaman</string>
     <string name="image_button_delete">Hapus</string>
     <string name="image_button_more">Lebih banyak</string>
     <string name="image_button_less">Lebih sedikit</string>
     <string name="image_button_repeat">Ulangi</string>
-    <string name="image_button_dont_repeat">Jangan ulangi repeat</string>
+    <string name="image_button_dont_repeat">Jangan ulangi</string>
     <string name="icon_click_trend_decreasing">Popularitas turun</string>
-    <string name="icon_click_trend_increasing">Popularitas naik </string>
+    <string name="icon_click_trend_increasing">Popularitas naik</string>
     <string name="icon_click_trend_stable">Popularitas stabil</string>
 
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% bebas iklan &amp; pribadi</string>
 
     <string name="settings_mpd">Daemon Pemutar Musik</string>
     <string name="settings_mpd_port">Porta MPD</string>
@@ -288,6 +279,10 @@
     <string name="action_play_in_external">Putar di pemutar eksternal</string>
     <string name="action_choose_external_player">Pilih pemutar eksternal</string>
 
+    <string name="settings_disable_battery_optimization">Optimasi baterai</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Optimasi baterai diabaikan, AMARadio harus selalu dapat memperoleh fokus kembali.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Optimasi baterai diaktifkan, AMARadio mungkin tidak dapat memperoleh fokus kembali di latar belakang.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Lainnya</string>
     <string name="settings_statistics">Statistik</string>
     <string name="settings_about">Tentang AMARadio</string>
@@ -307,8 +302,8 @@
         <item>Sab</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">URL stream berhasil di salin</string>
-    <string name="notify_track_info_copied">Info trek berhasil di salin</string>
+    <string name="notify_stream_url_copied">URL stream berhasil disalin</string>
+    <string name="notify_track_info_copied">Info trek berhasil disalin</string>
 
     <string-array name="actions_station_link">
         <item>Kunjungi situs web</item>
@@ -320,10 +315,24 @@
     <string name="nav_item_statistics">Statistik</string>
     <string name="nav_item_about">Tentang</string>
     <string name="refresh">Segarkan</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Negara</string>
+    <string name="filter_tag">Tag</string>
+    <string name="filter_language">Bahasa</string>
+    <string name="filter_sort_by">Urutkan berdasarkan</string>
+    <string name="filter_reverse">Urutan terbalik</string>
+    <string name="filter_apply">Terapkan Filter</string>
+    <string name="sort_name">Nama</string>
+    <string name="sort_votes">Suara</string>
+    <string name="sort_clicks">Klik</string>
+    <string name="sort_lastchange">Perubahan terakhir</string>
+    <string name="filter_select_country">Pilih Negara</string>
+    <string name="filter_select_language">Pilih Bahasa</string>
+    <string name="filter_type_tag">Ketik tag…</string>
 
-    <string name="alarm_backup">Alarm Alternatif</string>
-    <string name="alarm_fallback_info">Alarm sistem yang dipilih saat stasiun radio gagal dimuat</string>
-    <string name="alarm_back_desc">Alarm sistem alternatif yang akan digunakan saat stasiun radio gagal dimuat</string>
+    <string name="alarm_backup">Alarm Cadangan</string>
+    <string name="alarm_fallback_info">Alarm sistem digunakan karena stasiun radio yang dipilih gagal dimuat</string>
+    <string name="alarm_back_desc">Alarm sistem alternatif digunakan ketika stasiun radio tidak dapat dimuat</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

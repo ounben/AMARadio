@@ -109,27 +109,6 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         override fun getIsHls(): Boolean = this@PlayerService.isHls
         override fun isPlaying(): Boolean = this@PlayerService.radioPlayer?.isPlaying() ?: false
         override fun getPlayerState(): PlayState = this@PlayerService.radioPlayer?.playState ?: PlayState.Idle
-        override fun startRecording() {
-            this@PlayerService.radioPlayer?.let {
-                val app = this@PlayerService.application as AMARadioApp
-                app.recordingsManager.record(this@PlayerService, it)
-                this@PlayerService.sendBroadCast(PLAYER_SERVICE_META_UPDATE)
-            }
-        }
-        override fun stopRecording() {
-            this@PlayerService.radioPlayer?.let {
-                val app = this@PlayerService.application as AMARadioApp
-                app.recordingsManager.stopRecording(it)
-                this@PlayerService.sendBroadCast(PLAYER_SERVICE_META_UPDATE)
-            }
-        }
-        override fun isRecording(): Boolean = this@PlayerService.radioPlayer?.isRecording() ?: false
-        override fun getCurrentRecordFileName(): String? {
-            return this@PlayerService.radioPlayer?.let {
-                val app = this@PlayerService.application as AMARadioApp
-                app.recordingsManager.getRecordingInfo(it)?.fileName
-            }
-        }
         override fun getTransferredBytes(): Long = this@PlayerService.radioPlayer?.currentPlaybackTransferredBytes ?: 0
         override fun getBufferedSeconds(): Long = this@PlayerService.radioPlayer?.bufferedSeconds ?: 0
         override fun getLastPlayStartTime(): Long = this@PlayerService.lastPlayStartTime

@@ -3,21 +3,50 @@
     <string name="detail_name">Nimi</string>
     <string name="detail_tags">Tunnisteet</string>
     <string name="detail_country">Maa</string>
+    <string name="detail_create_shortcut">Lisää aloitusnäyttöön</string>
     <string name="detail_language">Kieli</string>
     <string name="detail_weblink">Kotisivu</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Toista</string>
+    <string name="detail_pause">Tauko</string>
     <string name="detail_stop">Pysäytä</string>
+    <string name="detail_share">Jaa</string>
+    <string name="detail_play_in_AMARadio">Toista AMARadiolla</string>
+
+    <string name="action_links">Linkit</string>
+    <string name="action_homepage">Kotisivu</string>
+    <string name="action_favorite">Suosikki</string>
+    <string name="action_alarm">Hälytys</string>
+
+    <string name="action_station_visit_website">Vieraile verkkosivustolla</string>
+    <string name="action_station_copy_stream_url">Kopioi suoratoiston URL</string>
+    <string name="action_station_share">Jaa</string>
+
+    <string name="action_local">Paikallinen</string>
+    <string name="action_skip_to_next">Seuraava</string>
+    <string name="action_pause">Tauko</string>
+    <string name="action_skip_to_previous">Edellinen</string>
+    <string name="action_resume">Jatka</string>
+    <string name="action_stop">Pysäytä</string>
     <string name="action_search">Hae</string>
+    <string name="action_delete">Poista</string>
+    <string name="action_delete_history">Tyhjennä historia</string>
+    <string name="action_delete_favorites">Poista suosikit</string>
+    <string name="action_delete_stream_history">Tyhjennä kappalehistoria</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Peruuta</string>
     <string name="action_top_click">Klikatuimmat</string>
+    <string name="action_toggle_view">Vaihda näkymää</string>
     <string name="action_top_vote">Suosituimmat</string>
     <string name="action_changed_lately">Viimeaikoina muuttuneet</string>
     <string name="action_currently_playing">Tämänhetkiset</string>
     <string name="action_tags">Tunnisteet</string>
-    <string name="action_countries">Maat</string>
+    <string name="action_countries">Maat/Alueet</string>
     <string name="action_languages">Kielet</string>
-    <string name="action_station_share">Jaa</string>
+    <string name="action_edit">Muokkaa</string>
+    <string name="action_copy_info">Kopioi tiedot</string>
     <string name="error_station_load">Ei voitu yhdistää asemaan</string>
-    <string name="error_list_update">Ei voitu yhdistää Radio Browser -palvelimeen</string>
+    <string name="error_list_update">Ei voitu yhdistää radio browser -palvelimeen</string>
 
     <string name="share_action">Jaa aseman osoite sovelluksella..</string>
 
@@ -26,59 +55,242 @@
     <string name="nav_item_history">Historia</string>
     <string name="nav_item_settings">Asetukset</string>
     <string name="nav_item_alarm">Hälytys</string>
-    <string name="tab_player_recordings">Nauhoitukset</string>
 
-    <string name="about_text">Tämä sovellus käyttää ilmaisia radioasematietoja osoitteesta\nhttps://www.radio-browser.info\nJokainen voi lisätä tai muokata olemassa olevia asemia sivustolla. Sivusto on wikityyppinen tietokanta internetissä toimiville radioasemille.\n\nOta yhteyttä:\ben@ounben.com\n\nIlmoita virheistä:\nhttps://github.com/ounben/AMARadio/issues\n\nJos pidät sovelluksesta ja haluat auttaa sen kehittämisessä, voit lähettää minulle sähköpostia (englanniksi). Haluaisin ennen kaikkea, että joku graafisesti kokenut voisi auttaa tekemään sovelluksesta mielyttävämmän näköisen :) Ehkä joku, joka osaa piirtää kuvakkeita ja kuvia...Mutta myös ohjelmoijia, jotka osaavat korjata bugeja ja lisätä uusia ominaisuuksia. ;)\nMyös ideat uusista ominaisuuksista ovat tervetulleita!\n\nTämä sovellus on ilmainen, ja käyttää GPLv3-lisenssiä.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
-
-    <string name="detail_star">Kirjanmerkki</string>
-    <string name="detail_unstar">Poista</string>
+    <string name="about_text">AMARadio on 100%% mainosvapaa ja yksityisyyteen keskittyvä sovellus.\n\nKehitin tämän sovelluksen alun perin äidilleni tarjotakseni hänelle yksinkertaisen, rehellisen radiokokemuksen ilman ärsyttäviä mainoksia tai seurantaa. Siksi AMARadio pysyy aina mainosvapaana – se on lupaus hänelle ja jaettu teidän kaikkien kanssanne.\n\nTämä projekti on fork ounbenin erinomaisesta RadioDroid-sovelluksesta. Koko koodikanta on siirretty Javasta Kotliniin sen varmistamiseksi, että sovellus pysyy nykyaikaisena ja yhteensopivana tulevien Android-versioiden kanssa.\n\nTämä sovellus käyttää ilmaisia radioasematietoja osoitteesta https://www.radio-browser.info .\nJokainen voi lisätä tai muokata olemassa olevia asemia sivustolla. Sivusto on wikityyppinen tietokanta internetissä toimiville radioasemille.\n\nOta yhteyttä: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nJos pidät sovelluksesta ja haluat auttaa sen kehittämisessä, voit lähettää minulle sähköpostia. Haluaisin ennen kaikkea, että joku graafisesti kokenut voisi auttaa tekemään sovelluksesta mielyttävämmän näköisen :) Ehkä joku, joka osaa piirtää kuvakkeita ja kuvia... mutta myös ohjelmoijia, jotka osaavat korjata bugeja tai toteuttaa uusia ominaisuuksia!\nMyös ideat uusista ominaisuuksista ovat tervetulleita!\n\nTämä sovellus on ilmainen ohjelmisto ja käyttää GPLv3-lisenssiä. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versio: %1$s</string>
+    <string name="detail_star">Lisää suosikkeihin</string>
+    <string name="detail_unstar">Poista suosikeista</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
     <string name="progress_loading">Ladataan...</string>
 
     <string name="sleep_timer" formatted="true">Uniajastin: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Pysäytä toisto valitun minuutin kuluttua</string>
+    <string name="sleep_timer_apply">Käytä</string>
+    <string name="sleep_timer_clear">Tyhjennä</string>
     <string name="nav_item_add_sleep">Uniajastin</string>
 
-    <string name="settings_single_use_tags">Kertakäyttöiset tunnisteet</string>
-    <string name="settings_single_use_tags_desc_off">Älä näytä kertakäyttöisiä tunnisteita</string>
-    <string name="settings_single_use_tags_desc_on">Näytä kertakäyttöiset tunnisteet</string>
+    <string name="nav_item_save_playlist">Vie suosikit soittolistana</string>
+    <string name="nav_item_load_playlist">Tuo suosikit soittolistalta</string>
+    <string name="nav_item_save_history_playlist">Vie historia soittolistana</string>
+    <string name="confirm_overwrite_file">Korvataanko tiedosto?</string>
+    <string name="dialog_hint_file_name">Syötä tiedoston nimi</string>
+    <string name="error_empty_field">Tämä kenttä on pakollinen</string>
+    <string name="error_invalid_file_name">Virheellinen tiedoston nimi</string>
+    <string name="label_button_cancel">Peruuta</string>
+    <string name="label_button_overwrite">Korvaa</string>
+    <string name="notify_load_playlist_nok">Tuonti kohteesta %1$s&#47;%2$s epäonnistui</string>
+    <string name="notify_load_playlist_now">Tuodaan kohteesta %1$s&#47;%2$s, odota hetki.</string>
+    <string name="notify_load_playlist_ok">Tuotu %1$d asemaa kohteesta %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Vienti kohteeseen %1$s&#47;%2$s epäonnistui</string>
+    <string name="notify_save_playlist_now">Viedään kohteeseen %1$s&#47;%2$s, odota hetki.</string>
+    <string name="notify_save_playlist_ok">Viety kohteeseen %1$s&#47;%2$s onnistuneesti</string>
+    <string name="notify_sync_list_deleted_entries">%1$d/%2$d paikallisesta asemasta luettelossa merkitty palvelimelta puuttuviksi</string>
+
+    <string name="searchpreference_clear_history">Tyhjennä historia</string>
+    <string name="searchpreference_no_results">Ei tuloksia</string>
+    <string name="searchpreference_search">Hae…</string>
+    <string name="settings_appearance">Ulkoasu</string>
+    <string name="settings_theme_selection_title">Teema</string>
+    <string name="theme_light">Vaalea</string>
+    <string name="theme_dark">Tumma</string>
+    <string name="theme_system">Seuraa järjestelmää</string>
+    <string name="settings_compact_style">Tiivis tila</string>
+    <string name="settings_compact_style_desc_off">Suuri kuvake aseman tiedoilla</string>
+    <string name="settings_compact_style_desc_on">Pieni kuvake ilman aseman tietoja</string>
+    <string name="settings_bottom_navigation">Alapalkki</string>
+    <string name="settings_ui_scale">Käyttöliittymän skaalaus</string>
+    <string name="ui_scale_compact">Tiivis</string>
+    <string name="ui_scale_standard">Järjestelmän oletus</string>
+    <string name="ui_scale_large">Suuri</string>
+    <string name="ui_scale_extra_large">Erittäin suuri</string>
+
+    <string name="settings_interaction">Vuorovaikutus</string>
+    <string name="settings_single_use_tags">Näytä harvinaiset tunnisteet</string>
+    <string name="settings_single_use_tags_desc_off">Harvoin käytettyjä tunnisteita ei näytetä</string>
+    <string name="settings_single_use_tags_desc_on">Harvoin käytetyt tunnisteet näytetään</string>
 
     <string name="settings_show_broken">Rikkinäiset asemat</string>
-    <string name="settings_show_broken_on">Näytä rikkinäiset asemat</string>
-    <string name="settings_show_broken_off">Älä näytä rikkinäisiä asemia</string>
+    <string name="settings_show_broken_on">Näytä rikkinäiset asemat luetteloissa</string>
+    <string name="settings_show_broken_off">Piilota rikkinäiset asemat luetteloissa</string>
+
+    <string name="settings_startup_behaviour">Käynnistyskäyttäytyminen</string>
+    <string name="action_grid_view">Ruudukkonäkymä</string>
+    <string name="action_list_view">Luettelonäkymä</string>
+
+    <string name="startup_action_title">Käynnistystoiminto</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Näytä kaikki asemat</string>
+    <string name="startup_show_favorites">Näytä suosikit</string>
+    <string name="startup_show_history">Näytä historia</string>
+    <string name="startup_show_last_view">Viimeisin näkymä</string>
+
+    <string name="settings_load_icons">Näytä asemien kuvakkeet</string>
+    <string name="settings_load_icons_on">Kuvakkeet ladataan</string>
+    <string name="settings_load_icons_off">Kuvakkeita ei ladata</string>
+
+    <string name="settings_auto_favorite">Automaattiset suosikit</string>
+    <string name="settings_auto_favorite_on">Lisää asemat automaattisesti suosikkeihin toistettaessa</string>
+    <string name="settings_auto_favorite_off">Älä lisää asemia automaattisesti suosikkeihin toistettaessa</string>
 
     <string name="settings_alarm">Hälytys</string>
-    <string name="settings_alarm_external">Avaa ulkoisella</string>
+    <string name="settings_alarm_external">Käytä ulkoista sovellusta</string>
+    <string name="settings_alarm_external_desc_on">Avaa hälytys oletusarvoisella ulkoisella sovelluksella</string>
+    <string name="settings_alarm_external_desc_off">Avaa hälytys AMARadiolla</string>
     <string name="settings_alarm_audio_player">Audiosoitin</string>
     <string name="settings_alarm_sleep_timer">Uniajastin</string>
     <string name="settings_alarm_sleep_timer_desc">Pysäytä toisto %1$s minuutin jälkeen</string>
     <string name="settings_play">Soitin</string>
-    <string name="settings_play_external">Avaa ulkoisella</string>
+    <string name="settings_auto_play_on_startup">Automaattinen toisto</string>
+    <string name="settings_auto_play_on_startup_on">Toista viimeisin asema käynnistettäessä</string>
+    <string name="settings_auto_play_on_startup_off">Älä toista viimeisintä asemaa käynnistettäessä</string>
+    <string name="settings_auto_off_on_startup">Automaattinen pysäytys</string>
+    <string name="settings_auto_off_on_startup_on">Käytä automaattista pysäytysajastinta automaattisen toiston kanssa</string>
+    <string name="settings_auto_off_on_startup_off">Älä käytä automaattista pysäytysajastinta automaattisen toiston kanssa</string>
+    <string name="settings_auto_off_sleep_timer">Automaattinen pysäytysajastin</string>
+    <string name="settings_auto_off_sleep_timer_desc">Pysäytä toisto %1$s minuutin jälkeen</string>
+    <string name="settings_play_external">Käytä ulkoista soitinta</string>
+    <string name="settings_play_external_desc_on">Toista asemia ulkoisella soittimella</string>
+    <string name="settings_play_external_desc_off">Toista asemia AMARadiolla</string>
+    <string name="settings_equalizer">Taajuuskorjain</string>
 
-    <string name="settings_statistics">Tilastoja</string>
-    <string name="settings_about">Tietoa</string>
+    <string name="settings_connectivity">Yhteydet</string>
+    <string name="settings_connect_timeout">Yhteyden aikakatkaisu</string>
+    <string name="settings_read_timeout">Lukemisen aikakatkaisu</string>
+    <string name="settings_resume_timeout">Jatkamisen aikakatkaisu</string>
+    <string name="settings_retry_timeout">Uudelleenyrityksen aikakatkaisu</string>
+    <string name="settings_retry_delay">Uudelleenyhdistämisen viive</string>
+    <string name="settings_proxy">Välityspalvelin</string>
+    <string name="settings_proxy_login">Käyttäjätunnus</string>
+    <string name="settings_proxy_password">Salasana</string>
+    <string name="settings_proxy_action_test">Testaa</string>
+    <string name="settings_proxy_working">Yhteys kohteeseen %s onnistui</string>
+    <string name="settings_proxy_not_working">Yhteys kohteeseen %1$s epäonnistui\n%2$s</string>
+    <string name="settings_proxy_invalid">Välityspalvelimen arvot ovat virheellisiä</string>
+    <string name="ignore_proxy_settings_invalid">Sivuutettiin virheelliset välityspalvelimen asetukset</string>
+    <string name="settings_seconds_format">%d sekuntia</string>
+    <string name="settings_milliseconds_format">%d millisekuntia</string>
 
+    <string name="settings_pause_when_noisy">Tauko kuulokkeiden irrottamisen yhteydessä</string>
+
+    <string name="settings_auto_resume_do_not_resume">Älä jatka</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Jatka langallisessa yhteydessä</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Jatka toistoa, kun langalliset kuulokkeet kytketään</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Jatka Bluetooth-yhteydessä</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Jatka toistoa, kun Bluetooth A2DP -laite kytketään</string>
+
+    <string name="settings_warn_no_wifi">Varoitus ilman Wi-Fi-yhteyttä</string>
+    <string name="settings_warn_no_wifi_on">Varoita, kun toistetaan ilman Wi-Fi-yhteyttä</string>
+    <string name="settings_warn_no_wifi_off">Ei varoitusta, kun Wi-Fi-yhteyttä ei ole</string>
+
+    <string name="notify_pre_play">Yhdistetään</string>
     <string name="notify_play">Toistetaan</string>
+    <string name="notify_paused">Tauko</string>
+    <string name="notify_metered_connection">Maksullinen yhteys</string>
 
-    <string name="error_stream_url">Ongelma URL-osoitteen avaamisessa</string>
+    <string name="notify_starred">Asema lisätty suosikkeihin</string>
+    <string name="notify_autostarred">Asema lisättiin automaattisesti suosikkeihin</string>
+    <string name="notify_unstarred">Asema poistettu suosikeista</string>
+    <string name="notify_deleted_favorites">Suosikit tyhjennetty</string>
+    <string name="notify_deleted_history">Historia tyhjennetty</string>
+
+    <string name="notify_open_link_failure">Sovellusta linkin avaamiseen ei löytynyt</string>
+
+    <string name="notify_station_removed_from_list">1 poistettu</string>
+    <string name="action_station_removed_from_list_undo">KUMOA</string>
+
+    <string name="alert_delete_history">Haluatko varmasti tyhjentää historian?</string>
+    <string name="alert_delete_favorites">Haluatko varmasti poistaa kaikki suosikit?</string>
+    <string name="yes">Kyllä</string>
+    <string name="no">Ei</string>
+
+    <string name="alert_select_mpd_server">Valitse palvelin</string>
+    <string name="alert_select_mpd_server_name">Palvelimen nimi</string>
+    <string name="alert_select_mpd_server_password">Palvelimen salasana</string>
+    <string name="hostname">Isäntänimi</string>
+    <string name="port">Portti</string>
+
+    <string name="alert_select_mpd_server_add">Lisää</string>
+    <string name="alert_select_mpd_server_save">Tallenna</string>
+    <string name="alert_select_mpd_server_remove">Poista</string>
+    <string name="alert_add_or_edit_mpd_server">Syötä palvelimen tiedot</string>
+    <string name="alert_alarm_working">Hälytysaika nyt</string>
+    <string name="alert_alarm_not_working">Ei riittävästi tietoja hälytystä varten</string>
+    <string name="alert_select_external_alarm_app">Valitse audiosoitin</string>
+
+    <string name="alert_press_back_to_exit">Paina takaisin vielä kerran poistuaksesi</string>
+
+    <string name="error_stream_url">Ongelma suoratoiston URL-osoitteessa</string>
     <string name="error_caching_stream">Ongelma suoratoiston puskuroinnissa</string>
-    <string name="error_play_stream">Suoratoistoa ei voida avata</string>
+    <string name="error_play_stream">Suoratoistoa ei voida toistaa</string>
+    <string name="error_stream_reconnect_timeout">Suoratoistoon ei voitu yhdistää uudelleen: aikakatkaisu</string>
+    <string name="warning_no_network_trying_resume">Ei verkkoyhteyttä. Yritetään jatkaa, kun yhteys palaa.</string>
+    <string name="giving_up_resume">Toiston jatkamisyrityksestä luovuttu</string>
 
-    <string name="error_record_needs_write">Nauhoitus tarvitsee kirjoitusoikeuden toimiakseen!</string>
-    <string name="error_grant_audiofocus">Järjestelmä ei sallinut äänikanavan kohdennuspyyntöä.</string>
+    <string name="error_grant_audiofocus">Järjestelmä hylkäsi äänen kohdennuspyynnön</string>
 
-    <string name="player_info_status">TILA:</string>
-    <string name="player_info_status_stopped">Pysäytetty</string>
-    <string name="player_info_status_playing">Toistetaan</string>
+    <string name="error_no_equalizer_found">Taajuuskorjainsovellusta ei löytynyt</string>
+
+    <string name="player_info_status">Tila:&#160;</string>
+    <string name="player_info_status_stopped">pysäytetty</string>
+    <string name="player_info_status_playing">toistaa</string>
     <string name="player_info_transferred">Siirretty data: %1$s</string>
-    <string name="player_info_recording_to">Nauhoitetaan polkuun: %1$s</string>
+
+    <string name="tab_player_art">Albumin kuvitus</string>
+    <string name="tab_player_info">Tiedot</string>
+    <string name="tab_player_history">Kappalehistoria</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">RIKKI</string>
+    <string name="station_detail_deleted_on_server">POISTETTU</string>
 
-    <string name="image_button_disable">Kytke pois</string>
-    <string name="image_button_record">Nauhoita</string>
+    <string name="station_details_clicks">%1$d klikkausta</string>
+    <string name="station_details_votes">%1$d ääntä</string>
+
+    <string name="image_button_disable">Poista käytöstä</string>
     <string name="image_button_delete">Poista</string>
     <string name="image_button_more">Lisää</string>
-    
+    <string name="image_button_less">Vähemmän</string>
+    <string name="image_button_repeat">Toisto</string>
+    <string name="image_button_dont_repeat">Ei toistoa</string>
+    <string name="icon_click_trend_decreasing">Suosio laskee</string>
+    <string name="icon_click_trend_increasing">Suosio kasvaa</string>
+    <string name="icon_click_trend_stable">Suosio vakaa</string>
+
+    <string name="media_route_menu_title">GoogleCast</string>
+    <string name="app_id">5A97BAE4</string>
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% mainosvapaa &amp; yksityinen</string>
+
+    <string name="settings_mpd">Music Player Daemon</string>
+    <string name="settings_mpd_port">MPD-portti</string>
+    <string name="settings_view_mpd_servers">Palvelimesi</string>
+    <string name="action_mpd_nok">MPD ei ole yhdistetty</string>
+    <string name="action_mpd_ok">MPD yhdistetty</string>
+    <string name="action_mpd_connected">Yhdistetty palvelimeen: %1$s</string>
+
+    <string name="mpd_no_connection">Ei yhteyttä</string>
+    <string name="action_enable_mpd">Ota MPD käyttöön</string>
+    <string name="action_disable_mpd">Poista MPD käytöstä</string>
+    <string name="action_add_mpd_server">Lisää MPD-palvelin</string>
+
+    <string name="action_play_in_external">Toista ulkoisella soittimella</string>
+    <string name="action_choose_external_player">Valitse ulkoinen soitin</string>
+
+    <string name="settings_disable_battery_optimization">Akun optimointi</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Akun optimointi sivuutetaan, AMARadion pitäisi aina pystyä saamaan kohdennus takaisin.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Akun optimointi on käytössä, AMARadio ei ehkä pysty saamaan kohdennusta takaisin taustalla.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Muuta</string>
+    <string name="settings_statistics">Tilastot</string>
+    <string name="settings_about">Tietoa AMARadiosta</string>
+
+    <string name="description_btn_skip_to_next">Siirry seuraavaan</string>
+    <string name="description_btn_skip_to_previous">Siirry edelliseen</string>
+
+    <string name="description_btn_setup_alarm">Aseta hälytys</string>
+
     <string-array name="weekdays">        
         <item>S</item>        
         <item>M</item>        
@@ -88,5 +300,44 @@
         <item>P</item>        
         <item>L</item>
     </string-array>
-    
+
+    <string name="notify_stream_url_copied">Suoratoiston URL kopioitu onnistuneesti</string>
+    <string name="notify_track_info_copied">Kappaleen tiedot kopioitu onnistuneesti</string>
+
+    <string-array name="actions_station_link">
+        <item>Vieraile verkkosivustolla</item>
+        <item>Kopioi suoratoiston URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Maksullinen yhteys havaittu</string>
+    <string name="alert_metered_connection_message">Maksullinen yhteys voi aiheuttaa lisäkustannuksia. Jatka painamalla \'OK\'.</string>
+    <string name="nav_item_statistics">Tilastot</string>
+    <string name="nav_item_about">Tietoa</string>
+    <string name="refresh">Päivitä</string>
+    <string name="action_filter">Suodatin</string>
+    <string name="filter_country">Maa</string>
+    <string name="filter_tag">Tunniste</string>
+    <string name="filter_language">Kieli</string>
+    <string name="filter_sort_by">Lajitteluperuste</string>
+    <string name="filter_reverse">Käänteinen järjestys</string>
+    <string name="filter_apply">Käytä suodatinta</string>
+    <string name="sort_name">Nimi</string>
+    <string name="sort_votes">Äänet</string>
+    <string name="sort_clicks">Klikkaukset</string>
+    <string name="sort_lastchange">Viimeisin muutos</string>
+    <string name="filter_select_country">Valitse maa</string>
+    <string name="filter_select_language">Valitse kieli</string>
+    <string name="filter_type_tag">Kirjoita tunniste…</string>
+
+    <string name="alarm_backup">Varahälytys</string>
+    <string name="alarm_fallback_info">Käytetään järjestelmän hälytystä, koska valittua radioasemaa ei voitu ladata</string>
+    <string name="alarm_back_desc">Järjestelmän varahälytys, kun radioasema ei lataudu</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_add_alarm">@string/action_alarm</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
 </resources>

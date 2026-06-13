@@ -44,7 +44,6 @@
     <string name="action_countries">البلدان/المناطق</string>
     <string name="action_languages">اللغات</string>
     <string name="action_edit">تعديل</string>
-    <string name="action_lyrics">كلمات الأغنية</string>
     <string name="action_copy_info">نسخ المعلومات</string>
     <string name="error_station_load">تعذر الاتصال بالمحطة</string>
     <string name="error_list_update">تعذر الاتصال بخادم دليل الراديو</string>
@@ -57,7 +56,7 @@
     <string name="nav_item_settings">الإعدادات</string>
     <string name="nav_item_alarm">المنبه</string>
 
-    <string name="about_text">تطبيق AMARadio خالٍ تماماً من الإعلانات بنسبة 100٪ ويهتم بالخصوصية.\n\nلقد قمت بتطوير هذا التطبيق في الأصل لوالدتي لتزويدها بتجربة راديو بسيطة وصادقة دون إعلانات مزعجة أو تتبع. لهذا السبب سيبقى AMARadio دائماً خالياً من الإعلانات – هذا وعد لها، وأشاركه معكم جميعاً.\n\nهذا المشروع هو نسخة مشتقة (Fork) من التطبيق المتميز RadioDroid للمطور ounben. تم نقل قاعدة الكود بالكامل من Java إلى Kotlin لضمان بقاء التطبيق حديثاً ومتوافقاً مع إصدارات أندرويد المستقبلية.\n\nيعتمد هذا التطبيق على دليل محطات الراديو المجاني المتاح على:\nhttps://www.radio-browser.infonيمكن لأي شخص إضافة محطات إليه، فهو يعمل مثل ويكيبيديا لمحطات الراديو عبر الإنترنت (البث المباشر).\n\nللتواصل:\ben@ounben.com\n\nنظام تتبع الأخطاء:\nhttps://github.com/ounben/AMARadio/issuesnnإذا كان البرنامج يعجبك وترغب في المساعدة، فلا تتردد في إرسال بريد إلكتروني إليّ. أحتاج فعلياً إلى شخص لديه خبرة في التصميم الجرافيكي لجعل التطبيق أكثر جاذبية للعين :) ربما شخص يمكنه رسم الأيقونات والصور... وأيضاً مبرمجين لإصلاح الأخطاء أو إضافة ميزات جديدة.\nالأفكار للميزات الجديدة مرحب بها دائماً أيضاً!\n\nهذا التطبيق هو برنامج حر مرخص بموجب رخصة GPLv3.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">تطبيق AMARadio خالٍ تماماً من الإعلانات بنسبة 100٪ ويهتم بالخصوصية.\n\nلقد قمت بتطوير هذا التطبيق في الأصل لوالدتي لتزويدها بتجربة راديو بسيطة وصادقة دون إعلانات مزعجة أو تتبع. لهذا السبب سيبقى AMARadio دائماً خالياً من الإعلانات – هذا وعد لها، وأشاركه معكم جميعاً.\n\nهذا المشروع هو نسخة مشتقة (Fork) من التطبيق المتميز RadioDroid للمطور ounben. تم نقل قاعدة الكود بالكامل من Java إلى Kotlin لضمان بقاء التطبيق حديثاً ومتوافقاً مع إصدارات أندرويد المستقبلية.\n\nيعتمد هذا التطبيق على دليل محطات الراديو المجاني المتاح على:\nhttps://www.radio-browser.info\nيمكن لأي شخص إضافة محطات إليه، فهو يعمل مثل ويكيبيديا لمحطات الراديو عبر الإنترنت (البث المباشر).\n\nللتواصل:\ben@ounben.com\n\nنظام تتبع الأخطاء:\nhttps://github.com/ounben/AMARadio/issues\n\nإذا كان البرنامج يعجبك وترغب في المساعدة، فلا تتردد في إرسال بريد إلقاء بريد إلكتروني إليّ. أحتاج فعلياً إلى شخص لديه خبرة في التصميم الجرافيكي لجعل التطبيق أكثر جاذبية للعين :) ربما شخص يمكنه رسم الأيقونات والصور... وأيضاً مبرمجين لإصلاح الأخطاء أو إضافة ميزات جديدة.\nالأفكار للميزات الجديدة مرحب بها دائماً أيضاً!\n\nهذا التطبيق هو برنامج حر مرخص بموجب رخصة GPLv3.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">الإصدار: %1$s</string>
     <string name="detail_star">إضافة إلى المفضلة</string>
     <string name="detail_unstar">حذف من المفضلة</string>
@@ -95,11 +94,15 @@
     <string name="theme_light">فاتح</string>
     <string name="theme_dark">داكن</string>
     <string name="theme_system">تلقائي حسب النظام</string>
-    <string name="settings_circular_icons">استخدام أيقونات دائرية</string>
     <string name="settings_compact_style">الوضع المدمج</string>
     <string name="settings_compact_style_desc_off">أيقونة كبيرة مع تفاصيل المحطة</string>
     <string name="settings_compact_style_desc_on">أيقونة صغيرة بدون تفاصيل المحطة</string>
     <string name="settings_bottom_navigation">شريط التنقل السفلي</string>
+    <string name="settings_ui_scale">تحجيم واجهة المستخدم</string>
+    <string name="ui_scale_compact">مدمج</string>
+    <string name="ui_scale_standard">قياسي</string>
+    <string name="ui_scale_large">كبير</string>
+    <string name="ui_scale_extra_large">كبير جداً</string>
 
     <string name="settings_interaction">التفاعل</string>
     <string name="settings_single_use_tags">إظهار الوسوم نادرة الاستخدام</string>
@@ -125,14 +128,6 @@
     <string name="settings_auto_favorite">المفضلة التلقائية</string>
     <string name="settings_auto_favorite_on">إضافة المحطات تلقائياً إلى المفضلة عند التشغيل</string>
     <string name="settings_auto_favorite_off">عدم إضافة المحطات تلقائياً إلى المفضلة عند التشغيل</string>
-
-    <string name="settings_icon_click_toggles_favorite">النقر للمفضلة</string>
-    <string name="settings_icon_click_toggles_favorite_on">انقر على أيقونة المحطة لإضافتها أو إزالتها من المفضلة</string>
-    <string name="settings_icon_click_toggles_favorite_off">انقر على أيقونة المحطة لبدء التشغيل</string>
-
-    <string name="settings_click_trend_icon_visible">إظهار أيقونة مؤشر الشهرة</string>
-    <string name="settings_click_trend_icon_visible_on">ستكون الأيقونة مرئية</string>
-    <string name="settings_click_trend_icon_visible_off">سيتم إخفاء الأيقونة</string>
 
     <string name="settings_alarm">المنبه</string>
     <string name="settings_alarm_external">تمكين تطبيق خارجي</string>
@@ -186,19 +181,6 @@
     <string name="settings_warn_no_wifi_on">التحذير عند التشغيل بدون اتصال واي فاي</string>
     <string name="settings_warn_no_wifi_off">عدم التحذير عند عدم الاتصال بالواي فاي</string>
 
-    <string name="settings_recordings">التسجيلات</string>
-    <string name="settings_record_name_formatting">صيغة الاسم</string>
-
-    <string name="settings_record_name_formatting_default" translatable="false">${station}_${artist}_${track}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_1" translatable="false">${station}_${artist}_${track}</string>
-    <string name="settings_record_name_formatting_2" translatable="false">${station}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_3" translatable="false">${index}_${station}_${date}</string>
-
-    <string name="settings_record_name_formatting_default_display">station_artist_track_\u200bdate_\u200btime</string>
-    <string name="settings_record_name_formatting_1_display">station_artist_\u200btrack</string>
-    <string name="settings_record_name_formatting_2_display">station_date_\u200btime</string>
-    <string name="settings_record_name_formatting_3_display">index_station_\u200bdate</string>
-
     <string name="notify_pre_play">جاري الاتصال</string>
     <string name="notify_play">جاري التشغيل</string>
     <string name="notify_paused">موقوف مؤقتاً</string>
@@ -214,8 +196,6 @@
 
     <string name="notify_station_removed_from_list">تمت إزالة 1</string>
     <string name="action_station_removed_from_list_undo">تراجع</string>
-
-    <string name="alert_install_lyrics_app">تطبيق QuickLyric غير مثبت على جهازك. هل تريد الحصول عليه من متجر Google Play؟</string>
 
     <string name="alert_delete_history">هل تريد حقاً مسح سجل البحث؟</string>
     <string name="alert_delete_favorites">هل تريد حقاً حذف جميع المحطات المفضلة؟</string>
@@ -245,7 +225,6 @@
     <string name="warning_no_network_trying_resume">لا يوجد اتصال بالشبكة. جاري محاولة الاستئناف عند عودة الاتصال.</string>
     <string name="giving_up_resume">تم التخلي عن محاولة استئناف التشغيل</string>
 
-    <string name="error_record_needs_write">مطلوب إذن الكتابة لإجراء التسجيل</string>
     <string name="error_grant_audiofocus">تم رفض طلب التركيز الصوتي (Audio Focus) من قبل النظام</string>
 
     <string name="error_no_equalizer_found">لم يتم العثور على تطبيق لمعدل الصوت</string>
@@ -253,16 +232,11 @@
     <string name="player_info_status">الحالة:&#160;</string>
     <string name="player_info_status_stopped">متوقف</string>
     <string name="player_info_status_playing">جاري التشغيل</string>
-    <string name="player_info_status_recording">جاري التسجيل</string>
-    <string name="player_info_status_playing_and_recording">جاري التشغيل والتسجيل</string>
     <string name="player_info_transferred">البيانات المنقولة: %1$s</string>
-    <string name="player_info_recording_to">جاري التسجيل في:\n%1$s</string>
-    <string name="player_info_recorded_to">التسجيل الأخير:\n%1$s</string>
 
     <string name="tab_player_art">غلاف الألبوم</string>
     <string name="tab_player_info">المعلومات</string>
     <string name="tab_player_history">سجل التراكات</string>
-    <string name="tab_player_recordings">التسجيلات</string>
 
     <string name="station_detail_bitrate">%1$1d كيلوبت/ثانية</string>
     <string name="station_detail_broken">معطلة</string>
@@ -272,9 +246,6 @@
     <string name="station_details_votes">%1$d تصويت</string>
 
     <string name="image_button_disable">تعطيل</string>
-    <string name="image_button_record">تسجيل</string>
-    <string name="image_button_record_request_permission">طلب أذونات للتسجيل</string>
-    <string name="image_button_recordings">التسجيلات</string>
     <string name="image_button_delete">حذف</string>
     <string name="image_button_more">المزيد</string>
     <string name="image_button_less">أقل</string>
@@ -304,11 +275,9 @@
     <string name="action_play_in_external">التشغيل في مشغل خارجي</string>
     <string name="action_choose_external_player">اختر مشغلاً خارجياً</string>
 
-    <string name="settings_lastfm_api_key">مفتاح API لـ Last.fm</string>
-    <string name="settings_lastfm_api_key_desc">أدخل مفتاح API لتمكين أغلفة الألبومات في مشغل الشاشة الكاملة</string>
     <string name="settings_disable_battery_optimization">تحسين البطارية</string>
     <string name="settings_ignore_battery_optimization_summary_on">يتم تجاهل تحسين البطارية، يجب أن يكون AMARadio قادراً دائماً على استعادة التركيز بعد فقدانه.</string>
-    <string name="settings_ignore_battery_optimization_summary_off">تم تفعيل تحسين البطارية، لن يتمكن AMARadio من استعادة التركيز بعد فقدانه إذا كان في الخلفية.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">تم تفعيل تحسين البطارية، لن يتمكن AMARadio von استعادة التركيز بعد فقدانه إذا كان في الخلفية.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">أخرى</string>
     <string name="settings_statistics">الإحصائيات</string>

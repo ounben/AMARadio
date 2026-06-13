@@ -15,7 +15,7 @@
     <string name="detail_play_in_AMARadio">Riproduci in AMARadio</string>
 
     <string name="action_links">Collegamenti</string>
-    <string name="action_homepage">Pagina di inizio</string>
+    <string name="action_homepage">Pagina iniziale</string>
     <string name="action_favorite">Preferito</string>
     <string name="action_alarm">Sveglia</string>
 
@@ -42,13 +42,12 @@
     <string name="action_changed_lately">Modificate recentemente</string>
     <string name="action_currently_playing">In onda</string>
     <string name="action_tags">Etichette</string>
-    <string name="action_countries">Nazioni</string>
+    <string name="action_countries">Nazioni/Regioni</string>
     <string name="action_languages">Lingue</string>
     <string name="action_edit">Modifica</string>
-    <string name="action_lyrics">Testo</string>
     <string name="action_copy_info">Copia info</string>
     <string name="error_station_load">Impossibile connettersi alla stazione</string>
-    <string name="error_list_update">Impossibile connettersi al server di scoperta delle radio</string>
+    <string name="error_list_update">Impossibile connettersi al server radio browser</string>
 
     <string name="share_action">Condividi collegamento alla stazione con...</string>
 
@@ -58,7 +57,7 @@
     <string name="nav_item_settings">Impostazioni</string>
     <string name="nav_item_alarm">Sveglia</string>
 
-    <string name="about_text">Questa applicazione usa il direttorio libero di radio presso\nhttps://www.radio-browser.info\nChiunque può aggiungere stazioni radio o modificare quelle esistenti. Funziona come una wiki per le stazioni radio che trasmettono (streaming) su internet.\n\Centatti:\ben@ounben.com\n\Gestore di bachi:\nhttps://github.com/ounben/AMARadio/issues\n\nSe ti piace questo software e vuoi aiutare, sentiti libero di inviare un email. Ho davvero bisogno di qualcuno con esperienza grafica che possa rendere l\'applicazione più bella da vedere :) Magari qualcuno che sa disegnare icone, immagini... Ma anche programmatori per sistemare i bachi, o implementare nuove caratteristiche. ;)\nInoltre sono sempre apprezzate idee per nuove caratteristiche!\n\nQuesta applicazione è software libero sotto la licenza\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio è al 100%% privo di pubblicità e focalizzato sulla privacy.\n\nHo originariamente sviluppato questa applicazione per mia madre per offrirle un\'esperienza radio semplice e onesta senza pubblicità fastidiose o tracciamento. Per questo motivo AMARadio rimarrà sempre privo di pubblicità – è una promessa fatta a lei, condivisa con tutti voi.\n\nQuesto progetto è un fork dell\'eccellente RadioDroid di ounben. L\'intera base di codice è stata migrata da Java a Kotlin per garantire che l\'applicazione rimanga moderna e compatibile con le future versioni di Android.\n\nQuesta applicazione usa il direttorio libero di radio presso https://www.radio-browser.info .\nChiunque può aggiungere stazioni radio. Funziona come una wiki per le stazioni radio che trasmettono (streaming) su internet.\n\nContatti: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe ti piace questo software e vuoi aiutare, sentiti libero di inviare un email. Ho davvero bisogno di qualcuno con esperienza grafica che possa rendere l\'applicazione più bella da vedere :) Magari qualcuno che sa disegnare icone, immagini... Ma anche programmatori per sistemare i bachi, o implementare nuove caratteristiche!\nInoltre sono sempre apprezzate idee per nuove caratteristiche!\n\nQuesta applicazione è software libero sotto la licenza GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versione: %1$s</string>
     <string name="detail_star">Aggiungi ai preferiti</string>
     <string name="detail_unstar">Cancella dai favoriti</string>
@@ -81,11 +80,12 @@
     <string name="label_button_cancel">Annulla</string>
     <string name="label_button_overwrite">Sovrascrivi</string>
     <string name="notify_load_playlist_nok">Impossibile importare da %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importando da %1$s&#47;%2$s, please wait.</string>
+    <string name="notify_load_playlist_now">Importando da %1$s&#47;%2$s, attendere prego.</string>
     <string name="notify_load_playlist_ok">Importate %1$d stazioni da %2$s&#47;%3$s</string>
     <string name="notify_save_playlist_nok">Impossibile esportare a %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Esportando a %1$s&#47;%2$s, per favore aspetta.</string>
+    <string name="notify_save_playlist_now">Esportando a %1$s&#47;%2$s, attendere prego.</string>
     <string name="notify_save_playlist_ok">Esportato a %1$s&#47;%2$s correttamente</string>
+    <string name="notify_sync_list_deleted_entries">%1$d su %2$d stazioni locali nella lista marcate come non esistenti sul server</string>
 
     <string name="searchpreference_clear_history">Svuota cronologia</string>
     <string name="searchpreference_no_results">Nessun risultato</string>
@@ -94,11 +94,16 @@
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Chiaro</string>
     <string name="theme_dark">Scuro</string>
-    <string name="settings_circular_icons">Usa icone circolari</string>
+    <string name="theme_system">Segui il sistema</string>
     <string name="settings_compact_style">Modalità compatta</string>
-    <string name="settings_compact_style_desc_off">Adotta icone grandi per i dettagli della stazione</string>
-    <string name="settings_compact_style_desc_on">Adotta icone piccole per i dettagli della stazione</string>
+    <string name="settings_compact_style_desc_off">Icone grandi per i dettagli della stazione</string>
+    <string name="settings_compact_style_desc_on">Icone piccole per i dettagli della stazione</string>
     <string name="settings_bottom_navigation">Navigazione in basso</string>
+    <string name="settings_ui_scale">Scala UI</string>
+    <string name="ui_scale_compact">Compatta</string>
+    <string name="ui_scale_standard">Standard di sistema</string>
+    <string name="ui_scale_large">Grande</string>
+    <string name="ui_scale_extra_large">Molto grande</string>
 
     <string name="settings_interaction">Interazione</string>
     <string name="settings_single_use_tags">Mostra etichette poco usate</string>
@@ -110,7 +115,10 @@
     <string name="settings_show_broken_off">Non mostrare stazioni rotte nelle liste</string>
 
     <string name="settings_startup_behaviour">Comportamento all\'avvio</string>
-    <string name="startup_action_title">Inizia azione</string>
+    <string name="action_grid_view">Vista a griglia</string>
+    <string name="action_list_view">Vista a lista</string>
+
+    <string name="startup_action_title">Azione all\'avvio</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Mostra tutte le stazioni</string>
     <string name="startup_show_favorites">Mostra preferiti</string>
@@ -122,16 +130,8 @@
     <string name="settings_load_icons_off">Le icone non saranno scaricate</string>
 
     <string name="settings_auto_favorite">Auto-preferiti</string>
-    <string name="settings_auto_favorite_on">Le stazioni saranno aggiunte in automatico ai preferiti quando sono riprodotte</string>
-    <string name="settings_auto_favorite_off">Le stazioni non saranno aggiunte in automatico ai preferiti quando sono riprodotte</string>
-
-    <string name="settings_icon_click_toggles_favorite">Clic dell\'icona</string>
-    <string name="settings_icon_click_toggles_favorite_on">Un clic sull\'icona della stazione la aggiunge o toglie dai preferiti</string>
-    <string name="settings_icon_click_toggles_favorite_off">Un clic sull\'icona della stazione inizia a riprodurre</string>
-
-    <string name="settings_click_trend_icon_visible">Icona della tendenza</string>
-    <string name="settings_click_trend_icon_visible_on">L\'icona sarà visibile</string>
-    <string name="settings_click_trend_icon_visible_off">L\'icona sarà nascosta</string>
+    <string name="settings_auto_favorite_on">Aggiungi automaticamente ai preferiti durante la riproduzione</string>
+    <string name="settings_auto_favorite_off">Non aggiungere automaticamente ai preferiti durante la riproduzione</string>
 
     <string name="settings_alarm">Sveglia</string>
     <string name="settings_alarm_external">Apri applicazione esterna</string>
@@ -144,15 +144,20 @@
     <string name="settings_auto_play_on_startup">Auto-riproduzione</string>
     <string name="settings_auto_play_on_startup_on">Riproduci l\'ultima stazione all\'avvio</string>
     <string name="settings_auto_play_on_startup_off">Non riprodurre l\'ultima stazione all\'avvio</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Usa timer auto-stop con auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Non usare timer auto-stop con auto-play</string>
+    <string name="settings_auto_off_sleep_timer">Timer auto-stop</string>
+    <string name="settings_auto_off_sleep_timer_desc">Smetti di riprodurre dopo %1$s minuti</string>
     <string name="settings_play_external">Apri riproduttore esterno</string>
     <string name="settings_play_external_desc_on">Riproduci stazioni con riproduttore esterno</string>
     <string name="settings_play_external_desc_off">Riproduci stazioni con AMARadio</string>
     <string name="settings_equalizer">Equalizzatore</string>
 
     <string name="settings_connectivity">Connessione</string>
-    <string name="settings_connect_timeout">Timeout di connessione della trasmissione</string>
-    <string name="settings_read_timeout">Timeout di lettura della trasmissione</string>
-    <string name="settings_resume_timeout">Timeout di ripresa della trasmissione</string>
+    <string name="settings_connect_timeout">Timeout di connessione</string>
+    <string name="settings_read_timeout">Timeout di lettura</string>
+    <string name="settings_resume_timeout">Timeout di ripresa</string>
     <string name="settings_retry_timeout">Timeout di riprova</string>
     <string name="settings_retry_delay">Ritardo di riconnessione</string>
     <string name="settings_proxy">Proxy</string>
@@ -162,7 +167,7 @@
     <string name="settings_proxy_working">Connesso con successo a %s</string>
     <string name="settings_proxy_not_working">Connessione fallita a %1$s\n%2$s</string>
     <string name="settings_proxy_invalid">I valori forniti per il proxy non sono validi</string>
-    <string name="ignore_proxy_settings_invalid">Sono state ignorate le  impostazioni non valide del proxy</string>
+    <string name="ignore_proxy_settings_invalid">Ignorate impostazioni non valide del proxy</string>
     <string name="settings_seconds_format">%d secondi</string>
     <string name="settings_milliseconds_format">%d millisecondi</string>
 
@@ -176,52 +181,42 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Riprendi con connessione Bluetooth</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Riprendi la riproduzione alla connessione di dispositivi A2DP Bluetooth</string>
 
-    <string name="settings_warn_no_wifi">Avviso di Wi-Fi spento</string>
+    <string name="settings_warn_no_wifi">Avviso senza Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Avvisa quando si riproduce senza connessione Wi-Fi</string>
-    <string name="settings_warn_no_wifi_off">Non avvisare quando si riproduce senza connessione Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Non avvisare quando non c\'è connessione Wi-Fi</string>
 
-    <string name="settings_recordings">Registrazioni</string>
-    <string name="settings_record_name_formatting">Formato del nome</string>
-
-    <string name="settings_record_name_formatting_default_display">stazione_artista_traccia_\u200bdata_\u200bora</string>
-    <string name="settings_record_name_formatting_1_display">stazione_artista_\u200btraccia</string>
-    <string name="settings_record_name_formatting_2_display">stazione_data_\u200bora</string>
-    <string name="settings_record_name_formatting_3_display">indice_stazione_\u200bdata</string>
-
-    <string name="notify_pre_play">Connettendo</string>
-    <string name="notify_play">Riproducendo</string>
+    <string name="notify_pre_play">Connessione in corso</string>
+    <string name="notify_play">In riproduzione</string>
     <string name="notify_paused">In pausa</string>
-    <string name="notify_metered_connection">Connessione misurata</string>
+    <string name="notify_metered_connection">Connessione a consumo</string>
 
-    <string name="notify_starred">La stazione è stata marcata come preferita</string>
-    <string name="notify_autostarred">La stazione è stata marcata automaticamente come preferita</string>
-    <string name="notify_unstarred">La stazione è stata cancellata dai preferiti</string>
+    <string name="notify_starred">La stazione è stata aggiunta ai preferiti</string>
+    <string name="notify_autostarred">La stazione è stata aggiunta automaticamente ai preferiti</string>
+    <string name="notify_unstarred">La stazione è stata rimossa dai preferiti</string>
     <string name="notify_deleted_favorites">I preferiti sono stati cancellati</string>
     <string name="notify_deleted_history">La cronologia è stata cancellata</string>
 
     <string name="notify_open_link_failure">Nessuna applicazione trovata per aprire il collegamento</string>
 
     <string name="notify_station_removed_from_list">1 cancellata</string>
-    <string name="action_station_removed_from_list_undo">DISFA</string>
-
-    <string name="alert_install_lyrics_app">QuickLyric non è installato sul dispositivo. Vuoi scaricarlo dal Google Play Store?</string>
+    <string name="action_station_removed_from_list_undo">ANNULLA</string>
 
     <string name="alert_delete_history">Vuoi davvero cancellare la cronologia?</string>
-    <string name="alert_delete_favorites">Vuoi davvero cancellare i preferiti?</string>
+    <string name="alert_delete_favorites">Vuoi davvero cancellare tutti i preferiti?</string>
     <string name="yes">Sì</string>
     <string name="no">No</string>
 
     <string name="alert_select_mpd_server">Per favore scegli un server</string>
     <string name="alert_select_mpd_server_name">Nome del server</string>
     <string name="alert_select_mpd_server_password">Password del server</string>
-    <string name="hostname">Nome dell\'host</string>
+    <string name="hostname">Hostname</string>
     <string name="port">Porta</string>
 
     <string name="alert_select_mpd_server_add">Aggiungi</string>
     <string name="alert_select_mpd_server_save">Salva</string>
-    <string name="alert_select_mpd_server_remove">Remove</string>
+    <string name="alert_select_mpd_server_remove">Rimuovi</string>
     <string name="alert_add_or_edit_mpd_server">Inserisci i dettagli del server</string>
-    <string name="alert_alarm_working">Tempo della sveglia ora</string>
+    <string name="alert_alarm_working">Ora della sveglia</string>
     <string name="alert_alarm_not_working">Non ci sono abbastanza informazioni per la sveglia</string>
     <string name="alert_select_external_alarm_app">Scegli riproduttore audio</string>
 
@@ -234,32 +229,27 @@
     <string name="warning_no_network_trying_resume">Nessuna connessione di rete. Provo a riprenderla quando la connessione torna.</string>
     <string name="giving_up_resume">Abbandono il tentativo di riprendere la riproduzione</string>
 
-    <string name="error_record_needs_write">Necessito dei permessi di scrittura per registrare</string>
-    <string name="error_grant_audiofocus">La richiesta dell\'audio non è stata accettata dal sistema</string>
+    <string name="error_grant_audiofocus">La richiesta di audio focus non è stata accettata dal sistema</string>
 
-    <string name="error_no_equalizer_found">Nessuna applicazione di equalizzazione</string>
+    <string name="error_no_equalizer_found">Nessuna applicazione di equalizzazione trovata</string>
 
     <string name="player_info_status">Stato:&#160;</string>
     <string name="player_info_status_stopped">interrotto</string>
-    <string name="player_info_status_playing">riproducendo</string>
-    <string name="player_info_status_recording">registrando</string>
-    <string name="player_info_status_playing_and_recording">riproducendo e registrando</string>
+    <string name="player_info_status_playing">riproduzione</string>
     <string name="player_info_transferred">Dati trasferiti: %1$s</string>
-    <string name="player_info_recording_to">Registrando a:\n%1$s</string>
-    <string name="player_info_recorded_to">Ultima registrazione:\n%1$s</string>
 
     <string name="tab_player_art">Copertina</string>
     <string name="tab_player_info">Info</string>
-    <string name="tab_player_history">Cronologia</string>
-    <string name="tab_player_recordings">Registrazioni</string>
+    <string name="tab_player_history">Cronologia tracce</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">ROTTO</string>
+    <string name="station_detail_deleted_on_server">CANCELLATO</string>
+
+    <string name="station_details_clicks">%1$d clic</string>
+    <string name="station_details_votes">%1$d voti</string>
 
     <string name="image_button_disable">Disabilita</string>
-    <string name="image_button_record">Registra</string>
-    <string name="image_button_record_request_permission">Richiedi permesso di registrazione</string>
-    <string name="image_button_recordings">Registrazioni</string>
     <string name="image_button_delete">Cancella</string>
     <string name="image_button_more">Più</string>
     <string name="image_button_less">Meno</string>
@@ -272,9 +262,10 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% privo di pubblicità e privato</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Porta di MPD</string>
+    <string name="settings_mpd_port">Porta MPD</string>
     <string name="settings_view_mpd_servers">I tuoi server</string>
     <string name="action_mpd_nok">MPD non connesso</string>
     <string name="action_mpd_ok">MPD connesso</string>
@@ -288,9 +279,13 @@
     <string name="action_play_in_external">Riproduci in riproduttore esterno</string>
     <string name="action_choose_external_player">Scegli riproduttore esterno</string>
 
+    <string name="settings_disable_battery_optimization">Ottimizzazione batteria</string>
+    <string name="settings_ignore_battery_optimization_summary_on">L\'ottimizzazione batteria è ignorata, AMARadio dovrebbe sempre poter recuperare il focus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">L\'ottimizzazione batteria è attiva, AMARadio potrebbe non recuperare il focus in background.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Altro</string>
     <string name="settings_statistics">Statistiche</string>
-    <string name="settings_about">Circa AMARadio</string>
+    <string name="settings_about">Info su AMARadio</string>
 
     <string name="description_btn_skip_to_next">Salta al seguente</string>
     <string name="description_btn_skip_to_previous">Salta al precedente</string>
@@ -307,23 +302,37 @@
         <item>S</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">L\'URL del flusso copiato correttamente</string>
-    <string name="notify_track_info_copied">Informazioni sulla traccia copiate correttamente</string>
+    <string name="notify_stream_url_copied">URL del flusso copiato correttamente</string>
+    <string name="notify_track_info_copied">Info traccia copiate correttamente</string>
 
     <string-array name="actions_station_link">
         <item>Visita sito web</item>
         <item>Copia URL del flusso</item>
     </string-array>
 
-    <string name="alert_metered_connection_title">Rilevata connessione a uso misurato</string>
-    <string name="alert_metered_connection_message">La connessione ad uso misurato può incorrere in costi aggiuntivi, premi \'OK\' per continuare.</string>
+    <string name="alert_metered_connection_title">Rilevata connessione a consumo</string>
+    <string name="alert_metered_connection_message">La connessione a consumo può comportare costi aggiuntivi, premi \'OK\' per continuare.</string>
     <string name="nav_item_statistics">Statistiche</string>
-    <string name="nav_item_about">Circa</string>
-    <string name="refresh">Ricarica</string>
+    <string name="nav_item_about">Info</string>
+    <string name="refresh">Aggiorna</string>
+    <string name="action_filter">Filtro</string>
+    <string name="filter_country">Nazione</string>
+    <string name="filter_tag">Etichetta</string>
+    <string name="filter_language">Lingua</string>
+    <string name="filter_sort_by">Ordina per</string>
+    <string name="filter_reverse">Inverti ordine</string>
+    <string name="filter_apply">Applica filtro</string>
+    <string name="sort_name">Nome</string>
+    <string name="sort_votes">Voti</string>
+    <string name="sort_clicks">Clic</string>
+    <string name="sort_lastchange">Ultima modifica</string>
+    <string name="filter_select_country">Seleziona nazione</string>
+    <string name="filter_select_language">Seleziona lingua</string>
+    <string name="filter_type_tag">Digita etichetta…</string>
 
-    <string name="alarm_backup">Sveglia alternativa</string>
-    <string name="alarm_fallback_info">Sveglia del sistema adottata se la stazione radio selezionata ha fallito il caricamento</string>
-    <string name="alarm_back_desc">Il sistema alternativo di sveglia adottato quando il caricamento della stazione radio fallisce</string>
+    <string name="alarm_backup">Sveglia di backup</string>
+    <string name="alarm_fallback_info">Sveglia di sistema usata perché la stazione radio scelta non è stata caricata</string>
+    <string name="alarm_back_desc">Sveglia di sistema alternativa usata quando il caricamento della radio fallisce</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

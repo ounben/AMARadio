@@ -40,7 +40,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         findPreference<PreferenceCategory>("pref_category_player")?.setIcon(R.drawable.ic_play_arrow_24dp)
         findPreference<PreferenceCategory>("pref_category_alarm")?.setIcon(R.drawable.ic_query_builder_black_24dp)
         findPreference<PreferenceCategory>("pref_category_connectivity")?.setIcon(R.drawable.ic_sync_black_24dp)
-        findPreference<PreferenceCategory>("pref_category_recordings")?.setIcon(R.drawable.ic_fiber_manual_record_black_24dp)
         findPreference<PreferenceCategory>("pref_category_mpd")?.setIcon(R.drawable.ic_volume_up_24dp)
         findPreference<PreferenceCategory>("pref_category_other")?.setIcon(R.drawable.ic_live_help_24dp)
 
@@ -66,7 +65,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         setPreferencesFromResource(R.xml.preferences, s)
         
         // Explicitly set summary providers for all list preferences
-        val listPrefs = listOf("theme_name", "ui_scale_level", "startup_action", "auto_off_timeout", "alarm_timeout", "record_name_formatting")
+        val listPrefs = listOf("theme_name", "ui_scale_level", "startup_action", "auto_off_timeout", "alarm_timeout")
         listPrefs.forEach { key ->
             findPreference<ListPreference>(key)?.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         }

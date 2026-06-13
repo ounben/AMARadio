@@ -10,11 +10,9 @@ import net.ounben.AMARadio.R
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.players.PlayState
 import net.ounben.AMARadio.players.PlayerWrapper
-import net.ounben.AMARadio.recording.RecordableListener
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
-import java.io.IOException
 import java.util.concurrent.atomic.AtomicBoolean
 
 class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapper, StreamProxyListener {
@@ -130,22 +128,6 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     override fun setStateListener(listener: PlayerWrapper.PlayListener?) {
         stateListener = listener
     }
-
-    override fun canRecord(): Boolean = mediaPlayer != null && !isHls
-
-    override fun startRecording(recordableListener: RecordableListener) {
-        proxy?.startRecording(recordableListener)
-    }
-
-    override fun stopRecording() {
-        proxy?.stopRecording()
-    }
-
-    override fun isRecording(): Boolean = proxy != null && proxy!!.isRecording()
-
-    override fun getRecordNameFormattingArgs(): Map<String, String>? = null
-
-    override fun getExtension(): String = proxy?.getExtension() ?: "mp3"
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
     override fun onFoundShoutcastStream(shoutcastInfo: ShoutcastInfo, isHls: Boolean) {

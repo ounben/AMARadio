@@ -7,10 +7,21 @@
     <string name="detail_create_shortcut">Afegeix a pantalla d\'inici</string>
     <string name="detail_language">Idioma</string>
     <string name="detail_weblink">Enllaç web</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Reprodueix</string>
     <string name="detail_pause">Posa en pausa</string>
     <string name="detail_stop">Atura</string>
     <string name="detail_share">Comparteix</string>
+    <string name="detail_play_in_AMARadio">Reprodueix en AMARadio</string>
+
+    <string name="action_links">Links</string>
+    <string name="action_homepage">Pàgina inicial</string>
+    <string name="action_favorite">Favorit</string>
+    <string name="action_alarm">Alarma</string>
+
+    <string name="action_station_visit_website">Visitar el lloc web</string>
+    <string name="action_station_copy_stream_url">Copia l\'URL del flux</string>
+    <string name="action_station_share">Comparteix</string>
 
     <string name="action_local">Local</string>
     <string name="action_skip_to_next">Següent</string>
@@ -22,6 +33,7 @@
     <string name="action_delete">Suprimeix</string>
     <string name="action_delete_history">Suprimeix l\'historial</string>
     <string name="action_delete_favorites">Suprimeix les preferides</string>
+    <string name="action_delete_stream_history">Tornar l\'historial de les pistes</string>
     <string name="action_ok">D\'acord</string>
     <string name="action_cancel">Cancel·la</string>
     <string name="action_top_click">Les més clicades</string>
@@ -30,8 +42,10 @@
     <string name="action_changed_lately">Darrers canvis</string>
     <string name="action_currently_playing">Reproducció en curs</string>
     <string name="action_tags">Etiquetes</string>
-    <string name="action_countries">Països</string>
+    <string name="action_countries">Països/Regions</string>
     <string name="action_languages">Idiomes</string>
+    <string name="action_edit">Edita</string>
+    <string name="action_copy_info">Copia Info</string>
     <string name="error_station_load">No s\'ha pogut connectar a l\'emissora</string>
     <string name="error_list_update">No s\'ha pogut connectar al servidor</string>
 
@@ -42,12 +56,12 @@
     <string name="nav_item_history">Historial</string>
     <string name="nav_item_settings">Configuració</string>
     <string name="nav_item_alarm">Alarma</string>
-    <string name="tab_player_recordings">Enregistraments</string>
 
-    <string name="about_text">Aquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a\nhttps://www.radio-browser.info\nTothom pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia. \n\nContacte:\ben@ounben.com\n\nBugtracker: \nhttps://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic. Necessitem algú amb experiència en disseny gràfic per fer que l\'aplicació sigui més agradable a la vista :) Potser algú que pugui dibuixar icones, imatges... però també programadors que arreglin errors, o desenvolupin (noves funcionalitats, no  errors ;)\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. \nhttp://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio és 100%% lliure de publicitat i centrat en la privadesa.\n\nOriginalment vaig desenvolupar aquesta aplicació per a la meva mare per oferir-li una experiència de ràdio senzilla i honesta sense anuncis molestos ni seguiment. Per això AMARadio sempre romandrà lliure d\'anuncis: és una promesa per a ella, compartida amb tots vosaltres.\n\nAquest projecte és un fork de l\'excel·lent RadioDroid per ounben. Tota la base de codi s\'ha migrat de Java a Kotlin per garantir que l\'aplicació es mantingui moderna i compatible amb les futures versions d\'Android.\n\nAquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a https://www.radio-browser.info .\nTothom hi pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia.\n\nContacte: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic. Necessitem algú amb experiència en disseny gràfic per fer que l\'aplicació sigui més agradable a la vista :) Potser algú que pugui dibuixar icones, imatges... però també programadors que arreglin errors, o desenvolupin funcionalitats!\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. http://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versió: %1$s</string>
     <string name="detail_star">Afegir a preferides</string>
     <string name="detail_unstar">Suprimeix de preferides</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
     <string name="progress_loading">Carregant ...</string>
 
     <string formatted="true" name="sleep_timer">Temporitzador: %1$02d:%2$02d</string>
@@ -56,14 +70,22 @@
     <string name="sleep_timer_clear">Esborra</string>
     <string name="nav_item_add_sleep">Temporitzador</string>
 
-    <string name="nav_item_save_playlist">Desa a la llista de reproducció</string>
-    <string name="nav_item_load_playlist">Carrega a la llista de reproducció</string>
+    <string name="nav_item_save_playlist">Exportar favorits com a llista de reproducció</string>
+    <string name="nav_item_load_playlist">Importar favorits de la llista de reproducció</string>
+    <string name="nav_item_save_history_playlist">Exportar historial com a llista de reproducció</string>
     <string name="confirm_overwrite_file">Sobreescriu el fitxer?</string>
     <string name="dialog_hint_file_name">Introduïu el nom del fitxer</string>
     <string name="error_empty_field">Aquest camp és obligatori</string>
     <string name="error_invalid_file_name">Nom de fitxer no vàlid</string>
     <string name="label_button_cancel">Cancel·lar</string>
     <string name="label_button_overwrite">Sobreescriure</string>
+    <string name="notify_load_playlist_nok">No s\'ha pogut importar de %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">S\'està important de %1$s&#47;%2$s, espereu un moment.</string>
+    <string name="notify_load_playlist_ok">S\'han importat %1$d emissores de %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">No s\'ha pogut exportar a %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">S\'està exportant a %1$s&#47;%2$s, espereu un moment.</string>
+    <string name="notify_save_playlist_ok">S\'ha exportat a %1$s&#47;%2$s correctament</string>
+    <string name="notify_sync_list_deleted_entries">%1$d de %2$d emissores locals a la llista marcades com a no existents al servidor</string>
 
     <string name="searchpreference_clear_history">Esborra historial</string>
     <string name="searchpreference_no_results">Sense resultats</string>
@@ -72,11 +94,16 @@
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Clar</string>
     <string name="theme_dark">Fosc</string>
-    <string name="settings_circular_icons">Utilitzeu icones circulars</string>
+    <string name="theme_system">Seguir el sistema</string>
     <string name="settings_compact_style">Mode compacte</string>
     <string name="settings_compact_style_desc_off">Icona gran adoptada amb els detalls de l\'emissora</string>
     <string name="settings_compact_style_desc_on">Icona petita adoptada sense detalls d\'emissora</string>
     <string name="settings_bottom_navigation">Navegació inferior</string>
+    <string name="settings_ui_scale">Escala d\'UI</string>
+    <string name="ui_scale_compact">Compacte</string>
+    <string name="ui_scale_standard">Estàndard del sistema</string>
+    <string name="ui_scale_large">Gran</string>
+    <string name="ui_scale_extra_large">Molt gran</string>
 
     <string name="settings_interaction">Interacció</string>
     <string name="settings_single_use_tags">Mostra etiquetes poc usades</string>
@@ -87,6 +114,10 @@
     <string name="settings_show_broken_on">Mostra les emissores espatllades a les llistes</string>
     <string name="settings_show_broken_off">No mostris les emissores espatllades a les llistes</string>
 
+    <string name="settings_startup_behaviour">Comportament inicial</string>
+    <string name="action_grid_view">Vista en graella</string>
+    <string name="action_list_view">Vista en llista</string>
+
     <string name="startup_action_title">Acció inicial</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Mostra totes les emissores</string>
@@ -94,21 +125,13 @@
     <string name="startup_show_history">Mostra l\'historial</string>
     <string name="startup_show_last_view">Darrera visualització</string>
 
-    <string name="settings_load_icons">Mostra icones</string>
-    <string name="settings_load_icons_on">Es mostraran les icones</string>
-    <string name="settings_load_icons_off">No es mostraran les icones</string>
+    <string name="settings_load_icons">Mostra les icones de les emissores</string>
+    <string name="settings_load_icons_on">Es descarregaran les icones</string>
+    <string name="settings_load_icons_off">No es descarregaran les icones</string>
 
-    <string name="settings_auto_favorite">Auto-preferides</string>
-    <string name="settings_auto_favorite_on">Afegir emissores automàticament a les preferides quan es reprodueixin</string>
-    <string name="settings_auto_favorite_off">No afegir emissores automàticament a les preferides quan es reprodueixin</string>
-
-    <string name="settings_icon_click_toggles_favorite">Comportament icona</string>
-    <string name="settings_icon_click_toggles_favorite_on">Toc a la icona d\'emissora afegeix o elimina l\'emissora de preferides</string>
-    <string name="settings_icon_click_toggles_favorite_off">Toc a la icona d\'emissora comença a reproduir</string>
-
-    <string name="settings_click_trend_icon_visible">Mostra icona de tendència</string>
-    <string name="settings_click_trend_icon_visible_on">La icona serà visible</string>
-    <string name="settings_click_trend_icon_visible_off">La icona s\'ocultarà</string>
+    <string name="settings_auto_favorite">Auto-favorits</string>
+    <string name="settings_auto_favorite_on">Afegir emissores automàticament a les preferides quan s\'estan reproduint</string>
+    <string name="settings_auto_favorite_off">No afegir emissores automàticament a les preferides quan s\'estan reproduint</string>
 
     <string name="settings_alarm">Alarma</string>
     <string name="settings_alarm_external">Habiliteu l\'aplicació externa</string>
@@ -118,34 +141,62 @@
     <string name="settings_alarm_sleep_timer">Temporitzador</string>
     <string name="settings_alarm_sleep_timer_desc">Deixa de reproduir després de %1$s minuts</string>
     <string name="settings_play">Reproducció</string>
-    <string name="settings_auto_play_on_startup">Reproducció automàtica</string>
+    <string name="settings_auto_play_on_startup">Auto-reproducció</string>
     <string name="settings_auto_play_on_startup_on">Reproduir la darrera emissora a l\'inici</string>
     <string name="settings_auto_play_on_startup_off">No reproduir la darrera emissora a l\'inici</string>
+    <string name="settings_auto_off_on_startup">Auto-aturada</string>
+    <string name="settings_auto_off_on_startup_on">Utilitzar el temporitzador d\'auto-aturada amb l\'auto-reproducció</string>
+    <string name="settings_auto_off_on_startup_off">No utilitzar el temporitzador d\'auto-aturada amb l\'auto-reproducció</string>
+    <string name="settings_auto_off_sleep_timer">Temporitzador d\'auto-aturada</string>
+    <string name="settings_auto_off_sleep_timer_desc">Atura la reproducció després de %1$s minuts</string>
     <string name="settings_play_external">Activa el reproductor extern</string>
     <string name="settings_play_external_desc_on">Reprodueix emissores amb reproductor extern</string>
     <string name="settings_play_external_desc_off">Reprodueix les emissores amb AMARadio</string>
     <string name="settings_equalizer">Equalitzador</string>
 
-    <string name="settings_warn_no_wifi">Avís sense connexió sense fils</string>
-    <string name="settings_warn_no_wifi_on">Avísar de manca de connexió sense fils</string>
-    <string name="settings_warn_no_wifi_off">No aviar de la manca de connexió sense fils</string>
+    <string name="settings_connectivity">Connectivitat</string>
+    <string name="settings_connect_timeout">Temps d\'espera de connexió</string>
+    <string name="settings_read_timeout">Temps d\'espera de lectura</string>
+    <string name="settings_resume_timeout">Temps d\'espera de represa</string>
+    <string name="settings_retry_timeout">Temps d\'espera de reintent</string>
+    <string name="settings_retry_delay">Retard de reconnexió</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Nom d\'usuari</string>
+    <string name="settings_proxy_password">Contrasenya</string>
+    <string name="settings_proxy_action_test">Test</string>
+    <string name="settings_proxy_working">Connectat correctament a %s</string>
+    <string name="settings_proxy_not_working">No s\'ha pogut connectar a %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Els valors que heu proporcionat per al servidor intermediari no són vàlids</string>
+    <string name="ignore_proxy_settings_invalid">S\'ha ignorat la configuració del servidor intermediari no vàlida</string>
+    <string name="settings_seconds_format">%d segons</string>
+    <string name="settings_milliseconds_format">%d mil·lisegons</string>
 
-    <string name="settings_recordings">Enregistraments</string>
-    <string name="settings_record_name_formatting">Format del nom</string>
+    <string name="settings_pause_when_noisy">Posa en pausa quan es desconnectin els auriculars</string>
 
-    <string name="settings_record_name_formatting_default_display">emissora_artista_pista_\u200bdata_\u200btemps</string>
-    <string name="settings_record_name_formatting_1_display">emissora_artista_\u200bpista</string>
-    <string name="settings_record_name_formatting_2_display">emissora_data_\u200btemps</string>
-    <string name="settings_record_name_formatting_3_display">index_emissora_\u200bdata</string>
+    <string name="settings_auto_resume_do_not_resume">No reprendre</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Reprendre amb connexió per cable</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Reprendre la reproducció en connectar auriculars per cable</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Reprendre amb connexió Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Reprendre la reproducció en connectar dispositius Bluetooth A2DP</string>
+
+    <string name="settings_warn_no_wifi">Avís sense Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Avisa quan es reprodueix sense connexió Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">No avisar quan no hi ha connexió Wi-Fi</string>
 
     <string name="notify_pre_play">Connectant</string>
     <string name="notify_play">Reproduint</string>
     <string name="notify_paused">En pausa</string>
+    <string name="notify_metered_connection">Connexió mesurada</string>
+
     <string name="notify_starred">S\'ha afegit l\'emissora a les preferides</string>
     <string name="notify_autostarred">L\'emissora s\'ha afegit automàticament a les preferides</string>
     <string name="notify_unstarred">L\'emissora s\'ha eliminat de les preferides</string>
     <string name="notify_deleted_favorites">S\'han suprimit de les preferides</string>
     <string name="notify_deleted_history">S\'ha suprimit l\'historial</string>
+
+    <string name="notify_open_link_failure">No s\'ha trobat cap aplicació per obrir l\'enllaç</string>
 
     <string name="notify_station_removed_from_list">1 Eliminat</string>
     <string name="action_station_removed_from_list_undo">DESFER</string>
@@ -157,6 +208,7 @@
 
     <string name="alert_select_mpd_server">Seleccioneu un servidor</string>
     <string name="alert_select_mpd_server_name">Nom del servidor</string>
+    <string name="alert_select_mpd_server_password">Contrasenya del servidor</string>
     <string name="hostname">Nom d\'amfitrió</string>
     <string name="port">Port</string>
 
@@ -168,58 +220,73 @@
     <string name="alert_alarm_not_working">No hi ha informació suficient per l\'alarma</string>
     <string name="alert_select_external_alarm_app">Trieu el reproductor d\'àudio</string>
 
-    <string name="alert_press_back_to_exit">Torneu a prémer enrera per sortir</string>
+    <string name="alert_press_back_to_exit">Torneu a prémer enrere per sortir</string>
 
-    <string name="error_stream_url">Problema amb l\'URL del flux de dades</string>
-    <string name="error_caching_stream">Problema amb la memòria cau del flux de dades</string>
-    <string name="error_play_stream">No es pot reproduir el flux de dades</string>
-    <string name="error_stream_reconnect_timeout">No es pot tornar a connectar al flux de dades: timeout</string>
-    <string name="giving_up_resume">No s\'ha pogut reprendre la reproducció</string>
+    <string name="error_stream_url">Problema amb l\'URL del flux</string>
+    <string name="error_caching_stream">Problema amb la memòria cau del flux</string>
+    <string name="error_play_stream">No es pot reproduir el flux</string>
+    <string name="error_stream_reconnect_timeout">No es pot tornar a connectar al flux: temps d\'espera esgotat</string>
+    <string name="warning_no_network_trying_resume">Sense connexió de xarxa. S\'intentarà reprendre quan es torni a connectar.</string>
+    <string name="giving_up_resume">S\'ha abandonat l\'intent de reprendre la reproducció</string>
 
-    <string name="error_record_needs_write">Necessiteu permís d\'escriptura per gravar</string>
-    <string name="error_grant_audiofocus">El sistema no ha donat reposta a la sol·licitud d\'àudio</string>
+    <string name="error_grant_audiofocus">El sistema no ha concedit la sol·licitud de focus d\'àudio</string>
 
-    <string name="error_no_equalizer_found">No s\'ha trobat cap aplicació d\'equalització</string>
+    <string name="error_no_equalizer_found">No s\'ha trobat cap aplicació d\'equalitzador</string>
 
     <string name="player_info_status">Estat:&#160;</string>
     <string name="player_info_status_stopped">aturat</string>
     <string name="player_info_status_playing">reproduint</string>
-    <string name="player_info_status_recording">enregistrant</string>
-    <string name="player_info_status_playing_and_recording">reproduint i enregistrant</string>
     <string name="player_info_transferred">Dades transferides: %1$s</string>
-    <string name="player_info_recording_to">Enregistrament a:\n%1$s</string>
-    <string name="player_info_recorded_to">Últim enregistrament:\n%1$s</string>
+
+    <string name="tab_player_art">Caràtula de l\'àlbum</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Historial de cançons</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">ERROR</string>
+    <string name="station_detail_deleted_on_server">SUPRIMIT</string>
+
+    <string name="station_details_clicks">%1$d clics</string>
+    <string name="station_details_votes">%1$d vots</string>
 
     <string name="image_button_disable">Inhabilitar</string>
-    <string name="image_button_record">Enregistrar</string>
-    <string name="image_button_record_request_permission">Sol·liciteu permisos per a la gravació</string>
-    <string name="image_button_recordings">Enregistraments</string>
     <string name="image_button_delete">Suprimir</string>
     <string name="image_button_more">Més</string>
     <string name="image_button_less">Menys</string>
     <string name="image_button_repeat">Repetició</string>
     <string name="image_button_dont_repeat">Sense repetició</string>
     <string name="icon_click_trend_decreasing">Popularitat decreixent</string>
-    <string name="icon_click_trend_increasing">Augment de la popularitat</string>
+    <string name="icon_click_trend_increasing">Popularitat creixent</string>
     <string name="icon_click_trend_stable">Popularitat estable</string>
 
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% lliure de publicitat i privat</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
     <string name="settings_mpd_port">Port MPD</string>
     <string name="settings_view_mpd_servers">Els vostres servidors</string>
     <string name="action_mpd_nok">MPD no connectat</string>
-    <string name="action_mpd_ok">Connexió MPD</string>
+    <string name="action_mpd_ok">MPD connectat</string>
     <string name="action_mpd_connected">Connectat al servidor: %1$s</string>
+
+    <string name="mpd_no_connection">Sense connexió</string>
+    <string name="action_enable_mpd">Activa MPD</string>
+    <string name="action_disable_mpd">Inhabilita MPD</string>
+    <string name="action_add_mpd_server">Afegeix un servidor MPD</string>
+
+    <string name="action_play_in_external">Reprodueix en un reproductor extern</string>
+    <string name="action_choose_external_player">Tria un reproductor extern</string>
 
     <string name="settings_other">Altres</string>
     <string name="settings_statistics">Estadístiques</string>
-    <string name="settings_about">Quant a AMARadio</string>
+    <string name="settings_about">Sobre AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Salta al següent</string>
+    <string name="description_btn_skip_to_previous">Salta a l\'anterior</string>
+
+    <string name="description_btn_setup_alarm">Configura l\'alarma</string>
 
     <string-array name="weekdays">
         <item>dg</item>
@@ -231,15 +298,43 @@
         <item>ds</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">L\'URL del flux de dades s\'ha copiat correctament</string>
+    <string name="notify_stream_url_copied">L\'URL del flux s\'ha copiat correctament</string>
+    <string name="notify_track_info_copied">La informació de la pista s\'ha copiat correctament</string>
 
     <string-array name="actions_station_link">
         <item>Visiteu el lloc web</item>
-        <item>Copia l\'URL del flux de dades</item>
+        <item>Copia l\'URL del flux</item>
     </string-array>
 
+    <string name="alert_metered_connection_title">Connexió mesurada detectada</string>
+    <string name="alert_metered_connection_message">Una connexió mesurada pot comportar càrrecs addicionals, premeu \'D\'acord\' per continuar.</string>
     <string name="nav_item_statistics">Estadístiques</string>
-    <string name="nav_item_about">Quant a</string>
+    <string name="nav_item_about">Sobre</string>
     <string name="refresh">Actualització</string>
+    <string name="action_filter">Filtre</string>
+    <string name="filter_country">País</string>
+    <string name="filter_tag">Etiqueta</string>
+    <string name="filter_language">Idioma</string>
+    <string name="filter_sort_by">Ordena per</string>
+    <string name="filter_reverse">Inverteix l\'ordre</string>
+    <string name="filter_apply">Aplica el filtre</string>
+    <string name="sort_name">Nom</string>
+    <string name="sort_votes">Vots</string>
+    <string name="sort_clicks">Clics</string>
+    <string name="sort_lastchange">Últim canvi</string>
+    <string name="filter_select_country">Selecciona el país</string>
+    <string name="filter_select_language">Selecciona l\'idioma</string>
+    <string name="filter_type_tag">Escriu l\'etiqueta…</string>
 
+    <string name="alarm_backup">Alarma alternativa</string>
+    <string name="alarm_fallback_info">Alarma del sistema adoptada ja que l\'emissora de ràdio seleccionada no s\'ha pogut carregar</string>
+    <string name="alarm_back_desc">Alarma del sistema alternativa adoptada quan l\'emissora de ràdio no es carrega</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_add_alarm">@string/action_alarm</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
 </resources>

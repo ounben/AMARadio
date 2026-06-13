@@ -3,10 +3,9 @@ package net.ounben.AMARadio.players
 import android.content.Context
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
-import net.ounben.AMARadio.recording.Recordable
 import okhttp3.OkHttpClient
 
-interface PlayerWrapper : Recordable {
+interface PlayerWrapper {
     interface PlayListener {
         fun onStateChanged(state: PlayState)
         fun onPlayerWarning(messageId: Int)

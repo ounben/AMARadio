@@ -3,8 +3,6 @@ package net.ounben.AMARadio.players.mediaplayer
 import android.util.Log
 import kotlinx.coroutines.*
 import net.ounben.AMARadio.BuildConfig
-import net.ounben.AMARadio.recording.Recordable
-import net.ounben.AMARadio.recording.RecordableListener
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
@@ -13,16 +11,13 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 import java.net.InetAddress
-import java.net.ProtocolException
 import java.net.ServerSocket
 import java.net.Socket
-import java.net.SocketTimeoutException
 import java.util.*
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-class StreamProxy(private val httpClient: OkHttpClient, private val uri: String, private val callback: StreamProxyListener) : Recordable {
+class StreamProxy(private val httpClient: OkHttpClient, private val uri: String, private val callback: StreamProxyListener) {
     private val TAG = "PROXY"
-    private var recordableListener: RecordableListener? = null
     private val readBuffer = ByteArray(256 * 16)
     @Volatile
     private var localAddress: String? = null
@@ -45,7 +40,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         }
     }
 
-    private suspend fun proxyDefaultStream(info: ShoutcastInfo?, inputStream: InputStream, outStream: OutputStream) {
+    private fun proxyDefaultStream(info: ShoutcastInfo?, inputStream: InputStream, outStream: OutputStream) {
         var bytesUntilMetaData = 0
         var streamHasMetaData = false
         if (info != null) {
@@ -65,14 +60,12 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                     bytesUntilMetaData -= readBytes
                 }
                 outStream.write(readBuffer, 0, readBytes)
-                recordableListener?.onBytesAvailable(readBuffer, 0, readBytes)
                 callback.onBytesRead(readBuffer, 0, readBytes)
             } else {
                 readMetaData(inputStream)
                 bytesUntilMetaData = info!!.metadataOffset
             }
         }
-        stopRecording()
     }
 
     private fun readMetaData(inputStream: InputStream): Int {
@@ -154,8 +147,6 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                 retry--
                 delay(1000)
             }
-        } catch (e: InterruptedException) {
-            Log.e(TAG, "Interrupted ex Proxy() $e")
         } catch (e: Exception) {
             Log.e(TAG, "exception occurred inside the connection loop, retry. $e")
         } finally {
@@ -192,28 +183,8 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
     fun stop() {
         if (BuildConfig.DEBUG) Log.d(TAG, "stopping proxy.")
         isStopped = true
-        stopRecording()
         scope.cancel()
     }
-
-    override fun canRecord(): Boolean = true
-
-    override fun startRecording(recordableListener: RecordableListener) {
-        this.recordableListener = recordableListener
-    }
-
-    override fun stopRecording() {
-        recordableListener?.let {
-            it.onRecordingEnded()
-            recordableListener = null
-        }
-    }
-
-    override fun isRecording(): Boolean = recordableListener != null
-
-    override fun getRecordNameFormattingArgs(): Map<String, String>? = null
-
-    override fun getExtension(): String = "mp3"
 
     companion object {
         private const val MAX_RETRIES = 100

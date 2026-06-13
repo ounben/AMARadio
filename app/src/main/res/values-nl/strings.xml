@@ -4,35 +4,50 @@
     <string name="detail_name">Naam</string>
     <string name="detail_tags">Labels</string>
     <string name="detail_country">Land</string>
+    <string name="detail_create_shortcut">Toevoegen aan beginscherm</string>
     <string name="detail_language">Taal</string>
     <string name="detail_weblink">Internetlink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Afspelen</string>
     <string name="detail_pause">Pauzeren</string>
     <string name="detail_stop">Stoppen</string>
     <string name="detail_share">Delen</string>
+    <string name="detail_play_in_AMARadio">Afspelen in AMARadio</string>
+
+    <string name="action_links">Links</string>
+    <string name="action_homepage">Startpagina</string>
+    <string name="action_favorite">Favoriet</string>
+    <string name="action_alarm">Alarm</string>
+
+    <string name="action_station_visit_website">Website bezoeken</string>
+    <string name="action_station_copy_stream_url">Stream-URL kopiëren</string>
+    <string name="action_station_share">Delen</string>
 
     <string name="action_local">Lokaal</string>
+    <string name="action_skip_to_next">Volgende</string>
     <string name="action_pause">Pauzeren</string>
+    <string name="action_skip_to_previous">Vorige</string>
     <string name="action_resume">Hervatten</string>
     <string name="action_stop">Stoppen</string>
     <string name="action_search">Zoeken</string>
     <string name="action_delete">Verwijderen</string>
     <string name="action_delete_history">Geschiedenis wissen</string>
     <string name="action_delete_favorites">Favorieten verwijderen</string>
+    <string name="action_delete_stream_history">Trackgeschiedenis wissen</string>
     <string name="action_ok">Oké</string>
     <string name="action_cancel">Annuleren</string>
-    <string name="action_top_click">Populaire stations</string>
-    <string name="action_top_vote">Meest op gestemde stations</string>
+    <string name="action_top_click">Meest aangeklikt</string>
+    <string name="action_toggle_view">Weergave wisselen</string>
+    <string name="action_top_vote">Meest gestemd</string>
     <string name="action_changed_lately">Onlangs gewijzigd</string>
-    <string name="action_currently_playing">Bezig met afspelen</string>
+    <string name="action_currently_playing">Nu bezig</string>
     <string name="action_tags">Labels</string>
-    <string name="action_countries">Landen</string>
+    <string name="action_countries">Landen/Regio\'s</string>
     <string name="action_languages">Talen</string>
-    <string name="action_station_visit_website">Website bezoeken</string>
-    <string name="action_station_copy_stream_url">Stream-URL kopiëren</string>
-    <string name="action_station_share">Delen</string>
-    <string name="error_station_load">Kan geen verbinding maken met radiostation</string>
-    <string name="error_list_update">Kan geen verbinding maken met RadioBrowser-server</string>
+    <string name="action_edit">Bewerken</string>
+    <string name="action_copy_info">Info kopiëren</string>
+    <string name="error_station_load">Kan geen verbinding maken met station</string>
+    <string name="error_list_update">Kan geen verbinding maken met radio browser server</string>
 
     <string name="share_action">Stationslink delen met...</string>
 
@@ -41,156 +56,200 @@
     <string name="nav_item_history">Geschiedenis</string>
     <string name="nav_item_settings">Instellingen</string>
     <string name="nav_item_alarm">Alarm</string>
-    <string name="tab_player_recordings">Opnames</string>
 
-    <string name="about_text">Deze app gebruikt de gratis radiostationsindex van\nhttps://www.radio-browser.info\nIedereen kan stations toevoegen of bewerken. Het is een soort van wiki voor online(streaming) radiostations.\n\nContact:\ben@ounben.com\n\nBugtracker:\nhttps://github.com/ounben/AMARadio/issues\n\nAls je deze software fijn vindt en wilt helpen, stuur me dan een e-mail. Ik heb iemand nodig met ontwerpervaring om deze oogstrelender te maken :) Iemand die pictogrammen kan creëren of afbeeldingen... Maar ook programmeurs die bugs willen oplossen of nieuwe functies willen toevoegen.\nIdeeën voor nieuwe functies zijn ook altijd welkom!\n\nDeze app is vrije software, uitgebracht onder de GPLv3-licentie.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio is 100%% reclamevrij en gericht op privacy.\n\nIk heb deze app oorspronkelijk ontwikkeld voor mijn moeder om haar een eenvoudige, eerlijke radio-ervaring te bieden zonder irritante advertenties of tracking. Daarom zal AMARadio altijd reclamevrij blijven – het is een belofte aan haar, gedeeld met jullie allemaal.\n\nDit project is een fork van de uitstekende RadioDroid door ounben. De volledige codebasis is gemigreerd van Java naar Kotlin om ervoor te zorgen dat de app modern blijft en compatibel is met toekomstige Android-versies.\n\nDeze app gebruikt de gratis radiostationsindex op https://www.radio-browser.info .\nIedereen kan stations toevoegen. Het werkt als een wiki voor online (streaming) radiostations.\n\nContact: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nAls je deze software fijn vindt en wilt helpen, stuur me dan een e-mail. Ik heb echt iemand nodig met ontwerpervaring om de app mooier te maken :) Misschien iemand die pictogrammen kan tekenen, afbeeldingen... maar ook programmeurs die bugs oplossen of nieuwe functies implementeren!\nIdeeën voor nieuwe functies zijn ook altijd welkom!\n\nDeze app is vrije software onder de GPLv3-licentie. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versie: %1$s</string>
     <string name="detail_star">Toevoegen aan favorieten</string>
     <string name="detail_unstar">Verwijderen uit favorieten</string>
-    <string name="progress_loading">Bezig met laden...</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Laden...</string>
 
     <string name="sleep_timer" formatted="true">Slaaptimer: %1$02d:%2$02d</string>
-    <string name="sleep_timer_title">Hoeveel minuten alvorens te stoppen?</string>
+    <string name="sleep_timer_title">Stoppen met afspelen na de geselecteerde minuut</string>
     <string name="sleep_timer_apply">Toepassen</string>
     <string name="sleep_timer_clear">Wissen</string>
     <string name="nav_item_add_sleep">Slaaptimer</string>
 
-    <string name="nav_item_save_playlist">Opslaan naar afspeellijst</string>
-    <string name="nav_item_load_playlist">Laden uit afspeellijst</string>
+    <string name="nav_item_save_playlist">Favorieten exporteren als afspeellijst</string>
+    <string name="nav_item_load_playlist">Favorieten importeren uit afspeellijst</string>
+    <string name="nav_item_save_history_playlist">Geschiedenis exporteren als afspeellijst</string>
+    <string name="confirm_overwrite_file">Bestand overschrijven?</string>
+    <string name="dialog_hint_file_name">Voer bestandsnaam in</string>
+    <string name="error_empty_field">Dit veld is verplicht</string>
+    <string name="error_invalid_file_name">Ongeldige bestandsnaam</string>
+    <string name="label_button_cancel">Annuleren</string>
+    <string name="label_button_overwrite">Overschrijven</string>
+    <string name="notify_load_playlist_nok">Kan niet importeren van %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Bezig met importeren van %1$s&#47;%2$s, even geduld.</string>
+    <string name="notify_load_playlist_ok">%1$d stations geïmporteerd van %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Kan niet exporteren naar %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Bezig met exporteren naar %1$s&#47;%2$s, even geduld.</string>
+    <string name="notify_save_playlist_ok">Succesvol geëxporteerd naar %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d van de %2$d lokale stations in de lijst gemarkeerd als niet bestaand op de server</string>
 
+    <string name="searchpreference_clear_history">Geschiedenis wissen</string>
+    <string name="searchpreference_no_results">Geen resultaten</string>
+    <string name="searchpreference_search">Zoeken…</string>
+    <string name="settings_appearance">Uiterlijk</string>
     <string name="settings_theme_selection_title">Thema</string>
     <string name="theme_light">Licht</string>
     <string name="theme_dark">Donker</string>
-    <string name="settings_circular_icons">Ronde pictogrammen gebruiken</string>
+    <string name="theme_system">Systeem volgen</string>
     <string name="settings_compact_style">Compacte modus</string>
-    <string name="settings_bottom_navigation">Navigatiebalk onderaan</string>
+    <string name="settings_compact_style_desc_off">Groot pictogram met stationdetails</string>
+    <string name="settings_compact_style_desc_on">Klein pictogram zonder stationdetails</string>
+    <string name="settings_bottom_navigation">Navigatie onderaan</string>
+    <string name="settings_ui_scale">UI Schaling</string>
+    <string name="ui_scale_compact">Compact</string>
+    <string name="ui_scale_standard">Systeemstandaard</string>
+    <string name="ui_scale_large">Groot</string>
+    <string name="ui_scale_extra_large">Zeer groot</string>
 
-    <string name="settings_single_use_tags">Eenmalige gebruikslabels tonen</string>
-    <string name="settings_single_use_tags_desc_off">Eenmalige gebruikslabels worden getoond</string>
-    <string name="settings_single_use_tags_desc_on">Eenmalige gebruikslabels worden niet getoond</string>
+    <string name="settings_interaction">Interactie</string>
+    <string name="settings_single_use_tags">Zeldzame labels tonen</string>
+    <string name="settings_single_use_tags_desc_off">Zelden gebruikte labels worden verborgen</string>
+    <string name="settings_single_use_tags_desc_on">Zelden gebruikte labels worden getoond</string>
 
-    <string name="settings_show_broken">Gebroken stations</string>
-    <string name="settings_show_broken_on">Gebroken stations tonen in lijsten</string>
-    <string name="settings_show_broken_off">Gebroken stations niet tonen in lijsten</string>
+    <string name="settings_show_broken">Defecte stations</string>
+    <string name="settings_show_broken_on">Defecte stations in lijsten tonen</string>
+    <string name="settings_show_broken_off">Defecte stations in lijsten verbergen</string>
+
+    <string name="settings_startup_behaviour">Opstartgedrag</string>
+    <string name="action_grid_view">Rasterweergave</string>
+    <string name="action_list_view">Lijstweergave</string>
 
     <string name="startup_action_title">Opstartactie</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Alle stations tonen</string>
     <string name="startup_show_favorites">Favorieten tonen</string>
     <string name="startup_show_history">Geschiedenis tonen</string>
-    <string name="startup_show_last_view">Vorige sessie</string>
+    <string name="startup_show_last_view">Laatste weergave</string>
 
     <string name="settings_load_icons">Stationslogo\'s tonen</string>
     <string name="settings_load_icons_on">Logo\'s worden gedownload</string>
     <string name="settings_load_icons_off">Logo\'s worden niet gedownload</string>
 
     <string name="settings_auto_favorite">Automatische favorieten</string>
-    <string name="settings_auto_favorite_on">Stations bij afspelen automatisch markeren als favoriet</string>
-    <string name="settings_auto_favorite_off">Stations bij afspelen niet automatisch markeren als favoriet</string>
-
-    <string name="settings_icon_click_toggles_favorite">Aanraken</string>
-    <string name="settings_icon_click_toggles_favorite_on">Aanraken van stationslogo voegt stations toe aan of verwijdert uit favorieten</string>
-    <string name="settings_icon_click_toggles_favorite_off">Aanraken van stationslogo speelt station af</string>
-
-    <string name="settings_click_trend_icon_visible">Populaire stations</string>
-    <string name="settings_click_trend_icon_visible_on">Pictogram wordt getoond</string>
-    <string name="settings_click_trend_icon_visible_off">Pictogram wordt verborgen</string>
+    <string name="settings_auto_favorite_on">Stations automatisch aan favorieten toevoegen bij afspelen</string>
+    <string name="settings_auto_favorite_off">Stations niet automatisch aan favorieten toevoegen bij afspelen</string>
 
     <string name="settings_alarm">Alarm</string>
-    <string name="settings_alarm_external">Extern openen</string>
+    <string name="settings_alarm_external">Externe app gebruiken</string>
+    <string name="settings_alarm_external_desc_on">Alarm openen met standaard externe app</string>
+    <string name="settings_alarm_external_desc_off">Alarm openen met AMARadio</string>
     <string name="settings_alarm_audio_player">Audiospeler</string>
     <string name="settings_alarm_sleep_timer">Slaaptimer</string>
     <string name="settings_alarm_sleep_timer_desc">Stoppen met afspelen na %1$s minuten</string>
     <string name="settings_play">Speler</string>
-    <string name="settings_play_external">Extern openen</string>
+    <string name="settings_auto_play_on_startup">Automatisch afspelen</string>
+    <string name="settings_auto_play_on_startup_on">Laatste station afspelen bij opstarten</string>
+    <string name="settings_auto_play_on_startup_off">Laatste station niet afspelen bij opstarten</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Auto-stop timer gebruiken bij automatisch afspelen</string>
+    <string name="settings_auto_off_on_startup_off">Auto-stop timer niet gebruiken bij automatisch afspelen</string>
+    <string name="settings_auto_off_sleep_timer">Auto-stop timer</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stoppen met afspelen na %1$s minuten</string>
+    <string name="settings_play_external">Externe speler gebruiken</string>
+    <string name="settings_play_external_desc_on">Stations afspelen met externe speler</string>
+    <string name="settings_play_external_desc_off">Stations afspelen met AMARadio</string>
     <string name="settings_equalizer">Equalizer</string>
 
-    <string name="settings_connectivity">Verbinding</string>
-    <string name="settings_connect_timeout">Stream - verbindingstime-out</string>
-    <string name="settings_read_timeout">Stream - leestime-out</string>
-    <string name="settings_retry_timeout">Stream - opnieuw proberen time-out</string>
-    <string name="settings_retry_delay">Tijd alvorens opnieuw te verbinden</string>
+    <string name="settings_connectivity">Connectiviteit</string>
+    <string name="settings_connect_timeout">Verbindingstime-out</string>
+    <string name="settings_read_timeout">Leestime-out</string>
+    <string name="settings_resume_timeout">Hervattingstime-out</string>
+    <string name="settings_retry_timeout">Herpogingstime-out</string>
+    <string name="settings_retry_delay">Herverbindingsvertraging</string>
     <string name="settings_proxy">Proxy</string>
     <string name="settings_proxy_login">Gebruikersnaam</string>
     <string name="settings_proxy_password">Wachtwoord</string>
     <string name="settings_proxy_action_test">Testen</string>
-    <string name="settings_proxy_working">Verbonden met %s</string>
+    <string name="settings_proxy_working">Succesvol verbonden met %s</string>
     <string name="settings_proxy_not_working">Verbinden met %1$s mislukt\n%2$s</string>
+    <string name="settings_proxy_invalid">Proxy-waarden zijn ongeldig</string>
+    <string name="ignore_proxy_settings_invalid">Ongeldige proxy-instellingen genegeerd</string>
     <string name="settings_seconds_format">%d seconden</string>
     <string name="settings_milliseconds_format">%d milliseconden</string>
 
-    <string name="settings_warn_no_wifi">Waarschuwen indien niet verbonden met Wi-Fi</string>
-    <string name="settings_warn_no_wifi_on">Waarschuwing tonen bij afspelen zonder Wi-Fi-verbinding</string>
-    <string name="settings_warn_no_wifi_off">Geen waarschuwing tonen bij afspelen zonder Wi-Fi-verbinding</string>
+    <string name="settings_pause_when_noisy">Pauzeren bij loskoppelen headset</string>
 
-    <string name="settings_recordings">Opnames</string>
-    <string name="settings_record_name_formatting">Opmaak</string>
+    <string name="settings_auto_resume_do_not_resume">Niet hervatten</string>
 
-    <!--<string name="settings_record_name_formatting_default" translatable="false">${station}_${artist}_${track}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_1" translatable="false">${station}_${artist}_${track}</string>
-    <string name="settings_record_name_formatting_2" translatable="false">${station}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_3" translatable="false">${index}_${station}_${date}</string>-->
+    <string name="settings_auto_resume_on_wired_headset_connected">Hervatten bij bedrade verbinding</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Afspelen hervatten bij aansluiten bedrade headset</string>
 
-    <string name="settings_record_name_formatting_default_display">station_artist_track_\u200bdate_\u200btime</string>
-    <string name="settings_record_name_formatting_1_display">station_artist_\u200btrack</string>
-    <string name="settings_record_name_formatting_2_display">station_date_\u200btime</string>
-    <string name="settings_record_name_formatting_3_display">index_station_\u200bdate</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Hervatten bij Bluetooth-verbinding</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Afspelen hervatten bij verbinden Bluetooth A2DP-apparaat</string>
 
-    <string name="notify_pre_play">Bezig met verbinden</string>
-    <string name="notify_play">Bezig met afspelen</string>
+    <string name="settings_warn_no_wifi">Wi-Fi waarschuwing</string>
+    <string name="settings_warn_no_wifi_on">Waarschuwen bij afspelen zonder Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Geen waarschuwing bij ontbreken Wi-Fi</string>
+
+    <string name="notify_pre_play">Verbinden</string>
+    <string name="notify_play">Afspelen</string>
     <string name="notify_paused">Gepauzeerd</string>
-    <string name="notify_starred">Station is toegevoegd aan favorieten</string>
-    <string name="notify_autostarred">Station is automatisch toegevoegd aan favorieten</string>
-    <string name="notify_unstarred">Station is verwijderd uit favorieten</string>
-    <string name="notify_deleted_favorites">Favorieten zijn verwijderd.</string>
-    <string name="notify_deleted_history">Geschiedenis is gewist.</string>
+    <string name="notify_metered_connection">Verbinding met datalimiet</string>
+
+    <string name="notify_starred">Station toegevoegd aan favorieten</string>
+    <string name="notify_autostarred">Station automatisch toegevoegd aan favorieten</string>
+    <string name="notify_unstarred">Station verwijderd uit favorieten</string>
+    <string name="notify_deleted_favorites">Favorieten zijn verwijderd</string>
+    <string name="notify_deleted_history">Geschiedenis is gewist</string>
+
+    <string name="notify_open_link_failure">Geen app gevonden om link te openen</string>
 
     <string name="notify_station_removed_from_list">1 verwijderd</string>
     <string name="action_station_removed_from_list_undo">ONGEDAAN MAKEN</string>
 
-    <string name="alert_delete_history">Weet je zeker dat je de geschiedenis wilt wissen?</string>
-    <string name="alert_delete_favorites">Weet je zeker dat je alle favorieten wilt verwijderen?</string>
+    <string name="alert_delete_history">Wilt u de geschiedenis echt wissen?</string>
+    <string name="alert_delete_favorites">Wilt u alle favorieten echt verwijderen?</string>
     <string name="yes">Ja</string>
     <string name="no">Nee</string>
 
-    <string name="alert_select_mpd_server">Welke server?</string>
+    <string name="alert_select_mpd_server">Selecteer een server</string>
     <string name="alert_select_mpd_server_name">Servernaam</string>
+    <string name="alert_select_mpd_server_password">Serverwachtwoord</string>
     <string name="hostname">Hostnaam</string>
     <string name="port">Poort</string>
 
-    <string name="alert_select_mpd_server_add">Toegevoegd</string>
+    <string name="alert_select_mpd_server_add">Toevoegen</string>
     <string name="alert_select_mpd_server_save">Opslaan</string>
     <string name="alert_select_mpd_server_remove">Verwijderen</string>
-    <string name="alert_add_or_edit_mpd_server">Voer de servergegevens in</string>
+    <string name="alert_add_or_edit_mpd_server">Voer servergegevens in</string>
+    <string name="alert_alarm_working">Alarmtijd nu</string>
+    <string name="alert_alarm_not_working">Onvoldoende info voor alarm</string>
+    <string name="alert_select_external_alarm_app">Kies audiospeler</string>
 
     <string name="alert_press_back_to_exit">Druk nogmaals op terug om af te sluiten</string>
 
-    <string name="error_stream_url">Stream-URL-probleem</string>
-    <string name="error_caching_stream">Stream-cacheprobleem</string>
-    <string name="error_play_stream">De stream kan niet worden afgespeeld</string>
-    <string name="error_stream_reconnect_timeout">Opnieuw verbinden mislukt: time-out.</string>
+    <string name="error_stream_url">Stream-URL probleem</string>
+    <string name="error_caching_stream">Stream-caching probleem</string>
+    <string name="error_play_stream">Kan stream niet afspelen</string>
+    <string name="error_stream_reconnect_timeout">Kan niet opnieuw verbinden met stream: time-out</string>
+    <string name="warning_no_network_trying_resume">Geen netwerkverbinding. Poging tot hervatten bij verbinding.</string>
+    <string name="giving_up_resume">Poging tot hervatten afspelen gestaakt</string>
 
-    <string name="error_record_needs_write">Schrijfmachtiging is benodigd voor opnames!</string>
-    <string name="error_grant_audiofocus">Audiofocus-machtiging is niet verleend.</string>
+    <string name="error_grant_audiofocus">Audiofocus-verzoek niet ingewilligd door systeem</string>
 
-    <string name="error_no_equalizer_found">Geen equalizer-app gevonden!</string>
+    <string name="error_no_equalizer_found">Geen equalizer-app gevonden</string>
 
     <string name="player_info_status">Status:&#160;</string>
     <string name="player_info_status_stopped">gestopt</string>
-    <string name="player_info_status_playing">bezig met afspelen</string>
-    <string name="player_info_status_recording">bezig met opnemen</string>
-    <string name="player_info_status_playing_and_recording">bezig met afspelen en opnemen</string>
-    <string name="player_info_transferred">Overgedragen gegevens: %1$s</string>
-    <string name="player_info_recording_to">Bezig met opnemen naar:\n%1$s</string>
-    <string name="player_info_recorded_to">Vorige opname:\n%1$s</string>
+    <string name="player_info_status_playing">speelt af</string>
+    <string name="player_info_transferred">Verzonden gegevens: %1$s</string>
+
+    <string name="tab_player_art">Albumhoezen</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Trackgeschiedenis</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
-    <string name="station_detail_broken">GEBROKEN</string>
+    <string name="station_detail_broken">DEFECT</string>
+    <string name="station_detail_deleted_on_server">VERWIJDERD</string>
 
-    <string name="image_button_disable">Uitgeschakeld</string>
-    <string name="image_button_record">Opnemen</string>
-    <string name="image_button_record_request_permission">Machtigingen voor opnemen verlenen</string>
-    <string name="image_button_recordings">Opnames</string>
+    <string name="station_details_clicks">%1$d klikken</string>
+    <string name="station_details_votes">%1$d stemmen</string>
+
+    <string name="image_button_disable">Uitschakelen</string>
     <string name="image_button_delete">Verwijderen</string>
     <string name="image_button_more">Meer</string>
     <string name="image_button_less">Minder</string>
@@ -198,20 +257,40 @@
     <string name="image_button_dont_repeat">Niet herhalen</string>
     <string name="icon_click_trend_decreasing">Populariteit neemt af</string>
     <string name="icon_click_trend_increasing">Populariteit neemt toe</string>
-    <string name="icon_click_trend_stable">Populariteit blijft gelijk</string>
+    <string name="icon_click_trend_stable">Stabiliteit populariteit</string>
 
-    <string name="media_route_menu_title">Chromecast</string>
+    <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% reclamevrij &amp; privé</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_view_mpd_servers">Jouw servers</string>
-    <string name="action_mpd_nok">MPD is niet verbonden</string>
-    <string name="action_mpd_ok">MPD is verbonden</string>
+    <string name="settings_mpd_port">MPD-poort</string>
+    <string name="settings_view_mpd_servers">Uw servers</string>
+    <string name="action_mpd_nok">MPD niet verbonden</string>
+    <string name="action_mpd_ok">MPD verbonden</string>
     <string name="action_mpd_connected">Verbonden met server: %1$s</string>
 
-    <string name="settings_other">Overig</string>
+    <string name="mpd_no_connection">Geen verbinding</string>
+    <string name="action_enable_mpd">MPD inschakelen</string>
+    <string name="action_disable_mpd">MPD uitschakelen</string>
+    <string name="action_add_mpd_server">MPD-server toevoegen</string>
+
+    <string name="action_play_in_external">Afspelen in externe speler</string>
+    <string name="action_choose_external_player">Kies externe speler</string>
+
+    <string name="settings_disable_battery_optimization">Batterij-optimalisatie</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Batterij-optimalisatie wordt genegeerd, AMARadio moet de focus altijd kunnen herwinnen.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Batterij-optimalisatie is ingeschakeld, AMARadio kan de focus in de achtergrond mogelijk niet herwinnen.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Overige</string>
     <string name="settings_statistics">Statistieken</string>
     <string name="settings_about">Over AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Naar volgende springen</string>
+    <string name="description_btn_skip_to_previous">Naar vorige springen</string>
+
+    <string name="description_btn_setup_alarm">Alarm instellen</string>
 
     <string-array name="weekdays">
         <item>Z</item>
@@ -223,10 +302,43 @@
         <item>Z</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">Stream-URL is gekopieerd!</string>
+    <string name="notify_stream_url_copied">Stream-URL succesvol gekopieerd</string>
+    <string name="notify_track_info_copied">Track-info succesvol gekopieerd</string>
 
+    <string-array name="actions_station_link">
+        <item>Website bezoeken</item>
+        <item>Stream-URL kopiëren</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Verbinding met datalimiet gedetecteerd</string>
+    <string name="alert_metered_connection_message">Een verbinding met datalimiet kan extra kosten veroorzaken, druk op \'Oké\' om door te gaan.</string>
     <string name="nav_item_statistics">Statistieken</string>
     <string name="nav_item_about">Over</string>
-    <string name="settings_mpd_port">MPD-poort</string>
-    <string name="refresh">Verversen</string>
+    <string name="refresh">Vernieuwen</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_tag">Label</string>
+    <string name="filter_language">Taal</string>
+    <string name="filter_sort_by">Sorteren op</string>
+    <string name="filter_reverse">Omgekeerde volgorde</string>
+    <string name="filter_apply">Filter toepassen</string>
+    <string name="sort_name">Naam</string>
+    <string name="sort_votes">Stemmen</string>
+    <string name="sort_clicks">Klikken</string>
+    <string name="sort_lastchange">Laatste wijziging</string>
+    <string name="filter_select_country">Selecteer land</string>
+    <string name="filter_select_language">Selecteer taal</string>
+    <string name="filter_type_tag">Typ label…</string>
+
+    <string name="alarm_backup">Reserve-alarm</string>
+    <string name="alarm_fallback_info">Systeemalarm gebruikt omdat het geselecteerde radiostation niet kon worden geladen</string>
+    <string name="alarm_back_desc">Alternatief systeemalarm gebruikt wanneer radiostation niet laadt</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_add_alarm">@string/action_alarm</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
 </resources>

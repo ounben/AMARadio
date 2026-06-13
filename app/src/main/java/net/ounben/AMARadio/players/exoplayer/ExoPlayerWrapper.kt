@@ -24,7 +24,6 @@ import net.ounben.AMARadio.R
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.players.PlayState
 import net.ounben.AMARadio.players.PlayerWrapper
-import net.ounben.AMARadio.recording.RecordableListener
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
@@ -35,7 +34,6 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
     private var bandwidthMeter: DefaultBandwidthMeter? = null
-    private var recordableListener: RecordableListener? = null
     override var totalTransferredBytes: Long = 0
         private set
     override var currentPlaybackTransferredBytes: Long = 0
@@ -182,25 +180,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     override fun onDataSourceBytesRead(buffer: ByteArray, offset: Int, length: Int) {
         totalTransferredBytes += length.toLong()
         currentPlaybackTransferredBytes += length.toLong()
-        recordableListener?.onBytesAvailable(buffer, offset, length)
     }
-
-    override fun canRecord(): Boolean = true
-
-    override fun startRecording(recordableListener: RecordableListener) {
-        this.recordableListener = recordableListener
-    }
-
-    override fun stopRecording() {
-        recordableListener?.onRecordingEnded()
-        recordableListener = null
-    }
-
-    override fun isRecording(): Boolean = recordableListener != null
-
-    override fun getRecordNameFormattingArgs(): Map<String, String>? = null
-
-    override fun getExtension(): String = if (isHls) "ts" else "mp3"
 
     private fun cancelStopTask() {
         fullStopTask?.let {

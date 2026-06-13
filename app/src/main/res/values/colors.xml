@@ -46,7 +46,6 @@
     <color name="swipeDeleteBackgroundColor">#EE0000</color>
     <color name="swipeDeleteBackgroundColorDark">#CC0000</color>
 
-    <color name="startRecordingColor">#FF3333</color>
 
     <color name="snackBarButtonColor">#FFB74D</color>
     <color name="snackBarButtonColorDark">@color/snackBarButtonColor</color>

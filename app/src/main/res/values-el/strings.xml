@@ -4,207 +4,289 @@
     <string name="detail_name">Όνομα</string>
     <string name="detail_tags">Καρτέλες</string>
     <string name="detail_country">Χώρα</string>
+    <string name="detail_create_shortcut">Προσθήκη στην αρχική οθόνη</string>
     <string name="detail_language">Γλώσσα</string>
     <string name="detail_weblink">Διαδικτυακός δεσμός</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Αναπαραγωγή</string>
     <string name="detail_pause">Παύση</string>
     <string name="detail_stop">Διακοπή</string>
     <string name="detail_share">Κοινή Χρήση</string>
+    <string name="detail_play_in_AMARadio">Αναπαραγωγή στο AMARadio</string>
 
-    <string name="action_local">Τοπικοί</string>
-    <string name="action_pause">Παύση</string>
-    <string name="action_resume">Ξεκίνημα, ξανά</string>
-    <string name="action_stop">Σταμάτημα</string>
-    <string name="action_search">Αναζήτηση</string>
-    <string name="action_delete">Διαγραφή</string>
-    <string name="action_delete_history">Διαγραφή του ιστορικού</string>
-    <string name="action_delete_favorites">Διαγραφή των αγαπημένων</string>
-    <string name="action_cancel">Ακύρωση</string>
-    <string name="action_top_click">ΠιοΚαλεσμένοι</string>
-    <string name="action_top_vote">ΠιοΨηφισμένοι</string>
-    <string name="action_changed_lately">Άλλαξαν πρόσφατα</string>
-    <string name="action_currently_playing">Παίζουν</string>
-    <string name="action_tags">Καρτέλες</string>
-    <string name="action_countries">Χώρες</string>
-    <string name="action_languages">Γλώσσες</string>
+    <string name="action_links">Σύνδεσμοι</string>
+    <string name="action_homepage">Αρχική σελίδα</string>
+    <string name="action_favorite">Αγαπημένο</string>
+    <string name="action_alarm">Ειδοποίηση</string>
+
     <string name="action_station_visit_website">Επίσκεψη στον Ιστότοπο</string>
     <string name="action_station_copy_stream_url">Αντιγραφή της Διεύθυνσης Url της Ροής</string>
-    <string name="error_station_load">Αδυναμία σύνδεσης στο σταθμό</string>
-    <string name="error_list_update">Αδυναμία σύνδεσης στον εξυπηρετητή πλοήγησης ραδιοφωνικών σταθμών</string>
+    <string name="action_station_share">Κοινή Χρήση</string>
 
-    <string name="share_action">Μοίρασμα του σταθμού με...</string>
+    <string name="action_local">Τοπικοί</string>
+    <string name="action_skip_to_next">Επόμενο</string>
+    <string name="action_pause">Παύση</string>
+    <string name="action_skip_to_previous">Προηγούμενο</string>
+    <string name="action_resume">Συνέχιση</string>
+    <string name="action_stop">Διακοπή</string>
+    <string name="action_search">Αναζήτηση</string>
+    <string name="action_delete">Διαγραφή</string>
+    <string name="action_delete_history">Διαγραφή ιστορικού</string>
+    <string name="action_delete_favorites">Διαγραφή αγαπημένων</string>
+    <string name="action_delete_stream_history">Εκκαθάριση ιστορικού κομματιών</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Ακύρωση</string>
+    <string name="action_top_click">Περισσότερα Κλικ</string>
+    <string name="action_toggle_view">Εναλλαγή προβολής</string>
+    <string name="action_top_vote">Καλύτερη Βαθμολογία</string>
+    <string name="action_changed_lately">Πρόσφατα Αλλαγμένα</string>
+    <string name="action_currently_playing">Παίζουν</string>
+    <string name="action_tags">Καρτέλες</string>
+    <string name="action_countries">Χώρες/Περιοχές</string>
+    <string name="action_languages">Γλώσσες</string>
+    <string name="action_edit">Επεξεργασία</string>
+    <string name="action_copy_info">Αντιγραφή Πληροφοριών</string>
+    <string name="error_station_load">Αδυναμία σύνδεσης στο σταθμό</string>
+    <string name="error_list_update">Αδυναμία σύνδεσης στον διακομιστή radio browser</string>
+
+    <string name="share_action">Μοίρασμα συνδέσμου σταθμού με...</string>
 
     <string name="nav_item_stations">Σταθμοί</string>
-    <string name="nav_item_starred">Αστέρες</string>
+    <string name="nav_item_starred">Αγαπημένα</string>
     <string name="nav_item_history">Ιστορικό</string>
     <string name="nav_item_settings">Ρυθμίσεις</string>
     <string name="nav_item_alarm">Ξυπνητήρι</string>
-    <string name="tab_player_recordings">Ηχογραφήσεις</string>
 
-    <string name="about_text">Αυτή η εφαρμογή χρησιμοποιεί τον ελεύθερο κατάλογο ραδιοφωνικών σταθμών, στο...\n
-  https://www.radio-browser.info\n
-  Ο καθένας μπορεί να προσθέσει σταθμούς σε αυτόν, ή να επεξεργαστεί υπάρχοντες σταθμούς.\n
-  Λειτουργεί σαν ένα γουίκι για διαδικτυακούς ραδιοφωνικούς σταθμούς (ροές).\n
-  \n
-  Επικοινωνία:\n
-  segler_alex@web.de\n
-  \n
-  Εποπτεία Δυσλειτουργιών:\n
-  https://github.com/ounben/AMARadio/issues\n
-  \n
-  Αν σου αρέσει αυτό το λογισμικό και θα ήθελες να βοηθήσεις, μην διστάσεις να μου στείλεις ένα ηλεκτρονικό γράμμα.\n
-  Πραγματικά χρειάζομαι κάποιον με εμπειρία στα γραφικά, για να κάνω την εφαρμογή ευχάριστη στο μάτι :) .\n
-  Ίσως κάποιος που μπορεί να ζωγραφίζει εικονίδια, εικόνες...\n
-  Αλλά, επίσης, προγραμματιστές που διορθώνουν δυσλειτουργίες, ή εφαρμόζουν νέες \n
-  (λειτουργίες και χαρακτηριστικά, όχι δυσλειτουργίες ;)  ) .\n
-  Επίσης,  ιδέες για νέα χαρακτηριστικά είναι πάντα καλοδεχούμενες!\n
-  \n
-  Η παρούσα εφαρμογή είναι ελεύθερο λογισμικό υπό την άδεια GPLv3.\n
-  https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">Το AMARadio είναι 100%% χωρίς διαφημίσεις και εστιασμένο στην ιδιωτικότητα.\n\nΑρχικά ανέπτυξα αυτήν την εφαρμογή για τη μητέρα μου για να της παρέχω μια απλή, ειλικρινή εμπειρία ραδιοφώνου χωρίς ενοχλητικές διαφημίσεις ή παρακολούθηση. Αυτός είναι ο λόγος για τον οποίο το AMARadio θα παραμείνει πάντα δωρεάν από διαφημίσεις – είναι μια υπόσχεση προς αυτήν, την οποία μοιράζομαι με όλους εσάς.\n\nΑυτό το έργο είναι ένα fork του εξαιρετικού RadioDroid από τον ounben. Ολόκληρη η βάση κώδικα έχει μεταφερθεί από Java σε Kotlin για να διασφαλιστεί ότι η εφαρμογή παραμένει σύγχρονη και συμβατή με μελλοντικές εκδόσεις Android.\n\nΑυτή η εφαρμογή χρησιμοποιεί τον δωρεάν κατάλογο ραδιοφωνικών σταθμών στο https://www.radio-browser.info .\nΌλοι μπορούν να προσθέσουν σταθμούς σε αυτόν. Λειτουργεί σαν wiki για διαδικτυακούς (streaming) ραδιοφωνικούς σταθμούς.\n\nΕπικοινωνία: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nΑν σας αρέσει το λογισμικό και θέλετε να βοηθήσετε, μη διστάσετε να μου στείλετε ένα email. Χρειάζομαι πραγματικά κάποιον με εμπειρία στα γραφικά για να κάνω την εφαρμογή πιο ευχάριστη στο μάτι :) Ίσως κάποιον που μπορεί να σχεδιάσει εικονίδια, εικόνες... αλλά και προγραμματιστές που διορθώνουν σφάλματα ή υλοποιούν νέες λειτουργίες!\nΙδέες για νέες λειτουργίες είναι επίσης πάντα ευπρόσδεκτες!\n\nΑυτή η εφαρμογή είναι ελεύθερο λογισμικό με άδεια χρήσης GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Έκδοση: %1$s</string>
-    <string name="detail_star">Προσθήκη στους σελιδοδείκτες των αγαπημένων</string>
-    <string name="detail_unstar">Διαγραφή από τα αγαπημένα</string>
-    <string name="progress_loading">Φορτώνει...</string>
+    <string name="detail_star">Προσθήκη στα αγαπημένα</string>
+    <string name="detail_unstar">Αφαίρεση από τα αγαπημένα</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Φόρτωση...</string>
 
     <string name="sleep_timer" formatted="true">Χρονοδιακόπτης ύπνου: %1$02d:%2$02d</string>
-    <string name="sleep_timer_title">Πόσα λεπτά πριν τη διακοπή;</string>
+    <string name="sleep_timer_title">Διακοπή αναπαραγωγής μετά το επιλεγμένο λεπτό</string>
     <string name="sleep_timer_apply">Εφαρμογή</string>
-    <string name="sleep_timer_clear">Καθάρισμα</string>
+    <string name="sleep_timer_clear">Εκκαθάριση</string>
     <string name="nav_item_add_sleep">Χρονοδιακόπτης ύπνου</string>
 
+    <string name="nav_item_save_playlist">Εξαγωγή αγαπημένων ως λίστα αναπαραγωγής</string>
+    <string name="nav_item_load_playlist">Εισαγωγή αγαπημένων από λίστα αναπαραγωγής</string>
+    <string name="nav_item_save_history_playlist">Εξαγωγή ιστορικού ως λίστα αναπαραγωγής</string>
+    <string name="confirm_overwrite_file">Αντικατάσταση του αρχείου;</string>
+    <string name="dialog_hint_file_name">Εισαγάγετε το όνομα του αρχείου</string>
+    <string name="error_empty_field">Αυτό το πεδίο είναι υποχρεωτικό</string>
+    <string name="error_invalid_file_name">Μη έγκυρο όνομα αρχείου</string>
+    <string name="label_button_cancel">Ακύρωση</string>
+    <string name="label_button_overwrite">Αντικατάσταση</string>
+    <string name="notify_load_playlist_nok">Αδυναμία εισαγωγής από %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Εισαγωγή από %1$s&#47;%2$s, παρακαλώ περιμένετε.</string>
+    <string name="notify_load_playlist_ok">Εισήχθησαν %1$d σταθμοί από %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Αδυναμία εξαγωγής σε %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Εξαγωγή σε %1$s&#47;%2$s, παρακαλώ περιμένετε.</string>
+    <string name="notify_save_playlist_ok">Επιτυχής εξαγωγή σε %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d από %2$d τοπικούς σταθμούς στη λίστα σημειώθηκαν ως ανύπαρκτοι στον διακομιστή</string>
+
+    <string name="searchpreference_clear_history">Εκκαθάριση ιστορικού</string>
+    <string name="searchpreference_no_results">Δεν βρέθηκαν αποτελέσματα</string>
+    <string name="searchpreference_search">Αναζήτηση…</string>
+    <string name="settings_appearance">Εμφάνιση</string>
     <string name="settings_theme_selection_title">Θέμα</string>
     <string name="theme_light">Φωτεινό</string>
     <string name="theme_dark">Σκοτεινό</string>
-    <string name="settings_circular_icons">Κυκλικά εικονίδια</string>
-    <string name="settings_compact_style">Συμπαγής κατάσταση λειτουργίας</string>
-    <string name="settings_bottom_navigation">Τα χειριστήρια κάτω</string>
+    <string name="theme_system">Ακολούθηση συστήματος</string>
+    <string name="settings_compact_style">Συμπαγής λειτουργία</string>
+    <string name="settings_compact_style_desc_off">Μεγάλο εικονίδιο με λεπτομέρειες σταθμού</string>
+    <string name="settings_compact_style_desc_on">Μικρό εικονίδιο χωρίς λεπτομέρειες σταθμού</string>
+    <string name="settings_bottom_navigation">Πλοήγηση στο κάτω μέρος</string>
+    <string name="settings_ui_scale">Κλίμακα UI</string>
+    <string name="ui_scale_compact">Συμπαγής</string>
+    <string name="ui_scale_standard">Πρότυπο συστήματος</string>
+    <string name="ui_scale_large">Μεγάλο</string>
+    <string name="ui_scale_extra_large">Πολύ μεγάλο</string>
 
-    <string name="settings_single_use_tags">Καρτέλες μονής χρήσης</string>
-    <string name="settings_single_use_tags_desc_off">Οι καρτέλες μοναδικής χρήσης δεν θα εμφανίζονται</string>
-    <string name="settings_single_use_tags_desc_on">Οι καρτέλες μοναδικής χρήσης θα εμφανίζονται</string>
+    <string name="settings_interaction">Αλληλεπίδραση</string>
+    <string name="settings_single_use_tags">Εμφάνιση σπάνιων ετικετών</string>
+    <string name="settings_single_use_tags_desc_off">Σπάνια χρησιμοποιούμενες ετικέτες δεν θα εμφανίζονται</string>
+    <string name="settings_single_use_tags_desc_on">Σπάνια χρησιμοποιούμενες ετικέτες θα εμφανίζονται</string>
 
-    <string name="settings_show_broken">Χαλασμένοι σταθμοί</string>
-    <string name="settings_show_broken_on">Να εμφανίζονται οι χαλασμένοι σταθμοί στα κατάστιχα</string>
-    <string name="settings_show_broken_off">Να μην εμφανίζονται οι χαλασμένοι σταθμοί στα κατάστιχα</string>
+    <string name="settings_show_broken">Μη λειτουργικοί σταθμοί</string>
+    <string name="settings_show_broken_on">Εμφάνιση μη λειτουργικών σταθμών σε λίστες</string>
+    <string name="settings_show_broken_off">Απόκρυψη μη λειτουργικών σταθμών σε λίστες</string>
 
-    <string name="startup_action_title">Δράση κατά την εκκίνηση</string>
+    <string name="settings_startup_behaviour">Συμπεριφορά έναρξης</string>
+    <string name="action_grid_view">Προβολή πλέγματος</string>
+    <string name="action_list_view">Προβολή λίστας</string>
+
+    <string name="startup_action_title">Ενέργεια έναρξης</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Εμφάνιση όλων των σταθμών</string>
-    <string name="startup_show_favorites">Εμφάνιση των αγαπημένων</string>
-    <string name="startup_show_history">Εμφάνιση του ιστορικού</string>
+    <string name="startup_show_favorites">Εμφάνιση αγαπημένων</string>
+    <string name="startup_show_history">Εμφάνιση ιστορικού</string>
     <string name="startup_show_last_view">Τελευταία προβολή</string>
 
-    <string name="settings_load_icons">Εικονίδια των σταθμών</string>
-    <string name="settings_load_icons_on">Τα εικονίδια θα λαμβάνονται</string>
-    <string name="settings_load_icons_off">Τα εικονίδια δεν θα λαμβάνονται</string>
+    <string name="settings_load_icons">Εμφάνιση εικονιδίων σταθμών</string>
+    <string name="settings_load_icons_on">Θα γίνεται λήψη εικονιδίων</string>
+    <string name="settings_load_icons_off">Δεν θα γίνεται λήψη εικονιδίων</string>
 
-    <string name="settings_auto_favorite">Αυτόματα-αγαπημένα</string>
-    <string name="settings_auto_favorite_on">Να ορίζονται, αυτόματα, οι σταθμοί ως αγαπημένοι, όταν παίζουν</string>
-    <string name="settings_auto_favorite_off">Να μην ορίζονται, αυτόματα, οι σταθμοί ως αγαπημένοι, όταν παίζουν</string>
-
-    <string name="settings_icon_click_toggles_favorite">Κλικ στα εικονίδια</string>
-    <string name="settings_icon_click_toggles_favorite_on">Το κλικάρισμα στο εικονίδιο του σταθμού, τον προσθέτει ή τον αφαιρεί από τα αγαπημένα</string>
-    <string name="settings_icon_click_toggles_favorite_off">Το κλικάρισμα στο εικονίδιο του σταθμού αρχίζει την αναπαραγωγή</string>
+    <string name="settings_auto_favorite">Αυτόματα αγαπημένα</string>
+    <string name="settings_auto_favorite_on">Αυτόματη προσθήκη σταθμών στα αγαπημένα κατά την αναπαραγωγή</string>
+    <string name="settings_auto_favorite_off">Όχι αυτόματη προσθήκη σταθμών στα αγαπημένα κατά την αναπαραγωγή</string>
 
     <string name="settings_alarm">Ξυπνητήρι</string>
-    <string name="settings_alarm_external">Άνοιγμα εξωτερικού</string>
-    <string name="settings_alarm_audio_player">Αναπαραγωγός Ήχου</string>
-    <string name="settings_alarm_sleep_timer">Χρονόμετρο ύπνου</string>
-    <string name="settings_alarm_sleep_timer_desc">Σταμάτημα της αναπαραγωγής μετά από %1$s λεπτά</string>
+    <string name="settings_alarm_external">Ενεργοποίηση εξωτερικής εφαρμογής</string>
+    <string name="settings_alarm_external_desc_on">Άνοιγμα ειδοποίησης με την προεπιλεγμένη εξωτερική εφαρμογή</string>
+    <string name="settings_alarm_external_desc_off">Άνοιγμα ειδοποίησης με το AMARadio</string>
+    <string name="settings_alarm_audio_player">Αναπαραγωγός ήχου</string>
+    <string name="settings_alarm_sleep_timer">Χρονοδιακόπτης ύπνου</string>
+    <string name="settings_alarm_sleep_timer_desc">Διακοπή αναπαραγωγής μετά από %1$s λεπτά</string>
     <string name="settings_play">Αναπαραγωγός</string>
-    <string name="settings_play_external">Άνοιγμα εξωτερικού</string>
+    <string name="settings_auto_play_on_startup">Αυτόματη αναπαραγωγή</string>
+    <string name="settings_auto_play_on_startup_on">Αναπαραγωγή τελευταίου σταθμού κατά την έναρξη</string>
+    <string name="settings_auto_play_on_startup_off">Όχι αναπαραγωγή τελευταίου σταθμού κατά την έναρξη</string>
+    <string name="settings_auto_off_on_startup">Αυτόματη διακοπή</string>
+    <string name="settings_auto_off_on_startup_on">Χρήση χρονοδιακόπτη αυτόματης διακοπής με την αυτόματη αναπαραγωγή</string>
+    <string name="settings_auto_off_on_startup_off">Όχι χρήση χρονοδιακόπτη αυτόματης διακοπής με την αυτόματη αναπαραγωγή</string>
+    <string name="settings_auto_off_sleep_timer">Χρονοδιακόπτης αυτόματης διακοπής</string>
+    <string name="settings_auto_off_sleep_timer_desc">Διακοπή αναπαραγωγής μετά από %1$s λεπτά</string>
+    <string name="settings_play_external">Ενεργοποίηση εξωτερικού αναπαραγωγού</string>
+    <string name="settings_play_external_desc_on">Αναπαραγωγή σταθμών με εξωτερικό αναπαραγωγό</string>
+    <string name="settings_play_external_desc_off">Αναπαραγωγή σταθμών με το AMARadio</string>
     <string name="settings_equalizer">Ισοσταθμιστής</string>
 
     <string name="settings_connectivity">Συνδεσιμότητα</string>
-    <string name="settings_connect_timeout">Λήξη της σύνδεσης της ροής</string>
-    <string name="settings_read_timeout">Λήξη της ανάγνωσης της ροής</string>
-    <string name="settings_retry_timeout">Λήξης της προσπάθειας ξανά στη ροή</string>
-    <string name="settings_retry_delay">Καθυστέρηση επανασυνδέσεων</string>
+    <string name="settings_connect_timeout">Λήξη σύνδεσης</string>
+    <string name="settings_read_timeout">Λήξη ανάγνωσης</string>
+    <string name="settings_resume_timeout">Λήξη συνέχισης</string>
+    <string name="settings_retry_timeout">Λήξη επαναπροσπάθειας</string>
+    <string name="settings_retry_delay">Καθυστέρηση επανασύνδεσης</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Όνομα χρήστη</string>
+    <string name="settings_proxy_password">Κωδικός πρόσβασης</string>
+    <string name="settings_proxy_action_test">Δοκιμή</string>
+    <string name="settings_proxy_working">Επιτυχής σύνδεση στο %s</string>
+    <string name="settings_proxy_not_working">Αποτυχία σύνδεσης στο %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Οι τιμές που δώσατε για το proxy δεν είναι έγκυρες</string>
+    <string name="ignore_proxy_settings_invalid">Αγνόηση μη έγκυρων ρυθμίσεων proxy</string>
     <string name="settings_seconds_format">%d δευτερόλεπτα</string>
-    <string name="settings_milliseconds_format">%d χιλιοστά του δευτερόλεπτου</string>
+    <string name="settings_milliseconds_format">%d χιλιοστά του δευτερολέπτου</string>
 
-    <string name="settings_warn_no_wifi">Γουάι-Φάι προειδοποίηση</string>
-    <string name="settings_warn_no_wifi_on">Προειδοποίηση όταν παίζει χωρίς σύνδεση Γουάι-Φάι</string>
-    <string name="settings_warn_no_wifi_off">Καμία προειδοποίηση όταν δεν είναι σε σύνδεση Γουάι-Φάι</string>
+    <string name="settings_pause_when_noisy">Παύση κατά την αποσύνδεση ακουστικών</string>
 
-    <string name="settings_recordings">Ηχογραφήσεις</string>
-    <string name="settings_record_name_formatting">Μόρφωση του ονόματος</string>
+    <string name="settings_auto_resume_do_not_resume">Όχι συνέχιση</string>
 
+    <string name="settings_auto_resume_on_wired_headset_connected">Συνέχιση σε ενσύρματη σύνδεση</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Συνέχιση αναπαραγωγής κατά τη σύνδεση ενσύρματων ακουστικών</string>
 
-    <string name="settings_record_name_formatting_default_display">σταθμός_καλλιτέχνης_κομμάτι_\\u200bχρόνος</string>
-    <string name="settings_record_name_formatting_1_display">σταθμός_καλλιτέχνης_\\u200bκομμάτι</string>
-    <string name="settings_record_name_formatting_2_display">σταθμός_ημερομηνία_\\u200bχρόνος</string>
-    <string name="settings_record_name_formatting_3_display">περιεχόμενα_σταθμός_\\u200bημερομηνία</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Συνέχιση σε σύνδεση Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Συνέχιση αναπαραγωγής κατά τη σύνδεση συσκευής Bluetooth A2DP</string>
 
-    <string name="notify_pre_play">Συνδέεται</string>
-    <string name="notify_play">Παίζει</string>
-    <string name="notify_paused">Παυμένο</string>
-    <string name="notify_starred">Ο σταθμός έχει προστεθεί στους σελιδοδείκτες των αγαπημένων</string>
-    <string name="notify_autostarred">Ο σταθμός έχει προστεθεί, αυτόματα, στους σελιδοδείκτες των αγαπημένων</string>
-    <string name="notify_unstarred">Ο σταθμός έχει απομακρυνθεί από το κατάστιχο των αγαπημένων</string>
-    <string name="notify_deleted_favorites">Τα αγαπημένα έχουν διαγραφεί.</string>
-    <string name="notify_deleted_history">Το ιστορικό έχει διαγραφεί.</string>
+    <string name="settings_warn_no_wifi">Προειδοποίηση απουσίας Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Προειδοποίηση κατά την αναπαραγωγή χωρίς σύνδεση Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Καμία προειδοποίηση κατά την αναπαραγωγή χωρίς σύνδεση Wi-Fi</string>
 
-    <string name="notify_station_removed_from_list">1 Απομακρύνθηκε</string>
+    <string name="notify_pre_play">Σύνδεση</string>
+    <string name="notify_play">Αναπαραγωγή</string>
+    <string name="notify_paused">Παύση</string>
+    <string name="notify_metered_connection">Σύνδεση με χρέωση</string>
+
+    <string name="notify_starred">Ο σταθμός προστέθηκε στα αγαπημένα</string>
+    <string name="notify_autostarred">Ο σταθμός προστέθηκε αυτόματα στα αγαπημένα</string>
+    <string name="notify_unstarred">Ο σταθμός αφαιρέθηκε από τα αγαπημένα</string>
+    <string name="notify_deleted_favorites">Τα αγαπημένα διαγράφηκαν</string>
+    <string name="notify_deleted_history">Το ιστορικό διαγράφηκε</string>
+
+    <string name="notify_open_link_failure">Δεν βρέθηκε εφαρμογή για το άνοιγμα του συνδέσμου</string>
+
+    <string name="notify_station_removed_from_list">1 Αφαιρέθηκε</string>
     <string name="action_station_removed_from_list_undo">ΑΝΑΙΡΕΣΗ</string>
 
-    <string name="alert_delete_history">Θέλεις πραγματικά να διαγράψεις το ιστορικό;</string>
-    <string name="alert_delete_favorites">Θέλεις πραγματικά να διαγράψεις όλα τα αγαπημένα;</string>
+    <string name="alert_delete_history">Θέλετε πραγματικά να διαγράψετε το ιστορικό;</string>
+    <string name="alert_delete_favorites">Θέλετε πραγματικά να διαγράψετε όλα τα αγαπημένα;</string>
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
 
-    <string name="alert_select_mpd_server">Ποιον εξυπηρετητή;</string>
-    <string name="alert_select_mpd_server_name">Όνομα του εξυπηρετητή</string>
-    <string name="hostname">Όνομα του οικοδεσπότη</string>
+    <string name="alert_select_mpd_server">Παρακαλώ επιλέξτε έναν διακομιστή</string>
+    <string name="alert_select_mpd_server_name">Όνομα διακομιστή</string>
+    <string name="alert_select_mpd_server_password">Κωδικός διακομιστή</string>
+    <string name="hostname">Hostname</string>
     <string name="port">Θύρα</string>
 
     <string name="alert_select_mpd_server_add">Προσθήκη</string>
     <string name="alert_select_mpd_server_save">Αποθήκευση</string>
-    <string name="alert_select_mpd_server_remove">Απομάκρυνση</string>
-    <string name="alert_add_or_edit_mpd_server">Εισαγωγή λεπτομερειών για τον εξυπηρετητή</string>
+    <string name="alert_select_mpd_server_remove">Αφαίρεση</string>
+    <string name="alert_add_or_edit_mpd_server">Εισαγάγετε λεπτομέρειες για έναν διακομιστή</string>
+    <string name="alert_alarm_working">Ώρα ειδοποίησης τώρα</string>
+    <string name="alert_alarm_not_working">Όχι αρκετές πληροφορίες για ειδοποίηση</string>
+    <string name="alert_select_external_alarm_app">Επιλέξτε αναπαραγωγό ήχου</string>
 
-    <string name="alert_press_back_to_exit">Πίεσε το «Επιστροφή» ακόμη μία φορά, για την έξοδο</string>
+    <string name="alert_press_back_to_exit">Πιέστε πίσω άλλη μια φορά για έξοδο</string>
 
-    <string name="error_stream_url">Πρόβλημα στη διεύθυνση url της ροής</string>
-    <string name="error_caching_stream">Πρόβλημα μικραποθήκευσης της ροής</string>
-    <string name="error_play_stream">Αδυναμία αναπαραγωγής της ροής</string>
-    <string name="error_stream_reconnect_timeout">Αδυναμία επανασύνδεσης στη ροή: λήξη του χρόνου</string>
+    <string name="error_stream_url">Πρόβλημα URL ροής</string>
+    <string name="error_caching_stream">Πρόβλημα προσωρινής αποθήκευσης ροής</string>
+    <string name="error_play_stream">Αδυναμία αναπαραγωγής ροής</string>
+    <string name="error_stream_reconnect_timeout">Αδυναμία επανασύνδεσης στη ροή: λήξη χρόνου</string>
+    <string name="warning_no_network_trying_resume">Δεν υπάρχει σύνδεση δικτύου. Προσπάθεια συνέχισης όταν επανέλθει η σύνδεση.</string>
+    <string name="giving_up_resume">Εγκατάλειψη προσπάθειας συνέχισης αναπαραγωγής</string>
 
-    <string name="error_record_needs_write">Απαιτείται άδεια εγγραφής για την ηχογράφηση.</string>
-    <string name="error_grant_audiofocus">Το αίτημα εστίασης στον ήχο δεν παραχωρήθηκε από το σύστημα.</string>
+    <string name="error_grant_audiofocus">Το αίτημα για εστίαση ήχου δεν παραχωρήθηκε από το σύστημα</string>
 
-    <string name="error_no_equalizer_found">Δεν βρέθηκε εφαρμογή ισοστάθμισης.</string>
+    <string name="error_no_equalizer_found">Δεν βρέθηκε εφαρμογή ισοσταθμιστή</string>
 
-    <string name="player_info_status">Κατάσταση: </string>
+    <string name="player_info_status">Κατάσταση:&#160;</string>
     <string name="player_info_status_stopped">σταματημένο</string>
-    <string name="player_info_status_playing">παίζει</string>
-    <string name="player_info_status_recording">ηχογραφεί</string>
-    <string name="player_info_status_playing_and_recording">παίζει και ηχογραφείται</string>
+    <string name="player_info_status_playing">αναπαραγωγή</string>
     <string name="player_info_transferred">Μεταφέρθηκαν δεδομένα: %1$s</string>
-    <string name="player_info_recording_to">Ηχογραφείται στο:\n
-    %1$s</string>
-    <string name="player_info_recorded_to">Τελευταία ηχογράφηση:\n
-    %1$s</string>
 
-    <string name="station_detail_bitrate">%1$1d χιλιομπίτια/δευτ.</string>
-    <string name="station_detail_broken">ΧΑΛΑΣΜΕΝΟΣ</string>
+    <string name="tab_player_art">Εξώφυλλο άλμπουμ</string>
+    <string name="tab_player_info">Πληροφορίες</string>
+    <string name="tab_player_history">Ιστορικό κομματιών</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ΧΑΛΑΣΜΕΝΟ</string>
+    <string name="station_detail_deleted_on_server">ΔΙΑΓΡΑΦΗΚΕ</string>
+
+    <string name="station_details_clicks">%1$d κλικ</string>
+    <string name="station_details_votes">%1$d ψήφοι</string>
 
     <string name="image_button_disable">Απενεργοποίηση</string>
-    <string name="image_button_record">Ηχογράφηση</string>
     <string name="image_button_delete">Διαγραφή</string>
     <string name="image_button_more">Περισσότερα</string>
+    <string name="image_button_less">Λιγότερα</string>
+    <string name="image_button_repeat">Επανάληψη</string>
+    <string name="image_button_dont_repeat">Όχι επανάληψη</string>
+    <string name="icon_click_trend_decreasing">Η δημοτικότητα μειώνεται</string>
+    <string name="icon_click_trend_increasing">Η δημοτικότητα αυξάνεται</string>
+    <string name="icon_click_trend_stable">Σταθερή δημοτικότητα</string>
 
     <string name="media_route_menu_title">GoogleCast</string>
+    <string name="app_id">5A97BAE4</string>
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% χωρίς διαφημίσεις &amp; Ιδιωτικό</string>
 
-    <string name="settings_mpd">Δαίμονας Αναπαραγωγής Μουσικής</string>
-    <string name="settings_view_mpd_servers">Οι εξυπηρετητές</string>
-    <string name="action_mpd_nok">Δεν συνδέθηκε το MPD</string>
-    <string name="action_mpd_ok">Συνδέθηκε το MPD</string>
-    <string name="action_mpd_connected">Συνδέθηκε στον εξυπηρετητή:  %1$s</string>
+    <string name="settings_mpd">Music Player Daemon</string>
+    <string name="settings_mpd_port">Θύρα MPD</string>
+    <string name="settings_view_mpd_servers">Οι διακομιστές σας</string>
+    <string name="action_mpd_nok">Το MPD δεν είναι συνδεδεμένο</string>
+    <string name="action_mpd_ok">Το MPD είναι συνδεδεμένο</string>
+    <string name="action_mpd_connected">Συνδέθηκε στον διακομιστή: %1$s</string>
+
+    <string name="mpd_no_connection">Δεν υπάρχει σύνδεση</string>
+    <string name="action_enable_mpd">Ενεργοποίηση MPD</string>
+    <string name="action_disable_mpd">Απενεργοποίηση MPD</string>
+    <string name="action_add_mpd_server">Προσθήκη διακομιστή MPD</string>
+
+    <string name="action_play_in_external">Αναπαραγωγή σε εξωτερικό αναπαραγωγό</string>
+    <string name="action_choose_external_player">Επιλέξτε εξωτερικό αναπαραγωγό</string>
 
     <string name="settings_other">Άλλα</string>
     <string name="settings_statistics">Στατιστικά</string>
-    <string name="settings_about">Σχετικά με το ΡάδιοΔροειδές</string>
+    <string name="settings_about">Σχετικά με το AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Μετάβαση στο επόμενο</string>
+    <string name="description_btn_skip_to_previous">Μετάβαση στο προηγούμενο</string>
+
+    <string name="description_btn_setup_alarm">Ορισμός ειδοποίησης</string>
 
     <string-array name="weekdays">
         <item>Κ</item>
@@ -216,10 +298,43 @@
         <item>Σ</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">Η Διεύθυνση Url της Ροής Έχει Αντιγραφεί με Επιτυχία!</string>
+    <string name="notify_stream_url_copied">Το URL της ροής αντιγράφηκε με επιτυχία</string>
+    <string name="notify_track_info_copied">Οι πληροφορίες του κομματιού αντιγράφηκαν με επιτυχία</string>
 
+    <string-array name="actions_station_link">
+        <item>Επίσκεψη στον ιστότοπο</item>
+        <item>Αντιγραφή URL ροής</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Ανιχνεύθηκε σύνδεση με χρέωση</string>
+    <string name="alert_metered_connection_message">Η σύνδεση με χρέωση ενδέχεται να επιφέρει πρόσθετες χρεώσεις, πιέστε \'OK\' για συνέχεια.</string>
     <string name="nav_item_statistics">Στατιστικά</string>
-    <string name="nav_item_about">Σχετικά με...</string>
-    <string name="settings_mpd_port">Θύρα MPD</string>
+    <string name="nav_item_about">Σχετικά</string>
     <string name="refresh">Ανανέωση</string>
+    <string name="action_filter">Φίλτρο</string>
+    <string name="filter_country">Χώρα</string>
+    <string name="filter_tag">Ετικέτα</string>
+    <string name="filter_language">Γλώσσα</string>
+    <string name="filter_sort_by">Ταξινόμηση κατά</string>
+    <string name="filter_reverse">Αντίστροφη σειρά</string>
+    <string name="filter_apply">Εφαρμογή Φίλτρου</string>
+    <string name="sort_name">Όνομα</string>
+    <string name="sort_votes">Ψήφοι</string>
+    <string name="sort_clicks">Κλικ</string>
+    <string name="sort_lastchange">Τελευταία Αλλαγή</string>
+    <string name="filter_select_country">Επιλέξτε Χώρα</string>
+    <string name="filter_select_language">Επιλέξτε Γλώσσα</string>
+    <string name="filter_type_tag">Πληκτρολογήστε ετικέτα…</string>
+
+    <string name="alarm_backup">Εναλλακτική ειδοποίηση</string>
+    <string name="alarm_fallback_info">Χρησιμοποιήθηκε η ειδοποίηση συστήματος καθώς ο επιλεγμένος ραδιοφωνικός σταθμός απέτυχε να φορτώσει</string>
+    <string name="alarm_back_desc">Εναλλακτική ειδοποίηση συστήματος όταν ο ραδιοφωνικός σταθμός αποτυγχάνει να φορτώσει</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_add_alarm">@string/action_alarm</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
 </resources>

@@ -45,7 +45,6 @@
     <string name="action_countries">Countries/Regions</string>
     <string name="action_languages">Languages</string>
     <string name="action_edit">Edit</string>
-    <string name="action_lyrics">Lyrics</string>
     <string name="action_copy_info">Copy Info</string>
     <string name="error_station_load">Could not connect to station</string>
     <string name="error_list_update">Could not connect to radio browser server</string>
@@ -186,19 +185,6 @@
     <string name="settings_warn_no_wifi_on">Warn when playing without Wi-Fi connection</string>
     <string name="settings_warn_no_wifi_off">No warning when not on Wi-Fi connection</string>
 
-    <string name="settings_recordings">Recordings</string>
-    <string name="settings_record_name_formatting">Name format</string>
-
-    <string name="settings_record_name_formatting_default" translatable="false">${station}_${artist}_${track}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_1" translatable="false">${station}_${artist}_${track}</string>
-    <string name="settings_record_name_formatting_2" translatable="false">${station}_${date}_${time}</string>
-    <string name="settings_record_name_formatting_3" translatable="false">${index}_${station}_${date}</string>
-
-    <string name="settings_record_name_formatting_default_display">station_artist_track_\u200bdate_\u200btime</string>
-    <string name="settings_record_name_formatting_1_display">station_artist_\u200btrack</string>
-    <string name="settings_record_name_formatting_2_display">station_date_\u200btime</string>
-    <string name="settings_record_name_formatting_3_display">index_station_\u200bdate</string>
-
     <string name="notify_pre_play">Connecting</string>
     <string name="notify_play">Playing</string>
     <string name="notify_paused">Paused</string>
@@ -214,8 +200,6 @@
 
     <string name="notify_station_removed_from_list">1 Removed</string>
     <string name="action_station_removed_from_list_undo">UNDO</string>
-
-    <string name="alert_install_lyrics_app">QuickLyric is not installed on your device. Would you like to get it from Google Play Store?</string>
 
     <string name="alert_delete_history">Do you really want to delete the history?</string>
     <string name="alert_delete_favorites">Do you really want to delete all favorites?</string>
@@ -245,7 +229,6 @@
     <string name="warning_no_network_trying_resume">No network connection. Trying to resume when connection is back.</string>
     <string name="giving_up_resume">Giving up attempt to resume playback</string>
 
-    <string name="error_record_needs_write">Need write permission for recording</string>
     <string name="error_grant_audiofocus">Request for audio focus was not granted by the system</string>
 
     <string name="error_no_equalizer_found">No equalizer app found</string>
@@ -253,16 +236,11 @@
     <string name="player_info_status">Status:&#160;</string>
     <string name="player_info_status_stopped">stopped</string>
     <string name="player_info_status_playing">playing</string>
-    <string name="player_info_status_recording">recording</string>
-    <string name="player_info_status_playing_and_recording">playing and recording</string>
     <string name="player_info_transferred">Transferred data: %1$s</string>
-    <string name="player_info_recording_to">Recording to:\n%1$s</string>
-    <string name="player_info_recorded_to">Last recording:\n%1$s</string>
 
     <string name="tab_player_art">Album art</string>
     <string name="tab_player_info">Info</string>
     <string name="tab_player_history">Track history</string>
-    <string name="tab_player_recordings">Recordings</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">BROKEN</string>
@@ -272,9 +250,6 @@
     <string name="station_details_votes">%1$d votes</string>
 
     <string name="image_button_disable">Disable</string>
-    <string name="image_button_record">Record</string>
-    <string name="image_button_record_request_permission">Request permissions for recording</string>
-    <string name="image_button_recordings">Recordings</string>
     <string name="image_button_delete">Delete</string>
     <string name="image_button_more">More</string>
     <string name="image_button_less">Less</string>

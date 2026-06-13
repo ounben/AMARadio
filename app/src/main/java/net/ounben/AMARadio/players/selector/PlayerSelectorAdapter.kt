@@ -128,9 +128,6 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
             }
             holder.btnPlay.setOnClickListener {
                 if (PlayerServiceUtil.isPlaying()) {
-                    if (PlayerServiceUtil.isRecording()) {
-                        PlayerServiceUtil.stopRecording()
-                    }
                     PlayerServiceUtil.pause(PauseReason.USER)
                 } else {
                     Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, stationToPlay!!, PlayerType.AMARadio) {

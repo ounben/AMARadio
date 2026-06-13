@@ -9,16 +9,13 @@ import net.ounben.AMARadio.R
 import net.ounben.AMARadio.AMARadioApp
 import net.ounben.AMARadio.Utils
 import net.ounben.AMARadio.players.exoplayer.ExoPlayerWrapper
-import net.ounben.AMARadio.players.mediaplayer.MediaPlayerWrapper
-import net.ounben.AMARadio.recording.Recordable
-import net.ounben.AMARadio.recording.RecordableListener
 import net.ounben.AMARadio.station.DataRadioStation
 import net.ounben.AMARadio.station.live.ShoutcastInfo
 import net.ounben.AMARadio.station.live.StreamLiveInfo
 import java.util.concurrent.TimeUnit
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener, Recordable {
+class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener {
     private val TAG = "RadioPlayer"
 
     interface PlayerListener {
@@ -123,33 +120,6 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     fun setVolume(volume: Float) {
         currentPlayer.setVolume(volume)
     }
-
-    override fun canRecord(): Boolean = currentPlayer.canRecord()
-
-    override fun startRecording(recordableListener: RecordableListener) {
-        currentPlayer.startRecording(recordableListener)
-    }
-
-    override fun stopRecording() {
-        currentPlayer.stopRecording()
-    }
-
-    override fun isRecording(): Boolean = currentPlayer.isRecording()
-
-    override fun getRecordNameFormattingArgs(): Map<String, String> {
-        val args = HashMap<String, String>()
-        args["station"] = Utils.sanitizeName(streamName ?: "")
-        if (lastLiveInfo != null) {
-            args["artist"] = Utils.sanitizeName(lastLiveInfo!!.artist ?: "")
-            args["track"] = Utils.sanitizeName(lastLiveInfo!!.track ?: "")
-        } else {
-            args["artist"] = "-"
-            args["track"] = "-"
-        }
-        return args
-    }
-
-    override fun getExtension(): String = currentPlayer.getExtension()
 
     fun runInPlayerThread(runnable: Runnable) {
         playerThreadHandler.post(runnable)

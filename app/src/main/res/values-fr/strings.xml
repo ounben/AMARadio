@@ -42,10 +42,9 @@
     <string name="action_changed_lately">Modification récente</string>
     <string name="action_currently_playing">Écoutées actuellement</string>
     <string name="action_tags">Étiquettes</string>
-    <string name="action_countries">Pays</string>
+    <string name="action_countries">Pays/Régions</string>
     <string name="action_languages">Langues</string>
     <string name="action_edit">Modifier</string>
-    <string name="action_lyrics">Paroles</string>
     <string name="action_copy_info">Copier les informations</string>
     <string name="error_station_load">Impossible de se connecter à la station</string>
     <string name="error_list_update">Impossible de se connecter au navigateur du serveur radio</string>
@@ -58,7 +57,7 @@
     <string name="nav_item_settings">Réglages</string>
     <string name="nav_item_alarm">Alarme</string>
 
-    <string name="about_text">Cette application utilise le répertoire libre de stations radios à l\'adresse\nhttps://www.radio-browser.info\nChacun peut y ajouter des stations ou éditer celles déjà existantes. Ce répertoire fonctionne comme un wiki pour recenser les stations de webradios (en streaming).\n\nContact :\ben@ounben.com\n\nSystème de suivi de bogues :\nhttps://github.com/ounben/AMARadio/issues\n\nSi vous appréciez cette application et que vous voulez soutenir le développement, n\'hésitez pas à m\'envoyer un mail. Si vous avez de l\'expérience en graphisme, vous êtes le bienvenu pour rendre AMARadio plus agréable à regarder ;) Je cherche aussi des programmeurs pour résoudre les bogues, et implémenter de nouvelles fonctionnalités !\nLes idées de nouvelles fonctionnalités sont d\'ailleurs toujours les bienvenues!\n\nCette application est un logiciel libre sous licence GNU GPLv3.\nhttps://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio est 100%% sans publicité et axé sur la confidentialité.\n\nJ\'ai initialement développé cette application pour ma mère afin de lui offrir une expérience radio simple et honnête, sans publicités gênantes ni traçage. C\'est pourquoi AMARadio restera toujours sans publicité – c\'est une promesse que je lui ai faite et que je partage avec vous tous.\n\nCe projet est un fork de l\'excellent RadioDroid par ounben. L\'ensemble de la base de code a été migré de Java vers Kotlin pour garantir que l\'application reste moderne et compatible avec les futures versions d\'Android.\n\nCette application utilise le répertoire libre de stations radios à l\'adresse https://www.radio-browser.info .\nChacun peut y ajouter des stations. Ce répertoire fonctionne comme un wiki pour recenser les stations de webradios (en streaming).\n\nContact : ben@ounben.com\n\nSystème de suivi de bogues : https://github.com/ounben/AMARadio/issues\n\nSi vous appréciez cette application et que vous voulez soutenir le développement, n\'hésitez pas à m\'envoyer un mail. Si vous avez de l\'expérience en graphisme, vous êtes le bienvenu pour rendre AMARadio plus agréable à regarder ;) Je cherche aussi des programmeurs pour résoudre les bogues ou implémenter de nouvelles fonctionnalités !\nLes idées de nouvelles fonctionnalités sont d\'ailleurs toujours les bienvenues!\n\nCette application est un logiciel libre sous licence GNU GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Version : %1$s</string>
     <string name="detail_star">Ajouter aux favoris</string>
     <string name="detail_unstar">Supprimer des favoris</string>
@@ -95,11 +94,16 @@
     <string name="settings_theme_selection_title">Thème</string>
     <string name="theme_light">Clair</string>
     <string name="theme_dark">Noir</string>
-    <string name="settings_circular_icons">Utiliser des icônes circulaires</string>
+    <string name="theme_system">Suivre le système</string>
     <string name="settings_compact_style">Mode compact</string>
     <string name="settings_compact_style_desc_off">Grande icône adoptée avec les détails de la station</string>
     <string name="settings_compact_style_desc_on">Petite icône adoptée sans les détails de la station</string>
     <string name="settings_bottom_navigation">Navigation inférieure</string>
+    <string name="settings_ui_scale">Échelle de l\'interface</string>
+    <string name="ui_scale_compact">Compact</string>
+    <string name="ui_scale_standard">Défaut système</string>
+    <string name="ui_scale_large">Grand</string>
+    <string name="ui_scale_extra_large">Très grand</string>
 
     <string name="settings_interaction">Interaction</string>
     <string name="settings_single_use_tags">Montrer les tags uniques</string>
@@ -111,6 +115,9 @@
     <string name="settings_show_broken_off">Ne pas afficher les stations défectueuses dans les listes de stations</string>
 
     <string name="settings_startup_behaviour">Comportement au démarrage</string>
+    <string name="action_grid_view">Vue en grille</string>
+    <string name="action_list_view">Vue en liste</string>
+
     <string name="startup_action_title">Commencer l\'action</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">Afficher toutes les stations</string>
@@ -126,14 +133,6 @@
     <string name="settings_auto_favorite_on">Ajoute automatiquement les stations en favoris lors de la lecture</string>
     <string name="settings_auto_favorite_off">Ne met pas les stations automatiquement en favoris lors de la lecture</string>
 
-    <string name="settings_icon_click_toggles_favorite">Clic sur une icône</string>
-    <string name="settings_icon_click_toggles_favorite_on">Un clic sur l\'icône d\'une station l\'ajoute ou l\'enlève des favoris</string>
-    <string name="settings_icon_click_toggles_favorite_off">Un clic sur l\'icône d\'une station lance la lecture</string>
-
-    <string name="settings_click_trend_icon_visible">Clic sur l\'icône de tendance</string>
-    <string name="settings_click_trend_icon_visible_on">L\'icône sera visible</string>
-    <string name="settings_click_trend_icon_visible_off">L\'icône sera cachée</string>
-
     <string name="settings_alarm">Alarme</string>
     <string name="settings_alarm_external">Ouverture avec une application externe</string>
     <string name="settings_alarm_external_desc_on">Ouvrir l\'alarme avec l\'application externe par défaut</string>
@@ -145,6 +144,11 @@
     <string name="settings_auto_play_on_startup">Lecture automatique</string>
     <string name="settings_auto_play_on_startup_on">Lire la dernière station au démarrage</string>
     <string name="settings_auto_play_on_startup_off">Ne pas lire la dernière station au démarrage</string>
+    <string name="settings_auto_off_on_startup">Arrêt automatique</string>
+    <string name="settings_auto_off_on_startup_on">Utiliser la minuterie d\'arrêt automatique avec la lecture automatique</string>
+    <string name="settings_auto_off_on_startup_off">Ne pas utiliser la minuterie d\'arrêt automatique avec la lecture automatique</string>
+    <string name="settings_auto_off_sleep_timer">Minuterie d\'arrêt automatique</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stopper la lecture après %1$s minutes</string>
     <string name="settings_play_external">Ouverture avec une application externe</string>
     <string name="settings_play_external_desc_on">Lire les stations avec un lecteur externe</string>
     <string name="settings_play_external_desc_off">Lire les stations avec AMARadio</string>
@@ -181,14 +185,6 @@
     <string name="settings_warn_no_wifi_on">Alerter lors de la lecture sans connexion Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Pas d\'alerte lors de la lecture sans connexion Wi-Fi</string>
 
-    <string name="settings_recordings">Enregistrements</string>
-    <string name="settings_record_name_formatting">Format du nom</string>
-
-    <string name="settings_record_name_formatting_default_display">stations_artiste_piste_\u200bdate_\u200bheure</string>
-    <string name="settings_record_name_formatting_1_display">stations_artiste_\u200bpiste</string>
-    <string name="settings_record_name_formatting_2_display">stations_date_\u200bheure</string>
-    <string name="settings_record_name_formatting_3_display">index_stations_\u200bdate</string>
-
     <string name="notify_pre_play">Connexion</string>
     <string name="notify_play">En lecture</string>
     <string name="notify_paused">En pause</string>
@@ -204,8 +200,6 @@
 
     <string name="notify_station_removed_from_list">1 Supprimée</string>
     <string name="action_station_removed_from_list_undo">ANNULER</string>
-
-    <string name="alert_install_lyrics_app">QuickLyric n’est pas installé sur votre appareil. Voulez-vous l\'obtenir sur le Google Play Store ?</string>
 
     <string name="alert_delete_history">Voulez-vous vraiment supprimer votre historique ?</string>
     <string name="alert_delete_favorites">Voulez-vous vraiment supprimer tous vos favoris ?</string>
@@ -235,33 +229,27 @@
     <string name="warning_no_network_trying_resume">Pas de connexion réseau. Tentative de reprise lorsque la connexion sera rétablie.</string>
     <string name="giving_up_resume">Tentative de reprise de la lecture ignorée</string>
 
-    <string name="error_record_needs_write">Droits d\'écriture requis pour l\'enregistrement !</string>
     <string name="error_grant_audiofocus">La demande de focus audio n\'a pas été accordée par le système.</string>
 
     <string name="error_no_equalizer_found">Aucun égaliseur trouvé !</string>
 
-    <string name="player_info_status">Status :</string>
+    <string name="player_info_status">Status :&#160;</string>
     <string name="player_info_status_stopped">Arrêté</string>
     <string name="player_info_status_playing">en lecture</string>
-    <string name="player_info_status_recording">en enregistrement</string>
-    <string name="player_info_status_playing_and_recording">en lecture et enregistrement</string>
     <string name="player_info_transferred">Données transmises : %1$s</string>
-    <string name="player_info_recording_to">Enregistrement à :\n%1$s</string>
-    <string name="player_info_recorded_to">Dernier enregistrement :\n%1$s</string>
 
     <string name="tab_player_art">Pochette d\'album</string>
     <string name="tab_player_info">Info</string>
-    <string name="tab_player_history">Historique</string>
-    <string name="tab_player_recordings">Enregistrements</string>
+    <string name="tab_player_history">Historique des pistes</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">INDISPONIBLE</string>
     <string name="station_detail_deleted_on_server">SUPPRIMÉ</string>
 
+    <string name="station_details_clicks">%1$d clics</string>
+    <string name="station_details_votes">%1$d votes</string>
+
     <string name="image_button_disable">Désactiver</string>
-    <string name="image_button_record">Enregistrer</string>
-    <string name="image_button_record_request_permission">Demande des autorisations pour l\'enregistrement</string>
-    <string name="image_button_recordings">Enregistrements</string>
     <string name="image_button_delete">Supprimer</string>
     <string name="image_button_more">Plus</string>
     <string name="image_button_less">Moins</string>
@@ -274,6 +262,7 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%% sans publicité &amp; Privé</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
     <string name="settings_mpd_port">Port MPD</string>
@@ -290,11 +279,13 @@
     <string name="action_play_in_external">Lire dans un lecteur externe</string>
     <string name="action_choose_external_player">Choisir un lecteur externe</string>
 
-    <string name="settings_lastfm_api_key">Clé API Last.fm</string>
-    <string name="settings_lastfm_api_key_desc">Entrez une clé API pour activer la pochette d\'album dans le lecteur plein écran</string>
+    <string name="settings_disable_battery_optimization">Optimisation de la batterie</string>
+    <string name="settings_ignore_battery_optimization_summary_on">L\'optimisation de la batterie est ignorée, AMARadio devrait toujours pouvoir récupérer le focus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">L\'optimisation de la batterie est activée, AMARadio peut ne pas récupérer le focus en arrière-plan.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Autre</string>
     <string name="settings_statistics">Statistiques</string>
-    <string name="settings_about">À propos AMARadio</string>
+    <string name="settings_about">À propos de AMARadio</string>
 
     <string name="description_btn_skip_to_next">Passer au suivant</string>
     <string name="description_btn_skip_to_previous">Passer au précédent</string>
@@ -324,11 +315,25 @@
     <string name="nav_item_statistics">Statistiques</string>
     <string name="nav_item_about">À propos</string>
     <string name="refresh">Rafraîchir</string>
+    <string name="action_filter">Filtre</string>
+    <string name="filter_country">Pays</string>
+    <string name="filter_tag">Étiquette</string>
+    <string name="filter_language">Langue</string>
+    <string name="filter_sort_by">Trier par</string>
+    <string name="filter_reverse">Inverser l\'ordre</string>
+    <string name="filter_apply">Appliquer le filtre</string>
+    <string name="sort_name">Nom</string>
+    <string name="sort_votes">Votes</string>
+    <string name="sort_clicks">Clics</string>
+    <string name="sort_lastchange">Dernier changement</string>
+    <string name="filter_select_country">Sélectionner le pays</string>
+    <string name="filter_select_language">Sélectionner la langue</string>
+    <string name="filter_type_tag">Saisir l\'étiquette…</string>
 
-    <string name="alarm_backup">Alarme alternative</string>
-    <string name="alarm_fallback_info">L\'alarme du système adoptée comme station radio sélectionnée n’a pas été chargée</string>
-    <string name="alarm_back_desc">Système d\'alarme alternatif adopté lorsque la station radio ne se charge pas</string>
-    
+    <string name="alarm_backup">Alarme de secours</string>
+    <string name="alarm_fallback_info">Alarme système adoptée car la station de radio sélectionnée n\'a pas pu être chargée</string>
+    <string name="alarm_back_desc">Système d\'alarme alternatif adopté lorsque la station de radio ne se charge pas</string>
+
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
