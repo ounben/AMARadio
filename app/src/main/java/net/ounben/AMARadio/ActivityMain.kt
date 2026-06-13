@@ -50,6 +50,7 @@ import android.app.TimePickerDialog
 import android.content.pm.PackageManager
 import android.widget.TimePicker
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.SystemBarStyle
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import com.google.android.material.navigation.NavigationBarView
@@ -100,7 +101,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Utils.getThemeResId(this))
-        enableEdgeToEdge()
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+        )
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
@@ -114,7 +117,13 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_content)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            v.setPadding(systemBars.left, 0, systemBars.right, 0)
+            insets
+        }
+
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.app_bar_layout)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(0, systemBars.top, 0, 0)
             insets
         }
 
