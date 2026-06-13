@@ -1,5 +1,7 @@
 package net.ounben.AMARadio.station
 
+import android.graphics.Color
+import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.ContextMenu
 import android.view.LayoutInflater
@@ -85,12 +87,18 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         }
 
         // Highlight playing station
-        val tv = TypedValue()
         if (playingStationPosition == position) {
+            val tv = TypedValue()
             fragmentActivity.theme.resolveAttribute(androidx.appcompat.R.attr.colorAccent, tv, true)
-            holder.itemView.setBackgroundColor(tv.data)
+            val gd = GradientDrawable()
+            gd.setColor(Color.TRANSPARENT)
+            val strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, fragmentActivity.resources.displayMetrics).toInt()
+            gd.setStroke(strokeWidth, tv.data)
+            holder.itemView.background = gd
         } else {
-            holder.itemView.setBackgroundColor(0)
+            val tv = TypedValue()
+            fragmentActivity.theme.resolveAttribute(android.R.attr.selectableItemBackground, tv, true)
+            holder.itemView.setBackgroundResource(tv.resourceId)
         }
         
         applyScaling(holder)
