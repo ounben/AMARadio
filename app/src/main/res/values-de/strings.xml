@@ -54,7 +54,7 @@
     <string name="nav_item_settings">Einstellungen</string>
     <string name="nav_item_alarm">Wecker</string>
 
-    <string name="about_text">AMARadio ist zu 100%% werbefrei und auf Privatsphäre ausgerichtet.\n\nIch habe diese App ursprünglich für meine Mutter entwickelt, um ihr ein einfaches, ehrliches Radioerlebnis ohne nervige Werbung oder Tracking zu ermöglichen. Deshalb wird AMARadio auch in Zukunft immer werbefrei bleiben – das ist mein Versprechen an sie, das ich gerne mit euch allen teile.\n\nDieses Projekt ist ein Fork des exzellenten RadioDroid von ounben. Die gesamte Codebasis wurde vollständig von Java auf Kotlin umgestellt, um sicherzustellen, dass die App modern bleibt und auch auf zukünftigen Android-Versionen bestens läuft.\n\nDiese App nutzt das freie Radiosender-Verzeichnis unter https://www.radio-browser.info .\nJeder kann Sender hinzufügen. Es funktioniert wie ein Wiki für Online-Radiosender.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nWenn dir die Software gefällt und du helfen möchtest, schick mir gerne eine E-Mail. Ich brauche wirklich jemanden mit grafischer Erfahrung, um die App schöner zu machen :) Vielleicht jemanden, der Icons oder Bilder zeichnen kann... aber auch Programmierer, die Bugs beheben oder neue Funktionen implementieren!\nAuch Ideen für neue Funktionen sind immer willkommen!\n\nDiese App ist freie Software, lizenziert unter der GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio ist zu 100% werbefrei und auf Privatsphäre ausgerichtet.\n\nIch habe diese App ursprünglich für meine Mutter entwickelt, um ihr ein einfaches, ehrliches Radioerlebnis ohne nervige Werbung oder Tracking zu ermöglichen. Deshalb wird AMARadio auch in Zukunft immer werbefrei bleiben – das ist mein Versprechen an sie, das ich gerne mit euch allen teile.\n\nDieses Projekt ist ein Fork des exzellenten RadioDroid von ounben. Die gesamte Codebasis wurde vollständig von Java auf Kotlin umgestellt, um sicherzustellen, dass die App modern bleibt und auch auf zukünftigen Android-Versionen bestens läuft.\n\nDiese App nutzt das freie Radiosender-Verzeichnis unter https://www.radio-browser.info .\nJeder kann Sender hinzufügen. Es funktioniert wie ein Wiki für Online-Radiosender.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nWenn dir die Software gefällt und du helfen möchtest, schick mir gerne eine E-Mail. Ich brauche wirklich jemanden mit grafischer Erfahrung, um die App schöner zu machen :) Vielleicht jemanden, der Icons oder Bilder zeichnen kann... aber auch Programmierer, die Bugs beheben oder neue Funktionen implementieren!\nAuch Ideen für neue Funktionen sind immer willkommen!\n\nDiese App ist freie Software, lizenziert unter der GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Version: %1$s</string>
     <string name="detail_star">Zu Favoriten hinzufügen</string>
     <string name="detail_unstar">Aus Favoriten entfernen</string>
@@ -259,7 +259,7 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">100%% werbefrei &amp; privat</string>
+    <string name="ad_free_promise">100% werbefrei &amp; privat</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
     <string name="settings_mpd_port">MPD Port</string>

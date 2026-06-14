@@ -5,6 +5,34 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.96] - 2026-06-13
+### Added
+- **New Branding "El Gato"**: Completely updated the app logo to the new "El Gato" design across the Splash screen, Toolbar, and Shortcuts.
+- **Improved UI Scaling in Settings**: All icons in the settings menu now strictly follow a 24dp base size and scale dynamically with the global "UI Scaling" preference.
+- **Visual Feedback**: Active stations in Grid View are now highlighted with a sleek **4dp orange border** for better visibility.
+- **Toolbar Styling**: Refined the main toolbar title to 18dp Bold with optimized spacing (8dp margin) to prevent cutoff at high UI scales.
+
+### Changed
+- **Feature Cleanup**: Completely **removed the "Recording" feature** (including AIDL and UI assets) to streamline the app and improve stability.
+- **Modernized Full Screen Player**: Simplified the layout by removing unnecessary bitrate/network info, focusing on centered controls and station details.
+- **System UI**: Implemented `enableEdgeToEdge` with a forced white status bar style for consistent high contrast across all themes.
+- **Unified Station Icons**: Standardized the radio placeholder icon to a consistent light gray and unified the loading logic to prevent flickering or incorrect images when scrolling.
+- **Service Management**: Optimized the background service to promote itself to the foreground only when active, improving battery life and system compliance.
+
+### Fixed
+- **Stability**: 
+    - Resolved a critical crash (`TransactionTooLargeException`) when minimizing the app with large station lists.
+    - Fixed a **StackOverflow crash** in the Alarm tab caused by decoupled listener logic.
+    - Fixed the "Black Screen" issue when expanding the full-screen player from the mini-player.
+    - Corrected foreground service handling to prevent background crashes on Android 12, 13, and 14.
+- **Localization**: 
+    - Implemented **localized country names** (e.g., "Deutschland" instead of "Germany") across the entire app.
+    - Fixed a critical crash in the Portuguese (Brazil) translation caused by a formatting error.
+    - Fixed a typo in the Splash Screen and "About" text where "100%" was incorrectly displayed as "100%%" across multiple languages.
+- **Audio Focus**: Fixed a conflict where the internal player and the service would fight over audio control, causing sudden stops.
+- **Interactivity**: Made the mini-player station icon clickable to expand the full-screen player.
+- **Search Weighted Scoring**: Improved local search results using a new weighted scoring system (Exact matches > Prefixes > Word starts).
+
 ## [0.95] - 2026-06-12
 ### Added
 - **Integrated Station Search in Filter**: You can now search for station names directly within the Advanced Filter tab, combining it with Country, Language, and Tag filters.

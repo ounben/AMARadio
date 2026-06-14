@@ -57,7 +57,7 @@
     <string name="nav_item_settings">Ajustes</string>
     <string name="nav_item_alarm">Alarme</string>
 
-    <string name="about_text">O AMARadio é 100%% livre de publicidade e focado na privacidade.\n\nOriginalmente desenvolvi este aplicativo para minha mãe, para proporcionar a ela uma experiência de rádio simples e honesta, sem anúncios irritantes ou rastreamento. É por isso que o AMARadio sempre permanecerá livre de anúncios – é uma promessa a ela, compartilhada com todos vocês.\n\nEste projeto é um fork do excelente RadioDroid de ounben. Toda a base de código foi migrada de Java para Kotlin para garantir que o aplicativo permaneça moderno e compatível com as futuras versões do Android.\n\nEste aplicativo usa o catálogo gratuito de rádios em https://www.radio-browser.info .\nTodos podem adicionar rádios. Funciona como uma wiki para rádios na rede.\n\nContato: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe você gosta da ideia e quer ajudar, fique à vontade para enviar um e-mail. Realmente preciso de alguém com experiência gráfica para tornar o aplicativo mais agradável aos olhos :) Talvez alguém que possa desenhar ícones, imagens... mas também desenvolvedores que corrijam bugs ou implementem novos recursos!\nTambém ideias para novas funcionalidades são sempre bem-vindas!\n\nEste aplicativo é de software livre licenciado sob a GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">O AMARadio é 100% livre de publicidade e focado na privacidade.\n\nOriginalmente desenvolvi este aplicativo para minha mãe, para proporcionar a ela uma experiência de rádio simples e honesta, sem anúncios irritantes ou rastreamento. É por isso que o AMARadio sempre permanecerá livre de anúncios – é uma promessa a ela, compartilhada com todos vocês.\n\nEste projeto é um fork do excelente RadioDroid de ounben. Toda a base de código foi migrada de Java para Kotlin para garantir que o aplicativo permaneça moderno e compatível com as futuras versões do Android.\n\nEste aplicativo usa o catálogo gratuito de rádios em https://www.radio-browser.info .\nTodos podem adicionar rádios. Funciona como uma wiki para rádios na rede.\n\nContato: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe você gosta da ideia e quer ajudar, fique à vontade para enviar um e-mail. Realmente preciso de alguém com experiência gráfica para tornar o aplicativo mais agradável aos olhos :) Talvez alguém que possa desenhar ícones, imagens... mas também desenvolvedores que corrijam bugs ou implementem novos recursos!\nTambém ideias para novas funcionalidades são sempre bem-vindas!\n\nEste aplicativo é de software livre licenciado sob a GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versão: %1$s</string>
     <string name="detail_star">Adicionar aos favoritos</string>
     <string name="detail_unstar">Excluir dos favoritos</string>
@@ -262,7 +262,7 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">100%% livre de publicidade e privado</string>
+    <string name="ad_free_promise">100% livre de publicidade e privado</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
     <string name="settings_mpd_port">Porta MPD</string>

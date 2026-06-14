@@ -57,7 +57,7 @@
     <string name="nav_item_settings">Pengaturan</string>
     <string name="nav_item_alarm">Alarm</string>
 
-    <string name="about_text">AMARadio adalah 100%% bebas iklan dan berfokus pada privasi.\n\nSaya awalnya mengembangkan aplikasi ini untuk ibu saya untuk memberinya pengalaman radio yang sederhana dan jujur tanpa iklan yang mengganggu atau pelacakan. Itulah sebabnya AMARadio akan selalu bebas iklan – itu adalah janji kepadanya, yang dibagikan kepada Anda semua.\n\nProyek ini adalah fork dari RadioDroid yang sangat bagus oleh ounben. Seluruh basis kode telah dimigrasikan dari Java ke Kotlin untuk memastikan aplikasi tetap modern dan kompatibel dengan versi Android di masa mendatang.\n\nAplikasi ini menggunakan direktori radio gratis di https://www.radio-browser.info .\nSemua orang bisa menambahkan stasiun radio. Bekerja seperti wiki untuk stasiun radio daring (streaming).\n\nKontak: ben@ounben.com\n\nPelacak bug: https://github.com/ounben/AMARadio/issues\n\nJika anda menyukai aplikasi ini dan ingin membantu, jangan sungkan untuk mengirim surel. Saya sangat membutuhkan seseorang dengan keahlian grafis untuk membuat desain aplikasi ini menjadi lebih baik :) Mungkin seseorang yang bisa menggambar ikon, aset gambar... tetapi juga pemrogram yang bisa memperbaiki bug, atau mengimplementasikan fitur baru!\nSaran ide-ide baru juga selalu kami hargai!\n\nAplikasi ini adalah perangkat lunak bebas di bawah naungan lisensi GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio adalah 100% bebas iklan dan berfokus pada privasi.\n\nSaya awalnya mengembangkan aplikasi ini untuk ibu saya untuk memberinya pengalaman radio yang sederhana dan jujur tanpa iklan yang mengganggu atau pelacakan. Itulah sebabnya AMARadio akan selalu bebas iklan – itu adalah janji kepadanya, yang dibagikan kepada Anda semua.\n\nProyek ini adalah fork dari RadioDroid yang sangat bagus oleh ounben. Seluruh basis kode telah dimigrasikan dari Java ke Kotlin untuk memastikan aplikasi tetap modern dan kompatibel dengan versi Android di masa mendatang.\n\nAplikasi ini menggunakan direktori radio gratis di https://www.radio-browser.info .\nSemua orang bisa menambahkan stasiun radio. Bekerja seperti wiki untuk stasiun radio daring (streaming).\n\nKontak: ben@ounben.com\n\nPelacak bug: https://github.com/ounben/AMARadio/issues\n\nJika anda menyukai aplikasi ini dan ingin membantu, jangan sungkan untuk mengirim surel. Saya sangat membutuhkan seseorang dengan keahlian grafis untuk membuat desain aplikasi ini menjadi lebih baik :) Mungkin seseorang yang bisa menggambar ikon, aset gambar... tetapi juga pemrogram yang bisa memperbaiki bug, atau mengimplementasikan fitur baru!\nSaran ide-ide baru juga selalu kami hargai!\n\nAplikasi ini adalah perangkat lunak bebas di bawah naungan lisensi GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versi: %1$s</string>
     <string name="detail_star">Tambahkan ke favorit</string>
     <string name="detail_unstar">Hapus dari favorit</string>
@@ -262,7 +262,7 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">100%% bebas iklan &amp; pribadi</string>
+    <string name="ad_free_promise">100% bebas iklan &amp; pribadi</string>
 
     <string name="settings_mpd">Daemon Pemutar Musik</string>
     <string name="settings_mpd_port">Porta MPD</string>

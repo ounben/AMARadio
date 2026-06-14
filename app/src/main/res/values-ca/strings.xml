@@ -57,7 +57,7 @@
     <string name="nav_item_settings">Configuració</string>
     <string name="nav_item_alarm">Alarma</string>
 
-    <string name="about_text">AMARadio és 100%% lliure de publicitat i centrat en la privadesa.\n\nOriginalment vaig desenvolupar aquesta aplicació per a la meva mare per oferir-li una experiència de ràdio senzilla i honesta sense anuncis molestos ni seguiment. Per això AMARadio sempre romandrà lliure d\'anuncis: és una promesa per a ella, compartida amb tots vosaltres.\n\nAquest projecte és un fork de l\'excel·lent RadioDroid per ounben. Tota la base de codi s\'ha migrat de Java a Kotlin per garantir que l\'aplicació es mantingui moderna i compatible amb les futures versions d\'Android.\n\nAquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a https://www.radio-browser.info .\nTothom hi pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia.\n\nContacte: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic. Necessitem algú amb experiència en disseny gràfic per fer que l\'aplicació sigui més agradable a la vista :) Potser algú que pugui dibuixar icones, imatges... però també programadors que arreglin errors, o desenvolupin funcionalitats!\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. http://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio és 100% lliure de publicitat i centrat en la privadesa.\n\nOriginalment vaig desenvolupar aquesta aplicació per a la meva mare per oferir-li una experiència de ràdio senzilla i honesta sense anuncis molestos ni seguiment. Per això AMARadio sempre romandrà lliure d\'anuncis: és una promesa per a ella, compartida amb tots vosaltres.\n\nAquest projecte és un fork de l\'excel·lent RadioDroid per ounben. Tota la base de codi s\'ha migrat de Java a Kotlin per garantir que l\'aplicació es mantingui moderna i compatible amb les futures versions d\'Android.\n\nAquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a https://www.radio-browser.info .\nTothom hi pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia.\n\nContacte: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic. Necessitem algú amb experiència en disseny gràfic per fer que l\'aplicació sigui més agradable a la vista :) Potser algú que pugui dibuixar icones, imatges... però també programadors que arreglin errors, o desenvolupin funcionalitats!\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. http://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versió: %1$s</string>
     <string name="detail_star">Afegir a preferides</string>
     <string name="detail_unstar">Suprimeix de preferides</string>
@@ -262,7 +262,7 @@
     <string name="media_route_menu_title">GoogleCast</string>
     <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">100%% lliure de publicitat i privat</string>
+    <string name="ad_free_promise">100% lliure de publicitat i privat</string>
 
     <string name="settings_mpd">Music Player Daemon</string>
     <string name="settings_mpd_port">Port MPD</string>

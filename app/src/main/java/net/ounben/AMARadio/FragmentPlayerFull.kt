@@ -82,6 +82,7 @@ class FragmentPlayerFull : Fragment() {
         updateUIReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
                 when (intent.action) {
+                    PlayerService.PLAYER_SERVICE_STATE_CHANGE,
                     PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
                 }
             }
@@ -134,9 +135,7 @@ class FragmentPlayerFull : Fragment() {
     }
 
     fun init() {
-        if (!initialized) {
-            fullUpdate()
-        }
+        fullUpdate()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

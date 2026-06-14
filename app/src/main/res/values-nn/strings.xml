@@ -54,7 +54,7 @@
   <string name="nav_item_settings">Innstillingar</string>
   <string name="nav_item_alarm">Varsling</string>
 
-  <string name="about_text">AMARadio er 100%% reklamefri og personvernfokusert.\n\nEg utvikla opphavleg denne appen for mor mi for å gje henne ei enkel, ærleg radiooppleving utan irriterande reklame eller sporing. Det er difor AMARadio alltid vil vera reklamefri – det er eit løfte til henne, delt med dykk alle.\n\nDette prosjektet er ein fork av den framifrå RadioDroid av ounben. Heile kodebasen har vorte migrert frå Java til Kotlin for å sikra at appen held seg moderne og kompatibel med framtidige Android-versjonar.\n\nDenne appen brukar radiokanaloversikta på https://www.radio-browser.info .\nAlle kan leggja til nye radiokanalar. Nettsida fungerer som ein wiki om radiokanalar som tilbyr strauming over nettet.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nViss du likar dette programmet og ønskjer å hjelpa til, ta gjerne kontakt med meg på e-post. Eg treng verkeleg nokon med designkompetanse for å gjera appen finare. :) Kanskje nokon som kan teikna ikon, bilete osv. Men òg programmerarar som kan retta feil eller leggja til ny funksjonalitet!\nForslag til nye funksjonar vert òg sette pris på!\n\nDenne appen er fri programvare tilgjengeleg under GPLv3-lisensen. https://www.gnu.org/licenses/gpl-3.0.html</string>
+  <string name="about_text">AMARadio er 100% reklamefri og personvernfokusert.\n\nEg utvikla opphavleg denne appen for mor mi for å gje henne ei enkel, ærleg radiooppleving utan irriterande reklame eller sporing. Det er difor AMARadio alltid vil vera reklamefri – det er eit løfte til henne, delt med dykk alle.\n\nDette prosjektet er ein fork av den framifrå RadioDroid av ounben. Heile kodebasen har vorte migrert frå Java til Kotlin for å sikra at appen held seg moderne og kompatibel med framtidige Android-versjonar.\n\nDenne appen brukar radiokanaloversikta på https://www.radio-browser.info .\nAlle kan leggja til nye radiokanalar. Nettsida fungerer som ein wiki om radiokanalar som tilbyr strauming over nettet.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nViss du likar dette programmet og ønskjer å hjelpa til, ta gjerne kontakt med meg på e-post. Eg treng verkeleg nokon med designkompetanse for å gjera appen finare. :) Kanskje nokon som kan teikna ikon, bilete osv. Men òg programmerarar som kan retta feil eller leggja til ny funksjonalitet!\nForslag til nye funksjonar vert òg sette pris på!\n\nDenne appen er fri programvare tilgjengeleg under GPLv3-lisensen. https://www.gnu.org/licenses/gpl-3.0.html</string>
   <string name="about_version">Versjon: %1$s</string>
   <string name="detail_star">Merk som favoritt</string>
   <string name="detail_unstar">Slett frå favorittar</string>
@@ -259,7 +259,7 @@
   <string name="media_route_menu_title">GoogleCast</string>
   <string name="app_id">5A97BAE4</string>
   <string name="app_name">AMARadio</string>
-  <string name="ad_free_promise">100%% reklamefri &amp; privat</string>
+  <string name="ad_free_promise">100% reklamefri &amp; privat</string>
 
   <string name="settings_mpd">Music Player Daemon</string>
   <string name="settings_mpd_port">MPD-port</string>
