@@ -79,5 +79,5 @@ This project is licensed under the **GNU General Public License v3.0**. Detailed
 
 ---
 <p align="center">
-  AMARadio - Professional Radio Streaming for Android
+  AMARadio - Professional Radio Streaming for Android.
 </p>
