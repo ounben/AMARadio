@@ -49,7 +49,7 @@ class TvChannelManager(val app: AMARadioApp) : Observer {
             setDisplayName(app.getString(R.string.app_name))
             setDescription(app.getString(R.string.app_name))
             setAppLinkIntent(Intent(app, ActivityMain::class.java))
-            AppCompatResources.getDrawable(app, R.drawable.ic_launcher)?.toBitmap()?.also { logo ->
+            AppCompatResources.getDrawable(app, R.mipmap.ic_elgato_launcher)?.toBitmap()?.also { logo ->
                 setLogo(logo)
             }
             build()

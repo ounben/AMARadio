@@ -30,8 +30,8 @@
         android:banner="@mipmap/ic_banner"
         android:name=".AMARadioApp"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/ic_elgato_launcher"
+        android:roundIcon="@mipmap/ic_elgato_launcher_round"
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme"
         android:requestLegacyExternalStorage="true"
@@ -109,7 +109,7 @@
 
         <meta-data
             android:name="com.google.android.gms.car.notification.SmallIcon"
-            android:resource="@mipmap/ic_launcher" />
+            android:resource="@mipmap/ic_elgato_launcher" />
 
     </application>
 </manifest>

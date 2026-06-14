@@ -184,7 +184,7 @@ class DataRadioStation : Parcelable {
 
     fun prepareShortcut(context: Context, cb: ShortcutReadyListener) {
         val url = if (!hasIcon()) {
-            Utils.resourceToUri(context.resources, R.drawable.ic_launcher).toString()
+            Utils.resourceToUri(context.resources, R.mipmap.ic_elgato_launcher).toString()
         } else {
             IconUrl
         }
@@ -192,7 +192,7 @@ class DataRadioStation : Parcelable {
         CoroutineScope(Dispatchers.IO).launch {
             val request = ImageRequest.Builder(context)
                 .data(url)
-                .error(R.drawable.ic_launcher)
+                .error(R.mipmap.ic_elgato_launcher)
                 .size(128, 128)
                 .transformations(RoundedCornersTransformation(12f))
                 .build()

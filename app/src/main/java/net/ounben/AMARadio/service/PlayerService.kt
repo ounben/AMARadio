@@ -186,7 +186,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         itsContext = this
         powerManager = getSystemService(POWER_SERVICE) as PowerManager
         audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
-        radioIcon = ResourcesCompat.getDrawable(resources, R.drawable.ic_launcher, null) as BitmapDrawable
+        radioIcon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_elgato_launcher, null) as? BitmapDrawable
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
         mediaSession = MediaSessionCompat(baseContext, baseContext.packageName).apply {
             setCallback(MediaSessionCallback(this@PlayerService, itsBinder))

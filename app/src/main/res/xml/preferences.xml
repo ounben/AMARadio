@@ -179,7 +179,7 @@
             android:enabled="false"
             android:key="shareapp_package"
             android:title="@string/settings_alarm_audio_player"
-            android:icon="@drawable/ic_launcher_foreground" />
+            android:icon="@mipmap/ic_elgato_launcher" />
 
         <ListPreference
             android:defaultValue="10"

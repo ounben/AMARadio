@@ -59,7 +59,7 @@
                                     android:layout_height="32dp"
                                     android:minWidth="0dp"
                                     android:scaleType="centerCrop"
-                                    android:src="@drawable/ic_cat_face"
+                                    android:src="@mipmap/ic_elgato_launcher"
                                     android:contentDescription="@null" />
 
                                 <TextView

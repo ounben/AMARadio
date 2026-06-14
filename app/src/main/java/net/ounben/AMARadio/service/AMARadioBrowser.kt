@@ -77,7 +77,7 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
 
             withContext(Dispatchers.IO) {
                 for (station in stations) {
-                    val url = if (!station.hasIcon()) Utils.resourceToUri(resources, R.drawable.ic_launcher).toString() else station.IconUrl
+                    val url = if (!station.hasIcon()) Utils.resourceToUri(resources, R.mipmap.ic_elgato_launcher).toString() else station.IconUrl
                     val request = ImageRequest.Builder(AMARadioApp)
                         .data(url)
                         .size(128, 128)
@@ -97,7 +97,7 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
             val mediaItems = ArrayList<MediaBrowserCompat.MediaItem>()
             for (station in stations) {
                 var stationIcon = stationIdToIcon[station.StationUuid]
-                if (stationIcon == null) stationIcon = BitmapFactory.decodeResource(Resources.getSystem(), R.drawable.ic_launcher)
+                if (stationIcon == null) stationIcon = BitmapFactory.decodeResource(resources, R.mipmap.ic_elgato_launcher)
                 val extras = Bundle()
                 extras.putParcelable(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationIcon)
                 extras.putParcelable(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, stationIcon)
