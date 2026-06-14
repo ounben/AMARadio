@@ -8,7 +8,9 @@ This project is a refined fork of RadioDroid, optimized for a more focused, acce
 
 ## Core Philosophy
 
-**Ad-Free and Privacy-Focused**: AMARadio was developed with the primary goal of providing a clean, honest radio experience. It contains no advertisements, no tracking, and no bloatware. This commitment to a distraction-free environment is a core principle of the project.
+**Ad-Free and Privacy-Focused**: AMARadio was developed with the primary goal of providing a clean, honest radio experience. It contains no advertisements, no tracking, and no bloatware. 
+
+Originally created as a personal project for the developer's mother to provide a simple, distraction-free way to enjoy global radio, AMARadio remains committed to these core values of transparency and accessibility for all users.
 
 ## Key Features
 
