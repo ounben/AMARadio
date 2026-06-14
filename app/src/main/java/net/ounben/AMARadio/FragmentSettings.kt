@@ -21,30 +21,54 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     private fun refreshToplevelIcons() {
         val color = Utils.getAccentColor(requireContext())
         val screen = preferenceScreen ?: return
+        val scale = UiScaler.getScaleFactor(requireContext())
+        val iconSizePx = (24 * resources.displayMetrics.density * scale).toInt()
 
-        fun tintPreference(pref: Preference) {
-            pref.icon?.mutate()?.setTint(color)
+        fun processPreference(pref: Preference) {
+            // Categories in some themes don't show icons, but we set them anyway
+            if (pref is PreferenceCategory) {
+                when (pref.key) {
+                    "pref_category_ui" -> pref.setIcon(R.drawable.ic_monitor_24dp)
+                    "pref_category_startup" -> pref.setIcon(R.drawable.ic_flight_takeoff_24dp)
+                    "pref_category_interaction" -> pref.setIcon(R.drawable.ic_touch_app_24dp)
+                    "pref_category_player" -> pref.setIcon(R.drawable.ic_play_arrow_24dp)
+                    "pref_category_alarm" -> pref.setIcon(R.drawable.ic_access_alarms_black_24dp)
+                    "pref_category_connectivity" -> pref.setIcon(R.drawable.ic_sync_black_24dp)
+                    "pref_category_mpd" -> pref.setIcon(R.drawable.ic_volume_up_24dp)
+                    "pref_category_other" -> pref.setIcon(R.drawable.ic_live_help_24dp)
+                }
+            }
+
+            pref.icon?.let { icon ->
+                // Unwrap if already processed to avoid deep nested wrappers
+                val baseIcon = if (icon is android.graphics.drawable.DrawableWrapper) {
+                    icon.drawable ?: icon
+                } else {
+                    icon
+                }
+                
+                val mutatedIcon = baseIcon.mutate()
+                mutatedIcon.setTint(color)
+                
+                // Strictly enforce the icon size to match other preference icons (24dp base)
+                val scaledIcon = object : android.graphics.drawable.DrawableWrapper(mutatedIcon) {
+                    override fun getIntrinsicWidth(): Int = iconSizePx
+                    override fun getIntrinsicHeight(): Int = iconSizePx
+                }
+                pref.icon = scaledIcon
+            }
+            
             if (pref is PreferenceGroup) {
                 for (i in 0 until pref.preferenceCount) {
-                    tintPreference(pref.getPreference(i))
+                    processPreference(pref.getPreference(i))
                 }
             }
         }
 
         findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
         
-        // Initial setup for categories (if icons are not in XML yet, though they should be)
-        findPreference<PreferenceCategory>("pref_category_ui")?.setIcon(R.drawable.ic_monitor_24dp)
-        findPreference<PreferenceCategory>("pref_category_startup")?.setIcon(R.drawable.ic_flight_takeoff_24dp)
-        findPreference<PreferenceCategory>("pref_category_interaction")?.setIcon(R.drawable.ic_touch_app_24dp)
-        findPreference<PreferenceCategory>("pref_category_player")?.setIcon(R.drawable.ic_play_arrow_24dp)
-        findPreference<PreferenceCategory>("pref_category_alarm")?.setIcon(R.drawable.ic_query_builder_black_24dp)
-        findPreference<PreferenceCategory>("pref_category_connectivity")?.setIcon(R.drawable.ic_sync_black_24dp)
-        findPreference<PreferenceCategory>("pref_category_mpd")?.setIcon(R.drawable.ic_volume_up_24dp)
-        findPreference<PreferenceCategory>("pref_category_other")?.setIcon(R.drawable.ic_live_help_24dp)
-
-        // Tint everything
-        tintPreference(screen)
+        // Process everything (tint and scale)
+        processPreference(screen)
     }
 
     private fun refreshToolbar() {
