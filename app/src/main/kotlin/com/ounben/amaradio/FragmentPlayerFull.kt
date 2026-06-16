@@ -9,7 +9,10 @@ import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
+import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +36,6 @@ class FragmentPlayerFull : Fragment() {
     }
 
     private var touchInterceptListener: TouchInterceptListener? = null
-    private var updateUIReceiver: BroadcastReceiver? = null
     private var initialized = false
     private val refreshHandler = RefreshHandler()
     private val timedUpdateTask = TimedUpdateTask(this)
@@ -79,11 +81,13 @@ class FragmentPlayerFull : Fragment() {
 
         trackHistoryRepository = AMARadioApp.trackHistoryRepository
 
-        updateUIReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                when (intent.action) {
-                    PlayerService.PLAYER_SERVICE_STATE_CHANGE,
-                    PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                AppEventManager.events.collect { intent ->
+                    when (intent.action) {
+                        PlayerService.PLAYER_SERVICE_STATE_CHANGE,
+                        PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
+                    }
                 }
             }
         }
@@ -213,19 +217,12 @@ class FragmentPlayerFull : Fragment() {
         fullUpdate()
         refreshHandler.executePeriodically(timedUpdateTask, TIMED_UPDATE_INTERVAL.toLong())
 
-        val filter = IntentFilter()
-        filter.addAction(PlayerService.PLAYER_SERVICE_TIMER_UPDATE)
-        filter.addAction(PlayerService.PLAYER_SERVICE_STATE_CHANGE)
-        filter.addAction(PlayerService.PLAYER_SERVICE_META_UPDATE)
-
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(updateUIReceiver!!, filter)
         favouriteManager.addObserver(favouritesObserver)
     }
 
     private fun stopUpdating() {
         if (view == null) return
         refreshHandler.cancel()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateUIReceiver!!)
         favouriteManager.deleteObserver(favouritesObserver)
     }
 

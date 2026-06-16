@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.ListView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ounben.amaradio.adapters.ItemAdapterStatistics
 import com.ounben.amaradio.data.DataStatistics
 import com.ounben.amaradio.interfaces.IFragmentRefreshable
@@ -37,7 +36,7 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
 
     private fun download(forceUpdate: Boolean) {
         val context = context ?: return
-        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
 
         val AMARadioApp = requireActivity().application as AMARadioApp
         val httpClient = AMARadioApp.httpClient
@@ -48,7 +47,7 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
                 Utils.downloadFeedRelative(httpClient, requireActivity(), "json/stats", forceUpdate, null)
             }
 
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
             
             if (result != null) {
                 itemAdapterStatistics?.clear()

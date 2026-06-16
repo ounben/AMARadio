@@ -5,7 +5,6 @@ import android.content.Intent
 import androidx.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ounben.amaradio.station.DataRadioStation
 import org.json.JSONArray
 import java.io.*
@@ -13,6 +12,7 @@ import java.util.*
 import org.apache.commons.text.similarity.CosineSimilarity
 import kotlinx.coroutines.*
 
+@Suppress("DEPRECATION")
 open class StationSaveManager(protected val context: Context) : Observable() {
     interface StationStatusListener {
         fun onStationStatusChanged(station: DataRadioStation, favourite: Boolean)
@@ -220,7 +220,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
     private fun refreshStationsFromServer() {
         val app = context.applicationContext as AMARadioApp
         val httpClient = app.httpClient
-        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
 
         scope.launch {
             val savedStations = ArrayList(listStations)
@@ -238,7 +238,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             save()
             setChanged()
             notifyObservers()
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
         }
     }
 

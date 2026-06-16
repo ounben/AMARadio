@@ -5,32 +5,19 @@ import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.MediaBrowserCompat
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media.MediaBrowserServiceCompat
 import com.ounben.amaradio.IPlayerService
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.utils.GetRealLinkAndPlayTask
+import kotlinx.coroutines.*
 
 class AMARadioBrowserService : MediaBrowserServiceCompat() {
     private lateinit var AMARadioBrowser: AMARadioBrowser
     private var playerServiceConnection: ServiceConnection? = null
     private var playerService: IPlayerService? = null
     private var playTask: GetRealLinkAndPlayTask? = null
-
-    private val playStationFromIdReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            val action = intent.action
-            if (MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID == action) {
-                val stationId = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_ID)
-                val station = stationId?.let { AMARadioBrowser.getStationById(it) }
-                if (station != null) {
-                    playTask?.cancel(false)
-                    playTask = GetRealLinkAndPlayTask(context, station, playerService!!)
-                    playTask!!.execute()
-                }
-            }
-        }
-    }
+    private var eventJob: Job? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -52,14 +39,26 @@ class AMARadioBrowserService : MediaBrowserServiceCompat() {
             }
         }
         bindService(anIntent, playerServiceConnection!!, BIND_AUTO_CREATE)
-        val filter = IntentFilter()
-        filter.addAction(MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID)
-        LocalBroadcastManager.getInstance(this).registerReceiver(playStationFromIdReceiver, filter)
+
+        eventJob = CoroutineScope(Dispatchers.Main).launch {
+            AppEventManager.events.collect { intent ->
+                if (MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID == intent.action) {
+                    val stationId = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_ID)
+                    val station = stationId?.let { AMARadioBrowser.getStationById(it) }
+                    if (station != null) {
+                        playTask?.cancel(false)
+                        playTask = GetRealLinkAndPlayTask(this@AMARadioBrowserService, station, playerService!!)
+                        playTask!!.execute()
+                    }
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         playerServiceConnection?.let { unbindService(it) }
+        eventJob?.cancel()
     }
 
     override fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): BrowserRoot {

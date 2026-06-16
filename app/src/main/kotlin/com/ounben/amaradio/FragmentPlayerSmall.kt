@@ -9,8 +9,12 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.launch
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.service.PauseReason
@@ -33,7 +37,6 @@ class FragmentPlayerSmall : Fragment() {
     }
 
     private var mpdClient: MPDClient? = null
-    private var updateUIReceiver: BroadcastReceiver? = null
     private var callback: Callback? = null
     private var role = Role.PLAYER
 
@@ -54,12 +57,14 @@ class FragmentPlayerSmall : Fragment() {
         mpdClient = AMARadioApp.mpdClient
         trackHistoryRepository = AMARadioApp.trackHistoryRepository
 
-        updateUIReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                when (intent.action) {
-                    PlayerService.PLAYER_SERVICE_STATE_CHANGE,
-                    PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
-                    PlayerService.PLAYER_SERVICE_BOUND -> tryPlayAtStart()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                AppEventManager.events.collect { intent ->
+                    when (intent.action) {
+                        PlayerService.PLAYER_SERVICE_STATE_CHANGE,
+                        PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
+                        PlayerService.PLAYER_SERVICE_BOUND -> tryPlayAtStart()
+                    }
                 }
             }
         }
@@ -136,18 +141,11 @@ class FragmentPlayerSmall : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val filter = IntentFilter()
-        filter.addAction(PlayerService.PLAYER_SERVICE_STATE_CHANGE)
-        filter.addAction(PlayerService.PLAYER_SERVICE_META_UPDATE)
-        filter.addAction(PlayerService.PLAYER_SERVICE_BOUND)
-
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(updateUIReceiver!!, filter)
         fullUpdate()
     }
 
     override fun onPause() {
         super.onPause()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateUIReceiver!!)
     }
 
     fun setCallback(callback: Callback?) {

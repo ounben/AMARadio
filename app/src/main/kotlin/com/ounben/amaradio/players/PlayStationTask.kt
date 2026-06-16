@@ -5,10 +5,10 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.*
 import com.ounben.amaradio.ActivityMain
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
@@ -65,7 +65,7 @@ class PlayStationTask(
 
     fun execute() {
         val ctx = contextRef.get() ?: return
-        LocalBroadcastManager.getInstance(ctx).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val AMARadioApp = ctx.applicationContext as AMARadioApp
         AMARadioApp.historyManager.add(stationToPlay)
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
@@ -88,7 +88,7 @@ class PlayStationTask(
             }
 
             val context = contextRef.get() ?: return@launch
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
 
             if (result != null) {
                 stationToPlay.playableUrl = result

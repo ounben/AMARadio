@@ -88,7 +88,6 @@ android {
 
 dependencies {
     implementation libs.androidx.media
-    implementation libs.androidx.localbroadcastmanager
     implementation libs.androidx.viewpager
     implementation libs.androidx.drawerlayout
     implementation libs.androidx.swiperefreshlayout

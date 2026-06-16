@@ -29,7 +29,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.media.app.NotificationCompat.MediaStyle
 import androidx.media.session.MediaButtonReceiver
 import androidx.preference.PreferenceManager
@@ -38,6 +37,7 @@ import coil.request.ImageRequest
 import coil.request.SuccessResult
 import kotlinx.coroutines.*
 import com.ounben.amaradio.*
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.PlayState
@@ -85,7 +85,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     private fun sendBroadCast(action: String) {
         val local = Intent()
         local.action = action
-        LocalBroadcastManager.getInstance(itsContext!!).sendBroadcast(local)
+        AppEventManager.sendEvent(local)
     }
 
     private val itsBinder: IPlayerService.Stub = object : IPlayerService.Stub() {
@@ -627,7 +627,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         }
         handler?.postDelayed(toneGeneratorStopRunnable!!, AUDIO_WARNING_DURATION.toLong())
         val broadcast = Intent(PLAYER_SERVICE_METERED_CONNECTION).apply { putExtra(PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, playerType as Parcelable) }
-        LocalBroadcastManager.getInstance(itsContext!!).sendBroadcast(broadcast)
+        AppEventManager.sendEvent(broadcast)
         updateNotification(PlayState.Paused)
     }
 
@@ -679,7 +679,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             if (state != PlayState.Paused && state != PlayState.Idle) startMeteredConnectionListener() else stopMeteredConnectionListener()
             updateNotification(state)
             val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, state as Parcelable) }
-            LocalBroadcastManager.getInstance(itsContext!!).sendBroadcast(intent)
+            AppEventManager.sendEvent(intent)
         }
     }
 

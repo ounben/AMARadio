@@ -10,10 +10,10 @@ import android.widget.Toast
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
 import androidx.fragment.app.FragmentActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.*
 import com.ounben.amaradio.*
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.alarm.TimePickerFragment
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.views.ItemListDialog
@@ -59,7 +59,7 @@ object StationActions {
     }
 
     private fun retrieveAndCopyStreamUrlToClipboard(context: Context, station: DataRadioStation) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val contextRef = WeakReference(context)
 
         scope.launch {
@@ -71,7 +71,7 @@ object StationActions {
             }
 
             val ctx = contextRef.get() ?: return@launch
-            LocalBroadcastManager.getInstance(ctx).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
 
             if (result != null) {
                 val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
@@ -115,7 +115,7 @@ object StationActions {
 
     @JvmStatic
     fun share(context: Context, station: DataRadioStation) {
-        LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val contextRef = WeakReference(context)
 
         scope.launch {
@@ -127,7 +127,7 @@ object StationActions {
             }
 
             val ctx = contextRef.get() ?: return@launch
-            LocalBroadcastManager.getInstance(ctx).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
 
             if (result != null) {
                 val share = Intent(Intent.ACTION_SEND)

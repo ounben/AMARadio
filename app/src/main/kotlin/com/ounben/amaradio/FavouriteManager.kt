@@ -6,7 +6,7 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.core.content.ContextCompat
 import com.ounben.amaradio.station.DataRadioStation
 import java.util.*
 import kotlin.math.min
@@ -23,7 +23,7 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
                 val local = Intent()
                 local.action = DataRadioStation.RADIO_STATION_LOCAL_INFO_CHAGED
                 local.putExtra(DataRadioStation.RADIO_STATION_UUID, station.StationUuid)
-                LocalBroadcastManager.getInstance(context).sendBroadcast(local)
+                AppEventManager.sendEvent(local)
             }
         }
     }

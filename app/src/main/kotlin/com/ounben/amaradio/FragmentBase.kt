@@ -7,10 +7,10 @@ import android.text.TextUtils
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.*
 
+@Suppress("DEPRECATION")
 open class FragmentBase : Fragment() {
     private var relativeUrl: String? = null
     private var urlResult: String? = null
@@ -62,11 +62,11 @@ open class FragmentBase : Fragment() {
         }
 
         val url = relativeUrl
-        if (!url.isNullOrBlank()) {
+        if (url != null) {
             val cache = Utils.getCacheFile(context, url)
             if (cache == null || forceUpdate) {
                 if (displayProgress) {
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
+                    AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
                 }
 
                 val AMARadioApp = context.applicationContext as AMARadioApp
@@ -80,7 +80,7 @@ open class FragmentBase : Fragment() {
                     }
 
                     DownloadFinished()
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+                    AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
                     
                     if (Utils.isDebug) {
                         Log.d(TAG, "Download relativeUrl finished: $url")

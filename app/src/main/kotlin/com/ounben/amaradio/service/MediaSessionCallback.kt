@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.os.RemoteException
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ounben.amaradio.IPlayerService
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.utils.GetRealLinkAndPlayTask
 import com.ounben.amaradio.service.PauseReason
@@ -79,7 +79,7 @@ class MediaSessionCallback(private val context: Context, private val playerServi
         if (stationId.isNotEmpty()) {
             val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
             intent.putExtra(EXTRA_STATION_ID, stationId)
-            LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+            AppEventManager.sendEvent(intent)
         }
     }
 

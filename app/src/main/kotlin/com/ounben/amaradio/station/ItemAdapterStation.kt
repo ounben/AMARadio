@@ -10,7 +10,6 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.FragmentActivity
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -22,6 +21,7 @@ import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.utils.*
 import com.ounben.amaradio.views.TagsView
+import kotlinx.coroutines.*
 import java.util.*
 
 open class ItemAdapterStation(
@@ -50,7 +50,7 @@ open class ItemAdapterStation(
     private var supportsStationRemoval = false
     private var shouldLoadIcons = false
     private var refreshable: IAdapterRefreshable? = null
-    private var updateUIReceiver: BroadcastReceiver? = null
+    private var eventJob: Job? = null
     private var expandedPosition = -1
     var playingStationPosition = -1
     protected val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp)
@@ -102,12 +102,8 @@ open class ItemAdapterStation(
     }
 
     init {
-        val filterIntentFilter = IntentFilter()
-        filterIntentFilter.addAction(PlayerService.PLAYER_SERVICE_META_UPDATE)
-        filterIntentFilter.addAction(DataRadioStation.RADIO_STATION_LOCAL_INFO_CHAGED)
-        updateUIReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent?) {
-                if (intent == null) return
+        eventJob = CoroutineScope(Dispatchers.Main).launch {
+            AppEventManager.events.collect { intent ->
                 when (intent.action) {
                     PlayerService.PLAYER_SERVICE_META_UPDATE -> highlightCurrentStation()
                     DataRadioStation.RADIO_STATION_LOCAL_INFO_CHAGED -> {
@@ -117,7 +113,6 @@ open class ItemAdapterStation(
                 }
             }
         }
-        LocalBroadcastManager.getInstance(fragmentActivity).registerReceiver(updateUIReceiver!!, filterIntentFilter)
     }
 
     fun enableItemRemoval(recyclerView: RecyclerView) {
@@ -326,7 +321,7 @@ open class ItemAdapterStation(
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        LocalBroadcastManager.getInstance(fragmentActivity).unregisterReceiver(updateUIReceiver!!)
+        eventJob?.cancel()
     }
 
     fun setFilterListener(filterListener: FilterListener) {

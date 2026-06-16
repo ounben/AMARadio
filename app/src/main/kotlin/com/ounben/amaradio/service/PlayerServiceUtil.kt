@@ -11,10 +11,10 @@ import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import coil.load
 import coil.request.CachePolicy
 import com.ounben.amaradio.IPlayerService
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
@@ -94,7 +94,7 @@ object PlayerServiceUtil {
                 itsPlayerService = IPlayerService.Stub.asInterface(binder)
                 val local = Intent()
                 local.action = PlayerService.PLAYER_SERVICE_BOUND
-                mainContext?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(local) }
+                AppEventManager.sendEvent(local)
             }
 
             override fun onServiceDisconnected(className: ComponentName) {

@@ -13,10 +13,14 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.LiveData
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.launch
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.players.mpd.MPDClient
@@ -34,7 +38,6 @@ class PlayerSelectorDialog() : BottomSheetDialogFragment() {
 
     private lateinit var mpdClient: MPDClient
     private var stationToPlay: DataRadioStation? = null
-    private var updateUIReceiver: BroadcastReceiver? = null
     private var recyclerViewServers: RecyclerView? = null
     private var playerSelectorAdapter: PlayerSelectorAdapter? = null
     private lateinit var serversRepository: MPDServersRepository
@@ -85,13 +88,17 @@ class PlayerSelectorDialog() : BottomSheetDialogFragment() {
         btnAddMPDServer?.setOnClickListener { editOrAddServer(null) }
         val servers: LiveData<List<MPDServerData>> = serversRepository.allServers
         servers.observe(viewLifecycleOwner) { mpdServers -> playerSelectorAdapter?.setEntries(mpdServers) }
-        updateUIReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
-                if (PlayerService.PLAYER_SERVICE_STATE_CHANGE == intent.action) {
-                    playerSelectorAdapter?.notifyAMARadioPlaybackStateChanged()
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                AppEventManager.events.collect { intent ->
+                    if (PlayerService.PLAYER_SERVICE_STATE_CHANGE == intent.action) {
+                        playerSelectorAdapter?.notifyAMARadioPlaybackStateChanged()
+                    }
                 }
             }
         }
+
         return view
     }
 
@@ -100,16 +107,12 @@ class PlayerSelectorDialog() : BottomSheetDialogFragment() {
         if (mpdClient.isMpdEnabled) {
             mpdClient.enableAutoUpdate()
         }
-        val filter = IntentFilter()
-        filter.addAction(PlayerService.PLAYER_SERVICE_STATE_CHANGE)
-        LocalBroadcastManager.getInstance(requireContext()).registerReceiver(updateUIReceiver!!, filter)
         updateEnableMpdButton()
     }
 
     override fun onPause() {
         super.onPause()
         mpdClient.disableAutoUpdate()
-        LocalBroadcastManager.getInstance(requireContext()).unregisterReceiver(updateUIReceiver!!)
     }
 
     private fun updateEnableMpdButton() {

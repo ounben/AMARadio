@@ -23,7 +23,6 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -356,9 +355,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onDestroy() {
         scope.cancel()
         super.onDestroy()
-        if (!PlayerServiceUtil.isNotificationActive()) {
-            PlayerServiceUtil.shutdownService()
-        }
     }
 
     override fun onPause() {
@@ -366,7 +362,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (Utils.isDebug) {
             Log.d(TAG, "PAUSED")
         }
-        broadcastReceiver?.let { LocalBroadcastManager.getInstance(this).unregisterReceiver(it) }
         super.onPause()
         if (PlayerServiceUtil.getPlayerState() == PlayState.Idle) {
             PlayerServiceUtil.shutdownService()
@@ -839,7 +834,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        LocalBroadcastManager.getInstance(this).sendBroadcast(Intent(ACTION_HIDE_LOADING))
+        AppEventManager.sendEvent(Intent(ACTION_HIDE_LOADING))
         invalidateOptionsMenu()
         checkMenuItems()
 
@@ -927,13 +922,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun setupBroadcastReceiver() {
-        val filter = IntentFilter()
-        filter.addAction(ACTION_HIDE_LOADING)
-        filter.addAction(ACTION_SHOW_LOADING)
-        filter.addAction(PlayerService.PLAYER_SERVICE_STATE_CHANGE)
-        filter.addAction(PlayerService.PLAYER_SERVICE_METERED_CONNECTION)
-        broadcastReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context, intent: Intent) {
+        scope.launch {
+            AppEventManager.events.collect { intent ->
                 when (intent.action) {
                     ACTION_HIDE_LOADING -> hideLoadingIcon()
                     ACTION_SHOW_LOADING -> showLoadingIcon()
@@ -957,7 +947,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                                     }
                                 }
                             }
-                            else -> Log.e(TAG, "broadcastReceiver unexpected PlayerType '$playerType'")
+                            else -> Log.e(TAG, "eventManager unexpected PlayerType '$playerType'")
                         }
                     }
                     PlayerService.PLAYER_SERVICE_STATE_CHANGE -> {
@@ -971,7 +961,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 }
             }
         }
-        LocalBroadcastManager.getInstance(this).registerReceiver(broadcastReceiver!!, filter)
     }
 
     private fun showLoadingIcon() {

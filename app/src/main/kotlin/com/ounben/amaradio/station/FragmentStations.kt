@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.ounben.amaradio.*
+import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.utils.CustomFilter
 import java.util.*
@@ -145,7 +145,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
 
             adapter.setFilterListener { searchStatus ->
                 layoutError?.visibility = if (searchStatus == StationsFilter.SearchStatus.ERROR) View.VISIBLE else View.GONE
-                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(android.content.Intent(ActivityMain.ACTION_HIDE_LOADING))
+                AppEventManager.sendEvent(android.content.Intent(ActivityMain.ACTION_HIDE_LOADING))
                 swipeRefreshLayout?.isRefreshing = false
             }
 
@@ -189,7 +189,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         if (rvStations != null && searchEnabled) {
             Log.d("STATIONS", "query a = $query")
             if (!TextUtils.isEmpty(query)) {
-                context?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING)) }
+                AppEventManager.sendEvent(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING))
             }
 
             stationsFilter?.setSearchStyle(searchStyle)

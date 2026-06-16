@@ -8,9 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
@@ -22,6 +19,7 @@ import com.ounben.amaradio.station.StationsFilter
 import kotlinx.coroutines.*
 import java.util.*
 
+@Suppress("DEPRECATION")
 class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private lateinit var rvStations: RecyclerView
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -131,8 +129,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
             }
 
             downloadFinished()
-            if (context != null)
-                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
             
             if (Utils.isDebug) {
                 Log.d(TAG, "Download finished")
