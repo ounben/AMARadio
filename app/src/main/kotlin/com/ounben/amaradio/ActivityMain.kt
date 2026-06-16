@@ -101,9 +101,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Utils.getThemeResId(this))
-        enableEdgeToEdge(
-            statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
-        )
+        // enableEdgeToEdge(
+        //     statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
+        // )
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
@@ -129,21 +129,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         Log.d(TAG, "FilesDir: " + filesDir.absolutePath)
         Log.d(TAG, "CacheDir: " + cacheDir.absolutePath)
-        try {
-            val dir = File(filesDir.absolutePath)
-            if (dir.isDirectory) {
-                dir.list()?.forEach { aChildren ->
-                    if (BuildConfig.DEBUG) {
-                        Log.d(TAG, "delete file: $aChildren")
-                    }
-                    try {
-                        File(dir, aChildren).delete()
-                    } catch (e: Exception) {
-                    }
-                }
-            }
-        } catch (e: Exception) {
-        }
 
         val myToolbar: Toolbar = findViewById(R.id.my_awesome_toolbar)
         setSupportActionBar(myToolbar)

@@ -66,7 +66,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val x = inflater.inflate(R.layout.layout_tabs, null)
+        val x = inflater.inflate(R.layout.layout_tabs, container, false)
         val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
         val vp = x.findViewById<ViewPager>(R.id.viewpager)
         viewPager = vp
