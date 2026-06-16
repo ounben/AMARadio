@@ -59,7 +59,7 @@
             </intent-filter>
         </activity>
         <service
-            android:name="net.ounben.AMARadio.service.PlayerService"
+            android:name="com.ounben.amaradio.service.PlayerService"
             android:exported="true"
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
@@ -68,7 +68,7 @@
         </service>
 
         <service
-            android:name="net.ounben.AMARadio.service.AMARadioBrowserService"
+            android:name="com.ounben.amaradio.service.AMARadioBrowserService"
             android:exported="true"
             tools:ignore="ExportedService">
             <intent-filter>
@@ -77,7 +77,7 @@
         </service>
 
         <receiver
-            android:name="net.ounben.AMARadio.alarm.AlarmReceiver"
+            android:name="com.ounben.amaradio.alarm.AlarmReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>
@@ -95,7 +95,7 @@
         </receiver>
 
         <receiver
-            android:name="net.ounben.AMARadio.BootReceiver"
+            android:name="com.ounben.amaradio.BootReceiver"
             android:exported="true"
             android:enabled="true">
             <intent-filter>

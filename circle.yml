@@ -14,7 +14,7 @@ machine:
     GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1000m -XX:+HeapDumpOnOutOfMemoryError"'
     GRADLE_HOME: ~/g/gradle-2.10
     PATH: ~/g/gradle-2.10/bin:$PATH
-    CLASS_P: net.ounben.AMARadio
+    CLASS_P: com.ounben.amaradio
     START_INTENT_P: .ActivityMain
 dependencies:
   cache_directories:

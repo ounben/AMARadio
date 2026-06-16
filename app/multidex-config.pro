@@ -1,1 +1,1 @@
--keep class net.ounben.AMARadio.tests.** { *; }
+-keep class com.ounben.amaradio.tests.** { *; }

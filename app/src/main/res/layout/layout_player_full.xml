@@ -13,7 +13,7 @@
         android:layout_height="1dp"
         android:background="?android:attr/dividerVertical" />
 
-    <net.ounben.AMARadio.views.RecyclerAwareNestedScrollView
+    <com.ounben.amaradio.views.RecyclerAwareNestedScrollView
         android:id="@+id/scrollViewContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -95,7 +95,7 @@
                     android:minLines="1"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
-                <net.ounben.AMARadio.views.TagsView
+                <com.ounben.amaradio.views.TagsView
                     android:id="@+id/viewTags"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/space" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </net.ounben.AMARadio.views.RecyclerAwareNestedScrollView>
+    </com.ounben.amaradio.views.RecyclerAwareNestedScrollView>
 
     <View
         android:id="@+id/dividerBottom"
