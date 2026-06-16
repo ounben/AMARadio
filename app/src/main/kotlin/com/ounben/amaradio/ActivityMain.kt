@@ -460,7 +460,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             
             // Also ensure the query text view is centered
             val searchText = mSearchView?.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
-            searchText?.gravity = android.view.Gravity.CENTER_VERTICAL
+            searchText?.gravity = Gravity.CENTER_VERTICAL
         }
 
         if (isSearchActive) {

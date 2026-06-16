@@ -38,12 +38,6 @@ open class FragmentBase : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        // We do NOT save urlResult here because it can be huge (TransactionTooLargeException).
-        // The data will be reloaded from cache or network when restored.
-    }
-
     override fun onDestroy() {
         downloadJob?.cancel()
         scope.cancel()

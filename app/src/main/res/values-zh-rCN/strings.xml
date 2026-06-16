@@ -57,7 +57,7 @@
     <string name="nav_item_settings">设置</string>
     <string name="nav_item_alarm">闹钟</string>
 
-    <string name="about_text">AMARadio 100% 无广告且注重隐私。\n\n我最初为我的母亲开发了这个应用程序，旨在为她提供一个简单、诚实的收音机体验，没有烦人的广告或跟踪。这就是为什么 AMARadio 将始终保持无广告 – 这是对她的承诺，并与你们所有人分享。\n\n此项目是基于 ounben 开发的优秀应用 RadioDroid 的分支。整个代码库已从 Java 迁移到 Kotlin，以确保应用保持现代性并兼容未来的 Android 版本。\n\n此程序使用位于 https://www.radio-browser.info 的免费广播电台目录。\n任何人都可以添加电台到目录中，就像一个在线（流媒体）广播电台的维基一样。\n\n联系：ben@ounben.com\n\n漏洞跟踪：https://github.com/ounben/AMARadio/issues\n\n如果您喜欢此软件并愿意提供帮助，敬请给本人发送邮件，我真的需要有绘图经验的朋友来让这个程序变得更美观 :)\n或许哪位朋友会画图标、图片... 或者哪位程序员会修复漏洞，或者开发新功能！\n关于新功能的建议也一向非常感谢！\n\n此程序是在 GPLv3 授权下的免费软件。https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio 100% 无广告且注重隐私。\n\n我最初为我的母亲开发了这个应用程序，旨在为她提供一个简单、诚实的收音机体验，没有烦人的广告或跟踪。这就是为什么 AMARadio 将始终保持无广告 – 这是对她的承诺，并与你们所有人分享。\n\n此项目是基于 https://github.com/segler-alex/RadioDroid 开发的优秀应用的分支。整个代码库已从 Java 迁移到 Kotlin，以确保应用保持现代性并兼容未来的 Android 版本。\n\n源代码可在以下地址获得：https://github.com/ounben/AMARadio\n\n此程序使用位于 https://www.radio-browser.info 的免费广播电台目录。\n任何人都可以添加电台。它就像一个在线广播电台的维基一样。\n\n联系：ben@ounben.com\n\n漏洞跟踪：https://github.com/ounben/AMARadio/issues\n\n如果您喜欢此软件并愿意提供帮助，请随时给我发送电子邮件。\n关于新功能的建议也一向非常感谢！\n\n此程序是在 GPLv3 授权下的免费软件。https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">版本：%1$s</string>
     <string name="detail_star">添加到收藏</string>
     <string name="detail_unstar">从收藏删除</string>
