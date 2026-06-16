@@ -9,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.preference.PreferenceManager
-import com.ounben.amaradio.BuildConfig
 import kotlinx.coroutines.*
 
 open class FragmentBase : Fragment() {
@@ -58,7 +57,7 @@ open class FragmentBase : Fragment() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val showBroken = sharedPref.getBoolean("show_broken", false)
 
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "Download relativeUrl: $relativeUrl")
         }
 
@@ -70,7 +69,7 @@ open class FragmentBase : Fragment() {
                     LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_SHOW_LOADING))
                 }
 
-                val AMARadioApp = requireActivity().application as AMARadioApp
+                val AMARadioApp = context.applicationContext as AMARadioApp
                 val httpClient = AMARadioApp.httpClient
 
                 downloadJob = scope.launch {
@@ -83,12 +82,12 @@ open class FragmentBase : Fragment() {
                     DownloadFinished()
                     LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
                     
-                    if (BuildConfig.DEBUG) {
+                    if (Utils.isDebug) {
                         Log.d(TAG, "Download relativeUrl finished: $url")
                     }
 
                     if (result != null) {
-                        if (BuildConfig.DEBUG) {
+                        if (Utils.isDebug) {
                             Log.d(TAG, "Download relativeUrl OK: $url")
                         }
                         urlResult = result

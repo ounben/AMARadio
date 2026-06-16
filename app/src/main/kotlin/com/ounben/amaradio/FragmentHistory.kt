@@ -19,7 +19,6 @@ import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.interfaces.IAdapterRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.StationsFilter
-import com.ounben.amaradio.BuildConfig
 import kotlinx.coroutines.*
 import java.util.*
 
@@ -34,19 +33,20 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private var lastQuery: String = ""
 
     private fun onStationClick(theStation: DataRadioStation) {
-        val AMARadioApp = requireActivity().application as AMARadioApp
-        Utils.showPlaySelection(AMARadioApp, theStation, requireActivity().supportFragmentManager)
+        val ctx = context ?: return
+        val AMARadioApp = ctx.applicationContext as AMARadioApp
+        Utils.showPlaySelection(AMARadioApp, theStation, parentFragmentManager)
 
         RefreshListGui()
         rvStations.smoothScrollToPosition(0)
     }
 
     override fun RefreshListGui() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "refreshing the stations list.")
+        if (Utils.isDebug) Log.d(TAG, "refreshing the stations list.")
 
         val adapter = rvStations.adapter as? ItemAdapterStation
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "stations count: ${historyManager.listStations.size}")
+        if (Utils.isDebug) Log.d(TAG, "stations count: ${historyManager.listStations.size}")
 
         adapter?.updateList(null, historyManager.listStations)
         if (lastQuery.isNotEmpty()) {
@@ -103,7 +103,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "onRefresh called from SwipeRefreshLayout")
             }
             RefreshDownloadList()
@@ -115,7 +115,8 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     }
 
     private fun RefreshDownloadList() {
-        val AMARadioApp = requireActivity().application as AMARadioApp
+        val ctx = context ?: return
+        val AMARadioApp = ctx.applicationContext as AMARadioApp
         val httpClient = AMARadioApp.httpClient
         val listUUids = ArrayList<String>()
         for (station in historyManager.listStations) {
@@ -126,19 +127,19 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
         downloadJob?.cancel()
         downloadJob = scope.launch {
             val result = withContext(Dispatchers.IO) {
-                Utils.getStationsByUuid(httpClient, requireActivity(), listUUids)
+                Utils.getStationsByUuid(httpClient, ctx, listUUids)
             }
 
             downloadFinished()
             if (context != null)
                 LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(Intent(ActivityMain.ACTION_HIDE_LOADING))
             
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "Download finished")
             }
 
             if (result != null) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d(TAG, "Download OK")
                 }
                 Log.d(TAG, "Found items: " + result.size)

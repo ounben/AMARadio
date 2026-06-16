@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.widget.SwitchCompat
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.Utils
 import java.util.*
 
 class ItemAdapterRadioAlarm(context: Context?) : ArrayAdapter<DataRadioStationAlarm>(context!!, R.layout.list_item_alarm) {
@@ -43,7 +43,7 @@ class ItemAdapterRadioAlarm(context: Context?) : ArrayAdapter<DataRadioStationAl
             s.setOnCheckedChangeListener(null)
             s.isChecked = aData.enabled
             s.setOnCheckedChangeListener { _, isChecked ->
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("ALARM", "new state:$isChecked")
                 }
                 ram?.setEnabled(aData.id, isChecked)

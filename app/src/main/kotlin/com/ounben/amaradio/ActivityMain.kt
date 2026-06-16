@@ -45,7 +45,6 @@ import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationsFilter
-import com.ounben.amaradio.BuildConfig
 import android.app.TimePickerDialog
 import android.content.pm.PackageManager
 import android.widget.TimePicker
@@ -334,7 +333,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "on request permissions result: $requestCode")
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -364,7 +363,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onPause() {
         sharedPref.edit { putInt("last_selectedMenuItem", selectedMenuItem) }
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "PAUSED")
         }
         broadcastReceiver?.let { LocalBroadcastManager.getInstance(this).unregisterReceiver(it) }
@@ -413,7 +412,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onResume() {
         super.onResume()
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "RESUMED")
         }
         setupBroadcastReceiver()

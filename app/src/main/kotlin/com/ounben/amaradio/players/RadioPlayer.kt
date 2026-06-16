@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.*
 import android.util.Log
 import androidx.preference.PreferenceManager
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
@@ -40,7 +39,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         override fun run() {
             val bufferTimeMs = currentPlayer.bufferedMs
             playerListener?.onBufferedTimeUpdate(bufferTimeMs)
-            if (BuildConfig.DEBUG) Log.d(TAG, "buffered $bufferTimeMs ms.")
+            if (Utils.isDebug) Log.d(TAG, "buffered $bufferTimeMs ms.")
             playerThreadHandler.postDelayed(this, 2000)
         }
     }
@@ -92,7 +91,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             if (playState == PlayState.Idle || playState == PlayState.Paused) return@post
             val audioSessionId = audioSessionId
             currentPlayer.pause()
-            if (BuildConfig.DEBUG) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
             setState(PlayState.Paused, audioSessionId)
         }
     }
@@ -103,7 +102,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         playerThreadHandler.post {
             val audioSessionId = audioSessionId
             currentPlayer.stop()
-            if (BuildConfig.DEBUG) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
             setState(PlayState.Idle, audioSessionId)
         }
     }
@@ -130,9 +129,9 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     private fun setState(state: PlayState, audioSessionId: Int) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "set state '${state.name}'")
+        if (Utils.isDebug) Log.d(TAG, "set state '${state.name}'")
         if (playState == state) return
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             if (state == PlayState.Playing) {
                 playerThreadHandler.removeCallbacks(bufferCheckRunnable)
                 playerThreadHandler.post(bufferCheckRunnable)

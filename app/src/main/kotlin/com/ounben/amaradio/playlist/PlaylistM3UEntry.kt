@@ -1,7 +1,7 @@
 package com.ounben.amaradio.playlist
 
 import android.util.Log
-import com.ounben.amaradio.BuildConfig
+import com.ounben.amaradio.Utils
 
 class PlaylistM3UEntry {
     var header: String? = null
@@ -26,7 +26,7 @@ class PlaylistM3UEntry {
     private fun decode() {
         val h = header ?: return
         if (h.startsWith(EXTINF)) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "found EXTINF:$h")
+            if (Utils.isDebug) Log.d(TAG, "found EXTINF:$h")
             val attributes = h.substring(EXTINF.length)
             val sep = attributes.indexOf(",")
             if (sep != -1) {
@@ -35,7 +35,7 @@ class PlaylistM3UEntry {
                 title = attributes.substring(sep + 1)
             }
         } else if (h.startsWith(STREAMINF)) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "found STREAMINFO:$h")
+            if (Utils.isDebug) Log.d(TAG, "found STREAMINFO:$h")
             isStreamInformation = true
             val attributes = h.substring(STREAMINF.length)
             val attributesList = attributes.split(",")

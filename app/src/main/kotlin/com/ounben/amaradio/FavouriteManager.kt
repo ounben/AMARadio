@@ -8,7 +8,6 @@ import android.content.pm.ShortcutManager
 import android.os.Build
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.BuildConfig
 import java.util.*
 import kotlin.math.min
 
@@ -52,7 +51,7 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
     }
 
     fun updateShortcuts() {
-        if (Build.VERSION.SDK_INT >= 25 && !BuildConfig.IS_TESTING.get()) {
+        if (Build.VERSION.SDK_INT >= 25 && !Utils.isTesting()) {
             val number = min(listStations.size, ActivityMain.MAX_DYNAMIC_LAUNCHER_SHORTCUTS)
             val setDynamicAppLauncherShortcuts = SetDynamicAppLauncherShortcuts(number)
             for (i in 0 until number) {

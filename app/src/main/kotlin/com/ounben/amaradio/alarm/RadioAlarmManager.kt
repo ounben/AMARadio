@@ -9,8 +9,8 @@ import android.preference.PreferenceManager
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.Utils
 import java.util.*
 
 class RadioAlarmManager(private val context: Context) {
@@ -30,7 +30,7 @@ class RadioAlarmManager(private val context: Context) {
     }
 
     fun add(station: DataRadioStation, hour: Int, minute: Int) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("ALARM", "added station:${station.Name}")
         }
         val alarm = DataRadioStationAlarm()
@@ -54,7 +54,7 @@ class RadioAlarmManager(private val context: Context) {
         while (!checkIdFree(i)) {
             i++
         }
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("ALARM", "new free id:$i")
         }
         return i
@@ -74,7 +74,7 @@ class RadioAlarmManager(private val context: Context) {
         val editor = sharedPref.edit()
         var items = ""
         for (alarm in list) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d("ALARM", "save item:${alarm.id}/${alarm.station?.Name}")
             }
             editor.putString("alarm.${alarm.id}.station", alarm.station?.toJson().toString())
@@ -98,14 +98,14 @@ class RadioAlarmManager(private val context: Context) {
 
     fun load() {
         list.clear()
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("ALARM", "load()")
         }
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val ids = sharedPref.getString("alarm.ids", "")
         if (!ids.isNullOrEmpty()) {
             val idsArr = ids.split(",").toTypedArray()
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d("ALARM", "load() - ${idsArr.size}")
             }
             for (id in idsArr) {
@@ -173,7 +173,7 @@ class RadioAlarmManager(private val context: Context) {
             // if new calendar is in the past, move it 1 day ahead
             // add 1 min, to ignore already fired events
             if (calendar.timeInMillis < System.currentTimeMillis() + 60) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("ALARM", "moved ahead one day")
                 }
                 calendar.timeInMillis = calendar.timeInMillis + ONE_DAY_IN_MILLIS
@@ -191,12 +191,12 @@ class RadioAlarmManager(private val context: Context) {
             Log.d("ALARM", "started:$alarmId ${calendar.get(Calendar.DAY_OF_WEEK)} ${calendar.get(Calendar.DAY_OF_MONTH)}.${calendar.get(Calendar.MONTH)} ${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
             
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("ALARM", "START setAlarmClock")
                 }
                 alarmMgr.setAlarmClock(AlarmManager.AlarmClockInfo(calendar.timeInMillis, alarmIntent), alarmIntent)
             } else {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("ALARM", "START setExact")
                 }
                 alarmMgr.setExact(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, alarmIntent)
@@ -207,7 +207,7 @@ class RadioAlarmManager(private val context: Context) {
     fun stop(alarmId: Int) {
         val alarm = getById(alarmId)
         if (alarm != null) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d("ALARM", "stopped:$alarmId")
             }
             val intent = Intent(context, AlarmReceiver::class.java)
@@ -264,7 +264,7 @@ class RadioAlarmManager(private val context: Context) {
     fun resetAllAlarms() {
         for (alarm in list) {
             if (alarm.enabled) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("ALARM", "started alarm with id:${alarm.id}")
                 }
                 start(alarm.id)

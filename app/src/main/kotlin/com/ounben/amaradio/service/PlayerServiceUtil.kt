@@ -14,9 +14,9 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import coil.load
 import coil.request.CachePolicy
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.station.DataRadioStation
@@ -69,7 +69,7 @@ object PlayerServiceUtil {
     fun shutdownService() {
         mainContext?.let { context ->
             try {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("PlayerServiceUtil", "PlayerServiceUtil: shutdownService")
                 }
                 val anIntent = Intent(context, PlayerService::class.java)
@@ -78,7 +78,7 @@ object PlayerServiceUtil {
                 itsPlayerService = null
                 serviceConnection = null
             } catch (e: Exception) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("PlayerServiceUtil", "PlayerServiceUtil: shutdownService E001:${e.message}")
                 }
             }
@@ -88,7 +88,7 @@ object PlayerServiceUtil {
     private fun getServiceConnection(): ServiceConnection {
         return object : ServiceConnection {
             override fun onServiceConnected(className: ComponentName, binder: IBinder) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("PLAYER", "Service came online")
                 }
                 itsPlayerService = IPlayerService.Stub.asInterface(binder)
@@ -98,7 +98,7 @@ object PlayerServiceUtil {
             }
 
             override fun onServiceDisconnected(className: ComponentName) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d("PLAYER", "Service offline")
                 }
                 mainContext?.let { unBind(it) }

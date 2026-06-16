@@ -167,7 +167,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 seconds = millisUntilFinished / 1000
-                if (BuildConfig.DEBUG) Log.d(TAG, "$seconds")
+                if (Utils.isDebug) Log.d(TAG, "$seconds")
                 sendBroadCast(PLAYER_SERVICE_TIMER_UPDATE)
             }
             override fun onFinish() {
@@ -212,7 +212,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     override fun onDestroy() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "PlayService should be destroyed.")
+        if (Utils.isDebug) Log.d(TAG, "PlayService should be destroyed.")
         stop()
         mediaSession?.release()
         radioPlayer?.destroy()
@@ -302,7 +302,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     fun pause(reason: PauseReason) {
-        if (BuildConfig.DEBUG) Log.d(TAG, "pausing playback, reason $reason")
+        if (Utils.isDebug) Log.d(TAG, "pausing playback, reason $reason")
         this.pauseReason = reason
         forceStopAudioWarning()
         if (reason == PauseReason.METERED_CONNECTION) lastMeteredConnectionWarningTime = System.currentTimeMillis()
@@ -331,7 +331,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     fun resume() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "resuming playback.")
+        if (Utils.isDebug) Log.d(TAG, "resuming playback.")
         forceStopAudioWarning()
         var bypass = false
         if (pauseReason == PauseReason.METERED_CONNECTION) {
@@ -355,7 +355,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     fun stop() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "stopping playback.")
+        if (Utils.isDebug) Log.d(TAG, "stopping playback.")
         pauseReason = PauseReason.NONE
         lastMeteredConnectionWarningTime = 0
         notificationIsActive = false
@@ -397,7 +397,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
 
     private fun enableMediaSession() {
         if (mediaSession?.isActive == false) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "enabling media session.")
+            if (Utils.isDebug) Log.d(TAG, "enabling media session.")
             registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
             mediaSession?.isActive = true
             setMediaPlaybackState(PlaybackStateCompat.STATE_NONE)
@@ -406,14 +406,14 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
 
     private fun disableMediaSession() {
         if (mediaSession?.isActive == true) {
-            if (BuildConfig.DEBUG) Log.d(TAG, "disabling media session.")
+            if (Utils.isDebug) Log.d(TAG, "disabling media session.")
             mediaSession?.isActive = false
             unregisterReceiver(becomingNoisyReceiver)
         }
     }
 
     private fun acquireAudioFocus(): Int {
-        if (BuildConfig.DEBUG) Log.d(TAG, "acquiring audio focus.")
+        if (Utils.isDebug) Log.d(TAG, "acquiring audio focus.")
         val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val playbackAttributes = AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_MEDIA)
@@ -429,7 +429,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
             @Suppress("DEPRECATION")
             audioManager!!.requestAudioFocus(afChangeListener, AudioManager.STREAM_MUSIC, AudioManager.AUDIOFOCUS_GAIN)
         }
-        if (BuildConfig.DEBUG) Log.d(TAG, "audio focus result: $result")
+        if (Utils.isDebug) Log.d(TAG, "audio focus result: $result")
         if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
             Log.e(TAG, "acquiring audio focus failed!")
             toastOnUi(R.string.error_grant_audiofocus)
@@ -438,7 +438,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     private fun releaseAudioFocus() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "releasing audio focus.")
+        if (Utils.isDebug) Log.d(TAG, "releasing audio focus.")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             audioFocusRequest?.let { audioManager?.abandonAudioFocusRequest(it) }
         } else {
@@ -448,7 +448,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     fun acquireWakeLockAndWifiLock() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "acquiring wake lock and wifi lock.")
+        if (Utils.isDebug) Log.d(TAG, "acquiring wake lock and wifi lock.")
         if (wakeLock == null) wakeLock = powerManager!!.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "PlayerService:")
         if (!wakeLock!!.isHeld) wakeLock!!.acquire()
         val wm = itsContext!!.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager?
@@ -461,7 +461,7 @@ class PlayerService : Service(), RadioPlayer.PlayerListener {
     }
 
     private fun releaseWakeLockAndWifiLock() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "releasing wake lock and wifi lock.")
+        if (Utils.isDebug) Log.d(TAG, "releasing wake lock and wifi lock.")
         wakeLock?.let { if (it.isHeld) it.release() }
         wakeLock = null
         wifiLock?.let { if (it.isHeld) it.release() }

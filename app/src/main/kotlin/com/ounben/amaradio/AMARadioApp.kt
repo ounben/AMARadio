@@ -75,6 +75,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
+        Utils.init(this)
 
         connectionPool = ConnectionPool()
 
@@ -112,7 +113,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             .connectTimeout(10, TimeUnit.SECONDS)
             .writeTimeout(10, TimeUnit.SECONDS)
             .readTimeout(10, TimeUnit.SECONDS)
-            .addInterceptor(UserAgentInterceptor("AMARadio/" + BuildConfig.VERSION_NAME))
+            .addInterceptor(UserAgentInterceptor("AMARadio/" + resources.getString(R.string.version_name)))
 
         httpClient = builder.build()
     }

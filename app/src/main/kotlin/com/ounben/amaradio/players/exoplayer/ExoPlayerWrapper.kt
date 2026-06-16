@@ -19,7 +19,6 @@ import androidx.media3.exoplayer.upstream.DefaultLoadErrorHandlingPolicy
 import androidx.media3.datasource.HttpDataSource
 import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
 import androidx.media3.common.util.UnstableApi
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
@@ -213,7 +212,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
                     if (player?.playWhenReady == true) {
                         isPlayingFlag = true
                         stateListener?.onStateChanged(PlayState.Playing)
-                        if (BuildConfig.DEBUG) Log.d("ExoPlayerWrapper", "Playback started, volume: ${player?.volume}")
+                        if (context != null && Utils.isDebug) Log.d("ExoPlayerWrapper", "Playback started, volume: ${player?.volume}")
                     } else {
                         stateListener?.onStateChanged(PlayState.Paused)
                     }

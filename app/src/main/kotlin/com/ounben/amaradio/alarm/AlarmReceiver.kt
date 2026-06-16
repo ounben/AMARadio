@@ -33,7 +33,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onReceive(context: Context, intent: Intent) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "received broadcast")
         }
         acquireLocks(context)
@@ -41,7 +41,7 @@ class AlarmReceiver : BroadcastReceiver() {
         Toast.makeText(context, context.resources.getText(R.string.alert_alarm_working), Toast.LENGTH_SHORT).show()
 
         alarmId = intent.getIntExtra("id", -1)
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "alarm id:$alarmId")
         }
 
@@ -51,7 +51,7 @@ class AlarmReceiver : BroadcastReceiver() {
         ram.resetAllAlarms()
 
         if (station != null && alarmId >= 0) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "radio id:$alarmId")
             }
 
@@ -73,7 +73,7 @@ class AlarmReceiver : BroadcastReceiver() {
             wakeLock = powerManager!!.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AlarmReceiver:")
         }
         if (!wakeLock!!.isHeld) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "acquire wakelock")
             }
             wakeLock!!.acquire()
@@ -88,7 +88,7 @@ class AlarmReceiver : BroadcastReceiver() {
                 }
             }
             if (!wifiLock!!.isHeld) {
-                if (BuildConfig.DEBUG) {
+                if (Utils.isDebug) {
                     Log.d(TAG, "acquire wifilock")
                 }
                 wifiLock!!.acquire()
@@ -102,14 +102,14 @@ class AlarmReceiver : BroadcastReceiver() {
         if (wakeLock != null) {
             wakeLock!!.release()
             wakeLock = null
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "release wakelock")
             }
         }
         if (wifiLock != null) {
             wifiLock!!.release()
             wifiLock = null
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "release wifilock")
             }
         }
@@ -118,7 +118,7 @@ class AlarmReceiver : BroadcastReceiver() {
     private var itsPlayerService: IPlayerService? = null
     private val svcConn: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, binder: IBinder) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "Service came online")
             }
             itsPlayerService = IPlayerService.Stub.asInterface(binder)
@@ -135,7 +135,7 @@ class AlarmReceiver : BroadcastReceiver() {
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "Service offline")
             }
             itsPlayerService = null
@@ -197,7 +197,7 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun playSystemAlarm(context: Context) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d(TAG, "Starting system alarm")
         }
         val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM)

@@ -200,7 +200,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("AAA", "changed key: $key")
         }
         if (key == "alarm_external") {
@@ -223,7 +223,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onAppSelected(packageName: String, activityName: String) {
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("SEL", "selected: $packageName/$activityName")
         }
         preferenceManager.sharedPreferences?.edit {

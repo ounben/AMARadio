@@ -5,7 +5,6 @@ import android.media.AudioManager
 import android.media.MediaPlayer
 import android.os.Handler
 import android.util.Log
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
@@ -41,7 +40,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (!isHls) {
             if (proxy != null) {
-                if (BuildConfig.DEBUG) Log.d(TAG, "stopping old proxy.")
+                if (Utils.isDebug) Log.d(TAG, "stopping old proxy.")
                 stopProxy()
             }
             proxy = StreamProxy(httpClient, streamUrl, this)

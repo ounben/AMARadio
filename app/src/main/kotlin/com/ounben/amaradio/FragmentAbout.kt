@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import com.ounben.amaradio.BuildConfig
 
 class FragmentAbout : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -14,9 +13,9 @@ class FragmentAbout : Fragment() {
 
         val aTextVersion = view.findViewById<TextView>(R.id.about_version)
         if (aTextVersion != null) {
-            var version = BuildConfig.VERSION_NAME
-            val gitHash = getString(R.string.GIT_HASH)
-            val buildDate = getString(R.string.BUILD_DATE)
+            var version = getString(R.string.version_name)
+            val gitHash = getString(R.string.git_hash)
+            val buildDate = getString(R.string.build_date)
 
             if (gitHash.isNotEmpty()) {
                 version += " (git $gitHash)"

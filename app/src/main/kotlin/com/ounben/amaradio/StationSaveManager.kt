@@ -7,7 +7,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.BuildConfig
 import org.json.JSONArray
 import java.io.*
 import java.util.*
@@ -270,7 +269,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         }
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val str = arr.toString()
-        if (BuildConfig.DEBUG) {
+        if (Utils.isDebug) {
             Log.d("SAVE", "wrote: $str")
         }
         sharedPref.edit().putString(getSaveId(), str).apply()

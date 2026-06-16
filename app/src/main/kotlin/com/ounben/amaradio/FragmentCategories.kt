@@ -13,7 +13,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ounben.amaradio.adapters.ItemAdapterCategory
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.station.StationsFilter
-import com.ounben.amaradio.BuildConfig
 import java.util.*
 
 class FragmentCategories : FragmentBase() {
@@ -54,10 +53,10 @@ class FragmentCategories : FragmentBase() {
 
     override fun RefreshListGui() {
         val rv = rvCategories ?: return
-
-        if (BuildConfig.DEBUG) Log.d(TAG, "refreshing the categories list.")
-
         val ctx = context ?: return
+
+        if (Utils.isDebug) Log.d(TAG, "refreshing the categories list.")
+
         if (sharedPref == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
         }
@@ -67,7 +66,7 @@ class FragmentCategories : FragmentBase() {
         val filteredCategoriesList = ArrayList<DataCategory>()
         val data = DataCategory.DecodeJson(getUrlResult()) ?: emptyArray()
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "categories count: ${data.size}")
+        if (Utils.isDebug) Log.d(TAG, "categories count: ${data.size}")
         val countryDict = CountryCodeDictionary.instance
         val flagsDict = CountryFlagsLoader.instance
 
@@ -105,7 +104,7 @@ class FragmentCategories : FragmentBase() {
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d(TAG, "onRefresh called from SwipeRefreshLayout")
             }
             DownloadUrl(true, false)

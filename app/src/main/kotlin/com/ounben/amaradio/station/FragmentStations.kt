@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
 import com.ounben.amaradio.*
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.utils.CustomFilter
 import java.util.*
@@ -66,9 +65,9 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
 
         if (!hasUrl()) return
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "refreshing the stations list.")
-
         val ctx = context ?: return
+        if (Utils.isDebug) Log.d(TAG, "refreshing the stations list.")
+
         if (sharedPref == null) {
             sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
         }
@@ -80,7 +79,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         queue?.clear()
         queue?.addAll(radioStations)
 
-        if (BuildConfig.DEBUG) Log.d(TAG, "station count: ${radioStations.size}")
+        if (Utils.isDebug) Log.d(TAG, "station count: ${radioStations.size}")
 
         for (station in radioStations) {
             if (showBroken || station.Working) {
@@ -190,7 +189,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         if (rvStations != null && searchEnabled) {
             Log.d("STATIONS", "query a = $query")
             if (!TextUtils.isEmpty(query)) {
-                LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING))
+                context?.let { LocalBroadcastManager.getInstance(it).sendBroadcast(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING)) }
             }
 
             stationsFilter?.setSearchStyle(searchStyle)

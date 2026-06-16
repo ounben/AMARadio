@@ -2,7 +2,7 @@ package com.ounben.amaradio.players.mediaplayer
 
 import android.util.Log
 import kotlinx.coroutines.*
-import com.ounben.amaradio.BuildConfig
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
@@ -29,11 +29,11 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
     }
 
     private fun createProxy() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "thread started")
+        if (Utils.isDebug) Log.d(TAG, "thread started")
         scope.launch {
             try {
                 connectToStream()
-                if (BuildConfig.DEBUG) Log.d(TAG, "createProxy() ended")
+                if (Utils.isDebug) Log.d(TAG, "createProxy() ended")
             } catch (e: Exception) {
                 Log.e(TAG, "", e)
             }
@@ -72,7 +72,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         val metadataBytes = inputStream.read() * 16
         var metadataBytesToRead = metadataBytes
         var readBytesBufferMetadata = 0
-        if (BuildConfig.DEBUG) Log.d(TAG, "metadata size:$metadataBytes")
+        if (Utils.isDebug) Log.d(TAG, "metadata size:$metadataBytes")
         if (metadataBytes > 0) {
             Arrays.fill(readBuffer, 0.toByte())
             while (true) {
@@ -82,10 +82,10 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                 readBytesBufferMetadata += readBytes
                 if (metadataBytesToRead <= 0) {
                     val s = String(readBuffer, 0, metadataBytes, charset("utf-8"))
-                    if (BuildConfig.DEBUG) Log.d(TAG, "METADATA:$s")
+                    if (Utils.isDebug) Log.d(TAG, "METADATA:$s")
                     val rawMetadata = decodeShoutcastMetadata(s)
                     val streamLiveInfo = StreamLiveInfo(rawMetadata)
-                    if (BuildConfig.DEBUG) Log.d(TAG, "META:${streamLiveInfo.title}")
+                    if (Utils.isDebug) Log.d(TAG, "META:${streamLiveInfo.title}")
                     callback.onFoundLiveStreamInfo(streamLiveInfo)
                     break
                 }
@@ -101,7 +101,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         var outputStream: OutputStream? = null
         var proxyServer: ServerSocket? = null
         try {
-            if (BuildConfig.DEBUG) Log.d(TAG, "creating local proxy")
+            if (Utils.isDebug) Log.d(TAG, "creating local proxy")
             try {
                 proxyServer = ServerSocket(0, 1, InetAddress.getLocalHost())
             } catch (e: IOException) {
@@ -121,20 +121,20 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                         return@use
                     }
                     val contentType = responseBody.contentType()
-                    if (BuildConfig.DEBUG) Log.d(TAG, "waiting...")
+                    if (Utils.isDebug) Log.d(TAG, "waiting...")
                     if (isStopped) return@use
                     socketProxy?.close()
                     outputStream?.close()
                     callback.onStreamCreated(localAddress!!)
                     proxyServer.soTimeout = 2000
                     socketProxy = proxyServer.accept()
-                    if (BuildConfig.DEBUG) Log.d(TAG, "sending OK to the local media player")
+                    if (Utils.isDebug) Log.d(TAG, "sending OK to the local media player")
                     outputStream = socketProxy!!.getOutputStream()
                     outputStream!!.write(("HTTP/1.0 200 OK\r\n" +
                             "Pragma: no-cache\r\n" +
                             "Content-Type: $contentType\r\n\r\n").toByteArray(charset("utf-8")))
                     val type = contentType.toString().lowercase(Locale.ROOT)
-                    if (BuildConfig.DEBUG) Log.d(TAG, "Content Type: $type")
+                    if (Utils.isDebug) Log.d(TAG, "Content Type: $type")
                     if (type == "application/vnd.apple.mpegurl" || type == "application/x-mpegurl") {
                         Log.e(TAG, "Cannot play HLS streams through proxy!")
                     } else {
@@ -181,7 +181,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
     fun getLocalAddress(): String? = localAddress
 
     fun stop() {
-        if (BuildConfig.DEBUG) Log.d(TAG, "stopping proxy.")
+        if (Utils.isDebug) Log.d(TAG, "stopping proxy.")
         isStopped = true
         scope.cancel()
     }

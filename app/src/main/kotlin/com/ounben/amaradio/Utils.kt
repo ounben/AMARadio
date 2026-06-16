@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.content.pm.ApplicationInfo
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Icon
@@ -49,10 +50,29 @@ import java.io.*
 import java.net.InetSocketAddress
 import java.net.Proxy
 import java.util.*
+import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
 
 object Utils {
     private var loadIcons = -1
+    private val testing = AtomicBoolean(false)
+    var isDebug = false
+        private set
+
+    @JvmStatic
+    fun init(context: Context) {
+        isDebug = (context.applicationInfo.flags and ApplicationInfo.FLAG_DEBUGGABLE) != 0
+    }
+
+    @JvmStatic
+    fun isTesting(): Boolean {
+        return testing.get()
+    }
+
+    @JvmStatic
+    fun setTesting(value: Boolean) {
+        testing.set(value)
+    }
 
     @JvmStatic
     fun parseIntWithDefault(number: String?, defaultVal: Int): Int {
@@ -81,7 +101,7 @@ object Utils {
             val mins = secs / 60
             val hours = mins / 60
 
-            if (BuildConfig.DEBUG) {
+            if (isDebug) {
                 Log.d("UTIL", "File last modified : $lastModDate secs=$secs  mins=$mins hours=$hours")
             }
 
@@ -93,12 +113,12 @@ object Utils {
                     chaine.append(line)
                 }
                 rd.close()
-                if (BuildConfig.DEBUG) {
+                if (isDebug) {
                     Log.d("UTIL", "used cache for:$theURI")
                 }
                 return chaine.toString()
             }
-            if (BuildConfig.DEBUG) {
+            if (isDebug) {
                 Log.d("UTIL", "do not use cache, because too old:$theURI")
             }
             return null
@@ -156,7 +176,7 @@ object Utils {
             }
 
             writeFileCache(ctx, theURI, responseStr)
-            if (BuildConfig.DEBUG) {
+            if (isDebug) {
                 Log.d("UTIL", "wrote cache file for:$theURI")
             }
             return responseStr

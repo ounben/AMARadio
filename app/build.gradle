@@ -32,7 +32,6 @@ android {
 
     buildFeatures {
         viewBinding true
-        buildConfig true
         aidl true
     }
 
@@ -51,11 +50,10 @@ android {
         }
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
+        resValue 'string', 'version_name', versionName
 
-        def escapedLocales = getAvailableLocales().collect { "\"" + it + "\"" }
-        buildConfigField "String[]", "AVAILABLE_LOCALES", String.format("{ %s }", escapedLocales.join(","))
-
-        buildConfigField "java.util.concurrent.atomic.AtomicBoolean", "IS_TESTING", "new java.util.concurrent.atomic.AtomicBoolean(false)"
+        def escapedLocales = getAvailableLocales()
+        resValue 'string', 'available_locales', escapedLocales.join(",")
     }
 
 
@@ -160,13 +158,13 @@ android.applicationVariants.all { variant ->
             }
         }
 
-        resValue 'string', 'GIT_HASH', gitHash()
+        resValue 'string', 'git_hash', gitHash()
 
         def getBuildDate = {
             new Date().format('yyyy-MM-dd HH:mm:ss')
         }
 
-        resValue 'string', 'BUILD_DATE', getBuildDate()
+        resValue 'string', 'build_date', getBuildDate()
 
         def finalName = appName
 

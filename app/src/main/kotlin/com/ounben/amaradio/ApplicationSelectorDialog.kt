@@ -10,7 +10,6 @@ import android.util.Log
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.ounben.amaradio.BuildConfig
 import com.ounben.amaradio.interfaces.IApplicationSelected
 
 class ApplicationSelectorDialog : DialogFragment() {
@@ -26,7 +25,7 @@ class ApplicationSelectorDialog : DialogFragment() {
         val resolveInfos = pm.queryIntentActivities(mainIntent, PackageManager.MATCH_DEFAULT_ONLY)
         for (info in resolveInfos) {
             val applicationInfo = info.activityInfo.applicationInfo
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d("UUU", "${applicationInfo.packageName} -- ${info.activityInfo.name} -> ")
             }
             arrayAdapter.add("${pm.getApplicationLabel(applicationInfo)}")
@@ -36,7 +35,7 @@ class ApplicationSelectorDialog : DialogFragment() {
         val builder = AlertDialog.Builder(requireActivity())
         builder.setTitle(R.string.alert_select_external_alarm_app)
         builder.setAdapter(arrayAdapter) { _, which ->
-            if (BuildConfig.DEBUG) {
+            if (Utils.isDebug) {
                 Log.d("AAA", "choose : $which")
             }
             callback?.let {

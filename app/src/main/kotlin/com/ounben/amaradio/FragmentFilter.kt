@@ -311,9 +311,10 @@ class FragmentFilter : FragmentBase() {
             // Load a very large number of tags to ensure specialized genres like "phonk" are included
             val tags = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags?limit=10000").map { it.Name }.sorted() }
             
+            val ctx = context ?: return@launch
             val countryItems = countriesData.map { 
                 val countryName = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
-                val flag = CountryFlagsLoader.instance.getFlag(requireContext(), it.Name)
+                val flag = CountryFlagsLoader.instance.getFlag(ctx, it.Name)
                 FilterItem(it.Name, "$countryName (${it.Name})", flag)
             }.sortedBy { it.label }
             
@@ -322,11 +323,11 @@ class FragmentFilter : FragmentBase() {
             }.sortedBy { it.label }
             
             if (isAdded) {
-                autoCountry.setAdapter(FilterDropdownAdapter(requireContext(), countryItems))
-                autoLanguage.setAdapter(FilterDropdownAdapter(requireContext(), languageItems))
+                autoCountry.setAdapter(FilterDropdownAdapter(ctx, countryItems))
+                autoLanguage.setAdapter(FilterDropdownAdapter(ctx, languageItems))
                 
                 // Use the custom "contains" adapter for tags too
-                val tagAdapter = ContainsFilterAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, tags)
+                val tagAdapter = ContainsFilterAdapter(ctx, android.R.layout.simple_dropdown_item_1line, tags)
                 autoTag.setAdapter(tagAdapter)
                 autoTag.threshold = 1
                 
@@ -342,14 +343,16 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun fetchCategoriesRaw(url: String): List<DataCategory> {
-        val AMARadioApp = requireActivity().application as AMARadioApp
-        val result = Utils.downloadFeedRelative(AMARadioApp.httpClient, requireContext(), url, false, null)
+        val ctx = context ?: return emptyList()
+        val AMARadioApp = ctx.applicationContext as AMARadioApp
+        val result = Utils.downloadFeedRelative(AMARadioApp.httpClient, ctx, url, false, null)
         return DataCategory.DecodeJson(result).toList()
     }
 
     private fun performSearch(collapseMenu: Boolean = false) {
         searchJob?.cancel()
         searchJob = scope.launch {
+            val ctx = context ?: return@launch
             // Programmatically collapse the filter menu only if requested (e.g. by Apply button)
             if (collapseMenu && ::appBarLayout.isInitialized) {
                 appBarLayout.setExpanded(false, true)
@@ -357,7 +360,7 @@ class FragmentFilter : FragmentBase() {
 
             swipeRefreshLayout?.isRefreshing = true
             layoutError?.visibility = View.GONE
-            val AMARadioApp = requireActivity().application as AMARadioApp
+            val AMARadioApp = ctx.applicationContext as AMARadioApp
             
             val params = mutableMapOf<String, String>()
             val name = autoName.text.toString()
@@ -376,7 +379,7 @@ class FragmentFilter : FragmentBase() {
             params["limit"] = "100" // Add a limit to prevent timeouts
             
             val resultString = withContext(Dispatchers.IO) {
-                Utils.downloadFeedRelative(AMARadioApp.httpClient, requireContext(), "json/stations/search", true, params)
+                Utils.downloadFeedRelative(AMARadioApp.httpClient, ctx, "json/stations/search", true, params)
             }
             
             if (resultString != null) {
