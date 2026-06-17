@@ -26,7 +26,6 @@ import com.ounben.amaradio.utils.RefreshHandler
 import com.ounben.amaradio.views.RecyclerAwareNestedScrollView
 import com.ounben.amaradio.views.TagsView
 import com.ounben.amaradio.utils.UiScaler
-import java.util.*
 
 class FragmentPlayerFull : Fragment() {
     private val TAG = "FragmentPlayerFull"
@@ -41,7 +40,7 @@ class FragmentPlayerFull : Fragment() {
     private val timedUpdateTask = TimedUpdateTask(this)
     
     private lateinit var favouriteManager: FavouriteManager
-    private val favouritesObserver = FavouritesObserver()
+    private var favouritesJob: kotlinx.coroutines.Job? = null
 
     private lateinit var trackHistoryRepository: TrackHistoryRepository
     private lateinit var trackHistoryAdapter: TrackHistoryAdapter
@@ -217,13 +216,18 @@ class FragmentPlayerFull : Fragment() {
         fullUpdate()
         refreshHandler.executePeriodically(timedUpdateTask, TIMED_UPDATE_INTERVAL.toLong())
 
-        favouriteManager.addObserver(favouritesObserver)
+        favouritesJob?.cancel()
+        favouritesJob = viewLifecycleOwner.lifecycleScope.launch {
+            favouriteManager.stationsFlow.collect {
+                updateFavouriteButton()
+            }
+        }
     }
 
     private fun stopUpdating() {
         if (view == null) return
         refreshHandler.cancel()
-        favouriteManager.deleteObserver(favouritesObserver)
+        favouritesJob?.cancel()
     }
 
     fun resetScroll() {
@@ -300,16 +304,6 @@ class FragmentPlayerFull : Fragment() {
             btnFavourite.setImageResource(R.drawable.ic_star_transparent_with_border_24dp)
             btnFavourite.alpha = 0.5f
             btnFavourite.contentDescription = requireContext().applicationContext.getString(R.string.detail_star)
-        }
-    }
-
-    private inner class FavouritesObserver : Observer {
-        override fun update(o: Observable?, arg: Any?) {
-            if (isAdded) {
-                requireActivity().runOnUiThread {
-                    updateFavouriteButton()
-                }
-            }
         }
     }
 

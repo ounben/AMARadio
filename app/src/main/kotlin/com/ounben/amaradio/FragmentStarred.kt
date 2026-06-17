@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ounben.amaradio.station.ItemAdapterStation
@@ -20,8 +23,7 @@ import com.ounben.amaradio.station.StationsFilter
 import kotlinx.coroutines.*
 import java.util.*
 
-@Suppress("DEPRECATION")
-class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable, Observer {
+class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private lateinit var rvStations: RecyclerView
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     private var downloadJob: Job? = null
@@ -63,7 +65,6 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable, Ob
 
         val AMARadioApp = requireActivity().application as AMARadioApp
         favouriteManager = AMARadioApp.favouriteManager
-        favouriteManager.addObserver(this)
 
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_stations, container, false)
@@ -97,7 +98,14 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable, Ob
                 // We don't want to update RecyclerView during its layout process
                 requireView().post {
                     favouriteManager.save()
-                    favouriteManager.notifyObservers()
+                }
+            }
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favouriteManager.stationsFlow.collect {
+                    RefreshListGui()
                 }
             }
         }
@@ -187,17 +195,12 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable, Ob
     override fun onDestroyView() {
         super.onDestroyView()
         rvStations.adapter = null
-        favouriteManager.deleteObserver(this)
         downloadJob?.cancel()
     }
 
     override fun onDestroy() {
         scope.cancel()
         super.onDestroy()
-    }
-
-    override fun update(o: Observable?, arg: Any?) {
-        RefreshListGui()
     }
 
     companion object {

@@ -11,15 +11,20 @@ import java.io.*
 import java.util.*
 import org.apache.commons.text.similarity.CosineSimilarity
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-@Suppress("DEPRECATION")
-open class StationSaveManager(protected val context: Context) : Observable() {
+open class StationSaveManager(protected val context: Context) {
     interface StationStatusListener {
         fun onStationStatusChanged(station: DataRadioStation, favourite: Boolean)
     }
 
     var listStations: MutableList<DataRadioStation> = ArrayList()
     protected var stationStatusListener: StationStatusListener? = null
+
+    private val _stationsFlow = MutableStateFlow<List<DataRadioStation>>(emptyList())
+    val stationsFlow: StateFlow<List<DataRadioStation>> = _stationsFlow.asStateFlow()
 
     protected val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
@@ -35,8 +40,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         if (station.queue == null) station.queue = this
         listStations.add(station)
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
         stationStatusListener?.onStationStatusChanged(station, true)
     }
 
@@ -45,8 +49,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             listStations.add(stationNew)
         }
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
     }
 
     fun replaceList(stationsNew: List<DataRadioStation>) {
@@ -59,16 +62,14 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             }
         }
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
     }
 
     fun addFront(station: DataRadioStation) {
         if (station.queue == null) station.queue = this
         listStations.add(0, station)
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
         stationStatusListener?.onStationStatusChanged(station, true)
     }
 
@@ -121,8 +122,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
 
     fun move(fromPos: Int, toPos: Int) {
         moveWithoutNotify(fromPos, toPos)
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
     }
 
     fun getBestNameMatch(query: String): DataRadioStation? {
@@ -155,8 +155,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             if (station.StationUuid == id) {
                 listStations.removeAt(i)
                 save()
-                setChanged()
-                notifyObservers()
+                _stationsFlow.value = listStations.toList()
                 stationStatusListener?.onStationStatusChanged(station, false)
                 return i
             }
@@ -168,8 +167,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         station.queue = this
         listStations.add(pos, station)
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
         stationStatusListener?.onStationStatusChanged(station, false)
     }
 
@@ -177,18 +175,12 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         val oldStation = listStations
         listStations = ArrayList()
         save()
-        setChanged()
-        notifyObservers()
+        _stationsFlow.value = listStations.toList()
         if (stationStatusListener != null) {
             for (station in oldStation) {
                 stationStatusListener!!.onStationStatusChanged(station, false)
             }
         }
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun hasChanged(): Boolean {
-        return true
     }
 
     fun size(): Int {
@@ -236,8 +228,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
 
             listStations.removeAll(stationsToRemove)
             save()
-            setChanged()
-            notifyObservers()
+            _stationsFlow.value = listStations.toList()
             AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
         }
     }
@@ -260,6 +251,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
         } else {
             Log.w("SAVE", "load() no stations to load")
         }
+        _stationsFlow.value = listStations.toList()
     }
 
     open fun save() {
@@ -273,6 +265,7 @@ open class StationSaveManager(protected val context: Context) : Observable() {
             Log.d("SAVE", "wrote: $str")
         }
         sharedPref.edit().putString(getSaveId(), str).apply()
+        _stationsFlow.value = listStations.toList()
     }
 
     /**

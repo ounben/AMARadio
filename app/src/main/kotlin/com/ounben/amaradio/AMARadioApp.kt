@@ -92,7 +92,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
         if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             tvChannelManager = TvChannelManager(this)
-            favouriteManager.addObserver(tvChannelManager)
         }
 
         trackHistoryRepository = TrackHistoryRepository(this)

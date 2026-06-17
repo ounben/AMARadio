@@ -14,8 +14,8 @@ import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.service.MediaSessionCallback
+import kotlinx.coroutines.*
 import java.io.IOException
-import java.util.*
 
 private const val INVALID_CONTENT_ID: Long = -1
 
@@ -34,13 +34,20 @@ fun <T : BaseProgram> Cursor.asSequence(fromCursor: (Cursor) -> T): Sequence<T> 
 }
 
 @SuppressLint("RestrictedApi")
-class TvChannelManager(val app: AMARadioApp) : Observer {
+class TvChannelManager(val app: AMARadioApp) {
     private val helper = PreviewChannelHelper(app)
     private var channelId = INVALID_CONTENT_ID
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
         if (Build.VERSION.SDK_INT >= 26) {
             channelId = helper.allChannels.firstOrNull()?.id ?: createDefaultChannel()
+            
+            scope.launch {
+                app.favouriteManager.stationsFlow.collect {
+                    publishStarred()
+                }
+            }
         }
     }
 
@@ -126,10 +133,6 @@ class TvChannelManager(val app: AMARadioApp) : Observer {
             Log.d(TAG, "Requesting channel to be browseable")
             TvContractCompat.requestChannelBrowsable(app, channelId)
         }
-    }
-
-    override fun update(p0: Observable?, p1: Any?) {
-        publishStarred()
     }
 
     companion object {
