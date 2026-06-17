@@ -11,19 +11,17 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.Utils
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import java.util.*
 
 class RadioAlarmManager(private val context: Context) {
     private val list = ArrayList<DataRadioStationAlarm>()
     private val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
 
-    class AlarmsObservable : Observable() {
-        override fun hasChanged(): Boolean {
-            return true
-        }
-    }
-
-    val savedAlarmsObservable = AlarmsObservable()
+    private val _savedAlarms = MutableStateFlow<List<DataRadioStationAlarm>>(emptyList())
+    val savedAlarms: StateFlow<List<DataRadioStationAlarm>> = _savedAlarms.asStateFlow()
 
     init {
         load()
@@ -93,7 +91,7 @@ class RadioAlarmManager(private val context: Context) {
         }
         editor.putString("alarm.ids", items)
         editor.apply()
-        savedAlarmsObservable.notifyObservers()
+        _savedAlarms.value = list.toList()
     }
 
     fun load() {
@@ -130,6 +128,7 @@ class RadioAlarmManager(private val context: Context) {
         } else {
             Log.w("ALARM", "empty load() string")
         }
+        _savedAlarms.value = list.toList()
     }
 
     fun setEnabled(alarmId: Int, enabled: Boolean) {

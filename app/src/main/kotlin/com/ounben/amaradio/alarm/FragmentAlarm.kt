@@ -9,10 +9,14 @@ import android.widget.AdapterView
 import android.widget.ListView
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.StationsFilter
+import kotlinx.coroutines.launch
 import java.util.*
 
 class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentSearchable {
@@ -20,7 +24,6 @@ class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentS
         private set
     private var adapterRadioAlarm: ItemAdapterRadioAlarm? = null
     private var lvAlarms: ListView? = null
-    private var alarmsObserver: Observer? = null
     private var lastQuery: String = ""
 
     override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
@@ -42,19 +45,27 @@ class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentS
                 clickOnItem(anObject)
             }
         }
-        alarmsObserver = Observer { _, _ -> refreshListAndView() }
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                ram?.savedAlarms?.collect {
+                    refreshListAndView()
+                }
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
         refreshListAndView()
-        ram?.savedAlarmsObservable?.addObserver(alarmsObserver)
     }
 
     override fun onPause() {
         super.onPause()
-        ram?.savedAlarmsObservable?.deleteObserver(alarmsObserver)
     }
 
     private fun refreshListAndView() {
