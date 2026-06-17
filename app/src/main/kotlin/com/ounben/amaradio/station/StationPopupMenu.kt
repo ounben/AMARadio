@@ -6,6 +6,8 @@ import android.os.Build
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
@@ -23,6 +25,17 @@ object StationPopupMenu {
 
         val popup = PopupMenu(context, view, gravity)
         popup.menuInflater.inflate(R.menu.station_popup_menu, popup.menu)
+
+        // Tint icons based on theme
+        val iconColor = Utils.themeAttributeToColor(android.R.attr.textColorPrimary, context, android.graphics.Color.BLACK)
+        for (i in 0 until popup.menu.size()) {
+            val item = popup.menu.getItem(i)
+            item.icon?.let { icon ->
+                val wrapped = DrawableCompat.wrap(icon.mutate())
+                DrawableCompat.setTint(wrapped, iconColor)
+                item.icon = wrapped
+            }
+        }
 
         // Show icons using reflection
         try {
