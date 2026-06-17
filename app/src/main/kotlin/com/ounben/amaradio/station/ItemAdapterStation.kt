@@ -5,12 +5,17 @@ import android.content.pm.ShortcutManager
 import android.graphics.Typeface
 import android.graphics.drawable.Drawable
 import android.os.Build
+import android.util.Log
 import android.util.TypedValue
 import android.view.*
 import android.widget.*
 import androidx.appcompat.content.res.AppCompatResources
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.*
@@ -56,6 +61,8 @@ open class ItemAdapterStation(
     protected val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp)
     private val favouriteManager: FavouriteManager = (fragmentActivity.application as AMARadioApp).favouriteManager
     private var filter: StationsFilter? = null
+    
+    protected var timeLastDragEnded: Long = 0
 
     private val tagSelectionCallback = TagsView.TagSelectionCallback { tag ->
         val i = Intent(fragmentActivity, ActivityMain::class.java)
@@ -65,7 +72,7 @@ open class ItemAdapterStation(
         fragmentActivity.startActivity(i)
     }
 
-    open inner class StationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, SwipeableViewHolder {
+    open inner class StationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView), View.OnClickListener, View.OnCreateContextMenuListener, SwipeableViewHolder {
         var viewForeground: View = itemView.findViewById(R.id.station_foreground)
         var layoutMain: LinearLayout = itemView.findViewById(R.id.layoutMain)
         var frameLayout: FrameLayout = itemView.findViewById(R.id.frameLayout)
@@ -85,9 +92,28 @@ open class ItemAdapterStation(
         var viewTags: TagsView? = null
         var buttonCreateShortcut: ImageButton? = null
         var buttonPlayInternalOrExternal: ImageButton? = null
+        
+        private var contextMenu: PopupMenu? = null
 
         init {
             itemView.setOnClickListener(this)
+            itemView.setOnCreateContextMenuListener(this)
+        }
+
+        open fun dismissContextMenu() {
+            contextMenu?.dismiss()
+            contextMenu = null
+        }
+
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
+            if (contextMenu != null) return
+            val pos = adapterPosition
+            if (pos == RecyclerView.NO_POSITION) return
+            val station = filteredStationsList[pos]
+            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station, this@ItemAdapterStation)
+            contextMenu?.setOnDismissListener {
+                dismissContextMenu()
+            }
         }
 
         override fun onClick(view: View) {
@@ -126,9 +152,14 @@ open class ItemAdapterStation(
     fun enableItemMoveAndRemoval(recyclerView: RecyclerView) {
         if (!supportsStationRemoval) {
             supportsStationRemoval = true
-            val swipeAndMoveHelper = RecyclerItemMoveAndSwipeHelper(fragmentActivity, ItemTouchHelper.UP or ItemTouchHelper.DOWN, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
+            val swipeAndMoveHelper = RecyclerItemMoveAndSwipeHelper(fragmentActivity, ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
             ItemTouchHelper(swipeAndMoveHelper).attachToRecyclerView(recyclerView)
         }
+    }
+
+    fun enableItemMove(recyclerView: RecyclerView) {
+        val swipeAndMoveHelper = RecyclerItemMoveAndSwipeHelper(fragmentActivity, ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, 0, this)
+        ItemTouchHelper(swipeAndMoveHelper).attachToRecyclerView(recyclerView)
     }
 
     fun updateList(refreshableList: IAdapterRefreshable?, stationsList: List<DataRadioStation>) {
@@ -309,7 +340,22 @@ open class ItemAdapterStation(
         stationActionsListener?.onStationSwiped(filteredStationsList[viewHolder.adapterPosition])
     }
 
-    override fun onDragged(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Double, dY: Double) {}
+    override fun onDragged(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Double, dY: Double) {
+        val foregroundView = (viewHolder as? SwipeableViewHolder)?.foregroundView ?: return
+        val stationViewHolder = viewHolder as? StationViewHolder ?: return
+
+        if (Math.abs(dX) > foregroundView.width * DISMISS_MENU_DRAG_THRESHOLD ||
+            Math.abs(dY) > foregroundView.height * DISMISS_MENU_DRAG_THRESHOLD) {
+            stationViewHolder.dismissContextMenu()
+        } else {
+            if (System.currentTimeMillis() > timeLastDragEnded + MIN_INTERVAL_BETWEEN_DRAG_AND_MENU_OPEN) {
+                Log.d(TAG, "Creating contextMenu from onDragged")
+
+                // Triggere das registrierte ContextMenu der View:
+                foregroundView.showContextMenu()
+            }
+        }
+    }
 
     override fun onMoved(viewHolder: StationViewHolder, from: Int, to: Int) {
         stationActionsListener?.onStationMoved(from, to)
@@ -317,11 +363,17 @@ open class ItemAdapterStation(
     }
 
     override fun onMoveEnded(viewHolder: StationViewHolder) {
+        timeLastDragEnded = System.currentTimeMillis()
         stationActionsListener?.onStationMoveFinished()
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         eventJob?.cancel()
+    }
+
+    companion object {
+        private const val MIN_INTERVAL_BETWEEN_DRAG_AND_MENU_OPEN = 200L
+        private const val DISMISS_MENU_DRAG_THRESHOLD = 0.15
     }
 
     fun setFilterListener(filterListener: FilterListener) {

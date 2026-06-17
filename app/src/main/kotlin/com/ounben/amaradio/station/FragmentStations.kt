@@ -154,6 +154,13 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
 
         rvStations?.let { Utils.setupStationRecyclerView(requireContext(), it, adapter) }
 
+        if (adapter is ItemAdapterIconOnlyStation) {
+            adapter.enableItemMove(rvStations!!)
+        } else {
+            // For remote lists, we don't want swipe-to-delete, but we want drag-to-open-menu
+            adapter.enableItemMove(rvStations!!)
+        }
+
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {
             if (hasUrl()) {
@@ -189,7 +196,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         if (rvStations != null && searchEnabled) {
             Log.d("STATIONS", "query a = $query")
             if (!TextUtils.isEmpty(query)) {
-                AppEventManager.sendEvent(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING))
+                AppEventManager.sendEvent(android.content.Intent(android.content.Intent(ActivityMain.ACTION_SHOW_LOADING)))
             }
 
             stationsFilter?.setSearchStyle(searchStyle)

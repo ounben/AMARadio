@@ -8,18 +8,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import com.ounben.amaradio.station.ItemAdapterStation
 import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.station.ItemAdapterIconOnlyStation
 import com.ounben.amaradio.interfaces.IAdapterRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.StationsFilter
 import kotlinx.coroutines.*
 import java.util.*
 
-@Suppress("DEPRECATION")
 class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private lateinit var rvStations: RecyclerView
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
@@ -75,14 +78,11 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
             override fun onStationSwiped(station: DataRadioStation) {
                 val removedIdx = historyManager.remove(station.StationUuid)
 
-                RefreshListGui()
-
                 val snackbar = Snackbar
                         .make(rvStations, R.string.notify_station_removed_from_list, 6000)
                 snackbar.anchorView = requireView().rootView.findViewById(R.id.bottom_sheet)
                 snackbar.setAction(R.string.action_station_removed_from_list_undo) {
                     historyManager.restore(station, removedIdx)
-                    RefreshListGui()
                 }
                 snackbar.show()
             }
@@ -97,7 +97,19 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
         rvStations = view.findViewById(R.id.recyclerViewStations)
         Utils.setupStationRecyclerView(requireContext(), rvStations, adapter)
 
-        adapter.enableItemRemoval(rvStations)
+        if (adapter is ItemAdapterIconOnlyStation) {
+            adapter.enableItemMove(rvStations)
+        } else {
+            adapter.enableItemMoveAndRemoval(rvStations)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                historyManager.stationsFlow.collect {
+                    RefreshListGui()
+                }
+            }
+        }
 
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {
@@ -141,7 +153,6 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
                 }
                 Log.d(TAG, "Found items: " + result.size)
                 syncList(result)
-                RefreshListGui()
             } else {
                 try {
                     Toast.makeText(context, resources.getText(R.string.error_list_update), Toast.LENGTH_SHORT).show()

@@ -79,6 +79,7 @@ open class StationSaveManager(protected val context: Context) {
             station.queue = this
         }
         listStations.addAll(stations)
+        _stationsFlow.value = listStations.toList()
     }
 
     val last: DataRadioStation?

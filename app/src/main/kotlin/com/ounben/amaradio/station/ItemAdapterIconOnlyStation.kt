@@ -38,17 +38,17 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             itemView.setOnCreateContextMenuListener(this)
         }
 
-        fun dismissContextMenu() {
+        override fun dismissContextMenu() {
             contextMenu?.dismiss()
             contextMenu = null
         }
 
-        override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
+        override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             if (contextMenu != null) return
             val pos = adapterPosition
             if (pos == RecyclerView.NO_POSITION) return
             val station = filteredStationsList[pos]
-            contextMenu = StationPopupMenu.open(v, fragmentActivity, fragmentActivity, station, this@ItemAdapterIconOnlyStation)
+            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station, this@ItemAdapterIconOnlyStation)
             contextMenu?.setOnDismissListener {
                 dismissContextMenu()
             }
@@ -125,10 +125,5 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
         val starPxSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, starBaseSize * factor, fragmentActivity.resources.displayMetrics).toInt()
         holder.starredStatusIcon.layoutParams.width = starPxSize
         holder.starredStatusIcon.layoutParams.height = starPxSize
-    }
-
-    fun enableItemMove(recyclerView: RecyclerView) {
-        val swipeAndMoveHelper = RecyclerItemMoveAndSwipeHelper(fragmentActivity, ItemTouchHelper.UP or ItemTouchHelper.DOWN or ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, 0, this)
-        ItemTouchHelper(swipeAndMoveHelper).attachToRecyclerView(recyclerView)
     }
 }
