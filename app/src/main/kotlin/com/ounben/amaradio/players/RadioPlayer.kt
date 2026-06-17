@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.RadioBrowserServerManager
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.exoplayer.ExoPlayerWrapper
 import com.ounben.amaradio.station.DataRadioStation
@@ -34,6 +35,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         private set
     private var lastLiveInfo: StreamLiveInfo? = null
     private var playStationTask: PlayStationTask? = null
+    private var stationLoadAttempts = 0
 
     private val bufferCheckRunnable = object : Runnable {
         override fun run() {
@@ -66,19 +68,35 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun play(station: DataRadioStation, isAlarm: Boolean) {
+        stationLoadAttempts = 0
+        executePlayStationTask(station, isAlarm)
+    }
+
+    private fun executePlayStationTask(station: DataRadioStation, isAlarm: Boolean) {
         setState(PlayState.PrePlaying, -1)
         playStationTask = PlayStationTask(station, mainContext,
             { url -> this@RadioPlayer.play(url, station.Name, isAlarm) },
             { executionResult ->
-                playStationTask = null
                 if (executionResult == PlayStationTask.ExecutionResult.FAILURE) {
-                    this@RadioPlayer.onPlayerError(R.string.error_station_load)
+                    stationLoadAttempts++
+                    if (stationLoadAttempts < 3) {
+                        Log.w(TAG, "Station load failed, retrying with server rotation (attempt $stationLoadAttempts)")
+                        RadioBrowserServerManager.rotateServer()
+                        executePlayStationTask(station, isAlarm)
+                    } else {
+                        playStationTask = null
+                        this@RadioPlayer.onPlayerError(R.string.error_station_load)
+                    }
+                } else {
+                    playStationTask = null
+                    stationLoadAttempts = 0
                 }
             })
         playStationTask!!.execute()
     }
 
     private fun cancelStationLinkRetrieval() {
+        stationLoadAttempts = 0
         playStationTask?.let {
             it.cancel(true)
             playStationTask = null

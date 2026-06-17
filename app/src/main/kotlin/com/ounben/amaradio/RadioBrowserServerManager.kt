@@ -79,6 +79,26 @@ object RadioBrowserServerManager {
     }
 
     /**
+     * Rotate to a different server from the list
+     */
+    @JvmStatic
+    fun rotateServer() {
+        val list = getServerList(false)
+        if (list.size > 1) {
+            val oldServer = currentServer
+            val rand = Random()
+            var nextServer = list[rand.nextInt(list.size)]
+            var attempts = 0
+            while (nextServer == oldServer && attempts < 10) {
+                nextServer = list[rand.nextInt(list.size)]
+                attempts++
+            }
+            currentServer = nextServer
+            Log.d("SRV", "Rotated from $oldServer to $currentServer")
+        }
+    }
+
+    /**
      * Construct full url from server and path
      */
     @JvmStatic
