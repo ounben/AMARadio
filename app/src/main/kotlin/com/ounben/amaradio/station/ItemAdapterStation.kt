@@ -227,6 +227,10 @@ open class ItemAdapterStation(
         val isExpanded = position == expandedPosition
         holder.textViewTags.visibility = if (isExpanded) View.GONE else View.VISIBLE
         holder.buttonMore.setImageResource(if (isExpanded) R.drawable.ic_expand_less_black_24dp else R.drawable.ic_expand_more_black_24dp)
+        
+        val themeColor = Utils.themeAttributeToColor(android.R.attr.textColorPrimary, fragmentActivity, android.graphics.Color.BLACK)
+        holder.buttonMore.setColorFilter(themeColor)
+
         holder.buttonMore.contentDescription = fragmentActivity.getString(if (isExpanded) R.string.image_button_less else R.string.image_button_more)
         holder.buttonMore.setOnClickListener {
             val oldExpanded = expandedPosition
@@ -289,6 +293,7 @@ open class ItemAdapterStation(
                 
                 applyScalingToExpandedDetails(holder)
             }
+            applyTintingToExpandedDetails(holder)
 
             holder.buttonVisitWebsite?.setOnClickListener { StationActions.openStationHomeUrl(fragmentActivity, station) }
             holder.buttonShare?.setOnClickListener { StationActions.share(fragmentActivity, station) }
@@ -396,6 +401,20 @@ open class ItemAdapterStation(
 
     fun setupIcon(imageView: ImageView) {
         // No-op
+    }
+
+    private fun applyTintingToExpandedDetails(holder: StationViewHolder) {
+        val color = Utils.themeAttributeToColor(android.R.attr.textColorPrimary, fragmentActivity, android.graphics.Color.BLACK)
+        listOf(
+            holder.buttonVisitWebsite,
+            holder.buttonShare,
+            holder.buttonBookmark,
+            holder.buttonAddAlarm,
+            holder.buttonCreateShortcut,
+            holder.buttonPlayInternalOrExternal
+        ).forEach { button ->
+            button?.setColorFilter(color)
+        }
     }
 
     private fun applyScalingToExpandedDetails(holder: StationViewHolder) {
