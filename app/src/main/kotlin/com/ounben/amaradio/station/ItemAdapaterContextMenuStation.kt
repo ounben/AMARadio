@@ -17,18 +17,19 @@ open class ItemAdapaterContextMenuStation(
     private var timeLastDragEnded: Long = 0
 
     override fun onDragged(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Double, dY: Double) {
-        val foregroundView = (viewHolder as SwipeableViewHolder).foregroundView ?: return
+        val foregroundView = (viewHolder as? SwipeableViewHolder)?.foregroundView ?: return
         val stationViewHolder = viewHolder as? ItemAdapterIconOnlyStation.IconOnlyStationViewHolder ?: return
 
         if (Math.abs(dX) > foregroundView.width * DISMISS_MENU_DRAG_THRESHOLD ||
             Math.abs(dY) > foregroundView.height * DISMISS_MENU_DRAG_THRESHOLD) {
             stationViewHolder.dismissContextMenu()
         } else {
-            // How to access contextMenu from here? It was private in my IconOnlyStationViewHolder conversion.
-            // I should make it public or provide a check.
             if (System.currentTimeMillis() > timeLastDragEnded + MIN_INTERVAL_BETWEEN_DRAG_AND_MENU_OPEN) {
                 Log.d(TAG, "Creating contextMenu from onDragged")
-                stationViewHolder.onCreateContextMenu(null!!, foregroundView, null)
+
+                // Reiner Text- oder Log-Check, um den Absturz zu verhindern.
+                // Wenn das Menü geöffnet werden soll, triggere das registrierte ContextMenu der View:
+                foregroundView.showContextMenu()
             }
         }
     }
