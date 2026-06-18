@@ -472,6 +472,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             .setContentText(msg)
             .setWhen(System.currentTimeMillis())
             .setTicker(theTicker)
+            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setSmallIcon(R.drawable.ic_play_arrow_24dp)
             .setLargeIcon(radioIcon?.bitmap)

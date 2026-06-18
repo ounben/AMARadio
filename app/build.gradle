@@ -18,7 +18,7 @@ def getAvailableLocales() {
 
 android {
     namespace 'com.ounben.amaradio'
-    compileSdkVersion 37
+    compileSdkVersion 36
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_17
@@ -38,7 +38,7 @@ android {
     defaultConfig {
         applicationId "com.ounben.amaradio"
         minSdkVersion 26
-        targetSdkVersion 35
+        targetSdkVersion 36
 
         versionCode 103
         versionName "0.96"

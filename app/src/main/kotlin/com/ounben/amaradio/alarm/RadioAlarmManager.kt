@@ -191,7 +191,17 @@ class RadioAlarmManager(private val context: Context) {
             }
             Log.d("ALARM", "started:$alarmId ${calendar.get(Calendar.DAY_OF_WEEK)} ${calendar.get(Calendar.DAY_OF_MONTH)}.${calendar.get(Calendar.MONTH)} ${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
             
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                if (Utils.isDebug) {
+                    Log.d("ALARM", "START setAlarmClock (API 31+)")
+                }
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU && !alarmMgr.canScheduleExactAlarms()) {
+                    Log.w("ALARM", "Cannot schedule exact alarms on API 31/32, falling back to setWindow")
+                    alarmMgr.setWindow(AlarmManager.RTC_WAKEUP, calendar.timeInMillis, 10000, alarmIntent)
+                } else {
+                    alarmMgr.setAlarmClock(AlarmManager.AlarmClockInfo(calendar.timeInMillis, alarmIntent), alarmIntent)
+                }
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 if (Utils.isDebug) {
                     Log.d("ALARM", "START setAlarmClock")
                 }
