@@ -4,7 +4,7 @@
 
 **AMARadio** is a professional, open-source Android application designed for streaming radio stations globally. It leverages the community-driven [radio-browser.info](https://www.radio-browser.info/) database to provide access to thousands of stations.
 
-This project is a refined fork of RadioDroid, optimized for a more focused, accessible, and stable user experience. The codebase has been completely migrated to **100% Kotlin**, adopting modern Android standards and ensuring full compatibility with Android 14 and 15.
+This project is a refined fork of RadioDroid, optimized for a more focused, accessible, and stable user experience. The codebase has been completely migrated to **100% Kotlin**, adopting modern Android standards and ensuring full compatibility with Android 14, 15, and 16.
 
 ## Core Philosophy
 
@@ -41,7 +41,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.96) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
+The latest version (v0.97) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -63,7 +63,7 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Persistence**: Room Database for metadata, SharedPreferences for configuration
 - **Networking**: OkHttp3 for API communication, Coil for asynchronous image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
-- **Target SDK**: 37 (Android 17)
+- **Target SDK**: 36 (Android 16)
 - **Minimum SDK**: 26 (Android 8.0)
 
 ## Contributing

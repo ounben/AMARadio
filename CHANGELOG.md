@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.97] - 2026-06-15
+### Added
+- **Android 16 Support**: Updated Target SDK to 36 (Android 16) to ensure future compatibility and security.
+- **Improved Foreground Handling**: Implemented immediate foreground service promotion in `PrePlaying` state. This prevents background execution restrictions on Android 14 and 15, ensuring the app starts reliably even when minimized during buffering.
+- **Media Category**: Added `.setCategory(NotificationCompat.CATEGORY_TRANSPORT)` to the playback notification for better system classification on modern Android versions.
+
+### Changed
+- **Architecture Migration**: Fully migrated the media playback and session architecture to **AndroidX Media3**. 
+    - Replaced legacy `MediaSessionCompat` and `MediaBrowserServiceCompat` with `MediaLibraryService` and `MediaLibrarySession`.
+    - Integrated `ExoPlayer` directly into the Media3 session for improved system-wide media controls and Android Auto support.
+- **Alarm Management**: Modernized `RadioAlarmManager` to use `USE_EXACT_ALARM` exclusively on Android 13+. This removes the need for manual "Schedule Exact Alarm" permission approval on newer devices.
+
+### Fixed
+- **System Integration**: Resolved package-private access issues with session tokens in notifications.
+- **Stability**: Fixed potential NullPointerExceptions during session initialization by synchronizing ExoPlayer creation on the main thread.
+- **Type Safety**: Corrected generic type mismatches in media library results.
+
 ## [0.96] - 2026-06-13
 ### Added
 - **New Branding "El Gato"**: Completely updated the app logo to the new "El Gato" design across the Splash screen, Toolbar, and Shortcuts.
