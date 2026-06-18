@@ -1,12 +1,9 @@
 package com.ounben.amaradio.service
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.media.MediaBrowserCompat
@@ -14,19 +11,24 @@ import android.support.v4.media.MediaDescriptionCompat
 import android.support.v4.media.MediaMetadataCompat
 import android.util.Log
 import androidx.media.MediaBrowserServiceCompat
-import androidx.media.utils.MediaConstants.*
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM
+import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM
 import androidx.preference.PreferenceManager
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.transform.RoundedCornersTransformation
-import kotlinx.coroutines.*
-import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()

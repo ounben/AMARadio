@@ -1,31 +1,33 @@
 package com.ounben.amaradio
 
-import android.content.*
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.Lifecycle
-import kotlinx.coroutines.launch
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ounben.amaradio.history.*
+import com.ounben.amaradio.history.TrackHistoryAdapter
+import com.ounben.amaradio.history.TrackHistoryRepository
+import com.ounben.amaradio.history.TrackHistoryViewModel
 import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
-import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.utils.RefreshHandler
+import com.ounben.amaradio.utils.UiScaler
 import com.ounben.amaradio.views.RecyclerAwareNestedScrollView
 import com.ounben.amaradio.views.TagsView
-import com.ounben.amaradio.utils.UiScaler
+import kotlinx.coroutines.launch
 
 class FragmentPlayerFull : Fragment() {
     private val TAG = "FragmentPlayerFull"

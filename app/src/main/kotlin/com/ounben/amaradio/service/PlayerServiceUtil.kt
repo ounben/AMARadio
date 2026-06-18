@@ -4,23 +4,20 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Build
 import android.os.IBinder
 import android.os.RemoteException
 import android.util.Log
 import android.util.TypedValue
 import android.widget.ImageView
-import androidx.appcompat.content.res.AppCompatResources
 import coil.load
 import coil.request.CachePolicy
-import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.AppEventManager
+import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)

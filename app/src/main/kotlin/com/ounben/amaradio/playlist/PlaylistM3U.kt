@@ -5,7 +5,7 @@ import java.io.IOException
 import java.io.StringReader
 import java.net.MalformedURLException
 import java.net.URL
-import java.util.*
+import java.util.Locale
 
 class PlaylistM3U(private val path: URL, private val fullText: String) {
     var extended = false

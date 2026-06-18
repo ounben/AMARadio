@@ -2,19 +2,21 @@ package com.ounben.amaradio
 
 import android.app.Activity
 import android.app.Application
-import android.content.*
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
-import android.view.*
-import android.widget.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.PopupMenu
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
-import kotlinx.coroutines.launch
-import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.service.PauseReason
@@ -23,6 +25,7 @@ import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.utils.UiScaler
+import kotlinx.coroutines.launch
 
 class FragmentPlayerSmall : Fragment() {
     private lateinit var trackHistoryRepository: TrackHistoryRepository

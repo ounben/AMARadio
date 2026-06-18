@@ -7,13 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.ounben.amaradio.adapters.ItemAdapterCategory
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.station.StationsFilter
-import java.util.*
 
 class FragmentCategories : FragmentBase() {
     private var rvCategories: RecyclerView? = null

@@ -1,9 +1,5 @@
 package com.ounben.amaradio.players.selector
 
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,23 +8,23 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.Lifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.coroutines.launch
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
-import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.Utils.parseIntWithDefault
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.players.mpd.MPDServerData
 import com.ounben.amaradio.players.mpd.MPDServersRepository
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.Utils.parseIntWithDefault
+import kotlinx.coroutines.launch
 
 class PlayerSelectorDialog() : BottomSheetDialogFragment() {
 

@@ -1,7 +1,5 @@
 package com.ounben.amaradio.players.mpd
 
-import java.util.HashMap
-
 class MPDServerData {
     enum class Status {
         Idle,

@@ -1,7 +1,6 @@
 package com.ounben.amaradio.players.selector
 
 import android.content.Context
-import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,10 +11,9 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
-import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.players.mpd.MPDServerData
@@ -27,7 +25,6 @@ import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
-import java.util.*
 
 class PlayerSelectorAdapter(private val context: Context, private val stationToPlay: DataRadioStation?) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

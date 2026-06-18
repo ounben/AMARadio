@@ -12,12 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.R
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.StationsFilter
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 
 class FragmentAlarm : Fragment(), TimePickerDialog.OnTimeSetListener, IFragmentSearchable {
     var ram: RadioAlarmManager? = null

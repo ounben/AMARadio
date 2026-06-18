@@ -1,13 +1,12 @@
 package com.ounben.amaradio.players.mpd
 
 import android.content.Context
+import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
-import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.util.*
 
 /**
  * MPD servers repository which is serialized into preferences.

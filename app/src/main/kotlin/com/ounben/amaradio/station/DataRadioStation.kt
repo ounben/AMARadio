@@ -2,30 +2,29 @@ package com.ounben.amaradio.station
 
 import android.content.Context
 import android.content.pm.ShortcutInfo
-import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.os.Parcelable
 import android.text.TextUtils
 import android.util.Log
-import androidx.annotation.RequiresApi
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
 import coil.transform.RoundedCornersTransformation
-import kotlinx.coroutines.*
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import com.ounben.amaradio.CountryCodeDictionary
 import com.ounben.amaradio.R
 import com.ounben.amaradio.StationSaveManager
 import com.ounben.amaradio.Utils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.parcelize.IgnoredOnParcel
+import kotlinx.parcelize.Parcelize
 import okhttp3.OkHttpClient
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
-import java.util.*
 
 @Parcelize
 class DataRadioStation : Parcelable {

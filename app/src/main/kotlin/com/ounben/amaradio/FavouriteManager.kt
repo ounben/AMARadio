@@ -6,9 +6,7 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build
-import androidx.core.content.ContextCompat
 import com.ounben.amaradio.station.DataRadioStation
-import java.util.*
 import kotlin.math.min
 
 class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {

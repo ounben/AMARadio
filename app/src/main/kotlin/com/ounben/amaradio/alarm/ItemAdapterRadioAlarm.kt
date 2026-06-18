@@ -5,12 +5,16 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.ToggleButton
 import androidx.appcompat.widget.SwitchCompat
-import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
-import java.util.*
+import java.util.Locale
 
 class ItemAdapterRadioAlarm(context: Context?) : ArrayAdapter<DataRadioStationAlarm>(context!!, R.layout.list_item_alarm) {
     private val ctx: Context = context!!

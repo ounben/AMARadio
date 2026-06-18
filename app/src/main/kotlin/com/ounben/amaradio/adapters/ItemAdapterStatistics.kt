@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import com.ounben.amaradio.data.DataStatistics
 import com.ounben.amaradio.R
+import com.ounben.amaradio.data.DataStatistics
 
 class ItemAdapterStatistics(context: Context, private val resourceId: Int) : ArrayAdapter<DataStatistics>(context, resourceId) {
     private val ctx: Context = context

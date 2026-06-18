@@ -6,12 +6,11 @@ import android.os.Build
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
-import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType

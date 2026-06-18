@@ -13,15 +13,20 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.ounben.amaradio.station.ItemAdapterStation
-import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.station.ItemAdapterIconOnlyStation
 import com.ounben.amaradio.interfaces.IAdapterRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
+import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.station.ItemAdapterIconOnlyStation
+import com.ounben.amaradio.station.ItemAdapterStation
 import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.station.StationsFilter
-import kotlinx.coroutines.*
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable {
     private lateinit var rvStations: RecyclerView

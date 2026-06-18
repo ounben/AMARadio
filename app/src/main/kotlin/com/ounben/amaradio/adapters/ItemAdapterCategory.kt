@@ -6,8 +6,8 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.R
+import com.ounben.amaradio.data.DataCategory
 import java.util.Locale
 
 class ItemAdapterCategory(private val resourceId: Int) : RecyclerView.Adapter<ItemAdapterCategory.CategoryViewHolder>() {

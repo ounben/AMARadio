@@ -3,7 +3,8 @@ package com.ounben.amaradio
 import android.util.Log
 import java.net.InetAddress
 import java.net.UnknownHostException
-import java.util.*
+import java.util.Random
+import java.util.Vector
 
 object RadioBrowserServerManager {
     private var currentServer: String? = null

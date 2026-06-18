@@ -1,6 +1,8 @@
 package com.ounben.amaradio
 
-import android.content.*
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.media.audiofx.AudioEffect
 import android.os.Bundle
 import android.os.PowerManager
@@ -8,12 +10,19 @@ import android.provider.Settings
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.edit
 import androidx.fragment.app.DialogFragment
-import androidx.preference.*
+import androidx.preference.EditTextPreference
+import androidx.preference.EditTextPreferenceDialogFragmentCompat
+import androidx.preference.ListPreference
+import androidx.preference.ListPreferenceDialogFragmentCompat
+import androidx.preference.Preference
+import androidx.preference.PreferenceCategory
+import androidx.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceGroup
 import com.ounben.amaradio.interfaces.IApplicationSelected
 import com.ounben.amaradio.proxy.ProxySettingsDialog
 import com.ounben.amaradio.utils.UiScaler
-import androidx.core.content.edit
 
 class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
     IApplicationSelected {

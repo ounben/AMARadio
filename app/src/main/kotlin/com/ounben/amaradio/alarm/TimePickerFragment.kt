@@ -7,7 +7,7 @@ import android.text.format.DateFormat
 import android.widget.TimePicker
 import androidx.fragment.app.DialogFragment
 import com.ounben.amaradio.Utils
-import java.util.*
+import java.util.Calendar
 
 class TimePickerFragment : DialogFragment, TimePickerDialog.OnTimeSetListener {
     private var callback: TimePickerDialog.OnTimeSetListener? = null

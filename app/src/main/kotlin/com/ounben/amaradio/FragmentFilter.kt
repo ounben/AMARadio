@@ -5,27 +5,35 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
-import androidx.preference.PreferenceManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
+import android.widget.Button
+import android.widget.Filter
+import android.widget.ImageView
+import android.widget.Spinner
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.edit
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.switchmaterial.SwitchMaterial
-import kotlinx.coroutines.*
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.ItemAdapterStation
 import com.ounben.amaradio.station.StationsFilter
 import com.ounben.amaradio.utils.UiScaler
-import java.net.URLEncoder
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.Locale
 
 class FragmentFilter : FragmentBase() {
     

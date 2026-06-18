@@ -11,7 +11,7 @@ import java.net.InetSocketAddress
 import java.net.Socket
 import java.nio.CharBuffer
 import java.nio.charset.Charset
-import java.util.*
+import java.util.LinkedList
 
 open class MPDAsyncTask : Runnable {
     interface ReadStage {

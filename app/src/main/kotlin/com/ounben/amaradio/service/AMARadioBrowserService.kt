@@ -1,16 +1,21 @@
 package com.ounben.amaradio.service
 
-import android.content.*
+import android.content.ComponentName
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
 import android.os.RemoteException
 import android.support.v4.media.MediaBrowserCompat
 import androidx.media.MediaBrowserServiceCompat
-import com.ounben.amaradio.IPlayerService
-import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.AppEventManager
+import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.utils.GetRealLinkAndPlayTask
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 class AMARadioBrowserService : MediaBrowserServiceCompat() {
     private lateinit var AMARadioBrowser: AMARadioBrowser

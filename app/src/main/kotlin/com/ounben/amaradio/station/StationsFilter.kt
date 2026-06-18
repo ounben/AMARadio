@@ -3,13 +3,11 @@ package com.ounben.amaradio.station
 import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
-import org.apache.commons.text.similarity.JaroWinklerSimilarity
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.utils.CustomFilter
-import java.io.UnsupportedEncodingException
 import java.net.URLEncoder
-import java.util.*
+import java.util.Locale
 
 class StationsFilter(private val context: Context, private val filterType: FilterType, private val dataProvider: DataProvider) : CustomFilter() {
     enum class FilterType {

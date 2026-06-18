@@ -10,10 +10,8 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils

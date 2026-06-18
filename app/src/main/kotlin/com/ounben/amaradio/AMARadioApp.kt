@@ -2,7 +2,6 @@ package com.ounben.amaradio
 
 import android.app.Application
 import android.app.UiModeManager
-import android.content.Context
 import android.content.res.Configuration
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
@@ -10,18 +9,16 @@ import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import com.ounben.amaradio.alarm.RadioAlarmManager
+import com.ounben.amaradio.cast.CastHandler
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.station.live.metadata.TrackMetadataSearcher
 import com.ounben.amaradio.utils.TvChannelManager
-import com.ounben.amaradio.cast.CastHandler
-import okhttp3.Cache
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import java.io.File
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 

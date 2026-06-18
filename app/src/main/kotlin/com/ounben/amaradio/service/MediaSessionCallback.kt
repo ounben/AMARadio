@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.os.RemoteException
 import android.support.v4.media.session.MediaSessionCompat
 import android.view.KeyEvent
-import com.ounben.amaradio.IPlayerService
-import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.AppEventManager
+import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.utils.GetRealLinkAndPlayTask
-import com.ounben.amaradio.service.PauseReason
-import com.ounben.amaradio.service.AMARadioBrowser
 
 class MediaSessionCallback(private val context: Context, private val playerService: IPlayerService) : MediaSessionCompat.Callback() {
 

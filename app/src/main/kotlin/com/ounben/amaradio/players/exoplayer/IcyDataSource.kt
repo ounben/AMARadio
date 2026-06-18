@@ -15,7 +15,7 @@ import okhttp3.Request
 import okhttp3.ResponseBody
 import okhttp3.internal.closeQuietly
 import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 @UnstableApi
 class IcyDataSource(

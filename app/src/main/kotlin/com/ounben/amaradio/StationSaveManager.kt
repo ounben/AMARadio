@@ -2,19 +2,25 @@ package com.ounben.amaradio
 
 import android.content.Context
 import android.content.Intent
-import androidx.preference.PreferenceManager
-import androidx.core.content.edit
 import android.util.Log
-import android.widget.Toast
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.ounben.amaradio.station.DataRadioStation
-import org.json.JSONArray
-import java.io.*
-import java.util.*
-import org.apache.commons.text.similarity.CosineSimilarity
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import org.apache.commons.text.similarity.CosineSimilarity
+import org.json.JSONArray
+import java.io.BufferedReader
+import java.io.Reader
+import java.io.Writer
+import java.util.Collections
+import java.util.Locale
 
 open class StationSaveManager(protected val context: Context) {
     interface StationStatusListener {

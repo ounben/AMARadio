@@ -12,7 +12,13 @@ import androidx.fragment.app.Fragment
 import com.ounben.amaradio.adapters.ItemAdapterStatistics
 import com.ounben.amaradio.data.DataStatistics
 import com.ounben.amaradio.interfaces.IFragmentRefreshable
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FragmentServerInfo : Fragment(), IFragmentRefreshable {
     private var itemAdapterStatistics: ItemAdapterStatistics? = null

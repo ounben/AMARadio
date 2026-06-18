@@ -8,16 +8,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.button.MaterialButton
-import com.ounben.amaradio.*
+import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
+import com.ounben.amaradio.FragmentBase
+import com.ounben.amaradio.R
+import com.ounben.amaradio.StationSaveManager
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.utils.CustomFilter
-import java.util.*
 
 class FragmentStations : FragmentBase(), IFragmentSearchable {
     private var rvStations: RecyclerView? = null

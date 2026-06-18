@@ -5,8 +5,13 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.LiveData
-import kotlinx.coroutines.*
-import java.util.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import java.util.concurrent.ConcurrentLinkedQueue
 
 class MPDClient(context: Context) {

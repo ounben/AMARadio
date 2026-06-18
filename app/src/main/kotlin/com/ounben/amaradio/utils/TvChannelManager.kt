@@ -9,12 +9,19 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.graphics.drawable.toBitmap
 import androidx.core.net.toUri
-import androidx.tvprovider.media.tv.*
+import androidx.tvprovider.media.tv.BaseProgram
+import androidx.tvprovider.media.tv.PreviewChannel
+import androidx.tvprovider.media.tv.PreviewChannelHelper
+import androidx.tvprovider.media.tv.PreviewProgram
+import androidx.tvprovider.media.tv.TvContractCompat
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.R
-import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.service.MediaSessionCallback
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import java.io.IOException
 
 private const val INVALID_CONTENT_ID: Long = -1
