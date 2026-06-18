@@ -448,7 +448,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         wifiLock = null
     }
 
-    private fun sendMessage(theTitle: String, theMessage: String, theTicker: String) {
+    private fun sendMessage(theTitle: String, theMessage: String, theTicker: String, playState: PlayState?) {
         var msg = theMessage
         val notificationIntent = Intent(this, ActivityMain::class.java).apply {
             putExtra("stationid", itsCurrentStation?.StationUuid)
@@ -460,7 +460,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val pendingIntentNext = PendingIntent.getService(this, 0, nextIntent, pendingIntentFlag)
         val previousIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_SKIP_TO_PREVIOUS }
         val pendingIntentPrevious = PendingIntent.getService(this, 0, previousIntent, pendingIntentFlag)
-        val playState = radioPlayer?.playState
         if ((playState == PlayState.Paused || playState == PlayState.Idle) && pauseReason == PauseReason.METERED_CONNECTION) {
             msg = resources.getString(R.string.notify_metered_connection)
         } else if (lastErrorFromPlayer != -1) {
@@ -535,12 +534,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 notificationIsActive = false
             }
             PlayState.PrePlaying -> {
-                sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play))
+                sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play), playState)
             }
             PlayState.Playing -> {
                 val title = liveInfo.title
-                if (!TextUtils.isEmpty(title)) sendMessage(itsCurrentStation?.Name ?: "", title!!, title)
-                else sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_play), itsCurrentStation?.Name ?: "")
+                if (!TextUtils.isEmpty(title)) sendMessage(itsCurrentStation?.Name ?: "", title!!, title, playState)
+                else sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_play), itsCurrentStation?.Name ?: "", playState)
                 
                 itsCurrentStation?.let { station ->
                     val metadataBuilder = MediaMetadata.Builder()
@@ -565,7 +564,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 }
             }
             PlayState.Paused -> {
-                sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_paused), itsCurrentStation?.Name ?: "")
+                sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_paused), itsCurrentStation?.Name ?: "", playState)
             }
         }
     }
