@@ -206,7 +206,10 @@ class FragmentFilter : FragmentBase() {
             override fun onStationMoveFinished() {}
         }
         
-        rvStations?.let { Utils.setupStationRecyclerView(requireContext(), it, adapter) }
+        rvStations?.let { 
+            Utils.setupStationRecyclerView(requireContext(), it, adapter) 
+            adapter.enableItemMove(it)
+        }
         
         btnApply.setOnClickListener {
             saveFilters()
