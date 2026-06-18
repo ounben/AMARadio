@@ -6,6 +6,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaSession
+import androidx.media3.session.SessionError
 import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
@@ -81,7 +82,7 @@ class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
                 .build()
             return Futures.immediateFuture(LibraryResult.ofItem(item, null))
         }
-        return Futures.immediateFuture(LibraryResult.ofError<MediaItem>(LibraryResult.RESULT_ERROR_BAD_VALUE))
+        return Futures.immediateFuture(LibraryResult.ofError<MediaItem>(SessionError.ERROR_BAD_VALUE))
     }
 
     fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId]
