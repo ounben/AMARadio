@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.preference.PreferenceManager
+import androidx.core.content.edit
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -290,7 +291,7 @@ class FragmentFilter : FragmentBase() {
     }
 
     private fun saveFilters() {
-        sharedPref?.edit()?.apply {
+        sharedPref?.edit {
             putString("filter_name", autoName.text.toString())
             putString("filter_country_code", selectedCountryCode)
             putString("filter_country_label", autoCountry.text.toString())
@@ -299,7 +300,6 @@ class FragmentFilter : FragmentBase() {
             putString("filter_tag", autoTag.text.toString())
             putString("filter_sort", sortOptions[spinnerSort.selectedItemPosition])
             putBoolean("filter_reverse", switchReverse.isChecked)
-            apply()
         }
     }
 

@@ -13,6 +13,7 @@ import androidx.appcompat.widget.AppCompatSpinner
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
+import androidx.core.content.edit
 import kotlinx.coroutines.*
 import com.ounben.amaradio.R
 import com.ounben.amaradio.AMARadioApp
@@ -62,10 +63,10 @@ class ProxySettingsDialog : DialogFragment() {
 
         val dialog = builder.setView(layout)
             .setPositiveButton(R.string.action_ok) { _, _ ->
-                val editor = sharedPref.edit()
                 val proxySettings = createProxySettings()
-                proxySettings.toPreferences(editor)
-                editor.apply()
+                sharedPref.edit {
+                    proxySettings.toPreferences(this)
+                }
 
                 (requireActivity().application as AMARadioApp).rebuildHttpClient()
             }

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import androidx.core.content.edit
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
@@ -106,11 +107,11 @@ class MPDServersRepository(private val context: Context) {
 
         private fun saveMPDServers(servers: List<MPDServerData>, context: Context) {
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-            val editor = sharedPref.edit()
             val gson = Gson()
             val serversJson = gson.toJson(servers)
-            editor.putString("mpd_servers", serversJson)
-            editor.apply()
+            sharedPref.edit {
+                putString("mpd_servers", serversJson)
+            }
         }
     }
 }

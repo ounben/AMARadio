@@ -5,7 +5,8 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.preference.PreferenceManager
+import androidx.preference.PreferenceManager
+import androidx.core.content.edit
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -69,28 +70,28 @@ class RadioAlarmManager(private val context: Context) {
 
     fun save() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val editor = sharedPref.edit()
         var items = ""
-        for (alarm in list) {
-            if (Utils.isDebug) {
-                Log.d("ALARM", "save item:${alarm.id}/${alarm.station?.Name}")
+        sharedPref.edit {
+            for (alarm in list) {
+                if (Utils.isDebug) {
+                    Log.d("ALARM", "save item:${alarm.id}/${alarm.station?.Name}")
+                }
+                putString("alarm.${alarm.id}.station", alarm.station?.toJson().toString())
+                putInt("alarm.${alarm.id}.timeHour", alarm.hour)
+                putInt("alarm.${alarm.id}.timeMinutes", alarm.minute)
+                putBoolean("alarm.${alarm.id}.enabled", alarm.enabled)
+                putBoolean("alarm.${alarm.id}.repeating", alarm.repeating)
+                val gson = Gson()
+                val weekdaysString = gson.toJson(alarm.weekDays)
+                putString("alarm.${alarm.id}.weekDays", weekdaysString)
+                items = if (items == "") {
+                    "" + alarm.id
+                } else {
+                    "$items,${alarm.id}"
+                }
             }
-            editor.putString("alarm.${alarm.id}.station", alarm.station?.toJson().toString())
-            editor.putInt("alarm.${alarm.id}.timeHour", alarm.hour)
-            editor.putInt("alarm.${alarm.id}.timeMinutes", alarm.minute)
-            editor.putBoolean("alarm.${alarm.id}.enabled", alarm.enabled)
-            editor.putBoolean("alarm.${alarm.id}.repeating", alarm.repeating)
-            val gson = Gson()
-            val weekdaysString = gson.toJson(alarm.weekDays)
-            editor.putString("alarm.${alarm.id}.weekDays", weekdaysString)
-            items = if (items == "") {
-                "" + alarm.id
-            } else {
-                "$items,${alarm.id}"
-            }
+            putString("alarm.ids", items)
         }
-        editor.putString("alarm.ids", items)
-        editor.apply()
         _savedAlarms.value = list.toList()
     }
 

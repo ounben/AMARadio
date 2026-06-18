@@ -3,6 +3,7 @@ package com.ounben.amaradio
 import android.content.Context
 import android.content.Intent
 import androidx.preference.PreferenceManager
+import androidx.core.content.edit
 import android.util.Log
 import android.widget.Toast
 import com.ounben.amaradio.station.DataRadioStation
@@ -265,7 +266,9 @@ open class StationSaveManager(protected val context: Context) {
         if (Utils.isDebug) {
             Log.d("SAVE", "wrote: $str")
         }
-        sharedPref.edit().putString(getSaveId(), str).apply()
+        sharedPref.edit {
+            putString(getSaveId(), str)
+        }
         _stationsFlow.value = listStations.toList()
     }
 
