@@ -64,15 +64,8 @@
             android:foregroundServiceType="mediaPlayback">
             <intent-filter>
                 <action android:name="android.intent.action.MEDIA_BUTTON" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name="com.ounben.amaradio.service.AMARadioBrowserService"
-            android:exported="true"
-            tools:ignore="ExportedService">
-            <intent-filter>
-                <action android:name="android.media.browse.MediaBrowserService" />
+                <action android:name="androidx.media3.session.MediaSessionService" />
+                <action android:name="androidx.media3.session.MediaLibraryService" />
             </intent-filter>
         </service>
 

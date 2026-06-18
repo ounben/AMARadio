@@ -112,6 +112,8 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         return !playerIsInLegalState.get() || mediaPlayer!!.isPlaying
     }
 
+    override val player: androidx.media3.common.Player? = null
+
     override val bufferedMs: Long = -1
 
     override val audioSessionId: Int

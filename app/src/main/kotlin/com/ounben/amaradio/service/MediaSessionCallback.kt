@@ -2,97 +2,52 @@ package com.ounben.amaradio.service
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
-import android.os.RemoteException
-import android.support.v4.media.session.MediaSessionCompat
-import android.view.KeyEvent
-import com.ounben.amaradio.AMARadioApp
+import androidx.media3.common.MediaItem
+import androidx.media3.session.LibraryResult
+import androidx.media3.session.MediaLibraryService.LibraryParams
+import androidx.media3.session.MediaLibraryService.MediaLibrarySession
+import androidx.media3.session.MediaSession
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.IPlayerService
-import com.ounben.amaradio.utils.GetRealLinkAndPlayTask
+import com.google.common.collect.ImmutableList
+import com.google.common.util.concurrent.ListenableFuture
 
-class MediaSessionCallback(private val context: Context, private val playerService: IPlayerService) : MediaSessionCompat.Callback() {
+class MediaSessionCallback(
+    private val context: Context,
+    private val playerService: IPlayerService,
+    private val amaradioBrowser: AMARadioBrowser
+) : MediaLibrarySession.Callback {
 
-    override fun onMediaButtonEvent(mediaButtonEvent: Intent): Boolean {
-        val event = mediaButtonEvent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)
-        if (event?.keyCode == KeyEvent.KEYCODE_HEADSETHOOK) {
-            if (event.action == KeyEvent.ACTION_UP && !event.isLongPress) {
-                try {
-                    if (playerService.isPlaying) {
-                        playerService.Pause(PauseReason.USER)
-                    } else {
-                        playerService.Resume()
-                    }
-                } catch (e: RemoteException) {
-                    e.printStackTrace()
-                }
+    override fun onConnect(session: MediaSession, controller: MediaSession.ControllerInfo): MediaSession.ConnectionResult {
+        return MediaSession.ConnectionResult.accept(
+            MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS,
+            MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS
+        )
+    }
+
+    override fun onGetLibraryRoot(session: MediaLibrarySession, browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
+        return amaradioBrowser.onGetLibraryRoot(browser, params)
+    }
+
+    override fun onGetChildren(session: MediaLibrarySession, browser: MediaSession.ControllerInfo, parentId: String, page: Int, pageSize: Int, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
+        return amaradioBrowser.onGetChildren(browser, parentId, page, pageSize, params)
+    }
+
+    override fun onGetItem(session: MediaLibrarySession, browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
+        return amaradioBrowser.onGetItem(browser, mediaId)
+    }
+
+    override fun onSetMediaItems(session: MediaSession, controller: MediaSession.ControllerInfo, mediaItems: MutableList<MediaItem>, startIndex: Int, startPositionMs: Long): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        if (mediaItems.isNotEmpty()) {
+            val mediaItem = mediaItems[0]
+            val stationId = AMARadioBrowser.stationIdFromMediaId(mediaItem.mediaId)
+            if (stationId.isNotEmpty()) {
+                 val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
+                 intent.putExtra(EXTRA_STATION_ID, stationId)
+                 AppEventManager.sendEvent(intent)
             }
-            return true
         }
-        return super.onMediaButtonEvent(mediaButtonEvent)
-    }
-
-    override fun onPause() {
-        try {
-            playerService.Pause(PauseReason.USER)
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onPlay() {
-        try {
-            playerService.Resume()
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onSkipToNext() {
-        try {
-            playerService.SkipToNext()
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onSkipToPrevious() {
-        try {
-            playerService.SkipToPrevious()
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onStop() {
-        try {
-            playerService.Stop()
-        } catch (e: RemoteException) {
-            e.printStackTrace()
-        }
-    }
-
-    override fun onPlayFromMediaId(mediaId: String, extras: Bundle?) {
-        val stationId = AMARadioBrowser.stationIdFromMediaId(mediaId)
-        if (stationId.isNotEmpty()) {
-            val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
-            intent.putExtra(EXTRA_STATION_ID, stationId)
-            AppEventManager.sendEvent(intent)
-        }
-    }
-
-    override fun onPlayFromSearch(query: String, extras: Bundle?) {
-        var q = query
-        // remove voice search residues like " with AMARadio"
-        q = q.replace("(?i) \\w+ radio\\s*droid.*".toRegex(), "")
-        val app = context.applicationContext as AMARadioApp
-        var station = app.favouriteManager.getBestNameMatch(q)
-        if (station == null) station = app.historyManager.getBestNameMatch(q)
-        if (station == null) station = app.fallbackStationsManager.getBestNameMatch(q)
-        station?.let {
-            val playTask = GetRealLinkAndPlayTask(context, it, playerService)
-            playTask.execute()
-        }
+        return super.onSetMediaItems(session, controller, mediaItems, startIndex, startPositionMs)
     }
 
     companion object {

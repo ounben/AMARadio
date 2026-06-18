@@ -20,6 +20,7 @@ interface PlayerWrapper {
     fun pause()
     fun stop()
     fun isPlaying(): Boolean
+    val player: androidx.media3.common.Player?
     val bufferedMs: Long
     val audioSessionId: Int
     val totalTransferredBytes: Long

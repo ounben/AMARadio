@@ -36,8 +36,8 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 
 @UnstableApi
-class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
-    private var player: ExoPlayer? = null
+class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
+    private var internalPlayer: ExoPlayer
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
     private var bandwidthMeter: DefaultBandwidthMeter? = null
@@ -48,7 +48,6 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     private var isHls = false
     private var isPlayingFlag = false
     private val playerThreadHandler = Handler(Looper.getMainLooper())
-    private var context: Context? = null
     private var audioSource: MediaSource? = null
     private var fullStopTask: Runnable? = null
     private var currentVolume = 1.0f
@@ -64,8 +63,13 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
         }
     }
 
+    init {
+        internalPlayer = ExoPlayer.Builder(context).build().apply {
+            addListener(PlayerEventListener())
+        }
+    }
+
     override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, isAlarm: Boolean) {
-        this.context = context
         this.streamUrl = streamUrl
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (bandwidthMeter == null) {
@@ -81,27 +85,22 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
         }
         playerThreadHandler.post {
             cancelStopTask()
-            if (player == null) {
-                player = ExoPlayer.Builder(context).build().apply {
-                    val audioAttributes = AudioAttributes.Builder()
-                        .setUsage(if (isAlarm) C.USAGE_ALARM else C.USAGE_MEDIA)
-                        .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
-                        .build()
-                    setAudioAttributes(audioAttributes, false)
-                    volume = currentVolume
-                    addListener(PlayerEventListener())
-                    Log.d("ExoPlayerWrapper", "Player created. Volume: $volume, AudioAttributes usage: ${audioAttributes.usage}")
-                }
-            }
-            player!!.setMediaSource(audioSource!!)
-            player!!.prepare()
-            player!!.playWhenReady = true
+            val audioAttributes = AudioAttributes.Builder()
+                .setUsage(if (isAlarm) C.USAGE_ALARM else C.USAGE_MEDIA)
+                .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+                .build()
+            internalPlayer.setAudioAttributes(audioAttributes, false)
+            internalPlayer.volume = currentVolume
+            internalPlayer.setMediaSource(audioSource!!)
+            internalPlayer.prepare()
+            internalPlayer.playWhenReady = true
+            Log.d("ExoPlayerWrapper", "Player starting. Volume: ${internalPlayer.volume}, AudioAttributes usage: ${audioAttributes.usage}")
         }
     }
 
     override fun pause() {
         playerThreadHandler.post {
-            player?.playWhenReady = false
+            internalPlayer.playWhenReady = false
             isPlayingFlag = false
         }
     }
@@ -109,28 +108,25 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     override fun stop() {
         isPlayingFlag = false
         playerThreadHandler.post {
-            player?.stop()
-            fullStopTask = Runnable {
-                player?.release()
-                player = null
-            }
-            playerThreadHandler.postDelayed(fullStopTask!!, 5000)
+            internalPlayer.stop()
         }
     }
 
     override fun isPlaying(): Boolean = isPlayingFlag
 
+    override val player: Player?
+        get() = internalPlayer
+
     override val bufferedMs: Long
         get() {
-            val p = player ?: return 0
-            val pos = p.bufferedPosition
-            val current = p.currentPosition
+            val pos = internalPlayer.bufferedPosition
+            val current = internalPlayer.currentPosition
             return if (pos > current) pos - current else 0
         }
 
     override val audioSessionId: Int
         get() {
-            val id = player?.audioSessionId ?: 0
+            val id = internalPlayer.audioSessionId
             Log.d("ExoPlayerWrapper", "get audioSessionId: $id")
             return id
         }
@@ -139,7 +135,7 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
 
     override fun setVolume(newVolume: Float) {
         currentVolume = newVolume / 100f
-        playerThreadHandler.post { player?.volume = currentVolume }
+        playerThreadHandler.post { internalPlayer.volume = currentVolume }
     }
 
     override fun setStateListener(listener: PlayerWrapper.PlayListener?) {
@@ -161,16 +157,14 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
 
     private fun resumeWhenNetworkConnected() {
         if (!isPlayingFlag) return
-        if (Utils.hasAnyConnection(context!!)) {
+        if (Utils.hasAnyConnection(context)) {
             playerThreadHandler.post {
-                player?.let {
-                    it.prepare(audioSource!!)
-                    it.playWhenReady = true
-                }
+                internalPlayer.prepare(audioSource!!)
+                internalPlayer.playWhenReady = true
             }
         } else {
             stateListener?.onPlayerWarning(R.string.warning_no_network_trying_resume)
-            context!!.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+            context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         }
     }
 
@@ -217,10 +211,10 @@ class ExoPlayerWrapper : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
         override fun onPlaybackStateChanged(playbackState: Int) {
              when (playbackState) {
                 Player.STATE_READY -> {
-                    if (player?.playWhenReady == true) {
+                    if (internalPlayer.playWhenReady) {
                         isPlayingFlag = true
                         stateListener?.onStateChanged(PlayState.Playing)
-                        if (context != null && Utils.isDebug) Log.d("ExoPlayerWrapper", "Playback started, volume: ${player?.volume}")
+                        if (Utils.isDebug) Log.d("ExoPlayerWrapper", "Playback started, volume: ${internalPlayer.volume}")
                     } else {
                         stateListener?.onStateChanged(PlayState.Paused)
                     }

@@ -1,152 +1,118 @@
 package com.ounben.amaradio.service
 
-import android.content.res.Resources
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Bundle
-import android.support.v4.media.MediaBrowserCompat
-import android.support.v4.media.MediaDescriptionCompat
-import android.support.v4.media.MediaMetadataCompat
-import android.util.Log
-import androidx.media.MediaBrowserServiceCompat
-import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE
-import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE
-import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM
-import androidx.media.utils.MediaConstants.DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM
-import androidx.preference.PreferenceManager
-import coil.imageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import coil.transform.RoundedCornersTransformation
+import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
+import androidx.media3.session.LibraryResult
+import androidx.media3.session.MediaLibraryService.LibraryParams
+import androidx.media3.session.MediaSession
+import com.google.common.collect.ImmutableList
+import com.google.common.util.concurrent.Futures
+import com.google.common.util.concurrent.ListenableFuture
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
-import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class AMARadioBrowser(private val AMARadioApp: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()
-    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    fun onGetRoot(clientPackageName: String, clientUid: Int, rootHints: Bundle?): MediaBrowserServiceCompat.BrowserRoot {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(AMARadioApp)
-        val extras = Bundle()
-        extras.putInt(DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_BROWSABLE, DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM)
-        if (sharedPref.getBoolean("load_icons", false) && sharedPref.getBoolean("icons_only_favorites_style", false)) {
-            Log.d(TAG, "Setting grid style for playables")
-            extras.putInt(DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE, DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM)
-        } else {
-            Log.d(TAG, "Setting list style for playables")
-            extras.putInt(DESCRIPTION_EXTRAS_KEY_CONTENT_STYLE_PLAYABLE, DESCRIPTION_EXTRAS_VALUE_CONTENT_STYLE_LIST_ITEM)
-        }
-        return MediaBrowserServiceCompat.BrowserRoot(MEDIA_ID_ROOT, extras)
+    fun onGetLibraryRoot(browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
+        val rootItem = MediaItem.Builder()
+            .setMediaId(MEDIA_ID_ROOT)
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .setTitle(AMARadioApp.resources.getString(R.string.app_name))
+                .build())
+            .build()
+        return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
     }
 
-    fun onLoadChildren(parentId: String, result: MediaBrowserServiceCompat.Result<List<MediaBrowserCompat.MediaItem>>) {
-        val resources = AMARadioApp.resources
+    fun onGetChildren(browser: MediaSession.ControllerInfo, parentId: String, page: Int, pageSize: Int, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
         if (MEDIA_ID_ROOT == parentId) {
-            result.sendResult(createBrowsableMediaItemsForRoot(resources))
-            return
+            val rootChildren = createBrowsableMediaItemsForRoot()
+            return Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
         }
+
         var stations: List<DataRadioStation>? = null
         when (parentId) {
             MEDIA_ID_MUSICS_FAVORITE -> stations = AMARadioApp.favouriteManager.getList()
             MEDIA_ID_MUSICS_HISTORY -> stations = AMARadioApp.historyManager.getList()
-            MEDIA_ID_MUSICS_TOP -> {}
         }
-        if (stations != null && stations.isNotEmpty()) {
-            stationIdToStation.clear()
+
+        if (stations != null) {
+            val mediaItems = ArrayList<MediaItem>()
             for (station in stations) {
                 stationIdToStation[station.StationUuid] = station
-            }
-            result.detach()
-            retrieveStationsIconAndSendResult(result, stations)
-        } else {
-            result.sendResult(ArrayList())
-        }
-    }
-
-    private fun retrieveStationsIconAndSendResult(result: MediaBrowserServiceCompat.Result<List<MediaBrowserCompat.MediaItem>>, stations: List<DataRadioStation>) {
-        scope.launch {
-            val stationIdToIcon = HashMap<String, Bitmap>()
-            val resources = AMARadioApp.resources
-
-            withContext(Dispatchers.IO) {
-                for (station in stations) {
-                    val url = if (!station.hasIcon()) Utils.resourceToUri(resources, R.mipmap.ic_elgato_launcher).toString() else station.IconUrl
-                    val request = ImageRequest.Builder(AMARadioApp)
-                        .data(url)
-                        .size(128, 128)
-                        .transformations(RoundedCornersTransformation(12f))
-                        .build()
-                    
-                    val imageResult = AMARadioApp.imageLoader.execute(request)
-                    if (imageResult is SuccessResult) {
-                        val bitmap = (imageResult.drawable as? BitmapDrawable)?.bitmap
-                        if (bitmap != null) {
-                            stationIdToIcon[station.StationUuid] = bitmap
-                        }
-                    }
-                }
-            }
-
-            val mediaItems = ArrayList<MediaBrowserCompat.MediaItem>()
-            for (station in stations) {
-                var stationIcon = stationIdToIcon[station.StationUuid]
-                if (stationIcon == null) stationIcon = BitmapFactory.decodeResource(resources, R.mipmap.ic_elgato_launcher)
-                val extras = Bundle()
-                extras.putParcelable(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, stationIcon)
-                extras.putParcelable(MediaMetadataCompat.METADATA_KEY_DISPLAY_ICON, stationIcon)
-                val mediaItem = MediaDescriptionCompat.Builder()
-                    .setMediaId(MEDIA_ID_MUSICS_HISTORY + LEAF_SEPARATOR + station.StationUuid)
+                val metadata = MediaMetadata.Builder()
                     .setTitle(station.Name)
-                    .setDescription("${station.Country} ${station.Country} ${station.TagsAll}")
-                    .setExtras(extras)
+                    .setSubtitle("${station.Country} ${station.TagsAll}")
+                    .setIsBrowsable(false)
+                    .setIsPlayable(true)
                 
                 val iconUrl = station.IconUrl
                 if (!iconUrl.isNullOrEmpty()) {
-                    val url = if (iconUrl.startsWith("http:")) iconUrl.replace("http:", "https:") else iconUrl
-                    mediaItem.setIconUri(Uri.parse(url))
-                } else {
-                    mediaItem.setIconUri(Utils.resourceToUri(resources, R.drawable.ic_radio_24dp))
+                    metadata.setArtworkUri(Uri.parse(iconUrl))
                 }
-                mediaItems.add(MediaBrowserCompat.MediaItem(mediaItem.build(), MediaBrowserCompat.MediaItem.FLAG_PLAYABLE))
+                
+                mediaItems.add(MediaItem.Builder()
+                    .setMediaId(MEDIA_ID_MUSICS_HISTORY + LEAF_SEPARATOR + station.StationUuid)
+                    .setMediaMetadata(metadata.build())
+                    .build())
             }
-            result.sendResult(mediaItems)
+            return Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(mediaItems), params))
         }
+
+        return Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.of<MediaItem>(), params))
+    }
+
+    fun onGetItem(browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
+        val stationId = stationIdFromMediaId(mediaId)
+        val station = stationIdToStation[stationId]
+        if (station != null) {
+            val item = MediaItem.Builder()
+                .setMediaId(mediaId)
+                .setMediaMetadata(MediaMetadata.Builder()
+                    .setTitle(station.Name)
+                    .setIsBrowsable(false)
+                    .setIsPlayable(true)
+                    .setArtworkUri(Uri.parse(station.IconUrl ?: ""))
+                    .build())
+                .build()
+            return Futures.immediateFuture(LibraryResult.ofItem(item, null))
+        }
+        return Futures.immediateFuture(LibraryResult.ofError<MediaItem>(LibraryResult.RESULT_ERROR_BAD_VALUE))
     }
 
     fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId]
 
-    private fun createBrowsableMediaItemsForRoot(resources: Resources): List<MediaBrowserCompat.MediaItem> {
-        val mediaItems = ArrayList<MediaBrowserCompat.MediaItem>()
-        mediaItems.add(MediaBrowserCompat.MediaItem(MediaDescriptionCompat.Builder()
+    private fun createBrowsableMediaItemsForRoot(): List<MediaItem> {
+        val resources = AMARadioApp.resources
+        val mediaItems = ArrayList<MediaItem>()
+        mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
-            .setTitle(resources.getString(R.string.nav_item_starred))
-            .setIconUri(Utils.resourceToUri(resources, R.drawable.ic_star_white_24))
-            .build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE))
-        mediaItems.add(MediaBrowserCompat.MediaItem(MediaDescriptionCompat.Builder()
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(resources.getString(R.string.nav_item_starred))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .build())
+            .build())
+        mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_HISTORY)
-            .setTitle(resources.getString(R.string.nav_item_history))
-            .setIconUri(Utils.resourceToUri(resources, R.drawable.ic_star_white_24))
-            .build(), MediaBrowserCompat.MediaItem.FLAG_BROWSABLE))
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(resources.getString(R.string.nav_item_history))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .build())
+            .build())
         return mediaItems
     }
 
     companion object {
-        private const val TAG = "AMARadioBrowser"
         private const val MEDIA_ID_ROOT = "__ROOT__"
         private const val MEDIA_ID_MUSICS_FAVORITE = "__FAVORITE__"
         private const val MEDIA_ID_MUSICS_HISTORY = "__HISTORY__"
-        private const val MEDIA_ID_MUSICS_TOP = "__TOP__"
         private const val LEAF_SEPARATOR = '|'
-        private const val IMAGE_LOAD_TIMEOUT_MS = 2000
 
         @JvmStatic
         fun stationIdFromMediaId(mediaId: String?): String {
