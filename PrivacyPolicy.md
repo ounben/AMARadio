@@ -30,4 +30,4 @@ While we do not foresee changes in our approach to privacy, we may update our Pr
 
 ## Contact Us
 
-If you have any questions about our Privacy Policy, please contact us at [mailto:segler_alex@web.de]
+If you have any questions about our Privacy Policy, please contact us at [ben@ounben.com]
