@@ -5,22 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [0.97] - 2026-06-15
-### Added
-- **Android 16 Support**: Updated Target SDK to 36 (Android 16) to ensure future compatibility and security.
-- **Improved Foreground Handling**: Implemented immediate foreground service promotion in `PrePlaying` state. This prevents background execution restrictions on Android 14 and 15, ensuring the app starts reliably even when minimized during buffering.
-- **Media Category**: Added `.setCategory(NotificationCompat.CATEGORY_TRANSPORT)` to the playback notification for better system classification on modern Android versions.
-
+## [0.98] - 2026-06-15
 ### Changed
-- **Architecture Migration**: Fully migrated the media playback and session architecture to **AndroidX Media3**. 
-    - Replaced legacy `MediaSessionCompat` and `MediaBrowserServiceCompat` with `MediaLibraryService` and `MediaLibrarySession`.
-    - Integrated `ExoPlayer` directly into the Media3 session for improved system-wide media controls and Android Auto support.
-- **Alarm Management**: Modernized `RadioAlarmManager` to use `USE_EXACT_ALARM` exclusively on Android 13+. This removes the need for manual "Schedule Exact Alarm" permission approval on newer devices.
+- **Target SDK 36 (Android 16)**: Finalized the migration to Android 16 to meet the latest Play Store requirements.
+- **Privacy Audit**: Completed a full audit of app permissions and dependencies. Verified that the app is 100% Java-free and utilizes only essential permissions.
+- **Notification Refinement**: Set the notification category to `CATEGORY_TRANSPORT` for improved system-level media handling.
 
 ### Fixed
-- **System Integration**: Resolved package-private access issues with session tokens in notifications.
-- **Stability**: Fixed potential NullPointerExceptions during session initialization by synchronizing ExoPlayer creation on the main thread.
-- **Type Safety**: Corrected generic type mismatches in media library results.
+- **Foreground Service Compliance**: Optimized the service start logic to strictly comply with Android 15+ background start restrictions, preventing potential crashes when starting playback.
+- **Alarm Logic**: Cleaned up legacy `AlarmManager` checks to ensure seamless operation on API 33-36 without unnecessary user prompts.
+
+## [0.97] - 2026-06-15
+### Added
+- **AndroidX Media3 Migration**: Completed the transition of the entire media playback and session architecture to the modern Media3 framework.
+- **Library Browser**: Re-implemented the Media Library Service to support improved media browsing and Android Auto integration.
+
+### Fixed
+- **Type Safety**: Resolved several generic and type-related compilation errors in the service layer.
+- **Stability**: Fixed a critical crash during session initialization by ensuring the player is created on the main thread.
 
 ## [0.96] - 2026-06-13
 ### Added

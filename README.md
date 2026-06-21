@@ -41,7 +41,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.97) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
+The latest version (v0.98) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
