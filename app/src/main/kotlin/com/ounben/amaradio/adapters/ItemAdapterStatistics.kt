@@ -16,9 +16,10 @@ class ItemAdapterStatistics(context: Context, private val resourceId: Int) : Arr
         val aData = getItem(position)!!
         var v = convertView
         if (v == null) {
-            val vi = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            v = vi.inflate(resourceId, null)
+            val vi = ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as? LayoutInflater
+            v = vi?.inflate(resourceId, null)
         }
+        if (v == null) return View(ctx) // Fallback
         val aTextViewTop = v!!.findViewById<TextView>(R.id.stats_name)
         val aTextViewBottom = v.findViewById<TextView>(R.id.stats_value)
         aTextViewTop?.text = aData.Name

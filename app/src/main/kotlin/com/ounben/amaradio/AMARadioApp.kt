@@ -95,8 +95,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         fallbackStationsManager = FallbackStationsManager(this)
         alarmManager = RadioAlarmManager(this)
 
-        val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
-        if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+        val uiModeManager = getSystemService(UI_MODE_SERVICE) as? UiModeManager
+        if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
             tvChannelManager = TvChannelManager(this)
         }
 
@@ -108,8 +108,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
         val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
         audioThread.start()
-        audioLooper = audioThread.looper
-        audioDispatcher = Handler(audioLooper).asCoroutineDispatcher("AudioThread")
+        val looper = audioThread.looper
+        audioLooper = looper
+        audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
 
         trackMetadataSearcher = TrackMetadataSearcher(httpClient)
     }

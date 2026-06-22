@@ -112,13 +112,13 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private fun getCountryCode(): String? {
         val ctx = context
         if (ctx != null) {
-            val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
-            var countryCode = tm.networkCountryIso
+            val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
+            var countryCode = tm?.networkCountryIso
             Log.d("MAIN", "Network country code: '$countryCode'")
             if (countryCode != null && countryCode.length == 2) {
                 return countryCode
             }
-            countryCode = tm.simCountryIso
+            countryCode = tm?.simCountryIso
             Log.d("MAIN", "Sim country code: '$countryCode'")
             if (countryCode != null && countryCode.length == 2) {
                 return countryCode

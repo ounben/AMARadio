@@ -235,8 +235,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         handler = Handler(mainLooper)
         itsContext = this
-        powerManager = getSystemService(POWER_SERVICE) as PowerManager
-        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
+        powerManager = getSystemService(Context.POWER_SERVICE) as? PowerManager
+        audioManager = getSystemService(Context.AUDIO_SERVICE) as? AudioManager
         radioIcon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_elgato_launcher, null) as? BitmapDrawable
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
         
@@ -246,7 +246,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             .build()
         mediaRouter?.addCallback(selector, mediaRouterCallback, MediaRouter.CALLBACK_FLAG_UNFILTERED_EVENTS)
 
-        amaradioBrowser = AMARadioBrowser(application as AMARadioApp)
+        amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
         val startActivityIntent = Intent(this, ActivityMain::class.java)
         mediaSession = MediaLibrarySession.Builder(this, radioPlayer!!.player!!, MediaSessionCallback(this, itsBinder, amaradioBrowser))

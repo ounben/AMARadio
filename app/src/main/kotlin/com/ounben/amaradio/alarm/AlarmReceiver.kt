@@ -80,17 +80,17 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun acquireLocks(context: Context) {
-        powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-        if (wakeLock == null) {
+        powerManager = context.getSystemService(Context.POWER_SERVICE) as? PowerManager
+        if (wakeLock == null && powerManager != null) {
             wakeLock = powerManager!!.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "AlarmReceiver:")
         }
-        if (!wakeLock!!.isHeld) {
+        if (wakeLock != null && !wakeLock!!.isHeld) {
             if (Utils.isDebug) {
                 Log.d(TAG, "acquire wakelock")
             }
             wakeLock!!.acquire()
         }
-        val wm = context.getSystemService(Context.WIFI_SERVICE) as WifiManager?
+        val wm = context.getSystemService(Context.WIFI_SERVICE) as? WifiManager
         if (wm != null) {
             if (wifiLock == null) {
                 wifiLock = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {

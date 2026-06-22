@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 105,
-      "versionName": "0.98",
-      "outputFile": "AMARadio-release-0.98-No commit hash.apk"
+      "versionCode": 106,
+      "versionName": "0.99",
+      "outputFile": "AMARadio-release-0.99-No commit hash.apk"
     }
   ],
   "elementType": "File",
@@ -22,14 +22,14 @@
       "minApi": 28,
       "maxApi": 30,
       "baselineProfiles": [
-        "baselineProfiles/1/AMARadio-release-0.98-No commit hash.dm"
+        "baselineProfiles/1/AMARadio-release-0.99-No commit hash.dm"
       ]
     },
     {
       "minApi": 31,
       "maxApi": 2147483647,
       "baselineProfiles": [
-        "baselineProfiles/0/AMARadio-release-0.98-No commit hash.dm"
+        "baselineProfiles/0/AMARadio-release-0.99-No commit hash.dm"
       ]
     }
   ],

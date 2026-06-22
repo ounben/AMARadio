@@ -33,8 +33,8 @@ class ConnectivityChecker {
             return
         }
         lastConnectionType = getCurrentConnectionType(context)
-        connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && connectivityManager != null) {
             networkCallback = object : ConnectivityManager.NetworkCallback() {
                 override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
                     val connected = networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
