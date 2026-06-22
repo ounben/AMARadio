@@ -5,6 +5,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99] - 2026-06-22
+### Added
+- **Resilient Network Cascade**: Implemented a fail-over mechanism for API requests. If the primary `radio-browser.info` servers are unreachable (503, timeout), the app automatically switches to the `radiobrowser.ounben.com` mirror.
+- **Asynchronous Search**: Migrated the station filtering and search engine to Kotlin Coroutines. Searches now run on `Dispatchers.IO`, keeping the UI perfectly fluid during heavy network activity.
+- **Audio Thread Prioritization**: Introduced a dedicated high-priority "AudioThread" (`THREAD_PRIORITY_URGENT_AUDIO`). Both ExoPlayer and the internal player logic now run on this thread to eliminate stuttering caused by background system processes.
+
+### Changed
+- **Sturdier Buffer Management**: Significantly increased player buffers (50s min, 100s max) and enabled `setPrioritizeTimeOverSizeThresholds`. This provides much better stability on devices with aggressive CPU throttling (Xiaomi/Oplus).
+- **Persistent Media Resources**: The player now keeps hardware resources (MediaCodec, AudioTrack) active during temporary buffering or idle states, preventing the "clicks" and silence gaps caused by hardware re-initialization.
+
+### Fixed
+- **Stability Fixes**:
+    - Resolved a `NullPointerException` in `ViewPager.onSaveInstanceState` related to IME (keyboard) layout changes.
+    - Fixed a critical `IllegalStateException` where the player was accessed from the wrong thread during notification updates.
+- **MediaRouter Debouncing**: Implemented filtering for redundant system "pings" to the MediaRouter, preventing unnecessary audio stack resets.
+- **Navigation Resilience**: Switched critical fragment transactions to `commitAllowingStateLoss()` to prevent crashes during rapid navigation or state-saving cycles.
+
 ## [0.98] - 2026-06-15
 ### Changed
 - **Target SDK 36 (Android 16)**: Finalized the migration to Android 16 to meet the latest Play Store requirements.

@@ -19,7 +19,8 @@ Originally created as a personal project for the developer's mother to provide a
 - **Modern Material Design**: A clean, streamlined interface with full support for Dark and Light modes, featuring the "El Gato" branding and edge-to-edge system integration.
 - **Global Station Database**: Instant access to a massive, community-maintained directory of international radio stations.
 - **Chromecast Integration**: Seamlessly stream content to compatible TVs and smart speakers.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management and metered data warnings.
+- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and metered data warnings.
+- **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
 - **Alarm and Sleep Timer**: Integrated radio alarm clock and sleep timer functionality.
 - **Android TV Support**: Specialized user interface optimized for television and large-screen devices.
@@ -41,7 +42,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.98) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
+The latest version (v0.99) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
