@@ -3,6 +3,8 @@ package com.ounben.amaradio
 import android.app.Application
 import android.app.UiModeManager
 import android.content.res.Configuration
+import android.os.Handler
+import android.os.HandlerThread
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
@@ -15,6 +17,7 @@ import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.station.live.metadata.TrackMetadataSearcher
 import com.ounben.amaradio.utils.TvChannelManager
+import kotlinx.coroutines.android.asCoroutineDispatcher
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -45,6 +48,12 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
 
     lateinit var trackMetadataSearcher: TrackMetadataSearcher
+        private set
+
+    lateinit var audioDispatcher: kotlinx.coroutines.CoroutineDispatcher
+        private set
+    
+    lateinit var audioLooper: android.os.Looper
         private set
 
     private lateinit var connectionPool: ConnectionPool
@@ -96,6 +105,11 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         
         // Initialisierung des Cast-Handlers
         castHandler = CastHandler(this)
+
+        val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+        audioThread.start()
+        audioLooper = audioThread.looper
+        audioDispatcher = Handler(audioLooper).asCoroutineDispatcher("AudioThread")
 
         trackMetadataSearcher = TrackMetadataSearcher(httpClient)
     }

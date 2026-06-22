@@ -17,6 +17,7 @@ import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.HttpDataSource
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
@@ -36,7 +37,7 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 
 @UnstableApi
-class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
+class ExoPlayerWrapper(private val context: Context, private val looper: android.os.Looper) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     private var internalPlayer: ExoPlayer
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
@@ -47,7 +48,7 @@ class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSou
         private set
     private var isHls = false
     private var isPlayingFlag = false
-    private val playerThreadHandler = Handler(Looper.getMainLooper())
+    private val playerThreadHandler = Handler(looper)
     private var audioSource: MediaSource? = null
     private var fullStopTask: Runnable? = null
     private var currentVolume = 1.0f
@@ -64,9 +65,29 @@ class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSou
     }
 
     init {
-        internalPlayer = ExoPlayer.Builder(context).build().apply {
-            addListener(PlayerEventListener())
-        }
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                50_000, // Min buffer 50s
+                100_000, // Max buffer 100s
+                2_500, // Buffer for playback 2.5s
+                5_000 // Buffer for playback after rebuffer 5s
+            )
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .build()
+
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(C.USAGE_MEDIA)
+            .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
+            .build()
+
+        internalPlayer = ExoPlayer.Builder(context)
+            .setLooper(looper)
+            .setLoadControl(loadControl)
+            .setAudioAttributes(audioAttributes, true) // handles audio focus
+            .setWakeMode(C.WAKE_MODE_NETWORK)
+            .build()
+        
+        internalPlayer.addListener(PlayerEventListener())
     }
 
     override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, isAlarm: Boolean) {
@@ -159,7 +180,8 @@ class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSou
         if (!isPlayingFlag) return
         if (Utils.hasAnyConnection(context)) {
             playerThreadHandler.post {
-                internalPlayer.prepare(audioSource!!)
+                audioSource?.let { internalPlayer.setMediaSource(it, false) }
+                internalPlayer.prepare()
                 internalPlayer.playWhenReady = true
             }
         } else {
@@ -221,10 +243,19 @@ class ExoPlayerWrapper(private val context: Context) : PlayerWrapper, IcyDataSou
                 }
                 Player.STATE_BUFFERING -> stateListener?.onStateChanged(PlayState.PrePlaying)
                 Player.STATE_IDLE -> {
+                    // Do not reset resources on IDLE to prevent hardware re-init
                     isPlayingFlag = false
                     stateListener?.onStateChanged(PlayState.Idle)
                 }
-                Player.STATE_ENDED -> stop()
+                Player.STATE_ENDED -> {
+                    // Avoid full stop on live streams, wait for data instead
+                    if (isHls || streamUrl != null) {
+                        Log.d("ExoPlayerWrapper", "STATE_ENDED reached on stream, keeping resources warm.")
+                        internalPlayer.prepare() // Keep resources warm and stay in buffering
+                    } else {
+                        stop()
+                    }
+                }
             }
         }
 

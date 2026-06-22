@@ -32,6 +32,9 @@ import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
+import androidx.mediarouter.media.MediaControlIntent
+import androidx.mediarouter.media.MediaRouteSelector
+import androidx.mediarouter.media.MediaRouter
 import androidx.preference.PreferenceManager
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -99,6 +102,30 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var notificationIsActive = false
     private val pendingIntentFlag = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) PendingIntent.FLAG_IMMUTABLE else 0
     private lateinit var amaradioBrowser: AMARadioBrowser
+    
+    private var mediaRouter: MediaRouter? = null
+    private var lastRouteId: String? = null
+    private val mediaRouterCallback = object : MediaRouter.Callback() {
+        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo, reason: Int) {
+            if (route.id == lastRouteId) {
+                if (Utils.isDebug) Log.d(TAG, "MediaRouter: Ignore redundant route selection for ${route.id}")
+                return
+            }
+            Log.d(TAG, "MediaRouter: New route selected: ${route.id}, reason: $reason")
+            lastRouteId = route.id
+            // Only here we might allow some state change if needed, 
+            // but we avoid calling stop() or re-init unless necessary.
+        }
+
+        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo, reason: Int) {
+             Log.d(TAG, "MediaRouter: Route unselected: ${route.id}")
+        }
+
+        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
+            // This is often called for volume changes or status pings
+            if (Utils.isDebug) Log.v(TAG, "MediaRouter: Route changed (status ping) for ${route.id}")
+        }
+    }
 
     private fun sendBroadCast(action: String) {
         val local = Intent()
@@ -203,6 +230,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     override fun onCreate() {
         super.onCreate()
+        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+        
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         handler = Handler(mainLooper)
         itsContext = this
@@ -211,6 +240,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         radioIcon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_elgato_launcher, null) as? BitmapDrawable
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
         
+        mediaRouter = MediaRouter.getInstance(this)
+        val selector = MediaRouteSelector.Builder()
+            .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
+            .build()
+        mediaRouter?.addCallback(selector, mediaRouterCallback, MediaRouter.CALLBACK_FLAG_UNFILTERED_EVENTS)
+
         amaradioBrowser = AMARadioBrowser(application as AMARadioApp)
 
         val startActivityIntent = Intent(this, ActivityMain::class.java)
@@ -238,6 +273,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     override fun onDestroy() {
         if (Utils.isDebug) Log.d(TAG, "PlayService should be destroyed.")
         stop()
+        mediaRouter?.removeCallback(mediaRouterCallback)
         mediaSession?.run {
             release()
             mediaSession = null
@@ -529,6 +565,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun updateNotification() { radioPlayer?.let { updateNotification(it.playState) } }
 
     private fun updateNotification(playState: PlayState) {
+        // Thread safety: Ensure we are on the player thread before accessing player instance
+        if (Looper.myLooper() != radioPlayer?.playerLooper) {
+            radioPlayer?.runInPlayerThread { updateNotification(playState) }
+            return
+        }
+
         when (playState) {
             PlayState.Idle -> {
                 NotificationManagerCompat.from(this).cancel(NOTIFY_ID)
@@ -636,33 +678,31 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun stopMeteredConnectionListener() { connectivityChecker.stopListening(this) }
 
     override fun onStateChanged(state: PlayState, audioSessionId: Int) {
-        handler?.post {
-            Log.d(TAG, "onStateChanged: state=$state, audioSessionId=$audioSessionId")
-            lastErrorFromPlayer = -1
-            if (state == PlayState.Playing) {
-                lastPlayStartTime = System.currentTimeMillis()
-                if (audioSessionId > 0) {
-                    val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
-                        putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
-                        putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
-                    }
-                    sendBroadcast(i)
+        Log.d(TAG, "onStateChanged: state=$state, audioSessionId=$audioSessionId")
+        lastErrorFromPlayer = -1
+        if (state == PlayState.Playing) {
+            lastPlayStartTime = System.currentTimeMillis()
+            if (audioSessionId > 0) {
+                val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
+                    putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
+                    putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
                 }
-            } else {
-                if (audioSessionId > 0) {
-                    val i = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
-                        putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
-                        putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
-                    }
-                    sendBroadcast(i)
-                }
-                if (state == PlayState.Idle) stop()
+                sendBroadcast(i)
             }
-            if (state != PlayState.Paused && state != PlayState.Idle) startMeteredConnectionListener() else stopMeteredConnectionListener()
-            updateNotification(state)
-            val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, state as Parcelable) }
-            AppEventManager.sendEvent(intent)
+        } else {
+            if (audioSessionId > 0) {
+                val i = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
+                    putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
+                    putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+                }
+                sendBroadcast(i)
+            }
+            if (state == PlayState.Idle) stop()
         }
+        if (state != PlayState.Paused && state != PlayState.Idle) startMeteredConnectionListener() else stopMeteredConnectionListener()
+        updateNotification(state)
+        val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, state as Parcelable) }
+        AppEventManager.sendEvent(intent)
     }
 
     override fun onPlayerWarning(messageId: Int) { onPlayerError(messageId) }
