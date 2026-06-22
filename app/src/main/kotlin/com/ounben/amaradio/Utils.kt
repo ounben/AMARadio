@@ -144,7 +144,7 @@ object Utils {
         }
     }
 
-    private fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
+    private fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, forceUpdate: Boolean, dictParams: Map<String, String>?, timeoutMs: Long? = null): String? {
         Log.i("DOWN", "Url=$theURI")
         if (!forceUpdate) {
             val cache = getCacheFile(ctx, theURI)
@@ -165,9 +165,19 @@ object Utils {
             
             val url = urlBuilder.build()
             Log.i("DOWN", "Final Url=$url")
+            
+            val client = if (timeoutMs != null) {
+                httpClient.newBuilder()
+                    .connectTimeout(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+                    .readTimeout(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+                    .build()
+            } else {
+                httpClient
+            }
+
             val request = Request.Builder().url(url).get().build()
             
-            val response = httpClient.newCall(request).execute()
+            val response = client.newCall(request).execute()
             val responseStr = response.body?.string() ?: ""
 
             if (!response.isSuccessful) {
@@ -188,26 +198,30 @@ object Utils {
 
     @JvmStatic
     fun downloadFeedRelative(httpClient: OkHttpClient, ctx: Context, theRelativeUri: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
-        val currentServer = RadioBrowserServerManager.getCurrentServer() ?: return null
-        var endpoint = RadioBrowserServerManager.constructEndpoint(currentServer, theRelativeUri)
-        var result = downloadFeed(httpClient, ctx, endpoint, forceUpdate, dictParams)
-        if (result != null) {
-            return result
+        // Step 1: Try official radio-browser.info servers with strict 2s timeout
+        val currentServer = RadioBrowserServerManager.getCurrentServer()
+        if (currentServer != null) {
+            val endpoint = RadioBrowserServerManager.constructEndpoint(currentServer, theRelativeUri)
+            val result = downloadFeed(httpClient, ctx, endpoint, forceUpdate, dictParams, 2000L)
+            if (result != null) return result
+            
+            // If current server failed, try rotating through the list once with strict timeout
+            val serverList = RadioBrowserServerManager.getServerList(false)
+            for (newServer in serverList) {
+                if (newServer == currentServer) continue
+                val rotatedEndpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
+                val rotatedResult = downloadFeed(httpClient, ctx, rotatedEndpoint, forceUpdate, dictParams, 2000L)
+                if (rotatedResult != null) {
+                    RadioBrowserServerManager.setCurrentServer(newServer)
+                    return rotatedResult
+                }
+            }
         }
 
-        val serverList = RadioBrowserServerManager.getServerList(false)
-        for (newServer in serverList) {
-            if (newServer == currentServer) {
-                continue
-            }
-            endpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
-            result = downloadFeed(httpClient, ctx, endpoint, forceUpdate, dictParams)
-            if (result != null) {
-                RadioBrowserServerManager.setCurrentServer(newServer)
-                return result
-            }
-        }
-        return null
+        // Step 2: Fail-over to Mirror Mirror radiobrowser.ounben.com with standard timeout
+        Log.w("UTIL", "Official servers failed or timed out, trying mirror fallback...")
+        val mirrorEndpoint = RadioBrowserServerManager.constructEndpoint(RadioBrowserServerManager.getMirrorServer(), theRelativeUri)
+        return downloadFeed(httpClient, ctx, mirrorEndpoint, forceUpdate, dictParams)
     }
 
     @JvmStatic

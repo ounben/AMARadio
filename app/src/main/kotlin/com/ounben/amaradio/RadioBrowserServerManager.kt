@@ -100,6 +100,14 @@ object RadioBrowserServerManager {
     }
 
     /**
+     * Mirror server as final fallback
+     */
+    @JvmStatic
+    fun getMirrorServer(): String {
+        return "radiobrowser.ounben.com"
+    }
+
+    /**
      * Construct full url from server and path
      */
     @JvmStatic
