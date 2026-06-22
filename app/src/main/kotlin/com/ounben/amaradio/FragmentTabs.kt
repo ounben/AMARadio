@@ -59,7 +59,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt("activeTabPosition", viewPager?.currentItem ?: 0)
+        // Protection: only save if viewPager is still attached and has an adapter
+        if (viewPager != null && viewPager?.adapter != null && !isRemoving) {
+            outState.putInt("activeTabPosition", viewPager?.currentItem ?: 0)
+        }
         queuedSearchStyle?.let { outState.putInt("queuedSearchStyle", it.ordinal) }
         outState.putString("queuedSearchQuery", queuedSearchQuery)
     }

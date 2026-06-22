@@ -182,7 +182,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             fragmentTransaction.hide(fullPlayerFragment!!)
             fragmentTransaction.replace(R.id.fragment_player_small, smallPlayerFragment!!)
             fragmentTransaction.replace(R.id.fragment_player_full, fullPlayerFragment!!)
-            fragmentTransaction.commit()
+            fragmentTransaction.commitAllowingStateLoss()
         }
 
         smallPlayerFragment?.setCallback { toggleBottomSheetState() }
@@ -835,9 +835,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             mFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             val fragmentTransaction = mFragmentManager.beginTransaction()
             if (Utils.bottomNavigationEnabled(this)) {
-                fragmentTransaction.replace(R.id.containerView, it).commit()
+                fragmentTransaction.replace(R.id.containerView, it).commitAllowingStateLoss()
             } else {
-                fragmentTransaction.replace(R.id.containerView, it).addToBackStack(backStackTag).commit()
+                fragmentTransaction.replace(R.id.containerView, it).addToBackStack(backStackTag).commitAllowingStateLoss()
             }
         }
 

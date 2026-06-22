@@ -138,7 +138,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         findPreference<Preference>("show_statistics")?.setOnPreferenceClickListener {
             val f = FragmentServerInfo()
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
+            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commitAllowingStateLoss()
             false
         }
 
@@ -146,7 +146,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         findPreference<Preference>("show_about")?.setOnPreferenceClickListener {
             val f = FragmentAbout()
             val fragmentTransaction = parentFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commit()
+            fragmentTransaction.replace(R.id.containerView, f).addToBackStack(ActivityMain.FRAGMENT_FROM_BACKSTACK.toString()).commitAllowingStateLoss()
             false
         }
 
