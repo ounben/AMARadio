@@ -25,6 +25,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Application Context Robustness**: Fixed a critical crash in `AMARadioApp.onCreate` by ensuring thread-safe dispatcher initialization and adding defensive checks for application context casting.
 - **UI & Adapter Stability**: Hardened `ItemAdapterStatistics` and `FragmentTabs` against null layout inflators and missing hardware features (e.g., tablets without SIM slots).
 
+### Removed
+- **Alarm Clock Feature**: Completely removed the integrated alarm clock functionality. This decision was made to ensure 100% stability across all Android devices, as modern background execution limits and manufacturer-specific "app freezers" (e.g., Oplus/Xiaomi) often compromised the reliability of background alarms. AMARadio now focuses exclusively on high-performance radio streaming.
+
 ## [0.98] - 2026-06-15
 ### Changed
 - **Target SDK 36 (Android 16)**: Finalized the migration to Android 16 to meet the latest Play Store requirements.

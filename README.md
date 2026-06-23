@@ -22,7 +22,7 @@ Originally created as a personal project for the developer's mother to provide a
 - **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and metered data warnings.
 - **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
-- **Alarm and Sleep Timer**: Integrated radio alarm clock and sleep timer functionality.
+- **Sleep Timer**: Integrated sleep timer functionality to automatically stop playback after a set duration.
 - **Android TV Support**: Specialized user interface optimized for television and large-screen devices.
 
 ## Screenshots
