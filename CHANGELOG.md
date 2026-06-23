@@ -5,6 +5,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.1] - 2026-06-23
+### Added
+- **Modern Build Configuration**: Upgraded `compileSdkVersion` and `targetSdkVersion` to **37** (Android 15) and transitioned to **Java 21** and **JVM 21** for better performance and modern API support.
+- **Enhanced Release Security**: Enabled `minifyEnabled` and `shrinkResources` in the release build to protect the code and reduce APK size.
+- **TV Compatibility**: Improved app visibility on Ethernet-only Android TV devices by explicitly declaring Wi-Fi as a non-mandatory feature.
+
+### Changed
+- **Code Modernization**:
+    - Replaced the deprecated `kotlinOptions` with the modern `kotlin.compilerOptions` DSL in `build.gradle`.
+    - Fully migrated from the deprecated `adapterPosition` to `bindingAdapterPosition` for more reliable RecyclerView item interactions.
+    - Standardized internal function naming from PascalCase to standard Kotlin **camelCase** (e.g., `RefreshListGui` -> `refreshListGui`).
+- **Optimization**:
+    - Replaced inefficient `notifyDataSetChanged()` calls with `DiffUtil` in `ItemAdapterStation` and `ItemAdapterCategory`, resulting in smoother animations and better list performance.
+    - Optimized connectivity checks by removing legacy `BroadcastReceiver` logic in favor of the modern `NetworkCallback` API.
+
+### Fixed
+- **Stability & Cleanliness**:
+    - Resolved over 50 lint warnings, including redundant safe calls, unnecessary non-null assertions, and qualified names.
+    - Improved resource management by ensuring all I/O operations in `StreamProxy` are correctly wrapped in `withContext(Dispatchers.IO)` and resources are properly closed.
+    - Fixed a long-standing issue where the "Pause on headset disconnect" feature would fail on certain Android versions due to missing receiver registration.
+    - Removed dozens of unused functions, imports, and variables across the entire project.
+- **Media Session**: Hardened `PlayerService` with proper Media3 permissions and removed the deprecated `MediaButtonReceiver` in favor of internal Media3 handling.
+- **UI Refinement**: Replaced manual "..." strings with the proper ellipsis character (&#8230;) in all translations.
+
 ## [0.99] - 2026-06-22
 ### Added
 - **Resilient Network Cascade**: Implemented a fail-over mechanism for API requests. If the primary `radio-browser.info` servers are unreachable (503, timeout), the app automatically switches to the `radiobrowser.ounben.com` mirror.

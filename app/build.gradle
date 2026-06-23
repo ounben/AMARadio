@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'com.google.devtools.ksp'
 apply plugin: 'kotlin-parcelize'
 
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 def getAvailableLocales() {
     def tree = fileTree(dir: 'src/main/res', include: '**/strings.xml')
     return tree.collect {
@@ -25,9 +27,11 @@ android {
         targetCompatibility JavaVersion.VERSION_21
     }
 
-    kotlinOptions {
-        jvmTarget = "21"
-        freeCompilerArgs += ["-opt-in=androidx.media3.common.util.UnstableApi"]
+    kotlin {
+        compilerOptions {
+            jvmTarget = JvmTarget.JVM_21
+            freeCompilerArgs.add("-opt-in=androidx.media3.common.util.UnstableApi")
+        }
     }
 
     buildFeatures {
@@ -40,8 +44,8 @@ android {
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 106
-        versionName "0.99"
+        versionCode 107
+        versionName "0.99.1"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -59,8 +63,8 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             lintOptions {
