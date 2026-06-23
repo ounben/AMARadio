@@ -10,6 +10,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.IOException
@@ -20,6 +21,7 @@ import java.net.ServerSocket
 import java.net.Socket
 import java.util.Arrays
 import java.util.Locale
+import kotlin.time.Duration.Companion.seconds
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class StreamProxy(private val httpClient: OkHttpClient, private val uri: String, private val callback: StreamProxyListener) {
@@ -50,15 +52,15 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         var bytesUntilMetaData = 0
         var streamHasMetaData = false
         if (info != null) {
-            callback.onFoundShoutcastStream(info, false)
+            callback.onFoundShoutcastStream(info, isHls = false)
             bytesUntilMetaData = info.metadataOffset
             streamHasMetaData = true
         }
         while (!isStopped) {
-            if (!streamHasMetaData || bytesUntilMetaData > 0) {
+            if (!streamHasMetaData || (bytesUntilMetaData > 0)) {
                 var bytesToRead = readBuffer.size
                 if (streamHasMetaData) {
-                    bytesToRead = Math.min(bytesUntilMetaData, bytesToRead)
+                    bytesToRead = kotlin.math.min(bytesUntilMetaData, bytesToRead)
                 }
                 val readBytes = inputStream.read(readBuffer, 0, bytesToRead)
                 if (readBytes <= 0) break
@@ -109,9 +111,10 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         try {
             if (Utils.isDebug) Log.d(tag, "creating local proxy")
             try {
-                proxyServer = ServerSocket(0, 1, InetAddress.getLocalHost())
-            } catch (e: IOException) {
-                e.printStackTrace()
+                proxyServer = withContext(Dispatchers.IO) {
+                    ServerSocket(0, 1, InetAddress.getLocalHost())
+                }
+            } catch (_: IOException) {
                 return
             }
             val port = proxyServer.localPort
@@ -119,49 +122,64 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
             val request = Request.Builder().url(uri)
                 .addHeader("Icy-MetaData", "1")
                 .build()
-            while (!isStopped && retry > 0) {
-                httpClient.newCall(request).execute().use { response ->
-                    val responseBody = response.body
-                    if (responseBody == null) {
-                        retry--
-                        return@use
+            while (!isStopped && (retry > 0)) {
+                val currentResponse = withContext(Dispatchers.IO) {
+                    try {
+                        httpClient.newCall(request).execute()
+                    } catch (_: IOException) {
+                        null
                     }
+                }
+
+                currentResponse?.use { response ->
+                    val responseBody = response.body
                     val contentType = responseBody.contentType()
                     if (Utils.isDebug) Log.d(tag, "waiting...")
+                    
                     if (isStopped) return@use
+                    
                     socketProxy?.close()
                     outputStream?.close()
                     callback.onStreamCreated(localAddress!!)
                     proxyServer.soTimeout = 2000
-                    socketProxy = proxyServer.accept()
+                    socketProxy = withContext(Dispatchers.IO) {
+                        proxyServer.accept()
+                    }
                     if (Utils.isDebug) Log.d(tag, "sending OK to the local media player")
-                    outputStream = socketProxy!!.getOutputStream()
-                    outputStream!!.write(("HTTP/1.0 200 OK\r\n" +
-                            "Pragma: no-cache\r\n" +
-                            "Content-Type: $contentType\r\n\r\n").toByteArray(charset("utf-8")))
+                    val out = socketProxy!!.getOutputStream()
+                    outputStream = out
+                    out.write(
+                        ("HTTP/1.0 200 OK\r\n" +
+                                "Pragma: no-cache\r\n" +
+                                "Content-Type: $contentType\r\n\r\n").toByteArray(charset("utf-8")),
+                    )
                     val type = contentType.toString().lowercase(Locale.ROOT)
                     if (Utils.isDebug) Log.d(tag, "Content Type: $type")
                     if (type == "application/vnd.apple.mpegurl" || type == "application/x-mpegurl") {
                         Log.e(tag, "Cannot play HLS streams through proxy!")
                     } else {
                         val info = ShoutcastInfo.Decode(response)
-                        proxyDefaultStream(info, responseBody.byteStream(), outputStream!!)
+                        proxyDefaultStream(info, responseBody.byteStream(), out)
                     }
                     retry = MAX_RETRIES
+                } ?: run {
+                    retry--
                 }
+                
                 if (isStopped) break
-                retry--
-                delay(1000)
+                delay(1.seconds)
             }
         } catch (e: Exception) {
             Log.e(tag, "exception occurred inside the connection loop, retry. $e")
         } finally {
-            try {
-                proxyServer?.close()
-                socketProxy?.close()
-                outputStream?.close()
-            } catch (e: IOException) {
-                Log.e(tag, "exception occurred while closing resources. $e")
+            withContext(Dispatchers.IO) {
+                try {
+                    proxyServer?.close()
+                    socketProxy?.close()
+                    outputStream?.close()
+                } catch (e: IOException) {
+                    Log.e(tag, "exception occurred while closing resources. $e")
+                }
             }
         }
         if (!isStopped) {
@@ -183,8 +201,6 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         }
         return metadata
     }
-
-    fun getLocalAddress(): String? = localAddress
 
     fun stop() {
         if (Utils.isDebug) Log.d(tag, "stopping proxy.")
