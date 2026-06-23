@@ -47,11 +47,11 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         if (savedInstanceState != null) {
             lastQuery = savedInstanceState.getString("lastQuery", "")
             val styleIdx = savedInstanceState.getInt("lastSearchStyle", 0)
-            lastSearchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+            lastSearchStyle = StationsFilter.SearchStyle.entries[styleIdx]
         }
     }
 
-    private fun onStationClick(theStation: DataRadioStation, pos: Int) {
+    private fun onStationClick(theStation: DataRadioStation) {
         val app = requireActivity().application as AMARadioApp
         Utils.showPlaySelection(app, theStation, requireActivity().supportFragmentManager)
     }
@@ -118,7 +118,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.GLOBAL)
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
-                this@FragmentStations.onStationClick(station, pos)
+                this@FragmentStations.onStationClick(station)
             }
 
             override fun onStationSwiped(station: DataRadioStation) {}
