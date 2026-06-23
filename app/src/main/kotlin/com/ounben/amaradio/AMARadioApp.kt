@@ -111,10 +111,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         trackMetadataSearcher = TrackMetadataSearcher(httpClient)
     }
 
-    fun setTestsInterceptor(testsInterceptor: Interceptor?) {
-        this.testsInterceptor = testsInterceptor
-    }
-
     fun rebuildHttpClient() {
         val builder = newHttpClient()
             .connectTimeout(10, TimeUnit.SECONDS)
