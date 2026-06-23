@@ -4,7 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.OverScroller
-import androidx.core.view.ViewCompat
+import androidx.core.view.isNotEmpty
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 class RecyclerAwareNestedScrollView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = 0
+    defStyleAttr: Int = 0,
 ) : NestedScrollView(context, attrs, defStyleAttr) {
 
     private var mScroller: OverScroller? = null
@@ -33,8 +33,8 @@ class RecyclerAwareNestedScrollView @JvmOverloads constructor(
     override fun fling(velocityY: Int) {
         super.fling(velocityY)
 
-        if (childCount > 0) {
-            ViewCompat.postInvalidateOnAnimation(this)
+        if (isNotEmpty()) {
+            postInvalidateOnAnimation()
             isFling = true
         }
     }
@@ -43,7 +43,7 @@ class RecyclerAwareNestedScrollView @JvmOverloads constructor(
         super.onScrollChanged(l, t, oldl, oldt)
 
         if (isFling) {
-            if (Math.abs(t - oldt) <= 3 || t == 0 || t == (getChildAt(0).measuredHeight - measuredHeight)) {
+            if (kotlin.math.abs(t - oldt) <= 3 || (t == 0) || (t == (getChildAt(0).measuredHeight - measuredHeight))) {
                 isFling = false
                 mScroller?.abortAnimation()
             }
@@ -51,22 +51,18 @@ class RecyclerAwareNestedScrollView @JvmOverloads constructor(
     }
 
     override fun onNestedPreScroll(target: View, dx: Int, dy: Int, consumed: IntArray, type: Int) {
-        if (target is RecyclerView) {
-            if ((dy < 0 && isRvScrolledToTop(target)) || (dy > 0 && !isNsvScrolledToBottom(this))) {
-                scrollBy(0, dy)
-                consumed[1] = dy
-                return
-            }
+        if (target is RecyclerView && ((dy < 0 && isRvScrolledToTop(target)) || (dy > 0 && !isNsvScrolledToBottom(this)))) {
+            scrollBy(0, dy)
+            consumed[1] = dy
+            return
         }
         super.onNestedPreScroll(target, dx, dy, consumed, type)
     }
 
     override fun onNestedPreFling(target: View, velX: Float, velY: Float): Boolean {
-        if (target is RecyclerView) {
-            if ((velY < 0 && isRvScrolledToTop(target)) || (velY > 0 && !isNsvScrolledToBottom(this))) {
-                fling(velY.toInt())
-                return true
-            }
+        if (target is RecyclerView && ((velY < 0 && isRvScrolledToTop(target)) || (velY > 0 && !isNsvScrolledToBottom(this)))) {
+            fling(velY.toInt())
+            return true
         }
         return super.onNestedPreFling(target, velX, velY)
     }
