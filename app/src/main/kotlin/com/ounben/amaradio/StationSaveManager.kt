@@ -19,7 +19,6 @@ import java.io.BufferedReader
 import java.io.Reader
 import java.io.Writer
 import java.util.Collections
-import java.util.Locale
 
 open class StationSaveManager(protected val context: Context) {
     interface StationStatusListener {
@@ -122,11 +121,6 @@ open class StationSaveManager(protected val context: Context) {
 
     fun moveWithoutNotify(fromPos: Int, toPos: Int) {
         Collections.rotate(listStations.subList(minOf(fromPos, toPos), maxOf(fromPos, toPos) + 1), Integer.signum(fromPos - toPos))
-    }
-
-    fun move(fromPos: Int, toPos: Int) {
-        moveWithoutNotify(fromPos, toPos)
-        _stationsFlow.value = listStations.toList()
     }
 
     fun remove(id: String): Int {
