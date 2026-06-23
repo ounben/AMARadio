@@ -62,7 +62,7 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Language**: 100% Kotlin
 - **Architecture**: MVVM with Jetpack Components (Lifecycle, ViewModel, ViewBinding)
 - **Persistence**: Room Database for metadata, SharedPreferences for configuration
-- **Networking**: OkHttp3 for API communication, Coil for asynchronous image loading
+- **Networking**: OkHttp for API communication, Coil for asynchronous image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
 - **Target SDK**: 36 (Android 16)
 - **Minimum SDK**: 26 (Android 8.0)
