@@ -63,7 +63,7 @@ open class ItemAdapterStation(
         fun onSearchCompleted(searchStatus: StationsFilter.SearchStatus)
     }
 
-    private val TAG = "AdapterStations"
+    private val tag = "AdapterStations"
     private var stationsList: List<DataRadioStation>? = null
     var filteredStationsList: List<DataRadioStation> = ArrayList()
     var stationActionsListener: StationActionsListener? = null
@@ -125,7 +125,7 @@ open class ItemAdapterStation(
             val pos = adapterPosition
             if (pos == RecyclerView.NO_POSITION) return
             val station = filteredStationsList[pos]
-            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station, this@ItemAdapterStation)
+            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station)
             contextMenu?.setOnDismissListener {
                 dismissContextMenu()
             }
@@ -321,15 +321,16 @@ open class ItemAdapterStation(
                 }
             }
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && fragmentActivity.applicationContext.getSystemService(ShortcutManager::class.java).isRequestPinShortcutSupported) {
-                holder.buttonCreateShortcut?.visibility = View.VISIBLE
-                holder.buttonCreateShortcut?.setOnClickListener {
-                    station.prepareShortcut(fragmentActivity, { shortcut ->
-                        val sm = fragmentActivity.applicationContext.getSystemService(ShortcutManager::class.java)
-                        if (sm.isRequestPinShortcutSupported) sm.requestPinShortcut(shortcut, null)
-                    })
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 &&
+            fragmentActivity.applicationContext.getSystemService(ShortcutManager::class.java).isRequestPinShortcutSupported) {
+            holder.buttonCreateShortcut?.visibility = View.VISIBLE
+            holder.buttonCreateShortcut?.setOnClickListener {
+                station.prepareShortcut(fragmentActivity) { shortcut ->
+                    val sm = fragmentActivity.applicationContext.getSystemService(ShortcutManager::class.java)
+                    if (sm.isRequestPinShortcutSupported) sm.requestPinShortcut(shortcut, null)
                 }
-            } else {
+            }
+        } else {
                 holder.buttonCreateShortcut?.visibility = View.INVISIBLE
             }
 
@@ -361,12 +362,12 @@ open class ItemAdapterStation(
         val foregroundView = (viewHolder as? SwipeableViewHolder)?.foregroundView ?: return
         val stationViewHolder = viewHolder as? StationViewHolder ?: return
 
-        if (Math.abs(dX) > foregroundView.width * DISMISS_MENU_DRAG_THRESHOLD ||
-            Math.abs(dY) > foregroundView.height * DISMISS_MENU_DRAG_THRESHOLD) {
+        if (kotlin.math.abs(dX) > foregroundView.width * DISMISS_MENU_DRAG_THRESHOLD ||
+            kotlin.math.abs(dY) > foregroundView.height * DISMISS_MENU_DRAG_THRESHOLD) {
             stationViewHolder.dismissContextMenu()
         } else {
             if (System.currentTimeMillis() > timeLastDragEnded + MIN_INTERVAL_BETWEEN_DRAG_AND_MENU_OPEN) {
-                Log.d(TAG, "Creating contextMenu from onDragged")
+                Log.d(tag, "Creating contextMenu from onDragged")
 
                 // Triggere das registrierte ContextMenu der View:
                 foregroundView.showContextMenu()

@@ -16,11 +16,11 @@ import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
 
 object StationPopupMenu {
-    fun open(view: View, context: Context, activity: FragmentActivity, station: DataRadioStation, itemAdapterStation: ItemAdapterStation): PopupMenu {
+    fun open(view: View, context: Context, activity: FragmentActivity, station: DataRadioStation): PopupMenu {
         val rootView = view.rootView
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity.applicationContext)
-        val play_external = sharedPref.getBoolean("play_external", false)
-        val gravity = if (view.y + view.height > view.rootView.height / 2) Gravity.TOP else Gravity.BOTTOM
+        val playExternal = sharedPref.getBoolean("play_external", false)
+        val gravity = if ((view.y + view.height) > (view.rootView.height / 2)) Gravity.TOP else Gravity.BOTTOM
 
         val popup = PopupMenu(context, view, gravity)
         popup.menuInflater.inflate(R.menu.station_popup_menu, popup.menu)
@@ -37,8 +37,8 @@ object StationPopupMenu {
         }
 
         // Dynamic visibility
-        popup.menu.findItem(R.id.action_play_in_amaradio).isVisible = play_external
-        popup.menu.findItem(R.id.action_play_in_external_player).isVisible = !play_external
+        popup.menu.findItem(R.id.action_play_in_amaradio).isVisible = playExternal
+        popup.menu.findItem(R.id.action_play_in_external_player).isVisible = !playExternal
         popup.menu.findItem(R.id.action_create_shortcut).isVisible = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
 
         popup.setOnMenuItemClickListener { item ->
@@ -48,8 +48,13 @@ object StationPopupMenu {
                     true
                 }
                 R.id.action_play_in_external_player -> {
-                    Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, station,
-                        PlayerType.EXTERNAL) { PlayStationTask.playExternal(station, context).execute() }
+                    Utils.playAndWarnIfMetered(
+                        context.applicationContext as AMARadioApp,
+                        station,
+                        PlayerType.EXTERNAL,
+                    ) {
+                        PlayStationTask.playExternal(station, context).execute()
+                    }
                     true
                 }
                 R.id.action_visit_homepage -> {
@@ -64,7 +69,7 @@ object StationPopupMenu {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                         station.prepareShortcut(context) { shortcut ->
                             val sm = context.getSystemService(ShortcutManager::class.java)
-                            if (sm != null && sm.isRequestPinShortcutSupported) {
+                            if ((sm != null) && sm.isRequestPinShortcutSupported) {
                                 sm.requestPinShortcut(shortcut, null)
                             }
                         }

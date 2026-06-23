@@ -46,7 +46,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             val pos = adapterPosition
             if (pos == RecyclerView.NO_POSITION) return
             val station = filteredStationsList[pos]
-            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station, this@ItemAdapterIconOnlyStation)
+            contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station)
             contextMenu?.setOnDismissListener {
                 dismissContextMenu()
             }
