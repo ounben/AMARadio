@@ -5,10 +5,10 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
+import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
 import com.google.android.material.snackbar.Snackbar
 import com.ounben.amaradio.AMARadioApp
@@ -31,9 +31,14 @@ object StationActions {
 
     @JvmStatic
     fun showWebLinks(activity: FragmentActivity, station: DataRadioStation) {
-        ItemListDialog.create(activity, intArrayOf(
-            R.string.action_station_visit_website, R.string.action_station_copy_stream_url, R.string.action_station_share
-        )) { resourceId ->
+        ItemListDialog.create(
+            activity,
+            intArrayOf(
+                R.string.action_station_visit_website,
+                R.string.action_station_copy_stream_url,
+                R.string.action_station_share,
+            ),
+        ) { resourceId ->
             when (resourceId) {
                 R.string.action_station_visit_website -> openStationHomeUrl(activity, station)
                 R.string.action_station_copy_stream_url -> retrieveAndCopyStreamUrlToClipboard(activity, station)
@@ -45,11 +50,9 @@ object StationActions {
     @JvmStatic
     fun openStationHomeUrl(activity: FragmentActivity, station: DataRadioStation) {
         if (!TextUtils.isEmpty(station.HomePageUrl)) {
-            val stationUrl = Uri.parse(station.HomePageUrl)
-            if (stationUrl != null) {
-                val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
-                activity.startActivity(newIntent)
-            }
+            val stationUrl = station.HomePageUrl.toUri()
+            val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
+            activity.startActivity(newIntent)
         }
     }
 
@@ -60,8 +63,8 @@ object StationActions {
         scope.launch {
             val result = withContext(Dispatchers.IO) {
                 val ctx = contextRef.get() ?: return@withContext null
-                val AMARadioApp = ctx.applicationContext as AMARadioApp
-                val httpClient = AMARadioApp.httpClient
+                val app = ctx.applicationContext as AMARadioApp
+                val httpClient = app.httpClient
                 Utils.getRealStationLink(httpClient, ctx, station.StationUuid)
             }
 
@@ -85,16 +88,16 @@ object StationActions {
 
     @JvmStatic
     fun markAsFavourite(context: Context, station: DataRadioStation) {
-        val AMARadioApp = context.applicationContext as AMARadioApp
-        AMARadioApp.favouriteManager.add(station)
+        val app = context.applicationContext as AMARadioApp
+        app.favouriteManager.add(station)
         (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_starred) }
         vote(context, station)
     }
 
     @JvmStatic
     fun removeFromFavourites(context: Context, view: View?, station: DataRadioStation) {
-        val AMARadioApp = context.applicationContext as AMARadioApp
-        val favouriteManager = AMARadioApp.favouriteManager
+        val app = context.applicationContext as AMARadioApp
+        val favouriteManager = app.favouriteManager
         val removedIdx = favouriteManager.remove(station.StationUuid)
 
         if (view != null) {
@@ -116,8 +119,8 @@ object StationActions {
         scope.launch {
             val result = withContext(Dispatchers.IO) {
                 val ctx = contextRef.get() ?: return@withContext null
-                val AMARadioApp = ctx.applicationContext as AMARadioApp
-                val httpClient = AMARadioApp.httpClient
+                val app = ctx.applicationContext as AMARadioApp
+                val httpClient = app.httpClient
                 Utils.getRealStationLink(httpClient, ctx, station.StationUuid)
             }
 
@@ -150,9 +153,9 @@ object StationActions {
         scope.launch {
             withContext(Dispatchers.IO) {
                 val ctx = contextRef.get() ?: return@withContext
-                val AMARadioApp = ctx.applicationContext as AMARadioApp
-                val httpClient = AMARadioApp.httpClient
-                Utils.downloadFeedRelative(httpClient, ctx, "json/vote/" + station.StationUuid, true, null)
+                val app = ctx.applicationContext as AMARadioApp
+                val httpClient = app.httpClient
+                Utils.downloadFeedRelative(httpClient, ctx, "json/vote/" + station.StationUuid, forceUpdate = true, dictParams = null)
             }
         }
     }
