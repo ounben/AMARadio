@@ -10,6 +10,8 @@ import android.widget.PopupMenu
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
@@ -236,9 +238,39 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
         }
     }
 
-    fun setEntries(mpdServers: List<MPDServerData>) {
-        this.mpdServers = mpdServers
-        notifyDataSetChanged()
+    fun setEntries(newList: List<MPDServerData>) {
+        val oldList = mpdServers ?: emptyList()
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = oldList.size
+            override fun getNewListSize(): Int = newList.size
+
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldList[oldItemPosition].id == newList[newItemPosition].id
+            }
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldList[oldItemPosition].contentEquals(newList[newItemPosition])
+            }
+        })
+
+        this.mpdServers = newList
+        diffResult.dispatchUpdatesTo(object : ListUpdateCallback {
+            override fun onInserted(position: Int, count: Int) {
+                notifyItemRangeInserted(position + fixedViewsCount, count)
+            }
+
+            override fun onRemoved(position: Int, count: Int) {
+                notifyItemRangeRemoved(position + fixedViewsCount, count)
+            }
+
+            override fun onMoved(fromPosition: Int, toPosition: Int) {
+                notifyItemMoved(fromPosition + fixedViewsCount, toPosition + fixedViewsCount)
+            }
+
+            override fun onChanged(position: Int, count: Int, payload: Any?) {
+                notifyItemRangeChanged(position + fixedViewsCount, count, payload)
+            }
+        })
     }
 
     override fun getItemCount(): Int {
