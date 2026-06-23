@@ -45,7 +45,7 @@
     <string name="error_station_load">Verbindung zum Sender fehlgeschlagen</string>
     <string name="error_list_update">Verbindung zum Radio-Browser-Server fehlgeschlagen</string>
 
-    <string name="share_action">Sender-Link teilen mit..</string>
+    <string name="share_action">Sender-Link teilen mit…</string>
 
     <string name="nav_item_stations">Sender</string>
     <string name="nav_item_starred">Favoriten</string>
@@ -57,7 +57,7 @@
     <string name="detail_star">Zu Favoriten hinzufügen</string>
     <string name="detail_unstar">Aus Favoriten entfernen</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Laden...</string>
+    <string name="progress_loading">Laden…</string>
 
     <string name="sleep_timer" formatted="true">Sleeptimer: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Wiedergabe nach der gewählten Minute stoppen</string>

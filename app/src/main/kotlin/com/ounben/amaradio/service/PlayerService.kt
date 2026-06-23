@@ -68,6 +68,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Date
 
+@Suppress("DEPRECATION")
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private val tag = "PLAY"
@@ -85,7 +86,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var wifiLock: WifiManager.WifiLock? = null
     private val becomingNoisyReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            if (AudioManager.ACTION_AUDIO_BECOMING_NOISY == intent.action && radioPlayer?.isPlaying() == true) {
+            if ((AudioManager.ACTION_AUDIO_BECOMING_NOISY == intent.action) && (radioPlayer?.isPlaying() == true)) {
                 val prefs = PreferenceManager.getDefaultSharedPreferences(context)
                 if (prefs.getBoolean("pause_when_noisy", true)) {
                     pause(PauseReason.BECAME_NOISY)
@@ -199,7 +200,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private val connectivityCallback = ConnectivityChecker.ConnectivityCallback { _, connectionType ->
-        if (connectionType == ConnectivityChecker.ConnectionType.METERED && sharedPref!!.getBoolean(METERED_CONNECTION_WARNING_KEY, false)) {
+        if ((connectionType == ConnectivityChecker.ConnectionType.METERED) && (sharedPref!!.getBoolean(METERED_CONNECTION_WARNING_KEY, false))) {
             warnAboutMeteredConnection(PlayerType.AMARadio)
         }
     }
@@ -320,7 +321,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
         }
 
-        if (itsCurrentStation != null && radioPlayer?.playState != PlayState.Idle) {
+        if ((itsCurrentStation != null) && (radioPlayer?.playState != PlayState.Idle)) {
             updateNotification(radioPlayer?.playState ?: PlayState.Paused)
         }
 
@@ -405,7 +406,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         lastMeteredConnectionWarningTime = 0
         val app = application as AMARadioApp
         val station = itsCurrentStation ?: app.historyManager.first
-        if (radioPlayer?.isPlaying() == false && station != null) {
+        if ((radioPlayer?.isPlaying() == false) && (station != null)) {
             if (bypass) {
                 startMeteredConnectionListener()
                 playWithoutWarnings(station)
@@ -535,7 +536,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         builder.setStyle(style)
         val notification = builder.build()
         try {
-            if ((playState == PlayState.Playing || playState == PlayState.PrePlaying) || (playState == PlayState.Paused)) {
+            if (((playState == PlayState.Playing) || (playState == PlayState.PrePlaying)) || (playState == PlayState.Paused)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
@@ -694,7 +695,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
             if (status == PlayState.Idle) stop()
         }
-        if (status != PlayState.Paused && status != PlayState.Idle) startMeteredConnectionListener() else stopMeteredConnectionListener()
+        if ((status != PlayState.Paused) && (status != PlayState.Idle)) startMeteredConnectionListener() else stopMeteredConnectionListener()
         updateNotification(status)
         val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, status as Parcelable) }
         AppEventManager.sendEvent(intent)

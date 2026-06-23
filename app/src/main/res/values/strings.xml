@@ -48,7 +48,7 @@
     <string name="error_station_load">Could not connect to station</string>
     <string name="error_list_update">Could not connect to radio browser server</string>
 
-    <string name="share_action">Share station link with..</string>
+    <string name="share_action">Share station link with…</string>
 
     <string name="nav_item_stations">Stations</string>
     <string name="nav_item_starred">Favorites</string>
@@ -60,7 +60,7 @@
     <string name="detail_star">Add to favorites</string>
     <string name="detail_unstar">Delete from favorites</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Loading...</string>
+    <string name="progress_loading">Loading…</string>
 
     <string name="sleep_timer" formatted="true">Sleep timer: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Stop playing after the selected minute</string>
