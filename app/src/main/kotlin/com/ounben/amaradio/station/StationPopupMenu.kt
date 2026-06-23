@@ -6,6 +6,8 @@ import android.os.Build
 import android.view.Gravity
 import android.view.View
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
@@ -27,8 +29,8 @@ object StationPopupMenu {
 
         // Tint icons based on theme
         val iconColor = Utils.themeAttributeToColor(android.R.attr.textColorPrimary, context, android.graphics.Color.BLACK)
-        for (i in 0 until popup.menu.size()) {
-            val item = popup.menu.getItem(i)
+        for (i in 0 until popup.menu.size) {
+            val item = popup.menu[i]
             item.icon?.let { icon ->
                 val wrapped = DrawableCompat.wrap(icon.mutate())
                 DrawableCompat.setTint(wrapped, iconColor)
