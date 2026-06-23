@@ -151,7 +151,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
                 swipeRefreshLayout?.isRefreshing = false
             }
 
-            btnRetry?.setOnClickListener { Search(lastSearchStyle, lastQuery ?: "") }
+            btnRetry?.setOnClickListener { search(lastSearchStyle, lastQuery ?: "") }
         }
 
         rvStations?.let { Utils.setupStationRecyclerView(requireContext(), it, adapter) }
@@ -170,7 +170,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
             } else if (searchEnabled) {
                 // force refresh
                 stationsFilter?.clearList()
-                Search(lastSearchStyle, lastQuery ?: "")
+                search(lastSearchStyle, lastQuery ?: "")
             }
         }
 
@@ -179,7 +179,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         if (lastQuery != null && stationsFilter != null) {
             Log.d("STATIONS", "do queued search for: $lastQuery style=$lastSearchStyle")
             stationsFilter?.clearList()
-            Search(lastSearchStyle, lastQuery!!)
+            search(lastSearchStyle, lastQuery!!)
         }
 
         return view
@@ -190,7 +190,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         rvStations?.adapter = null
     }
 
-    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("STATIONS", "query = $query searchStyle=$searchStyle")
         lastQuery = query
         lastSearchStyle = searchStyle

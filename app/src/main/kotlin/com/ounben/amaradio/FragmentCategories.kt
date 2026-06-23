@@ -46,7 +46,7 @@ class FragmentCategories : FragmentBase() {
 
     private fun clickOnItem(theData: DataCategory) {
         val m = activity as? ActivityMain
-        m?.Search(this.searchStyle, theData.Name)
+        m?.search(this.searchStyle, theData.Name)
     }
 
     override fun refreshListGui() {

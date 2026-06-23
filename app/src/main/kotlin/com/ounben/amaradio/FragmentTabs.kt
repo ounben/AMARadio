@@ -84,7 +84,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             
             queuedSearchQuery?.let {
                 Log.d("TABS", "do queued search: $it")
-                Search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
+                search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
                 // We keep the query for potential recreates, but clear it if search is complete
             }
         }
@@ -208,7 +208,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         viewPager.adapter = adapter
     }
 
-    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("TABS", "Search = $query searchStyle=$searchStyle")
         if (viewPager != null && viewPager?.adapter is ViewPagerAdapter) {
             val adapter = viewPager?.adapter as ViewPagerAdapter
@@ -216,7 +216,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
 
             if (searchPosition != -1) {
                 viewPager?.currentItem = searchPosition
-                (fragments[IDX_SEARCH] as IFragmentSearchable).Search(searchStyle, query)
+                (fragments[IDX_SEARCH] as IFragmentSearchable).search(searchStyle, query)
             }
         } else {
             Log.d("TABS", "b Search = $query")

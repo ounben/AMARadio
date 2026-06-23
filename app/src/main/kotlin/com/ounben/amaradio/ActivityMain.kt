@@ -470,7 +470,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     // Switch back to search by name if we were searching something else
                     val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
                     if (currentFragment is IFragmentSearchable) {
-                        currentFragment.Search(StationsFilter.SearchStyle.ByName, "")
+                        currentFragment.search(StationsFilter.SearchStyle.ByName, "")
                     }
                     invalidateOptionsMenu()
                     return true
@@ -821,7 +821,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         Log.d("MAIN", "Search() searchstyle=$searchStyle query=$query")
         val currentFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
         if (currentFragment is FragmentTabs) {
-            currentFragment.Search(searchStyle, query)
+            currentFragment.search(searchStyle, query)
         } else {
             selectedMenuItem = R.id.nav_item_stations
             onNavigationItemSelectedInternal()
@@ -830,7 +830,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             mainHandler.post {
                 val newFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
                 if (newFragment is FragmentTabs) {
-                    newFragment.Search(searchStyle, query)
+                    newFragment.search(searchStyle, query)
                 }
             }
         }
@@ -861,7 +861,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         container.post {
             val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
             if (currentFragment is IFragmentSearchable) {
-                currentFragment.Search(StationsFilter.SearchStyle.ByName, query)
+                currentFragment.search(StationsFilter.SearchStyle.ByName, query)
             }
         }
     }

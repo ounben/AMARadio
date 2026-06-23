@@ -57,7 +57,7 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable {
         }
     }
 
-    override fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         lastQuery = query
         stationsFilter?.setDelayer(object : com.ounben.amaradio.utils.CustomFilter.Delayer {
             override fun getPostingDelay(constraint: CharSequence?): Long = 300
