@@ -1,6 +1,5 @@
 package com.ounben.amaradio
 
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -19,13 +18,14 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.appcompat.widget.Toolbar
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.IntentCompat
 import androidx.core.content.edit
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.get
+import androidx.core.view.size
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -49,7 +49,6 @@ import com.ounben.amaradio.station.StationsFilter
 import com.ounben.amaradio.utils.UiScaler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Runnable
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
@@ -77,7 +76,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var playerBottomSheet: BottomSheetBehavior<View>
     private var smallPlayerFragment: FragmentPlayerSmall? = null
     private var fullPlayerFragment: FragmentPlayerFull? = null
-    private var broadcastReceiver: BroadcastReceiver? = null
     private var menuItemSearch: MenuItem? = null
     private var menuItemDelete: MenuItem? = null
     private var menuItemSleepTimer: MenuItem? = null
@@ -100,9 +98,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(Utils.getThemeResId(this))
-        // enableEdgeToEdge(
-        //     statusBarStyle = SystemBarStyle.dark(android.graphics.Color.TRANSPARENT)
-        // )
         super.onCreate(savedInstanceState)
 
         if (savedInstanceState != null) {
@@ -129,8 +124,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         Log.d(TAG, "FilesDir: " + filesDir.absolutePath)
         Log.d(TAG, "CacheDir: " + cacheDir.absolutePath)
 
-        val myToolbar: Toolbar = findViewById(R.id.my_awesome_toolbar)
-        setSupportActionBar(myToolbar)
+        setSupportActionBar(findViewById(R.id.my_awesome_toolbar))
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         if (Utils.isDarkTheme(this)) {
@@ -243,7 +237,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         applyUiScaling()
         setupStartUpFragment()
 
-        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(enabled = true) {
             override fun handleOnBackPressed() {
                 if (playerBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
                     playerBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
@@ -262,11 +256,11 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             invalidateOptionsMenu()
                             return
                         }
-                    } catch (ignore: NumberFormatException) {}
+                    } catch (_: NumberFormatException) {}
                 }
 
                 if (Utils.bottomNavigationEnabled(this@ActivityMain)) {
-                    if (lastExitTry != null && Date().time < lastExitTry!!.time + 3000) {
+                    if (lastExitTry != null && (Date().time < lastExitTry!!.time + 3000)) {
                         PlayerServiceUtil.shutdownService()
                         finish()
                     } else {
@@ -339,10 +333,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERM_REQ_STORAGE_FAV_LOAD -> {
-                LoadFavourites()
+                loadFavourites()
             }
             PERM_REQ_STORAGE_FAV_SAVE -> {
-                SaveFavourites()
+                saveFavourites()
             }
         }
     }
@@ -381,19 +375,17 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             if (TextUtils.isEmpty(stationUUID)) return
             intent.removeExtra(EXTRA_STATION_UUID)
             
-            val AMARadioApp = application as AMARadioApp
-            val httpClient = AMARadioApp.httpClient
+            val app = application as AMARadioApp
+            val httpClient = app.httpClient
             
             scope.launch {
                 val station = withContext(Dispatchers.IO) {
                     Utils.getStationByUuid(httpClient, applicationContext, stationUUID!!)
                 }
-                if (!isFinishing && station != null) {
+                if (!isFinishing && (station != null)) {
                     Utils.showPlaySelection(this@ActivityMain, station, supportFragmentManager)
                     val currentFragment = mFragmentManager.fragments.lastOrNull()
-                    if (currentFragment is FragmentHistory) {
-                        currentFragment.refreshListGui()
-                    }
+                    if (currentFragment is FragmentHistory) currentFragment.refreshListGui()
                 }
             }
         } else {
@@ -401,7 +393,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             Log.d("MAIN", "received search request for tag 1: $searchTag")
             if (searchTag != null) {
                 Log.d("MAIN", "received search request for tag 2: $searchTag")
-                Search(StationsFilter.SearchStyle.ByTagExact, searchTag)
+                search(StationsFilter.SearchStyle.ByTagExact, searchTag)
             }
         }
     }
@@ -431,7 +423,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.menu_main, menu)
 
-        val myToolbar: Toolbar = findViewById(R.id.my_awesome_toolbar)
         menuItemSleepTimer = menu.findItem(R.id.action_set_sleep_timer)
         menuItemSearch = menu.findItem(R.id.action_search)
         menuItemDelete = menu.findItem(R.id.action_delete)
@@ -463,27 +454,29 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             findViewById<View>(R.id.toolbar_title_container)?.visibility = View.GONE
         }
         
-        menuItemSearch?.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-            override fun onMenuItemActionExpand(item: MenuItem): Boolean {
-                isSearchActive = true
-                findViewById<View>(R.id.toolbar_title_container)?.visibility = View.GONE
-                invalidateOptionsMenu()
-                return true
-            }
-
-            override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
-                isSearchActive = false
-                lastSearchQuery = ""
-                findViewById<View>(R.id.toolbar_title_container)?.visibility = View.VISIBLE
-                // Switch back to search by name if we were searching something else
-                val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
-                if (currentFragment is IFragmentSearchable) {
-                    currentFragment.Search(StationsFilter.SearchStyle.ByName, "")
+        menuItemSearch?.setOnActionExpandListener(
+            object : MenuItem.OnActionExpandListener {
+                override fun onMenuItemActionExpand(item: MenuItem): Boolean {
+                    isSearchActive = true
+                    findViewById<View>(R.id.toolbar_title_container)?.visibility = View.GONE
+                    invalidateOptionsMenu()
+                    return true
                 }
-                invalidateOptionsMenu()
-                return true
-            }
-        })
+
+                override fun onMenuItemActionCollapse(item: MenuItem): Boolean {
+                    isSearchActive = false
+                    lastSearchQuery = ""
+                    findViewById<View>(R.id.toolbar_title_container)?.visibility = View.VISIBLE
+                    // Switch back to search by name if we were searching something else
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
+                    if (currentFragment is IFragmentSearchable) {
+                        currentFragment.Search(StationsFilter.SearchStyle.ByName, "")
+                    }
+                    invalidateOptionsMenu()
+                    return true
+                }
+            },
+        )
 
         mSearchView?.setOnQueryTextFocusChangeListener { v, hasFocus ->
             if (hasFocus) {
@@ -510,11 +503,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         
         menuItemFilter?.isVisible = !isSearching
 
-        var mpdIsVisible = false
-        val AMARadioApp = application as AMARadioApp
-        val mpdClient = AMARadioApp.mpdClient
+        val app = application as AMARadioApp
+        val mpdClient = app.mpdClient
         val repository = mpdClient.mpdServersRepository
-        mpdIsVisible = !repository.isEmpty && !isSearching
+        val mpdIsVisible = !repository.isEmpty && !isSearching
 
         menuItemMpd?.isVisible = mpdIsVisible
 
@@ -530,7 +522,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     menuItemLoad?.isVisible = true
                     menuItemSave?.setTitle(R.string.nav_item_save_playlist)
 
-                    menuItemDelete?.isVisible = !AMARadioApp.favouriteManager.isEmpty()
+                    menuItemDelete?.isVisible = !app.favouriteManager.isEmpty()
                     menuItemDelete?.setTitle(R.string.action_delete_favorites)
                 }
                 R.id.nav_item_history -> {
@@ -538,7 +530,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     menuItemSave?.isVisible = true
                     menuItemSave?.setTitle(R.string.nav_item_save_history_playlist)
 
-                    menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
+                    menuItemDelete?.isVisible = !app.historyManager.isEmpty()
                     menuItemDelete?.setTitle(R.string.action_delete_history)
                 }
             }
@@ -560,8 +552,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         findViewById<View>(R.id.toolbar_title_container)?.visibility = if (isSearching) View.GONE else View.VISIBLE
         
         if (isSearching) {
-            for (i in 0 until menu.size()) {
-                val item = menu.getItem(i)
+            for (i in 0 until menu.size) {
+                val item = menu[i]
                 if (item.itemId != R.id.action_search) {
                     item.isVisible = false
                 }
@@ -573,7 +565,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
         super.onActivityResult(requestCode, resultCode, resultData)
 
-        if (requestCode == ACTION_SAVE_FILE && resultCode == RESULT_OK) {
+        if ((requestCode == ACTION_SAVE_FILE) && (resultCode == RESULT_OK)) {
             resultData?.data?.let { uri ->
                 Log.d(TAG, "Chosen save path: $uri")
                 val app = application as AMARadioApp
@@ -598,7 +590,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 }
             }
         }
-        if (requestCode == ACTION_LOAD_FILE && resultCode == RESULT_OK) {
+        if ((requestCode == ACTION_LOAD_FILE) && (resultCode == RESULT_OK)) {
             resultData?.data?.let { uri ->
                 Log.d(TAG, "Chosen load path: $uri")
                 val app = application as AMARadioApp
@@ -631,7 +623,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
-    private fun SaveFavourites() {
+    private fun saveFavourites() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "audio/x-mpegurl"
@@ -641,7 +633,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         startActivityForResult(intent, ACTION_SAVE_FILE)
     }
 
-    private fun LoadFavourites() {
+    private fun loadFavourites() {
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
             addCategory(Intent.CATEGORY_OPENABLE)
             type = "audio/x-mpegurl"
@@ -659,7 +651,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_save -> {
                 try {
-                    SaveFavourites()
+                    saveFavourites()
                 } catch (e: Exception) {
                     Log.e("MAIN", e.toString())
                 }
@@ -667,7 +659,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_load -> {
                 try {
-                    LoadFavourites()
+                    loadFavourites()
                 } catch (e: Exception) {
                     Log.e("MAIN", e.toString())
                 }
@@ -687,8 +679,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .setMessage(getString(R.string.alert_delete_history))
                         .setCancelable(true)
                         .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                            val AMARadioApp = application as AMARadioApp
-                            AMARadioApp.historyManager.clear()
+                            val app = application as AMARadioApp
+                            app.historyManager.clear()
                             Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_history)
                             recreate()
                         }
@@ -700,8 +692,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                         .setMessage(getString(R.string.alert_delete_favorites))
                         .setCancelable(true)
                         .setPositiveButton(getString(R.string.yes)) { _, _ ->
-                            val AMARadioApp = application as AMARadioApp
-                            AMARadioApp.favouriteManager.clear()
+                            val app = application as AMARadioApp
+                            app.favouriteManager.clear()
                             Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_favorites)
                             recreate()
                         }
@@ -743,9 +735,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             return
         }
 
-        val AMARadioApp = application as AMARadioApp
-        val hm = AMARadioApp.historyManager
-        val fm = AMARadioApp.favouriteManager
+        val app = application as AMARadioApp
+        val hm = app.historyManager
+        val fm = app.favouriteManager
 
         val startupAction = sharedPref.getString("startup_action", getString(R.string.startup_show_history))
 
@@ -825,7 +817,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mNavigationView.menu.findItem(selectedMenuItem)?.isChecked = true
     }
 
-    fun Search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("MAIN", "Search() searchstyle=$searchStyle query=$query")
         val currentFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
         if (currentFragment is FragmentTabs) {
@@ -862,7 +854,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
     }
 
-    fun SearchStations(query: String) {
+    fun searchStations(query: String) {
         Log.d("MAIN", "SearchStations() $query")
         val container = findViewById<View>(R.id.containerView)
         // Ensure fragment is ready and search happens on main thread
@@ -880,7 +872,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onQueryTextChange(newText: String?): Boolean {
         lastSearchQuery = newText
-        SearchStations(newText ?: "")
+        searchStations(newText ?: "")
         return true
     }
 
@@ -911,9 +903,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             meteredConnectionAlertDialog = null
                         }
 
-                        val playerType: PlayerType? = IntentCompat.getParcelableExtra(intent, PlayerService.PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, PlayerType::class.java)
-
-                        when (playerType) {
+                        when (val playerType: PlayerType? = IntentCompat.getParcelableExtra(intent, PlayerService.PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, PlayerType::class.java)) {
                             PlayerType.AMARadio -> showMeteredConnectionDialog {
                                 Utils.play(application as AMARadioApp, PlayerServiceUtil.getCurrentStation()!!)
                             }
@@ -989,8 +979,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun selectMPDServer() {
-        val AMARadioApp = application as AMARadioApp
-        Utils.showMpdServersDialog(AMARadioApp, supportFragmentManager, null)
+        val app = application as AMARadioApp
+        Utils.showMpdServersDialog(app, supportFragmentManager, null)
     }
 
     override fun invalidateOptionsMenuForCast() {
