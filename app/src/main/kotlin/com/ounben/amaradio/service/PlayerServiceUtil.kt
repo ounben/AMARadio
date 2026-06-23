@@ -22,34 +22,37 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 object PlayerServiceUtil {
-    private var mainContext: Context? = null
+    @android.annotation.SuppressLint("StaticFieldLeak")
+    private var applicationContext: Context? = null
     private var mBound = false
     private var serviceConnection: ServiceConnection? = null
     private var itsPlayerService: IPlayerService? = null
 
     @JvmStatic
     fun startService(context: Context) {
-        mainContext = context
-        val anIntent = Intent(context, PlayerService::class.java)
+        val appCtx = context.applicationContext
+        applicationContext = appCtx
+        val anIntent = Intent(appCtx, PlayerService::class.java)
         
         // Use regular startService to avoid background-start restrictions during app launch.
         // The service will promote itself to foreground only when playback starts.
-        context.startService(anIntent)
+        appCtx.startService(anIntent)
 
         if (!mBound) {
             serviceConnection = getServiceConnection()
-            context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
+            appCtx.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
             mBound = true
         }
     }
 
     @JvmStatic
     fun bindService(context: Context) {
-        mainContext = context
+        val appCtx = context.applicationContext
+        applicationContext = appCtx
         if (mBound) return
         serviceConnection = getServiceConnection()
-        val anIntent = Intent(context, PlayerService::class.java)
-        context.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
+        val anIntent = Intent(appCtx, PlayerService::class.java)
+        appCtx.bindService(anIntent, serviceConnection!!, Context.BIND_AUTO_CREATE)
         mBound = true
     }
 
@@ -64,7 +67,7 @@ object PlayerServiceUtil {
 
     @JvmStatic
     fun shutdownService() {
-        mainContext?.let { context ->
+        applicationContext?.let { context ->
             try {
                 if (Utils.isDebug) {
                     Log.d("PlayerServiceUtil", "PlayerServiceUtil: shutdownService")
@@ -98,7 +101,7 @@ object PlayerServiceUtil {
                 if (Utils.isDebug) {
                     Log.d("PLAYER", "Service offline")
                 }
-                mainContext?.let { unBind(it) }
+                applicationContext?.let { unBind(it) }
                 itsPlayerService = null
             }
         }
@@ -261,7 +264,7 @@ object PlayerServiceUtil {
 
     @JvmStatic
     fun getStationIcon(holder: ImageView, fromUrl: String?) {
-        val context = mainContext ?: holder.context
+        val context = applicationContext ?: holder.context
         val r = context.resources
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, r.displayMetrics)
 
