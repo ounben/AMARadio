@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.lang.ref.WeakReference
 
+@Suppress("unused")
 class GetRealLinkAndPlayTask(context: Context, private val station: DataRadioStation, playerService: IPlayerService) {
     private val contextRef = WeakReference(context)
     private val playerServiceRef = WeakReference(playerService)
@@ -43,7 +44,7 @@ class GetRealLinkAndPlayTask(context: Context, private val station: DataRadioSta
         }
     }
 
-    fun cancel(mayInterruptIfRunning: Boolean) {
+    fun cancel() {
         job?.cancel()
     }
 }
