@@ -54,7 +54,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
 
         if (Utils.isDebug) Log.d(TAG, "stations count: ${historyManager.listStations.size}")
 
-        adapter?.updateList(null, historyManager.listStations)
+        adapter?.updateList(historyManager.listStations)
         if (lastQuery.isNotEmpty()) {
             stationsFilter?.filter(lastQuery)
         }

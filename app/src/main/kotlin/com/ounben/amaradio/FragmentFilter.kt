@@ -396,7 +396,7 @@ class FragmentFilter : FragmentBase() {
             
             if (resultString != null) {
                 val stations = DataRadioStation.DecodeJson(resultString) ?: emptyList()
-                (rvStations?.adapter as? ItemAdapterStation)?.updateList(null, stations)
+                (rvStations?.adapter as? ItemAdapterStation)?.updateList(stations)
                 
                 // Show error layout only if there was a real failure (resultString == null)
                 // If stations is empty, maybe show a "no results" message instead of "cannot connect"

@@ -51,7 +51,7 @@ class FragmentStarred : Fragment(), IAdapterRefreshable, IFragmentSearchable {
 
         if (Utils.isDebug) Log.d(TAG, "stations count: ${favouriteManager.listStations.size}")
 
-        adapter?.updateList(this, favouriteManager.listStations)
+        adapter?.updateList(favouriteManager.listStations)
         if (lastQuery.isNotEmpty()) {
             stationsFilter?.filter(lastQuery)
         }

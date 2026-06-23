@@ -19,6 +19,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.AMARadioApp
@@ -28,13 +29,11 @@ import com.ounben.amaradio.CountryFlagsLoader
 import com.ounben.amaradio.FavouriteManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
-import com.ounben.amaradio.interfaces.IAdapterRefreshable
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.utils.RecyclerItemMoveAndSwipeHelper
-import com.ounben.amaradio.utils.RecyclerItemSwipeHelper
 import com.ounben.amaradio.utils.SwipeableViewHolder
 import com.ounben.amaradio.utils.UiScaler
 import com.ounben.amaradio.views.TagsView
@@ -46,7 +45,7 @@ import kotlinx.coroutines.launch
 open class ItemAdapterStation(
     protected val fragmentActivity: FragmentActivity,
     protected val resourceId: Int,
-    protected val filterType: StationsFilter.FilterType
+    protected val filterType: StationsFilter.FilterType,
 ) : RecyclerView.Adapter<ItemAdapterStation.StationViewHolder>(),
     RecyclerItemMoveAndSwipeHelper.MoveAndSwipeCallback<ItemAdapterStation.StationViewHolder> {
 
@@ -68,7 +67,6 @@ open class ItemAdapterStation(
     private var filterListener: FilterListener? = null
     private var supportsStationRemoval = false
     private var shouldLoadIcons = false
-    private var refreshable: IAdapterRefreshable? = null
     private var eventJob: Job? = null
     private var expandedPosition = -1
     var playingStationPosition = -1
@@ -166,19 +164,32 @@ open class ItemAdapterStation(
         ItemTouchHelper(swipeAndMoveHelper).attachToRecyclerView(recyclerView)
     }
 
-    fun updateList(refreshableList: IAdapterRefreshable?, stationsList: List<DataRadioStation>) {
-        this.refreshable = refreshableList
+    fun updateList(stationsList: List<DataRadioStation>) {
         this.stationsList = stationsList
-        this.filteredStationsList = stationsList
-        notifyStationsChanged()
+        updateFilteredList(stationsList)
     }
 
-    private fun notifyStationsChanged() {
+    private fun updateFilteredList(newList: List<DataRadioStation>) {
+        val oldList = filteredStationsList
+        val diffResult = DiffUtil.calculateDiff(
+            object : DiffUtil.Callback() {
+                override fun getOldListSize(): Int = oldList.size
+                override fun getNewListSize(): Int = newList.size
+                override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return oldList[oldItemPosition].StationUuid == newList[newItemPosition].StationUuid
+                }
+                override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                    return oldList[oldItemPosition] == newList[newItemPosition]
+                }
+            },
+        )
+        
+        filteredStationsList = newList
         expandedPosition = -1
         playingStationPosition = -1
         shouldLoadIcons = Utils.shouldLoadIcons(fragmentActivity)
         highlightCurrentStation()
-        notifyDataSetChanged()
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StationViewHolder {
@@ -394,8 +405,7 @@ open class ItemAdapterStation(
                 object : StationsFilter.DataProvider {
                     override fun getOriginalStationList(): List<DataRadioStation> = stationsList ?: emptyList()
                     override fun notifyFilteredStationsChanged(status: StationsFilter.SearchStatus, filteredStations: List<DataRadioStation>) {
-                        filteredStationsList = filteredStations
-                        notifyStationsChanged()
+                        updateFilteredList(filteredStations)
                         filterListener?.onSearchCompleted(status)
                     }
                 },
@@ -432,7 +442,9 @@ open class ItemAdapterStation(
         ).forEach { button ->
             button?.layoutParams?.width = buttonSize
             button?.layoutParams?.height = buttonSize
-            if (button is ImageButton) button.scaleType = ImageView.ScaleType.FIT_CENTER
+            if (button is ImageButton) {
+                button.scaleType = ImageView.ScaleType.FIT_CENTER
+            }
         }
     }
 
@@ -505,8 +517,8 @@ open class ItemAdapterStation(
         }
         
         if (playingStationPosition != oldPos) {
-            if (oldPos > -1 && oldPos < itemCount) notifyItemChanged(oldPos)
-            if (playingStationPosition > -1 && playingStationPosition < itemCount) notifyItemChanged(playingStationPosition)
+            if (oldPos > -1 && (oldPos < itemCount)) notifyItemChanged(oldPos)
+            if (playingStationPosition > -1 && (playingStationPosition < itemCount)) notifyItemChanged(playingStationPosition)
         }
     }
 

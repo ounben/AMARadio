@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataCategory
@@ -42,9 +43,23 @@ class ItemAdapterCategory(private val resourceId: Int) : RecyclerView.Adapter<It
         this.categoryClickListener = categoryClickListener
     }
 
-    fun updateList(categoriesList: List<DataCategory>?) {
-        this.categoriesList = categoriesList
-        notifyDataSetChanged()
+    fun updateList(newList: List<DataCategory>?) {
+        val oldList = categoriesList ?: emptyList()
+        val currentNewList = newList ?: emptyList()
+        
+        val diffResult = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun getOldListSize(): Int = oldList.size
+            override fun getNewListSize(): Int = currentNewList.size
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldList[oldItemPosition].Name == currentNewList[newItemPosition].Name
+            }
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                return oldList[oldItemPosition] == currentNewList[newItemPosition]
+            }
+        })
+        
+        this.categoriesList = newList
+        diffResult.dispatchUpdatesTo(this)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {

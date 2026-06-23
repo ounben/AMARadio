@@ -91,7 +91,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
 
         val adapter = rv.adapter as? ItemAdapterStation
         if (adapter != null) {
-            adapter.updateList(null, filteredStationsList)
+            adapter.updateList(filteredStationsList)
             if (searchEnabled && lastQuery.isNullOrEmpty()) {
                 stationsFilter?.filter("")
             } else if (searchEnabled && !lastQuery.isNullOrEmpty()) {
