@@ -24,12 +24,12 @@ class FragmentCategories : FragmentBase() {
         super.onCreate(savedInstanceState)
         if (savedInstanceState != null) {
             val styleIdx = savedInstanceState.getInt("searchStyle", 0)
-            searchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+            searchStyle = StationsFilter.SearchStyle.entries[styleIdx]
         } else {
             arguments?.let {
                 val styleIdx = it.getInt("searchStyle", -1)
                 if (styleIdx != -1) {
-                    searchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+                    searchStyle = StationsFilter.SearchStyle.entries[styleIdx]
                 }
             }
         }
@@ -40,7 +40,7 @@ class FragmentCategories : FragmentBase() {
         outState.putInt("searchStyle", searchStyle.ordinal)
     }
 
-    fun SetBaseSearchLink(searchStyle: StationsFilter.SearchStyle) {
+    fun setBaseSearchLink(searchStyle: StationsFilter.SearchStyle) {
         this.searchStyle = searchStyle
     }
 
@@ -62,14 +62,14 @@ class FragmentCategories : FragmentBase() {
         val showSingleUseTags = sharedPref?.getBoolean("single_use_tags", false) ?: false
 
         val filteredCategoriesList = ArrayList<DataCategory>()
-        val data = DataCategory.DecodeJson(getUrlResult()) ?: emptyArray()
+        val data = DataCategory.DecodeJson(getUrlResult())
 
         if (Utils.isDebug) Log.d(TAG, "categories count: ${data.size}")
         val countryDict = CountryCodeDictionary.instance
         val flagsDict = CountryFlagsLoader.instance
 
         for (aData in data) {
-            if (!singleUseFilter || showSingleUseTags || aData.UsedCount > 1) {
+            if (!singleUseFilter || showSingleUseTags || (aData.UsedCount > 1)) {
                 if (searchStyle == StationsFilter.SearchStyle.ByCountryCodeExact) {
                     aData.Label = countryDict.getCountryByCode(aData.Name)
                     context?.let { aData.Icon = flagsDict.getFlag(it, aData.Name) }
@@ -85,8 +85,11 @@ class FragmentCategories : FragmentBase() {
         adapter?.updateList(filteredCategoriesList)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(requireContext())
         val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
         val layoutId = if (isGrid) R.layout.list_item_category_grid else R.layout.list_item_category
@@ -113,7 +116,7 @@ class FragmentCategories : FragmentBase() {
         return view
     }
 
-    fun EnableSingleUseFilter(b: Boolean) {
+    fun enableSingleUseFilter(b: Boolean) {
         this.singleUseFilter = b
     }
 

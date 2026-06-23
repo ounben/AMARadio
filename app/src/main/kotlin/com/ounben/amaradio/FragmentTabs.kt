@@ -200,10 +200,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             adapter.addFragment(fragment, titleRes, tabId)
         }
 
-        (fragments[IDX_TAGS] as? FragmentCategories)?.EnableSingleUseFilter(true)
-        (fragments[IDX_TAGS] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByTagExact)
-        (fragments[IDX_COUNTRIES] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
-        (fragments[IDX_LANGUAGES] as? FragmentCategories)?.SetBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
+        (fragments[IDX_TAGS] as? FragmentCategories)?.enableSingleUseFilter(true)
+        (fragments[IDX_TAGS] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByTagExact)
+        (fragments[IDX_COUNTRIES] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
+        (fragments[IDX_LANGUAGES] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
 
         viewPager.adapter = adapter
     }
