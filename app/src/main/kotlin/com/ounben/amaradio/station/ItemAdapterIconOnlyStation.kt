@@ -43,7 +43,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             if (contextMenu != null) return
-            val pos = adapterPosition
+            val pos = bindingAdapterPosition
             if (pos == RecyclerView.NO_POSITION) return
             val station = filteredStationsList[pos]
             contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station)
@@ -87,7 +87,7 @@ class ItemAdapterIconOnlyStation(fragmentActivity: FragmentActivity, resourceId:
             } else {
                 StationActions.markAsFavourite(fragmentActivity, station)
             }
-            notifyItemChanged(holder.adapterPosition)
+            notifyItemChanged(holder.bindingAdapterPosition)
         }
 
         // Highlight playing station

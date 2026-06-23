@@ -35,10 +35,10 @@ open class FragmentBase : Fragment() {
         }
         
         // Don't call DownloadUrl if we have a preserved result OR if we are a search fragment (url is null)
-        if (urlResult == null && !relativeUrl.isNullOrBlank()) {
-            DownloadUrl(false)
+        if ((urlResult == null) && !relativeUrl.isNullOrBlank()) {
+            downloadUrl(forceUpdate = false)
         } else if (urlResult != null) {
-            RefreshListGui()
+            refreshListGui()
         }
     }
 
@@ -53,7 +53,7 @@ open class FragmentBase : Fragment() {
     protected fun hasUrl(): Boolean = !TextUtils.isEmpty(relativeUrl)
 
     @JvmOverloads
-    fun DownloadUrl(forceUpdate: Boolean, displayProgress: Boolean = true) {
+    fun downloadUrl(forceUpdate: Boolean, displayProgress: Boolean = true) {
         if (!isCreated) return
         
         downloadJob?.cancel()
@@ -74,8 +74,8 @@ open class FragmentBase : Fragment() {
                     AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
                 }
 
-                val AMARadioApp = context.applicationContext as AMARadioApp
-                val httpClient = AMARadioApp.httpClient
+                val app = context.applicationContext as AMARadioApp
+                val httpClient = app.httpClient
 
                 downloadJob = scope.launch {
                     val result = withContext(Dispatchers.IO) {
@@ -84,7 +84,7 @@ open class FragmentBase : Fragment() {
                         Utils.downloadFeedRelative(httpClient, context, url, forceUpdate, p)
                     }
 
-                    DownloadFinished()
+                    downloadFinished()
                     AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
                     
                     if (Utils.isDebug) {
@@ -96,7 +96,7 @@ open class FragmentBase : Fragment() {
                             Log.d(TAG, "Download relativeUrl OK: $url")
                         }
                         urlResult = result
-                        RefreshListGui()
+                        refreshListGui()
                     } else {
                         try {
                             Toast.makeText(context, resources.getText(R.string.error_list_update), Toast.LENGTH_SHORT).show()
@@ -107,16 +107,16 @@ open class FragmentBase : Fragment() {
                 }
             } else {
                 urlResult = cache
-                DownloadFinished()
-                RefreshListGui()
+                downloadFinished()
+                refreshListGui()
             }
         } else {
-            RefreshListGui()
+            refreshListGui()
         }
     }
 
-    protected open fun RefreshListGui() {}
-    protected open fun DownloadFinished() {}
+    protected open fun refreshListGui() {}
+    protected open fun downloadFinished() {}
 
     companion object {
         private const val TAG = "FragmentBase"

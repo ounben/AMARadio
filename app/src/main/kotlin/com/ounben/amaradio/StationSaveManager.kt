@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.apache.commons.text.similarity.CosineSimilarity
 import org.json.JSONArray
 import java.io.BufferedReader
 import java.io.Reader
@@ -48,7 +47,7 @@ open class StationSaveManager(protected val context: Context) {
         listStations.add(station)
         save()
         _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, true)
+        stationStatusListener?.onStationStatusChanged(station, favourite = true)
     }
 
     fun addMultiple(stations: List<DataRadioStation>) {
@@ -77,7 +76,7 @@ open class StationSaveManager(protected val context: Context) {
         listStations.add(0, station)
         save()
         _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, true)
+        stationStatusListener?.onStationStatusChanged(station, favourite = true)
     }
 
     fun addAll(stations: List<DataRadioStation>?) {
@@ -88,9 +87,6 @@ open class StationSaveManager(protected val context: Context) {
         listStations.addAll(stations)
         _stationsFlow.value = listStations.toList()
     }
-
-    val last: DataRadioStation?
-        get() = if (listStations.isNotEmpty()) listStations[listStations.size - 1] else null
 
     val first: DataRadioStation?
         get() = if (listStations.isNotEmpty()) listStations[0] else null
@@ -106,7 +102,7 @@ open class StationSaveManager(protected val context: Context) {
 
     fun getNextById(id: String): DataRadioStation? {
         if (listStations.isEmpty()) return null
-        for (i in 0 until listStations.size - 1) {
+        for (i in 0 until (listStations.size - 1)) {
             if (listStations[i].StationUuid == id) {
                 return listStations[i + 1]
             }
@@ -133,30 +129,6 @@ open class StationSaveManager(protected val context: Context) {
         _stationsFlow.value = listStations.toList()
     }
 
-    fun getBestNameMatch(query: String): DataRadioStation? {
-        var bestStation: DataRadioStation? = null
-        val upperQuery = query.uppercase(Locale.ROOT)
-        var maxSimilarity = 0.0
-        val simMeasure = CosineSimilarity()
-        
-        // Helper to convert string to Map<CharSequence, Int> for CosineSimilarity
-        fun String.getTermFrequencies(): Map<CharSequence, Int> {
-            return this.toCharArray().groupBy { it.toString() as CharSequence }.mapValues { it.value.size }
-        }
-
-        val queryTerms = upperQuery.getTermFrequencies()
-
-        for (station in listStations) {
-            val stationName = station.Name.uppercase(Locale.ROOT)
-            val similarity = simMeasure.cosineSimilarity(stationName.getTermFrequencies(), queryTerms)
-            if (similarity > maxSimilarity) {
-                bestStation = station
-                maxSimilarity = similarity
-            }
-        }
-        return bestStation
-    }
-
     fun remove(id: String): Int {
         for (i in listStations.indices) {
             val station = listStations[i]
@@ -164,7 +136,7 @@ open class StationSaveManager(protected val context: Context) {
                 listStations.removeAt(i)
                 save()
                 _stationsFlow.value = listStations.toList()
-                stationStatusListener?.onStationStatusChanged(station, false)
+                stationStatusListener?.onStationStatusChanged(station, favourite = false)
                 return i
             }
         }
@@ -176,7 +148,7 @@ open class StationSaveManager(protected val context: Context) {
         listStations.add(pos, station)
         save()
         _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, false)
+        stationStatusListener?.onStationStatusChanged(station, favourite = false)
     }
 
     fun clear() {
@@ -186,7 +158,7 @@ open class StationSaveManager(protected val context: Context) {
         _stationsFlow.value = listStations.toList()
         if (stationStatusListener != null) {
             for (station in oldStation) {
-                stationStatusListener!!.onStationStatusChanged(station, false)
+                stationStatusListener!!.onStationStatusChanged(station, favourite = false)
             }
         }
     }
@@ -227,7 +199,7 @@ open class StationSaveManager(protected val context: Context) {
             val stationsToRemove = withContext(Dispatchers.IO) {
                 val toRemove = ArrayList<DataRadioStation>()
                 for (station in savedStations) {
-                    if (!station.refresh(httpClient, context) && !station.hasValidUuid() && station.RefreshRetryCount > DataRadioStation.MAX_REFRESH_RETRIES) {
+                    if (!station.refresh(httpClient, context) && (!station.hasValidUuid()) && (station.RefreshRetryCount > DataRadioStation.MAX_REFRESH_RETRIES)) {
                         toRemove.add(station)
                     }
                 }
@@ -286,7 +258,7 @@ open class StationSaveManager(protected val context: Context) {
         return try {
             writer.write("#EXTM3U\n")
             for (station in listStations) {
-                writer.write(M3U_PREFIX + station.StationUuid + "\n")
+                writer.write(m3uPrefix + station.StationUuid + "\n")
                 writer.write("#EXTINF:-1," + station.Name + "\n")
                 writer.write(station.StreamUrl + "\n\n")
             }
@@ -308,8 +280,9 @@ open class StationSaveManager(protected val context: Context) {
             val br = BufferedReader(reader)
             var line: String?
             while (br.readLine().also { line = it } != null) {
-                if (line?.startsWith(M3U_PREFIX) == true) {
-                    val uuid = line!!.substring(M3U_PREFIX.length).trim()
+                val currentLine = line ?: continue
+                if (currentLine.startsWith(m3uPrefix)) {
+                    val uuid = currentLine.substring(m3uPrefix.length).trim()
                     if (uuid.isNotEmpty()) {
                         listUuids.add(uuid)
                     }
@@ -335,5 +308,5 @@ open class StationSaveManager(protected val context: Context) {
         }
     }
 
-    protected val M3U_PREFIX = "#RADIOBROWSERUUID:"
+    private val m3uPrefix = "#RADIOBROWSERUUID:"
 }

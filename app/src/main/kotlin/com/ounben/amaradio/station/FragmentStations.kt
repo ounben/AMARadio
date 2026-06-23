@@ -52,11 +52,11 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
     }
 
     private fun onStationClick(theStation: DataRadioStation, pos: Int) {
-        val AMARadioApp = requireActivity().application as AMARadioApp
-        Utils.showPlaySelection(AMARadioApp, theStation, requireActivity().supportFragmentManager)
+        val app = requireActivity().application as AMARadioApp
+        Utils.showPlaySelection(app, theStation, requireActivity().supportFragmentManager)
     }
 
-    override fun RefreshListGui() {
+    override fun refreshListGui() {
         val rv = rvStations ?: return
         
         // Caching is disabled for Search fragments to ensure fresh results when selecting different countries/tags
@@ -166,7 +166,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         swipeRefreshLayout = view.findViewById(R.id.swiperefresh)
         swipeRefreshLayout?.setOnRefreshListener {
             if (hasUrl()) {
-                DownloadUrl(true, false)
+                downloadUrl(forceUpdate = true, displayProgress = false)
             } else if (searchEnabled) {
                 // force refresh
                 stationsFilter?.clearList()
@@ -174,7 +174,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
             }
         }
 
-        RefreshListGui()
+        refreshListGui()
 
         if (lastQuery != null && stationsFilter != null) {
             Log.d("STATIONS", "do queued search for: $lastQuery style=$lastSearchStyle")
@@ -208,7 +208,7 @@ class FragmentStations : FragmentBase(), IFragmentSearchable {
         }
     }
 
-    override fun DownloadFinished() {
+    override fun downloadFinished() {
         swipeRefreshLayout?.isRefreshing = false
     }
 

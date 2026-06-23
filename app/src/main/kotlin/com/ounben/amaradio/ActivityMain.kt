@@ -392,7 +392,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     Utils.showPlaySelection(this@ActivityMain, station, supportFragmentManager)
                     val currentFragment = mFragmentManager.fragments.lastOrNull()
                     if (currentFragment is FragmentHistory) {
-                        currentFragment.RefreshListGui()
+                        currentFragment.refreshListGui()
                     }
                 }
             }

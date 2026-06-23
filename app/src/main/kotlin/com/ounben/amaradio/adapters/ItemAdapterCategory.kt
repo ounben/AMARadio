@@ -30,7 +30,10 @@ class ItemAdapterCategory(private val resourceId: Int) : RecyclerView.Adapter<It
 
         override fun onClick(view: View) {
             categoriesList?.let {
-                categoryClickListener?.onCategoryClick(it[adapterPosition])
+                val pos = bindingAdapterPosition
+                if (pos != RecyclerView.NO_POSITION) {
+                    categoryClickListener?.onCategoryClick(it[pos])
+                }
             }
         }
     }

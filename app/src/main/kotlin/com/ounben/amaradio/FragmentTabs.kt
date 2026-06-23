@@ -238,10 +238,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         }
     }
 
-    override fun Refresh() {
+    override fun refresh() {
         val fragment = fragments[viewPager?.currentItem ?: 0]
         if (fragment is FragmentBase) {
-            fragment.DownloadUrl(true)
+            fragment.downloadUrl(forceUpdate = true)
         }
     }
 

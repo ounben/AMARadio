@@ -49,7 +49,7 @@ class FragmentCategories : FragmentBase() {
         m?.Search(this.searchStyle, theData.Name)
     }
 
-    override fun RefreshListGui() {
+    override fun refreshListGui() {
         val rv = rvCategories ?: return
         val ctx = context ?: return
 
@@ -105,10 +105,10 @@ class FragmentCategories : FragmentBase() {
             if (Utils.isDebug) {
                 Log.d(TAG, "onRefresh called from SwipeRefreshLayout")
             }
-            DownloadUrl(true, false)
+            downloadUrl(forceUpdate = true, displayProgress = false)
         }
 
-        RefreshListGui()
+        refreshListGui()
 
         return view
     }
@@ -117,7 +117,7 @@ class FragmentCategories : FragmentBase() {
         this.singleUseFilter = b
     }
 
-    override fun DownloadFinished() {
+    override fun downloadFinished() {
         swipeRefreshLayout?.isRefreshing = false
     }
 

@@ -35,7 +35,7 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
         val lv = view.findViewById<ListView>(R.id.listViewStatistics)
         lv.adapter = itemAdapterStatistics
 
-        download(false)
+        download(forceUpdate = false)
 
         return view
     }
@@ -44,8 +44,8 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
         val context = context ?: return
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
 
-        val AMARadioApp = requireActivity().application as AMARadioApp
-        val httpClient = AMARadioApp.httpClient
+        val app = requireActivity().application as AMARadioApp
+        val httpClient = app.httpClient
 
         downloadJob?.cancel()
         downloadJob = scope.launch {
@@ -71,8 +71,8 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
         }
     }
 
-    override fun Refresh() {
-        download(true)
+    override fun refresh() {
+        download(forceUpdate = true)
     }
 
     override fun onDestroyView() {

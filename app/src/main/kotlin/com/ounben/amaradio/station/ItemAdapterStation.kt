@@ -3,7 +3,6 @@ package com.ounben.amaradio.station
 import android.content.Intent
 import android.content.pm.ShortcutManager
 import android.graphics.Typeface
-import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
 import android.util.TypedValue
@@ -17,7 +16,6 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.FragmentActivity
 import androidx.preference.PreferenceManager
@@ -74,7 +72,6 @@ open class ItemAdapterStation(
     private var eventJob: Job? = null
     private var expandedPosition = -1
     var playingStationPosition = -1
-    protected val stationImagePlaceholder: Drawable? = AppCompatResources.getDrawable(fragmentActivity, R.drawable.ic_radio_24dp)
     private val favouriteManager: FavouriteManager = (fragmentActivity.application as AMARadioApp).favouriteManager
     private var filter: StationsFilter? = null
     
@@ -122,7 +119,7 @@ open class ItemAdapterStation(
 
         override fun onCreateContextMenu(menu: ContextMenu?, v: View?, menuInfo: ContextMenu.ContextMenuInfo?) {
             if (contextMenu != null) return
-            val pos = adapterPosition
+            val pos = bindingAdapterPosition
             if (pos == RecyclerView.NO_POSITION) return
             val station = filteredStationsList[pos]
             contextMenu = StationPopupMenu.open(v!!, fragmentActivity, fragmentActivity, station)
@@ -132,7 +129,7 @@ open class ItemAdapterStation(
         }
 
         override fun onClick(view: View) {
-            val pos = adapterPosition
+            val pos = bindingAdapterPosition
             if (pos != RecyclerView.NO_POSITION) {
                 stationActionsListener?.onStationClick(filteredStationsList[pos], pos)
             }
@@ -153,14 +150,6 @@ open class ItemAdapterStation(
                     }
                 }
             }
-        }
-    }
-
-    fun enableItemRemoval(recyclerView: RecyclerView) {
-        if (!supportsStationRemoval) {
-            supportsStationRemoval = true
-            val swipeHelper = RecyclerItemSwipeHelper(fragmentActivity, 0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT, this)
-            ItemTouchHelper(swipeHelper).attachToRecyclerView(recyclerView)
         }
     }
 
@@ -213,7 +202,6 @@ open class ItemAdapterStation(
         } else {
             holder.imageViewIcon.visibility = View.VISIBLE
             PlayerServiceUtil.getStationIcon(holder.imageViewIcon, if (station.hasIcon()) station.IconUrl else null)
-            setupIcon(holder.imageViewIcon)
 
             if (UiScaler.getScaleFactor(fragmentActivity) == UiScaler.SCALE_COMPACT) {
                 setupCompactStyle(holder)
@@ -228,7 +216,7 @@ open class ItemAdapterStation(
                 } else {
                     StationActions.markAsFavourite(fragmentActivity, station)
                 }
-                notifyItemChanged(holder.adapterPosition)
+                notifyItemChanged(holder.bindingAdapterPosition)
             }
             
             holder.starredStatusIcon.setOnClickListener(toggleFavoriteListener)
@@ -249,7 +237,7 @@ open class ItemAdapterStation(
         holder.buttonMore.contentDescription = fragmentActivity.getString(if (isExpanded) R.string.image_button_less else R.string.image_button_more)
         holder.buttonMore.setOnClickListener {
             val oldExpanded = expandedPosition
-            val currentPos = holder.adapterPosition
+            val currentPos = holder.bindingAdapterPosition
             expandedPosition = if (isExpanded) -1 else currentPos
             if (oldExpanded != -1) notifyItemChanged(oldExpanded)
             if (expandedPosition != -1) notifyItemChanged(expandedPosition)
@@ -288,11 +276,7 @@ open class ItemAdapterStation(
             val viewHeight = (holder.textViewShortDescription.textSize * 1.3f).toInt()
             it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
         }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            holder.textViewShortDescription.setCompoundDrawablesRelative(flag, null, null, null)
-        } else {
-            holder.textViewShortDescription.setCompoundDrawables(flag, null, null, null)
-        }
+        holder.textViewShortDescription.setCompoundDrawablesRelative(flag, null, null, null)
 
         if (isExpanded) {
             if (holder.stubDetails != null) {
@@ -317,11 +301,11 @@ open class ItemAdapterStation(
             } else {
                 holder.buttonBookmark?.setOnClickListener {
                     StationActions.markAsFavourite(fragmentActivity, station)
-                    notifyItemChanged(holder.adapterPosition)
+                    notifyItemChanged(holder.bindingAdapterPosition)
                 }
             }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 &&
+        if ((Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) &&
             fragmentActivity.applicationContext.getSystemService(ShortcutManager::class.java).isRequestPinShortcutSupported) {
             holder.buttonCreateShortcut?.visibility = View.VISIBLE
             holder.buttonCreateShortcut?.setOnClickListener {
@@ -355,7 +339,10 @@ open class ItemAdapterStation(
     override fun getItemCount(): Int = filteredStationsList.size
 
     override fun onSwiped(viewHolder: StationViewHolder, direction: Int) {
-        stationActionsListener?.onStationSwiped(filteredStationsList[viewHolder.adapterPosition])
+        val pos = viewHolder.bindingAdapterPosition
+        if (pos != RecyclerView.NO_POSITION) {
+            stationActionsListener?.onStationSwiped(filteredStationsList[pos])
+        }
     }
 
     override fun onDragged(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, dX: Double, dY: Double) {
@@ -401,20 +388,20 @@ open class ItemAdapterStation(
 
     fun getFilter(): StationsFilter {
         if (filter == null) {
-            filter = StationsFilter(fragmentActivity, filterType, object : StationsFilter.DataProvider {
-                override fun getOriginalStationList(): List<DataRadioStation> = stationsList ?: emptyList()
-                override fun notifyFilteredStationsChanged(status: StationsFilter.SearchStatus, filteredStations: List<DataRadioStation>) {
-                    filteredStationsList = filteredStations
-                    notifyStationsChanged()
-                    filterListener?.onSearchCompleted(status)
-                }
-            })
+            filter = StationsFilter(
+                fragmentActivity,
+                filterType,
+                object : StationsFilter.DataProvider {
+                    override fun getOriginalStationList(): List<DataRadioStation> = stationsList ?: emptyList()
+                    override fun notifyFilteredStationsChanged(status: StationsFilter.SearchStatus, filteredStations: List<DataRadioStation>) {
+                        filteredStationsList = filteredStations
+                        notifyStationsChanged()
+                        filterListener?.onSearchCompleted(status)
+                    }
+                },
+            )
         }
         return filter!!
-    }
-
-    fun setupIcon(imageView: ImageView) {
-        // No-op
     }
 
     private fun applyTintingToExpandedDetails(holder: StationViewHolder) {
@@ -445,15 +432,7 @@ open class ItemAdapterStation(
         ).forEach { button ->
             button?.layoutParams?.width = buttonSize
             button?.layoutParams?.height = buttonSize
-            if (button is ImageButton) {
-                button.scaleType = ImageView.ScaleType.FIT_CENTER
-            }
-        }
-        
-        holder.viewTags?.let { tagsView ->
-            val tagHeight = (25 * fragmentActivity.resources.displayMetrics.density * scale).toInt()
-            // Note: TagsView uses custom attributes, we might need to expose them if we want deep scaling.
-            // For now, fontScale handles the text size inside TagsView.
+            if (button is ImageButton) button.scaleType = ImageView.ScaleType.FIT_CENTER
         }
     }
 

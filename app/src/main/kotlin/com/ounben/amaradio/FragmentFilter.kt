@@ -63,17 +63,18 @@ class FragmentFilter : FragmentBase() {
                         val filterPattern = constraint.toString().lowercase(Locale.ROOT).trim()
                         
                         // Filter and sort by relevance: 
-                        val match = allItems.filter { 
+                        val match = allItems.asSequence().filter { 
                             it.toString().lowercase(Locale.ROOT).contains(filterPattern) 
                         }.sortedByDescending { 
                             val itemStr = it.toString().lowercase(Locale.ROOT)
-                            var score = 0
-                            if (itemStr == filterPattern) score = 1000
-                            else if (itemStr.startsWith(filterPattern)) score = 500
-                            else if (itemStr.contains(" $filterPattern")) score = 250
-                            else score = 100
+                            val score: Int = when {
+                                itemStr == filterPattern -> 1000
+                                itemStr.startsWith(filterPattern) -> 500
+                                itemStr.contains(" $filterPattern") -> 250
+                                else -> 100
+                            }
                             score
-                        }
+                        }.toList()
 
                         results.values = match
                         results.count = match.size
@@ -83,7 +84,7 @@ class FragmentFilter : FragmentBase() {
 
                 @Suppress("UNCHECKED_CAST")
                 override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                    filteredItems = results?.values as? List<T> ?: allItems
+                    filteredItems = (results?.values as? List<T>) ?: allItems
                     if (results != null && results.count > 0) {
                         notifyDataSetChanged()
                     } else {
@@ -207,8 +208,8 @@ class FragmentFilter : FragmentBase() {
         val adapter = Utils.createStationAdapter(requireActivity(), StationsFilter.FilterType.GLOBAL)
         adapter.stationActionsListener = object : ItemAdapterStation.StationActionsListener {
             override fun onStationClick(station: DataRadioStation, pos: Int) {
-                val AMARadioApp = requireActivity().application as AMARadioApp
-                Utils.showPlaySelection(AMARadioApp, station, requireActivity().supportFragmentManager)
+                val app = requireActivity().application as AMARadioApp
+                Utils.showPlaySelection(app, station, requireActivity().supportFragmentManager)
             }
             override fun onStationSwiped(station: DataRadioStation) {}
             override fun onStationMoved(from: Int, to: Int) {}
@@ -222,19 +223,19 @@ class FragmentFilter : FragmentBase() {
         
         btnApply.setOnClickListener {
             saveFilters()
-            performSearch(true)
+            performSearch(collapseMenu = true)
         }
         
         swipeRefreshLayout?.setOnRefreshListener {
-            performSearch(false)
+            performSearch(collapseMenu = false)
         }
         
         // Initial search if we have saved filters - but keep menu expanded
         if (hasAnyFilter()) {
-            performSearch(false)
+            performSearch(collapseMenu = false)
         }
 
-        applyUiScaling(view)
+        applyUiScaling()
 
         return view
     }
@@ -252,7 +253,7 @@ class FragmentFilter : FragmentBase() {
         }
     }
 
-    private fun applyUiScaling(view: View) {
+    private fun applyUiScaling() {
         val scale = UiScaler.getScaleFactor(requireContext())
         if (scale == UiScaler.SCALE_STANDARD) return
 
@@ -275,7 +276,7 @@ class FragmentFilter : FragmentBase() {
             getString(R.string.sort_name),
             getString(R.string.sort_votes),
             getString(R.string.sort_clicks),
-            getString(R.string.sort_lastchange)
+            getString(R.string.sort_lastchange),
         )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, sortLabels)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -355,8 +356,8 @@ class FragmentFilter : FragmentBase() {
 
     private fun fetchCategoriesRaw(url: String): List<DataCategory> {
         val ctx = context ?: return emptyList()
-        val AMARadioApp = ctx.applicationContext as AMARadioApp
-        val result = Utils.downloadFeedRelative(AMARadioApp.httpClient, ctx, url, false, null)
+        val app = ctx.applicationContext as AMARadioApp
+        val result = Utils.downloadFeedRelative(app.httpClient, ctx, url, false, null)
         return DataCategory.DecodeJson(result).toList()
     }
 
@@ -371,7 +372,6 @@ class FragmentFilter : FragmentBase() {
 
             swipeRefreshLayout?.isRefreshing = true
             layoutError?.visibility = View.GONE
-            val AMARadioApp = ctx.applicationContext as AMARadioApp
             
             val params = mutableMapOf<String, String>()
             val name = autoName.text.toString()
@@ -390,7 +390,8 @@ class FragmentFilter : FragmentBase() {
             params["limit"] = "100" // Add a limit to prevent timeouts
             
             val resultString = withContext(Dispatchers.IO) {
-                Utils.downloadFeedRelative(AMARadioApp.httpClient, ctx, "json/stations/search", true, params)
+                val app = ctx.applicationContext as AMARadioApp
+                Utils.downloadFeedRelative(app.httpClient, ctx, "json/stations/search", true, params)
             }
             
             if (resultString != null) {
@@ -414,9 +415,5 @@ class FragmentFilter : FragmentBase() {
     override fun onDestroyView() {
         searchJob?.cancel()
         super.onDestroyView()
-    }
-
-    companion object {
-        private const val TAG = "FragmentFilter"
     }
 }

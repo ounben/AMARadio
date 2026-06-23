@@ -40,14 +40,14 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
 
     private fun onStationClick(theStation: DataRadioStation) {
         val ctx = context ?: return
-        val AMARadioApp = ctx.applicationContext as AMARadioApp
-        Utils.showPlaySelection(AMARadioApp, theStation, parentFragmentManager)
+        val app = ctx.applicationContext as AMARadioApp
+        Utils.showPlaySelection(app, theStation, parentFragmentManager)
 
-        RefreshListGui()
+        refreshListGui()
         rvStations.smoothScrollToPosition(0)
     }
 
-    override fun RefreshListGui() {
+    override fun refreshListGui() {
         if (Utils.isDebug) Log.d(TAG, "refreshing the stations list.")
 
         val adapter = rvStations.adapter as? ItemAdapterStation
@@ -111,7 +111,7 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 historyManager.stationsFlow.collect {
-                    RefreshListGui()
+                    refreshListGui()
                 }
             }
         }
@@ -121,18 +121,18 @@ class FragmentHistory : Fragment(), IAdapterRefreshable, IFragmentSearchable {
             if (Utils.isDebug) {
                 Log.d(TAG, "onRefresh called from SwipeRefreshLayout")
             }
-            RefreshDownloadList()
+            refreshDownloadList()
         }
 
-        RefreshListGui()
+        refreshListGui()
 
         return view
     }
 
-    private fun RefreshDownloadList() {
+    private fun refreshDownloadList() {
         val ctx = context ?: return
-        val AMARadioApp = ctx.applicationContext as AMARadioApp
-        val httpClient = AMARadioApp.httpClient
+        val app = ctx.applicationContext as AMARadioApp
+        val httpClient = app.httpClient
         val listUUids = ArrayList<String>()
         for (station in historyManager.listStations) {
             listUUids.add(station.StationUuid)
