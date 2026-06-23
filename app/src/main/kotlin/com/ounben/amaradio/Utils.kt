@@ -1,12 +1,10 @@
 package com.ounben.amaradio
 
-import android.Manifest
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
 import android.content.pm.ShortcutInfo
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -14,15 +12,15 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Icon
 import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.net.Uri
 import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.webkit.MimeTypeMap
-import androidx.annotation.RequiresApi
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
@@ -70,15 +68,10 @@ object Utils {
     }
 
     @JvmStatic
-    fun setTesting(value: Boolean) {
-        testing.set(value)
-    }
-
-    @JvmStatic
     fun parseIntWithDefault(number: String?, defaultVal: Int): Int {
         return try {
             number?.toInt() ?: defaultVal
-        } catch (e: NumberFormatException) {
+        } catch (_: NumberFormatException) {
             defaultVal
         }
     }
@@ -122,8 +115,8 @@ object Utils {
                 Log.d("UTIL", "do not use cache, because too old:$theURI")
             }
             return null
-        } catch (e: Exception) {
-            Log.e("UTIL", "getCacheFile() $e")
+        } catch (_: Exception) {
+            // Log.e("UTIL", "getCacheFile() $e")
         }
         return null
     }
@@ -177,21 +170,22 @@ object Utils {
 
             val request = Request.Builder().url(url).get().build()
             
-            val response = client.newCall(request).execute()
-            val responseStr = response.body?.string() ?: ""
+            client.newCall(request).execute().use { response ->
+                val responseStr = response.body.string()
 
-            if (!response.isSuccessful) {
-                Log.e("UTIL", "Unsuccessful response: ${response.code} ${response.message}\n$responseStr")
-                return null
-            }
+                if (!response.isSuccessful) {
+                    Log.e("UTIL", "Unsuccessful response: ${response.code} ${response.message}\n$responseStr")
+                    return null
+                }
 
-            writeFileCache(ctx, theURI, responseStr)
-            if (isDebug) {
-                Log.d("UTIL", "wrote cache file for:$theURI")
+                writeFileCache(ctx, theURI, responseStr)
+                if (isDebug) {
+                    Log.d("UTIL", "wrote cache file for:$theURI")
+                }
+                return responseStr
             }
-            return responseStr
-        } catch (e: Exception) {
-            Log.e("UTIL", "downloadFeed() $e")
+        } catch (_: Exception) {
+            // Log.e("UTIL", "downloadFeed() $e")
         }
         return null
     }
@@ -233,8 +227,7 @@ object Utils {
             return try {
                 val jsonObj = JSONObject(result)
                 jsonObj.getString("url")
-            } catch (e: Exception) {
-                Log.e("UTIL", "getRealStationLink() $e")
+            } catch (_: Exception) {
                 null
             }
         }
@@ -254,8 +247,8 @@ object Utils {
                     }
                     Log.e("UTIL", "stations by uuid did have length:" + list.size)
                 }
-            } catch (e: Exception) {
-                Log.e("UTIL", "getStationByUuid() $e")
+            } catch (_: Exception) {
+                // Log.e("UTIL", "getStationByUuid() $e")
             }
         }
         return null
@@ -276,8 +269,8 @@ object Utils {
                 } else {
                     Log.e("UTIL", "stations by uuid was null")
                 }
-            } catch (e: Exception) {
-                Log.e("UTIL", "getStationsByUuid() $e")
+            } catch (_: Exception) {
+                // Log.e("UTIL", "getStationsByUuid() $e")
             }
         }
         return null
@@ -287,8 +280,8 @@ object Utils {
     fun getCurrentOrLastStation(ctx: Context): DataRadioStation? {
         var station = PlayerServiceUtil.getCurrentStation()
         if (station == null) {
-            val AMARadioApp = ctx.applicationContext as AMARadioApp
-            val historyManager = AMARadioApp.historyManager
+            val app = ctx.applicationContext as AMARadioApp
+            val historyManager = app.historyManager
             station = historyManager.first
         }
         return station
@@ -317,13 +310,12 @@ object Utils {
 
         if (castAvailable && !externalAvailable && !mpdAvailable) {
             PlayStationTask(station, context.applicationContext,
-                { url -> castHandler.playRemote(station.Name, url, station.IconUrl) },
-                null)
+                playFunc = { url -> castHandler.playRemote(station.Name, url, station.IconUrl) })
                 .execute()
         } else if (externalAvailable || mpdAvailable) {
             showMpdServersDialog(context, fragmentManager, station)
         } else {
-            playAndWarnIfMetered(context, station, PlayerType.AMARadio, Runnable { play(context, station) })
+            playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(context, station) }
         }
     }
 
@@ -367,12 +359,14 @@ object Utils {
     @JvmStatic
     fun shouldLoadIcons(context: Context): Boolean {
         when (loadIcons) {
-            -1 -> return if (PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getBoolean("load_icons", false)) {
-                loadIcons = 1
-                true
-            } else {
-                loadIcons = 0
-                true
+            -1 -> {
+                return if (PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getBoolean("load_icons", false)) {
+                    loadIcons = 1
+                    true
+                } else {
+                    loadIcons = 0
+                    false
+                }
             }
             0 -> return false
             1 -> return true
@@ -388,9 +382,7 @@ object Utils {
 
     @JvmStatic
     fun getThemeResId(context: Context): Int {
-        val selectedTheme = getTheme(context)
-
-        val isDark = when (selectedTheme) {
+        val isDark = when (getTheme(context)) {
             "dark" -> true
             "light" -> false
             "system" -> (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
@@ -408,88 +400,23 @@ object Utils {
         return getThemeResId(context) == R.style.MyMaterialTheme_Dark
     }
 
-    private val PERMISSIONS_STORAGE = arrayOf(
-        Manifest.permission.WRITE_EXTERNAL_STORAGE
-    )
-
-    @JvmStatic
-    fun verifyStoragePermissions(activity: Activity, request_id: Int): Boolean {
-        val permission = ContextCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                activity,
-                PERMISSIONS_STORAGE,
-                request_id
-            )
-            return false
-        }
-        return true
-    }
-
-    @JvmStatic
-    fun verifyStoragePermissions(fragment: Fragment, request_id: Int): Boolean {
-        val permission = ContextCompat.checkSelfPermission(fragment.requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            fragment.requestPermissions(PERMISSIONS_STORAGE, request_id)
-            return false
-        }
-        return true
-    }
-
-    @JvmStatic
-    fun getReadableBytes(bytesIn: Double): String {
-        var bytes = bytesIn
-        val str = arrayOf("B", "KB", "MB", "GB", "TB")
-        for (aStr in str) {
-            if (bytes < 1024) {
-                return String.format(Locale.getDefault(), "%1$,.1f %2\$s", bytes, aStr)
-            }
-            bytes /= 1024.0
-        }
-        return String.format(Locale.getDefault(), "%1$,.1f %2\$s", bytes * 1024, str[str.size - 1])
-    }
-
     @JvmStatic
     fun sanitizeName(str: String): String {
         return str.replace("\\W+".toRegex(), "_").replace("^_+".toRegex(), "").replace("_+$".toRegex(), "")
     }
 
     @JvmStatic
-    fun hasWifiConnection(context: Context): Boolean {
-        val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val mWifi = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-        return mWifi?.isConnected ?: false
-    }
-
-    @JvmStatic
     fun hasAnyConnection(context: Context): Boolean {
         val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val netInfo = connManager.activeNetworkInfo
-        return netInfo != null && netInfo.isConnected
+        val network = connManager.activeNetwork ?: return false
+        val capabilities = connManager.getNetworkCapabilities(network) ?: return false
+        return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     @JvmStatic
     fun bottomNavigationEnabled(context: Context): Boolean {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         return sharedPref.getBoolean("bottom_navigation", true)
-    }
-
-    @JvmStatic
-    fun formatStringWithNamedArgs(format: String, args: Map<String, String>): String {
-        val builder = StringBuilder(format)
-        for ((key1, value) in args) {
-            val key = "\${$key1}"
-            var startIdx = 0
-            while (true) {
-                val keyIdx = builder.indexOf(key, startIdx)
-                if (keyIdx == -1) {
-                    break
-                }
-                builder.replace(keyIdx, keyIdx + key.length, value)
-                startIdx = keyIdx + value.length
-            }
-        }
-        return builder.toString()
     }
 
     @JvmStatic
@@ -524,7 +451,7 @@ object Utils {
 
     @JvmStatic
     fun showModernToast(activity: Activity, resId: Int) {
-        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
+        val view = activity.findViewById(android.R.id.content) ?: activity.window.decorView
         showSnackbar(view, resId)
     }
 
@@ -536,30 +463,29 @@ object Utils {
         if (TextUtils.isEmpty(proxySettings.host)) {
             return false
         }
-        if (proxySettings.port < 1 || proxySettings.port > 65535) {
+        if (proxySettings.port !in 1..65535) {
             return false
         }
         val proxyAddress = InetSocketAddress.createUnresolved(proxySettings.host, proxySettings.port)
         val proxy = Proxy(proxySettings.type, proxyAddress)
         builder.proxy(proxy)
         if (proxySettings.login.isNotEmpty()) {
-            val proxyAuthenticator = Authenticator { _, response ->
+            builder.authenticator { _, response ->
                 val credential = Credentials.basic(proxySettings.login, proxySettings.password)
                 response.request.newBuilder()
                     .header("Proxy-Authorization", credential)
                     .build()
             }
-            builder.authenticator(proxyAuthenticator)
         }
         return true
     }
 
     @JvmStatic
     fun resourceToUri(resources: Resources, resID: Int): Uri {
-        return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
+        return (ContentResolver.SCHEME_ANDROID_RESOURCE + "://" +
                 resources.getResourcePackageName(resID) + '/' +
                 resources.getResourceTypeName(resID) + '/' +
-                resources.getResourceEntryName(resID))
+                resources.getResourceEntryName(resID)).toUri()
     }
 
     @JvmStatic
@@ -578,7 +504,6 @@ object Utils {
     }
 
     @JvmStatic
-    @RequiresApi(25)
     fun createShortcut(ctx: Context, station: DataRadioStation, bitmap: Bitmap?): ShortcutInfo {
         val playByUUIDintent = Intent(MediaSessionCallback.ACTION_PLAY_STATION_BY_UUID, null, ctx, ActivityMain::class.java)
             .putExtra(MediaSessionCallback.EXTRA_STATION_UUID, station.StationUuid)
