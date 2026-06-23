@@ -20,7 +20,7 @@ class ItemAdapterStatistics(context: Context, private val resourceId: Int) : Arr
             v = vi?.inflate(resourceId, null)
         }
         if (v == null) return View(ctx) // Fallback
-        val aTextViewTop = v!!.findViewById<TextView>(R.id.stats_name)
+        val aTextViewTop = v.findViewById<TextView>(R.id.stats_name)
         val aTextViewBottom = v.findViewById<TextView>(R.id.stats_value)
         aTextViewTop?.text = aData.Name
         aTextViewBottom?.text = aData.Value
