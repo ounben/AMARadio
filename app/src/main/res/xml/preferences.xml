@@ -163,36 +163,6 @@
             android:icon="@drawable/ic_tune_24dp" />
     </PreferenceCategory>
 
-    <PreferenceCategory android:title="@string/settings_alarm"
-        android:key="pref_category_alarm"
-        android:order="7">
-
-        <CheckBoxPreference
-            android:disableDependentsState="true"
-            android:key="alarm_external"
-            android:summaryOff="@string/settings_alarm_external_desc_off"
-            android:summaryOn="@string/settings_alarm_external_desc_on"
-            android:title="@string/settings_alarm_external"
-            android:icon="@drawable/ic_add_alarm_black_24dp" />
-
-        <Preference
-            android:enabled="false"
-            android:key="shareapp_package"
-            android:title="@string/settings_alarm_audio_player"
-            android:icon="@drawable/ic_play_arrow_24dp" />
-
-        <ListPreference
-            android:defaultValue="10"
-            android:dependency="alarm_external"
-            android:entries="@array/timeout_minutes"
-            android:entryValues="@array/timeout_minutes_values"
-            android:key="alarm_timeout"
-            android:summary="@string/settings_alarm_sleep_timer_desc"
-            android:title="@string/settings_alarm_sleep_timer"
-            android:icon="@drawable/ic_hourglass_empty_black_24dp" />
-
-    </PreferenceCategory>
-
     <PreferenceCategory android:title="@string/settings_mpd"
         android:key="pref_category_mpd"
         android:order="9">

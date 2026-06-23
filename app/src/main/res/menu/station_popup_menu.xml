@@ -17,10 +17,6 @@
         android:icon="@drawable/ic_share_24dp"
         android:title="@string/context_menu_share" />
     <item
-        android:id="@+id/action_add_alarm"
-        android:icon="@drawable/ic_add_alarm_black_24dp"
-        android:title="@string/context_menu_add_alarm" />
-    <item
         android:id="@+id/action_create_shortcut"
         android:icon="@drawable/ic_back_arrow_24dp"
         android:title="@string/context_menu_create_shortcut" />

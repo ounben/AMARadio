@@ -113,8 +113,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
             Log.d(TAG, "MediaRouter: New route selected: ${route.id}, reason: $reason")
             lastRouteId = route.id
-            // Only here we might allow some state change if needed, 
-            // but we avoid calling stop() or re-init unless necessary.
         }
 
         override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo, reason: Int) {
@@ -122,7 +120,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
 
         override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
-            // This is often called for volume changes or status pings
             if (Utils.isDebug) Log.v(TAG, "MediaRouter: Route changed (status ping) for ${route.id}")
         }
     }
@@ -139,7 +136,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         override fun SkipToNext() { this@PlayerService.next() }
         override fun SkipToPrevious() { this@PlayerService.previous() }
-        override fun Play(isAlarm: Boolean) { this@PlayerService.playCurrentStation(isAlarm) }
+        override fun Play() { this@PlayerService.playCurrentStation() }
         override fun Pause(reason: PauseReason) { this@PlayerService.pause(reason) }
         override fun Resume() { this@PlayerService.resume() }
         override fun Stop() { this@PlayerService.stop() }
@@ -322,7 +319,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun playWithoutWarnings(station: DataRadioStation) {
         setStation(station)
-        playCurrentStation(false)
+        playCurrentStation()
     }
 
     private fun playAndWarnIfMetered(station: DataRadioStation) {
@@ -338,12 +335,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         this.itsCurrentStation = station
     }
 
-    fun playCurrentStation(isAlarm: Boolean) {
+    fun playCurrentStation() {
         if (Utils.shouldLoadIcons(this)) downloadRadioIcon()
-        val currentVol = audioManager?.getStreamVolume(AudioManager.STREAM_MUSIC) ?: -1
-        val maxVol = audioManager?.getStreamMaxVolume(AudioManager.STREAM_MUSIC) ?: -1
-        val isMuted = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) audioManager?.isStreamMute(AudioManager.STREAM_MUSIC) else false
-        Log.d(TAG, "playCurrentStation: current music volume=$currentVol, max volume=$maxVol, isMuted=$isMuted")
         
         lastErrorFromPlayer = -1
         this.pauseReason = PauseReason.NONE
@@ -356,7 +349,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             
             updateNotification(PlayState.PrePlaying)
             
-            itsCurrentStation?.let { radioPlayer?.play(it, isAlarm) }
+            itsCurrentStation?.let { radioPlayer?.play(it) }
         }
     }
 
@@ -565,7 +558,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun updateNotification() { radioPlayer?.let { updateNotification(it.playState) } }
 
     private fun updateNotification(playState: PlayState) {
-        // Thread safety: Ensure we are on the player thread before accessing player instance
         if (Looper.myLooper() != radioPlayer?.playerLooper) {
             radioPlayer?.runInPlayerThread { updateNotification(playState) }
             return

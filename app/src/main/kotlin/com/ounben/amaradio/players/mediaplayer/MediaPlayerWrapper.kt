@@ -21,7 +21,6 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
     private var context: Context? = null
-    private var isAlarm = false
     private var isHls = false
     override var totalTransferredBytes: Long = 0
         private set
@@ -29,13 +28,12 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         private set
     private val playerIsInLegalState = AtomicBoolean(false)
 
-    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, isAlarm: Boolean) {
+    override fun playRemote(httpClient: okhttp3.OkHttpClient, streamUrl: String, context: Context) {
         if (streamUrl != this.streamUrl) {
             currentPlaybackTransferredBytes = 0
         }
         this.streamUrl = streamUrl
         this.context = context
-        this.isAlarm = isAlarm
         Log.v(TAG, "Stream url:$streamUrl")
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (!isHls) {
@@ -50,7 +48,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         }
     }
 
-    private fun playProxyStream(proxyUrl: String, context: Context?, isAlarm: Boolean) {
+    private fun playProxyStream(proxyUrl: String, context: Context?) {
         playerIsInLegalState.set(false)
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer()
@@ -61,7 +59,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         mediaPlayer!!.reset()
         try {
             @Suppress("DEPRECATION")
-            mediaPlayer!!.setAudioStreamType(if (isAlarm) AudioManager.STREAM_ALARM else AudioManager.STREAM_MUSIC)
+            mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
             mediaPlayer!!.setDataSource(proxyUrl)
             mediaPlayer!!.prepareAsync()
             mediaPlayer!!.setOnPreparedListener {
@@ -141,7 +139,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     }
 
     override fun onStreamCreated(proxyConnection: String) {
-        playerThreadHandler.post { playProxyStream(proxyConnection, context, isAlarm) }
+        playerThreadHandler.post { playProxyStream(proxyConnection, context) }
     }
 
     override fun onStreamStopped() {

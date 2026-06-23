@@ -19,12 +19,6 @@
             app:contentDescription="@string/nav_item_history" />
 
     <item
-            android:id="@+id/nav_item_alarm"
-            android:icon="@drawable/ic_access_alarms_black_24dp"
-            android:title="@string/nav_item_alarm"
-            app:contentDescription="@string/nav_item_alarm" />
-
-    <item
         android:id="@+id/nav_item_settings"
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/nav_item_settings"

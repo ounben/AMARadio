@@ -16,7 +16,6 @@ import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
-import com.ounben.amaradio.alarm.TimePickerFragment
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.views.ItemListDialog
 import kotlinx.coroutines.CoroutineScope
@@ -29,17 +28,6 @@ import java.lang.ref.WeakReference
 object StationActions {
     private const val TAG = "StationActions"
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-
-    @JvmStatic
-    fun setAsAlarm(activity: FragmentActivity, station: DataRadioStation) {
-        val AMARadioApp = activity.applicationContext as AMARadioApp
-        val newFragment = TimePickerFragment()
-        newFragment.setCallback { _, hourOfDay, minute ->
-            Log.i(TAG, "Alarm time picked $hourOfDay:$minute")
-            AMARadioApp.alarmManager.add(station, hourOfDay, minute)
-        }
-        newFragment.show(activity.supportFragmentManager, "timePicker")
-    }
 
     @JvmStatic
     fun showWebLinks(activity: FragmentActivity, station: DataRadioStation) {

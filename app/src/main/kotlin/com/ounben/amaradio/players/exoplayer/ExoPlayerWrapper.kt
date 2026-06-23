@@ -90,7 +90,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
         internalPlayer.addListener(PlayerEventListener())
     }
 
-    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, isAlarm: Boolean) {
+    override fun playRemote(httpClient: okhttp3.OkHttpClient, streamUrl: String, context: Context) {
         this.streamUrl = streamUrl
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (bandwidthMeter == null) {
@@ -107,7 +107,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
         playerThreadHandler.post {
             cancelStopTask()
             val audioAttributes = AudioAttributes.Builder()
-                .setUsage(if (isAlarm) C.USAGE_ALARM else C.USAGE_MEDIA)
+                .setUsage(C.USAGE_MEDIA)
                 .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
                 .build()
             internalPlayer.setAudioAttributes(audioAttributes, false)

@@ -139,7 +139,7 @@ object PlayerServiceUtil {
         try {
             itsPlayerService?.let {
                 it.SetStation(station)
-                it.Play(false)
+                it.Play()
             }
         } catch (e: RemoteException) {
             Log.e("", "$e")

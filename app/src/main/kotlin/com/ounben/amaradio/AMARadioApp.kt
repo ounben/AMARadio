@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import com.ounben.amaradio.alarm.RadioAlarmManager
 import com.ounben.amaradio.cast.CastHandler
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.mpd.MPDClient
@@ -32,8 +31,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
     lateinit var favouriteManager: FavouriteManager
         private set
     lateinit var fallbackStationsManager: FallbackStationsManager
-        private set
-    lateinit var alarmManager: RadioAlarmManager
         private set
     var tvChannelManager: TvChannelManager? = null
         private set
@@ -93,7 +90,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         historyManager = HistoryManager(this)
         favouriteManager = FavouriteManager(this)
         fallbackStationsManager = FallbackStationsManager(this)
-        alarmManager = RadioAlarmManager(this)
 
         val uiModeManager = getSystemService(UI_MODE_SERVICE) as? UiModeManager
         if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {

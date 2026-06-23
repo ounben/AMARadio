@@ -15,11 +15,6 @@
             android:id="@+id/nav_item_history"
             android:icon="@drawable/ic_restore_black_24dp"
             android:title="@string/nav_item_history" />
-
-        <item
-            android:id="@+id/nav_item_alarm"
-            android:icon="@drawable/ic_access_alarms_black_24dp"
-            android:title="@string/nav_item_alarm" />
     </group>
 
     <group

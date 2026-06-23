@@ -20,12 +20,10 @@ import androidx.preference.Preference
 import androidx.preference.PreferenceCategory
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.PreferenceGroup
-import com.ounben.amaradio.interfaces.IApplicationSelected
 import com.ounben.amaradio.proxy.ProxySettingsDialog
 import com.ounben.amaradio.utils.UiScaler
 
-class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener,
-    IApplicationSelected {
+class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private fun refreshToplevelIcons() {
         val color = Utils.getAccentColor(requireContext())
@@ -41,7 +39,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                     "pref_category_startup" -> pref.setIcon(R.drawable.ic_flight_takeoff_24dp)
                     "pref_category_interaction" -> pref.setIcon(R.drawable.ic_touch_app_24dp)
                     "pref_category_player" -> pref.setIcon(R.drawable.ic_play_arrow_24dp)
-                    "pref_category_alarm" -> pref.setIcon(R.drawable.ic_access_alarms_black_24dp)
                     "pref_category_connectivity" -> pref.setIcon(R.drawable.ic_sync_black_24dp)
                     "pref_category_mpd" -> pref.setIcon(R.drawable.ic_volume_up_24dp)
                     "pref_category_other" -> pref.setIcon(R.drawable.ic_live_help_24dp)
@@ -74,8 +71,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             }
         }
 
-        findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
-        
         // Process everything (tint and scale)
         processPreference(screen)
     }
@@ -98,7 +93,7 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         setPreferencesFromResource(R.xml.preferences, s)
         
         // Explicitly set summary providers for all list preferences
-        val listPrefs = listOf("theme_name", "ui_scale_level", "startup_action", "auto_off_timeout", "alarm_timeout")
+        val listPrefs = listOf("theme_name", "ui_scale_level", "startup_action", "auto_off_timeout")
         listPrefs.forEach { key ->
             findPreference<ListPreference>(key)?.summaryProvider = ListPreference.SimpleSummaryProvider.getInstance()
         }
@@ -187,7 +182,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         preferenceManager.sharedPreferences?.registerOnSharedPreferenceChangeListener(this)
         refreshToolbar()
         refreshToplevelIcons()
-        findPreference<Preference>("shareapp_package")?.summary = preferenceManager.sharedPreferences?.getString("shareapp_package", "")
         val batPref = preferenceScreen.findPreference<Preference>(getString(R.string.key_ignore_battery_optimization))
         if (batPref != null) {
             updateBatteryPrefDescription(batPref)
@@ -212,14 +206,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         if (Utils.isDebug) {
             Log.d("AAA", "changed key: $key")
         }
-        if (key == "alarm_external") {
-            val active = sharedPreferences?.getBoolean(key, false) ?: false
-            if (active) {
-                val newFragment = ApplicationSelectorDialog()
-                newFragment.setCallback(this)
-                newFragment.show(requireActivity().supportFragmentManager, "appPicker")
-            }
-        }
         if (key == "theme_name" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
             if (isResumed && activity != null && activity?.isFinishing == false) {
                 view?.post {
@@ -229,16 +215,5 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 }
             }
         }
-    }
-
-    override fun onAppSelected(packageName: String, activityName: String) {
-        if (Utils.isDebug) {
-            Log.d("SEL", "selected: $packageName/$activityName")
-        }
-        preferenceManager.sharedPreferences?.edit {
-            putString("shareapp_package", packageName)
-            putString("shareapp_activity", activityName)
-        }
-        findPreference<Preference>("shareapp_package")?.summary = packageName
     }
 }

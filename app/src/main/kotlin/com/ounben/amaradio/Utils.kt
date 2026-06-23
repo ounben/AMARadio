@@ -408,11 +408,6 @@ object Utils {
         return getThemeResId(context) == R.style.MyMaterialTheme_Dark
     }
 
-    @JvmStatic
-    fun getTimePickerThemeResId(context: Context): Int {
-        return if (getThemeResId(context) == R.style.MyMaterialTheme_Dark) R.style.DialogTheme_Dark else R.style.DialogTheme
-    }
-
     private val PERMISSIONS_STORAGE = arrayOf(
         Manifest.permission.WRITE_EXTERNAL_STORAGE
     )

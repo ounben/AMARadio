@@ -1,6 +1,5 @@
 package com.ounben.amaradio
 
-import android.app.TimePickerDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -15,7 +14,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.TimePicker
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
@@ -38,8 +36,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import com.ounben.amaradio.alarm.FragmentAlarm
-import com.ounben.amaradio.alarm.TimePickerFragment
 import com.ounben.amaradio.cast.CastAwareActivity
 import com.ounben.amaradio.cast.CastHandler
 import com.ounben.amaradio.interfaces.IFragmentSearchable
@@ -65,7 +61,6 @@ import java.util.Date
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
-    TimePickerDialog.OnTimeSetListener,
     CastHandler.CastHandlerListener, CastAwareActivity {
 
     override fun attachBaseContext(newBase: Context) {
@@ -90,7 +85,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var menuItemLoad: MenuItem? = null
     private var menuItemIconsView: MenuItem? = null
     private var menuItemListView: MenuItem? = null
-    private var menuItemAddAlarm: MenuItem? = null
     private var menuItemMpd: MenuItem? = null
     private var menuItemFilter: MenuItem? = null
     private var menuItemCast: MenuItem? = null
@@ -445,7 +439,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemLoad = menu.findItem(R.id.action_load)
         menuItemListView = menu.findItem(R.id.action_list_view)
         menuItemIconsView = menu.findItem(R.id.action_icons_view)
-        menuItemAddAlarm = menu.findItem(R.id.action_add_alarm)
         menuItemMpd = menu.findItem(R.id.action_mpd)
         menuItemFilter = menu.findItem(R.id.action_filter_global)
         
@@ -515,7 +508,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemListView?.isVisible = isIconsStyle && !isSearching
         menuItemIconsView?.isVisible = !isIconsStyle && !isSearching
         
-        menuItemAddAlarm?.isVisible = !isSearching
         menuItemFilter?.isVisible = !isSearching
 
         var mpdIsVisible = false
@@ -548,9 +540,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                     menuItemDelete?.isVisible = !AMARadioApp.historyManager.isEmpty()
                     menuItemDelete?.setTitle(R.string.action_delete_history)
-                }
-                R.id.nav_item_alarm -> {
-                    menuItemAddAlarm?.isVisible = true
                 }
             }
         }
@@ -735,12 +724,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 recreate()
                 return true
             }
-            R.id.action_add_alarm -> {
-                val newFragment = TimePickerFragment()
-                newFragment.setCallback(this)
-                newFragment.show(supportFragmentManager, "timePicker")
-                return true
-            }
         }
         return super.onOptionsItemSelected(menuItem)
     }
@@ -750,17 +733,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             playerBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
         } else {
             playerBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-        }
-    }
-
-    override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
-        val AMARadioApp = application as AMARadioApp
-        
-        // Create a NEW alarm for the current station
-        val station = Utils.getCurrentOrLastStation(this)
-        if (station != null) {
-            AMARadioApp.alarmManager.add(station, hourOfDay, minute)
-            Utils.showModernToast(this, R.string.alert_alarm_working)
         }
     }
 
@@ -827,7 +799,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             R.id.nav_item_stations -> f = FragmentTabs()
             R.id.nav_item_starred -> f = FragmentStarred()
             R.id.nav_item_history -> f = FragmentHistory()
-            R.id.nav_item_alarm -> f = FragmentAlarm()
             R.id.nav_item_settings -> f = FragmentSettings()
         }
 

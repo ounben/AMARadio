@@ -257,9 +257,6 @@ class FragmentPlayerSmall : Fragment() {
                 R.id.action_share -> {
                     StationActions.share(requireContext(), currentStation)
                 }
-                R.id.action_set_alarm -> {
-                    StationActions.setAsAlarm(requireActivity(), currentStation)
-                }
                 R.id.action_delete_stream_history -> {
                     trackHistoryRepository.deleteHistory()
                 }

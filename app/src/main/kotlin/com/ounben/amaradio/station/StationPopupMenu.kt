@@ -77,10 +77,6 @@ object StationPopupMenu {
                     StationActions.share(context, station)
                     true
                 }
-                R.id.action_add_alarm -> {
-                    StationActions.setAsAlarm(activity, station)
-                    true
-                }
                 R.id.action_create_shortcut -> {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                         station.prepareShortcut(context) { shortcut ->

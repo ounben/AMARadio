@@ -54,7 +54,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         currentPlayer.setStateListener(this)
     }
 
-    fun play(stationURL: String?, streamName: String?, isAlarm: Boolean) {
+    fun play(stationURL: String?, streamName: String?) {
         if (stationURL == null) return
         setState(PlayState.PrePlaying, -1)
         this.streamName = streamName
@@ -66,25 +66,25 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             .connectTimeout(connectTimeout.toLong(), TimeUnit.SECONDS)
             .readTimeout(readTimeout.toLong(), TimeUnit.SECONDS)
             .build()
-        playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, isAlarm) }
+        playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext) }
     }
 
-    fun play(station: DataRadioStation, isAlarm: Boolean) {
+    fun play(station: DataRadioStation) {
         stationLoadAttempts = 0
-        executePlayStationTask(station, isAlarm)
+        executePlayStationTask(station)
     }
 
-    private fun executePlayStationTask(station: DataRadioStation, isAlarm: Boolean) {
+    private fun executePlayStationTask(station: DataRadioStation) {
         setState(PlayState.PrePlaying, -1)
         playStationTask = PlayStationTask(station, mainContext,
-            { url -> this@RadioPlayer.play(url, station.Name, isAlarm) },
+            { url -> this@RadioPlayer.play(url, station.Name) },
             { executionResult ->
                 if (executionResult == PlayStationTask.ExecutionResult.FAILURE) {
                     stationLoadAttempts++
                     if (stationLoadAttempts < 3) {
                         Log.w(TAG, "Station load failed, retrying with server rotation (attempt $stationLoadAttempts)")
                         RadioBrowserServerManager.rotateServer()
-                        executePlayStationTask(station, isAlarm)
+                        executePlayStationTask(station)
                     } else {
                         playStationTask = null
                         this@RadioPlayer.onPlayerError(R.string.error_station_load)

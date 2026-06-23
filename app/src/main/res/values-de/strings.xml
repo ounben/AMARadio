@@ -14,7 +14,6 @@
     <string name="action_links">Links</string>
     <string name="action_homepage">Homepage</string>
     <string name="action_favorite">Favorit</string>
-    <string name="action_alarm">Wecker</string>
 
     <string name="action_station_visit_website">Website besuchen</string>
     <string name="action_station_copy_stream_url">Stream-URL kopieren</string>
@@ -52,7 +51,6 @@
     <string name="nav_item_starred">Favoriten</string>
     <string name="nav_item_history">Verlauf</string>
     <string name="nav_item_settings">Einstellungen</string>
-    <string name="nav_item_alarm">Wecker</string>
 
     <string name="about_text">AMARadio ist zu 100% werbefrei und auf Privatsphäre ausgerichtet.\n\nIch habe diese App ursprünglich für meine Mutter entwickelt, um ihr ein einfaches, ehrliches Radioerlebnis ohne nervige Werbung oder Tracking zu ermöglichen. Deshalb wird AMARadio auch in Zukunft immer werbefrei bleiben – das ist mein Versprechen an sie, das ich gerne mit euch allen teile.\n\nDieses Projekt ist ein Fork des exzellenten https://github.com/segler-alex/RadioDroid . Die gesamte Codebasis wurde vollständig von Java auf Kotlin umgestellt, um sicherzustellen, dass die App modern bleibt und auch auf zukünftigen Android-Versionen bestens läuft.\n\nDer Quellcode ist einsehbar unter: https://github.com/ounben/AMARadio\n\nDiese App nutzt das freie Radiosender-Verzeichnis unter https://www.radio-browser.info .\nJeder kann Sender hinzufügen. Es funktioniert wie ein Wiki für Online-Radiosender.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nWenn dir die Software gefällt und du helfen möchtest, schick mir gerne eine E-Mail.\nAuch Ideen für neue Funktionen sind immer willkommen!\n\nDiese App ist freie Software, lizenziert unter der GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Version: %1$s</string>
@@ -130,13 +128,6 @@
     <string name="settings_auto_favorite_on">Sender beim Abspielen automatisch zu Favoriten hinzufügen</string>
     <string name="settings_auto_favorite_off">Sender beim Abspielen nicht automatisch zu Favoriten hinzufügen</string>
 
-    <string name="settings_alarm">Wecker</string>
-    <string name="settings_alarm_external">Externe App verwenden</string>
-    <string name="settings_alarm_external_desc_on">Wecker mit Standard-Extern-App öffnen</string>
-    <string name="settings_alarm_external_desc_off">Wecker mit AMARadio öffnen</string>
-    <string name="settings_alarm_audio_player">Audioplayer</string>
-    <string name="settings_alarm_sleep_timer">Sleeptimer</string>
-    <string name="settings_alarm_sleep_timer_desc">Wiedergabe nach %1$s Minuten stoppen</string>
     <string name="settings_play">Player</string>
     <string name="settings_auto_play_on_startup">Auto-Play</string>
     <string name="settings_auto_play_on_startup_on">Letzten Sender beim Start abspielen</string>
@@ -213,10 +204,6 @@
     <string name="alert_select_mpd_server_save">Speichern</string>
     <string name="alert_select_mpd_server_remove">Entfernen</string>
     <string name="alert_add_or_edit_mpd_server">Serverdetails eingeben</string>
-    <string name="alert_alarm_working">Weckzeit jetzt</string>
-    <string name="alert_alarm_not_working">Nicht genügend Infos für Wecker</string>
-    <string name="alert_select_external_alarm_app">Audioplayer wählen</string>
-
     <string name="alert_press_back_to_exit">Noch einmal zurück zum Beenden</string>
 
     <string name="error_stream_url">Stream-URL Problem</string>
@@ -287,8 +274,6 @@
     <string name="description_btn_skip_to_next">Zum nächsten springen</string>
     <string name="description_btn_skip_to_previous">Zum vorherigen springen</string>
 
-    <string name="description_btn_setup_alarm">Wecker stellen</string>
-
     <string-array name="weekdays">
         <item>S</item>
         <item>M</item>
@@ -327,15 +312,10 @@
     <string name="filter_select_language">Sprache wählen</string>
     <string name="filter_type_tag">Tag eingeben…</string>
 
-    <string name="alarm_backup">Alternativer Weckton</string>
-    <string name="alarm_fallback_info">Systemwecker wurde verwendet, da der gewählte Radiosender nicht geladen werden konnte</string>
-    <string name="alarm_back_desc">Alternativer Systemwecker, wenn der Radiosender nicht lädt</string>
-
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>
