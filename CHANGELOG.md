@@ -17,13 +17,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 - **Stability Fixes**:
-    - Resolved a `NullPointerException` in `ViewPager.onSaveInstanceState` related to IME (keyboard) layout changes.
-    - Fixed a critical `IllegalStateException` where the player was accessed from the wrong thread during notification updates.
+  - Resolved a `NullPointerException` in `ViewPager.onSaveInstanceState` related to IME (keyboard) layout changes.
+  - Fixed a critical `IllegalStateException` where the player was accessed from the wrong thread during notification updates.
 - **MediaRouter Debouncing**: Implemented filtering for redundant system "pings" to the MediaRouter, preventing unnecessary audio stack resets.
 - **Navigation Resilience**: Switched critical fragment transactions to `commitAllowingStateLoss()` to prevent crashes during rapid navigation or state-saving cycles.
 - **System Service Hardening**: Implemented safe casting (`as?`) and null-safety for all system services (`UiModeManager`, `PowerManager`, `AudioManager`, `TelephonyManager`, `ConnectivityManager`). This prevents `ClassCastException` on devices with customized Android frameworks.
 - **Application Context Robustness**: Fixed a critical crash in `AMARadioApp.onCreate` by ensuring thread-safe dispatcher initialization and adding defensive checks for application context casting.
 - **Memory Leak Prevention**: Refactored `PlayerServiceUtil` to use `applicationContext` instead of potentially leaking `Activity` contexts. Implemented defensive null-checks and safe unbinding logic to ensure long-term process stability.
+- **Reflection Cleanup**: Completely removed all direct usage of Java Reflection (`Method.invoke`, `Field.get`) to improve stability on devices with aggressive manufacturer-specific optimizations (Oplus/Realme) and to ensure compatibility with modern Android runtime restrictions.
 - **UI & Adapter Stability**: Hardened `ItemAdapterStatistics` and `FragmentTabs` against null layout inflators and missing hardware features (e.g., tablets without SIM slots).
 
 ### Removed

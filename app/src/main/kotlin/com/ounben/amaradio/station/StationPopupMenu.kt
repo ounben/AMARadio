@@ -36,23 +36,6 @@ object StationPopupMenu {
             }
         }
 
-        // Show icons using reflection
-        try {
-            val fields = popup.javaClass.declaredFields
-            for (field in fields) {
-                if ("mPopup" == field.name) {
-                    field.isAccessible = true
-                    val menuPopupHelper = field.get(popup)
-                    val classPopupHelper = Class.forName(menuPopupHelper.javaClass.name)
-                    val setForceShowIcon = classPopupHelper.getMethod("setForceShowIcon", Boolean::class.java)
-                    setForceShowIcon.invoke(menuPopupHelper, true)
-                    break
-                }
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
         // Dynamic visibility
         popup.menu.findItem(R.id.action_play_in_amaradio).isVisible = play_external
         popup.menu.findItem(R.id.action_play_in_external_player).isVisible = !play_external

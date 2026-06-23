@@ -8,7 +8,6 @@ import androidx.core.view.ViewCompat
 import androidx.core.widget.NestedScrollView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import java.lang.reflect.Field
 
 /**
  * Credits to Alex Lockwood blogpost "Experimenting with Nested Scrolling"
@@ -28,7 +27,7 @@ class RecyclerAwareNestedScrollView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : NestedScrollView(context, attrs, defStyleAttr) {
 
-    private var mScroller: OverScroller? = getOverScrollerField()
+    private var mScroller: OverScroller? = null
     var isFling = false
 
     override fun fling(velocityY: Int) {
@@ -80,15 +79,5 @@ class RecyclerAwareNestedScrollView @JvmOverloads constructor(
         val lm = rv.layoutManager as? LinearLayoutManager ?: return false
         val firstView = lm.findViewByPosition(0) ?: return false
         return lm.findFirstVisibleItemPosition() == 0 && firstView.top == 0
-    }
-
-    private fun getOverScrollerField(): OverScroller? {
-        return try {
-            val fs: Field = NestedScrollView::class.java.getDeclaredField("mScroller")
-            fs.isAccessible = true
-            fs.get(this) as OverScroller
-        } catch (t: Throwable) {
-            null
-        }
     }
 }
