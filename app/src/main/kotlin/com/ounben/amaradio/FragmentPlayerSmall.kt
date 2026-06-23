@@ -98,11 +98,7 @@ class FragmentPlayerSmall : Fragment() {
 
         buttonMore.setOnClickListener {
             val station = Utils.getCurrentOrLastStation(requireContext()) ?: return@setOnClickListener
-            val AMARadioApp = requireActivity().application as AMARadioApp
-            val favouriteManager = AMARadioApp.favouriteManager
-            val isInFavorites = favouriteManager.has(station.StationUuid)
-
-            showPlayerMenu(station, isInFavorites)
+            showPlayerMenu(station)
         }
 
         imageViewIcon.setOnClickListener {
@@ -190,7 +186,7 @@ class FragmentPlayerSmall : Fragment() {
                 var timeout = 10
                 try {
                     timeout = sharedPreferences.getString("auto_off_timeout", "10")?.toInt() ?: 10
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                 }
                 PlayerServiceUtil.addTimer(timeout * 60)
             }
@@ -246,7 +242,7 @@ class FragmentPlayerSmall : Fragment() {
         }
     }
 
-    private fun showPlayerMenu(currentStation: DataRadioStation, stationIsInFavourites: Boolean) {
+    private fun showPlayerMenu(currentStation: DataRadioStation) {
         val dropDownMenu = PopupMenu(context, buttonMore)
         dropDownMenu.menuInflater.inflate(R.menu.menu_player, dropDownMenu.menu)
         dropDownMenu.setOnMenuItemClickListener { menuItem ->
