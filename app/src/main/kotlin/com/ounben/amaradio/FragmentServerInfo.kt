@@ -26,7 +26,7 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.layout_statistics, null)
+        val view = inflater.inflate(R.layout.layout_statistics, container, false)
 
         if (itemAdapterStatistics == null) {
             itemAdapterStatistics = ItemAdapterStatistics(requireActivity(), R.layout.list_item_statistic)
@@ -57,7 +57,7 @@ class FragmentServerInfo : Fragment(), IFragmentRefreshable {
             
             if (result != null) {
                 itemAdapterStatistics?.clear()
-                val items = DataStatistics.DecodeJson(result) ?: emptyArray()
+                val items = DataStatistics.DecodeJson(result)
                 for (item in items) {
                     itemAdapterStatistics?.add(item)
                 }
