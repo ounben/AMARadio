@@ -905,7 +905,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
                         when (val playerType: PlayerType? = IntentCompat.getParcelableExtra(intent, PlayerService.PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, PlayerType::class.java)) {
                             PlayerType.AMARadio -> showMeteredConnectionDialog {
-                                Utils.play(application as AMARadioApp, PlayerServiceUtil.getCurrentStation()!!)
+                                Utils.play(PlayerServiceUtil.getCurrentStation()!!)
                             }
                             PlayerType.EXTERNAL -> {
                                 val currentStation = PlayerServiceUtil.getCurrentStation()

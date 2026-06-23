@@ -21,7 +21,6 @@ import android.view.View
 import android.webkit.MimeTypeMap
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,7 +32,6 @@ import com.ounben.amaradio.service.ConnectivityChecker
 import com.ounben.amaradio.service.MediaSessionCallback
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
-import okhttp3.Authenticator
 import okhttp3.Credentials
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
@@ -132,7 +130,7 @@ object Utils {
             val aStream = FileOutputStream(f)
             aStream.write(content.toByteArray(charset("utf-8")))
             aStream.close()
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             Log.e("UTIL", "writeFileCache() could not write to cache file for:$theURI")
         }
     }
@@ -200,7 +198,7 @@ object Utils {
             if (result != null) return result
             
             // If current server failed, try rotating through the list once with strict timeout
-            val serverList = RadioBrowserServerManager.getServerList(false)
+            val serverList = RadioBrowserServerManager.getServerList(forceRefresh = false)
             for (newServer in serverList) {
                 if (newServer == currentServer) continue
                 val rotatedEndpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
@@ -237,7 +235,7 @@ object Utils {
     @JvmStatic
     fun getStationByUuid(httpClient: OkHttpClient, ctx: Context, stationUuid: String): DataRadioStation? {
         Log.w("UTIL", "Search by uuid:$stationUuid")
-        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid/$stationUuid", true, null)
+        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid/$stationUuid", forceUpdate = true, dictParams = null)
         if (result != null) {
             try {
                 val list = DataRadioStation.DecodeJson(result)
@@ -260,7 +258,7 @@ object Utils {
         Log.d("UTIL", "Search by uuid for items")
         val p = HashMap<String, String>()
         p["uuids"] = uuids
-        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", true, p)
+        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", forceUpdate = true, p)
         if (result != null) {
             try {
                 val list = DataRadioStation.DecodeJson(result)
@@ -289,24 +287,24 @@ object Utils {
 
     @JvmStatic
     fun showMpdServersDialog(context: Context, fragmentManager: FragmentManager, station: DataRadioStation?) {
-        val AMARadioApp = context.applicationContext as AMARadioApp
+        val app = context.applicationContext as AMARadioApp
         val oldFragment = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
-        if (oldFragment != null && oldFragment.isVisible) {
+        if ((oldFragment != null) && oldFragment.isVisible) {
             return
         }
         if (station == null) return
-        val playerSelectorDialogFragment = PlayerSelectorDialog(AMARadioApp.mpdClient, station)
+        val playerSelectorDialogFragment = PlayerSelectorDialog(app.mpdClient, station)
         playerSelectorDialogFragment.show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
     }
 
     @JvmStatic
     fun showPlaySelection(context: Context, station: DataRadioStation, fragmentManager: FragmentManager) {
-        val AMARadioApp = context.applicationContext as AMARadioApp
+        val app = context.applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val externalAvailable = sharedPref.getBoolean("play_external", false)
-        val castHandler = AMARadioApp.castHandler
+        val castHandler = app.castHandler
         val castAvailable = castHandler.isCastSessionAvailable
-        val mpdAvailable = AMARadioApp.mpdClient.isMpdEnabled
+        val mpdAvailable = app.mpdClient.isMpdEnabled
 
         if (castAvailable && !externalAvailable && !mpdAvailable) {
             PlayStationTask(station, context.applicationContext,
@@ -315,18 +313,24 @@ object Utils {
         } else if (externalAvailable || mpdAvailable) {
             showMpdServersDialog(context, fragmentManager, station)
         } else {
-            playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(context, station) }
+            playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(station) }
         }
     }
 
     @JvmStatic
     fun playAndWarnIfMetered(context: Context, station: DataRadioStation, playerType: PlayerType, playFunc: Runnable) {
-        playAndWarnIfMetered(context, station, playerType, playFunc, object : MeteredWarningCallback {
-            override fun warn(station: DataRadioStation, playerType: PlayerType) {
-                PlayerServiceUtil.setStation(station)
-                PlayerServiceUtil.warnAboutMeteredConnection(playerType)
-            }
-        })
+        playAndWarnIfMetered(
+            context,
+            station,
+            playerType,
+            playFunc,
+            object : MeteredWarningCallback {
+                override fun warn(station: DataRadioStation, playerType: PlayerType) {
+                    PlayerServiceUtil.setStation(station)
+                    PlayerServiceUtil.warnAboutMeteredConnection(playerType)
+                }
+            },
+        )
     }
 
     @JvmStatic
@@ -344,7 +348,7 @@ object Utils {
                              playFunc: Runnable, warningCallback: MeteredWarningCallback) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val warnOnMetered = sharedPref.getBoolean("warn_no_wifi", false)
-        if (warnOnMetered && ConnectivityChecker.getCurrentConnectionType(context) == ConnectivityChecker.ConnectionType.METERED) {
+        if (warnOnMetered && (ConnectivityChecker.getCurrentConnectionType(context) == ConnectivityChecker.ConnectionType.METERED)) {
             warningCallback.warn(station, playerType)
         } else {
             playFunc.run()
@@ -352,7 +356,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun play(context: Context, station: DataRadioStation) {
+    fun play(station: DataRadioStation) {
         PlayerServiceUtil.play(station)
     }
 
@@ -460,10 +464,10 @@ object Utils {
         if (proxySettings.type == Proxy.Type.DIRECT) {
             return true
         }
-        if (TextUtils.isEmpty(proxySettings.host)) {
+        if (proxySettings.host.isEmpty()) {
             return false
         }
-        if (proxySettings.port !in 1..65535) {
+        if (proxySettings.port !in (1..65535)) {
             return false
         }
         val proxyAddress = InetSocketAddress.createUnresolved(proxySettings.host, proxySettings.port)

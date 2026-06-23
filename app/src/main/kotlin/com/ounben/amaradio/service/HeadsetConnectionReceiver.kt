@@ -53,7 +53,7 @@ class HeadsetConnectionReceiver : BroadcastReceiver() {
             if (lastStation != null) {
                 if (!PlayerServiceUtil.isPlaying() && !AMARadioApp.mpdClient.isMpdEnabled) {
                     Utils.playAndWarnIfMetered(AMARadioApp, lastStation, PlayerType.AMARadio) {
-                        Utils.play(AMARadioApp, lastStation)
+                        Utils.play(lastStation)
                     }
                 }
             }

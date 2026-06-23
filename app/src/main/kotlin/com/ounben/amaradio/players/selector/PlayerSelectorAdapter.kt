@@ -128,7 +128,7 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
                     PlayerServiceUtil.pause(PauseReason.USER)
                 } else {
                     Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, stationToPlay!!, PlayerType.AMARadio) {
-                        Utils.play(context.applicationContext as AMARadioApp, stationToPlay)
+                        Utils.play(stationToPlay)
                     }
                 }
             }

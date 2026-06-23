@@ -144,7 +144,7 @@ object StationActions {
     @JvmStatic
     fun playInAMARadio(context: Context, station: DataRadioStation) {
         Utils.playAndWarnIfMetered(context, station, PlayerType.AMARadio) {
-            Utils.play(context, station)
+            Utils.play(station)
         }
     }
 
