@@ -5,10 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.ConnectivityManager
-import android.net.Uri
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
+import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
@@ -37,7 +37,7 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 
 @UnstableApi
-class ExoPlayerWrapper(private val context: Context, private val looper: android.os.Looper) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
+class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
     private var internalPlayer: ExoPlayer
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
@@ -55,6 +55,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
 
     private val networkChangedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
+            @Suppress("DEPRECATION")
             if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action) {
                 if (Utils.hasAnyConnection(context)) {
                     context.unregisterReceiver(this)
@@ -70,7 +71,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
                 50_000, // Min buffer 50s
                 100_000, // Max buffer 100s
                 2_500, // Buffer for playback 2.5s
-                5_000 // Buffer for playback after rebuffer 5s
+                5_000, // Buffer for playback after rebuffer 5s
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
@@ -90,7 +91,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
         internalPlayer.addListener(PlayerEventListener())
     }
 
-    override fun playRemote(httpClient: okhttp3.OkHttpClient, streamUrl: String, context: Context) {
+    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context) {
         this.streamUrl = streamUrl
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (bandwidthMeter == null) {
@@ -98,11 +99,11 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
         }
         val dataSourceFactory = RadioDataSourceFactory(httpClient, bandwidthMeter!!, this, 20, 2)
         audioSource = if (isHls) {
-            HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(Uri.parse(streamUrl)))
+            HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(streamUrl.toUri()))
         } else {
             ProgressiveMediaSource.Factory(dataSourceFactory)
                 .setLoadErrorHandlingPolicy(CustomLoadErrorHandlingPolicy(context))
-                .createMediaSource(MediaItem.fromUri(Uri.parse(streamUrl)))
+                .createMediaSource(MediaItem.fromUri(streamUrl.toUri()))
         }
         playerThreadHandler.post {
             cancelStopTask()
@@ -135,7 +136,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
 
     override fun isPlaying(): Boolean = isPlayingFlag
 
-    override val player: Player?
+    override val player: Player
         get() = internalPlayer
 
     override val bufferedMs: Long
@@ -186,6 +187,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
             }
         } else {
             stateListener?.onPlayerWarning(R.string.warning_no_network_trying_resume)
+            @Suppress("DEPRECATION")
             context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
         }
     }
@@ -218,11 +220,11 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
         override fun getRetryDelayMsFor(loadErrorInfo: LoadErrorHandlingPolicy.LoadErrorInfo): Long {
             if (loadErrorInfo.exception is HttpDataSource.InvalidResponseCodeException) {
                 val responseCode = (loadErrorInfo.exception as HttpDataSource.InvalidResponseCodeException).responseCode
-                if (responseCode in 400..499) return C.TIME_UNSET
+                if (responseCode in (400..499)) return C.TIME_UNSET
             }
-            val timeout = try { sharedPrefs.getString("settings_retry_timeout", "20")?.toInt() ?: 20 } catch (e: Exception) { 20 }
+            val timeout = try { sharedPrefs.getString("settings_retry_timeout", "20")?.toInt() ?: 20 } catch (_: Exception) { 20 }
             if (loadErrorInfo.errorCount > timeout) return C.TIME_UNSET
-            val delay = try { sharedPrefs.getString("settings_retry_delay", "2")?.toInt() ?: 2 } catch (e: Exception) { 2 }
+            val delay = try { sharedPrefs.getString("settings_retry_delay", "2")?.toInt() ?: 2 } catch (_: Exception) { 2 }
             return (delay * 1000).toLong()
         }
 
@@ -249,7 +251,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
                 }
                 Player.STATE_ENDED -> {
                     // Avoid full stop on live streams, wait for data instead
-                    if (isHls || streamUrl != null) {
+                    if (isHls || (streamUrl != null)) {
                         Log.d("ExoPlayerWrapper", "STATE_ENDED reached on stream, keeping resources warm.")
                         internalPlayer.prepare() // Keep resources warm and stay in buffering
                     } else {
@@ -268,7 +270,7 @@ class ExoPlayerWrapper(private val context: Context, private val looper: android
                 val entry = metadata[i]
                 if (entry is IcyInfo) {
                     val liveInfo = StreamLiveInfo(null)
-                    liveInfo.addMetadata("StreamTitle", entry.title?.toString())
+                    liveInfo.addMetadata("StreamTitle", entry.title)
                     stateListener?.onDataSourceStreamLiveInfo(liveInfo)
                 } else if (entry is IcyHeaders) {
                     val shoutcastInfo = ShoutcastInfo()
