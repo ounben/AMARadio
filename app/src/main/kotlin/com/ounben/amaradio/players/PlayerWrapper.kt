@@ -23,7 +23,6 @@ interface PlayerWrapper {
     val player: androidx.media3.common.Player?
     val bufferedMs: Long
     val audioSessionId: Int
-    val totalTransferredBytes: Long
     val currentPlaybackTransferredBytes: Long
     val isLocal: Boolean
     fun setVolume(newVolume: Float)

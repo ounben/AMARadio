@@ -169,9 +169,6 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         playerListener?.onStateChanged(state, audioSessionId)
     }
 
-    val totalTransferredBytes: Long
-        get() = currentPlayer.totalTransferredBytes
-
     val currentPlaybackTransferredBytes: Long
         get() = currentPlayer.currentPlaybackTransferredBytes
 

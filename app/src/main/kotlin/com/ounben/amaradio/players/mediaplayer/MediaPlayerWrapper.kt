@@ -23,8 +23,6 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     private var streamUrl: String? = null
     private var context: Context? = null
     private var isHls = false
-    override var totalTransferredBytes: Long = 0
-        private set
     override var currentPlaybackTransferredBytes: Long = 0
         private set
     private val playerIsInLegalState = AtomicBoolean(false)
@@ -148,7 +146,6 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     }
 
     override fun onBytesRead(buffer: ByteArray, offset: Int, length: Int) {
-        totalTransferredBytes += length.toLong()
         currentPlaybackTransferredBytes += length.toLong()
     }
 

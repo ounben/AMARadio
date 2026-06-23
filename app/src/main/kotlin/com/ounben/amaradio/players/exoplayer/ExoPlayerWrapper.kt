@@ -42,8 +42,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
     private var bandwidthMeter: DefaultBandwidthMeter? = null
-    override var totalTransferredBytes: Long = 0
-        private set
     override var currentPlaybackTransferredBytes: Long = 0
         private set
     private var isHls = false
@@ -203,7 +201,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceBytesRead(buffer: ByteArray, offset: Int, length: Int) {
-        totalTransferredBytes += length.toLong()
         currentPlaybackTransferredBytes += length.toLong()
     }
 
