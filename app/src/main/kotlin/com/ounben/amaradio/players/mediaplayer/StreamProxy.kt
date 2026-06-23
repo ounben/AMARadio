@@ -23,7 +23,7 @@ import java.util.Locale
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class StreamProxy(private val httpClient: OkHttpClient, private val uri: String, private val callback: StreamProxyListener) {
-    private val TAG = "PROXY"
+    private val tag = "PROXY"
     private val readBuffer = ByteArray(256 * 16)
     @Volatile
     private var localAddress: String? = null
@@ -35,13 +35,13 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
     }
 
     private fun createProxy() {
-        if (Utils.isDebug) Log.d(TAG, "thread started")
+        if (Utils.isDebug) Log.d(tag, "thread started")
         scope.launch {
             try {
                 connectToStream()
-                if (Utils.isDebug) Log.d(TAG, "createProxy() ended")
+                if (Utils.isDebug) Log.d(tag, "createProxy() ended")
             } catch (e: Exception) {
-                Log.e(TAG, "", e)
+                Log.e(tag, "", e)
             }
         }
     }
@@ -78,7 +78,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         val metadataBytes = inputStream.read() * 16
         var metadataBytesToRead = metadataBytes
         var readBytesBufferMetadata = 0
-        if (Utils.isDebug) Log.d(TAG, "metadata size:$metadataBytes")
+        if (Utils.isDebug) Log.d(tag, "metadata size:$metadataBytes")
         if (metadataBytes > 0) {
             Arrays.fill(readBuffer, 0.toByte())
             while (true) {
@@ -88,10 +88,10 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                 readBytesBufferMetadata += readBytes
                 if (metadataBytesToRead <= 0) {
                     val s = String(readBuffer, 0, metadataBytes, charset("utf-8"))
-                    if (Utils.isDebug) Log.d(TAG, "METADATA:$s")
+                    if (Utils.isDebug) Log.d(tag, "METADATA:$s")
                     val rawMetadata = decodeShoutcastMetadata(s)
                     val streamLiveInfo = StreamLiveInfo(rawMetadata)
-                    if (Utils.isDebug) Log.d(TAG, "META:${streamLiveInfo.title}")
+                    if (Utils.isDebug) Log.d(tag, "META:${streamLiveInfo.title}")
                     callback.onFoundLiveStreamInfo(streamLiveInfo)
                     break
                 }
@@ -107,7 +107,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
         var outputStream: OutputStream? = null
         var proxyServer: ServerSocket? = null
         try {
-            if (Utils.isDebug) Log.d(TAG, "creating local proxy")
+            if (Utils.isDebug) Log.d(tag, "creating local proxy")
             try {
                 proxyServer = ServerSocket(0, 1, InetAddress.getLocalHost())
             } catch (e: IOException) {
@@ -127,22 +127,22 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                         return@use
                     }
                     val contentType = responseBody.contentType()
-                    if (Utils.isDebug) Log.d(TAG, "waiting...")
+                    if (Utils.isDebug) Log.d(tag, "waiting...")
                     if (isStopped) return@use
                     socketProxy?.close()
                     outputStream?.close()
                     callback.onStreamCreated(localAddress!!)
                     proxyServer.soTimeout = 2000
                     socketProxy = proxyServer.accept()
-                    if (Utils.isDebug) Log.d(TAG, "sending OK to the local media player")
+                    if (Utils.isDebug) Log.d(tag, "sending OK to the local media player")
                     outputStream = socketProxy!!.getOutputStream()
                     outputStream!!.write(("HTTP/1.0 200 OK\r\n" +
                             "Pragma: no-cache\r\n" +
                             "Content-Type: $contentType\r\n\r\n").toByteArray(charset("utf-8")))
                     val type = contentType.toString().lowercase(Locale.ROOT)
-                    if (Utils.isDebug) Log.d(TAG, "Content Type: $type")
+                    if (Utils.isDebug) Log.d(tag, "Content Type: $type")
                     if (type == "application/vnd.apple.mpegurl" || type == "application/x-mpegurl") {
-                        Log.e(TAG, "Cannot play HLS streams through proxy!")
+                        Log.e(tag, "Cannot play HLS streams through proxy!")
                     } else {
                         val info = ShoutcastInfo.Decode(response)
                         proxyDefaultStream(info, responseBody.byteStream(), outputStream!!)
@@ -154,14 +154,14 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
                 delay(1000)
             }
         } catch (e: Exception) {
-            Log.e(TAG, "exception occurred inside the connection loop, retry. $e")
+            Log.e(tag, "exception occurred inside the connection loop, retry. $e")
         } finally {
             try {
                 proxyServer?.close()
                 socketProxy?.close()
                 outputStream?.close()
             } catch (e: IOException) {
-                Log.e(TAG, "exception occurred while closing resources. $e")
+                Log.e(tag, "exception occurred while closing resources. $e")
             }
         }
         if (!isStopped) {
@@ -187,7 +187,7 @@ class StreamProxy(private val httpClient: OkHttpClient, private val uri: String,
     fun getLocalAddress(): String? = localAddress
 
     fun stop() {
-        if (Utils.isDebug) Log.d(TAG, "stopping proxy.")
+        if (Utils.isDebug) Log.d(tag, "stopping proxy.")
         isStopped = true
         scope.cancel()
     }

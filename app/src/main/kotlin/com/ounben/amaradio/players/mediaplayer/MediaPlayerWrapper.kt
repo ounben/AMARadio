@@ -14,8 +14,9 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 import java.util.concurrent.atomic.AtomicBoolean
 
+@Suppress("unused")
 class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapper, StreamProxyListener {
-    private val TAG = "MediaPlayerWrapper"
+    private val tag = "MediaPlayerWrapper"
     private var mediaPlayer: MediaPlayer? = null
     private var proxy: StreamProxy? = null
     private var stateListener: PlayerWrapper.PlayListener? = null
@@ -28,17 +29,17 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         private set
     private val playerIsInLegalState = AtomicBoolean(false)
 
-    override fun playRemote(httpClient: okhttp3.OkHttpClient, streamUrl: String, context: Context) {
+    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context) {
         if (streamUrl != this.streamUrl) {
             currentPlaybackTransferredBytes = 0
         }
         this.streamUrl = streamUrl
         this.context = context
-        Log.v(TAG, "Stream url:$streamUrl")
+        Log.v(tag, "Stream url:$streamUrl")
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         if (!isHls) {
             if (proxy != null) {
-                if (Utils.isDebug) Log.d(TAG, "stopping old proxy.")
+                if (Utils.isDebug) Log.d(tag, "stopping old proxy.")
                 stopProxy()
             }
             proxy = StreamProxy(httpClient, streamUrl, this)
@@ -48,7 +49,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         }
     }
 
-    private fun playProxyStream(proxyUrl: String, context: Context?) {
+    private fun playProxyStream(proxyUrl: String) {
         playerIsInLegalState.set(false)
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer()
@@ -73,7 +74,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
                 true
             }
         } catch (e: Exception) {
-            Log.e(TAG, "$e")
+            Log.e(tag, e.toString())
             stateListener?.onPlayerError(R.string.error_play_stream)
         }
     }
@@ -139,7 +140,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     }
 
     override fun onStreamCreated(proxyConnection: String) {
-        playerThreadHandler.post { playProxyStream(proxyConnection, context) }
+        playerThreadHandler.post { playProxyStream(proxyConnection) }
     }
 
     override fun onStreamStopped() {
@@ -156,7 +157,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
             try {
                 proxy!!.stop()
             } catch (e: Exception) {
-                Log.e(TAG, "proxy stop exception: ", e)
+                Log.e(tag, "proxy stop exception: ", e)
             }
             proxy = null
         }
