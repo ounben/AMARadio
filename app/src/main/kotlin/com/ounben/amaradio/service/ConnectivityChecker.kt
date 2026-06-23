@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
-import androidx.core.net.ConnectivityManagerCompat
 
 class ConnectivityChecker {
     enum class ConnectionType {
