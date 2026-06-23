@@ -27,7 +27,6 @@ import android.os.Parcelable
 import android.os.PowerManager
 import android.os.Process
 import android.support.v4.media.session.MediaSessionCompat
-import android.text.TextUtils
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -40,10 +39,8 @@ import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
 import androidx.media3.common.MediaMetadata
-import androidx.media3.common.Player
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
-import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.mediarouter.media.MediaControlIntent
 import androidx.mediarouter.media.MediaRouteSelector
 import androidx.mediarouter.media.MediaRouter
@@ -158,6 +155,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         override fun getCurrentStation(): DataRadioStation? = this@PlayerService.itsCurrentStation
         override fun getMetadataLive(): StreamLiveInfo = this@PlayerService.liveInfo
         override fun getShoutcastInfo(): ShoutcastInfo? = this@PlayerService.streamInfo
+        @Suppress("DEPRECATION")
         override fun getMediaSessionToken(): MediaSessionCompat.Token? = null 
         override fun getIsHls(): Boolean = this@PlayerService.isHls
         override fun isPlaying(): Boolean = this@PlayerService.radioPlayer?.isPlaying() ?: false
@@ -221,7 +219,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 seconds = millisUntilFinished / 1000
-                if (Utils.isDebug) Log.d(tag, "$seconds")
+                if (Utils.isDebug) Log.d(tag, seconds.toString())
                 sendBroadCast(PLAYER_SERVICE_TIMER_UPDATE)
             }
             override fun onFinish() {
@@ -335,12 +333,18 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private fun playAndWarnIfMetered(station: DataRadioStation) {
-        Utils.playAndWarnIfMetered(application as AMARadioApp, station, PlayerType.AMARadio, { playWithoutWarnings(station) }, object : Utils.MeteredWarningCallback {
-            override fun warn(station: DataRadioStation, playerType: PlayerType) {
-                setStation(station)
-                warnAboutMeteredConnection(playerType)
-            }
-        })
+        Utils.playAndWarnIfMetered(
+            application as AMARadioApp,
+            station,
+            PlayerType.AMARadio,
+            { playWithoutWarnings(station) },
+            object : Utils.MeteredWarningCallback {
+                override fun warn(station: DataRadioStation, playerType: PlayerType) {
+                    setStation(station)
+                    warnAboutMeteredConnection(playerType)
+                }
+            },
+        )
     }
 
     fun setStation(station: DataRadioStation) {
@@ -377,19 +381,15 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     fun next() {
         itsCurrentStation?.let {
-            val station = it.queue?.getNextById(it.StationUuid)
-            if (station != null) {
-                if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
-            }
+            val station = it.queue?.getNextById(it.StationUuid) ?: return@let
+            if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
         }
     }
 
     fun previous() {
         itsCurrentStation?.let {
-            val station = it.queue?.getPreviousById(it.StationUuid)
-            if (station != null) {
-                if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
-            }
+            val station = it.queue?.getPreviousById(it.StationUuid) ?: return@let
+            if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
         }
     }
 
@@ -399,20 +399,18 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         var bypass = false
         if (pauseReason == PauseReason.METERED_CONNECTION) {
             val delta = System.currentTimeMillis() - lastMeteredConnectionWarningTime
-            bypass = delta in 1 until METERED_CONNECTION_WARNING_COOLDOWN
+            bypass = delta in (1 until METERED_CONNECTION_WARNING_COOLDOWN)
         }
         pauseReason = PauseReason.NONE
         lastMeteredConnectionWarningTime = 0
-        if (radioPlayer?.isPlaying() == false) {
-            val app = application as AMARadioApp
-            val station = itsCurrentStation ?: app.historyManager.first
-            station?.let {
-                if (bypass) {
-                    startMeteredConnectionListener()
-                    playWithoutWarnings(it)
-                } else {
-                    playAndWarnIfMetered(it)
-                }
+        val app = application as AMARadioApp
+        val station = itsCurrentStation ?: app.historyManager.first
+        if (radioPlayer?.isPlaying() == false && station != null) {
+            if (bypass) {
+                startMeteredConnectionListener()
+                playWithoutWarnings(station)
+            } else {
+                playAndWarnIfMetered(station)
             }
         }
     }
@@ -429,12 +427,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         radioPlayer?.stop()
         releaseWakeLockAndWifiLock()
         clearTimer()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            stopForeground(STOP_FOREGROUND_REMOVE)
-        } else {
-            @Suppress("DEPRECATION")
-            stopForeground(true)
-        }
+        stopForeground(STOP_FOREGROUND_REMOVE)
         stopMeteredConnectionListener()
     }
 
@@ -502,7 +495,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val pendingIntentNext = PendingIntent.getService(this, 0, nextIntent, pendingIntentFlag)
         val previousIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_SKIP_TO_PREVIOUS }
         val pendingIntentPrevious = PendingIntent.getService(this, 0, previousIntent, pendingIntentFlag)
-        if ((playState == PlayState.Paused || playState == PlayState.Idle) && pauseReason == PauseReason.METERED_CONNECTION) {
+        if (((playState == PlayState.Paused) || (playState == PlayState.Idle)) && (pauseReason == PauseReason.METERED_CONNECTION)) {
             msg = resources.getString(R.string.notify_metered_connection)
         } else if (lastErrorFromPlayer != -1) {
             try { msg = resources.getString(lastErrorFromPlayer) } catch (_: Exception) {}
@@ -520,12 +513,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             .setLargeIcon(radioIcon?.bitmap)
             .addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
             .addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
-        if (playState == PlayState.Playing || playState == PlayState.PrePlaying) {
+        if ((playState == PlayState.Playing) || (playState == PlayState.PrePlaying)) {
             val pauseIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_PAUSE }
             val pendingIntentPause = PendingIntent.getService(this, 0, pauseIntent, pendingIntentFlag)
             builder.addAction(R.drawable.ic_pause_24dp, getString(R.string.action_pause), pendingIntentPause)
             builder.setUsesChronometer(true).setOngoing(true)
-        } else if (playState == PlayState.Paused || playState == PlayState.Idle) {
+        } else if ((playState == PlayState.Paused) || (playState == PlayState.Idle)) {
             val resumeIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_RESUME }
             val pendingIntentResume = PendingIntent.getService(this, 0, resumeIntent, pendingIntentFlag)
             builder.addAction(R.drawable.ic_play_arrow_24dp, getString(R.string.action_resume), pendingIntentResume)
@@ -536,13 +529,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val style = mediaSession?.let { 
             androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it)
                 .setShowActionsInCompactView(1, 2, 3)
-        } ?: androidx.media.app.NotificationCompat.MediaStyle()
+        } ?: @Suppress("DEPRECATION") androidx.media.app.NotificationCompat.MediaStyle()
             .setShowActionsInCompactView(1, 2, 3)
 
         builder.setStyle(style)
         val notification = builder.build()
         try {
-            if (playState == PlayState.Playing || playState == PlayState.PrePlaying || playState == PlayState.Paused) {
+            if ((playState == PlayState.Playing || playState == PlayState.PrePlaying) || (playState == PlayState.Paused)) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
@@ -551,12 +544,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 notificationIsActive = true
             } else {
                 if (notificationIsActive) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        stopForeground(STOP_FOREGROUND_REMOVE)
-                    } else {
-                        @Suppress("DEPRECATION")
-                        stopForeground(true)
-                    }
+                    stopForeground(STOP_FOREGROUND_REMOVE)
                     notificationIsActive = false
                 } else {
                     (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
@@ -601,7 +589,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                         metadataBuilder.setArtist(liveInfo.artist)
                         metadataBuilder.setTitle(liveInfo.track)
                     } else {
-                        metadataBuilder.setTitle(if (liveInfo.title.isNotEmpty()) liveInfo.title else station.Name)
+                        metadataBuilder.setTitle(liveInfo.title.ifEmpty { station.Name })
                         metadataBuilder.setArtist(station.Name)
                     }
                     
@@ -627,7 +615,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 createBitmap(drawable.intrinsicWidth, drawable.intrinsicHeight).applyCanvas {
                     drawable.setBounds(0, 0, width, height)
                     drawable.draw(this)
-                }.toDrawable(resources) as BitmapDrawable
+                }.toDrawable(resources)
             }
             updateNotification()
             return
@@ -729,16 +717,16 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             updateNotification()
             val currentTime = Calendar.getInstance().time
             trackHistoryRepository?.getLastInsertedHistoryItem { entry, dao ->
-                if (entry != null && entry.title == this.liveInfo.title) {
+                if ((entry != null) && (entry.title == this.liveInfo.title)) {
                     entry.endTime = Date(0)
                     dao.update(entry)
                 } else {
                     dao.setCurrentPlayingTrackEndTime(currentTime)
                     val newEntry = TrackHistoryEntry().apply {
                         stationUuid = itsCurrentStation?.StationUuid ?: ""
-                        artist = this@PlayerService.liveInfo.artist ?: ""
-                        title = this@PlayerService.liveInfo.title ?: ""
-                        track = this@PlayerService.liveInfo.track ?: ""
+                        artist = this@PlayerService.liveInfo.artist
+                        title = this@PlayerService.liveInfo.title
+                        track = this@PlayerService.liveInfo.track
                         stationIconUrl = itsCurrentStation?.IconUrl ?: ""
                         startTime = currentTime
                         endTime = Date(0)
