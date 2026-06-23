@@ -59,7 +59,7 @@ object PlayerServiceUtil {
     private fun unBind(context: Context) {
         try {
             serviceConnection?.let { context.unbindService(it) }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
         }
         serviceConnection = null
         mBound = false
@@ -114,7 +114,7 @@ object PlayerServiceUtil {
     fun isPlaying(): Boolean {
         return try {
             itsPlayerService?.isPlaying ?: false
-        } catch (e: RemoteException) {
+        } catch (_: RemoteException) {
             false
         }
     }
@@ -123,7 +123,7 @@ object PlayerServiceUtil {
     fun getPlayerState(): PlayState {
         return try {
             itsPlayerService?.playerState ?: PlayState.Idle
-        } catch (e: RemoteException) {
+        } catch (_: RemoteException) {
             PlayState.Idle
         }
     }
@@ -186,15 +186,6 @@ object PlayerServiceUtil {
     }
 
     @JvmStatic
-    fun resume() {
-        try {
-            itsPlayerService?.Resume()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
     fun clearTimer() {
         try {
             itsPlayerService?.clearTimer()
@@ -243,16 +234,6 @@ object PlayerServiceUtil {
     }
 
     @JvmStatic
-    fun getStationInCurrentStation(): DataRadioStation? {
-        return try {
-            itsPlayerService?.currentStation
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            null
-        }
-    }
-
-    @JvmStatic
     fun getCurrentStation(): DataRadioStation? {
         return try {
             itsPlayerService?.currentStation
@@ -289,46 +270,6 @@ object PlayerServiceUtil {
     }
 
     @JvmStatic
-    fun getIsHls(): Boolean {
-        return try {
-            itsPlayerService?.getIsHls() ?: false
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            false
-        }
-    }
-
-    @JvmStatic
-    fun getTransferredBytes(): Long {
-        return try {
-            itsPlayerService?.getTransferredBytes() ?: 0
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            0
-        }
-    }
-
-    @JvmStatic
-    fun getBufferedSeconds(): Long {
-        return try {
-            itsPlayerService?.getBufferedSeconds() ?: 0
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            0
-        }
-    }
-
-    @JvmStatic
-    fun getLastPlayStartTime(): Long {
-        return try {
-            itsPlayerService?.getLastPlayStartTime() ?: 0
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            0
-        }
-    }
-
-    @JvmStatic
     fun getPauseReason(): PauseReason {
         return try {
             itsPlayerService?.getPauseReason() ?: PauseReason.NONE
@@ -339,39 +280,11 @@ object PlayerServiceUtil {
     }
 
     @JvmStatic
-    fun enableMPD(hostname: String, port: Int) {
-        try {
-            itsPlayerService?.enableMPD(hostname, port)
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
-    fun disableMPD() {
-        try {
-            itsPlayerService?.disableMPD()
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
     fun warnAboutMeteredConnection(playerType: PlayerType) {
         try {
             itsPlayerService?.warnAboutMeteredConnection(playerType)
         } catch (e: RemoteException) {
             Log.e("", "$e")
-        }
-    }
-
-    @JvmStatic
-    fun isNotificationActive(): Boolean {
-        return try {
-            itsPlayerService?.isNotificationActive() ?: false
-        } catch (e: RemoteException) {
-            Log.e("", "$e")
-            false
         }
     }
 }
