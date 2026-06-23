@@ -386,6 +386,7 @@ open class ItemAdapterStation(
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
         eventJob?.cancel()
+        filter?.release()
     }
 
     companion object {

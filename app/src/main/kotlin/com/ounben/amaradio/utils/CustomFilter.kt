@@ -1,10 +1,9 @@
 package com.ounben.amaradio.utils
 
-import android.os.Handler
-import android.os.Looper
 import com.ounben.amaradio.Utils
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
+import kotlin.time.Duration.Companion.milliseconds
 
 abstract class CustomFilter {
     private var mDelayer: Delayer? = null
@@ -33,7 +32,7 @@ abstract class CustomFilter {
         val requestId = filterRequestId.incrementAndGet()
         
         filterJob = scope.launch {
-            if (delayValue > 0) delay(delayValue)
+            if (delayValue > 0) delay(delayValue.milliseconds)
             
             val results = withContext(Dispatchers.IO) {
                 try {
@@ -54,10 +53,6 @@ abstract class CustomFilter {
 
     protected abstract fun performFiltering(constraint: CharSequence?): FilterResults
     protected abstract fun publishResults(constraint: CharSequence?, results: FilterResults)
-
-    open fun convertResultToString(resultValue: Any?): CharSequence {
-        return resultValue?.toString() ?: ""
-    }
 
     open class FilterResults {
         var values: Any? = null
