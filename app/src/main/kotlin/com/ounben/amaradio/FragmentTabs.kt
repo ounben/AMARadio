@@ -17,6 +17,7 @@ import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.FragmentStations
 import com.ounben.amaradio.station.StationsFilter
 
+@Suppress("DEPRECATION")
 class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private val itsAdressWWWLocal = "json/stations/bycountryexact/internet?order=clickcount&reverse=true"
     private val itsAdressWWWTopClick = "json/stations/topclick/100"
@@ -51,7 +52,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         if (savedInstanceState != null) {
             val styleIdx = savedInstanceState.getInt("queuedSearchStyle", -1)
             if (styleIdx != -1) {
-                queuedSearchStyle = StationsFilter.SearchStyle.values()[styleIdx]
+                queuedSearchStyle = StationsFilter.SearchStyle.entries[styleIdx]
             }
             queuedSearchQuery = savedInstanceState.getString("queuedSearchQuery")
         }
@@ -123,7 +124,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             if (countryCode != null && countryCode.length == 2) {
                 return countryCode
             }
-            countryCode = ctx.resources.configuration.locale.country
+            countryCode = ctx.resources.configuration.locales[0].country
             addresses[IDX_LOCAL] = "json/stations/bycountrycodeexact/?order=clickcount&reverse=true"
             Log.d("MAIN", "Locale: '$countryCode'")
             if (countryCode != null && countryCode.length == 2) {
@@ -244,6 +245,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         }
     }
 
+    @Suppress("DEPRECATION")
     internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
         private val mFragmentTitleList: MutableList<Int> = ArrayList()
