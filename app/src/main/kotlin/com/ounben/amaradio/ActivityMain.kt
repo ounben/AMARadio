@@ -186,7 +186,23 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
         coordinatorLayoutParams.behavior = appBarLayoutBehavior
 
-        playerBottomSheet = BottomSheetBehavior.from(findViewById(R.id.bottom_sheet))
+        val bottomSheetView = findViewById<View>(R.id.bottom_sheet)
+        playerBottomSheet = BottomSheetBehavior.from(bottomSheetView)
+        playerBottomSheet.isFitToContents = false
+        
+        ViewCompat.setOnApplyWindowInsetsListener(bottomSheetView) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            playerBottomSheet.expandedOffset = systemBars.top
+            
+            // Adjust the height of the bottom sheet so it doesn't overflow at the bottom
+            // because of the top offset.
+            val layoutParams = v.layoutParams
+            layoutParams.height = v.rootView.height - mBottomNavigationView.height - systemBars.top
+            v.layoutParams = layoutParams
+
+            insets
+        }
+
         playerBottomSheet.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             private var oldState = BottomSheetBehavior.STATE_COLLAPSED
 
