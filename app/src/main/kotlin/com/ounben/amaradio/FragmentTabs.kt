@@ -7,15 +7,27 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.unit.dp
 import androidx.fragment.app.Fragment
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ounben.amaradio.interfaces.IFragmentRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
-import com.ounben.amaradio.station.FragmentStations
+import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.ui.*
+import kotlinx.coroutines.launch
 
 class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private val itsAdressWWWLocal = "json/stations/bycountryexact/internet?order=clickcount&reverse=true"
@@ -30,8 +42,6 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private var queuedSearchQuery: String? = null
     private var queuedSearchStyle: StationsFilter.SearchStyle? = null
 
-    private val fragments = arrayOfNulls<Fragment>(11)
-    private var viewPager: ViewPager2? = null
     private val addresses = arrayOf(
         itsAdressWWWLocal,
         itsAdressWWWTopClick,
@@ -46,8 +56,14 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         ""
     )
 
+    private data class TabData(val id: Int, val titleRes: Int)
+
+    private var pagerStateRef: PagerState? = null
+    private var activeTabsList by mutableStateOf<List<TabData>>(emptyList())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        
         if (savedInstanceState != null) {
             val styleIdx = savedInstanceState.getInt("queuedSearchStyle", -1)
             if (styleIdx != -1) {
@@ -59,223 +75,199 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        // Protection: only save if viewPager is still attached and has an adapter
-        if (viewPager != null && viewPager?.adapter != null && !isRemoving) {
-            outState.putInt("activeTabPosition", viewPager?.currentItem ?: 0)
-        }
+        pagerStateRef?.let { outState.putInt("activeTabPosition", it.currentPage) }
         queuedSearchStyle?.let { outState.putInt("queuedSearchStyle", it.ordinal) }
         outState.putString("queuedSearchQuery", queuedSearchQuery)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val x = inflater.inflate(R.layout.layout_tabs, container, false)
-        val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
-        val vp = x.findViewById<ViewPager2>(R.id.viewpager)
-        viewPager = vp
-
-        setupViewPager(vp, tabLayout)
-
-        val activePos = savedInstanceState?.getInt("activeTabPosition", 0) ?: 0
-        vp.post {
-            if (activePos > 0 && activePos < (vp.adapter?.itemCount ?: 0)) {
-                vp.currentItem = activePos
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val initialTab = savedInstanceState?.getInt("activeTabPosition", 0) ?: 0
+        
+        return ComposeView(requireContext()).apply {
+            setContent {
+                AMARadioTheme {
+                    TabsScreen(initialTab)
+                }
             }
-            
-            queuedSearchQuery?.let {
-                Log.d("TABS", "do queued search: $it")
-                search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
-                // We keep the query for potential recreates, but clear it if search is complete
+        }
+    }
+
+    @Composable
+    private fun TabsScreen(initialTab: Int) {
+        val countryCode = remember { getCountryCode() }
+        val activeTabs = remember(countryCode) {
+            mutableListOf<TabData>().apply {
+                if (countryCode != null) add(TabData(IDX_LOCAL, R.string.action_local))
+                add(TabData(IDX_FILTER, R.string.action_filter))
+                add(TabData(IDX_TOP_CLICK, R.string.action_top_click))
+                add(TabData(IDX_CURRENTLY_HEARD, R.string.action_currently_playing))
+                add(TabData(IDX_COUNTRIES, R.string.action_countries))
+                add(TabData(IDX_SEARCH, R.string.action_search))
+            }
+        }.also { activeTabsList = it }
+
+        val pagerState = rememberPagerState(
+            initialPage = initialTab.coerceIn(0, activeTabs.size - 1),
+            pageCount = { activeTabs.size }
+        )
+        val coroutineScope = rememberCoroutineScope()
+        
+        pagerStateRef = pagerState
+
+        Column(modifier = Modifier.fillMaxSize()) {
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                edgePadding = 16.dp,
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary,
+                indicator = { tabPositions ->
+                    if (pagerState.currentPage < tabPositions.size) {
+                        TabRowDefaults.SecondaryIndicator(
+                            Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            ) {
+                activeTabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        text = { Text(text = androidx.compose.ui.res.stringResource(id = tab.titleRes)) }
+                    )
+                }
+            }
+
+            HorizontalPager(
+                state = pagerState,
+                modifier = Modifier.weight(1f),
+                beyondViewportPageCount = 1
+            ) { pageIndex ->
+                val tab = activeTabs[pageIndex]
+                TabContent(tab = tab)
             }
         }
 
-        return x
+        LaunchedEffect(queuedSearchQuery) {
+            queuedSearchQuery?.let { query ->
+                val searchIndex = activeTabs.indexOfFirst { it.id == IDX_SEARCH }
+                if (searchIndex != -1) {
+                    if (pagerState.currentPage != searchIndex) {
+                        pagerState.scrollToPage(searchIndex)
+                    }
+                    search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, query)
+                    queuedSearchQuery = null
+                }
+            }
+        }
     }
 
-    override fun onResume() {
-        super.onResume()
-        val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
-        tabLayout.visibility = View.VISIBLE
-    }
-
-    override fun onPause() {
-        super.onPause()
-        val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
-        tabLayout.visibility = View.GONE
+    @Composable
+    private fun TabContent(tab: TabData) {
+        val app = requireActivity().application as AMARadioApp
+        val context = requireContext()
+        val countryCode = remember { getCountryCode() }
+        
+        when (tab.id) {
+            IDX_FILTER -> {
+                val filterViewModel: FilterViewModel = viewModel(viewModelStoreOwner = this)
+                FilterScreen(
+                    viewModel = filterViewModel,
+                    onStationClick = { station -> Utils.showPlaySelection(app, station, childFragmentManager) },
+                    onFavoriteClick = { station ->
+                        if (app.favouriteManager.has(station.StationUuid)) {
+                            StationActions.removeFromFavourites(context, null, station)
+                        } else {
+                            StationActions.markAsFavourite(context, station)
+                        }
+                    },
+                    isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                )
+            }
+            IDX_LOCAL, IDX_TOP_CLICK, IDX_CURRENTLY_HEARD, IDX_SEARCH -> {
+                val stationsViewModel: StationsViewModel = viewModel(key = "tab_${tab.id}", viewModelStoreOwner = this)
+                val url = if (tab.id == IDX_LOCAL && countryCode != null) {
+                    "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
+                } else addresses[tab.id]
+                
+                StationsScreen(
+                    viewModel = stationsViewModel,
+                    url = url,
+                    onStationClick = { station -> Utils.showPlaySelection(app, station, childFragmentManager) },
+                    onFavoriteClick = { station ->
+                        if (app.favouriteManager.has(station.StationUuid)) {
+                            StationActions.removeFromFavourites(context, null, station)
+                        } else {
+                            StationActions.markAsFavourite(context, station)
+                        }
+                    },
+                    isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                )
+            }
+            IDX_COUNTRIES -> {
+                val categoriesViewModel: CategoriesViewModel = viewModel(key = "tab_${tab.id}", viewModelStoreOwner = this)
+                CategoriesScreen(
+                    viewModel = categoriesViewModel,
+                    url = addresses[tab.id],
+                    searchStyle = StationsFilter.SearchStyle.ByCountryCodeExact,
+                    singleUseFilter = false,
+                    onCategoryClick = { category ->
+                        (activity as? ActivityMain)?.search(StationsFilter.SearchStyle.ByCountryCodeExact, category.Name)
+                    }
+                )
+            }
+        }
     }
 
     private fun getCountryCode(): String? {
-        val ctx = context
-        if (ctx != null) {
-            val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-            var countryCode = tm?.networkCountryIso
-            Log.d("MAIN", "Network country code: '$countryCode'")
-            if (countryCode != null && countryCode.length == 2) {
-                return countryCode
-            }
-            countryCode = tm?.simCountryIso
-            Log.d("MAIN", "Sim country code: '$countryCode'")
-            if (countryCode != null && countryCode.length == 2) {
-                return countryCode
-            }
-            countryCode = ctx.resources.configuration.locales[0].country
-            addresses[IDX_LOCAL] = "json/stations/bycountrycodeexact/?order=clickcount&reverse=true"
-            Log.d("MAIN", "Locale: '$countryCode'")
-            if (countryCode != null && countryCode.length == 2) {
-                return countryCode
-            }
-        }
-        return null
-    }
-
-    private fun setupViewPager(viewPager: ViewPager2, tabLayout: TabLayout) {
-        val countryCode = getCountryCode()
-        if (countryCode != null) {
-            addresses[IDX_LOCAL] = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
-        }
-
-        // Create new instances first
-        val newFragments = arrayOfNulls<Fragment>(11)
-        newFragments[IDX_LOCAL] = FragmentStations()
-        newFragments[IDX_TOP_CLICK] = FragmentStations()
-        newFragments[IDX_TOP_VOTE] = FragmentStations()
-        newFragments[IDX_CHANGED_LATELY] = FragmentStations()
-        newFragments[IDX_CURRENTLY_HEARD] = FragmentStations()
-        newFragments[IDX_TAGS] = FragmentCategories()
-        newFragments[IDX_COUNTRIES] = FragmentCategories()
-        newFragments[IDX_LANGUAGES] = FragmentCategories()
-        newFragments[IDX_SEARCH] = FragmentStations()
-        newFragments[IDX_FILTER] = FragmentFilter()
-
-        // Setup arguments for all possible fragments
-        for (i in newFragments.indices) {
-            if (i == IDX_FILTER) continue
-            val bundle = Bundle()
-            bundle.putString("url", addresses[i])
-            if (i == IDX_SEARCH) bundle.putBoolean(FragmentStations.KEY_SEARCH_ENABLED, true)
-            if (i == IDX_TAGS) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByTagExact.ordinal)
-            if (i == IDX_COUNTRIES) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByCountryCodeExact.ordinal)
-            if (i == IDX_LANGUAGES) bundle.putInt("searchStyle", StationsFilter.SearchStyle.ByLanguageExact.ordinal)
-            newFragments[i]?.arguments = bundle
-        }
-
-        val activeTabs = mutableListOf<Int>()
-        if (countryCode != null) activeTabs.add(IDX_LOCAL)
-        activeTabs.add(IDX_FILTER)
-        activeTabs.add(IDX_TOP_CLICK)
-        activeTabs.add(IDX_CURRENTLY_HEARD)
-        activeTabs.add(IDX_COUNTRIES)
-        activeTabs.add(IDX_SEARCH)
-
-        val adapter = ViewPagerAdapter(this)
-
-        for (tabId in activeTabs) {
-            val fragment = newFragments[tabId]!!
-            fragments[tabId] = fragment
-            
-            val titleRes = when (tabId) {
-                IDX_LOCAL -> R.string.action_local
-                IDX_TOP_CLICK -> R.string.action_top_click
-                IDX_TOP_VOTE -> R.string.action_top_vote
-                IDX_CHANGED_LATELY -> R.string.action_changed_lately
-                IDX_CURRENTLY_HEARD -> R.string.action_currently_playing
-                IDX_TAGS -> R.string.action_tags
-                IDX_COUNTRIES -> R.string.action_countries
-                IDX_LANGUAGES -> R.string.action_languages
-                IDX_SEARCH -> R.string.action_search
-                IDX_FILTER -> R.string.action_filter
-                else -> 0
-            }
-            adapter.addFragment(fragment, titleRes, tabId)
-        }
-
-        (fragments[IDX_TAGS] as? FragmentCategories)?.enableSingleUseFilter(true)
-        (fragments[IDX_TAGS] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByTagExact)
-        (fragments[IDX_COUNTRIES] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByCountryCodeExact)
-        (fragments[IDX_LANGUAGES] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
-
-        viewPager.adapter = adapter
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = resources.getString(adapter.getTitleRes(position))
-        }.attach()
+        val ctx = context ?: return null
+        val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
+        return tm?.networkCountryIso?.takeIf { it.length == 2 }
+            ?: tm?.simCountryIso?.takeIf { it.length == 2 }
+            ?: ctx.resources.configuration.locales[0].country.takeIf { it.length == 2 }
     }
 
     override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
-        Log.d("TABS", "Search = $query searchStyle=$searchStyle")
-        val vp = viewPager
-        if (vp != null && vp.adapter is ViewPagerAdapter) {
-            val adapter = vp.adapter as ViewPagerAdapter
-            val searchPosition = adapter.getPositionForTabId(IDX_SEARCH)
-
-            if (searchPosition != -1) {
-                vp.currentItem = searchPosition
-                (fragments[IDX_SEARCH] as IFragmentSearchable).search(searchStyle, query)
+        val searchIndex = activeTabsList.indexOfFirst { it.id == IDX_SEARCH }
+        if (searchIndex != -1) {
+            val pagerState = pagerStateRef
+            if (pagerState != null) {
+                viewLifecycleOwner.lifecycleScope.launch {
+                    if (pagerState.currentPage != searchIndex) {
+                        pagerState.scrollToPage(searchIndex)
+                    }
+                    val searchViewModel: StationsViewModel = androidx.lifecycle.ViewModelProvider(this@FragmentTabs).get("tab_$IDX_SEARCH", StationsViewModel::class.java)
+                    searchViewModel.search(searchStyle, query)
+                }
             }
         } else {
-            Log.d("TABS", "b Search = $query")
             queuedSearchQuery = query
             queuedSearchStyle = searchStyle
         }
     }
 
-    fun openFilterTab() {
-        val vp = viewPager
-        if (vp != null && vp.adapter is ViewPagerAdapter) {
-            val adapter = vp.adapter as ViewPagerAdapter
-            val filterPosition = adapter.getPositionForTabId(IDX_FILTER)
-
-            if (filterPosition != -1) {
-                vp.currentItem = filterPosition
-                // Explicitly tell the fragment to expand when the menu icon is clicked
-                (fragments[IDX_FILTER] as? FragmentFilter)?.expandFilter()
-            }
-        }
-    }
-
     override fun refresh() {
-        val fragment = fragments[viewPager?.currentItem ?: 0]
-        if (fragment is FragmentBase) {
-            fragment.downloadUrl(forceUpdate = true)
-        }
+        // Implementation for Compose version
     }
 
-    internal inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
-        private val mFragmentList: MutableList<Fragment> = ArrayList()
-        private val mFragmentTitleList: MutableList<Int> = ArrayList()
-        private val mTabsMapping: MutableList<Int> = ArrayList()
-
-        override fun createFragment(position: Int): Fragment {
-            return mFragmentList[position]
-        }
-
-        override fun getItemCount(): Int {
-            return mFragmentList.size
-        }
-
-        fun addFragment(fragment: Fragment, title: Int, tabId: Int) {
-            mFragmentList.add(fragment)
-            mFragmentTitleList.add(title)
-            mTabsMapping.add(tabId)
-        }
-
-        fun getTitleRes(position: Int): Int {
-            return mFragmentTitleList[position]
-        }
-
-        fun getPositionForTabId(tabId: Int): Int {
-            return mTabsMapping.indexOf(tabId)
+    fun openFilterTab() {
+        val filterIndex = activeTabsList.indexOfFirst { it.id == IDX_FILTER }
+        if (filterIndex != -1) {
+            viewLifecycleOwner.lifecycleScope.launch {
+                pagerStateRef?.scrollToPage(filterIndex)
+            }
         }
     }
 
     companion object {
         private const val IDX_LOCAL = 0
         private const val IDX_TOP_CLICK = 1
-        private const val IDX_TOP_VOTE = 2
-        private const val IDX_CHANGED_LATELY = 3
         private const val IDX_CURRENTLY_HEARD = 4
-        private const val IDX_TAGS = 5
         private const val IDX_COUNTRIES = 6
-        private const val IDX_LANGUAGES = 7
         private const val IDX_SEARCH = 8
         private const val IDX_FILTER = 9
     }

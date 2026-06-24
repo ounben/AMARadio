@@ -166,11 +166,11 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             smallPlayerFragment = FragmentPlayerSmall()
             fullPlayerFragment = FragmentPlayerFull()
 
-            val fragmentTransaction = mFragmentManager.beginTransaction()
-            fragmentTransaction.hide(fullPlayerFragment!!)
-            fragmentTransaction.replace(R.id.fragment_player_small, smallPlayerFragment!!)
-            fragmentTransaction.replace(R.id.fragment_player_full, fullPlayerFragment!!)
-            fragmentTransaction.commitAllowingStateLoss()
+            mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_player_small, smallPlayerFragment!!)
+                .replace(R.id.fragment_player_full, fullPlayerFragment!!)
+                .hide(fullPlayerFragment!!)
+                .commitAllowingStateLoss()
         }
 
         smallPlayerFragment?.setCallback { toggleBottomSheetState() }
@@ -384,8 +384,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 }
                 if (!isFinishing && (station != null)) {
                     Utils.showPlaySelection(this@ActivityMain, station, supportFragmentManager)
-                    val currentFragment = mFragmentManager.fragments.lastOrNull()
-                    if (currentFragment is FragmentHistory) currentFragment.refreshListGui()
                 }
             }
         } else {

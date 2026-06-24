@@ -523,37 +523,4 @@ object Utils {
         
         return builder.build()
     }
-
-    @JvmStatic
-    fun setupStationRecyclerView(context: Context, rv: RecyclerView, adapter: RecyclerView.Adapter<*>) {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
-        
-        while (rv.itemDecorationCount > 0) {
-            rv.removeItemDecorationAt(0)
-        }
-
-        if (isGrid) {
-            val columnCount = com.ounben.amaradio.utils.UiScaler.getGridColumnCount(context)
-            rv.layoutManager = androidx.recyclerview.widget.GridLayoutManager(context, columnCount)
-        } else {
-            val llm = androidx.recyclerview.widget.LinearLayoutManager(context)
-            rv.layoutManager = llm
-            val dividerItemDecoration = androidx.recyclerview.widget.DividerItemDecoration(context, llm.orientation)
-            rv.addItemDecoration(dividerItemDecoration)
-        }
-        rv.adapter = adapter
-    }
-
-    @JvmStatic
-    fun createStationAdapter(activity: androidx.fragment.app.FragmentActivity, filterType: com.ounben.amaradio.station.StationsFilter.FilterType): com.ounben.amaradio.station.ItemAdapterStation {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(activity)
-        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
-        
-        return if (isGrid) {
-            com.ounben.amaradio.station.ItemAdapterIconOnlyStation(activity, R.layout.list_item_icon_only_station, filterType)
-        } else {
-            com.ounben.amaradio.station.ItemAdapterStation(activity, R.layout.list_item_station, filterType)
-        }
-    }
 }

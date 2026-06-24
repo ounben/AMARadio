@@ -1,0 +1,97 @@
+package com.ounben.amaradio.ui
+
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
+import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.Utils
+import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.station.StationsFilter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import androidx.preference.PreferenceManager
+
+class StationsViewModel(application: Application) : AndroidViewModel(application) {
+
+    data class StationsUiState(
+        val stations: List<DataRadioStation> = emptyList(),
+        val filteredStations: List<DataRadioStation> = emptyList(),
+        val isLoading: Boolean = false,
+        val error: String? = null,
+        val isGrid: Boolean = false
+    )
+
+    private val _uiState = MutableStateFlow(StationsUiState())
+    val uiState: StateFlow<StationsUiState> = _uiState.asStateFlow()
+
+    private val app = application as AMARadioApp
+    private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
+    private var currentUrl: String? = null
+
+    init {
+        _uiState.update { it.copy(isGrid = sharedPref.getBoolean("grid_view_enabled", false)) }
+    }
+
+    fun loadStations(url: String, forceUpdate: Boolean = false) {
+        if (currentUrl == url && !forceUpdate && _uiState.value.stations.isNotEmpty()) return
+        currentUrl = url
+
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+            
+            val showBroken = sharedPref.getBoolean("show_broken", false)
+            val params = HashMap<String, String>()
+            params["hidebroken"] = (!showBroken).toString()
+
+            val result = withContext(Dispatchers.IO) {
+                Utils.downloadFeedRelative(app.httpClient, app, url, forceUpdate, params)
+            }
+
+            if (result != null) {
+                val stations = DataRadioStation.DecodeJson(result) ?: emptyList()
+                val filtered = stations.filter { showBroken || it.Working }
+                _uiState.update { it.copy(stations = filtered, filteredStations = filtered, isLoading = false) }
+            } else {
+                _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
+            }
+        }
+    }
+
+    fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+        val url = when (searchStyle) {
+            StationsFilter.SearchStyle.ByName -> "json/stations/byname/$query"
+            StationsFilter.SearchStyle.ByTagExact -> "json/stations/bytagexact/$query"
+            StationsFilter.SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$query"
+            StationsFilter.SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$query"
+            else -> "json/stations/byname/$query"
+        }
+        loadStations(url, forceUpdate = true)
+    }
+
+    fun filter(query: String) {
+        val stations = _uiState.value.stations
+        if (query.isEmpty()) {
+            _uiState.update { it.copy(filteredStations = stations) }
+            return
+        }
+
+        viewModelScope.launch(Dispatchers.Default) {
+            val filtered = stations.filter { 
+                it.Name.contains(query, ignoreCase = true) || 
+                it.TagsAll.contains(query, ignoreCase = true)
+            }
+            _uiState.update { it.copy(filteredStations = filtered) }
+        }
+    }
+
+    fun toggleViewMode() {
+        val newMode = !_uiState.value.isGrid
+        sharedPref.edit().putBoolean("grid_view_enabled", newMode).apply()
+        _uiState.update { it.copy(isGrid = newMode) }
+    }
+}
