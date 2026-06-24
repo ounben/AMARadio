@@ -117,8 +117,12 @@ class FragmentPlayerFull : Fragment() {
         recyclerViewHistory.addItemDecoration(dividerItemDecoration)
 
         trackHistoryViewModel = ViewModelProvider(this).get(TrackHistoryViewModel::class.java)
-        trackHistoryViewModel.allHistoryPaged.observe(viewLifecycleOwner) { songHistoryEntries ->
-            trackHistoryAdapter.submitList(songHistoryEntries)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                trackHistoryViewModel.allHistoryPaged.collect { songHistoryEntries ->
+                    trackHistoryAdapter.submitData(songHistoryEntries)
+                }
+            }
         }
 
         recyclerViewHistory.viewTreeObserver.let {

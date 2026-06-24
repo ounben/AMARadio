@@ -1,7 +1,6 @@
 package com.ounben.amaradio.history
 
-import androidx.lifecycle.LiveData
-import androidx.paging.DataSource
+import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
@@ -17,10 +16,10 @@ interface TrackHistoryDao {
     fun update(historyEntry: TrackHistoryEntry)
 
     @Query("SELECT * from track_history ORDER BY uid DESC")
-    fun getAllHistory(): LiveData<List<TrackHistoryEntry>>
+    fun getAllHistory(): List<TrackHistoryEntry>
 
     @Query("SELECT * FROM track_history ORDER BY uid DESC")
-    fun getAllHistoryPositional(): DataSource.Factory<Int, TrackHistoryEntry>
+    fun getAllHistoryPaged(): PagingSource<Int, TrackHistoryEntry>
 
     @Query("SELECT * FROM track_history ORDER BY uid DESC LIMIT 1")
     fun getLastInsertedHistoryItem(): TrackHistoryEntry?

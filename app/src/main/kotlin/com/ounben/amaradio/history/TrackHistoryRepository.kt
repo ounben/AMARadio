@@ -1,10 +1,11 @@
 package com.ounben.amaradio.history
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
 import com.ounben.amaradio.database.AMARadioDatabase
+import kotlinx.coroutines.flow.Flow
 import java.util.Date
 import java.util.concurrent.Executor
 
@@ -15,7 +16,7 @@ class TrackHistoryRepository(application: Application) {
 
     private val dao: TrackHistoryDao
     private val queryExecutor: Executor
-    val allHistoryPaged: LiveData<PagedList<TrackHistoryEntry>>
+    val allHistoryPagedFlow: Flow<PagingData<TrackHistoryEntry>>
 
     private var insertsToTruncateLeft = 0
 
@@ -23,13 +24,13 @@ class TrackHistoryRepository(application: Application) {
         val db = AMARadioDatabase.getDatabase(application)
         dao = db.songHistoryDao()
         queryExecutor = db.databaseExecutor
-        allHistoryPaged = LivePagedListBuilder(
-            dao.getAllHistoryPositional(),
-            PagedList.Config.Builder()
-                .setPageSize(HISTORY_PAGE_SIZE)
-                .setEnablePlaceholders(true)
-                .build()
-        ).build()
+        allHistoryPagedFlow = Pager(
+            config = PagingConfig(
+                pageSize = HISTORY_PAGE_SIZE,
+                enablePlaceholders = true
+            ),
+            pagingSourceFactory = { dao.getAllHistoryPaged() }
+        ).flow
     }
 
     fun insert(historyEntry: TrackHistoryEntry) {

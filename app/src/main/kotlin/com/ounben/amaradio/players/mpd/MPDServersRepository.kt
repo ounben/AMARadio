@@ -2,9 +2,10 @@ package com.ounben.amaradio.players.mpd
 
 import android.content.Context
 import androidx.core.content.edit
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 
 /**
@@ -15,7 +16,10 @@ import kotlinx.serialization.json.Json
 class MPDServersRepository(private val context: Context) {
     private val jsonConfig = Json { ignoreUnknownKeys = true }
     private var servers: MutableList<MPDServerData> = getMPDServers(context)
-    private val serversLiveData = MutableLiveData<List<MPDServerData>>()
+    
+    private val _serversFlow = MutableStateFlow<List<MPDServerData>>(emptyList())
+    val allServersFlow: StateFlow<List<MPDServerData>> = _serversFlow.asStateFlow()
+
     private var lastServerId = -1
 
     init {
@@ -24,21 +28,18 @@ class MPDServersRepository(private val context: Context) {
                 lastServerId = server.id
             }
         }
-        serversLiveData.value = servers
+        _serversFlow.value = servers
     }
-
-    val allServers: LiveData<List<MPDServerData>>
-        get() = serversLiveData
 
     fun addServer(mpdServerData: MPDServerData) {
         mpdServerData.id = ++lastServerId
         servers.add(mpdServerData)
         saveMPDServers(servers, context)
-        serversLiveData.postValue(servers)
+        _serversFlow.value = ArrayList(servers)
     }
 
     val isEmpty: Boolean
-        get() = serversLiveData.value?.isEmpty() ?: true
+        get() = allServersFlow.value.isEmpty()
 
     fun removeServer(mpdServerData: MPDServerData) {
         var changed = false
@@ -52,7 +53,7 @@ class MPDServersRepository(private val context: Context) {
         }
         if (changed) {
             saveMPDServers(servers, context)
-            serversLiveData.postValue(servers)
+            _serversFlow.value = ArrayList(servers)
         }
     }
 
@@ -60,7 +61,7 @@ class MPDServersRepository(private val context: Context) {
         for (serverData in servers) {
             serverData.connected = false
         }
-        serversLiveData.postValue(serversLiveData.value)
+        _serversFlow.value = ArrayList(servers)
     }
 
     fun updatePersistentData(mpdServerData: MPDServerData) {
@@ -75,7 +76,7 @@ class MPDServersRepository(private val context: Context) {
         }
         if (changed) {
             saveMPDServers(servers, context)
-            serversLiveData.postValue(serversLiveData.value)
+            _serversFlow.value = ArrayList(servers)
         }
     }
 
@@ -90,7 +91,7 @@ class MPDServersRepository(private val context: Context) {
             }
         }
         if (changed) {
-            serversLiveData.postValue(serversLiveData.value)
+            _serversFlow.value = ArrayList(servers)
         }
     }
 

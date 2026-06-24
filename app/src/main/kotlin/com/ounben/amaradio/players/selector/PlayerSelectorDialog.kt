@@ -9,7 +9,6 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
@@ -82,14 +81,19 @@ class PlayerSelectorDialog() : BottomSheetDialogFragment() {
             updateEnableMpdButton()
         }
         btnAddMPDServer?.setOnClickListener { editOrAddServer(null) }
-        val servers: LiveData<List<MPDServerData>> = serversRepository.allServers
-        servers.observe(viewLifecycleOwner) { mpdServers -> playerSelectorAdapter?.setEntries(mpdServers) }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                AppEventManager.events.collect { intent ->
-                    if (PlayerService.PLAYER_SERVICE_STATE_CHANGE == intent.action) {
-                        playerSelectorAdapter?.notifyAMARadioPlaybackStateChanged()
+                launch {
+                    serversRepository.allServersFlow.collect { mpdServers ->
+                        playerSelectorAdapter?.setEntries(mpdServers)
+                    }
+                }
+                launch {
+                    AppEventManager.events.collect { intent ->
+                        if (PlayerService.PLAYER_SERVICE_STATE_CHANGE == intent.action) {
+                            playerSelectorAdapter?.notifyAMARadioPlaybackStateChanged()
+                        }
                     }
                 }
             }

@@ -10,15 +10,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.FragmentActivity
-import androidx.paging.PagedList
-import androidx.paging.PagedListAdapter
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.service.PlayerServiceUtil
 
-class TrackHistoryAdapter(private val activity: FragmentActivity) : PagedListAdapter<TrackHistoryEntry, TrackHistoryAdapter.TrackHistoryItemViewHolder>(DIFF_CALLBACK) {
+class TrackHistoryAdapter(private val activity: FragmentActivity) : PagingDataAdapter<TrackHistoryEntry, TrackHistoryAdapter.TrackHistoryItemViewHolder>(DIFF_CALLBACK) {
     class TrackHistoryItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val rootview: View = itemView
         val imageViewStationIcon: ImageView = itemView.findViewById(R.id.imageViewStationIcon)
@@ -38,6 +37,7 @@ class TrackHistoryAdapter(private val activity: FragmentActivity) : PagedListAda
 
     override fun onBindViewHolder(holder: TrackHistoryItemViewHolder, position: Int) {
         val historyEntry = getItem(position) ?: return
+        shouldLoadIcons = Utils.shouldLoadIcons(context)
         if (shouldLoadIcons) {
             if (!TextUtils.isEmpty(historyEntry.stationIconUrl)) {
                 PlayerServiceUtil.getStationIcon(holder.imageViewStationIcon, historyEntry.stationIconUrl)
@@ -52,11 +52,6 @@ class TrackHistoryAdapter(private val activity: FragmentActivity) : PagedListAda
         holder.textViewTrackName.isSelected = true
         holder.textViewTrackArtist.isSelected = true
         holder.rootview.setOnClickListener { showTrackInfoDialog(historyEntry) }
-    }
-
-    override fun submitList(pagedList: PagedList<TrackHistoryEntry>?) {
-        shouldLoadIcons = Utils.shouldLoadIcons(context)
-        super.submitList(pagedList)
     }
 
     private fun showTrackInfoDialog(historyEntry: TrackHistoryEntry) {

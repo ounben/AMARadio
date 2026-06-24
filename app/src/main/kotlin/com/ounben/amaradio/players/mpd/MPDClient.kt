@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import androidx.lifecycle.LiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -29,7 +28,6 @@ class MPDClient(context: Context) {
     private var deadCheckJob: Job? = null
 
     val mpdServersRepository: MPDServersRepository = MPDServersRepository(context)
-    private val mpdServers: LiveData<List<MPDServerData>> = mpdServersRepository.allServers
 
     private val mainThreadHandler = Handler(Looper.getMainLooper())
     private val serverChangesQueue = ConcurrentLinkedQueue<MPDServerData>()
@@ -82,7 +80,7 @@ class MPDClient(context: Context) {
 
         cancelCheckJobs()
 
-        val servers = ArrayList(mpdServers.value ?: emptyList())
+        val servers = ArrayList(mpdServersRepository.allServersFlow.value)
         quickCheckJob = checkScope.launch {
             checkServers(servers) { QUICK_REFRESH_TIMEOUT.toInt() }
             

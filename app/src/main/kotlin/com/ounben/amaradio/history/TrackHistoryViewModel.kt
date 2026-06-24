@@ -2,9 +2,11 @@ package com.ounben.amaradio.history
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.paging.PagedList
+import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.ounben.amaradio.AMARadioApp
+import kotlinx.coroutines.flow.Flow
 
 class TrackHistoryViewModel(application: Application) : AndroidViewModel(application) {
     private val repository: TrackHistoryRepository
@@ -14,6 +16,6 @@ class TrackHistoryViewModel(application: Application) : AndroidViewModel(applica
         repository = AMARadioApp.trackHistoryRepository
     }
 
-    val allHistoryPaged: LiveData<PagedList<TrackHistoryEntry>>
-        get() = repository.allHistoryPaged
+    val allHistoryPaged: Flow<PagingData<TrackHistoryEntry>>
+        get() = repository.allHistoryPagedFlow.cachedIn(viewModelScope)
 }
