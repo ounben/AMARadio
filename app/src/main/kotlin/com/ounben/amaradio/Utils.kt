@@ -99,7 +99,7 @@ object Utils {
                 Log.d("UTIL", "File last modified : $lastModDate secs=$secs  mins=$mins hours=$hours")
             }
 
-            if (hours < 1) {
+            if (hours < 48) {
                 val aStream = FileInputStream(file)
                 val rd = BufferedReader(InputStreamReader(aStream))
                 var line: String?
