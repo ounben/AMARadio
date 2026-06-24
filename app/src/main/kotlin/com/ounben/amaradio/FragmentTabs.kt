@@ -8,16 +8,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.ounben.amaradio.interfaces.IFragmentRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.FragmentStations
 import com.ounben.amaradio.station.StationsFilter
 
-@Suppress("DEPRECATION")
 class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private val itsAdressWWWLocal = "json/stations/bycountryexact/internet?order=clickcount&reverse=true"
     private val itsAdressWWWTopClick = "json/stations/topclick/100"
@@ -32,7 +31,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private var queuedSearchStyle: StationsFilter.SearchStyle? = null
 
     private val fragments = arrayOfNulls<Fragment>(11)
-    private var viewPager: ViewPager? = null
+    private var viewPager: ViewPager2? = null
     private val addresses = arrayOf(
         itsAdressWWWLocal,
         itsAdressWWWTopClick,
@@ -71,14 +70,14 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val x = inflater.inflate(R.layout.layout_tabs, container, false)
         val tabLayout = requireActivity().findViewById<TabLayout>(R.id.tabs)
-        val vp = x.findViewById<ViewPager>(R.id.viewpager)
+        val vp = x.findViewById<ViewPager2>(R.id.viewpager)
         viewPager = vp
 
-        setupViewPager(vp)
+        setupViewPager(vp, tabLayout)
 
         val activePos = savedInstanceState?.getInt("activeTabPosition", 0) ?: 0
         vp.post {
-            if (activePos > 0 && activePos < (vp.adapter?.count ?: 0)) {
+            if (activePos > 0 && activePos < (vp.adapter?.itemCount ?: 0)) {
                 vp.currentItem = activePos
             }
             
@@ -86,12 +85,6 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 Log.d("TABS", "do queued search: $it")
                 search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, it)
                 // We keep the query for potential recreates, but clear it if search is complete
-            }
-        }
-
-        tabLayout.post {
-            if (context != null) {
-                tabLayout.setupWithViewPager(vp)
             }
         }
 
@@ -134,7 +127,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         return null
     }
 
-    private fun setupViewPager(viewPager: ViewPager) {
+    private fun setupViewPager(viewPager: ViewPager2, tabLayout: TabLayout) {
         val countryCode = getCountryCode()
         if (countryCode != null) {
             addresses[IDX_LOCAL] = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
@@ -173,15 +166,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         activeTabs.add(IDX_COUNTRIES)
         activeTabs.add(IDX_SEARCH)
 
-        val fm = childFragmentManager
-        val adapter = ViewPagerAdapter(fm)
+        val adapter = ViewPagerAdapter(this)
 
         for (tabId in activeTabs) {
-            // ViewPager uses positions 0, 1, 2... for its tags in the adapter
-            val position = adapter.count
-            val tag = "android:switcher:${R.id.viewpager}:$position"
-            val existing = fm.findFragmentByTag(tag)
-            val fragment = existing ?: newFragments[tabId]!!
+            val fragment = newFragments[tabId]!!
             fragments[tabId] = fragment
             
             val titleRes = when (tabId) {
@@ -206,16 +194,21 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         (fragments[IDX_LANGUAGES] as? FragmentCategories)?.setBaseSearchLink(StationsFilter.SearchStyle.ByLanguageExact)
 
         viewPager.adapter = adapter
+
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = resources.getString(adapter.getTitleRes(position))
+        }.attach()
     }
 
     override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("TABS", "Search = $query searchStyle=$searchStyle")
-        if (viewPager != null && viewPager?.adapter is ViewPagerAdapter) {
-            val adapter = viewPager?.adapter as ViewPagerAdapter
+        val vp = viewPager
+        if (vp != null && vp.adapter is ViewPagerAdapter) {
+            val adapter = vp.adapter as ViewPagerAdapter
             val searchPosition = adapter.getPositionForTabId(IDX_SEARCH)
 
             if (searchPosition != -1) {
-                viewPager?.currentItem = searchPosition
+                vp.currentItem = searchPosition
                 (fragments[IDX_SEARCH] as IFragmentSearchable).search(searchStyle, query)
             }
         } else {
@@ -226,12 +219,13 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     }
 
     fun openFilterTab() {
-        if (viewPager != null && viewPager?.adapter is ViewPagerAdapter) {
-            val adapter = viewPager?.adapter as ViewPagerAdapter
+        val vp = viewPager
+        if (vp != null && vp.adapter is ViewPagerAdapter) {
+            val adapter = vp.adapter as ViewPagerAdapter
             val filterPosition = adapter.getPositionForTabId(IDX_FILTER)
 
             if (filterPosition != -1) {
-                viewPager?.currentItem = filterPosition
+                vp.currentItem = filterPosition
                 // Explicitly tell the fragment to expand when the menu icon is clicked
                 (fragments[IDX_FILTER] as? FragmentFilter)?.expandFilter()
             }
@@ -245,17 +239,16 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         }
     }
 
-    @Suppress("DEPRECATION")
-    internal inner class ViewPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+    internal inner class ViewPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
         private val mFragmentList: MutableList<Fragment> = ArrayList()
         private val mFragmentTitleList: MutableList<Int> = ArrayList()
         private val mTabsMapping: MutableList<Int> = ArrayList()
 
-        override fun getItem(position: Int): Fragment {
+        override fun createFragment(position: Int): Fragment {
             return mFragmentList[position]
         }
 
-        override fun getCount(): Int {
+        override fun getItemCount(): Int {
             return mFragmentList.size
         }
 
@@ -265,8 +258,8 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             mTabsMapping.add(tabId)
         }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            return resources.getString(mFragmentTitleList[position])
+        fun getTitleRes(position: Int): Int {
+            return mFragmentTitleList[position]
         }
 
         fun getPositionForTabId(tabId: Int): Int {

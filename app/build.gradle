@@ -93,7 +93,7 @@ android {
 
 dependencies {
     implementation libs.androidx.media
-    implementation libs.androidx.viewpager
+    implementation libs.androidx.viewpager2
     implementation libs.androidx.drawerlayout
     implementation libs.androidx.swiperefreshlayout
     implementation libs.androidx.appcompat
