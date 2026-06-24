@@ -1,16 +1,18 @@
 package com.ounben.amaradio.station.live.metadata.lastfm.data
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Album {
-    @SerializedName("artist")
+    @SerialName("artist")
     var artist: String? = null
-    @SerializedName("title")
+    @SerialName("title")
     var title: String? = null
-    @SerializedName("mbid")
+    @SerialName("mbid")
     var mbid: String? = null
-    @SerializedName("url")
+    @SerialName("url")
     var url: String? = null
-    @SerializedName("image")
+    @SerialName("image")
     var image: List<Image>? = null
 }

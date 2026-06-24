@@ -108,7 +108,6 @@ dependencies {
     implementation libs.androidx.tvprovider
 
     implementation libs.okhttp
-    implementation libs.gson
     implementation libs.coil
 
     // Compose

@@ -5,8 +5,7 @@ import androidx.core.content.edit
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.preference.PreferenceManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.json.Json
 
 /**
  * MPD servers repository which is serialized into preferences.
@@ -14,6 +13,7 @@ import com.google.gson.reflect.TypeToken
  * In future should be backed up by database.
  */
 class MPDServersRepository(private val context: Context) {
+    private val jsonConfig = Json { ignoreUnknownKeys = true }
     private var servers: MutableList<MPDServerData> = getMPDServers(context)
     private val serversLiveData = MutableLiveData<List<MPDServerData>>()
     private var lastServerId = -1
@@ -94,23 +94,27 @@ class MPDServersRepository(private val context: Context) {
         }
     }
 
-    companion object {
-        private fun getMPDServers(context: Context): MutableList<MPDServerData> {
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-            val serversFromPrefs = sharedPref.getString("mpd_servers", "")
-            val gson = Gson()
-            val type = object : TypeToken<ArrayList<MPDServerData>>() {}.type
-            val serversList: MutableList<MPDServerData>? = gson.fromJson(serversFromPrefs, type)
-            return serversList ?: mutableListOf()
+    private fun getMPDServers(context: Context): MutableList<MPDServerData> {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val serversFromPrefs = sharedPref.getString("mpd_servers", "") ?: ""
+        if (serversFromPrefs.isBlank()) return mutableListOf()
+        return try {
+            jsonConfig.decodeFromString<List<MPDServerData>>(serversFromPrefs).toMutableList()
+        } catch (_: Exception) {
+            mutableListOf()
         }
+    }
 
-        private fun saveMPDServers(servers: List<MPDServerData>, context: Context) {
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-            val gson = Gson()
-            val serversJson = gson.toJson(servers)
-            sharedPref.edit {
-                putString("mpd_servers", serversJson)
-            }
+    private fun saveMPDServers(servers: List<MPDServerData>, context: Context) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val serversJson = jsonConfig.encodeToString(servers)
+        sharedPref.edit {
+            putString("mpd_servers", serversJson)
         }
+    }
+
+    companion object {
+        // Migration of methods to instance methods or separate object if needed
+        // but here they are used locally.
     }
 }

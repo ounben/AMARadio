@@ -1,10 +1,12 @@
 package com.ounben.amaradio.station.live.metadata.lastfm.data
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 class Tag {
-    @SerializedName("name")
+    @SerialName("name")
     var name: String? = null
-    @SerializedName("url")
+    @SerialName("url")
     var url: String? = null
 }

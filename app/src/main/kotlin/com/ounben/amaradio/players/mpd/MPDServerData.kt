@@ -1,5 +1,9 @@
 package com.ounben.amaradio.players.mpd
 
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+
+@Serializable
 class MPDServerData {
     enum class Status {
         Idle,
@@ -15,10 +19,10 @@ class MPDServerData {
     var password: String? = null
 
     // Runtime status
-    var isReachable: Boolean = false
-    var status: Status = Status.Idle
-    var volume: Int = 0
-    var connected: Boolean = false
+    @Transient var isReachable: Boolean = false
+    @Transient var status: Status = Status.Idle
+    @Transient var volume: Int = 0
+    @Transient var connected: Boolean = false
 
     constructor(name: String, hostname: String, port: Int, password: String?) {
         this.name = name
@@ -26,6 +30,8 @@ class MPDServerData {
         this.port = port
         this.password = password
     }
+
+    constructor() // Required for serialization if we had primary constructor with defaults
 
     constructor(other: MPDServerData) {
         this.id = other.id

@@ -1,9 +1,11 @@
 package com.ounben.amaradio.proxy
 
 import android.content.SharedPreferences
-import com.google.gson.Gson
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import java.net.Proxy
 
+@Serializable
 class ProxySettings {
     var host: String = ""
     var port: Int = 0
@@ -12,8 +14,7 @@ class ProxySettings {
     var type: Proxy.Type? = null
 
     fun toPreferences(sharedPrefEditor: SharedPreferences.Editor) {
-        val gson = Gson()
-        val jsonStr = gson.toJson(this)
+        val jsonStr = Json.encodeToString(this)
         sharedPrefEditor.putString(PREFERENCES_KEY, jsonStr)
     }
 
@@ -22,9 +23,13 @@ class ProxySettings {
 
         @JvmStatic
         fun fromPreferences(sharedPref: SharedPreferences): ProxySettings? {
-            val gson = Gson()
-            val jsonStr = sharedPref.getString(PREFERENCES_KEY, "")
-            return gson.fromJson(jsonStr, ProxySettings::class.java)
+            val jsonStr = sharedPref.getString(PREFERENCES_KEY, "") ?: ""
+            if (jsonStr.isBlank()) return null
+            return try {
+                Json.decodeFromString<ProxySettings>(jsonStr)
+            } catch (_: Exception) {
+                null
+            }
         }
     }
 }

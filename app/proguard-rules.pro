@@ -31,15 +31,9 @@
     public static final android.os.Parcelable$Creator *;
 }
 
-# Gson specific rules
--keepattributes Signature
--keepattributes *Annotation*
--keepattributes EnclosingMethod
--keep class com.google.gson.reflect.TypeToken
--keep class * extends com.google.gson.reflect.TypeToken
--keepclassmembers class * {
-  @com.google.gson.annotations.SerializedName <fields>;
-}
+# kotlinx.serialization
+-keepattributes *Annotation*, InnerClasses, EnclosingMethod, Signature
+-keep,allowobfuscation,allowoptimization class com.ounben.amaradio.station.live.metadata.lastfm.data.** { *; }
 
 # Media3 / ExoPlayer
 -keep class androidx.media3.** { *; }

@@ -1,13 +1,14 @@
 package com.ounben.amaradio
 
 import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.Locale
 
 class CountryCodeDictionary private constructor() {
+    @Serializable
     private class Country {
         val name: String? = null
         val code: String? = null
@@ -19,10 +20,9 @@ class CountryCodeDictionary private constructor() {
         val resources = context.resources
         val inputStream = resources.openRawResource(R.raw.countries)
         val reader = BufferedReader(InputStreamReader(inputStream))
+        val jsonContent = reader.use { it.readText() }
 
-        val gson = Gson()
-        val collectionType = object : TypeToken<Collection<Country>>() {}.type
-        val countries = gson.fromJson<Collection<Country>>(reader, collectionType)
+        val countries = Json.decodeFromString<List<Country>>(jsonContent)
 
         for (country in countries) {
             val code = country.code

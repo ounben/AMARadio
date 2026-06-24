@@ -1,7 +1,6 @@
 package com.ounben.amaradio.station.live.metadata.lastfm
 
 import android.text.TextUtils
-import com.google.gson.Gson
 import com.ounben.amaradio.station.live.metadata.TrackMetadata
 import com.ounben.amaradio.station.live.metadata.TrackMetadataCallback
 import com.ounben.amaradio.station.live.metadata.lastfm.data.LfmTrackMetadata
@@ -11,10 +10,11 @@ import okhttp3.Callback
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import kotlinx.serialization.json.Json
 import java.io.IOException
 
 class LfmMetadataSearcher(private val httpClient: OkHttpClient) {
-    private val gson = Gson()
+    private val jsonConfig = Json { ignoreUnknownKeys = true }
     private val rateLimiter = RateLimiter(4, 60 * 1000)
 
     private fun tryNormalizeTrack(track: String): String? {
@@ -61,7 +61,12 @@ class LfmMetadataSearcher(private val httpClient: OkHttpClient) {
 
         override fun onResponse(call: Call, response: Response) {
             try {
-                val lfmTrackMetadata = gson.fromJson(response.body.charStream(), LfmTrackMetadata::class.java)
+                val responseStr = response.body.string()
+                val lfmTrackMetadata = try {
+                    jsonConfig.decodeFromString<LfmTrackMetadata>(responseStr)
+                } catch (_: Exception) {
+                    null
+                }
                 val trackData = lfmTrackMetadata?.track
 
                 if (trackData == null) {
