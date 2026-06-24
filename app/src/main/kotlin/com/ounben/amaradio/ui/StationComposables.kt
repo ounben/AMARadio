@@ -109,7 +109,8 @@ fun StationListItem(
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = "$flagEmoji ${station.getShortDetails(context)}",
@@ -131,7 +132,7 @@ fun StationListItem(
             Icon(
                 imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                 contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
-                tint = if (isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -168,7 +169,7 @@ fun StationGridItem(
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                     contentDescription = null,
-                    tint = if (isFavorite) Color(0xFFFFD700) else MaterialTheme.colorScheme.onSurfaceVariant,
+                    tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(18.dp)
                 )
             }
@@ -180,7 +181,7 @@ fun StationGridItem(
                     .fillMaxWidth()
                     .background(Color.Black.copy(alpha = 0.6f))
                     .padding(4.dp),
-                color = Color.White,
+                color = Color.White, // Always white on black background for contrast
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
@@ -241,7 +242,8 @@ fun CategoryListItem(
             Text(
                 text = category.Label ?: category.Name,
                 style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = "${category.UsedCount} stations",
@@ -275,7 +277,8 @@ fun CategoryGridItem(
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = MaterialTheme.colorScheme.onSurface
             )
             Text(
                 text = category.UsedCount.toString(),

@@ -73,7 +73,13 @@ fun FilterScreen(
                                     }
                                 }
                             },
-                            singleLine = true
+                            singleLine = true,
+                            colors = OutlinedTextFieldDefaults.colors(
+                                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
                         )
 
                         // Country Filter
@@ -112,7 +118,8 @@ fun FilterScreen(
                             Text(
                                 text = stringResource(R.string.filter_sort_by), 
                                 modifier = Modifier.padding(end = 8.dp),
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                             SortSpinner(
                                 selectedSort = uiState.sortBy,
@@ -126,9 +133,17 @@ fun FilterScreen(
                         ) {
                             Checkbox(
                                 checked = uiState.reverse,
-                                onCheckedChange = viewModel::onReverseChange
+                                onCheckedChange = viewModel::onReverseChange,
+                                colors = CheckboxDefaults.colors(
+                                    checkedColor = MaterialTheme.colorScheme.primary,
+                                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
                             )
-                            Text(stringResource(R.string.filter_reverse), style = MaterialTheme.typography.bodyMedium)
+                            Text(
+                                text = stringResource(R.string.filter_reverse), 
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         }
 
                         Button(
@@ -136,7 +151,11 @@ fun FilterScreen(
                                 isExpanded = false
                                 viewModel.performSearch() 
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary,
+                                contentColor = MaterialTheme.colorScheme.onPrimary
+                            )
                         ) {
                             Text(stringResource(R.string.filter_apply))
                         }
@@ -147,7 +166,7 @@ fun FilterScreen(
 
         if (uiState.isSearching) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         } else if (uiState.error != null) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -200,11 +219,17 @@ fun FilterDropdown(
                 }
             },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
-            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         )
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             options.forEach { item ->
                 DropdownMenuItem(
@@ -213,7 +238,7 @@ fun FilterDropdown(
                             if (item.emoji.isNotEmpty()) {
                                 Text(item.emoji, modifier = Modifier.padding(end = 8.dp))
                             }
-                            Text(item.label) 
+                            Text(item.label, color = MaterialTheme.colorScheme.onSurface) 
                         }
                     },
                     onClick = {
@@ -258,16 +283,23 @@ fun TagAutoCompleteField(
                 }
             },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable).fillMaxWidth(),
-            singleLine = true
+            singleLine = true,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         )
         
         ExposedDropdownMenu(
             expanded = expanded && suggestions.isNotEmpty(),
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             suggestions.forEach { tag ->
                 DropdownMenuItem(
-                    text = { Text(tag) },
+                    text = { Text(tag, color = MaterialTheme.colorScheme.onSurface) },
                     onClick = {
                         onSelect(tag)
                         expanded = false
@@ -303,15 +335,21 @@ fun SortSpinner(
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable),
-            colors = ExposedDropdownMenuDefaults.outlinedTextFieldColors()
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                focusedLabelColor = MaterialTheme.colorScheme.primary,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
+            )
         )
         ExposedDropdownMenu(
             expanded = expanded,
-            onDismissRequest = { expanded = false }
+            onDismissRequest = { expanded = false },
+            containerColor = MaterialTheme.colorScheme.surface
         ) {
             options.forEach { (value, label) ->
                 DropdownMenuItem(
-                    text = { Text(label) },
+                    text = { Text(label, color = MaterialTheme.colorScheme.onSurface) },
                     onClick = {
                         onSortChange(value)
                         expanded = false
