@@ -22,7 +22,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.io.IOException
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 class AMARadioApp : Application(), ImageLoaderFactory {
 
@@ -113,9 +113,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
     fun rebuildHttpClient() {
         val builder = newHttpClient()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
-            .readTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(10.seconds)
+            .writeTimeout(10.seconds)
+            .readTimeout(10.seconds)
             .addInterceptor(UserAgentInterceptor("AMARadio/" + resources.getString(R.string.version_name)))
 
         httpClient = builder.build()

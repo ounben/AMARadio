@@ -48,6 +48,7 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
+import kotlin.time.Duration.Companion.milliseconds
 
 object Utils {
     private var loadIcons = -1
@@ -159,8 +160,8 @@ object Utils {
             
             val client = if (timeoutMs != null) {
                 httpClient.newBuilder()
-                    .connectTimeout(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
-                    .readTimeout(timeoutMs, java.util.concurrent.TimeUnit.MILLISECONDS)
+                    .connectTimeout(timeoutMs.milliseconds)
+                    .readTimeout(timeoutMs.milliseconds)
                     .build()
             } else {
                 httpClient

@@ -13,7 +13,7 @@ import com.ounben.amaradio.players.exoplayer.ExoPlayerWrapper
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener {
@@ -63,8 +63,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         val readTimeout = prefs.getInt("stream_read_timeout", 10)
         val AMARadioApp = mainContext.applicationContext as AMARadioApp
         val customizedHttpClient = AMARadioApp.newHttpClient()
-            .connectTimeout(connectTimeout.toLong(), TimeUnit.SECONDS)
-            .readTimeout(readTimeout.toLong(), TimeUnit.SECONDS)
+            .connectTimeout(connectTimeout.seconds)
+            .readTimeout(readTimeout.seconds)
             .build()
         playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext) }
     }

@@ -61,7 +61,7 @@ class LfmMetadataSearcher(private val httpClient: OkHttpClient) {
 
         override fun onResponse(call: Call, response: Response) {
             try {
-                val lfmTrackMetadata = gson.fromJson(response.body?.charStream(), LfmTrackMetadata::class.java)
+                val lfmTrackMetadata = gson.fromJson(response.body.charStream(), LfmTrackMetadata::class.java)
                 val trackData = lfmTrackMetadata?.track
 
                 if (trackData == null) {

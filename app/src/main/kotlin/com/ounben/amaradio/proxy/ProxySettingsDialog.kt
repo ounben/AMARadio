@@ -23,7 +23,7 @@ import okhttp3.Request
 import java.io.IOException
 import java.net.Proxy
 import java.util.Locale
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 class ProxySettingsDialog : DialogFragment() {
 
@@ -114,9 +114,9 @@ class ProxySettingsDialog : DialogFragment() {
         proxyTestJob = lifecycleScope.launch {
             val result = withContext(Dispatchers.IO) {
                 val builder = AMARadioApp.newHttpClientWithoutProxy()
-                    .connectTimeout(10, TimeUnit.SECONDS)
-                    .writeTimeout(10, TimeUnit.SECONDS)
-                    .readTimeout(10, TimeUnit.SECONDS)
+                    .connectTimeout(10.seconds)
+                    .writeTimeout(10.seconds)
+                    .readTimeout(10.seconds)
 
                 if (!Utils.setOkHttpProxy(builder, proxySettings)) {
                     connectionInvalidInputStr
