@@ -39,7 +39,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         val countries: List<CategoryItem> = emptyList(),
         val languages: List<CategoryItem> = emptyList(),
         val suggestedTags: List<String> = emptyList(),
-        val error: String? = null
+        val error: String? = null,
+        val isGrid: Boolean = false
     )
 
     data class CategoryItem(val code: String, val label: String, val emoji: String = "")
@@ -55,9 +56,15 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     init {
         loadSavedFilters()
         fetchMetadata()
+        refreshGridMode()
         if (hasAnyFilter()) {
             performSearch()
         }
+    }
+
+    fun refreshGridMode() {
+        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
+        _uiState.update { it.copy(isGrid = isGrid) }
     }
 
     private fun loadSavedFilters() {

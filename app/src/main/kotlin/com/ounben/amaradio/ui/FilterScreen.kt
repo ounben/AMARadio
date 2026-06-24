@@ -156,7 +156,7 @@ fun FilterScreen(
         } else {
             StationList(
                 stations = uiState.stations,
-                isGrid = false,
+                isGrid = uiState.isGrid,
                 onStationClick = onStationClick,
                 onFavoriteClick = onFavoriteClick,
                 isFavorite = isFavorite,

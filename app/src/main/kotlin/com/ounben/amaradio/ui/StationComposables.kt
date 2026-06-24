@@ -1,5 +1,6 @@
 package com.ounben.amaradio.ui
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -22,6 +23,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
@@ -40,35 +42,37 @@ fun StationList(
     isFavorite: (String) -> Boolean,
     modifier: Modifier = Modifier
 ) {
-    if (isGrid) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 120.dp),
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(stations, key = { it.StationUuid }) { station ->
-                StationGridItem(
-                    station = station,
-                    isFavorite = isFavorite(station.StationUuid),
-                    onClick = { onStationClick(station) },
-                    onFavoriteClick = { onFavoriteClick(station) }
-                )
+    Crossfade(targetState = isGrid, label = "StationListFade", modifier = modifier.fillMaxSize()) { targetIsGrid ->
+        if (targetIsGrid) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 120.dp),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(stations, key = { it.StationUuid }) { station ->
+                    StationGridItem(
+                        station = station,
+                        isFavorite = isFavorite(station.StationUuid),
+                        onClick = { onStationClick(station) },
+                        onFavoriteClick = { onFavoriteClick(station) }
+                    )
+                }
             }
-        }
-    } else {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
-            items(stations, key = { it.StationUuid }) { station ->
-                StationListItem(
-                    station = station,
-                    isFavorite = isFavorite(station.StationUuid),
-                    onClick = { onStationClick(station) },
-                    onFavoriteClick = { onFavoriteClick(station) }
-                )
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    thickness = 0.5.dp,
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
-                )
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(stations, key = { it.StationUuid }) { station ->
+                    StationListItem(
+                        station = station,
+                        isFavorite = isFavorite(station.StationUuid),
+                        onClick = { onStationClick(station) },
+                        onFavoriteClick = { onFavoriteClick(station) }
+                    )
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        thickness = 0.5.dp,
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                    )
+                }
             }
         }
     }
@@ -178,7 +182,7 @@ fun StationGridItem(
                     .padding(4.dp),
                 color = Color.White,
                 style = MaterialTheme.typography.labelSmall,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center,
+                textAlign = TextAlign.Center,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )
@@ -193,25 +197,27 @@ fun CategoryList(
     onCategoryClick: (DataCategory) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    if (isGrid) {
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = 120.dp),
-            modifier = modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp)
-        ) {
-            items(categories) { category ->
-                CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
+    Crossfade(targetState = isGrid, label = "CategoryListFade", modifier = modifier.fillMaxSize()) { targetIsGrid ->
+        if (targetIsGrid) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 120.dp),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                items(categories) { category ->
+                    CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
+                }
             }
-        }
-    } else {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
-            items(categories) { category ->
-                CategoryListItem(category = category, onClick = { onCategoryClick(category) })
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    thickness = 0.5.dp,
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
-                )
+        } else {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(categories) { category ->
+                    CategoryListItem(category = category, onClick = { onCategoryClick(category) })
+                    HorizontalDivider(
+                        modifier = Modifier.padding(horizontal = 16.dp),
+                        thickness = 0.5.dp,
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                    )
+                }
             }
         }
     }
@@ -269,7 +275,7 @@ fun CategoryGridItem(
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                textAlign = TextAlign.Center
             )
             Text(
                 text = category.UsedCount.toString(),

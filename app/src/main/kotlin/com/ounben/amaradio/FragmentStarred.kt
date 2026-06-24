@@ -18,6 +18,13 @@ import androidx.compose.runtime.*
 
 class FragmentStarred : Fragment(), IFragmentSearchable {
 
+    override fun onResume() {
+        super.onResume()
+        val app = requireActivity().application as AMARadioApp
+        val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(this, LocalStationsViewModelFactory(app, false)).get(LocalStationsViewModel::class.java)
+        viewModel.refreshGridMode()
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return ComposeView(requireContext()).apply {
             setContent {

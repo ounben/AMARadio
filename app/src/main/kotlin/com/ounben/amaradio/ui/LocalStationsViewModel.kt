@@ -29,7 +29,7 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
 
     init {
-        _uiState.update { it.copy(isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)) }
+        refreshGridMode()
         
         viewModelScope.launch {
             manager.stationsFlow.collect { stations ->
@@ -40,6 +40,11 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
                 }
             }
         }
+    }
+
+    fun refreshGridMode() {
+        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
+        _uiState.update { it.copy(isGrid = isGrid) }
     }
 
     fun search(query: String) {

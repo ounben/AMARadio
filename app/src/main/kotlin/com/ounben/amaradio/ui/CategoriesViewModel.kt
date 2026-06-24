@@ -32,7 +32,12 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     private var currentUrl: String? = null
 
     init {
-        _uiState.update { it.copy(isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)) }
+        refreshGridMode()
+    }
+
+    fun refreshGridMode() {
+        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
+        _uiState.update { it.copy(isGrid = isGrid) }
     }
 
     fun loadCategories(url: String, searchStyle: StationsFilter.SearchStyle, singleUseFilter: Boolean, forceUpdate: Boolean = false) {

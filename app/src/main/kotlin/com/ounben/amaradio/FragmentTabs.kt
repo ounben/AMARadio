@@ -223,6 +223,27 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh grid mode for all active viewmodels
+        activeTabsList.forEach { tab ->
+            when (tab.id) {
+                IDX_LOCAL, IDX_TOP_CLICK, IDX_CURRENTLY_HEARD, IDX_SEARCH -> {
+                    val vm: StationsViewModel = androidx.lifecycle.ViewModelProvider(this).get("tab_${tab.id}", StationsViewModel::class.java)
+                    vm.refreshGridMode()
+                }
+                IDX_COUNTRIES -> {
+                    val vm: CategoriesViewModel = androidx.lifecycle.ViewModelProvider(this).get("tab_${tab.id}", CategoriesViewModel::class.java)
+                    vm.refreshGridMode()
+                }
+                IDX_FILTER -> {
+                    val vm: FilterViewModel = androidx.lifecycle.ViewModelProvider(this).get(FilterViewModel::class.java)
+                    vm.refreshGridMode()
+                }
+            }
+        }
+    }
+
     private fun getCountryCode(): String? {
         val ctx = context ?: return null
         val tm = ctx.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager

@@ -34,7 +34,12 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     private var currentUrl: String? = null
 
     init {
-        _uiState.update { it.copy(isGrid = sharedPref.getBoolean("grid_view_enabled", false)) }
+        refreshGridMode()
+    }
+
+    fun refreshGridMode() {
+        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
+        _uiState.update { it.copy(isGrid = isGrid) }
     }
 
     fun loadStations(url: String, forceUpdate: Boolean = false) {
