@@ -310,15 +310,9 @@ object Utils {
         val app = context.applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val externalAvailable = sharedPref.getBoolean("play_external", false)
-        val castHandler = app.castHandler
-        val castAvailable = castHandler.isCastSessionAvailable
         val mpdAvailable = app.mpdClient.isMpdEnabled
 
-        if (castAvailable && !externalAvailable && !mpdAvailable) {
-            PlayStationTask(station, context.applicationContext,
-                playFunc = { url -> castHandler.playRemote(station.Name, url, station.IconUrl) })
-                .execute()
-        } else if (externalAvailable || mpdAvailable) {
+        if (externalAvailable || mpdAvailable) {
             showMpdServersDialog(context, fragmentManager, station)
         } else {
             playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(station) }

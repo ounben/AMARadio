@@ -64,7 +64,6 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
     private var mpdServers: List<MPDServerData>? = null
 
     init {
-        val AMARadioApp = context.applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         showPlayInExternal = sharedPref.getBoolean("play_external", false) && stationToPlay != null
         warnOnMeteredConnection = sharedPref.getBoolean(PlayerService.METERED_CONNECTION_WARNING_KEY, false)
@@ -76,10 +75,6 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
         if (showPlayInExternal) {
             fixedViewsCount++
             viewTypes.add(PlayerType.EXTERNAL.value)
-        }
-        if (AMARadioApp.castHandler.isCastSessionAvailable) {
-            fixedViewsCount++
-            viewTypes.add(PlayerType.CAST.value)
         }
     }
 
@@ -140,11 +135,6 @@ class PlayerSelectorAdapter(private val context: Context, private val stationToP
                 Utils.playAndWarnIfMetered(context.applicationContext as AMARadioApp, stationToPlay!!, PlayerType.EXTERNAL) {
                     PlayStationTask.playExternal(stationToPlay, context).execute()
                 }
-            }
-        } else if (viewType == PlayerType.CAST.value) {
-            holder.textViewDescription.setText(R.string.media_route_menu_title)
-            holder.btnPlay.setOnClickListener {
-                PlayStationTask.playCAST(stationToPlay!!, context).execute()
             }
         }
     }

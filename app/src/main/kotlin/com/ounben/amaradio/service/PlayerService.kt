@@ -41,9 +41,6 @@ import androidx.core.graphics.drawable.toDrawable
 import androidx.media3.common.MediaMetadata
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
-import androidx.mediarouter.media.MediaControlIntent
-import androidx.mediarouter.media.MediaRouteSelector
-import androidx.mediarouter.media.MediaRouter
 import androidx.preference.PreferenceManager
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -111,27 +108,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var notificationIsActive = false
     private val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE
     private lateinit var amaradioBrowser: AMARadioBrowser
-    
-    private var mediaRouter: MediaRouter? = null
-    private var lastRouteId: String? = null
-    private val mediaRouterCallback = object : MediaRouter.Callback() {
-        override fun onRouteSelected(router: MediaRouter, route: MediaRouter.RouteInfo, reason: Int) {
-            if (route.id == lastRouteId) {
-                if (Utils.isDebug) Log.d(tag, "MediaRouter: Ignore redundant route selection for ${route.id}")
-                return
-            }
-            Log.d(tag, "MediaRouter: New route selected: ${route.id}, reason: $reason")
-            lastRouteId = route.id
-        }
-
-        override fun onRouteUnselected(router: MediaRouter, route: MediaRouter.RouteInfo, reason: Int) {
-             Log.d(tag, "MediaRouter: Route unselected: ${route.id}")
-        }
-
-        override fun onRouteChanged(router: MediaRouter, route: MediaRouter.RouteInfo) {
-            if (Utils.isDebug) Log.v(tag, "MediaRouter: Route changed (status ping) for ${route.id}")
-        }
-    }
 
     private fun sendBroadCast(action: String) {
         val local = Intent()
@@ -246,12 +222,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
         radioIcon = ResourcesCompat.getDrawable(resources, R.mipmap.ic_elgato_launcher, null) as? BitmapDrawable
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
-        
-        mediaRouter = MediaRouter.getInstance(this)
-        val selector = MediaRouteSelector.Builder()
-            .addControlCategory(MediaControlIntent.CATEGORY_REMOTE_PLAYBACK)
-            .build()
-        mediaRouter?.addCallback(selector, mediaRouterCallback, MediaRouter.CALLBACK_FLAG_UNFILTERED_EVENTS)
 
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
@@ -280,7 +250,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     override fun onDestroy() {
         if (Utils.isDebug) Log.d(tag, "PlayService should be destroyed.")
         stop()
-        mediaRouter?.removeCallback(mediaRouterCallback)
         mediaSession?.run {
             release()
             mediaSession = null

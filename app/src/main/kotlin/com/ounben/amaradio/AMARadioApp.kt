@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
-import com.ounben.amaradio.cast.CastHandler
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.proxy.ProxySettings
@@ -39,9 +38,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
 
     lateinit var mpdClient: MPDClient
-        private set
-
-    lateinit var castHandler: CastHandler
         private set
 
     lateinit var trackMetadataSearcher: TrackMetadataSearcher
@@ -98,9 +94,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
         trackHistoryRepository = TrackHistoryRepository(this)
         mpdClient = MPDClient(this)
-        
-        // Initialisierung des Cast-Handlers
-        castHandler = CastHandler(this)
 
         val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
         audioThread.start()

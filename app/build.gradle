@@ -103,7 +103,6 @@ dependencies {
     implementation libs.androidx.recyclerview
     implementation libs.material
     implementation libs.androidx.preference
-    implementation libs.androidx.mediarouter
     implementation libs.androidx.constraintlayout
     implementation libs.androidx.tvprovider
 
@@ -142,10 +141,7 @@ dependencies {
 
     implementation libs.androidx.paging.runtime
 
-    // Google Cast & SafetyNet (Jetzt für alle Builds aktiv, da Flavors entfernt wurden)
-    implementation libs.play.services.cast.framework
-    // implementation 'com.google.android.gms:play-services-cast:21.2.0'
-    implementation libs.play.services.cast.framework
+    // Google Cast & SafetyNet
     implementation libs.play.services.safetynet
 
     testImplementation libs.junit

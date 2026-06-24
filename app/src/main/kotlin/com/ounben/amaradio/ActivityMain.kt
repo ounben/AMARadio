@@ -36,8 +36,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
-import com.ounben.amaradio.cast.CastAwareActivity
-import com.ounben.amaradio.cast.CastHandler
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.PlayStationTask
@@ -59,8 +57,7 @@ import java.io.OutputStreamWriter
 import java.util.Date
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener,
-    CastHandler.CastHandlerListener, CastAwareActivity {
+    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(UiScaler.wrapContext(newBase))
@@ -85,7 +82,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var menuItemListView: MenuItem? = null
     private var menuItemMpd: MenuItem? = null
     private var menuItemFilter: MenuItem? = null
-    private var menuItemCast: MenuItem? = null
     private lateinit var sharedPref: SharedPreferences
     private var selectedMenuItem = 0
     private var instanceStateWasSaved = false
@@ -248,8 +244,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-        (application as AMARadioApp).castHandler.setActivity(this)
-
         applyUiScaling()
         setupStartUpFragment()
 
@@ -377,9 +371,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         if (PlayerServiceUtil.getPlayerState() == PlayState.Idle) {
             PlayerServiceUtil.shutdownService()
         }
-        val castHandler = (application as AMARadioApp).castHandler
-        castHandler.onPause()
-        castHandler.setActivity(null)
     }
 
     private fun handleIntent(intent: Intent) {
@@ -419,9 +410,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
         setupBroadcastReceiver()
         PlayerServiceUtil.startService(applicationContext)
-        val castHandler = (application as AMARadioApp).castHandler
-        castHandler.onResume()
-        castHandler.setActivity(this)
 
         if (playerBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) {
             appBarLayout.setExpanded(false)
@@ -550,11 +538,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
         }
 
-        menuItemCast = (application as AMARadioApp).castHandler.getRouteItem(applicationContext, menu)
-        if (isSearching) {
-            menuItemCast?.isVisible = false
-        }
-        
         return true
     }
 
@@ -995,10 +978,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun selectMPDServer() {
         val app = application as AMARadioApp
         Utils.showMpdServersDialog(app, supportFragmentManager, null)
-    }
-
-    override fun invalidateOptionsMenuForCast() {
-        invalidateOptionsMenu()
     }
 
     companion object {

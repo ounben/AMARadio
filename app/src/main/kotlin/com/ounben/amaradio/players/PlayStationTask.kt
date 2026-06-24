@@ -59,13 +59,6 @@ class PlayStationTask(
                 ctx.startActivity(share)
             }, null)
         }
-
-        @JvmStatic
-        fun playCAST(stationToPlay: DataRadioStation, ctx: Context): PlayStationTask {
-            val AMARadioApp = ctx.applicationContext as AMARadioApp
-            val castHandler = AMARadioApp.castHandler
-            return PlayStationTask(stationToPlay, ctx, { url -> castHandler.playRemote(stationToPlay.Name, url, stationToPlay.IconUrl) }, null)
-        }
     }
 
     fun execute() {

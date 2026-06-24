@@ -7,6 +7,5 @@ import kotlinx.parcelize.Parcelize
 enum class PlayerType(val value: Int) : Parcelable {
     MPD_SERVER(0),
     AMARadio(1),
-    EXTERNAL(2),
-    CAST(3)
+    EXTERNAL(2)
 }
