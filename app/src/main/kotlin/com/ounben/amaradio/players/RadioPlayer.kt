@@ -13,6 +13,9 @@ import com.ounben.amaradio.players.exoplayer.ExoPlayerWrapper
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import kotlin.time.Duration.Companion.seconds
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
@@ -83,8 +86,12 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
                     stationLoadAttempts++
                     if (stationLoadAttempts < 3) {
                         Log.w(TAG, "Station load failed, retrying with server rotation (attempt $stationLoadAttempts)")
-                        RadioBrowserServerManager.rotateServer()
-                        executePlayStationTask(station)
+                        playerThreadHandler.post {
+                            CoroutineScope(Dispatchers.Main).launch {
+                                RadioBrowserServerManager.rotateServer()
+                                executePlayStationTask(station)
+                            }
+                        }
                     } else {
                         playStationTask = null
                         this@RadioPlayer.onPlayerError(R.string.error_station_load)

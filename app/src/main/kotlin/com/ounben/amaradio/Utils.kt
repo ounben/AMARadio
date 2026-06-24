@@ -36,7 +36,9 @@ import okhttp3.Credentials
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import org.json.JSONObject
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
@@ -229,8 +231,8 @@ object Utils {
         if (result != null) {
             Log.i("UTIL", result)
             return try {
-                val jsonObj = JSONObject(result)
-                jsonObj.getString("url")
+                val jsonObj = Json.parseToJsonElement(result).jsonObject
+                jsonObj["url"]?.jsonPrimitive?.content
             } catch (_: Exception) {
                 null
             }

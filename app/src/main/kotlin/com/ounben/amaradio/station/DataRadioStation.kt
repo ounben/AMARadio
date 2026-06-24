@@ -21,37 +21,41 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.parcelize.IgnoredOnParcel
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
-import org.json.JSONArray
-import org.json.JSONException
-import org.json.JSONObject
 
+@Serializable
 @Parcelize
 class DataRadioStation : Parcelable {
-    var Name: String = ""
-    var StationUuid: String = ""
-    var ChangeUuid: String = ""
-    var StreamUrl: String = ""
-    var HomePageUrl: String = ""
-    var IconUrl: String = ""
-    var Country: String = ""
-    var CountryCode: String = ""
-    var State: String = ""
-    var TagsAll: String = ""
-    var Language: String = ""
-    var ClickCount: Int = 0
-    var ClickTrend: Int = 0
-    var Votes: Int = 0
-    var RefreshRetryCount: Int = 0
-    var Bitrate: Int = 0
-    var Codec: String = ""
-    var Working: Boolean = true
-    var Hls: Boolean = false
-    var DeletedOnServer: Boolean = false
-    var playableUrl: String? = null
+    @SerialName("name") var Name: String = ""
+    @SerialName("stationuuid") var StationUuid: String = ""
+    @SerialName("changeuuid") var ChangeUuid: String = ""
+    @SerialName("url") var StreamUrl: String = ""
+    @SerialName("homepage") var HomePageUrl: String = ""
+    @SerialName("favicon") var IconUrl: String = ""
+    @SerialName("country") var Country: String = ""
+    @SerialName("countrycode") var CountryCode: String = ""
+    @SerialName("state") var State: String = ""
+    @SerialName("tags") var TagsAll: String = ""
+    @SerialName("language") var Language: String = ""
+    @SerialName("clickcount") var ClickCount: Int = 0
+    @SerialName("clicktrend") var ClickTrend: Int = 0
+    @SerialName("votes") var Votes: Int = 0
+    @SerialName("bitrate") var Bitrate: Int = 0
+    @SerialName("codec") var Codec: String = ""
+
+    @Transient var RefreshRetryCount: Int = 0
+    @Transient var Working: Boolean = true
+    @Transient var Hls: Boolean = false
+    @Transient var DeletedOnServer: Boolean = false
+    @Transient var playableUrl: String? = null
 
     @IgnoredOnParcel
-    var queue: StationSaveManager? = null
+    @Transient var queue: StationSaveManager? = null
 
     val stationId: String
         get() = StationUuid
@@ -118,32 +122,11 @@ class DataRadioStation : Parcelable {
         if (playableUrl == null) playableUrl = ""
     }
 
-    fun toJson(): JSONObject {
-        val json = JSONObject()
-        try {
-            json.put("name", Name)
-            json.put("stationuuid", StationUuid)
-            json.put("changeuuid", ChangeUuid)
-            json.put("url", StreamUrl)
-            json.put("homepage", HomePageUrl)
-            json.put("favicon", IconUrl)
-            json.put("country", Country)
-            json.put("countrycode", CountryCode)
-            json.put("state", State)
-            json.put("tags", TagsAll)
-            json.put("language", Language)
-            json.put("clickcount", ClickCount)
-            json.put("clicktrend", ClickTrend)
-            json.put("votes", Votes)
-            json.put("bitrate", Bitrate)
-            json.put("codec", Codec)
-        } catch (e: JSONException) {
-            Log.e(TAG, "toJson: ", e)
-        }
-        return json
+    fun toJsonString(): String {
+        return jsonConfig.encodeToString(this)
     }
 
-    fun refresh(httpClient: OkHttpClient, context: Context): Boolean {
+    suspend fun refresh(httpClient: OkHttpClient, context: Context): Boolean {
         RefreshRetryCount++
         val result = Utils.getStationByUuid(httpClient, context, StationUuid)
         if (result != null) {
@@ -215,29 +198,30 @@ class DataRadioStation : Parcelable {
         const val RADIO_STATION_LOCAL_INFO_CHAGED = "com.ounben.amaradio.radiostation.changed"
         const val RADIO_STATION_UUID = "UUID"
 
+        private val jsonConfig = Json { 
+            ignoreUnknownKeys = true 
+            coerceInputValues = true
+            encodeDefaults = true
+        }
+
         @JvmStatic
         fun DecodeJson(json: String?): List<DataRadioStation>? {
             if (json == null) return null
             val trimmedJson = json.trim()
             if (!trimmedJson.startsWith("[")) {
                 if (trimmedJson.startsWith("<!DOCTYPE", ignoreCase = true) || trimmedJson.startsWith("<html", ignoreCase = true)) {
-                    Log.w(TAG, "DecodeJson: Received HTML instead of JSON. Server might be redirecting to home page.")
+                    Log.w(TAG, "DecodeJson: Received HTML instead of JSON.")
                 } else {
-                    Log.e(TAG, "DecodeJson: Invalid JSON format (not an array): ${trimmedJson.take(100)}")
+                    Log.e(TAG, "DecodeJson: Invalid JSON format (not an array)")
                 }
                 return null
             }
-            val list: MutableList<DataRadioStation> = ArrayList()
-            try {
-                val array = JSONArray(trimmedJson)
-                for (i in 0 until array.length()) {
-                    val obj = array.getJSONObject(i)
-                    list.add(DecodeJsonObject(obj))
-                }
-            } catch (e: JSONException) {
+            return try {
+                jsonConfig.decodeFromString<List<DataRadioStation>>(trimmedJson)
+            } catch (e: Exception) {
                 Log.e(TAG, "DecodeJson exception: ", e)
+                null
             }
-            return list
         }
 
         @JvmStatic
@@ -245,37 +229,15 @@ class DataRadioStation : Parcelable {
             if (json == null) return null
             val trimmedJson = json.trim()
             if (!trimmedJson.startsWith("{")) {
-                Log.e(TAG, "DecodeJsonSingle: Invalid JSON format (not an object): ${trimmedJson.take(100)}")
+                Log.e(TAG, "DecodeJsonSingle: Invalid JSON format (not an object)")
                 return null
             }
-            try {
-                val obj = JSONObject(trimmedJson)
-                return DecodeJsonObject(obj)
-            } catch (e: JSONException) {
+            return try {
+                jsonConfig.decodeFromString<DataRadioStation>(trimmedJson)
+            } catch (e: Exception) {
                 Log.e(TAG, "DecodeJsonSingle error: ", e)
+                null
             }
-            return null
-        }
-
-        private fun DecodeJsonObject(obj: JSONObject): DataRadioStation {
-            val station = DataRadioStation()
-            station.Name = obj.optString("name")
-            station.StationUuid = obj.optString("stationuuid")
-            station.ChangeUuid = obj.optString("changeuuid")
-            station.StreamUrl = obj.optString("url")
-            station.HomePageUrl = obj.optString("homepage")
-            station.IconUrl = obj.optString("favicon")
-            station.Country = obj.optString("country")
-            station.CountryCode = obj.optString("countrycode")
-            station.State = obj.optString("state")
-            station.TagsAll = obj.optString("tags")
-            station.Language = obj.optString("language")
-            station.ClickCount = obj.optInt("clickcount")
-            station.ClickTrend = obj.optInt("clicktrend")
-            station.Votes = obj.optInt("votes")
-            station.Bitrate = obj.optInt("bitrate")
-            station.Codec = obj.optString("codec")
-            return station
         }
     }
 }

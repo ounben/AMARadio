@@ -3,6 +3,7 @@ package com.ounben.amaradio.players
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
@@ -82,25 +83,31 @@ class PlayStationTask(
         }
 
         job = scope.launch {
-            val result = withContext(Dispatchers.IO) {
-                if (!stationToPlay.hasValidUuid()) {
-                    if (!stationToPlay.refresh(AMARadioApp.httpClient, ctx)) {
-                        return@withContext null
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    if (!stationToPlay.hasValidUuid()) {
+                        if (!stationToPlay.refresh(AMARadioApp.httpClient, ctx)) {
+                            return@withContext null
+                        }
                     }
+                    Utils.getRealStationLink(AMARadioApp.httpClient, ctx.applicationContext, stationToPlay.StationUuid)
                 }
-                Utils.getRealStationLink(AMARadioApp.httpClient, ctx.applicationContext, stationToPlay.StationUuid)
-            }
 
-            val context = contextRef.get() ?: return@launch
-            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
+                val context = contextRef.get() ?: return@launch
 
-            if (result != null) {
-                stationToPlay.playableUrl = result
-                playFunc.play(result)
-            } else {
-                Toast.makeText(context.applicationContext, context.resources.getText(R.string.error_station_load), Toast.LENGTH_SHORT).show()
+                if (result != null) {
+                    stationToPlay.playableUrl = result
+                    playFunc.play(result)
+                } else {
+                    Toast.makeText(context.applicationContext, context.resources.getText(R.string.error_station_load), Toast.LENGTH_SHORT).show()
+                }
+                postExecuteTask?.onPostExecute(if (result != null) ExecutionResult.SUCCESS else ExecutionResult.FAILURE)
+            } catch (e: Exception) {
+                Log.e("PLAY", "Error in PlayStationTask", e)
+                postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
+            } finally {
+                AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
             }
-            postExecuteTask?.onPostExecute(if (result != null) ExecutionResult.SUCCESS else ExecutionResult.FAILURE)
         }
     }
 

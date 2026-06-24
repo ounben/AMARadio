@@ -14,7 +14,8 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONArray
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.Reader
 import java.io.Writer
@@ -32,6 +33,11 @@ open class StationSaveManager(protected val context: Context) {
     val stationsFlow: StateFlow<List<DataRadioStation>> = _stationsFlow.asStateFlow()
 
     protected val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    private val jsonConfig = Json { 
+        ignoreUnknownKeys = true 
+        encodeDefaults = true
+    }
 
     init {
         load()
@@ -229,19 +235,24 @@ open class StationSaveManager(protected val context: Context) {
     }
 
     open fun save() {
-        val arr = JSONArray()
-        for (station in listStations) {
-            arr.put(station.toJson())
+        val stationsCopy = ArrayList(listStations)
+        scope.launch {
+            val str = withContext(Dispatchers.Default) {
+                jsonConfig.encodeToString(stationsCopy)
+            }
+            
+            withContext(Dispatchers.IO) {
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+                sharedPref.edit {
+                    putString(getSaveId(), str)
+                }
+            }
+            
+            if (Utils.isDebug) {
+                Log.d("SAVE", "Saved stations for ${getSaveId()}")
+            }
+            _stationsFlow.value = stationsCopy.toList()
         }
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val str = arr.toString()
-        if (Utils.isDebug) {
-            Log.d("SAVE", "wrote: $str")
-        }
-        sharedPref.edit {
-            putString(getSaveId(), str)
-        }
-        _stationsFlow.value = listStations.toList()
     }
 
     /**
