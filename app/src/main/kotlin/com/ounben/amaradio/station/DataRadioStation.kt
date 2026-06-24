@@ -218,15 +218,24 @@ class DataRadioStation : Parcelable {
         @JvmStatic
         fun DecodeJson(json: String?): List<DataRadioStation>? {
             if (json == null) return null
+            val trimmedJson = json.trim()
+            if (!trimmedJson.startsWith("[")) {
+                if (trimmedJson.startsWith("<!DOCTYPE", ignoreCase = true) || trimmedJson.startsWith("<html", ignoreCase = true)) {
+                    Log.w(TAG, "DecodeJson: Received HTML instead of JSON. Server might be redirecting to home page.")
+                } else {
+                    Log.e(TAG, "DecodeJson: Invalid JSON format (not an array): ${trimmedJson.take(100)}")
+                }
+                return null
+            }
             val list: MutableList<DataRadioStation> = ArrayList()
             try {
-                val array = JSONArray(json)
+                val array = JSONArray(trimmedJson)
                 for (i in 0 until array.length()) {
                     val obj = array.getJSONObject(i)
                     list.add(DecodeJsonObject(obj))
                 }
             } catch (e: JSONException) {
-                Log.e(TAG, "DecodeJson: ", e)
+                Log.e(TAG, "DecodeJson exception: ", e)
             }
             return list
         }
@@ -234,11 +243,16 @@ class DataRadioStation : Parcelable {
         @JvmStatic
         fun DecodeJsonSingle(json: String?): DataRadioStation? {
             if (json == null) return null
+            val trimmedJson = json.trim()
+            if (!trimmedJson.startsWith("{")) {
+                Log.e(TAG, "DecodeJsonSingle: Invalid JSON format (not an object): ${trimmedJson.take(100)}")
+                return null
+            }
             try {
-                val obj = JSONObject(json)
+                val obj = JSONObject(trimmedJson)
                 return DecodeJsonObject(obj)
             } catch (e: JSONException) {
-                Log.e(TAG, "DecodeJsonSingle: ", e)
+                Log.e(TAG, "DecodeJsonSingle error: ", e)
             }
             return null
         }

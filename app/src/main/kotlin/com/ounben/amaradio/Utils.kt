@@ -191,6 +191,11 @@ object Utils {
 
     @JvmStatic
     fun downloadFeedRelative(httpClient: OkHttpClient, ctx: Context, theRelativeUri: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
+        if (theRelativeUri.isBlank()) {
+            Log.w("UTIL", "downloadFeedRelative: Relative URI is blank, skipping request.")
+            return null
+        }
+
         // Step 1: Try official radio-browser.info servers with strict 2s timeout
         val currentServer = RadioBrowserServerManager.getCurrentServer()
         if (currentServer != null) {

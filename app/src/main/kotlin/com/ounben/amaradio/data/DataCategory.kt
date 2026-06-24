@@ -22,18 +22,23 @@ class DataCategory : Comparable<DataCategory> {
         @JvmStatic
         fun DecodeJson(result: String?): Array<DataCategory> {
             val aList = ArrayList<DataCategory>()
-            if (result != null && TextUtils.isGraphic(result)) {
-                try {
-                    val jsonArray = JSONArray(result)
-                    for (i in 0 until jsonArray.length()) {
-                        val anObject = jsonArray.getJSONObject(i)
-                        val aData = DataCategory()
-                        aData.Name = anObject.getString("name")
-                        aData.UsedCount = anObject.getInt("stationcount")
-                        aList.add(aData)
+            if (result != null) {
+                val trimmedResult = result.trim()
+                if (trimmedResult.startsWith("[")) {
+                    try {
+                        val jsonArray = JSONArray(trimmedResult)
+                        for (i in 0 until jsonArray.length()) {
+                            val anObject = jsonArray.getJSONObject(i)
+                            val aData = DataCategory()
+                            aData.Name = anObject.getString("name")
+                            aData.UsedCount = anObject.getInt("stationcount")
+                            aList.add(aData)
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
                     }
-                } catch (e: JSONException) {
-                    e.printStackTrace()
+                } else if (trimmedResult.startsWith("<html", ignoreCase = true) || trimmedResult.startsWith("<!DOCTYPE", ignoreCase = true)) {
+                    android.util.Log.w("DataCategory", "DecodeJson: Received HTML instead of JSON.")
                 }
             }
             return aList.toTypedArray()

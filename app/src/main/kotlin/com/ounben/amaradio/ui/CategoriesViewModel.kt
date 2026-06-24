@@ -41,6 +41,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     fun loadCategories(url: String, searchStyle: StationsFilter.SearchStyle, singleUseFilter: Boolean, forceUpdate: Boolean = false) {
+        if (url.isBlank()) return
         if (currentUrl == url && !forceUpdate && _uiState.value.categories.isNotEmpty()) return
         currentUrl = url
 

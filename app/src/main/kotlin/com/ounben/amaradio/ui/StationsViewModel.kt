@@ -43,6 +43,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun loadStations(url: String, forceUpdate: Boolean = false) {
+        if (url.isBlank()) return
         if (currentUrl == url && !forceUpdate && _uiState.value.stations.isNotEmpty()) return
         currentUrl = url
 
