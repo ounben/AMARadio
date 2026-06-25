@@ -16,7 +16,10 @@ import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
+import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.HttpDataSource
+import androidx.media3.datasource.TransferListener
+import androidx.media3.datasource.okhttp.OkHttpDataSource
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
@@ -35,20 +38,22 @@ import com.ounben.amaradio.players.PlayerWrapper
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
+import java.util.concurrent.TimeUnit
 
 @UnstableApi
-class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWrapper, IcyDataSource.IcyDataSourceListener {
+class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWrapper, TransferListener {
     private var internalPlayer: ExoPlayer
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
-    private var bandwidthMeter: DefaultBandwidthMeter? = null
-    override var currentPlaybackTransferredBytes: Long = 0
-        private set
+    
+    private var bytesTransferred: Long = 0
+    override val currentPlaybackTransferredBytes: Long
+        get() = bytesTransferred
+    
     private var isHls = false
     private var isPlayingFlag = false
     private val playerThreadHandler = Handler(looper)
     private var audioSource: MediaSource? = null
-    private var fullStopTask: Runnable? = null
     private var currentVolume = 1.0f
 
     private val networkChangedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -69,7 +74,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 50_000, // Min buffer 50s
                 100_000, // Max buffer 100s
                 2_500, // Buffer for playback 2.5s
-                5_000, // Buffer for playback after rebuffer 5s
+                5_000 // Buffer for playback after rebuffer 5s
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
@@ -82,7 +87,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
             .setLoadControl(loadControl)
-            .setAudioAttributes(audioAttributes, true) // handles audio focus
+            // IMPORTANT: set handleAudioFocus to FALSE because PlayerService manages focus manually.
+            // This prevents a conflict where focus is requested twice and then revoked from the service.
+            .setAudioAttributes(audioAttributes, false) 
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         
@@ -92,29 +99,34 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context) {
         this.streamUrl = streamUrl
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
-        if (bandwidthMeter == null) {
-            bandwidthMeter = DefaultBandwidthMeter.Builder(context).build()
-        }
-        val dataSourceFactory = RadioDataSourceFactory(httpClient, bandwidthMeter!!, this, 20, 2)
+        bytesTransferred = 0
+
+        // Dedicated OkHttpClient with requested timeouts
+        val dedicatedClient = httpClient.newBuilder()
+            .connectTimeout(2, TimeUnit.SECONDS)
+            .readTimeout(5, TimeUnit.SECONDS)
+            .build()
+
+        // We don't send Icy-MetaData: 1 here to avoid interleaved stream chunks that OkHttpDataSource can't handle.
+        // ExoPlayer will still extract what it can from HTTP headers.
+        val dataSourceFactory = OkHttpDataSource.Factory(dedicatedClient)
+            .setUserAgent("AMARadio/0.99.2")
+            .setTransferListener(this)
+
         audioSource = if (isHls) {
             HlsMediaSource.Factory(dataSourceFactory).createMediaSource(MediaItem.fromUri(streamUrl.toUri()))
         } else {
             ProgressiveMediaSource.Factory(dataSourceFactory)
-                .setLoadErrorHandlingPolicy(CustomLoadErrorHandlingPolicy(context))
+                .setLoadErrorHandlingPolicy(CustomLoadErrorHandlingPolicy())
                 .createMediaSource(MediaItem.fromUri(streamUrl.toUri()))
         }
+
         playerThreadHandler.post {
-            cancelStopTask()
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(C.USAGE_MEDIA)
-                .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
-                .build()
-            internalPlayer.setAudioAttributes(audioAttributes, false)
             internalPlayer.volume = currentVolume
-            internalPlayer.setMediaSource(audioSource!!)
+            internalPlayer.setMediaSource(audioSource!!, true)
             internalPlayer.prepare()
             internalPlayer.playWhenReady = true
-            Log.d("ExoPlayerWrapper", "Player starting. Volume: ${internalPlayer.volume}, AudioAttributes usage: ${audioAttributes.usage}")
+            Log.d("ExoPlayerWrapper", "Player preparing with OkHttpDataSource. Focus handling: OFF")
         }
     }
 
@@ -145,11 +157,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
 
     override val audioSessionId: Int
-        get() {
-            val id = internalPlayer.audioSessionId
-            Log.d("ExoPlayerWrapper", "get audioSessionId: $id")
-            return id
-        }
+        get() = internalPlayer.audioSessionId
 
     override val isLocal: Boolean = true
 
@@ -160,19 +168,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
     override fun setStateListener(listener: PlayerWrapper.PlayListener?) {
         stateListener = listener
-    }
-
-    override fun onDataSourceConnected() {
-        currentPlaybackTransferredBytes = 0
-    }
-
-    override fun onDataSourceConnectionLost() {
-        Log.w("ExoPlayerWrapper", "Data source connection lost, attempting silent recovery...")
-        resumeWhenNetworkConnected()
-    }
-
-    override fun onDataSourceConnectionLostIrrecoverably() {
-        stateListener?.onPlayerError(R.string.error_stream_url)
     }
 
     private fun resumeWhenNetworkConnected() {
@@ -190,42 +185,30 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
     }
 
-    override fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo?) {
-        shoutcastInfo?.let {
-            stateListener?.onDataSourceShoutcastInfo(it, isHls)
-        }
+    // TransferListener implementation
+    override fun onTransferInitializing(source: androidx.media3.datasource.DataSource, dataSpec: DataSpec, isNetwork: Boolean) {}
+    override fun onTransferStart(source: androidx.media3.datasource.DataSource, dataSpec: DataSpec, isNetwork: Boolean) {}
+    override fun onBytesTransferred(source: androidx.media3.datasource.DataSource, dataSpec: DataSpec, isNetwork: Boolean, bytesTransferred: Int) {
+        this.bytesTransferred += bytesTransferred.toLong()
     }
+    override fun onTransferEnd(source: androidx.media3.datasource.DataSource, dataSpec: DataSpec, isNetwork: Boolean) {}
 
-    override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
-        stateListener?.onDataSourceStreamLiveInfo(streamLiveInfo)
-    }
-
-    override fun onDataSourceBytesRead(buffer: ByteArray, offset: Int, length: Int) {
-        currentPlaybackTransferredBytes += length.toLong()
-    }
-
-    private fun cancelStopTask() {
-        fullStopTask?.let {
-            playerThreadHandler.removeCallbacks(it)
-            fullStopTask = null
-        }
-    }
-
-    private class CustomLoadErrorHandlingPolicy(context: Context) : DefaultLoadErrorHandlingPolicy() {
+    private inner class CustomLoadErrorHandlingPolicy : DefaultLoadErrorHandlingPolicy() {
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         
         override fun getRetryDelayMsFor(loadErrorInfo: LoadErrorHandlingPolicy.LoadErrorInfo): Long {
-            if (loadErrorInfo.exception is HttpDataSource.InvalidResponseCodeException) {
-                val responseCode = (loadErrorInfo.exception as HttpDataSource.InvalidResponseCodeException).responseCode
-                if (responseCode in (400..499)) return C.TIME_UNSET
+            // Fail fast on network errors during opening (initial connect)
+            val exception = loadErrorInfo.exception
+            if (exception is HttpDataSource.HttpDataSourceException && 
+                exception.type == HttpDataSource.HttpDataSourceException.TYPE_OPEN) {
+                return C.TIME_UNSET 
             }
-            val timeout = try { sharedPrefs.getString("settings_retry_timeout", "20")?.toInt() ?: 20 } catch (_: Exception) { 20 }
-            if (loadErrorInfo.errorCount > timeout) return C.TIME_UNSET
+            
             val delay = try { sharedPrefs.getString("settings_retry_delay", "2")?.toInt() ?: 2 } catch (_: Exception) { 2 }
             return (delay * 1000).toLong()
         }
 
-        override fun getMinimumLoadableRetryCount(dataType: Int): Int = Int.MAX_VALUE
+        override fun getMinimumLoadableRetryCount(dataType: Int): Int = 3
     }
 
     private inner class PlayerEventListener : Player.Listener {
@@ -235,31 +218,30 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                     if (internalPlayer.playWhenReady) {
                         isPlayingFlag = true
                         stateListener?.onStateChanged(PlayState.Playing)
-                        if (Utils.isDebug) Log.d("ExoPlayerWrapper", "Playback started, volume: ${internalPlayer.volume}")
                     } else {
                         stateListener?.onStateChanged(PlayState.Paused)
                     }
                 }
                 Player.STATE_BUFFERING -> stateListener?.onStateChanged(PlayState.PrePlaying)
                 Player.STATE_IDLE -> {
-                    // Do not reset resources on IDLE to prevent hardware re-init
                     isPlayingFlag = false
                     stateListener?.onStateChanged(PlayState.Idle)
                 }
-                Player.STATE_ENDED -> {
-                    // Avoid full stop on live streams, wait for data instead
-                    if (isHls || (streamUrl != null)) {
-                        Log.d("ExoPlayerWrapper", "STATE_ENDED reached on stream, keeping resources warm.")
-                        internalPlayer.prepare() // Keep resources warm and stay in buffering
-                    } else {
-                        stop()
-                    }
-                }
+                Player.STATE_ENDED -> stop()
             }
         }
 
         override fun onPlayerError(error: PlaybackException) {
-            stateListener?.onPlayerError(R.string.error_play_stream)
+            Log.e("ExoPlayerWrapper", "onPlayerError: ${error.errorCodeName} (${error.errorCode})", error)
+            
+            val messageId = when (error.errorCode) {
+                PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_FAILED,
+                PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS,
+                PlaybackException.ERROR_CODE_IO_INVALID_HTTP_CONTENT_TYPE -> R.string.error_station_load
+                PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_TIMEOUT -> R.string.error_stream_reconnect_timeout
+                else -> R.string.error_play_stream
+            }
+            stateListener?.onPlayerError(messageId)
         }
 
         override fun onMetadata(metadata: Metadata) {
