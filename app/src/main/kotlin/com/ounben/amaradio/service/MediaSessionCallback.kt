@@ -8,13 +8,11 @@ import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.media3.session.MediaSession
 import com.ounben.amaradio.AppEventManager
-import com.ounben.amaradio.IPlayerService
 import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.ListenableFuture
 
 class MediaSessionCallback(
     private val context: Context,
-    private val playerService: IPlayerService,
     private val amaradioBrowser: AMARadioBrowser
 ) : MediaLibrarySession.Callback {
 

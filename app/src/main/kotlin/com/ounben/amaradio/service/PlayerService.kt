@@ -26,7 +26,6 @@ import android.os.Looper
 import android.os.Parcelable
 import android.os.PowerManager
 import android.os.Process
-import android.support.v4.media.session.MediaSessionCompat
 import android.util.Log
 import android.util.TypedValue
 import android.view.KeyEvent
@@ -132,8 +131,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         override fun getCurrentStation(): DataRadioStation? = this@PlayerService.itsCurrentStation
         override fun getMetadataLive(): StreamLiveInfo = this@PlayerService.liveInfo
         override fun getShoutcastInfo(): ShoutcastInfo? = this@PlayerService.streamInfo
-        @Suppress("DEPRECATION")
-        override fun getMediaSessionToken(): MediaSessionCompat.Token? = null 
         override fun getIsHls(): Boolean = this@PlayerService.isHls
         override fun isPlaying(): Boolean = this@PlayerService.radioPlayer?.isPlaying() ?: false
         override fun getPlayerState(): PlayState = this@PlayerService.radioPlayer?.playState ?: PlayState.Idle
@@ -224,7 +221,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
         val startActivityIntent = Intent(this, ActivityMain::class.java)
-        mediaSession = MediaLibrarySession.Builder(this, radioPlayer!!.player!!, MediaSessionCallback(this, itsBinder, amaradioBrowser))
+        mediaSession = MediaLibrarySession.Builder(this, radioPlayer!!.player!!, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(PendingIntent.getActivity(this, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag))
             .build()
 
