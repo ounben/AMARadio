@@ -30,8 +30,7 @@ import com.ounben.amaradio.views.TagsView
 import kotlinx.coroutines.launch
 
 class FragmentPlayerFull : Fragment() {
-    private val TAG = "FragmentPlayerFull"
-
+    
     fun interface TouchInterceptListener {
         fun requestDisallowInterceptTouchEvent(disallow: Boolean)
     }
@@ -314,8 +313,8 @@ class FragmentPlayerFull : Fragment() {
     }
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
-    private class TimedUpdateTask(obj: FragmentPlayerFull) : RefreshHandler.ObjectBoundRunnable<FragmentPlayerFull>(obj) {
-        override fun run(fragmentPlayerFull: FragmentPlayerFull) {
+    private class TimedUpdateTask(fragment: FragmentPlayerFull) : RefreshHandler.ObjectBoundRunnable<FragmentPlayerFull>(fragment) {
+        override fun run(obj: FragmentPlayerFull) {
             // No periodic updates needed for now
         }
     }

@@ -8,9 +8,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ounben.amaradio.interfaces.IFragmentSearchable
-import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.LocalStationsViewModel
 import com.ounben.amaradio.ui.StationList
@@ -55,15 +54,18 @@ class FragmentStarred : Fragment(), IFragmentSearchable {
         }
     }
 
-    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: SearchStyle, query: String) {
         val app = requireActivity().application as AMARadioApp
         val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(requireActivity(), LocalStationsViewModelFactory(app, false)).get("starred", LocalStationsViewModel::class.java)
         viewModel.search(query)
     }
 }
 
-class LocalStationsViewModelFactory(private val app: AMARadioApp, private val isHistory: Boolean) : androidx.lifecycle.ViewModelProvider.Factory {
+class LocalStationsViewModelFactory(private val app: AMARadioApp, isHistory: Boolean) : androidx.lifecycle.ViewModelProvider.Factory {
+    private val isHistoryFlag = isHistory
+    
+    @Suppress("UNCHECKED_CAST")
     override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-        return LocalStationsViewModel(app, isHistory) as T
+        return LocalStationsViewModel(app, isHistoryFlag) as T
     }
 }

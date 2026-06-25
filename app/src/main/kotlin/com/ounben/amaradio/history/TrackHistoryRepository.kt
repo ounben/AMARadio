@@ -6,7 +6,6 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.ounben.amaradio.database.AMARadioDatabase
 import kotlinx.coroutines.flow.Flow
-import java.util.Date
 import java.util.concurrent.Executor
 
 class TrackHistoryRepository(application: Application) {
@@ -43,18 +42,6 @@ class TrackHistoryRepository(application: Application) {
                 insertsToTruncateLeft--
             }
         }
-    }
-
-    fun setCurrentPlayingTrackEndTime(time: Date) {
-        queryExecutor.execute { dao.setCurrentPlayingTrackEndTime(time) }
-    }
-
-    fun setLastHistoryItemEndTimeRelative(deltaSeconds: Int) {
-        queryExecutor.execute { dao.setLastHistoryItemEndTimeRelative(deltaSeconds) }
-    }
-
-    fun setTrackArtUrl(id: Int, artUrl: String) {
-        queryExecutor.execute { dao.setTrackArtUrl(id, artUrl) }
     }
 
     fun getLastInsertedHistoryItem(callback: GetItemCallback) {

@@ -8,9 +8,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ounben.amaradio.interfaces.IFragmentSearchable
-import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.LocalStationsViewModel
 import com.ounben.amaradio.ui.StationList
@@ -55,7 +54,7 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
         }
     }
 
-    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: SearchStyle, query: String) {
         val app = requireActivity().application as AMARadioApp
         val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(requireActivity(), LocalStationsViewModelFactory(app, true)).get("history", LocalStationsViewModel::class.java)
         viewModel.search(query)

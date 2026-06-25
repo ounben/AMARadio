@@ -22,6 +22,7 @@ import androidx.preference.PreferenceManager
 import androidx.core.content.edit
 import android.content.SharedPreferences
 import java.util.Locale
+import kotlin.time.Duration.Companion.milliseconds
 
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -64,7 +65,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         loadSavedFilters()
         // Delay metadata fetching slightly to prioritize initial UI rendering
         viewModelScope.launch {
-            delay(300)
+            delay(300.milliseconds)
             fetchMetadata()
             if (hasAnyFilter()) {
                 performSearch()
@@ -76,7 +77,6 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     override fun onCleared() {
         sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
-        super.onCleared()
     }
 
     fun refreshGridMode() {
@@ -171,7 +171,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private fun searchTagsOnline(query: String) {
         tagSearchJob?.cancel()
         tagSearchJob = viewModelScope.launch {
-            delay(500)
+            delay(500.milliseconds)
             val tags = withContext(Dispatchers.IO) {
                 fetchCategoriesRaw("json/tags/$query")
             }

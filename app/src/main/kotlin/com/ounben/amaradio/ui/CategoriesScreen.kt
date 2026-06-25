@@ -6,13 +6,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.ounben.amaradio.data.DataCategory
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 
 @Composable
 fun CategoriesScreen(
     viewModel: CategoriesViewModel,
     url: String?,
-    searchStyle: StationsFilter.SearchStyle,
+    searchStyle: SearchStyle,
     singleUseFilter: Boolean,
     onCategoryClick: (DataCategory) -> Unit
 ) {

@@ -6,9 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -49,7 +48,6 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
 
     override fun onCleared() {
         sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
-        super.onCleared()
     }
 
     fun refreshGridMode() {
@@ -85,7 +83,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    fun search(searchStyle: SearchStyle, query: String) {
         if (query.isBlank()) {
             _uiState.update { it.copy(stations = emptyList(), filteredStations = emptyList()) }
             return
@@ -93,11 +91,10 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
         
         val encodedQuery = URLEncoder.encode(query, "UTF-8").replace("+", "%20")
         val url = when (searchStyle) {
-            StationsFilter.SearchStyle.ByName -> "json/stations/byname/$encodedQuery"
-            StationsFilter.SearchStyle.ByTagExact -> "json/stations/bytagexact/$encodedQuery"
-            StationsFilter.SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$encodedQuery"
-            StationsFilter.SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$encodedQuery"
-            else -> "json/stations/byname/$encodedQuery"
+            SearchStyle.ByName -> "json/stations/byname/$encodedQuery"
+            SearchStyle.ByTagExact -> "json/stations/bytagexact/$encodedQuery"
+            SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$encodedQuery"
+            SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$encodedQuery"
         }
         loadStations(url, forceUpdate = true)
     }
@@ -116,11 +113,5 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             }
             _uiState.update { it.copy(filteredStations = filtered) }
         }
-    }
-
-    fun toggleViewMode() {
-        val newMode = !_uiState.value.isGrid
-        sharedPref.edit().putBoolean("icons_only_favorites_style", newMode).apply()
-        _uiState.update { it.copy(isGrid = newMode) }
     }
 }

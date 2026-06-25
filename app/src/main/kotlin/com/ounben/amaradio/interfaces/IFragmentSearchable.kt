@@ -1,7 +1,7 @@
 package com.ounben.amaradio.interfaces
 
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 
 interface IFragmentSearchable {
-    fun search(searchStyle: StationsFilter.SearchStyle, query: String)
+    fun search(searchStyle: SearchStyle, query: String)
 }

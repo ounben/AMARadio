@@ -3,7 +3,6 @@ package com.ounben.amaradio
 import android.content.Context
 import android.os.Bundle
 import android.telephony.TelephonyManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +24,7 @@ import com.ounben.amaradio.interfaces.IFragmentRefreshable
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.ui.*
 import kotlinx.coroutines.launch
 
@@ -40,7 +39,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
     private val itsAdressWWWLanguages = "json/languages"
 
     private var queuedSearchQuery: String? = null
-    private var queuedSearchStyle: StationsFilter.SearchStyle? = null
+    private var queuedSearchStyle: SearchStyle? = null
 
     private val addresses = arrayOf(
         itsAdressWWWLocal,
@@ -67,7 +66,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         if (savedInstanceState != null) {
             val styleIdx = savedInstanceState.getInt("queuedSearchStyle", -1)
             if (styleIdx != -1) {
-                queuedSearchStyle = StationsFilter.SearchStyle.entries[styleIdx]
+                queuedSearchStyle = SearchStyle.entries[styleIdx]
             }
             queuedSearchQuery = savedInstanceState.getString("queuedSearchQuery")
         }
@@ -159,7 +158,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                     if (pagerState.currentPage != searchIndex) {
                         pagerState.scrollToPage(searchIndex)
                     }
-                    search(queuedSearchStyle ?: StationsFilter.SearchStyle.ByName, query)
+                    search(queuedSearchStyle ?: SearchStyle.ByName, query)
                     queuedSearchQuery = null
                 }
             }
@@ -221,10 +220,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 CategoriesScreen(
                     viewModel = categoriesViewModel,
                     url = addresses[tab.id],
-                    searchStyle = StationsFilter.SearchStyle.ByCountryCodeExact,
+                    searchStyle = SearchStyle.ByCountryCodeExact,
                     singleUseFilter = false,
                     onCategoryClick = { category ->
-                        (activity as? ActivityMain)?.search(StationsFilter.SearchStyle.ByCountryCodeExact, category.Name)
+                        (activity as? ActivityMain)?.search(SearchStyle.ByCountryCodeExact, category.Name)
                     }
                 )
             }
@@ -245,7 +244,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             ?: ctx.resources.configuration.locales[0].country.takeIf { it.length == 2 }
     }
 
-    override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    override fun search(searchStyle: SearchStyle, query: String) {
         val searchIndex = activeTabsList.indexOfFirst { it.id == IDX_SEARCH }
         if (searchIndex != -1) {
             val pagerState = pagerStateRef

@@ -40,8 +40,8 @@ class CountryCodeDictionary private constructor() {
 
         val locale = try {
             Locale.Builder().setRegion(code).build()
-        } catch (e: Exception) {
-            Locale("", code)
+        } catch (_: Exception) {
+            Locale.Builder().setLanguage("").setRegion(code).build()
         }
         val displayCountry = locale.getDisplayCountry(Locale.getDefault())
         val result = if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {

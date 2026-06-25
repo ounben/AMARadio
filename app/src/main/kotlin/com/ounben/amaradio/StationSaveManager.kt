@@ -19,7 +19,6 @@ import kotlinx.serialization.json.Json
 import java.io.BufferedReader
 import java.io.Reader
 import java.io.Writer
-import java.util.Collections
 
 open class StationSaveManager(protected val context: Context) {
     interface StationStatusListener {
@@ -70,34 +69,12 @@ open class StationSaveManager(protected val context: Context) {
         }
     }
 
-    fun replaceList(stationsNew: List<DataRadioStation>) {
-        for (stationNew in stationsNew) {
-            for (i in listStations.indices) {
-                if (listStations[i].StationUuid == stationNew.StationUuid) {
-                    listStations[i] = stationNew
-                    break
-                }
-            }
-        }
-        save()
-        _stationsFlow.value = listStations.toList()
-    }
-
     fun addFront(station: DataRadioStation) {
         if (station.queue == null) station.queue = this
         listStations.add(0, station)
         save()
         _stationsFlow.value = listStations.toList()
         stationStatusListener?.onStationStatusChanged(station, favourite = true)
-    }
-
-    fun addAll(stations: List<DataRadioStation>?) {
-        if (stations == null) return
-        for (station in stations) {
-            station.queue = this
-        }
-        listStations.addAll(stations)
-        _stationsFlow.value = listStations.toList()
     }
 
     val first: DataRadioStation?
@@ -130,10 +107,6 @@ open class StationSaveManager(protected val context: Context) {
             }
         }
         return listStations[listStations.size - 1]
-    }
-
-    fun moveWithoutNotify(fromPos: Int, toPos: Int) {
-        Collections.rotate(listStations.subList(minOf(fromPos, toPos), maxOf(fromPos, toPos) + 1), Integer.signum(fromPos - toPos))
     }
 
     fun remove(id: String): Int {
@@ -193,7 +166,7 @@ open class StationSaveManager(protected val context: Context) {
     }
 
     fun getList(): List<DataRadioStation> {
-        return Collections.unmodifiableList(listStations)
+        return java.util.Collections.unmodifiableList(listStations)
     }
 
     private fun refreshStationsFromServer() {

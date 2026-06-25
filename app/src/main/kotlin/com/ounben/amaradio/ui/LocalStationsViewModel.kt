@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import androidx.preference.PreferenceManager
 import android.content.SharedPreferences
 
-class LocalStationsViewModel(application: Application, private val isHistory: Boolean) : AndroidViewModel(application) {
+class LocalStationsViewModel(application: Application, isHistory: Boolean) : AndroidViewModel(application) {
 
     data class LocalStationsUiState(
         val stations: List<DataRadioStation> = emptyList(),
@@ -52,7 +52,6 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
 
     override fun onCleared() {
         sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
-        super.onCleared()
     }
 
     fun refreshGridMode() {
@@ -66,11 +65,5 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
             else state.stations.filter { it.Name.contains(query, ignoreCase = true) || it.TagsAll.contains(query, ignoreCase = true) }
             state.copy(query = query, filteredStations = filtered)
         }
-    }
-
-    fun toggleViewMode() {
-        val newMode = !_uiState.value.isGrid
-        sharedPref.edit().putBoolean("icons_only_favorites_style", newMode).apply()
-        _uiState.update { it.copy(isGrid = newMode) }
     }
 }

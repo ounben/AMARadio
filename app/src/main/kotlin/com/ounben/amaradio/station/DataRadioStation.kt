@@ -24,7 +24,6 @@ import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import okhttp3.OkHttpClient
 
@@ -48,11 +47,9 @@ class DataRadioStation : Parcelable {
     @SerialName("bitrate") var Bitrate: Int = 0
     @SerialName("codec") var Codec: String = ""
 
-    @Transient var RefreshRetryCount: Int = 0
-    @Transient var Working: Boolean = true
-    @Transient var Hls: Boolean = false
-    @Transient var DeletedOnServer: Boolean = false
-    @Transient var playableUrl: String? = null
+    @IgnoredOnParcel @Transient var RefreshRetryCount: Int = 0
+    @IgnoredOnParcel @Transient var Working: Boolean = true
+    @IgnoredOnParcel @Transient var playableUrl: String? = null
 
     @IgnoredOnParcel
     @Transient var queue: StationSaveManager? = null
@@ -61,9 +58,6 @@ class DataRadioStation : Parcelable {
     @Transient private var shortDetailsCache: String? = null
     @IgnoredOnParcel
     @Transient private var longDetailsCache: String? = null
-
-    val stationId: String
-        get() = StationUuid
 
     fun getShortDetails(context: Context): String {
         shortDetailsCache?.let { return it }
@@ -126,15 +120,6 @@ class DataRadioStation : Parcelable {
 
     fun hasIcon(): Boolean {
         return !TextUtils.isEmpty(IconUrl)
-    }
-
-    fun fixStationFields() {
-        if (TagsAll == null) TagsAll = ""
-        if (playableUrl == null) playableUrl = ""
-    }
-
-    fun toJsonString(): String {
-        return jsonConfig.encodeToString(this)
     }
 
     suspend fun refresh(httpClient: OkHttpClient, context: Context): Boolean {
@@ -231,22 +216,6 @@ class DataRadioStation : Parcelable {
                 jsonConfig.decodeFromString<List<DataRadioStation>>(trimmedJson)
             } catch (e: Exception) {
                 Log.e(TAG, "DecodeJson exception: ", e)
-                null
-            }
-        }
-
-        @JvmStatic
-        fun DecodeJsonSingle(json: String?): DataRadioStation? {
-            if (json == null) return null
-            val trimmedJson = json.trim()
-            if (!trimmedJson.startsWith("{")) {
-                Log.e(TAG, "DecodeJsonSingle: Invalid JSON format (not an object)")
-                return null
-            }
-            return try {
-                jsonConfig.decodeFromString<DataRadioStation>(trimmedJson)
-            } catch (e: Exception) {
-                Log.e(TAG, "DecodeJsonSingle error: ", e)
                 null
             }
         }

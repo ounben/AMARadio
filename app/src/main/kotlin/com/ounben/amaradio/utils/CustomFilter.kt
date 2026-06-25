@@ -13,12 +13,6 @@ abstract class CustomFilter {
     private var filterJob: Job? = null
     private val filterRequestId = AtomicInteger(0)
 
-    fun setDelayer(delayer: Delayer?) {
-        synchronized(mLock) {
-            mDelayer = delayer
-        }
-    }
-
     fun filter(constraint: CharSequence?) {
         filter(constraint, null)
     }
@@ -65,9 +59,5 @@ abstract class CustomFilter {
 
     interface Delayer {
         fun getPostingDelay(constraint: CharSequence?): Long
-    }
-
-    fun release() {
-        scope.cancel()
     }
 }

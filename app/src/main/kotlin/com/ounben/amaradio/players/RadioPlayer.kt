@@ -107,7 +107,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private fun cancelStationLinkRetrieval() {
         stationLoadAttempts = 0
         playStationTask?.let {
-            it.cancel(true)
+            it.cancel()
             playStationTask = null
         }
     }

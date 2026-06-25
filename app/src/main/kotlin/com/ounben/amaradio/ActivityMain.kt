@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -28,7 +27,6 @@ import androidx.core.view.get
 import androidx.core.view.size
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import com.google.android.material.appbar.AppBarLayout
@@ -44,7 +42,7 @@ import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.service.MediaSessionCallback
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.utils.UiScaler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -57,6 +55,7 @@ import java.io.BufferedWriter
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 import java.util.Date
+import kotlin.time.Duration.Companion.milliseconds
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
     NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
@@ -402,7 +401,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             Log.d("MAIN", "received search request for tag 1: $searchTag")
             if (searchTag != null) {
                 Log.d("MAIN", "received search request for tag 2: $searchTag")
-                search(StationsFilter.SearchStyle.ByTagExact, searchTag)
+                search(SearchStyle.ByTagExact, searchTag)
             }
         }
     }
@@ -450,7 +449,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             
             // Also ensure the query text view is centered
             val searchText = mSearchView?.findViewById<TextView>(androidx.appcompat.R.id.search_src_text)
-            searchText?.gravity = Gravity.CENTER_VERTICAL
+            searchText?.gravity = android.view.Gravity.CENTER_VERTICAL
         }
 
         if (isSearchActive) {
@@ -824,7 +823,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mNavigationView.menu.findItem(selectedMenuItem)?.isChecked = true
     }
 
-    fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+    fun search(searchStyle: SearchStyle, query: String) {
         Log.d("MAIN", "Search() searchstyle=$searchStyle query=$query")
         
         val stationsFragment = mFragmentManager.findFragmentByTag(R.id.nav_item_stations.toString())
@@ -875,7 +874,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         for (tag in tags) {
             val fragment = mFragmentManager.findFragmentByTag(tag)
             if (fragment != null && fragment.isVisible && fragment is IFragmentSearchable) {
-                fragment.search(StationsFilter.SearchStyle.ByName, query)
+                fragment.search(SearchStyle.ByName, query)
                 return
             }
         }
@@ -1003,12 +1002,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         scope.launch {
             // Wait for initial fragment to render to keep startup fast
-            delay(1500)
+            delay(1500.milliseconds)
 
             // Pre-render the full player (bottom sheet content)
             fullPlayerFragment?.init()
             Log.d(TAG, "Pre-rendered FullPlayerFragment")
-            delay(1000)
+            delay(1000.milliseconds)
 
             for (tabId in allTabs) {
                 // Skip the currently active one
@@ -1032,7 +1031,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                                 .commitAllowingStateLoss()
                             
                             Log.d(TAG, "Pre-rendered fragment for tag: $tag")
-                            delay(1000) // Delay between each pre-render to avoid CPU spikes
+                            delay(1000.milliseconds) // Delay between each pre-render to avoid CPU spikes
                         }
                     }
                 }

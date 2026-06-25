@@ -1,11 +1,15 @@
 package com.ounben.amaradio.ui
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.ounben.amaradio.*
+import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.CountryCodeDictionary
+import com.ounben.amaradio.CountryFlagsLoader
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.data.DataCategory
-import com.ounben.amaradio.station.StationsFilter
+import com.ounben.amaradio.station.SearchStyle
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +18,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
-import android.content.SharedPreferences
 
 class CategoriesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -45,7 +48,6 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
 
     override fun onCleared() {
         sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
-        super.onCleared()
     }
 
     fun refreshGridMode() {
@@ -53,7 +55,7 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
         _uiState.update { it.copy(isGrid = isGrid) }
     }
 
-    fun loadCategories(url: String, searchStyle: StationsFilter.SearchStyle, singleUseFilter: Boolean, forceUpdate: Boolean = false) {
+    fun loadCategories(url: String, searchStyle: SearchStyle, singleUseFilter: Boolean, forceUpdate: Boolean = false) {
         if (url.isBlank()) return
         if (currentUrl == url && !forceUpdate && _uiState.value.categories.isNotEmpty()) return
         currentUrl = url
@@ -76,13 +78,13 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
                     val filtered = categories.filter { 
                         !singleUseFilter || showSingleUseTags || (it.UsedCount > 1)
                     }.onEach { cat ->
-                        if (searchStyle == StationsFilter.SearchStyle.ByCountryCodeExact) {
+                        if (searchStyle == SearchStyle.ByCountryCodeExact) {
                             cat.Label = countryDict.getCountryByCode(cat.Name)
                             cat.Icon = flagsDict.getFlag(app, cat.Name)
                         }
                     }
 
-                    if (searchStyle == StationsFilter.SearchStyle.ByCountryCodeExact) {
+                    if (searchStyle == SearchStyle.ByCountryCodeExact) {
                         filtered.sorted()
                     } else {
                         filtered

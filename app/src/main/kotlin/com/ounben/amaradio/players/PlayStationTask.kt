@@ -2,9 +2,9 @@ package com.ounben.amaradio.players
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.ActivityMain
@@ -47,7 +47,7 @@ class PlayStationTask(
         fun playExternal(stationToPlay: DataRadioStation, ctx: Context): PlayStationTask {
             return PlayStationTask(stationToPlay, ctx, { url ->
                 val share = Intent(Intent.ACTION_VIEW)
-                share.setDataAndType(Uri.parse(url), "audio/*")
+                share.setDataAndType(url.toUri(), "audio/*")
                 ctx.startActivity(share)
             }, null)
         }
@@ -96,7 +96,7 @@ class PlayStationTask(
         }
     }
 
-    fun cancel(mayInterruptIfRunning: Boolean) {
+    fun cancel() {
         job?.cancel()
     }
 }
