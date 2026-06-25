@@ -12,7 +12,6 @@ import coil.ImageLoader
 import coil.ImageLoaderFactory
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.proxy.ProxySettings
-import com.ounben.amaradio.station.live.metadata.TrackMetadataSearcher
 import com.ounben.amaradio.utils.TvChannelManager
 import kotlinx.coroutines.android.asCoroutineDispatcher
 import okhttp3.ConnectionPool
@@ -34,9 +33,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
 
     lateinit var trackHistoryRepository: TrackHistoryRepository
-        private set
-
-    lateinit var trackMetadataSearcher: TrackMetadataSearcher
         private set
 
     lateinit var audioDispatcher: kotlinx.coroutines.CoroutineDispatcher
@@ -95,8 +91,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         val looper = audioThread.looper
         audioLooper = looper
         audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
-
-        trackMetadataSearcher = TrackMetadataSearcher(httpClient)
     }
 
     fun rebuildHttpClient() {

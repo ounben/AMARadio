@@ -17,22 +17,18 @@
 -keep class com.ounben.amaradio.proxy.ProxySettings { *; }
 -keep class com.ounben.amaradio.CountryCodeDictionary$Country { *; }
 
-# Keep all metadata models (used with Gson)
--keep class com.ounben.amaradio.station.live.metadata.** { *; }
-
 # Keep Room DAOs and database
 -keep class * extends androidx.room.RoomDatabase
 -keep interface com.ounben.amaradio.history.TrackHistoryDao { *; }
 -dontwarn androidx.room.paging.**
 
-# Keep Parcelable classes and creators
+# Parcelable classes and creators
 -keep class * implements android.os.Parcelable {
     public static final android.os.Parcelable$Creator *;
 }
 
 # kotlinx.serialization
 -keepattributes *Annotation*, InnerClasses, EnclosingMethod, Signature
--keep,allowobfuscation,allowoptimization class com.ounben.amaradio.station.live.metadata.lastfm.data.** { *; }
 
 # Media3 / ExoPlayer
 -keep class androidx.media3.** { *; }
