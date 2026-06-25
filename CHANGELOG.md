@@ -5,6 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.2] - 2026-06-25
+### Added
+- **Instant UI Experience**: Migrated to an Activity-scoped ViewModel architecture and a persistent `hide/show` fragment navigation. This eliminates flickering and makes switching between Stations, Favorites, and History instantaneous.
+- **Background Pre-Rendering**: Implemented a staged background initialization that "warms up" all app sections (including the full player drawer) shortly after startup, ensuring they are ready before the first click.
+- **Offline Filter Metadata**: Integrated a comprehensive local database of 11,000 genre tags, countries, and languages. The Advanced Filter now provides instant, ranked suggestions (by station count) even without an internet connection.
+
+### Changed
+- **Smart Caching**: Refactored the API cache to use MD5-hashed, server-independent storage. Repeat visits to countries or search results are now loaded instantly from disk regardless of server rotation.
+- **Performance Optimization**: 
+    - Optimized Jetpack Compose list rendering using stable UUID keys and background data processing, completely eliminating "skipped frames" during scrolling.
+    - Decoupled playback start from background storage tasks (History/Favorites) for a faster "Play" response.
+- **Data Resilience**: Implemented a "lightweight copy" mechanism for inter-process communication to prevent `TransactionTooLargeException` crashes when handling stations with extensive metadata or Chinese characters.
+
+### Fixed
+- **Favorites Management**: Fully restored and modernized the Favorites Import/Export (M3U) functionality with support for large lists and UTF-8 encoding.
+- **Stability**: 
+    - Resolved critical 60-second UI freezes (ANR) caused by redundant layout transitions in the navigation bar.
+    - Fixed a fatal build error (Lint) related to RecyclerView size constraints in the full-screen player.
+    - Unified the "Grid/List" view toggle behavior to be consistent and reactive across the entire app.
+- **Clean Code**: Removed obsolete classes (e.g., `StationsFilter`) and dozens of unused legacy functions, reducing technical debt.
+
 ## [0.99.1] - 2026-06-23
 ### Added
 - **Modern Build Configuration**: Upgraded `compileSdkVersion` and `targetSdkVersion` to **37** (Android 15) and transitioned to **Java 21** and **JVM 21** for better performance and modern API support.

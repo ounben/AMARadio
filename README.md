@@ -4,7 +4,7 @@
 
 **AMARadio** is a professional, open-source Android application designed for streaming radio stations globally. It leverages the community-driven [radio-browser.info](https://www.radio-browser.info/) database to provide access to thousands of stations.
 
-This project is a refined fork of RadioDroid, optimized for a more focused, accessible, and stable user experience. The codebase has been completely migrated to **100% Kotlin**, adopting modern Android standards and ensuring full compatibility with Android 14, 15, and 16.
+This project is a refined fork of RadioDroid, optimized for a more focused, accessible, and stable user experience. The codebase has been completely migrated to **100% Kotlin**, adopting modern Android standards and ensuring full compatibility with Android 14 and 15.
 
 ## Core Philosophy
 
@@ -14,12 +14,12 @@ Originally created as a personal project for the developer's mother to provide a
 
 ## Key Features
 
-- **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. Search results are prioritized using a weighted scoring system for maximum relevance.
+- **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
+- **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. Metadata for 11,000+ tags is cached locally for instant, offline suggestions.
 - **Dynamic UI Scaling**: Built-in accessibility settings allow for dynamic adjustment of the user interface, including font and component sizes, ranging from Compact to Extra Large.
-- **Modern Material Design**: A clean, streamlined interface with full support for Dark and Light modes, featuring the "El Gato" branding and edge-to-edge system integration.
+- **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
 - **Global Station Database**: Instant access to a massive, community-maintained directory of international radio stations.
-- **Chromecast Integration**: Seamlessly stream content to compatible TVs and smart speakers.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and metered data warnings.
+- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and MD5-hashed local caching for API responses.
 - **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
 - **Sleep Timer**: Integrated sleep timer functionality to automatically stop playback after a set duration.
@@ -42,7 +42,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.99) introduces significant stability improvements and branding updates. You can download the application from the releases page or your preferred app store.
+The latest version (v0.99.2) introduces significant performance optimizations and advanced caching. You can download the application from the releases page or your preferred app store.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -60,11 +60,12 @@ To build the project locally, ensure you have the latest version of Android Stud
 ## Technical Specification
 
 - **Language**: 100% Kotlin
-- **Architecture**: MVVM with Jetpack Components (Lifecycle, ViewModel, ViewBinding)
-- **Persistence**: Room Database for metadata, SharedPreferences for configuration
-- **Networking**: OkHttp for API communication, Coil for asynchronous image loading
+- **UI Framework**: Jetpack Compose & Material 3
+- **Architecture**: MVVM with Activity-scoped ViewModels for state persistence
+- **Persistence**: Room Database for history, SharedPreferences for configuration
+- **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
-- **Target SDK**: 36 (Android 16)
+- **Target SDK**: 37 (Android 15)
 - **Minimum SDK**: 26 (Android 8.0)
 
 ## Contributing
