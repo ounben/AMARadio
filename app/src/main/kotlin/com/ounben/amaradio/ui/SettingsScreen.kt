@@ -56,12 +56,6 @@ fun SettingsScreen(
                     icon = Icons.Default.FormatSize,
                     onValueChange = { viewModel.updateString("ui_scale_level", it) }
                 )
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_bottom_navigation),
-                    checked = uiState.bottomNavigation,
-                    icon = Icons.Default.ArrowBack,
-                    onCheckedChange = { viewModel.updateBoolean("bottom_navigation", it) }
-                )
             }
 
             // Startup Behaviour

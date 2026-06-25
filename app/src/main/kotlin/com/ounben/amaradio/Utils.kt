@@ -363,7 +363,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun bottomNavigationEnabled(context: Context): Boolean = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("bottom_navigation", true)
+    fun bottomNavigationEnabled(context: Context): Boolean = true
 
     @JvmStatic
     fun themeAttributeToColor(themeAttributeId: Int, context: Context, fallbackColorId: Int): Int {

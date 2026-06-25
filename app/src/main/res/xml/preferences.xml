@@ -27,12 +27,6 @@
         android:key="pref_category_ui"
         android:order="3">
 
-        <CheckBoxPreference
-            android:defaultValue="true"
-            android:key="bottom_navigation"
-            android:title="@string/settings_bottom_navigation"
-            android:icon="@drawable/ic_back_arrow_24dp" />
-
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/settings_startup_behaviour"

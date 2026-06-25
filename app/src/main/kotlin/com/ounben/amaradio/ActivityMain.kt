@@ -31,7 +31,6 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationBarView
-import com.google.android.material.navigation.NavigationView
 import com.google.android.material.tabs.TabLayout
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.players.PlayState
@@ -57,7 +56,7 @@ import java.util.Date
 import kotlin.time.Duration.Companion.milliseconds
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, SharedPreferences.OnSharedPreferenceChangeListener {
+    SearchView.OnQueryTextListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(UiScaler.wrapContext(newBase))
@@ -67,7 +66,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var appBarLayout: AppBarLayout
     private lateinit var tabsView: TabLayout
     private lateinit var mDrawerLayout: DrawerLayout
-    private lateinit var mNavigationView: NavigationView
     private lateinit var mBottomNavigationView: BottomNavigationView
     private lateinit var mFragmentManager: FragmentManager
     private lateinit var containerView: View
@@ -134,25 +132,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         appBarLayout = findViewById(R.id.app_bar_layout)
         tabsView = findViewById(R.id.tabs)
         mDrawerLayout = findViewById(R.id.drawerLayout)
-        mNavigationView = findViewById(R.id.my_navigation_view)
         mBottomNavigationView = findViewById(R.id.bottom_navigation)
         containerView = findViewById(R.id.containerView)
 
-        if (Utils.bottomNavigationEnabled(this)) {
-            mBottomNavigationView.setOnItemSelectedListener(this)
-            mNavigationView.visibility = View.GONE
-            mNavigationView.layoutParams.width = 0
-        } else {
-            mNavigationView.setNavigationItemSelectedListener(this)
-            mBottomNavigationView.visibility = View.GONE
-
-            val mDrawerToggle = ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name)
-            mDrawerLayout.addDrawerListener(mDrawerToggle)
-            mDrawerToggle.syncState()
-
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-            supportActionBar?.setHomeButtonEnabled(true)
-        }
+        // Force Bottom Navigation
+        mBottomNavigationView.setOnItemSelectedListener(this)
+        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         smallPlayerFragment = mFragmentManager.findFragmentById(R.id.fragment_player_small) as? FragmentPlayerSmall
         fullPlayerFragment = mFragmentManager.findFragmentById(R.id.fragment_player_full) as? FragmentPlayerFull
@@ -251,15 +236,13 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     } catch (_: NumberFormatException) {}
                 }
 
-                if (Utils.bottomNavigationEnabled(this@ActivityMain)) {
-                    if (lastExitTry != null && (Date().time < lastExitTry!!.time + 3000)) {
-                        PlayerServiceUtil.shutdownService()
-                        finish()
-                    } else {
-                        Utils.showModernToast(this@ActivityMain, R.string.alert_press_back_to_exit)
-                        lastExitTry = Date()
-                        return
-                    }
+                if (lastExitTry != null && (Date().time < lastExitTry!!.time + 3000)) {
+                    PlayerServiceUtil.shutdownService()
+                    finish()
+                } else {
+                    Utils.showModernToast(this@ActivityMain, R.string.alert_press_back_to_exit)
+                    lastExitTry = Date()
+                    return
                 }
 
                 if (backStackCount > 1) {
@@ -452,10 +435,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     override fun onOptionsItemSelected(menuItem: MenuItem): Boolean {
         when (menuItem.itemId) {
-            android.R.id.home -> {
-                mDrawerLayout.openDrawer(GravityCompat.START)
-                return true
-            }
             R.id.action_save -> { saveFavourites(); return true }
             R.id.action_load -> { loadFavourites(); return true }
             R.id.action_set_sleep_timer -> { changeTimer(); return true }
@@ -494,8 +473,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     private fun selectMenuItem(itemId: Int) {
-        val menu = if (Utils.bottomNavigationEnabled(this)) mBottomNavigationView.menu else mNavigationView.menu
-        val item = menu.findItem(itemId) ?: menu.findItem(R.id.nav_item_stations)
+        val item = mBottomNavigationView.menu.findItem(itemId) ?: mBottomNavigationView.menu.findItem(R.id.nav_item_stations)
         selectedMenuItem = item.itemId
         onNavigationItemSelectedInternal()
     }
@@ -545,8 +523,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private fun checkMenuItems() {
         val bItem = mBottomNavigationView.menu.findItem(selectedMenuItem)
         if (bItem != null && !bItem.isChecked) bItem.isChecked = true
-        val nItem = mNavigationView.menu.findItem(selectedMenuItem)
-        if (nItem != null && !nItem.isChecked) nItem.isChecked = true
     }
 
     fun search(searchStyle: SearchStyle, query: String) {
@@ -601,7 +577,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "theme_name" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
+        if (key == "theme_name" || key == UiScaler.PREF_KEY_UI_SCALE) {
             recreate()
         }
     }

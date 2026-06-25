@@ -16,7 +16,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     data class SettingsUiState(
         val themeName: String = "system",
         val uiScaleLevel: String = "standard",
-        val bottomNavigation: Boolean = true,
         val startupAction: String = "",
         val autoPlayOnStartup: Boolean = false,
         val autoOffOnStartup: Boolean = false,
@@ -60,7 +59,6 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             it.copy(
                 themeName = sharedPref.getString("theme_name", "system") ?: "system",
                 uiScaleLevel = sharedPref.getString("ui_scale_level", "standard") ?: "standard",
-                bottomNavigation = sharedPref.getBoolean("bottom_navigation", true),
                 startupAction = sharedPref.getString("startup_action", defaultStartupAction) ?: defaultStartupAction,
                 autoPlayOnStartup = sharedPref.getBoolean("auto_play_on_startup", false),
                 autoOffOnStartup = sharedPref.getBoolean("auto_off_on_startup", false),
