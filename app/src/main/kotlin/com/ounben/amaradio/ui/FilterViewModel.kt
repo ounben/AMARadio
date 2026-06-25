@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import androidx.core.content.edit
+import android.content.SharedPreferences
 import java.util.Locale
 
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
@@ -53,13 +54,29 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private var tagSearchJob: Job? = null
     private var allTags: List<String> = emptyList()
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "icons_only_favorites_style") {
+            refreshGridMode()
+        }
+    }
+
     init {
         loadSavedFilters()
-        fetchMetadata()
-        refreshGridMode()
-        if (hasAnyFilter()) {
-            performSearch()
+        // Delay metadata fetching slightly to prioritize initial UI rendering
+        viewModelScope.launch {
+            delay(300)
+            fetchMetadata()
+            if (hasAnyFilter()) {
+                performSearch()
+            }
         }
+        refreshGridMode()
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
+    }
+
+    override fun onCleared() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
+        super.onCleared()
     }
 
     fun refreshGridMode() {

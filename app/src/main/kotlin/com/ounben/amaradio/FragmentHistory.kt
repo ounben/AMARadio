@@ -21,7 +21,7 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
     override fun onResume() {
         super.onResume()
         val app = requireActivity().application as AMARadioApp
-        val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(this, LocalStationsViewModelFactory(app, true)).get(LocalStationsViewModel::class.java)
+        val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(requireActivity(), LocalStationsViewModelFactory(app, true)).get("history", LocalStationsViewModel::class.java)
         viewModel.refreshGridMode()
     }
 
@@ -31,7 +31,9 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
                 AMARadioTheme {
                     val app = requireActivity().application as AMARadioApp
                     val viewModel: LocalStationsViewModel = viewModel(
-                        factory = LocalStationsViewModelFactory(app, true)
+                        key = "history",
+                        factory = LocalStationsViewModelFactory(app, true),
+                        viewModelStoreOwner = requireActivity()
                     )
                     val uiState by viewModel.uiState.collectAsState()
                     
@@ -54,6 +56,8 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
     }
 
     override fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
-        // ViewModel search logic needs to be called here or handled via shared state
+        val app = requireActivity().application as AMARadioApp
+        val viewModel: LocalStationsViewModel = androidx.lifecycle.ViewModelProvider(requireActivity(), LocalStationsViewModelFactory(app, true)).get("history", LocalStationsViewModel::class.java)
+        viewModel.search(query)
     }
 }

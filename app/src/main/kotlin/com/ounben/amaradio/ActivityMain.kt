@@ -26,6 +26,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.get
 import androidx.core.view.size
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -49,6 +50,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedWriter
@@ -70,6 +72,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private lateinit var mNavigationView: NavigationView
     private lateinit var mBottomNavigationView: BottomNavigationView
     private lateinit var mFragmentManager: FragmentManager
+    private lateinit var containerView: View
     private lateinit var playerBottomSheet: BottomSheetBehavior<View>
     private var smallPlayerFragment: FragmentPlayerSmall? = null
     private var fullPlayerFragment: FragmentPlayerFull? = null
@@ -137,6 +140,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mDrawerLayout = findViewById(R.id.drawerLayout)
         mNavigationView = findViewById(R.id.my_navigation_view)
         mBottomNavigationView = findViewById(R.id.bottom_navigation)
+        containerView = findViewById(R.id.containerView)
 
         if (Utils.bottomNavigationEnabled(this)) {
             mBottomNavigationView.setOnItemSelectedListener(this)
@@ -215,7 +219,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     if (smallPlayerFragment?.context != null) {
                         appBarLayout.setExpanded(false)
                         smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.HEADER)
-                        mFragmentManager.findFragmentById(R.id.containerView)?.let { transaction.hide(it) }
+                        containerView.visibility = View.INVISIBLE
                     }
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     appBarLayout.setExpanded(true)
@@ -230,7 +234,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 }
 
                 if (oldState == BottomSheetBehavior.STATE_EXPANDED && newState != BottomSheetBehavior.STATE_EXPANDED) {
-                    mFragmentManager.findFragmentById(R.id.containerView)?.let { transaction.show(it) }
+                    containerView.visibility = View.VISIBLE
                 }
 
                 if (!transaction.isEmpty) {
@@ -245,6 +249,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         applyUiScaling()
         setupStartUpFragment()
+        preRenderFragments()
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(enabled = true) {
             override fun handleOnBackPressed() {
@@ -467,11 +472,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     isSearchActive = false
                     lastSearchQuery = ""
                     findViewById<View>(R.id.toolbar_title_container)?.visibility = View.VISIBLE
-                    // Switch back to search by name if we were searching something else
-                    val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
-                    if (currentFragment is IFragmentSearchable) {
-                        currentFragment.search(StationsFilter.SearchStyle.ByName, "")
-                    }
+                    
+                    // Clear search in visible fragment
+                    searchStations("")
+                    
                     invalidateOptionsMenu()
                     return true
                 }
@@ -667,7 +671,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             val app = application as AMARadioApp
                             app.historyManager.clear()
                             Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_history)
-                            recreate()
                         }
                         .setNegativeButton(getString(R.string.no), null)
                         .show()
@@ -680,7 +683,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                             val app = application as AMARadioApp
                             app.favouriteManager.clear()
                             Utils.showModernToast(this@ActivityMain, R.string.notify_deleted_favorites)
-                            recreate()
                         }
                         .setNegativeButton(getString(R.string.no), null)
                         .show()
@@ -693,12 +695,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             }
             R.id.action_list_view -> {
                 sharedPref.edit(commit = true) { putBoolean("icons_only_favorites_style", false) }
-                recreate()
+                invalidateOptionsMenu()
                 return true
             }
             R.id.action_icons_view -> {
                 sharedPref.edit(commit = true) { putBoolean("icons_only_favorites_style", true) }
-                recreate()
+                invalidateOptionsMenu()
                 return true
             }
         }
@@ -768,26 +770,46 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
         mSearchView?.clearFocus()
         mDrawerLayout.closeDrawers()
+
+        val tag = selectedMenuItem.toString()
+        val targetFragment = mFragmentManager.findFragmentByTag(tag)
         
-        var f: Fragment? = null
-        val backStackTag = selectedMenuItem.toString()
+        // Safety check: if already visible and correct, nothing to do
+        if (targetFragment?.isVisible == true && containerView.isVisible) return true
 
-        when (selectedMenuItem) {
-            R.id.nav_item_stations -> f = FragmentTabs()
-            R.id.nav_item_starred -> f = FragmentStarred()
-            R.id.nav_item_history -> f = FragmentHistory()
-            R.id.nav_item_settings -> f = FragmentSettings()
-        }
-
-        f?.let {
-            mFragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-            val fragmentTransaction = mFragmentManager.beginTransaction()
-            if (Utils.bottomNavigationEnabled(this)) {
-                fragmentTransaction.replace(R.id.containerView, it).commitAllowingStateLoss()
-            } else {
-                fragmentTransaction.replace(R.id.containerView, it).addToBackStack(backStackTag).commitAllowingStateLoss()
+        val fragmentTransaction = mFragmentManager.beginTransaction()
+        
+        // Opaque background tags to hide
+        val mainFragmentTags = listOf(
+            R.id.nav_item_stations.toString(),
+            R.id.nav_item_starred.toString(),
+            R.id.nav_item_history.toString(),
+            R.id.nav_item_settings.toString()
+        )
+        
+        // Hide EVERYTHING except player fragments
+        mFragmentManager.fragments.forEach { f ->
+            val fTag = f.tag
+            if (fTag != null && mainFragmentTags.contains(fTag) && fTag != tag) {
+                fragmentTransaction.hide(f)
             }
         }
+
+        // Show or add the target fragment
+        if (targetFragment == null) {
+            val newFragment = when (selectedMenuItem) {
+                R.id.nav_item_stations -> FragmentTabs()
+                R.id.nav_item_starred -> FragmentStarred()
+                R.id.nav_item_history -> FragmentHistory()
+                R.id.nav_item_settings -> FragmentSettings()
+                else -> FragmentTabs()
+            }
+            fragmentTransaction.add(R.id.containerView, newFragment, tag)
+        } else {
+            fragmentTransaction.show(targetFragment)
+        }
+
+        fragmentTransaction.commitAllowingStateLoss()
 
         AppEventManager.sendEvent(Intent(ACTION_HIDE_LOADING))
         invalidateOptionsMenu()
@@ -804,16 +826,18 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
         Log.d("MAIN", "Search() searchstyle=$searchStyle query=$query")
-        val currentFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
-        if (currentFragment is FragmentTabs) {
-            currentFragment.search(searchStyle, query)
+        
+        val stationsFragment = mFragmentManager.findFragmentByTag(R.id.nav_item_stations.toString())
+        
+        if (stationsFragment != null && stationsFragment.isVisible && stationsFragment is FragmentTabs) {
+            stationsFragment.search(searchStyle, query)
         } else {
             selectedMenuItem = R.id.nav_item_stations
             onNavigationItemSelectedInternal()
             // Important: we post the search to ensure the Fragment is created and attached
             val mainHandler = android.os.Handler(android.os.Looper.getMainLooper())
             mainHandler.post {
-                val newFragment = mFragmentManager.fragments.lastOrNull { it.isVisible }
+                val newFragment = mFragmentManager.findFragmentByTag(R.id.nav_item_stations.toString())
                 if (newFragment is FragmentTabs) {
                     newFragment.search(searchStyle, query)
                 }
@@ -841,12 +865,18 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     fun searchStations(query: String) {
         Log.d("MAIN", "SearchStations() $query")
-        val container = findViewById<View>(R.id.containerView)
-        // Ensure fragment is ready and search happens on main thread
-        container.post {
-            val currentFragment = supportFragmentManager.findFragmentById(R.id.containerView)
-            if (currentFragment is IFragmentSearchable) {
-                currentFragment.search(StationsFilter.SearchStyle.ByName, query)
+        
+        val tags = listOf(
+            R.id.nav_item_stations.toString(),
+            R.id.nav_item_starred.toString(),
+            R.id.nav_item_history.toString()
+        )
+
+        for (tag in tags) {
+            val fragment = mFragmentManager.findFragmentByTag(tag)
+            if (fragment != null && fragment.isVisible && fragment is IFragmentSearchable) {
+                fragment.search(StationsFilter.SearchStyle.ByName, query)
+                return
             }
         }
     }
@@ -961,6 +991,53 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         seekDialog.create().show()
+    }
+
+    private fun preRenderFragments() {
+        val allTabs = listOf(
+            R.id.nav_item_stations,
+            R.id.nav_item_starred,
+            R.id.nav_item_history,
+            R.id.nav_item_settings
+        )
+
+        scope.launch {
+            // Wait for initial fragment to render to keep startup fast
+            delay(1500)
+
+            // Pre-render the full player (bottom sheet content)
+            fullPlayerFragment?.init()
+            Log.d(TAG, "Pre-rendered FullPlayerFragment")
+            delay(1000)
+
+            for (tabId in allTabs) {
+                // Skip the currently active one
+                if (tabId == selectedMenuItem) continue
+
+                val tag = tabId.toString()
+                if (mFragmentManager.findFragmentByTag(tag) == null) {
+                    val fragment = when (tabId) {
+                        R.id.nav_item_stations -> FragmentTabs()
+                        R.id.nav_item_starred -> FragmentStarred()
+                        R.id.nav_item_history -> FragmentHistory()
+                        R.id.nav_item_settings -> FragmentSettings()
+                        else -> null
+                    }
+
+                    fragment?.let {
+                        if (!isFinishing && !isDestroyed) {
+                            mFragmentManager.beginTransaction()
+                                .add(R.id.containerView, it, tag)
+                                .hide(it)
+                                .commitAllowingStateLoss()
+                            
+                            Log.d(TAG, "Pre-rendered fragment for tag: $tag")
+                            delay(1000) // Delay between each pre-render to avoid CPU spikes
+                        }
+                    }
+                }
+            }
+        }
     }
 
     companion object {

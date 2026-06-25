@@ -57,10 +57,16 @@ class DataRadioStation : Parcelable {
     @IgnoredOnParcel
     @Transient var queue: StationSaveManager? = null
 
+    @IgnoredOnParcel
+    @Transient private var shortDetailsCache: String? = null
+    @IgnoredOnParcel
+    @Transient private var longDetailsCache: String? = null
+
     val stationId: String
         get() = StationUuid
 
     fun getShortDetails(context: Context): String {
+        shortDetailsCache?.let { return it }
         val list: MutableList<String?> = ArrayList()
         if (!TextUtils.isEmpty(Language)) {
             list.add(Language)
@@ -77,10 +83,13 @@ class DataRadioStation : Parcelable {
         if (Votes > 0) {
             list.add(context.getString(R.string.station_details_votes, Votes))
         }
-        return TextUtils.join(" | ", list)
+        val result = TextUtils.join(" | ", list)
+        shortDetailsCache = result
+        return result
     }
 
     fun getLongDetails(context: Context): String {
+        longDetailsCache?.let { return it }
         val list: MutableList<String?> = ArrayList()
         if (!TextUtils.isEmpty(Language)) {
             list.add(Language)
@@ -110,7 +119,9 @@ class DataRadioStation : Parcelable {
         if (!TextUtils.isEmpty(State)) {
             list.add(State)
         }
-        return TextUtils.join(" | ", list)
+        val result = TextUtils.join(" | ", list)
+        longDetailsCache = result
+        return result
     }
 
     fun hasIcon(): Boolean {

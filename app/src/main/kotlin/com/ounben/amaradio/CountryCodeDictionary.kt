@@ -15,6 +15,7 @@ class CountryCodeDictionary private constructor() {
     }
 
     private val codeToCountry = HashMap<String, String>()
+    private val displayCountryCache = HashMap<String, String>()
 
     fun load(context: Context) {
         val resources = context.resources
@@ -34,16 +35,23 @@ class CountryCodeDictionary private constructor() {
     }
 
     fun getCountryByCode(code: String): String? {
+        val lowerCode = code.lowercase(Locale.ENGLISH)
+        displayCountryCache[lowerCode]?.let { return it }
+
         val locale = try {
             Locale.Builder().setRegion(code).build()
         } catch (e: Exception) {
             Locale("", code)
         }
         val displayCountry = locale.getDisplayCountry(Locale.getDefault())
-        if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {
-            return displayCountry
+        val result = if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {
+            displayCountry
+        } else {
+            codeToCountry[lowerCode]
         }
-        return codeToCountry[code.lowercase(Locale.ENGLISH)]
+        
+        result?.let { displayCountryCache[lowerCode] = it }
+        return result
     }
 
     companion object {

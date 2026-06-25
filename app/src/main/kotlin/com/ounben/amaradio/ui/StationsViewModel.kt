@@ -8,6 +8,7 @@ import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationsFilter
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,6 +16,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
+import android.content.SharedPreferences
+import java.net.URLEncoder
 
 class StationsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -33,8 +36,20 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
     private var currentUrl: String? = null
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "icons_only_favorites_style") {
+            refreshGridMode()
+        }
+    }
+
     init {
         refreshGridMode()
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
+    }
+
+    override fun onCleared() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
+        super.onCleared()
     }
 
     fun refreshGridMode() {
@@ -71,12 +86,18 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun search(searchStyle: StationsFilter.SearchStyle, query: String) {
+        if (query.isBlank()) {
+            _uiState.update { it.copy(stations = emptyList(), filteredStations = emptyList()) }
+            return
+        }
+        
+        val encodedQuery = URLEncoder.encode(query, "UTF-8").replace("+", "%20")
         val url = when (searchStyle) {
-            StationsFilter.SearchStyle.ByName -> "json/stations/byname/$query"
-            StationsFilter.SearchStyle.ByTagExact -> "json/stations/bytagexact/$query"
-            StationsFilter.SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$query"
-            StationsFilter.SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$query"
-            else -> "json/stations/byname/$query"
+            StationsFilter.SearchStyle.ByName -> "json/stations/byname/$encodedQuery"
+            StationsFilter.SearchStyle.ByTagExact -> "json/stations/bytagexact/$encodedQuery"
+            StationsFilter.SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$encodedQuery"
+            StationsFilter.SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$encodedQuery"
+            else -> "json/stations/byname/$encodedQuery"
         }
         loadStations(url, forceUpdate = true)
     }
@@ -99,7 +120,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
 
     fun toggleViewMode() {
         val newMode = !_uiState.value.isGrid
-        sharedPref.edit().putBoolean("grid_view_enabled", newMode).apply()
+        sharedPref.edit().putBoolean("icons_only_favorites_style", newMode).apply()
         _uiState.update { it.copy(isGrid = newMode) }
     }
 }

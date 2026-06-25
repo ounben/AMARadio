@@ -174,7 +174,9 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
         
         when (tab.id) {
             IDX_FILTER -> {
-                val filterViewModel: FilterViewModel = viewModel(viewModelStoreOwner = this)
+                val filterViewModel: FilterViewModel = viewModel(
+                    viewModelStoreOwner = requireActivity()
+                )
                 FilterScreen(
                     viewModel = filterViewModel,
                     onStationClick = { station -> Utils.showPlaySelection(app, station, childFragmentManager) },
@@ -189,7 +191,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 )
             }
             IDX_LOCAL, IDX_TOP_CLICK, IDX_CURRENTLY_HEARD, IDX_SEARCH -> {
-                val stationsViewModel: StationsViewModel = viewModel(key = "tab_${tab.id}", viewModelStoreOwner = this)
+                val stationsViewModel: StationsViewModel = viewModel(
+                    key = "tab_${tab.id}",
+                    viewModelStoreOwner = requireActivity()
+                )
                 val url = if (tab.id == IDX_LOCAL && countryCode != null) {
                     "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
                 } else addresses[tab.id]
@@ -209,7 +214,10 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                 )
             }
             IDX_COUNTRIES -> {
-                val categoriesViewModel: CategoriesViewModel = viewModel(key = "tab_${tab.id}", viewModelStoreOwner = this)
+                val categoriesViewModel: CategoriesViewModel = viewModel(
+                    key = "tab_${tab.id}",
+                    viewModelStoreOwner = requireActivity()
+                )
                 CategoriesScreen(
                     viewModel = categoriesViewModel,
                     url = addresses[tab.id],
@@ -225,23 +233,8 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
 
     override fun onResume() {
         super.onResume()
-        // Refresh grid mode for all active viewmodels
-        activeTabsList.forEach { tab ->
-            when (tab.id) {
-                IDX_LOCAL, IDX_TOP_CLICK, IDX_CURRENTLY_HEARD, IDX_SEARCH -> {
-                    val vm: StationsViewModel = androidx.lifecycle.ViewModelProvider(this).get("tab_${tab.id}", StationsViewModel::class.java)
-                    vm.refreshGridMode()
-                }
-                IDX_COUNTRIES -> {
-                    val vm: CategoriesViewModel = androidx.lifecycle.ViewModelProvider(this).get("tab_${tab.id}", CategoriesViewModel::class.java)
-                    vm.refreshGridMode()
-                }
-                IDX_FILTER -> {
-                    val vm: FilterViewModel = androidx.lifecycle.ViewModelProvider(this).get(FilterViewModel::class.java)
-                    vm.refreshGridMode()
-                }
-            }
-        }
+        // No manual refresh needed here as ViewModels handle their own init
+        // and setting changes trigger Activity recreation.
     }
 
     private fun getCountryCode(): String? {
@@ -261,7 +254,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
                     if (pagerState.currentPage != searchIndex) {
                         pagerState.scrollToPage(searchIndex)
                     }
-                    val searchViewModel: StationsViewModel = androidx.lifecycle.ViewModelProvider(this@FragmentTabs).get("tab_$IDX_SEARCH", StationsViewModel::class.java)
+                    val searchViewModel: StationsViewModel = androidx.lifecycle.ViewModelProvider(requireActivity()).get("tab_$IDX_SEARCH", StationsViewModel::class.java)
                     searchViewModel.search(searchStyle, query)
                 }
             }

@@ -11,6 +11,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import androidx.preference.PreferenceManager
+import android.content.SharedPreferences
 
 class LocalStationsViewModel(application: Application, private val isHistory: Boolean) : AndroidViewModel(application) {
 
@@ -28,8 +29,15 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
     private val manager = if (isHistory) app.historyManager else app.favouriteManager
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "icons_only_favorites_style") {
+            refreshGridMode()
+        }
+    }
+
     init {
         refreshGridMode()
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
         
         viewModelScope.launch {
             manager.stationsFlow.collect { stations ->
@@ -40,6 +48,11 @@ class LocalStationsViewModel(application: Application, private val isHistory: Bo
                 }
             }
         }
+    }
+
+    override fun onCleared() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
+        super.onCleared()
     }
 
     fun refreshGridMode() {

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
+import android.content.SharedPreferences
 
 class CategoriesViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -31,8 +32,20 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
     private var currentUrl: String? = null
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "icons_only_favorites_style") {
+            refreshGridMode()
+        }
+    }
+
     init {
         refreshGridMode()
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
+    }
+
+    override fun onCleared() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
+        super.onCleared()
     }
 
     fun refreshGridMode() {
