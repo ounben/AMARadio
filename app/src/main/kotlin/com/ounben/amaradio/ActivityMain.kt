@@ -655,6 +655,62 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         startActivityForResult(intent, ACTION_LOAD_FILE)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
+        super.onActivityResult(requestCode, resultCode, resultData)
+
+        if ((requestCode == ACTION_SAVE_FILE) && (resultCode == RESULT_OK)) {
+            resultData?.data?.let { uri ->
+                val app = application as AMARadioApp
+                scope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openOutputStream(uri)?.use { os ->
+                                val writer = os.bufferedWriter(Charsets.UTF_8)
+                                val manager = if (selectedMenuItem == R.id.nav_item_starred) app.favouriteManager else app.historyManager
+                                manager.exportM3U(writer)
+                            } ?: false
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Unable to write to file $e")
+                            false
+                        }
+                    }
+                    if (success) Utils.showModernToast(this@ActivityMain, R.string.notify_save_playlist_ok)
+                    else Utils.showModernToast(this@ActivityMain, R.string.notify_save_playlist_nok)
+                }
+            }
+        }
+        if ((requestCode == ACTION_LOAD_FILE) && (resultCode == RESULT_OK)) {
+            resultData?.data?.let { uri ->
+                val app = application as AMARadioApp
+                Utils.showModernToast(this, R.string.notify_load_playlist_now)
+                scope.launch {
+                    val manager = if (selectedMenuItem == R.id.nav_item_starred) app.favouriteManager else app.historyManager
+                    val loadedStations = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openInputStream(uri)?.use { isStr ->
+                                manager.importM3U(isStr.bufferedReader(Charsets.UTF_8))
+                            }
+                        } catch (e: Exception) {
+                            Log.e(TAG, "Unable to load file $e")
+                            null
+                        }
+                    }
+                    
+                    if (loadedStations != null) {
+                        if (loadedStations.isNotEmpty()) {
+                            manager.addMultiple(loadedStations)
+                            Utils.showSnackbar(findViewById(android.R.id.content), getString(R.string.notify_load_playlist_ok, loadedStations.size, "", ""))
+                        } else {
+                            Utils.showSnackbar(findViewById(android.R.id.content), "No valid stations found in file")
+                        }
+                    } else {
+                        Utils.showModernToast(this@ActivityMain, R.string.notify_load_playlist_nok)
+                    }
+                }
+            }
+        }
+    }
+
     companion object {
         const val LAUNCH_EQUALIZER_REQUEST = 1
         const val MAX_DYNAMIC_LAUNCHER_SHORTCUTS = 4

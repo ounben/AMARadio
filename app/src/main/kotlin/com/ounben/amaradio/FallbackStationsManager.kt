@@ -8,22 +8,26 @@ import kotlinx.coroutines.withContext
 
 class FallbackStationsManager(ctx: Context) : StationSaveManager(ctx) {
     override fun load() {
-        listStations.clear()
-        
         scope.launch {
             val arr = withContext(Dispatchers.IO) {
-                val str = context.resources
-                        .openRawResource(R.raw.fallback_stations)
-                        .bufferedReader()
-                        .use { it.readText() }
-                
-                withContext(Dispatchers.Default) {
-                    DataRadioStation.DecodeJson(str)
+                try {
+                    val str = context.resources
+                            .openRawResource(R.raw.fallback_stations)
+                            .bufferedReader()
+                            .use { it.readText() }
+                    
+                    withContext(Dispatchers.Default) {
+                        DataRadioStation.DecodeJson(str)
+                    }
+                } catch (e: Exception) {
+                    null
                 }
             }
             
             if (arr != null) {
-                listStations.addAll(arr)
+                listStations.clear()
+                stationsSet.clear()
+                addAll(arr)
             }
         }
     }

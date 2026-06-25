@@ -233,16 +233,23 @@ object Utils {
     }
 
     @JvmStatic
-    suspend fun getStationsByUuid(httpClient: OkHttpClient, ctx: Context, listUUids: Iterable<String>): List<DataRadioStation>? {
-        val p = HashMap<String, String>()
-        p["uuids"] = TextUtils.join(",", listUUids)
-        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", true, p)
-        if (result != null) {
-            try {
-                return withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
-            } catch (_: Exception) {}
+    suspend fun getStationsByUuid(httpClient: OkHttpClient, ctx: Context, listUUids: List<String>): List<DataRadioStation>? {
+        if (listUUids.isEmpty()) return emptyList()
+        val allResults = mutableListOf<DataRadioStation>()
+        val chunks = listUUids.chunked(50)
+        
+        for (chunk in chunks) {
+            val p = HashMap<String, String>()
+            p["uuids"] = TextUtils.join(",", chunk)
+            val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", true, p)
+            if (result != null) {
+                try {
+                    val decoded = withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
+                    if (decoded != null) allResults.addAll(decoded)
+                } catch (_: Exception) {}
+            }
         }
-        return null
+        return if (allResults.isEmpty() && listUUids.isNotEmpty()) null else allResults
     }
 
     @JvmStatic

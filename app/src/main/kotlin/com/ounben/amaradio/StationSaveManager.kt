@@ -1,7 +1,6 @@
 package com.ounben.amaradio
 
 import android.content.Context
-import android.content.Intent
 import android.util.Log
 import androidx.core.content.edit
 import androidx.preference.PreferenceManager
@@ -16,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import java.io.BufferedReader
 import java.io.Reader
 import java.io.Writer
 
@@ -25,8 +23,8 @@ open class StationSaveManager(protected val context: Context) {
         fun onStationStatusChanged(station: DataRadioStation, favourite: Boolean)
     }
 
-    var listStations: MutableList<DataRadioStation> = ArrayList()
-    private val stationsSet = HashSet<String>() // For O(1) lookup
+    protected var listStations: MutableList<DataRadioStation> = ArrayList()
+    protected val stationsSet = HashSet<String>()
     
     protected var stationStatusListener: StationStatusListener? = null
 
@@ -41,63 +39,66 @@ open class StationSaveManager(protected val context: Context) {
     }
 
     init {
+        @Suppress("LeakingThis")
         load()
     }
 
     protected open fun getSaveId(): String = "default"
 
     open fun add(station: DataRadioStation) {
-        scope.launch(Dispatchers.Default) {
-            if (station.queue == null) station.queue = this@StationSaveManager
-            
-            withContext(Dispatchers.Main) {
-                if (!stationsSet.contains(station.StationUuid)) {
-                    listStations.add(station)
-                    stationsSet.add(station.StationUuid)
-                    save()
-                    _stationsFlow.value = listStations.toList()
-                    stationStatusListener?.onStationStatusChanged(station, favourite = true)
-                }
-            }
+        if (station.queue == null) station.queue = this
+        if (!stationsSet.contains(station.StationUuid)) {
+            listStations.add(station)
+            stationsSet.add(station.StationUuid)
+            save()
+            _stationsFlow.value = listStations.toList()
+            stationStatusListener?.onStationStatusChanged(station, favourite = true)
         }
     }
 
     open fun addMultiple(stations: List<DataRadioStation>) {
-        scope.launch(Dispatchers.Default) {
-            var changed = false
-            withContext(Dispatchers.Main) {
-                for (stationNew in stations) {
-                    if (!stationsSet.contains(stationNew.StationUuid)) {
-                        if (stationNew.queue == null) stationNew.queue = this@StationSaveManager
-                        listStations.add(stationNew)
-                        stationsSet.add(stationNew.StationUuid)
-                        changed = true
-                    }
-                }
-                if (changed) {
-                    save()
-                    _stationsFlow.value = listStations.toList()
-                }
+        var changed = false
+        for (stationNew in stations) {
+            if (!stationsSet.contains(stationNew.StationUuid)) {
+                if (stationNew.queue == null) stationNew.queue = this
+                listStations.add(stationNew)
+                stationsSet.add(stationNew.StationUuid)
+                changed = true
             }
+        }
+        if (changed) {
+            save()
+            _stationsFlow.value = listStations.toList()
+        }
+    }
+
+    open fun addAll(stations: List<DataRadioStation>?) {
+        if (stations == null) return
+        var changed = false
+        for (station in stations) {
+            if (!stationsSet.contains(station.StationUuid)) {
+                station.queue = this
+                listStations.add(station)
+                stationsSet.add(station.StationUuid)
+                changed = true
+            }
+        }
+        if (changed) {
+            _stationsFlow.value = listStations.toList()
         }
     }
 
     fun addFront(station: DataRadioStation) {
-        scope.launch(Dispatchers.Default) {
-            if (station.queue == null) station.queue = this@StationSaveManager
-            withContext(Dispatchers.Main) {
-                // For history, we allow duplicates but move to front, or just add
-                listStations.add(0, station)
-                stationsSet.add(station.StationUuid)
-                save()
-                _stationsFlow.value = listStations.toList()
-                stationStatusListener?.onStationStatusChanged(station, favourite = true)
-            }
-        }
+        if (station.queue == null) station.queue = this
+        listStations.removeAll { it.StationUuid == station.StationUuid }
+        listStations.add(0, station)
+        stationsSet.add(station.StationUuid)
+        save()
+        _stationsFlow.value = listStations.toList()
+        stationStatusListener?.onStationStatusChanged(station, favourite = true)
     }
 
-    val first: DataRadioStation?
-        get() = if (listStations.isNotEmpty()) listStations[0] else null
+    val first: DataRadioStation? get() = listStations.firstOrNull()
 
     fun getById(id: String): DataRadioStation? = listStations.find { it.StationUuid == id }
 
@@ -130,7 +131,8 @@ open class StationSaveManager(protected val context: Context) {
 
     open fun restore(station: DataRadioStation, pos: Int) {
         station.queue = this
-        listStations.add(pos.coerceIn(0, listStations.size), station)
+        val safePos = pos.coerceIn(0, listStations.size)
+        listStations.add(safePos, station)
         stationsSet.add(station.StationUuid)
         save()
         _stationsFlow.value = listStations.toList()
@@ -150,45 +152,40 @@ open class StationSaveManager(protected val context: Context) {
     fun isEmpty(): Boolean = listStations.isEmpty()
     fun has(id: String): Boolean = stationsSet.contains(id)
 
-    private fun hasInvalidUuids(): Boolean = listStations.any { !it.hasValidUuid() }
-
     fun getList(): List<DataRadioStation> = java.util.Collections.unmodifiableList(listStations)
 
     open fun load() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val str = sharedPref.getString(getSaveId(), null) ?: return
-
-        scope.launch {
-            val arr = withContext(Dispatchers.Default) {
-                DataRadioStation.DecodeJson(str)
-            }
-            
-            if (arr != null) {
-                withContext(Dispatchers.Main) {
-                    val uniqueStations = arr.distinctBy { it.StationUuid }
+        val str = sharedPref.getString(getSaveId(), null)
+        if (str != null) {
+            try {
+                val arr = DataRadioStation.DecodeJson(str)
+                if (arr != null) {
                     listStations.clear()
                     stationsSet.clear()
-                    for (station in uniqueStations) {
-                        station.queue = this@StationSaveManager
-                        listStations.add(station)
-                        stationsSet.add(station.StationUuid)
+                    arr.distinctBy { it.StationUuid }.forEach {
+                        it.queue = this
+                        listStations.add(it)
+                        stationsSet.add(it.StationUuid)
                     }
-                    _stationsFlow.value = listStations.toList()
                 }
+            } catch (e: Exception) {
+                Log.e("SAVE", "Error loading stations", e)
             }
         }
+        _stationsFlow.value = listStations.toList()
     }
 
     open fun save() {
         val stationsCopy = ArrayList(listStations)
-        scope.launch {
-            val str = withContext(Dispatchers.Default) {
-                jsonConfig.encodeToString(stationsCopy)
-            }
-            withContext(Dispatchers.IO) {
-                PreferenceManager.getDefaultSharedPreferences(context).edit {
+        scope.launch(Dispatchers.IO) {
+            try {
+                val str = jsonConfig.encodeToString(stationsCopy)
+                PreferenceManager.getDefaultSharedPreferences(context).edit(commit = true) {
                     putString(getSaveId(), str)
                 }
+            } catch (e: Exception) {
+                Log.e("SAVE", "Error saving stations", e)
             }
         }
     }
@@ -214,11 +211,12 @@ open class StationSaveManager(protected val context: Context) {
             val listUuids = ArrayList<String>()
             reader.readLines().forEach { line ->
                 if (line.startsWith("#RADIOBROWSERUUID:")) {
-                    val uuid = line.substringAfter(":").trim()
+                    val uuid = line.substringAfter("#RADIOBROWSERUUID:").trim()
                     if (uuid.isNotEmpty()) listUuids.add(uuid)
                 }
             }
             if (listUuids.isEmpty()) return@withContext emptyList()
+            
             val app = context.applicationContext as AMARadioApp
             com.ounben.amaradio.Utils.getStationsByUuid(app.httpClient, context, listUuids)
         } catch (e: Exception) {
