@@ -7,12 +7,14 @@ import android.view.ViewGroup
 import androidx.compose.ui.platform.ComposeView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.ounben.amaradio.history.TrackHistoryViewModel
+import com.ounben.amaradio.history.TrackHistoryInfoDialog
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.ui.AMARadioTheme
+import com.ounben.amaradio.ui.HistoryScreen
 import com.ounben.amaradio.ui.LocalStationsViewModel
-import com.ounben.amaradio.ui.StationList
 import androidx.compose.runtime.*
 
 class FragmentHistory : Fragment(), IFragmentSearchable {
@@ -29,16 +31,16 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
             setContent {
                 AMARadioTheme {
                     val app = requireActivity().application as AMARadioApp
-                    val viewModel: LocalStationsViewModel = viewModel(
+                    val localStationsViewModel: LocalStationsViewModel = viewModel(
                         key = "history",
                         factory = LocalStationsViewModelFactory(app, true),
                         viewModelStoreOwner = requireActivity()
                     )
-                    val uiState by viewModel.uiState.collectAsState()
+                    val trackHistoryViewModel: TrackHistoryViewModel = viewModel()
                     
-                    StationList(
-                        stations = uiState.filteredStations,
-                        isGrid = uiState.isGrid,
+                    HistoryScreen(
+                        localStationsViewModel = localStationsViewModel,
+                        trackHistoryViewModel = trackHistoryViewModel,
                         onStationClick = { station -> Utils.showPlaySelection(app, station, parentFragmentManager) },
                         onFavoriteClick = { station ->
                             if (app.favouriteManager.has(station.StationUuid)) {
@@ -46,6 +48,10 @@ class FragmentHistory : Fragment(), IFragmentSearchable {
                             } else {
                                 StationActions.markAsFavourite(requireContext(), station)
                             }
+                        },
+                        onTrackClick = { track ->
+                            val dialog = TrackHistoryInfoDialog(track)
+                            dialog.show(parentFragmentManager, TrackHistoryInfoDialog.FRAGMENT_TAG)
                         },
                         isFavorite = { uuid -> app.favouriteManager.has(uuid) }
                     )

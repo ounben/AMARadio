@@ -13,6 +13,7 @@ import com.ounben.amaradio.station.SearchStyle
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.LocalStationsViewModel
 import com.ounben.amaradio.ui.StationList
+import com.ounben.amaradio.ui.SingleTabContainer
 import androidx.compose.runtime.*
 
 class FragmentStarred : Fragment(), IFragmentSearchable {
@@ -36,19 +37,21 @@ class FragmentStarred : Fragment(), IFragmentSearchable {
                     )
                     val uiState by viewModel.uiState.collectAsState()
                     
-                    StationList(
-                        stations = uiState.filteredStations,
-                        isGrid = uiState.isGrid,
-                        onStationClick = { station -> Utils.showPlaySelection(app, station, parentFragmentManager) },
-                        onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) {
-                                StationActions.removeFromFavourites(requireContext(), null, station)
-                            } else {
-                                StationActions.markAsFavourite(requireContext(), station)
-                            }
-                        },
-                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
-                    )
+                    SingleTabContainer(titleRes = R.string.nav_item_starred) {
+                        StationList(
+                            stations = uiState.filteredStations,
+                            isGrid = uiState.isGrid,
+                            onStationClick = { station -> Utils.showPlaySelection(app, station, parentFragmentManager) },
+                            onFavoriteClick = { station ->
+                                if (app.favouriteManager.has(station.StationUuid)) {
+                                    StationActions.removeFromFavourites(requireContext(), null, station)
+                                } else {
+                                    StationActions.markAsFavourite(requireContext(), station)
+                                }
+                            },
+                            isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                        )
+                    }
                 }
             }
         }

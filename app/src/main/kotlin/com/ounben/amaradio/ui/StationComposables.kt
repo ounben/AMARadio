@@ -27,9 +27,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataCategory
+import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
 
@@ -80,6 +83,68 @@ fun StationList(
                     )
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun TrackList(
+    tracks: LazyPagingItems<TrackHistoryEntry>,
+    onTrackClick: (TrackHistoryEntry) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    LazyColumn(modifier = modifier.fillMaxSize()) {
+        items(
+            count = tracks.itemCount,
+            key = tracks.itemKey { it.uid }
+        ) { index ->
+            tracks[index]?.let { track ->
+                TrackListItem(track = track, onClick = { onTrackClick(track) })
+                HorizontalDivider(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    thickness = 0.5.dp,
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TrackListItem(
+    track: TrackHistoryEntry,
+    onClick: () -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick)
+            .padding(vertical = 8.dp, horizontal = 12.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        AsyncImage(
+            model = track.stationIconUrl,
+            contentDescription = null,
+            modifier = Modifier.size(40.dp),
+            error = painterResource(R.drawable.ic_radio_24dp),
+            placeholder = painterResource(R.drawable.ic_radio_24dp)
+        )
+        Spacer(modifier = Modifier.width(12.dp))
+        Column(modifier = Modifier.weight(1f)) {
+            Text(
+                text = track.track ?: "",
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+            Text(
+                text = track.artist ?: "",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                maxLines = 1
+            )
         }
     }
 }

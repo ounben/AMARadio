@@ -57,7 +57,7 @@ import java.util.Date
 import kotlin.time.Duration.Companion.milliseconds
 
 class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListener,
-    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener {
+    NavigationView.OnNavigationItemSelectedListener, SearchView.OnQueryTextListener, SharedPreferences.OnSharedPreferenceChangeListener {
 
     override fun attachBaseContext(newBase: Context) {
         super.attachBaseContext(UiScaler.wrapContext(newBase))
@@ -322,12 +322,14 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     override fun onPause() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(this)
         sharedPref.edit { putInt("last_selectedMenuItem", selectedMenuItem) }
         super.onPause()
     }
 
     override fun onResume() {
         super.onResume()
+        sharedPref.registerOnSharedPreferenceChangeListener(this)
         setupBroadcastReceiver()
         PlayerServiceUtil.startService(applicationContext)
 
@@ -594,6 +596,12 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                     PlayerService.PLAYER_SERVICE_STATE_CHANGE -> if (PlayerServiceUtil.isPlaying()) meteredConnectionAlertDialog?.dismiss()
                 }
             }
+        }
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "theme_name" || key == "bottom_navigation" || key == UiScaler.PREF_KEY_UI_SCALE) {
+            recreate()
         }
     }
 
