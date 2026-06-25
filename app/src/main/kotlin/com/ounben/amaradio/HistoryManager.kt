@@ -27,7 +27,7 @@ class HistoryManager(ctx: Context) : StationSaveManager(ctx) {
 
     private fun cutList(count: Int) {
         if (listStations.size > count) {
-            listStations = listStations.subList(0, count)
+            listStations = ArrayList(listStations.subList(0, count))
         }
     }
 }

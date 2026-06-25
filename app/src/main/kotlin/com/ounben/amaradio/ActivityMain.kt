@@ -655,6 +655,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_set_sleep_timer -> {
+                changeTimer()
+                return true
+            }
+            R.id.action_delete -> {
                 if (selectedMenuItem == R.id.nav_item_history) {
                     AlertDialog.Builder(this)
                         .setMessage(getString(R.string.alert_delete_history))

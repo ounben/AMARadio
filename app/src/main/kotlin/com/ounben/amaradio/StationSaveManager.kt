@@ -55,12 +55,19 @@ open class StationSaveManager(protected val context: Context) {
         stationStatusListener?.onStationStatusChanged(station, favourite = true)
     }
 
-    fun addMultiple(stations: List<DataRadioStation>) {
+    open fun addMultiple(stations: List<DataRadioStation>) {
+        var changed = false
         for (stationNew in stations) {
-            listStations.add(stationNew)
+            if (!has(stationNew.StationUuid)) {
+                if (stationNew.queue == null) stationNew.queue = this
+                listStations.add(stationNew)
+                changed = true
+            }
         }
-        save()
-        _stationsFlow.value = listStations.toList()
+        if (changed) {
+            save()
+            _stationsFlow.value = listStations.toList()
+        }
     }
 
     fun replaceList(stationsNew: List<DataRadioStation>) {
@@ -220,10 +227,17 @@ open class StationSaveManager(protected val context: Context) {
         if (str != null) {
             val arr = DataRadioStation.DecodeJson(str)
             if (arr != null) {
-                for (station in arr) {
+                val uniqueStations = arr.distinctBy { it.StationUuid }
+                for (station in uniqueStations) {
                     station.queue = this
                 }
-                listStations.addAll(arr)
+                listStations.addAll(uniqueStations)
+                
+                if (uniqueStations.size < arr.size) {
+                    Log.w("SAVE", "Cleaned up ${arr.size - uniqueStations.size} duplicates in ${getSaveId()}")
+                    save() // Persistent fix
+                }
+
                 if (hasInvalidUuids() && Utils.hasAnyConnection(context)) {
                     refreshStationsFromServer()
                 }

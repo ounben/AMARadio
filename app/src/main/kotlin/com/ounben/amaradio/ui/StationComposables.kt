@@ -49,7 +49,7 @@ fun StationList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(stations, key = { it.StationUuid }) { station ->
+                items(stations, key = { it.StationUuid.ifEmpty { it.hashCode().toString() } }) { station ->
                     StationGridItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -60,7 +60,7 @@ fun StationList(
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(stations, key = { it.StationUuid }) { station ->
+                items(stations, key = { it.StationUuid.ifEmpty { it.hashCode().toString() } }) { station ->
                     StationListItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
