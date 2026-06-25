@@ -51,7 +51,7 @@ abstract class CustomFilter {
         }
     }
 
-    protected abstract fun performFiltering(constraint: CharSequence?): FilterResults
+    protected abstract suspend fun performFiltering(constraint: CharSequence?): FilterResults
     protected abstract fun publishResults(constraint: CharSequence?, results: FilterResults)
 
     open class FilterResults {

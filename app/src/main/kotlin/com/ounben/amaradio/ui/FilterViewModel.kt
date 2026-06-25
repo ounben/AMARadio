@@ -181,16 +181,24 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             val tagsData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags?limit=500") }
             allTags = tagsData.map { it.Name }
 
+            val processedCountries = withContext(Dispatchers.Default) {
+                countriesData.map { 
+                    val label = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
+                    val emoji = EmojiUtils.getFlagEmoji(it.Name) ?: ""
+                    CategoryItem(it.Name, label, emoji)
+                }.sortedBy { it.label }
+            }
+
+            val processedLanguages = withContext(Dispatchers.Default) {
+                languagesData.map { 
+                    CategoryItem(it.Name, it.Name.replaceFirstChar { c -> c.uppercase() })
+                }.sortedBy { it.label }
+            }
+
             _uiState.update { state ->
                 state.copy(
-                    countries = countriesData.map { 
-                        val label = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
-                        val emoji = EmojiUtils.getFlagEmoji(it.Name) ?: ""
-                        CategoryItem(it.Name, label, emoji)
-                    }.sortedBy { it.label },
-                    languages = languagesData.map { 
-                        CategoryItem(it.Name, it.Name.replaceFirstChar { c -> c.uppercase() })
-                    }.sortedBy { it.label }
+                    countries = processedCountries,
+                    languages = processedLanguages
                 )
             }
         }
@@ -198,7 +206,9 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     private suspend fun fetchCategoriesRaw(url: String): List<DataCategory> {
         val result = Utils.downloadFeedRelative(app.httpClient, app, url, false, null)
-        return DataCategory.DecodeJson(result).toList()
+        return withContext(Dispatchers.Default) {
+            DataCategory.DecodeJson(result).toList()
+        }
     }
 
     fun performSearch() {
@@ -224,7 +234,9 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             }
             
             if (resultString != null) {
-                val stations = DataRadioStation.DecodeJson(resultString) ?: emptyList()
+                val stations = withContext(Dispatchers.Default) {
+                    DataRadioStation.DecodeJson(resultString) ?: emptyList()
+                }
                 _uiState.update { it.copy(stations = stations, isSearching = false) }
             } else {
                 _uiState.update { it.copy(isSearching = false, error = "Failed to fetch stations") }

@@ -1,6 +1,8 @@
 package com.ounben.amaradio
 
 import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.util.Random
@@ -11,9 +13,9 @@ object RadioBrowserServerManager {
     private var serverList: Array<String>? = null
 
     /**
-     * Blocking: do dns request do get a list of all available servers
+     * Non-blocking: do dns request do get a list of all available servers
      */
-    private fun doDnsServerListing(): Array<String> {
+    private suspend fun doDnsServerListing(): Array<String> = withContext(Dispatchers.IO) {
         Log.d("DNS", "doDnsServerListing()")
         val listResult = Vector<String>()
         try {
@@ -39,14 +41,14 @@ object RadioBrowserServerManager {
             listResult.add("de1.api.radio-browser.info")
         }
         Log.d("DNS", "doDnsServerListing() Found servers: ${listResult.size}")
-        return listResult.toTypedArray()
+        listResult.toTypedArray()
     }
 
     /**
-     * Blocking: return current cached server list. Generate list if still null.
+     * Non-blocking: return current cached server list. Generate list if still null.
      */
     @JvmStatic
-    fun getServerList(forceRefresh: Boolean): Array<String> {
+    suspend fun getServerList(forceRefresh: Boolean): Array<String> {
         if (serverList == null || serverList!!.isEmpty() || forceRefresh) {
             serverList = doDnsServerListing()
         }
@@ -54,10 +56,10 @@ object RadioBrowserServerManager {
     }
 
     /**
-     * Blocking: return current selected server. Select one, if there is no current server.
+     * Non-blocking: return current selected server. Select one, if there is no current server.
      */
     @JvmStatic
-    fun getCurrentServer(): String? {
+    suspend fun getCurrentServer(): String? {
         if (currentServer == null) {
             val list = getServerList(false)
             if (list.isNotEmpty()) {
@@ -83,7 +85,7 @@ object RadioBrowserServerManager {
      * Rotate to a different server from the list
      */
     @JvmStatic
-    fun rotateServer() {
+    suspend fun rotateServer() {
         val list = getServerList(false)
         if (list.size > 1) {
             val oldServer = currentServer

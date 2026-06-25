@@ -40,7 +40,9 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
             }
 
             if (result != null) {
-                val items = DataStatistics.DecodeJson(result).toList()
+                val items = withContext(Dispatchers.Default) {
+                    DataStatistics.DecodeJson(result).toList()
+                }
                 _uiState.update { it.copy(statistics = items, isLoading = false) }
             } else {
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load statistics") }

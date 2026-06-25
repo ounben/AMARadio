@@ -1,6 +1,7 @@
 package com.ounben.amaradio.ui
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
@@ -195,11 +196,11 @@ fun FilterDropdown(
     onClear: () -> Unit,
     icon: androidx.compose.ui.graphics.vector.ImageVector
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    var showDialog by remember { mutableStateOf(false) }
 
     ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
+        expanded = false,
+        onExpandedChange = { showDialog = true },
         modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
@@ -215,7 +216,7 @@ fun FilterDropdown(
                             Icon(Icons.Default.Clear, contentDescription = "Clear")
                         }
                     }
-                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded)
+                    ExposedDropdownMenuDefaults.TrailingIcon(expanded = false)
                 }
             },
             modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
@@ -226,26 +227,81 @@ fun FilterDropdown(
                 unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
             )
         )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            containerColor = MaterialTheme.colorScheme.surface
+    }
+
+    if (showDialog) {
+        SearchableSelectionDialog(
+            title = label,
+            options = options,
+            onSelect = {
+                onSelect(it)
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun SearchableSelectionDialog(
+    title: String,
+    options: List<FilterViewModel.CategoryItem>,
+    onSelect: (FilterViewModel.CategoryItem) -> Unit,
+    onDismiss: () -> Unit
+) {
+    var searchQuery by remember { mutableStateOf("") }
+    val filteredOptions = remember(searchQuery, options) {
+        if (searchQuery.isEmpty()) options
+        else options.filter { it.label.contains(searchQuery, ignoreCase = true) }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        modifier = Modifier.fillMaxHeight(0.8f)
+    ) {
+        Surface(
+            shape = MaterialTheme.shapes.extraLarge,
+            tonalElevation = 6.dp,
+            modifier = Modifier.fillMaxWidth()
         ) {
-            options.forEach { item ->
-                DropdownMenuItem(
-                    text = { 
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            if (item.emoji.isNotEmpty()) {
-                                Text(item.emoji, modifier = Modifier.padding(end = 8.dp))
-                            }
-                            Text(item.label, color = MaterialTheme.colorScheme.onSurface) 
-                        }
-                    },
-                    onClick = {
-                        onSelect(item)
-                        expanded = false
-                    }
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = title,
+                    style = MaterialTheme.typography.headlineSmall,
+                    modifier = Modifier.padding(bottom = 16.dp)
                 )
+
+                OutlinedTextField(
+                    value = searchQuery,
+                    onValueChange = { searchQuery = it },
+                    placeholder = { Text(stringResource(R.string.searchpreference_search)) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                    modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
+                    singleLine = true
+                )
+
+                androidx.compose.foundation.lazy.LazyColumn(
+                    modifier = Modifier.weight(1f),
+                    contentPadding = PaddingValues(vertical = 8.dp)
+                ) {
+                    items(filteredOptions, key = { it.code }) { item ->
+                        ListItem(
+                            headlineContent = { Text(item.label) },
+                            leadingContent = if (item.emoji.isNotEmpty()) {
+                                { Text(item.emoji, style = MaterialTheme.typography.headlineSmall) }
+                            } else null,
+                            modifier = Modifier.clickable { onSelect(item) }
+                        )
+                    }
+                }
+
+                TextButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.align(Alignment.End)
+                ) {
+                    Text(stringResource(R.string.label_button_cancel))
+                }
             }
         }
     }

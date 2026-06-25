@@ -221,31 +221,41 @@ open class StationSaveManager(protected val context: Context) {
     }
 
     open fun load() {
-        listStations.clear()
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val str = sharedPref.getString(getSaveId(), null)
-        if (str != null) {
-            val arr = DataRadioStation.DecodeJson(str)
+        if (str == null) {
+            Log.w("SAVE", "load() no stations to load for ${getSaveId()}")
+            _stationsFlow.value = emptyList()
+            return
+        }
+
+        scope.launch {
+            val arr = withContext(Dispatchers.Default) {
+                DataRadioStation.DecodeJson(str)
+            }
+            
             if (arr != null) {
                 val uniqueStations = arr.distinctBy { it.StationUuid }
+                listStations.clear()
                 for (station in uniqueStations) {
-                    station.queue = this
+                    station.queue = this@StationSaveManager
                 }
                 listStations.addAll(uniqueStations)
                 
                 if (uniqueStations.size < arr.size) {
                     Log.w("SAVE", "Cleaned up ${arr.size - uniqueStations.size} duplicates in ${getSaveId()}")
-                    save() // Persistent fix
+                    save()
                 }
 
+                _stationsFlow.value = listStations.toList()
+                
                 if (hasInvalidUuids() && Utils.hasAnyConnection(context)) {
                     refreshStationsFromServer()
                 }
+            } else {
+                _stationsFlow.value = emptyList()
             }
-        } else {
-            Log.w("SAVE", "load() no stations to load")
         }
-        _stationsFlow.value = listStations.toList()
     }
 
     open fun save() {
@@ -293,7 +303,7 @@ open class StationSaveManager(protected val context: Context) {
      * Liest Stationen aus einem Reader (M3U-Format) ein.
      * Synchroner Aufruf, muss in einem Hintergrund-Thread erfolgen.
      */
-    fun importM3U(reader: Reader): List<DataRadioStation>? {
+    suspend fun importM3U(reader: Reader): List<DataRadioStation>? = withContext(Dispatchers.IO) {
         try {
             val listUuids = ArrayList<String>()
             val br = BufferedReader(reader)
@@ -308,10 +318,10 @@ open class StationSaveManager(protected val context: Context) {
                 }
             }
             
-            if (listUuids.isEmpty()) return emptyList()
+            if (listUuids.isEmpty()) return@withContext emptyList<DataRadioStation>()
 
             val app = context.applicationContext as AMARadioApp
-            val listStationsNew = Utils.getStationsByUuid(app.httpClient, context, listUuids) ?: return null
+            val listStationsNew = Utils.getStationsByUuid(app.httpClient, context, listUuids) ?: return@withContext null
 
             // Sortierung beibehalten
             val listStationsSorted = ArrayList<DataRadioStation>()
@@ -320,10 +330,10 @@ open class StationSaveManager(protected val context: Context) {
                     listStationsSorted.add(it)
                 }
             }
-            return listStationsSorted
+            listStationsSorted
         } catch (e: Exception) {
             Log.e("LOAD", "M3U Import failed: $e")
-            return null
+            null
         }
     }
 

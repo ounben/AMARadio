@@ -34,6 +34,7 @@ android {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_21
             freeCompilerArgs.add("-opt-in=androidx.media3.common.util.UnstableApi")
+            freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
     }
 
@@ -107,6 +108,7 @@ dependencies {
     implementation libs.androidx.tvprovider
 
     implementation libs.okhttp
+    implementation libs.okhttp.coroutines
     implementation libs.coil
 
     // Compose

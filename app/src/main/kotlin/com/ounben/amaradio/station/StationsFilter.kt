@@ -39,7 +39,7 @@ class StationsFilter(private val context: Context, private val filterType: Filte
         this.searchStyle = searchStyle
     }
 
-    private fun searchGlobal(query: String): List<DataRadioStation> {
+    private suspend fun searchGlobal(query: String): List<DataRadioStation> {
         Log.d("FILTER", "searchGlobal 1:$query")
         val AMARadioApp = context.applicationContext as AMARadioApp
         val httpClient = AMARadioApp.httpClient
@@ -82,7 +82,7 @@ class StationsFilter(private val context: Context, private val filterType: Filte
         lastRemoteQuery = ""
     }
 
-    override fun performFiltering(constraint: CharSequence?): FilterResults {
+    override suspend fun performFiltering(constraint: CharSequence?): FilterResults {
         val query = constraint?.toString()?.lowercase(Locale.ROOT) ?: ""
         Log.d("FILTER", "performFiltering() $query")
         

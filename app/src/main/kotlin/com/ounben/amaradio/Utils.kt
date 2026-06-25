@@ -23,7 +23,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
-import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerSelectorDialog
 import com.ounben.amaradio.players.selector.PlayerType
@@ -32,17 +31,24 @@ import com.ounben.amaradio.service.ConnectivityChecker
 import com.ounben.amaradio.service.MediaSessionCallback
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonObject
+import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.Call
+import okhttp3.Callback
 import okhttp3.Credentials
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.jsonObject
-import kotlinx.serialization.json.jsonPrimitive
+import okhttp3.Response
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.InputStreamReader
 import java.net.InetSocketAddress
 import java.net.Proxy
@@ -50,6 +56,8 @@ import java.util.Date
 import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 import kotlin.time.Duration.Companion.milliseconds
 
 object Utils {
@@ -78,7 +86,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun getCacheFile(ctx: Context, theURI: String): String? {
+    suspend fun getCacheFile(ctx: Context, theURI: String): String? = withContext(Dispatchers.IO) {
         val chaine = StringBuilder("")
         try {
             var aFileName = theURI.lowercase(Locale.ROOT).replace("http://", "")
@@ -86,7 +94,7 @@ object Utils {
             aFileName = sanitizeName(aFileName)
 
             val file = File(ctx.cacheDir.absolutePath + "/" + aFileName)
-            if (!file.exists()) return null
+            if (!file.exists()) return@withContext null
             
             val lastModDate = Date(file.lastModified())
             val now = Date()
@@ -110,20 +118,19 @@ object Utils {
                 if (isDebug) {
                     Log.d("UTIL", "used cache for:$theURI")
                 }
-                return chaine.toString()
+                return@withContext chaine.toString()
             }
             if (isDebug) {
                 Log.d("UTIL", "do not use cache, because too old:$theURI")
             }
-            return null
+            return@withContext null
         } catch (_: Exception) {
-            // Log.e("UTIL", "getCacheFile() $e")
         }
-        return null
+        null
     }
 
     @JvmStatic
-    fun writeFileCache(ctx: Context, theURI: String, content: String) {
+    suspend fun writeFileCache(ctx: Context, theURI: String, content: String) = withContext(Dispatchers.IO) {
         try {
             var aFileName = theURI.lowercase(Locale.ROOT).replace("http://", "")
             aFileName = aFileName.replace("https://", "")
@@ -138,7 +145,27 @@ object Utils {
         }
     }
 
-    private fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, forceUpdate: Boolean, dictParams: Map<String, String>?, timeoutMs: Long? = null): String? {
+    /**
+     * Helper to wrap OkHttp Call in a suspend function
+     */
+    private suspend fun Call.await(): Response = suspendCancellableCoroutine { continuation ->
+        enqueue(object : Callback {
+            override fun onResponse(call: Call, response: Response) {
+                continuation.resume(response)
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                if (continuation.isCancelled) return
+                continuation.resumeWithException(e)
+            }
+        })
+
+        continuation.invokeOnCancellation {
+            cancel()
+        }
+    }
+
+    private suspend fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, forceUpdate: Boolean, dictParams: Map<String, String>?, timeoutMs: Long? = null): String? {
         Log.i("DOWN", "Url=$theURI")
         if (!forceUpdate) {
             val cache = getCacheFile(ctx, theURI)
@@ -171,7 +198,7 @@ object Utils {
 
             val request = Request.Builder().url(url).get().build()
             
-            client.newCall(request).execute().use { response ->
+            client.newCall(request).await().use { response ->
                 val responseStr = response.body.string()
 
                 if (!response.isSuccessful) {
@@ -186,13 +213,12 @@ object Utils {
                 return responseStr
             }
         } catch (_: Exception) {
-            // Log.e("UTIL", "downloadFeed() $e")
         }
         return null
     }
 
     @JvmStatic
-    fun downloadFeedRelative(httpClient: OkHttpClient, ctx: Context, theRelativeUri: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
+    suspend fun downloadFeedRelative(httpClient: OkHttpClient, ctx: Context, theRelativeUri: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
         if (theRelativeUri.isBlank()) {
             Log.w("UTIL", "downloadFeedRelative: Relative URI is blank, skipping request.")
             return null
@@ -225,13 +251,15 @@ object Utils {
     }
 
     @JvmStatic
-    fun getRealStationLink(httpClient: OkHttpClient, ctx: Context, stationId: String): String? {
+    suspend fun getRealStationLink(httpClient: OkHttpClient, ctx: Context, stationId: String): String? {
         Log.i("UTIL", "StationUUID:$stationId")
         val result = downloadFeedRelative(httpClient, ctx, "json/url/$stationId", true, null)
         if (result != null) {
             Log.i("UTIL", result)
             return try {
-                val jsonObj = Json.parseToJsonElement(result).jsonObject
+                val jsonObj = withContext(Dispatchers.Default) {
+                    Json.parseToJsonElement(result).jsonObject
+                }
                 jsonObj["url"]?.jsonPrimitive?.content
             } catch (_: Exception) {
                 null
@@ -241,12 +269,14 @@ object Utils {
     }
 
     @JvmStatic
-    fun getStationByUuid(httpClient: OkHttpClient, ctx: Context, stationUuid: String): DataRadioStation? {
+    suspend fun getStationByUuid(httpClient: OkHttpClient, ctx: Context, stationUuid: String): DataRadioStation? {
         Log.w("UTIL", "Search by uuid:$stationUuid")
         val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid/$stationUuid", forceUpdate = true, dictParams = null)
         if (result != null) {
             try {
-                val list = DataRadioStation.DecodeJson(result)
+                val list = withContext(Dispatchers.Default) {
+                    DataRadioStation.DecodeJson(result)
+                }
                 if (list != null) {
                     if (list.size == 1) {
                         return list[0]
@@ -254,14 +284,13 @@ object Utils {
                     Log.e("UTIL", "stations by uuid did have length:" + list.size)
                 }
             } catch (_: Exception) {
-                // Log.e("UTIL", "getStationByUuid() $e")
             }
         }
         return null
     }
 
     @JvmStatic
-    fun getStationsByUuid(httpClient: OkHttpClient, ctx: Context, listUUids: Iterable<String>): List<DataRadioStation>? {
+    suspend fun getStationsByUuid(httpClient: OkHttpClient, ctx: Context, listUUids: Iterable<String>): List<DataRadioStation>? {
         val uuids = TextUtils.join(",", listUUids)
         Log.d("UTIL", "Search by uuid for items")
         val p = HashMap<String, String>()
@@ -269,14 +298,15 @@ object Utils {
         val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", forceUpdate = true, p)
         if (result != null) {
             try {
-                val list = DataRadioStation.DecodeJson(result)
+                val list = withContext(Dispatchers.Default) {
+                    DataRadioStation.DecodeJson(result)
+                }
                 if (list != null) {
                     return list
                 } else {
                     Log.e("UTIL", "stations by uuid was null")
                 }
             } catch (_: Exception) {
-                // Log.e("UTIL", "getStationsByUuid() $e")
             }
         }
         return null
