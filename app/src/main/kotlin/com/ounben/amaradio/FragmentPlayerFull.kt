@@ -118,7 +118,6 @@ class FragmentPlayerFull : Fragment() {
         val llmHistory = LinearLayoutManager(context)
         llmHistory.orientation = RecyclerView.VERTICAL
         recyclerViewHistory.layoutManager = llmHistory
-        recyclerViewHistory.setHasFixedSize(true)
         recyclerViewHistory.isNestedScrollingEnabled = false
 
         val dividerItemDecoration = DividerItemDecoration(recyclerViewHistory.context, llmHistory.orientation)
