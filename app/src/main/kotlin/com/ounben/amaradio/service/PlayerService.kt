@@ -671,7 +671,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         AppEventManager.sendEvent(intent)
     }
 
-    override fun onPlayerWarning(messageId: Int) { onPlayerError(messageId) }
+    override fun onPlayerWarning(messageId: Int) { 
+        Log.w(tag, "Player warning: ${resources.getString(messageId)}")
+    }
+
     override fun onPlayerError(messageId: Int) {
         handler?.post { lastErrorFromPlayer = messageId; toastOnUi(messageId); updateNotification() }
     }

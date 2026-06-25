@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
+import coil.decode.SvgDecoder
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.utils.TvChannelManager
@@ -140,6 +141,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)
             .okHttpClient { httpClient }
+            .components {
+                add(SvgDecoder.Factory())
+            }
             .build()
     }
 }

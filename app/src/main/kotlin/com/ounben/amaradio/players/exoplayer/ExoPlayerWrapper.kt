@@ -167,7 +167,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceConnectionLost() {
-        stateListener?.onPlayerWarning(R.string.error_caching_stream)
+        Log.w("ExoPlayerWrapper", "Data source connection lost, attempting silent recovery...")
         resumeWhenNetworkConnected()
     }
 
