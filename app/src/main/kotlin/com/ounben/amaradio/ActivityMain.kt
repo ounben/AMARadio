@@ -283,7 +283,8 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val iconSize = (24 * resources.displayMetrics.density * scale).toInt()
         mBottomNavigationView.itemIconSize = iconSize
 
-        val baseHeightDp = 72f
+        // Increased base height to 84dp to accommodate the 3rd status line
+        val baseHeightDp = 84f
         val scaledHeight = (baseHeightDp * resources.displayMetrics.density * scale).toInt()
         playerBottomSheet.peekHeight = scaledHeight
         

@@ -18,6 +18,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.history.TrackHistoryRepository
+import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -47,8 +48,17 @@ class FragmentPlayerSmall : Fragment() {
     private lateinit var imageViewIcon: ImageView
     private lateinit var buttonPlay: ImageButton
     private lateinit var buttonMore: ImageButton
+    
+    private lateinit var cellTowerView: ImageView
+    private lateinit var statusErrorText: TextView
 
     private var firstPlayAttempted = false
+    
+    // Cache to prevent redundant UI updates
+    private var currentStationUuid: String? = null
+    private var currentTitle: String? = null
+    private var currentPlayState: PlayState? = null
+    private var currentRole: Role? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -76,6 +86,9 @@ class FragmentPlayerSmall : Fragment() {
 
         buttonPlay = view.findViewById(R.id.buttonPlay)
         buttonMore = view.findViewById(R.id.buttonMore)
+        
+        cellTowerView = view.findViewById(R.id.cell_tower_view)
+        statusErrorText = view.findViewById(R.id.status_error_text)
 
         return view
     }
@@ -116,13 +129,14 @@ class FragmentPlayerSmall : Fragment() {
 
         val layoutParams = view?.layoutParams
         if (layoutParams != null) {
-            val baseHeightDp = 72f
+            // Increased base height to 84dp to accommodate the 3rd line
+            val baseHeightDp = 84f
             val scaledHeight = (baseHeightDp * resources.displayMetrics.density * scale).toInt()
             layoutParams.height = scaledHeight
             view?.layoutParams = layoutParams
         }
 
-        val iconSize = (36 * resources.displayMetrics.density * scale).toInt()
+        val iconSize = (40 * resources.displayMetrics.density * scale).toInt()
         imageViewIcon.layoutParams.width = iconSize
         imageViewIcon.layoutParams.height = iconSize
 
@@ -142,6 +156,7 @@ class FragmentPlayerSmall : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        cellTowerView.clearAnimation()
     }
 
     fun setCallback(callback: Callback?) {
@@ -192,6 +207,27 @@ class FragmentPlayerSmall : Fragment() {
     }
 
     private fun fullUpdate() {
+        if (!isAdded) return
+        
+        val station = Utils.getCurrentOrLastStation(requireContext())
+        val stationName = station?.Name ?: ""
+        val liveInfo = PlayerServiceUtil.getMetadataLive()
+        val streamTitle = liveInfo.title
+        val displayTitle = if (!TextUtils.isEmpty(streamTitle)) streamTitle else ""
+        val state = PlayerServiceUtil.getPlayerState()
+
+        if (station?.StationUuid == currentStationUuid && 
+            displayTitle == currentTitle && 
+            state == currentPlayState && 
+            role == currentRole) {
+            return
+        }
+
+        currentStationUuid = station?.StationUuid
+        currentTitle = displayTitle
+        currentPlayState = state
+        currentRole = role
+
         if (PlayerServiceUtil.isPlaying()) {
             buttonPlay.setImageResource(R.drawable.ic_pause_circle)
             buttonPlay.contentDescription = resources.getString(R.string.detail_pause)
@@ -200,16 +236,11 @@ class FragmentPlayerSmall : Fragment() {
             buttonPlay.contentDescription = resources.getString(R.string.detail_play)
         }
 
-        val station = Utils.getCurrentOrLastStation(requireContext())
-        val stationName = station?.Name ?: ""
-
         textViewStationName.text = stationName
 
-        val liveInfo = PlayerServiceUtil.getMetadataLive()
-        val streamTitle = liveInfo.title
-        if (!TextUtils.isEmpty(streamTitle)) {
+        if (!TextUtils.isEmpty(displayTitle)) {
             textViewLiveInfo.visibility = View.VISIBLE
-            textViewLiveInfo.text = streamTitle
+            textViewLiveInfo.text = displayTitle
             textViewStationName.gravity = Gravity.BOTTOM
         } else {
             textViewLiveInfo.visibility = View.GONE
@@ -225,6 +256,8 @@ class FragmentPlayerSmall : Fragment() {
             PlayerServiceUtil.getStationIcon(imageViewIcon, if (station?.hasIcon() == true) station.IconUrl else null)
         }
 
+        updateStatusUi(state)
+
         if (role == Role.PLAYER) {
             buttonPlay.visibility = View.VISIBLE
             buttonMore.visibility = View.GONE
@@ -236,6 +269,48 @@ class FragmentPlayerSmall : Fragment() {
             textViewLiveInfo.visibility = View.GONE
             textViewStationName.visibility = View.GONE
             textViewLiveInfoBig.visibility = View.VISIBLE
+            cellTowerView.visibility = View.GONE
+            statusErrorText.visibility = View.GONE
+        }
+    }
+
+    private fun updateStatusUi(state: PlayState) {
+        cellTowerView.clearAnimation()
+        
+        if (role == Role.HEADER) {
+            cellTowerView.visibility = View.GONE
+            statusErrorText.visibility = View.GONE
+            return
+        }
+
+        when (state) {
+            PlayState.PrePlaying -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark))
+                statusErrorText.visibility = View.GONE
+                
+                val anim = android.view.animation.AlphaAnimation(1.0f, 0.2f).apply {
+                    duration = 600
+                    repeatMode = android.view.animation.Animation.REVERSE
+                    repeatCount = android.view.animation.Animation.INFINITE
+                }
+                cellTowerView.startAnimation(anim)
+            }
+            PlayState.Playing -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark))
+                statusErrorText.visibility = View.GONE
+            }
+            PlayState.Error -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+                statusErrorText.text = getString(R.string.error_station_load)
+                statusErrorText.visibility = View.VISIBLE
+            }
+            else -> {
+                cellTowerView.visibility = View.GONE
+                statusErrorText.visibility = View.GONE
+            }
         }
     }
 

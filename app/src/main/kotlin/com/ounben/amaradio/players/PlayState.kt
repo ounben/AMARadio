@@ -8,5 +8,6 @@ enum class PlayState : Parcelable {
     Idle,
     PrePlaying,
     Playing,
-    Paused
+    Paused,
+    Error
 }

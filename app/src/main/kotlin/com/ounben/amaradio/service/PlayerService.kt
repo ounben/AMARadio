@@ -573,6 +573,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             PlayState.Paused -> {
                 sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.notify_paused), itsCurrentStation?.Name ?: "", playState)
             }
+            PlayState.Error -> {
+                sendMessage(itsCurrentStation?.Name ?: "", resources.getString(R.string.error_station_load), itsCurrentStation?.Name ?: "", playState)
+            }
         }
     }
 

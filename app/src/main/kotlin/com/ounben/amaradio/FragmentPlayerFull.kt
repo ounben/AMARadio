@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ounben.amaradio.history.TrackHistoryAdapter
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.history.TrackHistoryViewModel
+import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -61,10 +63,14 @@ class FragmentPlayerFull : Fragment() {
     private lateinit var btnNext: ImageButton
     private lateinit var btnFavourite: ImageButton
 
+    private lateinit var cellTowerView: ImageView
+    private lateinit var statusErrorText: TextView
+
     // Cache to prevent redundant UI updates
     private var currentStationUuid: String? = null
     private var currentTitle: String? = null
     private var isCurrentlyPlaying: Boolean = false
+    private var currentPlayState: PlayState? = null
     private var isFavoriteState: Boolean? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -113,6 +119,9 @@ class FragmentPlayerFull : Fragment() {
         btnPrev = view.findViewById(R.id.buttonPrev)
         btnNext = view.findViewById(R.id.buttonNext)
         btnFavourite = view.findViewById(R.id.buttonFavorite)
+
+        cellTowerView = view.findViewById(R.id.cell_tower_view)
+        statusErrorText = view.findViewById(R.id.status_error_text)
 
         recyclerViewHistory.adapter = trackHistoryAdapter
         val llmHistory = LinearLayoutManager(context)
@@ -225,6 +234,7 @@ class FragmentPlayerFull : Fragment() {
         if (view == null) return
         refreshHandler.cancel()
         favouritesJob?.cancel()
+        cellTowerView.clearAnimation()
     }
 
     fun resetScroll() {
@@ -259,12 +269,14 @@ class FragmentPlayerFull : Fragment() {
         val streamTitle = liveInfo.title
         val displayTitle = if (!TextUtils.isEmpty(streamTitle)) streamTitle else station?.Name ?: ""
         val playing = PlayerServiceUtil.isPlaying()
+        val state = PlayerServiceUtil.getPlayerState()
         val fav = station?.let { favouriteManager.has(it.StationUuid) } ?: false
 
         // Optimization: Skip heavy UI updates if data hasn't changed
         if (station?.StationUuid == currentStationUuid && 
             displayTitle == currentTitle && 
             playing == isCurrentlyPlaying &&
+            state == currentPlayState &&
             fav == isFavoriteState &&
             initialized) {
             return
@@ -273,6 +285,7 @@ class FragmentPlayerFull : Fragment() {
         currentStationUuid = station?.StationUuid
         currentTitle = displayTitle
         isCurrentlyPlaying = playing
+        currentPlayState = state
         isFavoriteState = fav
 
         view?.post {
@@ -298,7 +311,42 @@ class FragmentPlayerFull : Fragment() {
 
             updatePlaybackButtons(playing)
             updateFavouriteButton(fav)
+            updateStatusUi(state)
             initialized = true
+        }
+    }
+
+    private fun updateStatusUi(state: PlayState) {
+        cellTowerView.clearAnimation()
+        
+        when (state) {
+            PlayState.PrePlaying -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_orange_dark))
+                statusErrorText.visibility = View.GONE
+                
+                val anim = android.view.animation.AlphaAnimation(1.0f, 0.2f).apply {
+                    duration = 600
+                    repeatMode = android.view.animation.Animation.REVERSE
+                    repeatCount = android.view.animation.Animation.INFINITE
+                }
+                cellTowerView.startAnimation(anim)
+            }
+            PlayState.Playing -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark))
+                statusErrorText.visibility = View.GONE
+            }
+            PlayState.Error -> {
+                cellTowerView.visibility = View.VISIBLE
+                cellTowerView.setColorFilter(androidx.core.content.ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark))
+                statusErrorText.text = getString(R.string.error_station_load)
+                statusErrorText.visibility = View.VISIBLE
+            }
+            else -> {
+                cellTowerView.visibility = View.GONE
+                statusErrorText.visibility = View.GONE
+            }
         }
     }
 

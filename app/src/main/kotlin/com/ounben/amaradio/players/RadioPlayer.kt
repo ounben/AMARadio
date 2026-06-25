@@ -194,8 +194,13 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     override fun onPlayerError(messageId: Int) {
-        pause()
-        playerThreadHandler.post { playerListener?.onPlayerError(messageId) }
+        playerThreadHandler.post { 
+            currentPlayer.stop()
+            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            playState = PlayState.Error
+            playerListener?.onStateChanged(PlayState.Error, audioSessionId)
+            playerListener?.onPlayerError(messageId) 
+        }
     }
 
     override fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo, isHls: Boolean) {

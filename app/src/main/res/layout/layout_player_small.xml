@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?attr/listPreferredItemHeightLarge"
+    android:layout_height="wrap_content"
     android:background="?attr/colorPlayerBackground"
     android:clickable="true"
-    android:focusable="true">
+    android:focusable="true"
+    android:paddingBottom="4dp">
 
     <View
         android:layout_width="match_parent"
@@ -28,11 +29,9 @@
 
     <ImageView
         android:id="@+id/playerRadioImage"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_centerVertical="true"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
         android:contentDescription="@null"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -44,36 +43,69 @@
         android:id="@+id/textViewStationName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
         android:singleLine="true"
         android:textColor="?attr/colorAccent"
-        android:textSize="12sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/textViewLiveInfo"
         app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@id/playerRadioImage"
         app:layout_constraintTop_toBottomOf="@id/drag_handle"
-        tools:text="Station name (Long long long long long long long long long long long long long text)" />
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:text="Station name" />
 
     <TextView
         android:id="@+id/textViewLiveInfo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="12dp"
         android:ellipsize="end"
-        android:gravity="top"
         android:singleLine="true"
         android:textColor="@color/textColorSecondary"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutStatus"
         app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
         app:layout_constraintStart_toEndOf="@id/playerRadioImage"
         app:layout_constraintTop_toBottomOf="@id/textViewStationName"
-        tools:text="Song (Long long long long long long long long long long long long long text)" />
+        tools:text="Song title" />
 
+    <LinearLayout
+        android:id="@+id/layoutStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
+        app:layout_constraintStart_toEndOf="@id/playerRadioImage"
+        app:layout_constraintTop_toBottomOf="@id/textViewLiveInfo">
+
+        <ImageView
+            android:id="@+id/cell_tower_view"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_sync_black_24dp"
+            android:visibility="gone"
+            app:tint="@android:color/holo_orange_dark"
+            tools:visibility="visible" />
+
+        <TextView
+            android:id="@+id/status_error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            tools:text="Sender nicht erreichbar"
+            tools:visibility="visible" />
+    </LinearLayout>
+
+    <!-- Keeping Big info for potential Header role -->
     <TextView
         android:id="@+id/textViewLiveInfoBig"
         android:layout_width="0dp"
@@ -84,11 +116,12 @@
         android:textColor="?attr/colorAccent"
         android:textSize="14sp"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/barrierEndButtons"
         app:layout_constraintStart_toEndOf="@id/playerRadioImage"
         app:layout_constraintTop_toBottomOf="@id/drag_handle"
-        tools:text="Song (Long long long long long long long long long long long long long text)" />
+        tools:text="Song title Big" />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrierEndButtons"
@@ -99,16 +132,13 @@
 
     <ImageButton
         android:id="@+id/buttonPlay"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/detail_play"
-        android:scaleX="1.5"
-        android:scaleY="1.5"
+        android:scaleX="1.2"
+        android:scaleY="1.2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drag_handle"
@@ -118,11 +148,7 @@
         android:id="@+id/buttonMore"
         android:layout_width="36dp"
         android:layout_height="36dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
         android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/image_button_more"
         android:visibility="gone"
