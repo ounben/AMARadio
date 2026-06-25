@@ -137,6 +137,21 @@ class DataRadioStation : Parcelable {
         return !TextUtils.isEmpty(StationUuid) && StationUuid != "null"
     }
 
+    /**
+     * Creates a lightweight copy of the station for IPC (Binder) transport.
+     * Prevents TransactionTooLargeException with large metadata or Chinese characters.
+     */
+    fun getLightweightCopy(): DataRadioStation {
+        val copy = DataRadioStation()
+        copy.Name = this.Name
+        copy.StationUuid = this.StationUuid
+        copy.StreamUrl = this.StreamUrl
+        copy.IconUrl = this.IconUrl
+        copy.CountryCode = this.CountryCode
+        // We omit TagsAll and heavy descriptions to save space in Binder buffer
+        return copy
+    }
+
     fun copyPropertiesFrom(other: DataRadioStation) {
         Name = other.Name
         StationUuid = other.StationUuid

@@ -26,6 +26,8 @@ open class StationSaveManager(protected val context: Context) {
     }
 
     var listStations: MutableList<DataRadioStation> = ArrayList()
+    private val stationsSet = HashSet<String>() // For O(1) lookup
+    
     protected var stationStatusListener: StationStatusListener? = null
 
     private val _stationsFlow = MutableStateFlow<List<DataRadioStation>>(emptyList())
@@ -42,165 +44,119 @@ open class StationSaveManager(protected val context: Context) {
         load()
     }
 
-    protected open fun getSaveId(): String {
-        return "default"
-    }
+    protected open fun getSaveId(): String = "default"
 
     open fun add(station: DataRadioStation) {
-        if (station.queue == null) station.queue = this
-        listStations.add(station)
-        save()
-        _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, favourite = true)
+        scope.launch(Dispatchers.Default) {
+            if (station.queue == null) station.queue = this@StationSaveManager
+            
+            withContext(Dispatchers.Main) {
+                if (!stationsSet.contains(station.StationUuid)) {
+                    listStations.add(station)
+                    stationsSet.add(station.StationUuid)
+                    save()
+                    _stationsFlow.value = listStations.toList()
+                    stationStatusListener?.onStationStatusChanged(station, favourite = true)
+                }
+            }
+        }
     }
 
     open fun addMultiple(stations: List<DataRadioStation>) {
-        var changed = false
-        for (stationNew in stations) {
-            if (!has(stationNew.StationUuid)) {
-                if (stationNew.queue == null) stationNew.queue = this
-                listStations.add(stationNew)
-                changed = true
+        scope.launch(Dispatchers.Default) {
+            var changed = false
+            withContext(Dispatchers.Main) {
+                for (stationNew in stations) {
+                    if (!stationsSet.contains(stationNew.StationUuid)) {
+                        if (stationNew.queue == null) stationNew.queue = this@StationSaveManager
+                        listStations.add(stationNew)
+                        stationsSet.add(stationNew.StationUuid)
+                        changed = true
+                    }
+                }
+                if (changed) {
+                    save()
+                    _stationsFlow.value = listStations.toList()
+                }
             }
-        }
-        if (changed) {
-            save()
-            _stationsFlow.value = listStations.toList()
         }
     }
 
     fun addFront(station: DataRadioStation) {
-        if (station.queue == null) station.queue = this
-        listStations.add(0, station)
-        save()
-        _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, favourite = true)
+        scope.launch(Dispatchers.Default) {
+            if (station.queue == null) station.queue = this@StationSaveManager
+            withContext(Dispatchers.Main) {
+                // For history, we allow duplicates but move to front, or just add
+                listStations.add(0, station)
+                stationsSet.add(station.StationUuid)
+                save()
+                _stationsFlow.value = listStations.toList()
+                stationStatusListener?.onStationStatusChanged(station, favourite = true)
+            }
+        }
     }
 
     val first: DataRadioStation?
         get() = if (listStations.isNotEmpty()) listStations[0] else null
 
-    fun getById(id: String): DataRadioStation? {
-        for (station in listStations) {
-            if (id == station.StationUuid) {
-                return station
-            }
-        }
-        return null
-    }
+    fun getById(id: String): DataRadioStation? = listStations.find { it.StationUuid == id }
 
     fun getNextById(id: String): DataRadioStation? {
         if (listStations.isEmpty()) return null
-        for (i in 0 until (listStations.size - 1)) {
-            if (listStations[i].StationUuid == id) {
-                return listStations[i + 1]
-            }
-        }
-        return listStations[0]
+        val idx = listStations.indexOfFirst { it.StationUuid == id }
+        if (idx == -1 || idx == listStations.size - 1) return listStations[0]
+        return listStations[idx + 1]
     }
 
     fun getPreviousById(id: String): DataRadioStation? {
         if (listStations.isEmpty()) return null
-        for (i in 1 until listStations.size) {
-            if (listStations[i].StationUuid == id) {
-                return listStations[i - 1]
-            }
-        }
-        return listStations[listStations.size - 1]
+        val idx = listStations.indexOfFirst { it.StationUuid == id }
+        if (idx == -1 || idx == 0) return listStations.last()
+        return listStations[idx - 1]
     }
 
     fun remove(id: String): Int {
-        for (i in listStations.indices) {
-            val station = listStations[i]
-            if (station.StationUuid == id) {
-                listStations.removeAt(i)
-                save()
-                _stationsFlow.value = listStations.toList()
-                stationStatusListener?.onStationStatusChanged(station, favourite = false)
-                return i
-            }
+        val idx = listStations.indexOfFirst { it.StationUuid == id }
+        if (idx != -1) {
+            val station = listStations.removeAt(idx)
+            stationsSet.remove(id)
+            save()
+            _stationsFlow.value = listStations.toList()
+            stationStatusListener?.onStationStatusChanged(station, favourite = false)
+            return idx
         }
         return -1
     }
 
     open fun restore(station: DataRadioStation, pos: Int) {
         station.queue = this
-        listStations.add(pos, station)
+        listStations.add(pos.coerceIn(0, listStations.size), station)
+        stationsSet.add(station.StationUuid)
         save()
         _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, favourite = false)
+        stationStatusListener?.onStationStatusChanged(station, favourite = true)
     }
 
     fun clear() {
-        val oldStation = listStations
-        listStations = ArrayList()
+        val oldStations = ArrayList(listStations)
+        listStations.clear()
+        stationsSet.clear()
         save()
-        _stationsFlow.value = listStations.toList()
-        if (stationStatusListener != null) {
-            for (station in oldStation) {
-                stationStatusListener!!.onStationStatusChanged(station, favourite = false)
-            }
-        }
+        _stationsFlow.value = emptyList()
+        oldStations.forEach { stationStatusListener?.onStationStatusChanged(it, favourite = false) }
     }
 
-    fun size(): Int {
-        return listStations.size
-    }
+    fun size(): Int = listStations.size
+    fun isEmpty(): Boolean = listStations.isEmpty()
+    fun has(id: String): Boolean = stationsSet.contains(id)
 
-    fun isEmpty(): Boolean {
-        return listStations.size == 0
-    }
+    private fun hasInvalidUuids(): Boolean = listStations.any { !it.hasValidUuid() }
 
-    fun has(id: String): Boolean {
-        val station = getById(id)
-        return station != null
-    }
-
-    private fun hasInvalidUuids(): Boolean {
-        for (station in listStations) {
-            if (!station.hasValidUuid()) {
-                return true
-            }
-        }
-        return false
-    }
-
-    fun getList(): List<DataRadioStation> {
-        return java.util.Collections.unmodifiableList(listStations)
-    }
-
-    private fun refreshStationsFromServer() {
-        val app = context.applicationContext as AMARadioApp
-        val httpClient = app.httpClient
-        AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
-
-        scope.launch {
-            val savedStations = ArrayList(listStations)
-            val stationsToRemove = withContext(Dispatchers.IO) {
-                val toRemove = ArrayList<DataRadioStation>()
-                for (station in savedStations) {
-                    if (!station.refresh(httpClient, context) && (!station.hasValidUuid()) && (station.RefreshRetryCount > DataRadioStation.MAX_REFRESH_RETRIES)) {
-                        toRemove.add(station)
-                    }
-                }
-                toRemove
-            }
-
-            listStations.removeAll(stationsToRemove)
-            save()
-            _stationsFlow.value = listStations.toList()
-            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
-        }
-    }
+    fun getList(): List<DataRadioStation> = java.util.Collections.unmodifiableList(listStations)
 
     open fun load() {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val str = sharedPref.getString(getSaveId(), null)
-        if (str == null) {
-            Log.w("SAVE", "load() no stations to load for ${getSaveId()}")
-            _stationsFlow.value = emptyList()
-            return
-        }
+        val str = sharedPref.getString(getSaveId(), null) ?: return
 
         scope.launch {
             val arr = withContext(Dispatchers.Default) {
@@ -208,25 +164,17 @@ open class StationSaveManager(protected val context: Context) {
             }
             
             if (arr != null) {
-                val uniqueStations = arr.distinctBy { it.StationUuid }
-                listStations.clear()
-                for (station in uniqueStations) {
-                    station.queue = this@StationSaveManager
+                withContext(Dispatchers.Main) {
+                    val uniqueStations = arr.distinctBy { it.StationUuid }
+                    listStations.clear()
+                    stationsSet.clear()
+                    for (station in uniqueStations) {
+                        station.queue = this@StationSaveManager
+                        listStations.add(station)
+                        stationsSet.add(station.StationUuid)
+                    }
+                    _stationsFlow.value = listStations.toList()
                 }
-                listStations.addAll(uniqueStations)
-                
-                if (uniqueStations.size < arr.size) {
-                    Log.w("SAVE", "Cleaned up ${arr.size - uniqueStations.size} duplicates in ${getSaveId()}")
-                    save()
-                }
-
-                _stationsFlow.value = listStations.toList()
-                
-                if (hasInvalidUuids() && Utils.hasAnyConnection(context)) {
-                    refreshStationsFromServer()
-                }
-            } else {
-                _stationsFlow.value = emptyList()
             }
         }
     }
@@ -237,32 +185,21 @@ open class StationSaveManager(protected val context: Context) {
             val str = withContext(Dispatchers.Default) {
                 jsonConfig.encodeToString(stationsCopy)
             }
-            
             withContext(Dispatchers.IO) {
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-                sharedPref.edit {
+                PreferenceManager.getDefaultSharedPreferences(context).edit {
                     putString(getSaveId(), str)
                 }
             }
-            
-            if (Utils.isDebug) {
-                Log.d("SAVE", "Saved stations for ${getSaveId()}")
-            }
-            _stationsFlow.value = stationsCopy.toList()
         }
     }
 
-    /**
-     * Schreibt die aktuelle Liste im M3U-Format in den Writer.
-     * Schließt den Writer NICHT (überlassen wir dem Aufrufer/use-Block).
-     */
     fun exportM3U(writer: Writer): Boolean {
         return try {
             writer.write("#EXTM3U\n")
-            for (station in listStations) {
-                writer.write(m3uPrefix + station.StationUuid + "\n")
-                writer.write("#EXTINF:-1," + station.Name + "\n")
-                writer.write(station.StreamUrl + "\n\n")
+            listStations.forEach {
+                writer.write("#RADIOBROWSERUUID:${it.StationUuid}\n")
+                writer.write("#EXTINF:-1,${it.Name}\n")
+                writer.write("${it.StreamUrl}\n\n")
             }
             writer.flush()
             true
@@ -272,43 +209,21 @@ open class StationSaveManager(protected val context: Context) {
         }
     }
 
-    /**
-     * Liest Stationen aus einem Reader (M3U-Format) ein.
-     * Synchroner Aufruf, muss in einem Hintergrund-Thread erfolgen.
-     */
     suspend fun importM3U(reader: Reader): List<DataRadioStation>? = withContext(Dispatchers.IO) {
         try {
             val listUuids = ArrayList<String>()
-            val br = BufferedReader(reader)
-            var line: String?
-            while (br.readLine().also { line = it } != null) {
-                val currentLine = line ?: continue
-                if (currentLine.startsWith(m3uPrefix)) {
-                    val uuid = currentLine.substring(m3uPrefix.length).trim()
-                    if (uuid.isNotEmpty()) {
-                        listUuids.add(uuid)
-                    }
+            reader.readLines().forEach { line ->
+                if (line.startsWith("#RADIOBROWSERUUID:")) {
+                    val uuid = line.substringAfter(":").trim()
+                    if (uuid.isNotEmpty()) listUuids.add(uuid)
                 }
             }
-            
-            if (listUuids.isEmpty()) return@withContext emptyList<DataRadioStation>()
-
+            if (listUuids.isEmpty()) return@withContext emptyList()
             val app = context.applicationContext as AMARadioApp
-            val listStationsNew = Utils.getStationsByUuid(app.httpClient, context, listUuids) ?: return@withContext null
-
-            // Sortierung beibehalten
-            val listStationsSorted = ArrayList<DataRadioStation>()
-            for (uuid in listUuids) {
-                listStationsNew.find { it.StationUuid == uuid }?.let { 
-                    listStationsSorted.add(it)
-                }
-            }
-            listStationsSorted
+            com.ounben.amaradio.Utils.getStationsByUuid(app.httpClient, context, listUuids)
         } catch (e: Exception) {
             Log.e("LOAD", "M3U Import failed: $e")
             null
         }
     }
-
-    private val m3uPrefix = "#RADIOBROWSERUUID:"
 }

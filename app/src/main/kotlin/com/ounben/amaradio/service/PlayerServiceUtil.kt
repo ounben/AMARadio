@@ -141,20 +141,21 @@ object PlayerServiceUtil {
     fun play(station: DataRadioStation) {
         try {
             itsPlayerService?.let {
-                it.SetStation(station)
+                // Pre-strip heavy metadata to prevent TransactionTooLargeException
+                it.SetStation(station.getLightweightCopy())
                 it.Play()
             }
         } catch (e: RemoteException) {
-            Log.e("", "$e")
+            Log.e("PLAYER", "RemoteException during play: $e")
         }
     }
 
     @JvmStatic
     fun setStation(station: DataRadioStation) {
         try {
-            itsPlayerService?.SetStation(station)
+            itsPlayerService?.SetStation(station.getLightweightCopy())
         } catch (e: RemoteException) {
-            Log.e("", "$e")
+            Log.e("PLAYER", "RemoteException during setStation: $e")
         }
     }
 

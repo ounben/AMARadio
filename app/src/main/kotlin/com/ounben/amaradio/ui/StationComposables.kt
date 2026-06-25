@@ -8,8 +8,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
@@ -49,10 +49,10 @@ fun StationList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(
+                itemsIndexed(
                     items = stations,
-                    key = { it.StationUuid } // Use only UUID for stability
-                ) { station ->
+                    key = { index, station -> "${station.StationUuid}_$index" } // Safe from duplicates
+                ) { _, station ->
                     StationGridItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -63,10 +63,10 @@ fun StationList(
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(
+                itemsIndexed(
                     items = stations,
-                    key = { it.StationUuid } // Use only UUID for stability
-                ) { station ->
+                    key = { index, station -> "${station.StationUuid}_$index" } // Safe from duplicates
+                ) { _, station ->
                     StationListItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -203,13 +203,13 @@ fun CategoryList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(categories, key = { it.Name }) { category ->
+                itemsIndexed(categories, key = { index, category -> "${category.Name}_$index" }) { _, category ->
                     CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
                 }
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(categories, key = { it.Name }) { category ->
+                itemsIndexed(categories, key = { index, category -> "${category.Name}_$index" }) { _, category ->
                     CategoryListItem(category = category, onClick = { onCategoryClick(category) })
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 16.dp),

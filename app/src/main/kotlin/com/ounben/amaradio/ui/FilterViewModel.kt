@@ -1,16 +1,17 @@
 package com.ounben.amaradio.ui
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.CountryCodeDictionary
+import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -21,6 +22,9 @@ import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import androidx.core.content.edit
 import android.content.SharedPreferences
+import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.jsonArray
+import kotlinx.serialization.json.jsonObject
 import java.util.Locale
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -40,20 +44,18 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         val stations: List<DataRadioStation> = emptyList(),
         val countries: List<CategoryItem> = emptyList(),
         val languages: List<CategoryItem> = emptyList(),
-        val suggestedTags: List<String> = emptyList(),
+        val tags: List<CategoryItem> = emptyList(),
         val error: String? = null,
         val isGrid: Boolean = false
     )
 
-    data class CategoryItem(val code: String, val label: String, val emoji: String = "")
+    data class CategoryItem(val code: String, val label: String, val emoji: String = "", val count: Int = 0)
 
     private val _uiState = MutableStateFlow(FilterUiState())
     val uiState: StateFlow<FilterUiState> = _uiState.asStateFlow()
 
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
     private val app = application as AMARadioApp
-    private var tagSearchJob: Job? = null
-    private var allTags: List<String> = emptyList()
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "icons_only_favorites_style") {
@@ -63,9 +65,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     init {
         loadSavedFilters()
-        // Delay metadata fetching slightly to prioritize initial UI rendering
         viewModelScope.launch {
-            delay(300.milliseconds)
+            delay(100.milliseconds)
             fetchMetadata()
             if (hasAnyFilter()) {
                 performSearch()
@@ -141,48 +142,12 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         _uiState.update { it.copy(languageCode = "", languageLabel = "") }
     }
 
-    fun onTagChange(newTag: String) {
-        _uiState.update { it.copy(tag = newTag) }
-        viewModelScope.launch(Dispatchers.Default) {
-            updateTagSuggestions(newTag)
-        }
-    }
-
     fun onTagSelect(selectedTag: String) {
-        _uiState.update { it.copy(tag = selectedTag, suggestedTags = emptyList()) }
+        _uiState.update { it.copy(tag = selectedTag) }
     }
 
-    private suspend fun updateTagSuggestions(query: String) {
-        if (query.length < 2) {
-            _uiState.update { it.copy(suggestedTags = emptyList()) }
-            return
-        }
-        
-        val filtered = allTags.filter { 
-            it.contains(query, ignoreCase = true)
-        }.take(20)
-        
-        _uiState.update { it.copy(suggestedTags = filtered) }
-        
-        // Also kick off an online refined search if list is small or empty
-        if (filtered.size < 5) {
-            searchTagsOnline(query)
-        }
-    }
-
-    private fun searchTagsOnline(query: String) {
-        tagSearchJob?.cancel()
-        tagSearchJob = viewModelScope.launch {
-            delay(500.milliseconds)
-            val tags = withContext(Dispatchers.IO) {
-                fetchCategoriesRaw("json/tags/$query")
-            }
-            val onlineResults = tags.map { it.Name }
-            _uiState.update { state ->
-                val combined = (state.suggestedTags + onlineResults).distinct().take(20)
-                state.copy(suggestedTags = combined)
-            }
-        }
+    fun clearTag() {
+        _uiState.update { it.copy(tag = "") }
     }
 
     fun onSortByChange(newSort: String) {
@@ -193,51 +158,78 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         _uiState.update { it.copy(reverse = newReverse) }
     }
 
+    private suspend fun loadLocalOrRemote(resName: String, remoteUrl: String, debugName: String): List<DataCategory> = withContext(Dispatchers.IO) {
+        val resId = app.resources.getIdentifier(resName, "raw", app.packageName)
+        if (resId != 0) {
+            try {
+                val inputStream = app.resources.openRawResource(resId)
+                val content = inputStream.bufferedReader().use { it.readText() }.trim()
+                
+                val jsonToDecode = if (content.startsWith("{")) {
+                    val root = Json.parseToJsonElement(content).jsonObject
+                    if (root.containsKey("rows")) {
+                        root["rows"]?.jsonArray?.toString() ?: "[]"
+                    } else {
+                        "[$content]"
+                    }
+                } else {
+                    content
+                }
+
+                val decoded = DataCategory.DecodeJson(jsonToDecode).toList()
+                if (decoded.isNotEmpty()) {
+                    Log.d("FILTER_DEBUG", "Loaded local $debugName: ${decoded.size} items")
+                    return@withContext decoded
+                }
+            } catch (e: Exception) {
+                Log.w("FILTER_DEBUG", "Error parsing local $debugName: ${e.message}")
+            }
+        }
+        
+        Log.d("FILTER_DEBUG", "Local $debugName not found, trying remote: $remoteUrl")
+        val result = Utils.downloadFeedRelative(app.httpClient, app, remoteUrl, false, null)
+        DataCategory.DecodeJson(result).toList()
+    }
+
     private fun fetchMetadata() {
         viewModelScope.launch {
-            val countriesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/countrycodes") }
-            val languagesData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/languages") }
-            val tagsData = withContext(Dispatchers.IO) { fetchCategoriesRaw("json/tags?limit=500") }
-            allTags = tagsData.map { it.Name }
+            val tagsData = loadLocalOrRemote("radio_browser_tag_cache", "json/tags?limit=1000", "tags")
+            val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")
+            val languagesData = loadLocalOrRemote("radio_browser_language_cache", "json/languages", "languages")
+
+            val processedTags = withContext(Dispatchers.Default) {
+                tagsData.map { CategoryItem(it.Name, it.Name, count = it.UsedCount) }.sortedByDescending { it.count }
+            }
 
             val processedCountries = withContext(Dispatchers.Default) {
                 countriesData.map { 
                     val label = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
                     val emoji = EmojiUtils.getFlagEmoji(it.Name) ?: ""
-                    CategoryItem(it.Name, label, emoji)
+                    CategoryItem(it.Name, label, emoji, count = it.UsedCount)
                 }.sortedBy { it.label }
             }
 
             val processedLanguages = withContext(Dispatchers.Default) {
                 languagesData.map { 
-                    CategoryItem(it.Name, it.Name.replaceFirstChar { c -> c.uppercase() })
+                    val label = it.Name.replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() }
+                    CategoryItem(it.Name, label, count = it.UsedCount)
                 }.sortedBy { it.label }
             }
 
             _uiState.update { state ->
                 state.copy(
                     countries = processedCountries,
-                    languages = processedLanguages
+                    languages = processedLanguages,
+                    tags = processedTags
                 )
             }
-        }
-    }
-
-    private suspend fun fetchCategoriesRaw(url: String): List<DataCategory> {
-        val result = Utils.downloadFeedRelative(app.httpClient, app, url, false, null)
-        return withContext(Dispatchers.Default) {
-            DataCategory.DecodeJson(result).toList()
         }
     }
 
     fun performSearch() {
         viewModelScope.launch {
             _uiState.update { it.copy(isSearching = true, error = null) }
-            
-            // Save filters in background to avoid UI hitch
-            withContext(Dispatchers.IO) {
-                saveFilters()
-            }
+            withContext(Dispatchers.IO) { saveFilters() }
             
             val params = mutableMapOf<String, String>()
             val state = _uiState.value

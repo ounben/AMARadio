@@ -1,0 +1,2558 @@
+{
+	"table": "LanguageCache",
+	"rows":
+	[
+		{
+			"name": "english",
+			"stationcount": 12146
+		},
+		{
+			"name": "spanish",
+			"stationcount": 4794
+		},
+		{
+			"name": "german",
+			"stationcount": 4219
+		},
+		{
+			"name": "chinese",
+			"stationcount": 2171
+		},
+		{
+			"name": "french",
+			"stationcount": 2166
+		},
+		{
+			"name": "russian",
+			"stationcount": 1703
+		},
+		{
+			"name": "italian",
+			"stationcount": 1283
+		},
+		{
+			"name": "greek",
+			"stationcount": 1144
+		},
+		{
+			"name": "polish",
+			"stationcount": 813
+		},
+		{
+			"name": "dutch",
+			"stationcount": 778
+		},
+		{
+			"name": "portuguese",
+			"stationcount": 664
+		},
+		{
+			"name": "arabic",
+			"stationcount": 567
+		},
+		{
+			"name": "hindi",
+			"stationcount": 477
+		},
+		{
+			"name": "american english",
+			"stationcount": 455
+		},
+		{
+			"name": "brazilian portuguese",
+			"stationcount": 404
+		},
+		{
+			"name": "romanian",
+			"stationcount": 328
+		},
+		{
+			"name": "tamil",
+			"stationcount": 317
+		},
+		{
+			"name": "serbian",
+			"stationcount": 315
+		},
+		{
+			"name": "turkish",
+			"stationcount": 283
+		},
+		{
+			"name": "hungarian",
+			"stationcount": 262
+		},
+		{
+			"name": "español mexico",
+			"stationcount": 232
+		},
+		{
+			"name": "croatian",
+			"stationcount": 213
+		},
+		{
+			"name": "română",
+			"stationcount": 211
+		},
+		{
+			"name": "romania",
+			"stationcount": 196
+		},
+		{
+			"name": "czech",
+			"stationcount": 194
+		},
+		{
+			"name": "ukrainian",
+			"stationcount": 190
+		},
+		{
+			"name": "japanese",
+			"stationcount": 186
+		},
+		{
+			"name": "indonesian",
+			"stationcount": 178
+		},
+		{
+			"name": "swedish",
+			"stationcount": 152
+		},
+		{
+			"name": "castellano. español",
+			"stationcount": 150
+		},
+		{
+			"name": "filipino",
+			"stationcount": 150
+		},
+		{
+			"name": "bulgarian",
+			"stationcount": 132
+		},
+		{
+			"name": "español argentina",
+			"stationcount": 130
+		},
+		{
+			"name": "english uk",
+			"stationcount": 129
+		},
+		{
+			"name": "язык: русский",
+			"stationcount": 127
+		},
+		{
+			"name": "engilsh",
+			"stationcount": 126
+		},
+		{
+			"name": "slovak",
+			"stationcount": 125
+		},
+		{
+			"name": "español internacional",
+			"stationcount": 120
+		},
+		{
+			"name": "cantonese",
+			"stationcount": 119
+		},
+		{
+			"name": "português  brasil",
+			"stationcount": 106
+		},
+		{
+			"name": "bosnian",
+			"stationcount": 106
+		},
+		{
+			"name": "español - latinoamerica",
+			"stationcount": 105
+		},
+		{
+			"name": "finnish",
+			"stationcount": 104
+		},
+		{
+			"name": "danish",
+			"stationcount": 102
+		},
+		{
+			"name": "malayalam",
+			"stationcount": 102
+		},
+		{
+			"name": "catalan",
+			"stationcount": 99
+		},
+		{
+			"name": "korean",
+			"stationcount": 98
+		},
+		{
+			"name": "português (brasil)",
+			"stationcount": 96
+		},
+		{
+			"name": "british english",
+			"stationcount": 90
+		},
+		{
+			"name": "hebrew",
+			"stationcount": 87
+		},
+		{
+			"name": "slovenian",
+			"stationcount": 84
+		},
+		{
+			"name": "deutsch fränkisch",
+			"stationcount": 83
+		},
+		{
+			"name": "luganda",
+			"stationcount": 77
+		},
+		{
+			"name": "punjabi",
+			"stationcount": 73
+		},
+		{
+			"name": "bahasa indonesia",
+			"stationcount": 69
+		},
+		{
+			"name": "portugues do brasil",
+			"stationcount": 67
+		},
+		{
+			"name": "românä",
+			"stationcount": 65
+		},
+		{
+			"name": "espanish",
+			"stationcount": 63
+		},
+		{
+			"name": "akan",
+			"stationcount": 62
+		},
+		{
+			"name": "urdu",
+			"stationcount": 59
+		},
+		{
+			"name": "norwegian",
+			"stationcount": 58
+		},
+		{
+			"name": "ukranian",
+			"stationcount": 58
+		},
+		{
+			"name": "pt-br",
+			"stationcount": 58
+		},
+		{
+			"name": "francaise",
+			"stationcount": 57
+		},
+		{
+			"name": "estonian",
+			"stationcount": 57
+		},
+		{
+			"name": "thai",
+			"stationcount": 55
+		},
+		{
+			"name": "swiss german",
+			"stationcount": 55
+		},
+		{
+			"name": "espaňol",
+			"stationcount": 54
+		},
+		{
+			"name": "latvian",
+			"stationcount": 52
+		},
+		{
+			"name": "español chile",
+			"stationcount": 50
+		},
+		{
+			"name": "español colombia",
+			"stationcount": 44
+		},
+		{
+			"name": "mandarin",
+			"stationcount": 40
+		},
+		{
+			"name": "hokkien",
+			"stationcount": 39
+		},
+		{
+			"name": "sinhala",
+			"stationcount": 37
+		},
+		{
+			"name": "macedonian",
+			"stationcount": 37
+		},
+		{
+			"name": "malay",
+			"stationcount": 33
+		},
+		{
+			"name": "lithuanian",
+			"stationcount": 33
+		},
+		{
+			"name": "swahili",
+			"stationcount": 33
+		},
+		{
+			"name": "turkçe",
+			"stationcount": 33
+		},
+		{
+			"name": "kannada",
+			"stationcount": 32
+		},
+		{
+			"name": "azerbaijani",
+			"stationcount": 32
+		},
+		{
+			"name": "kurdish",
+			"stationcount": 32
+		},
+		{
+			"name": "persian",
+			"stationcount": 32
+		},
+		{
+			"name": "deu",
+			"stationcount": 30
+		},
+		{
+			"name": "kazakh",
+			"stationcount": 29
+		},
+		{
+			"name": "português (br)",
+			"stationcount": 28
+		},
+		{
+			"name": "georgian",
+			"stationcount": 27
+		},
+		{
+			"name": "english/russian",
+			"stationcount": 27
+		},
+		{
+			"name": "afrikaans",
+			"stationcount": 25
+		},
+		{
+			"name": "tagalog",
+			"stationcount": 25
+		},
+		{
+			"name": "belarusian",
+			"stationcount": 24
+		},
+		{
+			"name": "english/",
+			"stationcount": 23
+		},
+		{
+			"name": "montenegro",
+			"stationcount": 23
+		},
+		{
+			"name": "flemish",
+			"stationcount": 22
+		},
+		{
+			"name": "albanian",
+			"stationcount": 21
+		},
+		{
+			"name": "bangla",
+			"stationcount": 21
+		},
+		{
+			"name": "rus",
+			"stationcount": 21
+		},
+		{
+			"name": "nepali",
+			"stationcount": 19
+		},
+		{
+			"name": "amharic",
+			"stationcount": 19
+		},
+		{
+			"name": "galician",
+			"stationcount": 19
+		},
+		{
+			"name": "telugu",
+			"stationcount": 19
+		},
+		{
+			"name": "low german",
+			"stationcount": 19
+		},
+		{
+			"name": "türkisch",
+			"stationcount": 18
+		},
+		{
+			"name": "haitian creole",
+			"stationcount": 18
+		},
+		{
+			"name": "creole",
+			"stationcount": 18
+		},
+		{
+			"name": "العربية",
+			"stationcount": 17
+		},
+		{
+			"name": "icelandic",
+			"stationcount": 17
+		},
+		{
+			"name": "montenegrin",
+			"stationcount": 17
+		},
+		{
+			"name": "mongolian",
+			"stationcount": 17
+		},
+		{
+			"name": "portugues do braasil",
+			"stationcount": 17
+		},
+		{
+			"name": "asunción",
+			"stationcount": 17
+		},
+		{
+			"name": "armenian",
+			"stationcount": 17
+		},
+		{
+			"name": "engilsh uk",
+			"stationcount": 16
+		},
+		{
+			"name": "javanese",
+			"stationcount": 16
+		},
+		{
+			"name": "español peruano",
+			"stationcount": 15
+		},
+		{
+			"name": "franch",
+			"stationcount": 15
+		},
+		{
+			"name": "gernan",
+			"stationcount": 15
+		},
+		{
+			"name": "latin",
+			"stationcount": 15
+		},
+		{
+			"name": "willemstad",
+			"stationcount": 15
+		},
+		{
+			"name": "kapampangan",
+			"stationcount": 15
+		},
+		{
+			"name": "vietnamese",
+			"stationcount": 15
+		},
+		{
+			"name": "spain",
+			"stationcount": 14
+		},
+		{
+			"name": "français - lëtzebuergesch",
+			"stationcount": 14
+		},
+		{
+			"name": "englsih",
+			"stationcount": 14
+		},
+		{
+			"name": "norsk",
+			"stationcount": 14
+		},
+		{
+			"name": "tibetan",
+			"stationcount": 13
+		},
+		{
+			"name": "uyghur",
+			"stationcount": 13
+		},
+		{
+			"name": "basque",
+			"stationcount": 13
+		},
+		{
+			"name": "kurdi",
+			"stationcount": 12
+		},
+		{
+			"name": "irish",
+			"stationcount": 12
+		},
+		{
+			"name": "inglés/portugués/español",
+			"stationcount": 12
+		},
+		{
+			"name": "deutch",
+			"stationcount": 12
+		},
+		{
+			"name": "bengali",
+			"stationcount": 12
+		},
+		{
+			"name": "moroccan arabic",
+			"stationcount": 11
+		},
+		{
+			"name": "english/ españa/ russian /francia /italia",
+			"stationcount": 11
+		},
+		{
+			"name": "odia",
+			"stationcount": 11
+		},
+		{
+			"name": "bambara",
+			"stationcount": 11
+		},
+		{
+			"name": "عربي",
+			"stationcount": 10
+		},
+		{
+			"name": "moldovian",
+			"stationcount": 10
+		},
+		{
+			"name": "marathi",
+			"stationcount": 10
+		},
+		{
+			"name": "pigin",
+			"stationcount": 10
+		},
+		{
+			"name": "tatar",
+			"stationcount": 10
+		},
+		{
+			"name": "galego",
+			"stationcount": 10
+		},
+		{
+			"name": "luxembourgish",
+			"stationcount": 10
+		},
+		{
+			"name": "español ecuador",
+			"stationcount": 10
+		},
+		{
+			"name": "khmer",
+			"stationcount": 10
+		},
+		{
+			"name": "româna",
+			"stationcount": 9
+		},
+		{
+			"name": "norddeutsch",
+			"stationcount": 9
+		},
+		{
+			"name": "estonia",
+			"stationcount": 9
+		},
+		{
+			"name": "brasil",
+			"stationcount": 9
+		},
+		{
+			"name": "nederland",
+			"stationcount": 9
+		},
+		{
+			"name": "tunisian",
+			"stationcount": 9
+		},
+		{
+			"name": "lusoga",
+			"stationcount": 9
+		},
+		{
+			"name": "cebuano",
+			"stationcount": 8
+		},
+		{
+			"name": "ilocano",
+			"stationcount": 8
+		},
+		{
+			"name": "flammish",
+			"stationcount": 8
+		},
+		{
+			"name": "breton",
+			"stationcount": 8
+		},
+		{
+			"name": "kiswahili",
+			"stationcount": 8
+		},
+		{
+			"name": "bhojpuri",
+			"stationcount": 8
+		},
+		{
+			"name": "hakka",
+			"stationcount": 8
+		},
+		{
+			"name": "#spanish",
+			"stationcount": 8
+		},
+		{
+			"name": "indian",
+			"stationcount": 8
+		},
+		{
+			"name": "sorbian",
+			"stationcount": 7
+		},
+		{
+			"name": "kurdish.",
+			"stationcount": 7
+		},
+		{
+			"name": "hausa",
+			"stationcount": 7
+		},
+		{
+			"name": "slovenski",
+			"stationcount": 7
+		},
+		{
+			"name": "ingles español",
+			"stationcount": 7
+		},
+		{
+			"name": "ру",
+			"stationcount": 7
+		},
+		{
+			"name": "gaelic",
+			"stationcount": 7
+		},
+		{
+			"name": "croatia",
+			"stationcount": 7
+		},
+		{
+			"name": "английский",
+			"stationcount": 7
+		},
+		{
+			"name": "english/ russian /francia /españa",
+			"stationcount": 7
+		},
+		{
+			"name": "china",
+			"stationcount": 7
+		},
+		{
+			"name": "bashkir",
+			"stationcount": 6
+		},
+		{
+			"name": "tr",
+			"stationcount": 6
+		},
+		{
+			"name": "sepedi",
+			"stationcount": 6
+		},
+		{
+			"name": "papiamentu",
+			"stationcount": 6
+		},
+		{
+			"name": "isizulu",
+			"stationcount": 6
+		},
+		{
+			"name": "welsh",
+			"stationcount": 6
+		},
+		{
+			"name": "kyrgyz",
+			"stationcount": 6
+		},
+		{
+			"name": "язык: ру",
+			"stationcount": 6
+		},
+		{
+			"name": "ancient greek",
+			"stationcount": 5
+		},
+		{
+			"name": "latino",
+			"stationcount": 5
+		},
+		{
+			"name": "lumasaba luganda english",
+			"stationcount": 5
+		},
+		{
+			"name": "rock",
+			"stationcount": 5
+		},
+		{
+			"name": "uzbek",
+			"stationcount": 5
+		},
+		{
+			"name": "assamese",
+			"stationcount": 5
+		},
+		{
+			"name": "česky",
+			"stationcount": 5
+		},
+		{
+			"name": "yiddish",
+			"stationcount": 5
+		},
+		{
+			"name": "xitsonga",
+			"stationcount": 5
+		},
+		{
+			"name": "arabic.",
+			"stationcount": 5
+		},
+		{
+			"name": "occitan",
+			"stationcount": 5
+		},
+		{
+			"name": "global",
+			"stationcount": 5
+		},
+		{
+			"name": "faroese",
+			"stationcount": 5
+		},
+		{
+			"name": "romani",
+			"stationcount": 5
+		},
+		{
+			"name": "castilian",
+			"stationcount": 5
+		},
+		{
+			"name": "carpatho-rusyn",
+			"stationcount": 5
+		},
+		{
+			"name": "shqip",
+			"stationcount": 5
+		},
+		{
+			"name": "schweizerdeutsch",
+			"stationcount": 5
+		},
+		{
+			"name": "burmese",
+			"stationcount": 5
+		},
+		{
+			"name": "español paraguay",
+			"stationcount": 5
+		},
+		{
+			"name": "español asunción",
+			"stationcount": 4
+		},
+		{
+			"name": "sächsisch",
+			"stationcount": 4
+		},
+		{
+			"name": "украина",
+			"stationcount": 4
+		},
+		{
+			"name": "africa",
+			"stationcount": 4
+		},
+		{
+			"name": "malagasy",
+			"stationcount": 4
+		},
+		{
+			"name": "te reo maori",
+			"stationcount": 4
+		},
+		{
+			"name": "ger",
+			"stationcount": 4
+		},
+		{
+			"name": "sanskrit",
+			"stationcount": 4
+		},
+		{
+			"name": "online radio",
+			"stationcount": 4
+		},
+		{
+			"name": "hawaiian",
+			"stationcount": 4
+		},
+		{
+			"name": "españa",
+			"stationcount": 4
+		},
+		{
+			"name": "luganda english",
+			"stationcount": 4
+		},
+		{
+			"name": "te reo",
+			"stationcount": 4
+		},
+		{
+			"name": "samoan",
+			"stationcount": 4
+		},
+		{
+			"name": "yoruba",
+			"stationcount": 4
+		},
+		{
+			"name": "teochew",
+			"stationcount": 4
+		},
+		{
+			"name": "chaoshan dialect",
+			"stationcount": 4
+		},
+		{
+			"name": "angol",
+			"stationcount": 4
+		},
+		{
+			"name": "国语",
+			"stationcount": 4
+		},
+		{
+			"name": "belge",
+			"stationcount": 4
+		},
+		{
+			"name": "sami",
+			"stationcount": 4
+		},
+		{
+			"name": "romansh",
+			"stationcount": 4
+		},
+		{
+			"name": "twi",
+			"stationcount": 4
+		},
+		{
+			"name": "brazillian",
+			"stationcount": 4
+		},
+		{
+			"name": "английский русский",
+			"stationcount": 4
+		},
+		{
+			"name": "euskera",
+			"stationcount": 4
+		},
+		{
+			"name": "sesotho",
+			"stationcount": 4
+		},
+		{
+			"name": "quechua",
+			"stationcount": 4
+		},
+		{
+			"name": "setswana",
+			"stationcount": 4
+		},
+		{
+			"name": "english hindi",
+			"stationcount": 4
+		},
+		{
+			"name": "urdu/punjabi/seraiki",
+			"stationcount": 4
+		},
+		{
+			"name": "canadian",
+			"stationcount": 4
+		},
+		{
+			"name": "sint maarten",
+			"stationcount": 4
+		},
+		{
+			"name": "bisaya",
+			"stationcount": 4
+		},
+		{
+			"name": "arapça",
+			"stationcount": 3
+		},
+		{
+			"name": "80s",
+			"stationcount": 3
+		},
+		{
+			"name": "hindu",
+			"stationcount": 3
+		},
+		{
+			"name": "bahasa jawa",
+			"stationcount": 3
+		},
+		{
+			"name": "english spanish",
+			"stationcount": 3
+		},
+		{
+			"name": "frances",
+			"stationcount": 3
+		},
+		{
+			"name": "jawa",
+			"stationcount": 3
+		},
+		{
+			"name": "#english",
+			"stationcount": 3
+		},
+		{
+			"name": "engels",
+			"stationcount": 3
+		},
+		{
+			"name": "suomi",
+			"stationcount": 3
+		},
+		{
+			"name": "iranian",
+			"stationcount": 3
+		},
+		{
+			"name": "englisg",
+			"stationcount": 3
+		},
+		{
+			"name": "aboriginal languages",
+			"stationcount": 3
+		},
+		{
+			"name": "yugoslavian",
+			"stationcount": 3
+		},
+		{
+			"name": "english/tagalog",
+			"stationcount": 3
+		},
+		{
+			"name": "java",
+			"stationcount": 3
+		},
+		{
+			"name": "cree",
+			"stationcount": 3
+		},
+		{
+			"name": "san salvador",
+			"stationcount": 3
+		},
+		{
+			"name": "maltese",
+			"stationcount": 3
+		},
+		{
+			"name": "xhosa",
+			"stationcount": 3
+		},
+		{
+			"name": "pop music",
+			"stationcount": 3
+		},
+		{
+			"name": "ภาษาไทย",
+			"stationcount": 3
+		},
+		{
+			"name": "portugues brasil",
+			"stationcount": 3
+		},
+		{
+			"name": "fulani",
+			"stationcount": 3
+		},
+		{
+			"name": "tshivenda",
+			"stationcount": 3
+		},
+		{
+			"name": "siswati",
+			"stationcount": 3
+		},
+		{
+			"name": "frenchhttps://rfiswahili96k.ice.infomaniak.ch/rfis",
+			"stationcount": 3
+		},
+		{
+			"name": "kölscher dialekt",
+			"stationcount": 3
+		},
+		{
+			"name": "türkish",
+			"stationcount": 3
+		},
+		{
+			"name": "canada",
+			"stationcount": 3
+		},
+		{
+			"name": "punjab",
+			"stationcount": 3
+		},
+		{
+			"name": "fijian",
+			"stationcount": 3
+		},
+		{
+			"name": "lingala",
+			"stationcount": 3
+		},
+		{
+			"name": "various languages",
+			"stationcount": 3
+		},
+		{
+			"name": "128 brazilian portuguese",
+			"stationcount": 3
+		},
+		{
+			"name": "discography",
+			"stationcount": 3
+		},
+		{
+			"name": "gujarati",
+			"stationcount": 3
+		},
+		{
+			"name": "guarani",
+			"stationcount": 3
+		},
+		{
+			"name": "rossia",
+			"stationcount": 3
+		},
+		{
+			"name": "sindhi",
+			"stationcount": 3
+		},
+		{
+			"name": "aymara",
+			"stationcount": 3
+		},
+		{
+			"name": "australian",
+			"stationcount": 3
+		},
+		{
+			"name": "asturian",
+			"stationcount": 3
+		},
+		{
+			"name": "latinoamerica",
+			"stationcount": 2
+		},
+		{
+			"name": "音乐",
+			"stationcount": 2
+		},
+		{
+			"name": "malgache",
+			"stationcount": 2
+		},
+		{
+			"name": "slowenisch",
+			"stationcount": 2
+		},
+		{
+			"name": "lugwere",
+			"stationcount": 2
+		},
+		{
+			"name": "lower sorbian",
+			"stationcount": 2
+		},
+		{
+			"name": "татарский",
+			"stationcount": 2
+		},
+		{
+			"name": "sinhalese",
+			"stationcount": 2
+		},
+		{
+			"name": "seychellois creole",
+			"stationcount": 2
+		},
+		{
+			"name": "limburgs",
+			"stationcount": 2
+		},
+		{
+			"name": "хз",
+			"stationcount": 2
+		},
+		{
+			"name": "lebanese",
+			"stationcount": 2
+		},
+		{
+			"name": "latviešu",
+			"stationcount": 2
+		},
+		{
+			"name": "standard moroccan amazigh",
+			"stationcount": 2
+		},
+		{
+			"name": "lliones",
+			"stationcount": 2
+		},
+		{
+			"name": "язык: russia",
+			"stationcount": 2
+		},
+		{
+			"name": "malti",
+			"stationcount": 2
+		},
+		{
+			"name": "pacific",
+			"stationcount": 2
+		},
+		{
+			"name": "palestinian",
+			"stationcount": 2
+		},
+		{
+			"name": "pedro juan caballero",
+			"stationcount": 2
+		},
+		{
+			"name": "various filipino languages",
+			"stationcount": 2
+		},
+		{
+			"name": "pigeon english",
+			"stationcount": 2
+		},
+		{
+			"name": "tigrigna",
+			"stationcount": 2
+		},
+		{
+			"name": "torres strait creole",
+			"stationcount": 2
+		},
+		{
+			"name": "porguês",
+			"stationcount": 2
+		},
+		{
+			"name": "portoguese",
+			"stationcount": 2
+		},
+		{
+			"name": "usa",
+			"stationcount": 2
+		},
+		{
+			"name": "portugues francês",
+			"stationcount": 2
+		},
+		{
+			"name": "portuguese brazil",
+			"stationcount": 2
+		},
+		{
+			"name": "upper sorbian",
+			"stationcount": 2
+		},
+		{
+			"name": "ua",
+			"stationcount": 2
+		},
+		{
+			"name": "romany",
+			"stationcount": 2
+		},
+		{
+			"name": "turkmen",
+			"stationcount": 2
+		},
+		{
+			"name": "outro",
+			"stationcount": 2
+		},
+		{
+			"name": "others",
+			"stationcount": 2
+		},
+		{
+			"name": "ossetian",
+			"stationcount": 2
+		},
+		{
+			"name": "mauritian creole",
+			"stationcount": 2
+		},
+		{
+			"name": "mexicano",
+			"stationcount": 2
+		},
+		{
+			"name": "ml",
+			"stationcount": 2
+		},
+		{
+			"name": "swiss",
+			"stationcount": 2
+		},
+		{
+			"name": "čeština",
+			"stationcount": 2
+		},
+		{
+			"name": "zulu",
+			"stationcount": 2
+		},
+		{
+			"name": "sardinian",
+			"stationcount": 2
+		},
+		{
+			"name": "multiculti",
+			"stationcount": 2
+		},
+		{
+			"name": "nderlands",
+			"stationcount": 2
+		},
+		{
+			"name": "nedersaksisch",
+			"stationcount": 2
+		},
+		{
+			"name": "nemet",
+			"stationcount": 2
+		},
+		{
+			"name": "tamaulipas",
+			"stationcount": 2
+		},
+		{
+			"name": "russian/yakut",
+			"stationcount": 2
+		},
+		{
+			"name": "norwwegian",
+			"stationcount": 2
+		},
+		{
+			"name": "novokuznetzk",
+			"stationcount": 2
+		},
+		{
+			"name": "only music",
+			"stationcount": 2
+		},
+		{
+			"name": "roma",
+			"stationcount": 2
+		},
+		{
+			"name": "bicolano",
+			"stationcount": 2
+		},
+		{
+			"name": "fge spain",
+			"stationcount": 2
+		},
+		{
+			"name": "dan",
+			"stationcount": 2
+		},
+		{
+			"name": "fante",
+			"stationcount": 2
+		},
+		{
+			"name": "dansk/oldnordisk",
+			"stationcount": 2
+		},
+		{
+			"name": "esperanto",
+			"stationcount": 2
+		},
+		{
+			"name": "bonaire",
+			"stationcount": 2
+		},
+		{
+			"name": "dhivehi",
+			"stationcount": 2
+		},
+		{
+			"name": "español españa",
+			"stationcount": 2
+		},
+		{
+			"name": "gaeilge",
+			"stationcount": 2
+		},
+		{
+			"name": "arabesk",
+			"stationcount": 2
+		},
+		{
+			"name": "anguilla",
+			"stationcount": 2
+		},
+		{
+			"name": "espana",
+			"stationcount": 2
+		},
+		{
+			"name": "brezhoneg",
+			"stationcount": 2
+		},
+		{
+			"name": "bislama",
+			"stationcount": 2
+		},
+		{
+			"name": "colombo",
+			"stationcount": 2
+		},
+		{
+			"name": "hits",
+			"stationcount": 2
+		},
+		{
+			"name": "französich",
+			"stationcount": 2
+		},
+		{
+			"name": "berbere",
+			"stationcount": 2
+		},
+		{
+			"name": "chill",
+			"stationcount": 2
+		},
+		{
+			"name": "hrvatska",
+			"stationcount": 2
+		},
+		{
+			"name": "holland",
+			"stationcount": 2
+		},
+		{
+			"name": "bavarian",
+			"stationcount": 2
+		},
+		{
+			"name": "http://stream-uk1.radioparadise.com:80/aac-32",
+			"stationcount": 2
+		},
+		{
+			"name": "finland",
+			"stationcount": 2
+		},
+		{
+			"name": "finish",
+			"stationcount": 2
+		},
+		{
+			"name": "azeri",
+			"stationcount": 2
+		},
+		{
+			"name": "fries",
+			"stationcount": 2
+		},
+		{
+			"name": "fijian hindi",
+			"stationcount": 2
+		},
+		{
+			"name": "ibo",
+			"stationcount": 2
+		},
+		{
+			"name": "haryanvi",
+			"stationcount": 2
+		},
+		{
+			"name": "isindebele",
+			"stationcount": 2
+		},
+		{
+			"name": "gagauz",
+			"stationcount": 2
+		},
+		{
+			"name": "#japan",
+			"stationcount": 2
+		},
+		{
+			"name": "gallego",
+			"stationcount": 2
+		},
+		{
+			"name": "english/sotho/afrikaans",
+			"stationcount": 2
+		},
+		{
+			"name": "english russian",
+			"stationcount": 2
+		},
+		{
+			"name": "bulgaria",
+			"stationcount": 2
+		},
+		{
+			"name": "1",
+			"stationcount": 2
+		},
+		{
+			"name": "gallo",
+			"stationcount": 2
+		},
+		{
+			"name": "konkani",
+			"stationcount": 2
+		},
+		{
+			"name": "+7 languages",
+			"stationcount": 2
+		},
+		{
+			"name": "catalán",
+			"stationcount": 2
+		},
+		{
+			"name": "norvegian\\",
+			"stationcount": 2
+		},
+		{
+			"name": "gascon",
+			"stationcount": 2
+		},
+		{
+			"name": "ladin",
+			"stationcount": 2
+		},
+		{
+			"name": "ladino",
+			"stationcount": 2
+		},
+		{
+			"name": "englsh",
+			"stationcount": 2
+		},
+		{
+			"name": "e",
+			"stationcount": 2
+		},
+		{
+			"name": "alemanha",
+			"stationcount": 2
+		},
+		{
+			"name": "japones",
+			"stationcount": 2
+		},
+		{
+			"name": "jamaicaans-patois",
+			"stationcount": 2
+		},
+		{
+			"name": "isixhosa",
+			"stationcount": 2
+		},
+		{
+			"name": "aka bo",
+			"stationcount": 2
+		},
+		{
+			"name": "tigre",
+			"stationcount": 1
+		},
+		{
+			"name": "castelhano",
+			"stationcount": 1
+		},
+		{
+			"name": "tamazight",
+			"stationcount": 1
+		},
+		{
+			"name": "cochin",
+			"stationcount": 1
+		},
+		{
+			"name": "coatian",
+			"stationcount": 1
+		},
+		{
+			"name": "tachelhite",
+			"stationcount": 1
+		},
+		{
+			"name": "egnlish",
+			"stationcount": 1
+		},
+		{
+			"name": "classical",
+			"stationcount": 1
+		},
+		{
+			"name": "chuvash",
+			"stationcount": 1
+		},
+		{
+			"name": "chhattisgarhi",
+			"stationcount": 1
+		},
+		{
+			"name": "chipewyan",
+			"stationcount": 1
+		},
+		{
+			"name": "talk",
+			"stationcount": 1
+		},
+		{
+			"name": "urhobo",
+			"stationcount": 1
+		},
+		{
+			"name": "tahitian",
+			"stationcount": 1
+		},
+		{
+			"name": "cooperativa",
+			"stationcount": 1
+		},
+		{
+			"name": "sámi",
+			"stationcount": 1
+		},
+		{
+			"name": "duits",
+			"stationcount": 1
+		},
+		{
+			"name": "somali",
+			"stationcount": 1
+		},
+		{
+			"name": "soft",
+			"stationcount": 1
+		},
+		{
+			"name": "durch",
+			"stationcount": 1
+		},
+		{
+			"name": "dutch colombo",
+			"stationcount": 1
+		},
+		{
+			"name": "eesti",
+			"stationcount": 1
+		},
+		{
+			"name": "skolt sámi",
+			"stationcount": 1
+		},
+		{
+			"name": "efik",
+			"stationcount": 1
+		},
+		{
+			"name": "eight additional languages",
+			"stationcount": 1
+		},
+		{
+			"name": "eletrica",
+			"stationcount": 1
+		},
+		{
+			"name": "sing along",
+			"stationcount": 1
+		},
+		{
+			"name": "en gb",
+			"stationcount": 1
+		},
+		{
+			"name": "silesian",
+			"stationcount": 1
+		},
+		{
+			"name": "south asian languages",
+			"stationcount": 1
+		},
+		{
+			"name": "south slavey",
+			"stationcount": 1
+		},
+		{
+			"name": "dialects",
+			"stationcount": 1
+		},
+		{
+			"name": "cornish",
+			"stationcount": 1
+		},
+		{
+			"name": "coronel oviedo",
+			"stationcount": 1
+		},
+		{
+			"name": "corsu",
+			"stationcount": 1
+		},
+		{
+			"name": "swahili/",
+			"stationcount": 1
+		},
+		{
+			"name": "dai language",
+			"stationcount": 1
+		},
+		{
+			"name": "swabian",
+			"stationcount": 1
+		},
+		{
+			"name": "sv",
+			"stationcount": 1
+		},
+		{
+			"name": "sranan tongo",
+			"stationcount": 1
+		},
+		{
+			"name": "spanol",
+			"stationcount": 1
+		},
+		{
+			"name": "spanish saba",
+			"stationcount": 1
+		},
+		{
+			"name": "spani",
+			"stationcount": 1
+		},
+		{
+			"name": "spanhol",
+			"stationcount": 1
+		},
+		{
+			"name": "span",
+			"stationcount": 1
+		},
+		{
+			"name": "encarnación",
+			"stationcount": 1
+		},
+		{
+			"name": "cantonce",
+			"stationcount": 1
+		},
+		{
+			"name": "молдавский",
+			"stationcount": 1
+		},
+		{
+			"name": "испанский",
+			"stationcount": 1
+		},
+		{
+			"name": "беларуская",
+			"stationcount": 1
+		},
+		{
+			"name": "angličtina",
+			"stationcount": 1
+		},
+		{
+			"name": "śląski",
+			"stationcount": 1
+		},
+		{
+			"name": "annang",
+			"stationcount": 1
+		},
+		{
+			"name": "anq",
+			"stationcount": 1
+		},
+		{
+			"name": "anserma",
+			"stationcount": 1
+		},
+		{
+			"name": "zeelandic",
+			"stationcount": 1
+		},
+		{
+			"name": "zaiwa",
+			"stationcount": 1
+		},
+		{
+			"name": "yupik",
+			"stationcount": 1
+		},
+		{
+			"name": "apiaka",
+			"stationcount": 1
+		},
+		{
+			"name": "yucatec maya",
+			"stationcount": 1
+		},
+		{
+			"name": "ar",
+			"stationcount": 1
+		},
+		{
+			"name": "inuvialuktun",
+			"stationcount": 1
+		},
+		{
+			"name": "неизвестен",
+			"stationcount": 1
+		},
+		{
+			"name": "осетинский",
+			"stationcount": 1
+		},
+		{
+			"name": "amazigh",
+			"stationcount": 1
+		},
+		{
+			"name": "月南",
+			"stationcount": 1
+		},
+		{
+			"name": "德语",
+			"stationcount": 1
+		},
+		{
+			"name": "師傅傅",
+			"stationcount": 1
+		},
+		{
+			"name": "中国",
+			"stationcount": 1
+		},
+		{
+			"name": "10 additional languages",
+			"stationcount": 1
+		},
+		{
+			"name": "111",
+			"stationcount": 1
+		},
+		{
+			"name": "язык: русский английский",
+			"stationcount": 1
+		},
+		{
+			"name": "123",
+			"stationcount": 1
+		},
+		{
+			"name": "16 other languages",
+			"stationcount": 1
+		},
+		{
+			"name": "17 addtional languages",
+			"stationcount": 1
+		},
+		{
+			"name": "чукотский",
+			"stationcount": 1
+		},
+		{
+			"name": "церковнославянский",
+			"stationcount": 1
+		},
+		{
+			"name": "afghan",
+			"stationcount": 1
+		},
+		{
+			"name": "укр",
+			"stationcount": 1
+		},
+		{
+			"name": "српски",
+			"stationcount": 1
+		},
+		{
+			"name": "yeruoba",
+			"stationcount": 1
+		},
+		{
+			"name": "arabi",
+			"stationcount": 1
+		},
+		{
+			"name": "brabants",
+			"stationcount": 1
+		},
+		{
+			"name": "tyvan",
+			"stationcount": 1
+		},
+		{
+			"name": "brasileiro",
+			"stationcount": 1
+		},
+		{
+			"name": "turkt",
+			"stationcount": 1
+		},
+		{
+			"name": "bukharian",
+			"stationcount": 1
+		},
+		{
+			"name": "cajun",
+			"stationcount": 1
+		},
+		{
+			"name": "tule kaweah yokuts",
+			"stationcount": 1
+		},
+		{
+			"name": "tshivenḓa",
+			"stationcount": 1
+		},
+		{
+			"name": "tshiluba",
+			"stationcount": 1
+		},
+		{
+			"name": "capiznon",
+			"stationcount": 1
+		},
+		{
+			"name": "caribbean english",
+			"stationcount": 1
+		},
+		{
+			"name": "tongan",
+			"stationcount": 1
+		},
+		{
+			"name": "tonga",
+			"stationcount": 1
+		},
+		{
+			"name": "tlicho",
+			"stationcount": 1
+		},
+		{
+			"name": "tigrinya",
+			"stationcount": 1
+		},
+		{
+			"name": "bohemian",
+			"stationcount": 1
+		},
+		{
+			"name": "ucrânia",
+			"stationcount": 1
+		},
+		{
+			"name": "ukrainisch",
+			"stationcount": 1
+		},
+		{
+			"name": "astur-leonese",
+			"stationcount": 1
+		},
+		{
+			"name": "wolof",
+			"stationcount": 1
+		},
+		{
+			"name": "ateso",
+			"stationcount": 1
+		},
+		{
+			"name": "australian indigenous",
+			"stationcount": 1
+		},
+		{
+			"name": "azer",
+			"stationcount": 1
+		},
+		{
+			"name": "azr",
+			"stationcount": 1
+		},
+		{
+			"name": "vaporwave",
+			"stationcount": 1
+		},
+		{
+			"name": "uzbek،russian",
+			"stationcount": 1
+		},
+		{
+			"name": "bahasa sunda",
+			"stationcount": 1
+		},
+		{
+			"name": "bearnese",
+			"stationcount": 1
+		},
+		{
+			"name": "us",
+			"stationcount": 1
+		},
+		{
+			"name": "bering aleut",
+			"stationcount": 1
+		},
+		{
+			"name": "upper chinook",
+			"stationcount": 1
+		},
+		{
+			"name": "ungarisch",
+			"stationcount": 1
+		},
+		{
+			"name": "bihari",
+			"stationcount": 1
+		},
+		{
+			"name": "cassubian",
+			"stationcount": 1
+		},
+		{
+			"name": "oromo",
+			"stationcount": 1
+		},
+		{
+			"name": "noongar aboriginal",
+			"stationcount": 1
+		},
+		{
+			"name": "noongar",
+			"stationcount": 1
+		},
+		{
+			"name": "ngakarimojong",
+			"stationcount": 1
+		},
+		{
+			"name": "new orleans louisiana",
+			"stationcount": 1
+		},
+		{
+			"name": "nethe",
+			"stationcount": 1
+		},
+		{
+			"name": "ibibio",
+			"stationcount": 1
+		},
+		{
+			"name": "id",
+			"stationcount": 1
+		},
+		{
+			"name": "igbo",
+			"stationcount": 1
+		},
+		{
+			"name": "illonggo",
+			"stationcount": 1
+		},
+		{
+			"name": "navajo",
+			"stationcount": 1
+		},
+		{
+			"name": "nahuatl",
+			"stationcount": 1
+		},
+		{
+			"name": "māori",
+			"stationcount": 1
+		},
+		{
+			"name": "muromian",
+			"stationcount": 1
+		},
+		{
+			"name": "ilokano",
+			"stationcount": 1
+		},
+		{
+			"name": "moselle romance",
+			"stationcount": 1
+		},
+		{
+			"name": "hun",
+			"stationcount": 1
+		},
+		{
+			"name": "noric",
+			"stationcount": 1
+		},
+		{
+			"name": "originarios",
+			"stationcount": 1
+		},
+		{
+			"name": "hausa l",
+			"stationcount": 1
+		},
+		{
+			"name": "hh",
+			"stationcount": 1
+		},
+		{
+			"name": "old novgorod",
+			"stationcount": 1
+		},
+		{
+			"name": "oilsjters",
+			"stationcount": 1
+		},
+		{
+			"name": "hindi english assamese",
+			"stationcount": 1
+		},
+		{
+			"name": "nyungar",
+			"stationcount": 1
+		},
+		{
+			"name": "nyoongar",
+			"stationcount": 1
+		},
+		{
+			"name": "nuxalk",
+			"stationcount": 1
+		},
+		{
+			"name": "greel",
+			"stationcount": 1
+		},
+		{
+			"name": "northern sámi",
+			"stationcount": 1
+		},
+		{
+			"name": "northern manx",
+			"stationcount": 1
+		},
+		{
+			"name": "north slavey",
+			"stationcount": 1
+		},
+		{
+			"name": "http://wdr-1live-live.icecast.wdr.de",
+			"stationcount": 1
+		},
+		{
+			"name": "norn",
+			"stationcount": 1
+		},
+		{
+			"name": "ilonggo",
+			"stationcount": 1
+		},
+		{
+			"name": "inari sámi",
+			"stationcount": 1
+		},
+		{
+			"name": "kelantanese malay",
+			"stationcount": 1
+		},
+		{
+			"name": "keski-suomi",
+			"stationcount": 1
+		},
+		{
+			"name": "kikongo",
+			"stationcount": 1
+		},
+		{
+			"name": "lugisu",
+			"stationcount": 1
+		},
+		{
+			"name": "kikuyu swahili",
+			"stationcount": 1
+		},
+		{
+			"name": "kinand",
+			"stationcount": 1
+		},
+		{
+			"name": "kirmanci",
+			"stationcount": 1
+		},
+		{
+			"name": "lower arrernte",
+			"stationcount": 1
+		},
+		{
+			"name": "kiwi",
+			"stationcount": 1
+		},
+		{
+			"name": "louisiana french",
+			"stationcount": 1
+		},
+		{
+			"name": "komi",
+			"stationcount": 1
+		},
+		{
+			"name": "lisu",
+			"stationcount": 1
+		},
+		{
+			"name": "korea",
+			"stationcount": 1
+		},
+		{
+			"name": "kroatisch",
+			"stationcount": 1
+		},
+		{
+			"name": "kupsabiny",
+			"stationcount": 1
+		},
+		{
+			"name": "kashubian",
+			"stationcount": 1
+		},
+		{
+			"name": "kashmiri",
+			"stationcount": 1
+		},
+		{
+			"name": "indigenous languages",
+			"stationcount": 1
+		},
+		{
+			"name": "monoglian",
+			"stationcount": 1
+		},
+		{
+			"name": "inuktituk",
+			"stationcount": 1
+		},
+		{
+			"name": "iran",
+			"stationcount": 1
+		},
+		{
+			"name": "minang",
+			"stationcount": 1
+		},
+		{
+			"name": "irani",
+			"stationcount": 1
+		},
+		{
+			"name": "messapic",
+			"stationcount": 1
+		},
+		{
+			"name": "iraqi turkmen",
+			"stationcount": 1
+		},
+		{
+			"name": "masurian",
+			"stationcount": 1
+		},
+		{
+			"name": "manx",
+			"stationcount": 1
+		},
+		{
+			"name": "jamaican",
+			"stationcount": 1
+		},
+		{
+			"name": "juma",
+			"stationcount": 1
+		},
+		{
+			"name": "kachin",
+			"stationcount": 1
+		},
+		{
+			"name": "kampampangan",
+			"stationcount": 1
+		},
+		{
+			"name": "magesh",
+			"stationcount": 1
+		},
+		{
+			"name": "latvia",
+			"stationcount": 1
+		},
+		{
+			"name": "oromo amharic somali",
+			"stationcount": 1
+		},
+		{
+			"name": "shona",
+			"stationcount": 1
+		},
+		{
+			"name": "espa",
+			"stationcount": 1
+		},
+		{
+			"name": "españo",
+			"stationcount": 1
+		},
+		{
+			"name": "roots",
+			"stationcount": 1
+		},
+		{
+			"name": "română end english",
+			"stationcount": 1
+		},
+		{
+			"name": "español in catalán",
+			"stationcount": 1
+		},
+		{
+			"name": "español ingles",
+			"stationcount": 1
+		},
+		{
+			"name": "espsñol",
+			"stationcount": 1
+		},
+		{
+			"name": "evergreens",
+			"stationcount": 1
+		},
+		{
+			"name": "f",
+			"stationcount": 1
+		},
+		{
+			"name": "fench",
+			"stationcount": 1
+		},
+		{
+			"name": "r",
+			"stationcount": 1
+		},
+		{
+			"name": "québecois",
+			"stationcount": 1
+		},
+		{
+			"name": "quiché",
+			"stationcount": 1
+		},
+		{
+			"name": "qirimtatar",
+			"stationcount": 1
+		},
+		{
+			"name": "fra",
+			"stationcount": 1
+		},
+		{
+			"name": "russian/",
+			"stationcount": 1
+		},
+		{
+			"name": "esapa",
+			"stationcount": 1
+		},
+		{
+			"name": "shimaoré",
+			"stationcount": 1
+		},
+		{
+			"name": "engish",
+			"stationcount": 1
+		},
+		{
+			"name": "engleza",
+			"stationcount": 1
+		},
+		{
+			"name": "englidh",
+			"stationcount": 1
+		},
+		{
+			"name": "engligh",
+			"stationcount": 1
+		},
+		{
+			"name": "englisgh",
+			"stationcount": 1
+		},
+		{
+			"name": "englisj",
+			"stationcount": 1
+		},
+		{
+			"name": "engllish",
+			"stationcount": 1
+		},
+		{
+			"name": "san miguel",
+			"stationcount": 1
+		},
+		{
+			"name": "esan",
+			"stationcount": 1
+		},
+		{
+			"name": "samba e pagode",
+			"stationcount": 1
+		},
+		{
+			"name": "sakha",
+			"stationcount": 1
+		},
+		{
+			"name": "saint lucian creole",
+			"stationcount": 1
+		},
+		{
+			"name": "saba",
+			"stationcount": 1
+		},
+		{
+			"name": "s",
+			"stationcount": 1
+		},
+		{
+			"name": "potuguese",
+			"stationcount": 1
+		},
+		{
+			"name": "francia",
+			"stationcount": 1
+		},
+		{
+			"name": "geopn",
+			"stationcount": 1
+		},
+		{
+			"name": "germanhttps://stream.laut.fm/deutrockosterreich",
+			"stationcount": 1
+		},
+		{
+			"name": "pazeh",
+			"stationcount": 1
+		},
+		{
+			"name": "pashto /urdu",
+			"stationcount": 1
+		},
+		{
+			"name": "pashto",
+			"stationcount": 1
+		},
+		{
+			"name": "paraguay",
+			"stationcount": 1
+		},
+		{
+			"name": "ghana",
+			"stationcount": 1
+		},
+		{
+			"name": "panjabi",
+			"stationcount": 1
+		},
+		{
+			"name": "pali",
+			"stationcount": 1
+		},
+		{
+			"name": "gujrati",
+			"stationcount": 1
+		},
+		{
+			"name": "pacifica multi ethnic",
+			"stationcount": 1
+		},
+		{
+			"name": "gujurati",
+			"stationcount": 1
+		},
+		{
+			"name": "p",
+			"stationcount": 1
+		},
+		{
+			"name": "gwich'in",
+			"stationcount": 1
+		},
+		{
+			"name": "haiti creole",
+			"stationcount": 1
+		},
+		{
+			"name": "pfälzisch",
+			"stationcount": 1
+		},
+		{
+			"name": "garifuna",
+			"stationcount": 1
+		},
+		{
+			"name": "francés",
+			"stationcount": 1
+		},
+		{
+			"name": "portugués",
+			"stationcount": 1
+		},
+		{
+			"name": "portuguese brazillian",
+			"stationcount": 1
+		},
+		{
+			"name": "frysk",
+			"stationcount": 1
+		},
+		{
+			"name": "fränkisch",
+			"stationcount": 1
+		},
+		{
+			"name": "furlan",
+			"stationcount": 1
+		},
+		{
+			"name": "gagana samoa",
+			"stationcount": 1
+		},
+		{
+			"name": "portu",
+			"stationcount": 1
+		},
+		{
+			"name": "portguese",
+			"stationcount": 1
+		},
+		{
+			"name": "port",
+			"stationcount": 1
+		},
+		{
+			"name": "galaic–portuguese",
+			"stationcount": 1
+		},
+		{
+			"name": "por",
+			"stationcount": 1
+		},
+		{
+			"name": "polynesia",
+			"stationcount": 1
+		},
+		{
+			"name": "polka",
+			"stationcount": 1
+		},
+		{
+			"name": "pol",
+			"stationcount": 1
+		},
+		{
+			"name": "oscan",
+			"stationcount": 1
+		}
+	]
+}

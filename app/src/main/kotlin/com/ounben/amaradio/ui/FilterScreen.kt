@@ -32,9 +32,7 @@ fun FilterScreen(
                 .padding(8.dp)
                 .fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
         ) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Row(
@@ -72,13 +70,7 @@ fun FilterScreen(
                                     }
                                 }
                             },
-                            singleLine = true,
-                            colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
-                            )
+                            singleLine = true
                         )
 
                         // Country Filter
@@ -101,48 +93,27 @@ fun FilterScreen(
                             icon = Icons.Default.Language
                         )
 
-                        // Tag Filter with Auto-Complete
-                        TagAutoCompleteField(
+                        // Tag Filter (Now using the same dropdown style)
+                        FilterDropdown(
+                            label = stringResource(R.string.filter_tag),
                             value = uiState.tag,
-                            suggestions = uiState.suggestedTags,
-                            onValueChange = viewModel::onTagChange,
-                            onSelect = viewModel::onTagSelect,
-                            label = stringResource(R.string.filter_tag)
+                            options = uiState.tags,
+                            onSelect = { item -> viewModel.onTagSelect(item.label) },
+                            onClear = { viewModel.clearTag() },
+                            icon = Icons.Default.Tag
                         )
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Text(
-                                text = stringResource(R.string.filter_sort_by), 
-                                modifier = Modifier.padding(end = 8.dp),
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
-                            SortSpinner(
-                                selectedSort = uiState.sortBy,
-                                onSortChange = viewModel::onSortByChange
-                            )
+                            Text(text = stringResource(R.string.filter_sort_by), modifier = Modifier.padding(end = 8.dp), style = MaterialTheme.typography.bodyMedium)
+                            SortSpinner(selectedSort = uiState.sortBy, onSortChange = viewModel::onSortByChange)
                         }
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Checkbox(
-                                checked = uiState.reverse,
-                                onCheckedChange = viewModel::onReverseChange,
-                                colors = CheckboxDefaults.colors(
-                                    checkedColor = MaterialTheme.colorScheme.primary,
-                                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
-                            )
-                            Text(
-                                text = stringResource(R.string.filter_reverse), 
-                                style = MaterialTheme.typography.bodyMedium,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+                        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
+                            Checkbox(checked = uiState.reverse, onCheckedChange = viewModel::onReverseChange)
+                            Text(text = stringResource(R.string.filter_reverse), style = MaterialTheme.typography.bodyMedium)
                         }
 
                         Button(
@@ -150,11 +121,7 @@ fun FilterScreen(
                                 isExpanded = false
                                 viewModel.performSearch() 
                             },
-                            modifier = Modifier.fillMaxWidth(),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary,
-                                contentColor = MaterialTheme.colorScheme.onPrimary
-                            )
+                            modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(stringResource(R.string.filter_apply))
                         }
@@ -165,7 +132,7 @@ fun FilterScreen(
 
         if (uiState.isSearching) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+                CircularProgressIndicator()
             }
         } else if (uiState.error != null) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -217,13 +184,7 @@ fun FilterDropdown(
                     ExposedDropdownMenuDefaults.TrailingIcon(expanded = false)
                 }
             },
-            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth(),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable).fillMaxWidth()
         )
     }
 
@@ -249,8 +210,9 @@ fun SearchableSelectionDialog(
     onDismiss: () -> Unit
 ) {
     var searchQuery by remember { mutableStateOf("") }
+    // Filter optimization for large lists
     val filteredOptions = remember(searchQuery, options) {
-        if (searchQuery.isEmpty()) options
+        if (searchQuery.length < 2) options.take(200)
         else options.filter { it.label.contains(searchQuery, ignoreCase = true) }
     }
 
@@ -264,11 +226,7 @@ fun SearchableSelectionDialog(
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text(
-                    text = title,
-                    style = MaterialTheme.typography.headlineSmall,
-                    modifier = Modifier.padding(bottom = 16.dp)
-                )
+                Text(text = title, style = MaterialTheme.typography.headlineSmall, modifier = Modifier.padding(bottom = 16.dp))
 
                 OutlinedTextField(
                     value = searchQuery,
@@ -283,9 +241,12 @@ fun SearchableSelectionDialog(
                     modifier = Modifier.weight(1f),
                     contentPadding = PaddingValues(vertical = 8.dp)
                 ) {
-                    items(filteredOptions, key = { it.code }) { item ->
+                    items(filteredOptions, key = { it.code + it.count }) { item ->
                         ListItem(
                             headlineContent = { Text(item.label) },
+                            supportingContent = if (item.count > 0) {
+                                { Text("${item.count} stations") }
+                            } else null,
                             leadingContent = if (item.emoji.isNotEmpty()) {
                                 { Text(item.emoji, style = MaterialTheme.typography.headlineSmall) }
                             } else null,
@@ -294,71 +255,9 @@ fun SearchableSelectionDialog(
                     }
                 }
 
-                TextButton(
-                    onClick = onDismiss,
-                    modifier = Modifier.align(Alignment.End)
-                ) {
+                TextButton(onClick = onDismiss, modifier = Modifier.align(Alignment.End)) {
                     Text(stringResource(R.string.label_button_cancel))
                 }
-            }
-        }
-    }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TagAutoCompleteField(
-    value: String,
-    suggestions: List<String>,
-    onValueChange: (String) -> Unit,
-    onSelect: (String) -> Unit,
-    label: String
-) {
-    var expanded by remember { mutableStateOf(false) }
-
-    ExposedDropdownMenuBox(
-        expanded = expanded && suggestions.isNotEmpty(),
-        onExpandedChange = { if (!it) expanded = false },
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        OutlinedTextField(
-            value = value,
-            onValueChange = {
-                onValueChange(it)
-                expanded = it.isNotEmpty()
-            },
-            label = { Text(label) },
-            leadingIcon = { Icon(Icons.Default.Tag, contentDescription = null) },
-            trailingIcon = {
-                if (value.isNotEmpty()) {
-                    IconButton(onClick = { onValueChange("") }) {
-                        Icon(Icons.Default.Clear, contentDescription = "Clear")
-                    }
-                }
-            },
-            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryEditable).fillMaxWidth(),
-            singleLine = true,
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-        )
-        
-        ExposedDropdownMenu(
-            expanded = expanded && suggestions.isNotEmpty(),
-            onDismissRequest = { expanded = false },
-            containerColor = MaterialTheme.colorScheme.surface
-        ) {
-            suggestions.forEach { tag ->
-                DropdownMenuItem(
-                    text = { Text(tag, color = MaterialTheme.colorScheme.onSurface) },
-                    onClick = {
-                        onSelect(tag)
-                        expanded = false
-                    }
-                )
             }
         }
     }
@@ -379,31 +278,18 @@ fun SortSpinner(
     var expanded by remember { mutableStateOf(false) }
     val currentLabel = options.find { it.first == selectedSort }?.second ?: ""
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded }
-    ) {
+    ExposedDropdownMenuBox(expanded = expanded, onExpandedChange = { expanded = !expanded }) {
         OutlinedTextField(
             value = currentLabel,
             onValueChange = {},
             readOnly = true,
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = MaterialTheme.colorScheme.primary,
-                focusedLabelColor = MaterialTheme.colorScheme.primary,
-                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
-                unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+            modifier = Modifier.menuAnchor(MenuAnchorType.PrimaryNotEditable)
         )
-        ExposedDropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            containerColor = MaterialTheme.colorScheme.surface
-        ) {
+        ExposedDropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
             options.forEach { (value, label) ->
                 DropdownMenuItem(
-                    text = { Text(label, color = MaterialTheme.colorScheme.onSurface) },
+                    text = { Text(label) },
                     onClick = {
                         onSortChange(value)
                         expanded = false

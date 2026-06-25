@@ -57,34 +57,23 @@ class PlayStationTask(
         val ctx = contextRef.get() ?: return
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val AMARadioApp = ctx.applicationContext as AMARadioApp
-        AMARadioApp.historyManager.add(stationToPlay)
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
-        if (sharedPref.getBoolean("auto_favorite", false)) {
-            val favouriteManager = AMARadioApp.favouriteManager
-            if (!favouriteManager.has(stationToPlay.StationUuid)) {
-                favouriteManager.add(stationToPlay)
-                Toast.makeText(ctx, ctx.getString(R.string.notify_autostarred), Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        job = scope.launch {
+        
+        // Start playback logic immediately
+        job = scope.launch(Dispatchers.Main) {
             try {
+                // Get real link in background
                 val result = withContext(Dispatchers.IO) {
                     if (!stationToPlay.hasValidUuid()) {
-                        if (!stationToPlay.refresh(AMARadioApp.httpClient, ctx)) {
-                            return@withContext null
-                        }
+                        if (!stationToPlay.refresh(AMARadioApp.httpClient, ctx)) return@withContext null
                     }
                     Utils.getRealStationLink(AMARadioApp.httpClient, ctx.applicationContext, stationToPlay.StationUuid)
                 }
-
-                val context = contextRef.get() ?: return@launch
 
                 if (result != null) {
                     stationToPlay.playableUrl = result
                     playFunc.play(result)
                 } else {
-                    Toast.makeText(context.applicationContext, context.resources.getText(R.string.error_station_load), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
                 }
                 postExecuteTask?.onPostExecute(if (result != null) ExecutionResult.SUCCESS else ExecutionResult.FAILURE)
             } catch (e: Exception) {
@@ -92,6 +81,21 @@ class PlayStationTask(
                 postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
             } finally {
                 AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            }
+        }
+
+        // Parallel: Add to history and auto-favorite in background without blocking play start
+        scope.launch(Dispatchers.Default) {
+            AMARadioApp.historyManager.add(stationToPlay)
+            
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
+            if (sharedPref.getBoolean("auto_favorite", false)) {
+                if (!AMARadioApp.favouriteManager.has(stationToPlay.StationUuid)) {
+                    AMARadioApp.favouriteManager.add(stationToPlay)
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(ctx, R.string.notify_autostarred, Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
