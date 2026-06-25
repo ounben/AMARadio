@@ -58,33 +58,21 @@ class PlayStationTask(
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val AMARadioApp = ctx.applicationContext as AMARadioApp
         
-        // Start playback logic immediately
-        job = scope.launch(Dispatchers.Main) {
-            try {
-                // Get real link in background
-                val result = withContext(Dispatchers.IO) {
-                    if (!stationToPlay.hasValidUuid()) {
-                        if (!stationToPlay.refresh(AMARadioApp.httpClient, ctx)) return@withContext null
-                    }
-                    Utils.getRealStationLink(AMARadioApp.httpClient, ctx.applicationContext, stationToPlay.StationUuid)
-                }
-
-                if (result != null) {
-                    stationToPlay.playableUrl = result
-                    playFunc.play(result)
-                } else {
-                    Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
-                }
-                postExecuteTask?.onPostExecute(if (result != null) ExecutionResult.SUCCESS else ExecutionResult.FAILURE)
-            } catch (e: Exception) {
-                Log.e("PLAY", "Error in PlayStationTask", e)
-                postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
-            } finally {
-                AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
-            }
+        // Instant Start using provided URL only. 
+        // No click tracking feedback is sent to the server.
+        if (stationToPlay.StreamUrl.isNotEmpty()) {
+            stationToPlay.playableUrl = stationToPlay.StreamUrl
+            playFunc.play(stationToPlay.StreamUrl)
+            postExecuteTask?.onPostExecute(ExecutionResult.SUCCESS)
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
+        } else {
+            // Should not happen with current API results
+            Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
+            postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
+            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
         }
 
-        // Parallel: Add to history and auto-favorite in background without blocking play start
+        // Parallel: Add to history and auto-favorite in background
         scope.launch(Dispatchers.Default) {
             AMARadioApp.historyManager.add(stationToPlay)
             

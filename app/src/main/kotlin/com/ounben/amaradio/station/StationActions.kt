@@ -91,7 +91,6 @@ object StationActions {
         val app = context.applicationContext as AMARadioApp
         app.favouriteManager.add(station)
         (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_starred) }
-        vote(context, station)
     }
 
     @JvmStatic
@@ -145,18 +144,6 @@ object StationActions {
     fun playInAMARadio(context: Context, station: DataRadioStation) {
         Utils.playAndWarnIfMetered(context, station, PlayerType.AMARadio) {
             Utils.play(station)
-        }
-    }
-
-    private fun vote(context: Context, station: DataRadioStation) {
-        val contextRef = WeakReference(context)
-        scope.launch {
-            withContext(Dispatchers.IO) {
-                val ctx = contextRef.get() ?: return@withContext
-                val app = ctx.applicationContext as AMARadioApp
-                val httpClient = app.httpClient
-                Utils.downloadFeedRelative(httpClient, ctx, "json/vote/" + station.StationUuid, forceUpdate = true, dictParams = null)
-            }
         }
     }
 }

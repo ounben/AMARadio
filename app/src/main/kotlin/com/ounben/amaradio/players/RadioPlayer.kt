@@ -65,7 +65,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         val connectTimeout = prefs.getInt("stream_connect_timeout", 4)
         val readTimeout = prefs.getInt("stream_read_timeout", 10)
         val AMARadioApp = mainContext.applicationContext as AMARadioApp
-        val customizedHttpClient = AMARadioApp.newHttpClient()
+        val customizedHttpClient = AMARadioApp.httpClient.newBuilder()
             .connectTimeout(connectTimeout.seconds)
             .readTimeout(readTimeout.seconds)
             .build()
