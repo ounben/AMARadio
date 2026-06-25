@@ -49,7 +49,7 @@ fun StationList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(stations, key = { it.StationUuid.ifEmpty { it.hashCode().toString() } }) { station ->
+                items(stations, key = { it.StationUuid + it.Name }) { station ->
                     StationGridItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -60,7 +60,7 @@ fun StationList(
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(stations, key = { it.StationUuid.ifEmpty { it.hashCode().toString() } }) { station ->
+                items(stations, key = { it.StationUuid + it.Name }) { station ->
                     StationListItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -205,13 +205,13 @@ fun CategoryList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(categories) { category ->
+                items(categories, key = { it.Name }) { category ->
                     CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
                 }
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(categories) { category ->
+                items(categories, key = { it.Name }) { category ->
                     CategoryListItem(category = category, onClick = { onCategoryClick(category) })
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 16.dp),

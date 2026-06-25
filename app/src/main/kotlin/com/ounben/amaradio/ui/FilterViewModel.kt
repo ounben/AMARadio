@@ -143,21 +143,23 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     fun onTagChange(newTag: String) {
         _uiState.update { it.copy(tag = newTag) }
-        updateTagSuggestions(newTag)
+        viewModelScope.launch(Dispatchers.Default) {
+            updateTagSuggestions(newTag)
+        }
     }
 
     fun onTagSelect(selectedTag: String) {
         _uiState.update { it.copy(tag = selectedTag, suggestedTags = emptyList()) }
     }
 
-    private fun updateTagSuggestions(query: String) {
+    private suspend fun updateTagSuggestions(query: String) {
         if (query.length < 2) {
             _uiState.update { it.copy(suggestedTags = emptyList()) }
             return
         }
         
         val filtered = allTags.filter { 
-            it.lowercase(Locale.ROOT).contains(query.lowercase(Locale.ROOT)) 
+            it.contains(query, ignoreCase = true)
         }.take(20)
         
         _uiState.update { it.copy(suggestedTags = filtered) }
@@ -251,10 +253,10 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             }
             
             if (resultString != null) {
-                val stations = withContext(Dispatchers.Default) {
+                val filtered = withContext(Dispatchers.Default) {
                     DataRadioStation.DecodeJson(resultString) ?: emptyList()
                 }
-                _uiState.update { it.copy(stations = stations, isSearching = false) }
+                _uiState.update { it.copy(stations = filtered, isSearching = false) }
             } else {
                 _uiState.update { it.copy(isSearching = false, error = "Failed to fetch stations") }
             }

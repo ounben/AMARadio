@@ -5,7 +5,6 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -62,6 +61,12 @@ class FragmentPlayerFull : Fragment() {
     private lateinit var btnNext: ImageButton
     private lateinit var btnFavourite: ImageButton
 
+    // Cache to prevent redundant UI updates
+    private var currentStationUuid: String? = null
+    private var currentTitle: String? = null
+    private var isCurrentlyPlaying: Boolean = false
+    private var isFavoriteState: Boolean? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val AMARadioApp = requireActivity().application as AMARadioApp
@@ -86,7 +91,9 @@ class FragmentPlayerFull : Fragment() {
                 AppEventManager.events.collect { intent ->
                     when (intent.action) {
                         PlayerService.PLAYER_SERVICE_STATE_CHANGE,
-                        PlayerService.PLAYER_SERVICE_META_UPDATE -> fullUpdate()
+                        PlayerService.PLAYER_SERVICE_META_UPDATE -> {
+                            if (isVisible) fullUpdate() else initialized = false
+                        }
                     }
                 }
             }
@@ -111,6 +118,8 @@ class FragmentPlayerFull : Fragment() {
         val llmHistory = LinearLayoutManager(context)
         llmHistory.orientation = RecyclerView.VERTICAL
         recyclerViewHistory.layoutManager = llmHistory
+        recyclerViewHistory.setHasFixedSize(true)
+        recyclerViewHistory.isNestedScrollingEnabled = false
 
         val dividerItemDecoration = DividerItemDecoration(recyclerViewHistory.context, llmHistory.orientation)
         recyclerViewHistory.addItemDecoration(dividerItemDecoration)
@@ -124,25 +133,11 @@ class FragmentPlayerFull : Fragment() {
             }
         }
 
-        recyclerViewHistory.viewTreeObserver.let {
-            if (it.isAlive) {
-                it.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-                    override fun onGlobalLayout() {
-                        val layoutParams = recyclerViewHistory.layoutParams
-                        val newHeight = scrollViewContent.height
-                        if (newHeight != layoutParams.height) {
-                            layoutParams.height = newHeight
-                            recyclerViewHistory.layoutParams = layoutParams
-                        }
-                    }
-                })
-            }
-        }
-
         return view
     }
 
     fun init() {
+        if (!isAdded) return
         fullUpdate()
     }
 
@@ -155,7 +150,6 @@ class FragmentPlayerFull : Fragment() {
             } else {
                 playLastFromHistory()
             }
-            updatePlaybackButtons(PlayerServiceUtil.isPlaying())
         }
 
         btnPrev.setOnClickListener { PlayerServiceUtil.skipToPrevious() }
@@ -168,7 +162,6 @@ class FragmentPlayerFull : Fragment() {
             } else {
                 StationActions.markAsFavourite(requireContext(), station)
             }
-            updateFavouriteButton()
         }
 
         applyUiScaling()
@@ -260,36 +253,57 @@ class FragmentPlayerFull : Fragment() {
     }
 
     private fun fullUpdate() {
+        if (!isAdded || view == null) return
+        
         val station = Utils.getCurrentOrLastStation(requireContext())
-        if (station != null) {
-            val liveInfo = PlayerServiceUtil.getMetadataLive()
-            val streamTitle = liveInfo.title
-            textViewGeneralInfo.text = if (!TextUtils.isEmpty(streamTitle)) streamTitle else station.Name
+        val liveInfo = PlayerServiceUtil.getMetadataLive()
+        val streamTitle = liveInfo.title
+        val displayTitle = if (!TextUtils.isEmpty(streamTitle)) streamTitle else station?.Name ?: ""
+        val playing = PlayerServiceUtil.isPlaying()
+        val fav = station?.let { favouriteManager.has(it.StationUuid) } ?: false
 
-            val flag = CountryFlagsLoader.instance.getFlag(requireContext(), station.CountryCode)
-            flag?.let {
-                val k = it.intrinsicWidth.toFloat() / it.intrinsicHeight.toFloat()
-                val viewHeight = (textViewStationDescription.textSize * 1.3f).toInt()
-                it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
-            }
-            textViewStationDescription.setCompoundDrawablesRelative(flag, null, null, null)
-            textViewStationDescription.text = station.getLongDetails(requireContext())
-
-            val tags = station.TagsAll.split(",").toTypedArray()
-            viewTags.setTags(tags.toList())
+        // Optimization: Skip heavy UI updates if data hasn't changed
+        if (station?.StationUuid == currentStationUuid && 
+            displayTitle == currentTitle && 
+            playing == isCurrentlyPlaying &&
+            fav == isFavoriteState &&
+            initialized) {
+            return
         }
 
-        updatePlaybackButtons(PlayerServiceUtil.isPlaying())
-        updateFavouriteButton()
-        timedUpdateTask.run()
-        initialized = true
+        currentStationUuid = station?.StationUuid
+        currentTitle = displayTitle
+        isCurrentlyPlaying = playing
+        isFavoriteState = fav
+
+        view?.post {
+            if (!isAdded) return@post
+            
+            if (textViewGeneralInfo.text != displayTitle) {
+                textViewGeneralInfo.text = displayTitle
+            }
+
+            if (station != null) {
+                val flag = CountryFlagsLoader.instance.getFlag(requireContext(), station.CountryCode)
+                flag?.let {
+                    val k = it.intrinsicWidth.toFloat() / it.intrinsicHeight.toFloat()
+                    val viewHeight = (textViewStationDescription.textSize * 1.3f).toInt()
+                    it.setBounds(0, 0, (k * viewHeight).toInt(), viewHeight)
+                }
+                textViewStationDescription.setCompoundDrawablesRelative(flag, null, null, null)
+                textViewStationDescription.text = station.getLongDetails(requireContext())
+
+                val tags = station.TagsAll.split(",").map { it.trim() }.filter { it.isNotEmpty() }
+                viewTags.setTags(tags)
+            }
+
+            updatePlaybackButtons(playing)
+            updateFavouriteButton(fav)
+            initialized = true
+        }
     }
 
     private fun updatePlaybackButtons(playing: Boolean) {
-        updatePlayButton(playing)
-    }
-
-    private fun updatePlayButton(playing: Boolean) {
         if (playing) {
             btnPlay.setImageResource(R.drawable.ic_pause_circle)
             btnPlay.contentDescription = resources.getString(R.string.detail_pause)
@@ -299,17 +313,22 @@ class FragmentPlayerFull : Fragment() {
         }
     }
 
-    private fun updateFavouriteButton() {
-        val station = Utils.getCurrentOrLastStation(requireContext())
-        if (station != null && favouriteManager.has(station.StationUuid)) {
+    private fun updateFavouriteButton(isFav: Boolean) {
+        if (isFav) {
             btnFavourite.setImageResource(R.drawable.ic_star_24dp)
             btnFavourite.alpha = 1.0f
-            btnFavourite.contentDescription = requireContext().applicationContext.getString(R.string.detail_unstar)
+            btnFavourite.contentDescription = getString(R.string.detail_unstar)
         } else {
             btnFavourite.setImageResource(R.drawable.ic_star_transparent_with_border_24dp)
             btnFavourite.alpha = 0.5f
-            btnFavourite.contentDescription = requireContext().applicationContext.getString(R.string.detail_star)
+            btnFavourite.contentDescription = getString(R.string.detail_star)
         }
+    }
+
+    private fun updateFavouriteButton() {
+        val station = Utils.getCurrentOrLastStation(requireContext())
+        val fav = station?.let { favouriteManager.has(it.StationUuid) } ?: false
+        updateFavouriteButton(fav)
     }
 
     @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)

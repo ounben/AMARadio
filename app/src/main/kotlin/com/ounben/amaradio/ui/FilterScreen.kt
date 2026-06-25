@@ -318,14 +318,14 @@ fun TagAutoCompleteField(
 
     ExposedDropdownMenuBox(
         expanded = expanded && suggestions.isNotEmpty(),
-        onExpandedChange = { expanded = it },
+        onExpandedChange = { if (!it) expanded = false },
         modifier = Modifier.fillMaxWidth()
     ) {
         OutlinedTextField(
             value = value,
             onValueChange = {
                 onValueChange(it)
-                expanded = true
+                expanded = it.isNotEmpty()
             },
             label = { Text(label) },
             leadingIcon = { Icon(Icons.Default.Tag, contentDescription = null) },

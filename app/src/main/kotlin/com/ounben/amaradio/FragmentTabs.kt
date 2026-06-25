@@ -144,7 +144,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             HorizontalPager(
                 state = pagerState,
                 modifier = Modifier.weight(1f),
-                beyondViewportPageCount = 1
+                beyondViewportPageCount = 0
             ) { pageIndex ->
                 val tab = activeTabs[pageIndex]
                 TabContent(tab = tab)

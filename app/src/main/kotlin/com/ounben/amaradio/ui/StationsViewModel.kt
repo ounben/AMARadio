@@ -73,8 +73,8 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
 
             if (result != null) {
                 val filtered = withContext(Dispatchers.Default) {
-                    val stations = DataRadioStation.DecodeJson(result) ?: emptyList()
-                    stations.filter { showBroken || it.Working }
+                    val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
+                    decoded.filter { showBroken || it.Working }
                 }
                 _uiState.update { it.copy(stations = filtered, filteredStations = filtered, isLoading = false) }
             } else {
