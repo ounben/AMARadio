@@ -51,7 +51,7 @@ class HeadsetConnectionReceiver : BroadcastReceiver() {
             val historyManager = AMARadioApp.historyManager
             val lastStation = historyManager.first
             if (lastStation != null) {
-                if (!PlayerServiceUtil.isPlaying() && !AMARadioApp.mpdClient.isMpdEnabled) {
+                if (!PlayerServiceUtil.isPlaying()) {
                     Utils.playAndWarnIfMetered(AMARadioApp, lastStation, PlayerType.AMARadio) {
                         Utils.play(lastStation)
                     }

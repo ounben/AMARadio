@@ -18,7 +18,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.history.TrackHistoryRepository
-import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -39,7 +38,6 @@ class FragmentPlayerSmall : Fragment() {
         fun onToggle()
     }
 
-    private var mpdClient: MPDClient? = null
     private var callback: Callback? = null
     private var role = Role.PLAYER
 
@@ -57,7 +55,6 @@ class FragmentPlayerSmall : Fragment() {
         val view = inflater.inflate(R.layout.layout_player_small, container, false)
 
         val AMARadioApp = requireActivity().application as AMARadioApp
-        mpdClient = AMARadioApp.mpdClient
         trackHistoryRepository = AMARadioApp.trackHistoryRepository
 
         viewLifecycleOwner.lifecycleScope.launch {

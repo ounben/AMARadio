@@ -11,9 +11,6 @@ import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
-import com.ounben.amaradio.players.mpd.MPDClient
-import com.ounben.amaradio.players.mpd.MPDServerData
-import com.ounben.amaradio.players.mpd.tasks.MPDPlayTask
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,11 +43,6 @@ class PlayStationTask(
     private var job: Job? = null
 
     companion object {
-        @JvmStatic
-        fun playMPD(mpdClient: MPDClient, mpdServerData: MPDServerData, stationToPlay: DataRadioStation, ctx: Context): PlayStationTask {
-            return PlayStationTask(stationToPlay, ctx, { url -> mpdClient.enqueueTask(mpdServerData, MPDPlayTask(url, null)) }, null)
-        }
-
         @JvmStatic
         fun playExternal(stationToPlay: DataRadioStation, ctx: Context): PlayStationTask {
             return PlayStationTask(stationToPlay, ctx, { url ->

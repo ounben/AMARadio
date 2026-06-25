@@ -197,16 +197,10 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
-    <string name="alert_select_mpd_server">Please select a server</string>
-    <string name="alert_select_mpd_server_name">Server name</string>
-    <string name="alert_select_mpd_server_password">Server password</string>
+    <string name="alert_select_player">Please select a player</string>
+    <string name="alert_select_player_name">Name</string>
     <string name="hostname">Hostname</string>
     <string name="port">Port</string>
-
-    <string name="alert_select_mpd_server_add">Add</string>
-    <string name="alert_select_mpd_server_save">Save</string>
-    <string name="alert_select_mpd_server_remove">Remove</string>
-    <string name="alert_add_or_edit_mpd_server">Enter details about a server</string>
 
     <string name="alert_press_back_to_exit">Press back once more to exit</string>
 
@@ -249,18 +243,6 @@
 
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% Ad-Free &amp; Private</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">MPD port</string>
-    <string name="settings_view_mpd_servers">Your servers</string>
-    <string name="action_mpd_nok">MPD not connected</string>
-    <string name="action_mpd_ok">MPD connected</string>
-    <string name="action_mpd_connected">Connected to server: %1$s</string>
-
-    <string name="mpd_no_connection">No connection</string>
-    <string name="action_enable_mpd">Enable MPD</string>
-    <string name="action_disable_mpd">Disable MPD</string>
-    <string name="action_add_mpd_server">Add MPD server</string>
 
     <string name="action_play_in_external">Play in external player</string>
     <string name="action_choose_external_player">Choose external player</string>

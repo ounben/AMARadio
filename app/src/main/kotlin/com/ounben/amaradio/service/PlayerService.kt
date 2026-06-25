@@ -141,8 +141,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         override fun getBufferedSeconds(): Long = this@PlayerService.radioPlayer?.bufferedSeconds ?: 0
         override fun getLastPlayStartTime(): Long = this@PlayerService.lastPlayStartTime
         override fun getPauseReason(): PauseReason = this@PlayerService.pauseReason
-        override fun enableMPD(hostname: String, port: Int) {}
-        override fun disableMPD() {}
         override fun warnAboutMeteredConnection(playerType: PlayerType) { this@PlayerService.warnAboutMeteredConnection(playerType) }
         override fun isNotificationActive(): Boolean = this@PlayerService.notificationIsActive
     }

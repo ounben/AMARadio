@@ -39,7 +39,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                     "pref_category_interaction" -> pref.setIcon(R.drawable.ic_touch_app_24dp)
                     "pref_category_player" -> pref.setIcon(R.drawable.ic_play_arrow_24dp)
                     "pref_category_connectivity" -> pref.setIcon(R.drawable.ic_sync_black_24dp)
-                    "pref_category_mpd" -> pref.setIcon(R.drawable.ic_volume_up_24dp)
                     "pref_category_other" -> pref.setIcon(R.drawable.ic_live_help_24dp)
                 }
             }
@@ -118,13 +117,6 @@ class FragmentSettings : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             val proxySettingsDialog = ProxySettingsDialog()
             proxySettingsDialog.setCancelable(true)
             proxySettingsDialog.show(parentFragmentManager, "")
-            false
-        }
-
-        // MPD
-        findPreference<Preference>("mpd_servers_viewer")?.setOnPreferenceClickListener {
-            val AMARadioApp = requireActivity().application as AMARadioApp
-            Utils.showMpdServersDialog(AMARadioApp, requireActivity().supportFragmentManager, null)
             false
         }
 

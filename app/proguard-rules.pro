@@ -14,7 +14,6 @@
 -keep class com.ounben.amaradio.station.DataRadioStation { *; }
 -keep class com.ounben.amaradio.data.** { *; }
 -keep class com.ounben.amaradio.history.TrackHistoryEntry { *; }
--keep class com.ounben.amaradio.players.mpd.MPDServerData { *; }
 -keep class com.ounben.amaradio.proxy.ProxySettings { *; }
 -keep class com.ounben.amaradio.CountryCodeDictionary$Country { *; }
 

@@ -28,12 +28,6 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_mpd"
-        android:title="@string/settings_mpd"
-        android:icon="@drawable/mpd"
-        app:showAsAction="ifRoom" />
-
-    <item
         android:id="@+id/action_set_sleep_timer"
         android:icon="@drawable/ic_hourglass_empty_black_24dp"
         android:title="@string/nav_item_add_sleep"

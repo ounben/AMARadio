@@ -11,7 +11,6 @@ import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import com.ounben.amaradio.history.TrackHistoryRepository
-import com.ounben.amaradio.players.mpd.MPDClient
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.station.live.metadata.TrackMetadataSearcher
 import com.ounben.amaradio.utils.TvChannelManager
@@ -35,9 +34,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
 
     lateinit var trackHistoryRepository: TrackHistoryRepository
-        private set
-
-    lateinit var mpdClient: MPDClient
         private set
 
     lateinit var trackMetadataSearcher: TrackMetadataSearcher
@@ -93,7 +89,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         }
 
         trackHistoryRepository = TrackHistoryRepository(this)
-        mpdClient = MPDClient(this)
 
         val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
         audioThread.start()

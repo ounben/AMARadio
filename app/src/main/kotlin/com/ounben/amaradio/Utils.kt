@@ -294,26 +294,17 @@ object Utils {
     }
 
     @JvmStatic
-    fun showMpdServersDialog(context: Context, fragmentManager: FragmentManager, station: DataRadioStation?) {
-        val app = context.applicationContext as AMARadioApp
-        val oldFragment = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
-        if ((oldFragment != null) && oldFragment.isVisible) {
-            return
-        }
-        if (station == null) return
-        val playerSelectorDialogFragment = PlayerSelectorDialog(app.mpdClient, station)
-        playerSelectorDialogFragment.show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
-    }
-
-    @JvmStatic
     fun showPlaySelection(context: Context, station: DataRadioStation, fragmentManager: FragmentManager) {
-        val app = context.applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val externalAvailable = sharedPref.getBoolean("play_external", false)
-        val mpdAvailable = app.mpdClient.isMpdEnabled
 
-        if (externalAvailable || mpdAvailable) {
-            showMpdServersDialog(context, fragmentManager, station)
+        if (externalAvailable) {
+            val oldFragment = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
+            if ((oldFragment != null) && oldFragment.isVisible) {
+                return
+            }
+            val playerSelectorDialogFragment = PlayerSelectorDialog(station)
+            playerSelectorDialogFragment.show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
         } else {
             playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(station) }
         }

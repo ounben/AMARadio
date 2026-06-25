@@ -80,7 +80,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     private var menuItemLoad: MenuItem? = null
     private var menuItemIconsView: MenuItem? = null
     private var menuItemListView: MenuItem? = null
-    private var menuItemMpd: MenuItem? = null
     private var menuItemFilter: MenuItem? = null
     private lateinit var sharedPref: SharedPreferences
     private var selectedMenuItem = 0
@@ -432,7 +431,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemLoad = menu.findItem(R.id.action_load)
         menuItemListView = menu.findItem(R.id.action_list_view)
         menuItemIconsView = menu.findItem(R.id.action_icons_view)
-        menuItemMpd = menu.findItem(R.id.action_mpd)
         menuItemFilter = menu.findItem(R.id.action_filter_global)
         
         mSearchView = menuItemSearch?.actionView as? SearchView
@@ -506,12 +504,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         menuItemFilter?.isVisible = !isSearching
 
         val app = application as AMARadioApp
-        val mpdClient = app.mpdClient
-        val repository = mpdClient.mpdServersRepository
-        val mpdIsVisible = !repository.isEmpty && !isSearching
-
-        menuItemMpd?.isVisible = mpdIsVisible
-
         if (!isSearching) {
             when (selectedMenuItem) {
                 R.id.nav_item_stations -> {
@@ -663,14 +655,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
                 return true
             }
             R.id.action_set_sleep_timer -> {
-                changeTimer()
-                return true
-            }
-            R.id.action_mpd -> {
-                selectMPDServer()
-                return true
-            }
-            R.id.action_delete -> {
                 if (selectedMenuItem == R.id.nav_item_history) {
                     AlertDialog.Builder(this)
                         .setMessage(getString(R.string.alert_delete_history))
@@ -973,11 +957,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         seekDialog.create().show()
-    }
-
-    private fun selectMPDServer() {
-        val app = application as AMARadioApp
-        Utils.showMpdServersDialog(app, supportFragmentManager, null)
     }
 
     companion object {
