@@ -13,17 +13,13 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import androidx.core.content.IntentCompat
 import androidx.core.content.edit
-import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.preference.PreferenceManager
@@ -31,11 +27,8 @@ import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationBarView
-import com.google.android.material.tabs.TabLayout
 import com.ounben.amaradio.interfaces.IFragmentSearchable
 import com.ounben.amaradio.players.PlayState
-import com.ounben.amaradio.players.PlayStationTask
-import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.service.MediaSessionCallback
 import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -49,9 +42,6 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.io.BufferedWriter
-import java.io.InputStreamReader
-import java.io.OutputStreamWriter
 import java.util.Date
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -64,8 +54,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
 
     private var mSearchView: SearchView? = null
     private lateinit var appBarLayout: AppBarLayout
-    private lateinit var tabsView: TabLayout
-    private lateinit var mDrawerLayout: DrawerLayout
     private lateinit var mBottomNavigationView: BottomNavigationView
     private lateinit var mFragmentManager: FragmentManager
     private lateinit var containerView: View
@@ -130,14 +118,10 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         mFragmentManager = supportFragmentManager
 
         appBarLayout = findViewById(R.id.app_bar_layout)
-        tabsView = findViewById(R.id.tabs)
-        mDrawerLayout = findViewById(R.id.drawerLayout)
         mBottomNavigationView = findViewById(R.id.bottom_navigation)
         containerView = findViewById(R.id.containerView)
 
-        // Force Bottom Navigation
         mBottomNavigationView.setOnItemSelectedListener(this)
-        mDrawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
 
         smallPlayerFragment = mFragmentManager.findFragmentById(R.id.fragment_player_small) as? FragmentPlayerSmall
         fullPlayerFragment = mFragmentManager.findFragmentById(R.id.fragment_player_full) as? FragmentPlayerFull
@@ -153,17 +137,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         }
 
         smallPlayerFragment?.setCallback { toggleBottomSheetState() }
-        fullPlayerFragment?.setTouchInterceptListener { disallow ->
-            findViewById<View>(R.id.bottom_sheet).parent.requestDisallowInterceptTouchEvent(disallow)
-        }
-
-        val coordinatorLayoutParams = appBarLayout.layoutParams as CoordinatorLayout.LayoutParams
-        val appBarLayoutBehavior = object : AppBarLayout.Behavior() {
-            override fun onStartNestedScroll(parent: CoordinatorLayout, child: AppBarLayout, directTargetChild: View, target: View, nestedScrollAxes: Int, type: Int): Boolean {
-                return playerBottomSheet.state == BottomSheetBehavior.STATE_COLLAPSED
-            }
-        }
-        coordinatorLayoutParams.behavior = appBarLayoutBehavior
 
         val bottomSheetView = findViewById<View>(R.id.bottom_sheet)
         playerBottomSheet = BottomSheetBehavior.from(bottomSheetView)
@@ -182,28 +155,18 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
             private var oldState = BottomSheetBehavior.STATE_COLLAPSED
 
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-                if (newState == BottomSheetBehavior.STATE_DRAGGING && oldState == BottomSheetBehavior.STATE_EXPANDED) {
-                    if (fullPlayerFragment?.isScrolled == true) {
-                        playerBottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-                        return
-                    }
-                }
-
                 if (newState != BottomSheetBehavior.STATE_COLLAPSED && oldState == BottomSheetBehavior.STATE_COLLAPSED) {
                     fullPlayerFragment?.init()
                 }
 
                 if (newState == BottomSheetBehavior.STATE_EXPANDED) {
-                    if (smallPlayerFragment?.context != null) {
-                        appBarLayout.post { appBarLayout.setExpanded(false, false) }
-                        smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.HEADER)
-                    }
+                    appBarLayout.post { appBarLayout.setExpanded(false, false) }
+                    smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.HEADER)
                 } else if (newState == BottomSheetBehavior.STATE_COLLAPSED) {
                     appBarLayout.post { appBarLayout.setExpanded(true, false) }
                     smallPlayerFragment?.setRole(FragmentPlayerSmall.Role.PLAYER)
                     fullPlayerFragment?.resetScroll()
                 }
-
                 oldState = newState
             }
 
@@ -266,7 +229,6 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
         val iconSize = (24 * resources.displayMetrics.density * scale).toInt()
         mBottomNavigationView.itemIconSize = iconSize
 
-        // Increased base height to 84dp to accommodate the 3rd status line
         val baseHeightDp = 84f
         val scaledHeight = (baseHeightDp * resources.displayMetrics.density * scale).toInt()
         playerBottomSheet.peekHeight = scaledHeight
@@ -479,10 +441,9 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
     
     private fun onNavigationItemSelectedInternal(): Boolean {
-        preRenderJob?.cancel() // KILL background work IMMEDIATELY on any navigation
+        preRenderJob?.cancel()
         if (playerBottomSheet.state == BottomSheetBehavior.STATE_EXPANDED) playerBottomSheet.state = BottomSheetBehavior.STATE_COLLAPSED
         mSearchView?.clearFocus()
-        mDrawerLayout.closeDrawers()
 
         val tag = selectedMenuItem.toString()
         val targetFragment = mFragmentManager.findFragmentByTag(tag)
@@ -551,7 +512,7 @@ class ActivityMain : AppCompatActivity(), NavigationBarView.OnItemSelectedListen
     }
 
     fun searchStations(query: String) {
-        preRenderJob?.cancel() // Kill background work immediately on user input
+        preRenderJob?.cancel()
         listOf(R.id.nav_item_stations.toString(), R.id.nav_item_starred.toString(), R.id.nav_item_history.toString()).forEach { tag ->
             val fragment = mFragmentManager.findFragmentByTag(tag)
             if (fragment != null && fragment.isVisible && fragment is IFragmentSearchable) {
