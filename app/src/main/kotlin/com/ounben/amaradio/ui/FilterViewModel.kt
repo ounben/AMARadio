@@ -231,9 +231,13 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     fun performSearch() {
-        saveFilters()
         viewModelScope.launch {
             _uiState.update { it.copy(isSearching = true, error = null) }
+            
+            // Save filters in background to avoid UI hitch
+            withContext(Dispatchers.IO) {
+                saveFilters()
+            }
             
             val params = mutableMapOf<String, String>()
             val state = _uiState.value

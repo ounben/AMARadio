@@ -250,6 +250,7 @@ class FragmentTabs : Fragment(), IFragmentRefreshable, IFragmentSearchable {
             val pagerState = pagerStateRef
             if (pagerState != null) {
                 viewLifecycleOwner.lifecycleScope.launch {
+                    // Use instant scroll for search to free up CPU for list rendering
                     if (pagerState.currentPage != searchIndex) {
                         pagerState.scrollToPage(searchIndex)
                     }

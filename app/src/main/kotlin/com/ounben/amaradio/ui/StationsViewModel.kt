@@ -8,6 +8,7 @@ import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.SearchStyle
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,6 +18,7 @@ import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import android.content.SharedPreferences
 import java.net.URLEncoder
+import kotlin.time.Duration.Companion.milliseconds
 
 class StationsViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -61,6 +63,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
         currentUrl = url
 
         viewModelScope.launch {
+            if (!forceUpdate) delay(50.milliseconds) // Small delay to let animations settle
             _uiState.update { it.copy(isLoading = true, error = null) }
             
             val showBroken = sharedPref.getBoolean("show_broken", false)
@@ -72,11 +75,11 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             }
 
             if (result != null) {
-                val filtered = withContext(Dispatchers.Default) {
+                withContext(Dispatchers.Default) {
                     val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
-                    decoded.filter { showBroken || it.Working }
+                    val filtered = decoded.filter { showBroken || it.Working }
+                    _uiState.update { it.copy(stations = filtered, filteredStations = filtered, isLoading = false) }
                 }
-                _uiState.update { it.copy(stations = filtered, filteredStations = filtered, isLoading = false) }
             } else {
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
             }
@@ -96,7 +99,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             SearchStyle.ByCountryCodeExact -> "json/stations/bycountrycodeexact/$encodedQuery"
             SearchStyle.ByLanguageExact -> "json/stations/bylanguageexact/$encodedQuery"
         }
-        loadStations(url, forceUpdate = true)
+        loadStations(url, forceUpdate = false)
     }
 
     fun filter(query: String) {

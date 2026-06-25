@@ -44,16 +44,12 @@ import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import java.io.BufferedReader
 import java.io.File
-import java.io.FileInputStream
-import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStreamReader
 import java.net.InetSocketAddress
 import java.net.Proxy
+import java.security.MessageDigest
 import java.util.Date
-import java.util.Locale
 import java.util.concurrent.atomic.AtomicBoolean
 import java.util.regex.Pattern
 import kotlin.coroutines.resume
@@ -72,9 +68,7 @@ object Utils {
     }
 
     @JvmStatic
-    fun isTesting(): Boolean {
-        return testing.get()
-    }
+    fun isTesting(): Boolean = testing.get()
 
     @JvmStatic
     fun parseIntWithDefault(number: String?, defaultVal: Int): Int {
@@ -85,107 +79,65 @@ object Utils {
         }
     }
 
-    @JvmStatic
-    suspend fun getCacheFile(ctx: Context, theURI: String): String? = withContext(Dispatchers.IO) {
-        val chaine = StringBuilder("")
-        try {
-            var aFileName = theURI.lowercase(Locale.ROOT).replace("http://", "")
-            aFileName = aFileName.replace("https://", "")
-            aFileName = sanitizeName(aFileName)
+    private fun String.md5(): String {
+        val bytes = MessageDigest.getInstance("MD5").digest(this.toByteArray())
+        return bytes.joinToString("") { "%02x".format(it) }
+    }
 
-            val file = File(ctx.cacheDir.absolutePath + "/" + aFileName)
+    @JvmStatic
+    suspend fun getCacheFile(ctx: Context, cacheKey: String): String? = withContext(Dispatchers.IO) {
+        try {
+            val fileName = "cache_" + cacheKey.md5()
+            val file = File(ctx.cacheDir, fileName)
             if (!file.exists()) return@withContext null
             
-            val lastModDate = Date(file.lastModified())
-            val now = Date()
-            val millis = now.time - file.lastModified()
-            val secs = millis / 1000
-            val mins = secs / 60
-            val hours = mins / 60
-
-            if (isDebug) {
-                Log.d("UTIL", "File last modified : $lastModDate secs=$secs  mins=$mins hours=$hours")
-            }
+            val millis = System.currentTimeMillis() - file.lastModified()
+            val hours = millis / (1000 * 60 * 60)
 
             if (hours < 48) {
-                val aStream = FileInputStream(file)
-                val rd = BufferedReader(InputStreamReader(aStream))
-                var line: String?
-                while (rd.readLine().also { line = it } != null) {
-                    chaine.append(line)
-                }
-                rd.close()
-                if (isDebug) {
-                    Log.d("UTIL", "used cache for:$theURI")
-                }
-                return@withContext chaine.toString()
+                val content = file.readText(Charsets.UTF_8)
+                if (isDebug) Log.d("UTIL", "Used cache for: $cacheKey")
+                return@withContext content
+            } else {
+                if (isDebug) Log.d("UTIL", "Cache too old for: $cacheKey")
+                file.delete()
             }
-            if (isDebug) {
-                Log.d("UTIL", "do not use cache, because too old:$theURI")
-            }
-            return@withContext null
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            Log.e("UTIL", "Error reading cache", e)
         }
         null
     }
 
     @JvmStatic
-    suspend fun writeFileCache(ctx: Context, theURI: String, content: String) = withContext(Dispatchers.IO) {
+    suspend fun writeFileCache(ctx: Context, cacheKey: String, content: String) = withContext(Dispatchers.IO) {
         try {
-            var aFileName = theURI.lowercase(Locale.ROOT).replace("http://", "")
-            aFileName = aFileName.replace("https://", "")
-            aFileName = sanitizeName(aFileName)
-
-            val f = File(ctx.cacheDir.toString() + "/" + aFileName)
-            val aStream = FileOutputStream(f)
-            aStream.write(content.toByteArray(charset("utf-8")))
-            aStream.close()
-        } catch (_: Exception) {
-            Log.e("UTIL", "writeFileCache() could not write to cache file for:$theURI")
+            val fileName = "cache_" + cacheKey.md5()
+            val file = File(ctx.cacheDir, fileName)
+            file.writeText(content, Charsets.UTF_8)
+            if (isDebug) Log.d("UTIL", "Wrote cache file for: $cacheKey")
+        } catch (e: Exception) {
+            Log.e("UTIL", "Error writing cache", e)
         }
     }
 
-    /**
-     * Helper to wrap OkHttp Call in a suspend function
-     */
     private suspend fun Call.await(): Response = suspendCancellableCoroutine { continuation ->
         enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 continuation.resume(response)
             }
-
             override fun onFailure(call: Call, e: IOException) {
                 if (continuation.isCancelled) return
                 continuation.resumeWithException(e)
             }
         })
-
-        continuation.invokeOnCancellation {
-            cancel()
-        }
+        continuation.invokeOnCancellation { cancel() }
     }
 
-    private suspend fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, forceUpdate: Boolean, dictParams: Map<String, String>?, timeoutMs: Long? = null): String? {
-        Log.i("DOWN", "Url=$theURI")
-        if (!forceUpdate) {
-            val cache = getCacheFile(ctx, theURI)
-            if (cache != null) {
-                return cache
-            }
-        }
-        Log.i("DOWN", "Url=$theURI (not cached)")
-
+    private suspend fun downloadFeed(httpClient: OkHttpClient, ctx: Context, theURI: String, dictParams: Map<String, String>?, timeoutMs: Long? = null): String? = withContext(Dispatchers.IO) {
         try {
-            val urlBuilder = theURI.toHttpUrlOrNull()?.newBuilder() ?: return null
-            
-            if (dictParams != null) {
-                for ((key, value) in dictParams) {
-                    urlBuilder.addQueryParameter(key, value)
-                }
-            }
-            
+            val urlBuilder = theURI.toHttpUrlOrNull()?.newBuilder() ?: return@withContext null
+            dictParams?.forEach { (k, v) -> urlBuilder.addQueryParameter(k, v) }
             val url = urlBuilder.build()
-            Log.i("DOWN", "Final Url=$url")
             
             val client = if (timeoutMs != null) {
                 httpClient.newBuilder()
@@ -197,65 +149,65 @@ object Utils {
             }
 
             val request = Request.Builder().url(url).get().build()
-            
             client.newCall(request).await().use { response ->
-                val responseStr = response.body.string()
-
-                if (!response.isSuccessful) {
-                    Log.e("UTIL", "Unsuccessful response: ${response.code} ${response.message}\n$responseStr")
-                    return null
-                }
-
-                writeFileCache(ctx, theURI, responseStr)
-                if (isDebug) {
-                    Log.d("UTIL", "wrote cache file for:$theURI")
-                }
-                return responseStr
+                if (!response.isSuccessful) return@withContext null
+                return@withContext response.body.string()
             }
         } catch (_: Exception) {
         }
-        return null
+        null
     }
 
     @JvmStatic
     suspend fun downloadFeedRelative(httpClient: OkHttpClient, ctx: Context, theRelativeUri: String, forceUpdate: Boolean, dictParams: Map<String, String>?): String? {
-        if (theRelativeUri.isBlank()) {
-            Log.w("UTIL", "downloadFeedRelative: Relative URI is blank, skipping request.")
-            return null
+        if (theRelativeUri.isBlank()) return null
+
+        val cacheKey = theRelativeUri + (dictParams?.toString() ?: "")
+        
+        if (!forceUpdate) {
+            val cached = getCacheFile(ctx, cacheKey)
+            if (cached != null) return cached
         }
 
-        // Step 1: Try official radio-browser.info servers with strict 2s timeout
+        Log.i("DOWN", "Url=$theRelativeUri (not cached or forced)")
+
+        // Try official servers
         val currentServer = RadioBrowserServerManager.getCurrentServer()
         if (currentServer != null) {
             val endpoint = RadioBrowserServerManager.constructEndpoint(currentServer, theRelativeUri)
-            val result = downloadFeed(httpClient, ctx, endpoint, forceUpdate, dictParams, 2000L)
-            if (result != null) return result
+            val result = downloadFeed(httpClient, ctx, endpoint, dictParams, 2000L)
+            if (result != null) {
+                writeFileCache(ctx, cacheKey, result)
+                return result
+            }
             
-            // If current server failed, try rotating through the list once with strict timeout
-            val serverList = RadioBrowserServerManager.getServerList(forceRefresh = false)
+            // Rotation fallback
+            val serverList = RadioBrowserServerManager.getServerList(false)
             for (newServer in serverList) {
                 if (newServer == currentServer) continue
-                val rotatedEndpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
-                val rotatedResult = downloadFeed(httpClient, ctx, rotatedEndpoint, forceUpdate, dictParams, 2000L)
-                if (rotatedResult != null) {
+                val rotEndpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
+                val rotResult = downloadFeed(httpClient, ctx, rotEndpoint, dictParams, 2000L)
+                if (rotResult != null) {
                     RadioBrowserServerManager.setCurrentServer(newServer)
-                    return rotatedResult
+                    writeFileCache(ctx, cacheKey, rotResult)
+                    return rotResult
                 }
             }
         }
 
-        // Step 2: Fail-over to Mirror Mirror radiobrowser.ounben.com with standard timeout
-        Log.w("UTIL", "Official servers failed or timed out, trying mirror fallback...")
+        // Mirror fallback
         val mirrorEndpoint = RadioBrowserServerManager.constructEndpoint(RadioBrowserServerManager.getMirrorServer(), theRelativeUri)
-        return downloadFeed(httpClient, ctx, mirrorEndpoint, forceUpdate, dictParams)
+        val mirrorResult = downloadFeed(httpClient, ctx, mirrorEndpoint, dictParams)
+        if (mirrorResult != null) {
+            writeFileCache(ctx, cacheKey, mirrorResult)
+        }
+        return mirrorResult
     }
 
     @JvmStatic
     suspend fun getRealStationLink(httpClient: OkHttpClient, ctx: Context, stationId: String): String? {
-        Log.i("UTIL", "StationUUID:$stationId")
         val result = downloadFeedRelative(httpClient, ctx, "json/url/$stationId", true, null)
         if (result != null) {
-            Log.i("UTIL", result)
             return try {
                 val jsonObj = withContext(Dispatchers.Default) {
                     Json.parseToJsonElement(result).jsonObject
@@ -270,44 +222,25 @@ object Utils {
 
     @JvmStatic
     suspend fun getStationByUuid(httpClient: OkHttpClient, ctx: Context, stationUuid: String): DataRadioStation? {
-        Log.w("UTIL", "Search by uuid:$stationUuid")
-        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid/$stationUuid", forceUpdate = true, dictParams = null)
+        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid/$stationUuid", true, null)
         if (result != null) {
             try {
-                val list = withContext(Dispatchers.Default) {
-                    DataRadioStation.DecodeJson(result)
-                }
-                if (list != null) {
-                    if (list.size == 1) {
-                        return list[0]
-                    }
-                    Log.e("UTIL", "stations by uuid did have length:" + list.size)
-                }
-            } catch (_: Exception) {
-            }
+                val list = withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
+                if (list?.size == 1) return list[0]
+            } catch (_: Exception) {}
         }
         return null
     }
 
     @JvmStatic
     suspend fun getStationsByUuid(httpClient: OkHttpClient, ctx: Context, listUUids: Iterable<String>): List<DataRadioStation>? {
-        val uuids = TextUtils.join(",", listUUids)
-        Log.d("UTIL", "Search by uuid for items")
         val p = HashMap<String, String>()
-        p["uuids"] = uuids
-        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", forceUpdate = true, p)
+        p["uuids"] = TextUtils.join(",", listUUids)
+        val result = downloadFeedRelative(httpClient, ctx, "json/stations/byuuid", true, p)
         if (result != null) {
             try {
-                val list = withContext(Dispatchers.Default) {
-                    DataRadioStation.DecodeJson(result)
-                }
-                if (list != null) {
-                    return list
-                } else {
-                    Log.e("UTIL", "stations by uuid was null")
-                }
-            } catch (_: Exception) {
-            }
+                return withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
+            } catch (_: Exception) {}
         }
         return null
     }
@@ -317,8 +250,7 @@ object Utils {
         var station = PlayerServiceUtil.getCurrentStation()
         if (station == null) {
             val app = ctx.applicationContext as AMARadioApp
-            val historyManager = app.historyManager
-            station = historyManager.first
+            station = app.historyManager.first
         }
         return station
     }
@@ -326,15 +258,10 @@ object Utils {
     @JvmStatic
     fun showPlaySelection(context: Context, station: DataRadioStation, fragmentManager: FragmentManager) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val externalAvailable = sharedPref.getBoolean("play_external", false)
-
-        if (externalAvailable) {
-            val oldFragment = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
-            if ((oldFragment != null) && oldFragment.isVisible) {
-                return
-            }
-            val playerSelectorDialogFragment = PlayerSelectorDialog(station)
-            playerSelectorDialogFragment.show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
+        if (sharedPref.getBoolean("play_external", false)) {
+            val old = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
+            if (old != null && old.isVisible) return
+            PlayerSelectorDialog(station).show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
         } else {
             playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(station) }
         }
@@ -342,18 +269,12 @@ object Utils {
 
     @JvmStatic
     fun playAndWarnIfMetered(context: Context, station: DataRadioStation, playerType: PlayerType, playFunc: Runnable) {
-        playAndWarnIfMetered(
-            context,
-            station,
-            playerType,
-            playFunc,
-            object : MeteredWarningCallback {
-                override fun warn(station: DataRadioStation, playerType: PlayerType) {
-                    PlayerServiceUtil.setStation(station)
-                    PlayerServiceUtil.warnAboutMeteredConnection(playerType)
-                }
-            },
-        )
+        playAndWarnIfMetered(context, station, playerType, playFunc, object : MeteredWarningCallback {
+            override fun warn(station: DataRadioStation, playerType: PlayerType) {
+                PlayerServiceUtil.setStation(station)
+                PlayerServiceUtil.warnAboutMeteredConnection(playerType)
+            }
+        })
     }
 
     @JvmStatic
@@ -370,8 +291,7 @@ object Utils {
     fun playAndWarnIfMetered(context: Context, station: DataRadioStation, playerType: PlayerType,
                              playFunc: Runnable, warningCallback: MeteredWarningCallback) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val warnOnMetered = sharedPref.getBoolean("warn_no_wifi", false)
-        if (warnOnMetered && (ConnectivityChecker.getCurrentConnectionType(context) == ConnectivityChecker.ConnectionType.METERED)) {
+        if (sharedPref.getBoolean("warn_no_wifi", false) && (ConnectivityChecker.getCurrentConnectionType(context) == ConnectivityChecker.ConnectionType.METERED)) {
             warningCallback.warn(station, playerType)
         } else {
             playFunc.run()
@@ -385,20 +305,10 @@ object Utils {
 
     @JvmStatic
     fun shouldLoadIcons(context: Context): Boolean {
-        when (loadIcons) {
-            -1 -> {
-                return if (PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getBoolean("load_icons", false)) {
-                    loadIcons = 1
-                    true
-                } else {
-                    loadIcons = 0
-                    false
-                }
-            }
-            0 -> return false
-            1 -> return true
-        }
-        return false
+        if (loadIcons != -1) return loadIcons == 1
+        val result = PreferenceManager.getDefaultSharedPreferences(context.applicationContext).getBoolean("load_icons", false)
+        loadIcons = if (result) 1 else 0
+        return result
     }
 
     @JvmStatic
@@ -412,56 +322,52 @@ object Utils {
         val isDark = when (getTheme(context)) {
             "dark" -> true
             "light" -> false
-            "system" -> (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
-            // Backward compatibility for translated strings
-            context.resources.getString(R.string.theme_dark) -> true
-            context.resources.getString(R.string.theme_light) -> false
-            else -> false
+            else -> (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
         }
-
         return if (isDark) R.style.MyMaterialTheme_Dark else R.style.MyMaterialTheme
     }
 
     @JvmStatic
-    fun isDarkTheme(context: Context): Boolean {
-        return getThemeResId(context) == R.style.MyMaterialTheme_Dark
+    fun isDarkTheme(context: Context): Boolean = getThemeResId(context) == R.style.MyMaterialTheme_Dark
+
+    @JvmStatic
+    fun setOkHttpProxy(builder: OkHttpClient.Builder, proxySettings: ProxySettings): Boolean {
+        if (proxySettings.type == Proxy.Type.DIRECT) return true
+        if (proxySettings.host.isEmpty() || proxySettings.port !in (1..65535)) return false
+        val proxyAddress = InetSocketAddress.createUnresolved(proxySettings.host, proxySettings.port)
+        builder.proxy(Proxy(proxySettings.type, proxyAddress))
+        if (proxySettings.login.isNotEmpty()) {
+            builder.authenticator { _, response ->
+                val credential = Credentials.basic(proxySettings.login, proxySettings.password)
+                response.request.newBuilder().header("Proxy-Authorization", credential).build()
+            }
+        }
+        return true
     }
 
     @JvmStatic
-    fun sanitizeName(str: String): String {
-        return str.replace("\\W+".toRegex(), "_").replace("^_+".toRegex(), "").replace("_+$".toRegex(), "")
-    }
+    fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder = client
 
     @JvmStatic
     fun hasAnyConnection(context: Context): Boolean {
         val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connManager.activeNetwork ?: return false
-        val capabilities = connManager.getNetworkCapabilities(network) ?: return false
+        val capabilities = connManager.getNetworkCapabilities(connManager.activeNetwork) ?: return false
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     @JvmStatic
-    fun bottomNavigationEnabled(context: Context): Boolean {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        return sharedPref.getBoolean("bottom_navigation", true)
-    }
+    fun bottomNavigationEnabled(context: Context): Boolean = PreferenceManager.getDefaultSharedPreferences(context).getBoolean("bottom_navigation", true)
 
     @JvmStatic
     fun themeAttributeToColor(themeAttributeId: Int, context: Context, fallbackColorId: Int): Int {
         val outValue = TypedValue()
-        val theme = context.theme
-        val wasResolved = theme.resolveAttribute(themeAttributeId, outValue, true)
-        return if (wasResolved) {
+        return if (context.theme.resolveAttribute(themeAttributeId, outValue, true)) {
             if (outValue.resourceId == 0) outValue.data else ContextCompat.getColor(context, outValue.resourceId)
-        } else {
-            fallbackColorId
-        }
+        } else fallbackColorId
     }
 
     @JvmStatic
-    fun getAccentColor(context: Context): Int {
-        return themeAttributeToColor(androidx.appcompat.R.attr.colorAccent, context, Color.LTGRAY)
-    }
+    fun getAccentColor(context: Context): Int = themeAttributeToColor(androidx.appcompat.R.attr.colorAccent, context, Color.LTGRAY)
 
     @JvmStatic
     fun showSnackbar(view: View, message: String) {
@@ -472,39 +378,9 @@ object Utils {
     }
 
     @JvmStatic
-    fun showSnackbar(view: View, resId: Int) {
-        showSnackbar(view, view.context.getString(resId))
-    }
-
-    @JvmStatic
     fun showModernToast(activity: Activity, resId: Int) {
-        val view = activity.findViewById(android.R.id.content) ?: activity.window.decorView
-        showSnackbar(view, resId)
-    }
-
-    @JvmStatic
-    fun setOkHttpProxy(builder: OkHttpClient.Builder, proxySettings: ProxySettings): Boolean {
-        if (proxySettings.type == Proxy.Type.DIRECT) {
-            return true
-        }
-        if (proxySettings.host.isEmpty()) {
-            return false
-        }
-        if (proxySettings.port !in (1..65535)) {
-            return false
-        }
-        val proxyAddress = InetSocketAddress.createUnresolved(proxySettings.host, proxySettings.port)
-        val proxy = Proxy(proxySettings.type, proxyAddress)
-        builder.proxy(proxy)
-        if (proxySettings.login.isNotEmpty()) {
-            builder.authenticator { _, response ->
-                val credential = Credentials.basic(proxySettings.login, proxySettings.password)
-                response.request.newBuilder()
-                    .header("Proxy-Authorization", credential)
-                    .build()
-            }
-        }
-        return true
+        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
+        showSnackbar(view, activity.getString(resId))
     }
 
     @JvmStatic
@@ -517,32 +393,18 @@ object Utils {
 
     @JvmStatic
     fun getMimeType(url: String, defaultMimeType: String?): String? {
-        var type = defaultMimeType
         val extension = MimeTypeMap.getFileExtensionFromUrl(url)
-        if (extension != null) {
-            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension)
-        }
-        return type
-    }
-
-    @JvmStatic
-    fun enableTls12OnPreLollipop(client: OkHttpClient.Builder): OkHttpClient.Builder {
-        return client
+        return if (extension != null) MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) else defaultMimeType
     }
 
     @JvmStatic
     fun createShortcut(ctx: Context, station: DataRadioStation, bitmap: Bitmap?): ShortcutInfo {
         val playByUUIDintent = Intent(MediaSessionCallback.ACTION_PLAY_STATION_BY_UUID, null, ctx, ActivityMain::class.java)
             .putExtra(MediaSessionCallback.EXTRA_STATION_UUID, station.StationUuid)
-        
         val builder = ShortcutInfo.Builder(ctx.applicationContext, ctx.packageName + "/" + station.StationUuid)
             .setShortLabel(station.Name)
             .setIntent(playByUUIDintent)
-        
-        bitmap?.let {
-            builder.setIcon(Icon.createWithBitmap(it))
-        }
-        
+        bitmap?.let { builder.setIcon(Icon.createWithBitmap(it)) }
         return builder.build()
     }
 }

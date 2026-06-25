@@ -49,7 +49,10 @@ fun StationList(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                items(stations, key = { it.StationUuid + it.Name }) { station ->
+                items(
+                    items = stations,
+                    key = { it.StationUuid } // Use only UUID for stability
+                ) { station ->
                     StationGridItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -60,7 +63,10 @@ fun StationList(
             }
         } else {
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(stations, key = { it.StationUuid + it.Name }) { station ->
+                items(
+                    items = stations,
+                    key = { it.StationUuid } // Use only UUID for stability
+                ) { station ->
                     StationListItem(
                         station = station,
                         isFavorite = isFavorite(station.StationUuid),
@@ -70,7 +76,7 @@ fun StationList(
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         thickness = 0.5.dp,
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
                     )
                 }
             }
@@ -87,18 +93,19 @@ fun StationListItem(
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
+    val details = remember(station.ClickCount, station.Votes, station.Language) { station.getShortDetails(context) }
     
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(12.dp),
+            .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = station.IconUrl,
             contentDescription = null,
-            modifier = Modifier.size(48.dp),
+            modifier = Modifier.size(44.dp),
             error = painterResource(R.drawable.ic_radio_24dp),
             placeholder = painterResource(R.drawable.ic_radio_24dp)
         )
@@ -113,25 +120,16 @@ fun StationListItem(
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "$flagEmoji ${station.getShortDetails(context)}",
+                text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1
             )
-            if (station.TagsAll.isNotEmpty()) {
-                Text(
-                    text = station.TagsAll.replace(",", ", "),
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.primary,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
         }
         IconButton(onClick = onFavoriteClick) {
             Icon(
                 imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                contentDescription = if (isFavorite) "Remove from favorites" else "Add to favorites",
+                contentDescription = null,
                 tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -150,13 +148,13 @@ fun StationGridItem(
             .padding(4.dp)
             .aspectRatio(1f)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
     ) {
         Box(modifier = Modifier.fillMaxSize()) {
             AsyncImage(
                 model = station.IconUrl,
                 contentDescription = null,
-                modifier = Modifier.fillMaxSize().padding(16.dp),
+                modifier = Modifier.fillMaxSize().padding(12.dp),
                 contentScale = ContentScale.Fit,
                 error = painterResource(R.drawable.ic_radio_24dp),
                 placeholder = painterResource(R.drawable.ic_radio_24dp)
@@ -164,13 +162,13 @@ fun StationGridItem(
             
             IconButton(
                 onClick = onFavoriteClick,
-                modifier = Modifier.align(Alignment.TopEnd).size(32.dp)
+                modifier = Modifier.align(Alignment.TopEnd).size(30.dp)
             ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                     contentDescription = null,
                     tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(18.dp)
+                    modifier = Modifier.size(16.dp)
                 )
             }
             
@@ -179,9 +177,9 @@ fun StationGridItem(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
                     .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.6f))
-                    .padding(4.dp),
-                color = Color.White, // Always white on black background for contrast
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .padding(2.dp),
+                color = Color.White,
                 style = MaterialTheme.typography.labelSmall,
                 textAlign = TextAlign.Center,
                 maxLines = 1,
@@ -216,7 +214,7 @@ fun CategoryList(
                     HorizontalDivider(
                         modifier = Modifier.padding(horizontal = 16.dp),
                         thickness = 0.5.dp,
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
+                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
                     )
                 }
             }
@@ -233,11 +231,11 @@ fun CategoryListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(16.dp),
+            .padding(12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CategoryIcon(category = category, modifier = Modifier.size(40.dp))
-        Spacer(modifier = Modifier.width(16.dp))
+        CategoryIcon(category = category, modifier = Modifier.size(36.dp))
+        Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = category.Label ?: category.Name,
@@ -263,14 +261,14 @@ fun CategoryGridItem(
         modifier = Modifier
             .padding(4.dp)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
     ) {
         Column(
-            modifier = Modifier.padding(12.dp).fillMaxWidth(),
+            modifier = Modifier.padding(8.dp).fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CategoryIcon(category = category, modifier = Modifier.size(48.dp))
-            Spacer(modifier = Modifier.height(8.dp))
+            CategoryIcon(category = category, modifier = Modifier.size(44.dp))
+            Spacer(modifier = Modifier.height(4.dp))
             Text(
                 text = category.Label ?: category.Name,
                 style = MaterialTheme.typography.labelMedium,
