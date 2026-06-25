@@ -65,7 +65,7 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Persistence**: Room Database for history, SharedPreferences for configuration
 - **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
-- **Target SDK**: 37 (Android 15)
+- **Target SDK**: 37 (Android 17)
 - **Minimum SDK**: 26 (Android 8.0)
 
 ## Contributing
