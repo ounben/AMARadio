@@ -8,13 +8,11 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -28,7 +26,6 @@ import kotlinx.coroutines.launch
 private sealed class MainTab {
     object Local : MainTab()
     data class Filter(val index: Int, val id: String, val label: String) : MainTab()
-    object Search : MainTab()
 }
 
 @Composable
@@ -44,14 +41,13 @@ fun TabsScreen(
     val filterState by filterViewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
 
-    // 1. Build Dynamic Tab List
+    // Build Dynamic Tab List (Removed Search Tab)
     val tabs = remember(countryCode, filterState.tabs) {
         mutableListOf<MainTab>().apply {
             if (countryCode != null) add(MainTab.Local)
             filterState.tabs.forEachIndexed { index, tab ->
                 add(MainTab.Filter(index, tab.id, tab.label))
             }
-            add(MainTab.Search)
         }
     }
 
@@ -60,7 +56,7 @@ fun TabsScreen(
         pageCount = { tabs.size }
     )
 
-    // Sync Pager -> ViewModel (so FilterScreen knows which tab is active)
+    // Sync Pager -> ViewModel
     LaunchedEffect(pagerState.currentPage, tabs) {
         val currentTab = tabs.getOrNull(pagerState.currentPage)
         if (currentTab is MainTab.Filter) {
@@ -98,7 +94,6 @@ fun TabsScreen(
                             val title = when (tab) {
                                 is MainTab.Local -> stringResource(R.string.action_local)
                                 is MainTab.Filter -> tab.label.ifBlank { "..." }
-                                is MainTab.Search -> stringResource(R.string.action_search)
                             }
                             
                             Text(
@@ -112,13 +107,11 @@ fun TabsScreen(
                 }
             }
 
-            // Global Add Filter Button next to tabs
             if (filterState.tabs.size < 5) {
                 IconButton(
                     onClick = { 
                         filterViewModel.addTab()
                         coroutineScope.launch {
-                            // Find the index of the last filter tab (which is the new one)
                             val lastFilterIndex = tabs.indexOfLast { it is MainTab.Filter }
                             if (lastFilterIndex != -1) {
                                 pagerState.animateScrollToPage(lastFilterIndex + 1)
@@ -138,7 +131,6 @@ fun TabsScreen(
             beyondViewportPageCount = 0,
             verticalAlignment = Alignment.Top
         ) { pageIndex ->
-            // Safety check for dynamic tabs
             if (pageIndex >= tabs.size) return@HorizontalPager
 
             when (val tab = tabs[pageIndex]) {
@@ -159,19 +151,6 @@ fun TabsScreen(
                     FilterScreen(
                         viewModel = filterViewModel,
                         tabIndex = tab.index,
-                        onStationClick = onStationClick,
-                        onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                            else app.favouriteManager.add(station)
-                        },
-                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
-                    )
-                }
-                is MainTab.Search -> {
-                    val stationsViewModel: StationsViewModel = viewModel(key = "search_stations")
-                    StationsScreen(
-                        viewModel = stationsViewModel,
-                        url = "",
                         onStationClick = onStationClick,
                         onFavoriteClick = { station ->
                             if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
