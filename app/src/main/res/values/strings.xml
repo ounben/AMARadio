@@ -46,6 +46,15 @@
     <string name="action_edit">Edit</string>
     <string name="action_copy_info">Copy Info</string>
     <string name="action_rename_tab">Rename Tab</string>
+    <string name="error_filter_name_required">Please enter a name for this filter tab first</string>
+    <string name="confirm_delete_filter_tab">Are you sure you want to delete the filter \"%1$s\"?</string>
+    <string name="filter_empty_title">Build Your Custom Radio Station Feed</string>
+    <string name="filter_empty_desc">Create a personalized view by combining multiple criteria. You can narrow down your search using:</string>
+    <string name="filter_empty_filter_by">Filter by</string>
+    <string name="filter_empty_filter_desc">Country, Station Name, Tags, or Language</string>
+    <string name="filter_empty_sort_by">Sort by</string>
+    <string name="filter_empty_sort_desc">Clicks, Alphabet, Votes, or Last Change</string>
+    <string name="filter_empty_hint">Type a name in the field above to save this custom view!</string>
     <string name="error_station_load">Could not connect to station</string>
     <string name="error_list_update">Could not connect to radio browser server</string>
 

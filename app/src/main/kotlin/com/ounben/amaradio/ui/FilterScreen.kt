@@ -1,5 +1,6 @@
 package com.ounben.amaradio.ui
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -7,20 +8,27 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,21 +39,27 @@ import com.ounben.amaradio.station.DataRadioStation
 @Composable
 fun FilterScreen(
     viewModel: FilterViewModel,
+    tabIndex: Int,
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    var isExpanded by remember { mutableStateOf(true) }
+    val currentTab = uiState.tabs.getOrNull(tabIndex) ?: return
+    
+    // rememberSaveable ensures the state persists during scroll and pager recycling
+    var isExpanded by rememberSaveable(tabIndex) { mutableStateOf(currentTab.label.isBlank()) }
+    var showDeleteConfirm by remember { mutableStateOf(false) }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        // 1. FILTER CARD WITH COLLAPSIBLE MENU
         Surface(
             modifier = Modifier.fillMaxWidth().padding(8.dp),
             shape = RoundedCornerShape(12.dp),
-            tonalElevation = 0.dp,
             color = MaterialTheme.colorScheme.surfaceVariant
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
+                // Header / Toggle Row (Always visible)
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -58,10 +72,13 @@ fun FilterScreen(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = stringResource(R.string.action_filter),
-                        style = MaterialTheme.typography.titleMedium,
+                        text = if (currentTab.label.isNotBlank()) currentTab.label else stringResource(R.string.action_filter),
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = if (currentTab.label.isNotBlank()) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f)
                     )
                     Icon(
                         imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.FilterList,
@@ -73,39 +90,46 @@ fun FilterScreen(
                 AnimatedVisibility(visible = isExpanded) {
                     Column(
                         modifier = Modifier.padding(top = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
                     ) {
-                        // Rename Tab
+                        // RENAME FIELD (Styled to match other fields)
                         CustomFilterField(
                             label = stringResource(R.string.action_rename_tab),
-                            value = uiState.tabName,
+                            value = currentTab.label,
                             icon = Icons.AutoMirrored.Filled.Label,
-                            onValueChange = viewModel::onTabNameChange,
-                            onClear = { viewModel.onTabNameChange("") }
+                            onValueChange = { viewModel.updateTabLabel(tabIndex, it) },
+                            onClear = { viewModel.updateTabLabel(tabIndex, "") }
                         )
 
+                        HorizontalDivider(
+                            modifier = Modifier.padding(vertical = 2.dp),
+                            thickness = 0.5.dp,
+                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
+                        )
+
+                        // CRITERIA FIELDS
                         CustomFilterField(
                             label = stringResource(R.string.detail_name),
-                            value = uiState.name,
+                            value = currentTab.name,
                             icon = Icons.Default.Search,
-                            onValueChange = viewModel::onNameChange,
-                            onClear = { viewModel.onNameChange("") }
+                            onValueChange = { viewModel.onNameChange(tabIndex, it) },
+                            onClear = { viewModel.onNameChange(tabIndex, "") }
                         )
 
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             CustomFilterField(
                                 label = stringResource(R.string.filter_country),
-                                value = if (uiState.countryEmoji.isNotEmpty()) "${uiState.countryEmoji} ${uiState.countryLabel}" else uiState.countryLabel,
+                                value = if (currentTab.countryEmoji.isNotEmpty()) "${currentTab.countryEmoji} ${currentTab.countryLabel}" else currentTab.countryLabel,
                                 icon = Icons.Default.Public,
                                 isReadOnly = true,
                                 modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearCountry() },
+                                onClear = { viewModel.clearCountry(tabIndex) },
                                 dialogContent = { onDismiss ->
                                     SearchableSelectionDialog(
                                         title = stringResource(R.string.filter_country),
                                         options = uiState.countries,
                                         onSelect = { item -> 
-                                            viewModel.onCountrySelect(item.code, item.label)
+                                            viewModel.onCountrySelect(tabIndex, item.code, item.label)
                                             onDismiss()
                                         },
                                         onDismiss = onDismiss
@@ -114,17 +138,17 @@ fun FilterScreen(
                             )
                             CustomFilterField(
                                 label = stringResource(R.string.filter_language),
-                                value = uiState.languageLabel,
+                                value = currentTab.languageLabel,
                                 icon = Icons.Default.Language,
                                 isReadOnly = true,
                                 modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearLanguage() },
+                                onClear = { viewModel.clearLanguage(tabIndex) },
                                 dialogContent = { onDismiss ->
                                     SearchableSelectionDialog(
                                         title = stringResource(R.string.filter_language),
                                         options = uiState.languages,
                                         onSelect = { item -> 
-                                            viewModel.onLanguageSelect(item.code, item.label)
+                                            viewModel.onLanguageSelect(tabIndex, item.code, item.label)
                                             onDismiss()
                                         },
                                         onDismiss = onDismiss
@@ -136,17 +160,17 @@ fun FilterScreen(
                         Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             CustomFilterField(
                                 label = stringResource(R.string.filter_tag),
-                                value = uiState.tag,
+                                value = currentTab.tag,
                                 icon = Icons.Default.Tag,
                                 isReadOnly = true,
                                 modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearTag() },
+                                onClear = { viewModel.clearTag(tabIndex) },
                                 dialogContent = { onDismiss ->
                                     SearchableSelectionDialog(
                                         title = stringResource(R.string.filter_tag),
                                         options = uiState.tags,
                                         onSelect = { item -> 
-                                            viewModel.onTagSelect(item.label)
+                                            viewModel.onTagSelect(tabIndex, item.label)
                                             onDismiss()
                                         },
                                         onDismiss = onDismiss
@@ -154,8 +178,8 @@ fun FilterScreen(
                                 }
                             )
                             SortField(
-                                selectedSort = uiState.sortBy,
-                                onSortChange = viewModel::onSortByChange,
+                                selectedSort = currentTab.sortBy,
+                                onSortChange = { viewModel.onSortByChange(tabIndex, it) },
                                 modifier = Modifier.weight(1f)
                             )
                         }
@@ -165,21 +189,42 @@ fun FilterScreen(
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween
                         ) {
-                            IconButton(
-                                onClick = { viewModel.onReverseChange(!uiState.reverse) },
-                                modifier = Modifier.size(36.dp)
-                            ) {
-                                Icon(
-                                    imageVector = if (uiState.reverse) Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
-                                    contentDescription = "Direction",
-                                    tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                )
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                IconButton(
+                                    onClick = { viewModel.onReverseChange(tabIndex, !currentTab.reverse) },
+                                    modifier = Modifier.size(36.dp)
+                                ) {
+                                    Icon(
+                                        imageVector = if (currentTab.reverse) Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
+                                        contentDescription = "Direction",
+                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
+                                }
+
+                                if (uiState.tabs.size > 1) {
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    IconButton(
+                                        onClick = { showDeleteConfirm = true },
+                                        modifier = Modifier.size(36.dp)
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.Delete,
+                                            contentDescription = "Delete Tab",
+                                            tint = MaterialTheme.colorScheme.onSurface // Requested White in Dark Mode / Black in Light
+                                        )
+                                    }
+                                }
                             }
 
+                            val context = LocalContext.current
                             Button(
                                 onClick = { 
-                                    isExpanded = false
-                                    viewModel.performSearch() 
+                                    if (currentTab.label.isBlank()) {
+                                        Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
+                                    } else {
+                                        isExpanded = false
+                                        viewModel.performSearch(tabIndex) 
+                                    }
                                 },
                                 shape = RoundedCornerShape(8.dp),
                                 contentPadding = PaddingValues(horizontal = 20.dp),
@@ -196,24 +241,137 @@ fun FilterScreen(
             }
         }
 
-        if (uiState.isSearching) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                CircularProgressIndicator(color = AmaradioAmber)
-            }
-        } else if (uiState.error != null) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text(text = uiState.error!!, color = MaterialTheme.colorScheme.error)
-            }
+        // 2. CONTENT AREA / EMPTY STATE
+        if (currentTab.label.trim().isEmpty()) {
+            FilterEmptyState()
         } else {
-            StationList(
-                stations = uiState.stations,
-                isGrid = uiState.isGrid,
-                onStationClick = onStationClick,
-                onFavoriteClick = onFavoriteClick,
-                isFavorite = isFavorite,
-                modifier = Modifier.weight(1f)
-            )
+            if (uiState.isSearching) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator(color = AmaradioAmber)
+                }
+            } else if (uiState.error != null) {
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(text = uiState.error!!, color = MaterialTheme.colorScheme.error)
+                }
+            } else {
+                StationListTemplate(
+                    stations = currentTab.stations,
+                    isGrid = uiState.isGrid,
+                    isLoading = false,
+                    error = null,
+                    emptyMessage = stringResource(R.string.searchpreference_no_results),
+                    onStationClick = onStationClick,
+                    onFavoriteClick = onFavoriteClick,
+                    isFavorite = isFavorite,
+                    modifier = Modifier.weight(1f)
+                )
+            }
         }
+    }
+
+    if (showDeleteConfirm) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirm = false },
+            title = { Text(stringResource(R.string.action_delete)) },
+            text = { Text(stringResource(R.string.confirm_delete_filter_tab, currentTab.label)) },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        viewModel.removeTab(tabIndex)
+                        showDeleteConfirm = false
+                    }
+                ) {
+                    Text(stringResource(R.string.yes), color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirm = false }) {
+                    Text(stringResource(R.string.no))
+                }
+            }
+        )
+    }
+}
+
+@Composable
+fun FilterEmptyState() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 32.dp)
+            .verticalScroll(rememberScrollState()),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Icon(
+            imageVector = Icons.Default.Radio,
+            contentDescription = null,
+            modifier = Modifier.size(100.dp),
+            tint = AmaradioAmber
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Text(
+            text = stringResource(R.string.filter_empty_title),
+            style = MaterialTheme.typography.headlineSmall,
+            fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurface
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Text(
+            text = stringResource(R.string.filter_empty_desc),
+            style = MaterialTheme.typography.bodyMedium,
+            textAlign = TextAlign.Center,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
+        
+        Spacer(modifier = Modifier.height(16.dp))
+        
+        Card(
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Column(modifier = Modifier.padding(16.dp)) {
+                Text(
+                    text = stringResource(R.string.filter_empty_filter_by), 
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold, 
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = stringResource(R.string.filter_empty_filter_desc), 
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = stringResource(R.string.filter_empty_sort_by), 
+                    style = MaterialTheme.typography.labelLarge,
+                    fontWeight = FontWeight.Bold, 
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = stringResource(R.string.filter_empty_sort_desc), 
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Text(
+            text = stringResource(R.string.filter_empty_hint),
+            style = MaterialTheme.typography.bodySmall.copy(
+                fontStyle = FontStyle.Italic, 
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            textAlign = TextAlign.Center
+        )
     }
 }
 

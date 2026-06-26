@@ -43,6 +43,15 @@
     <string name="action_edit">Bearbeiten</string>
     <string name="action_copy_info">Info kopieren</string>
     <string name="action_rename_tab">Tab umbenennen</string>
+    <string name="error_filter_name_required">Bitte gib zuerst einen Namen für diesen Filter-Tab ein</string>
+    <string name="confirm_delete_filter_tab">Bist du sicher, dass du den Filter \"%1$s\" löschen möchtest?</string>
+    <string name="filter_empty_title">Erstelle deinen eigenen Sender-Feed</string>
+    <string name="filter_empty_desc">Kombiniere mehrere Kriterien für deine persönliche Ansicht. Du kannst filtern nach:</string>
+    <string name="filter_empty_filter_by">Filtern nach</string>
+    <string name="filter_empty_filter_desc">Land, Sendername, Tags oder Sprache</string>
+    <string name="filter_empty_sort_by">Sortieren nach</string>
+    <string name="filter_empty_sort_desc">Klicks, Alphabet, Bewertungen oder letzte Änderung</string>
+    <string name="filter_empty_hint">Gib oben einen Namen ein, um diese Ansicht zu speichern!</string>
     <string name="error_station_load">Verbindung zum Sender fehlgeschlagen</string>
     <string name="error_list_update">Verbindung zum Radio-Browser-Server fehlgeschlagen</string>
 

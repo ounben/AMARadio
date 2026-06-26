@@ -22,27 +22,37 @@ import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import androidx.core.content.edit
 import android.content.SharedPreferences
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import java.util.Locale
+import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
+
+@Serializable
+data class FilterTabItem(
+    val id: String = UUID.randomUUID().toString(),
+    val label: String = "New Filter",
+    val name: String = "",
+    val countryCode: String = "",
+    val countryLabel: String = "",
+    val countryEmoji: String = "",
+    val languageCode: String = "",
+    val languageLabel: String = "",
+    val tag: String = "",
+    val sortBy: String = "clickcount",
+    val reverse: Boolean = true,
+    @kotlinx.serialization.Transient val stations: List<DataRadioStation> = emptyList()
+)
 
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
 
     data class FilterUiState(
-        val tabName: String = "",
-        val name: String = "",
-        val countryCode: String = "",
-        val countryLabel: String = "",
-        val countryEmoji: String = "",
-        val languageCode: String = "",
-        val languageLabel: String = "",
-        val tag: String = "",
-        val sortBy: String = "clickcount",
-        val reverse: Boolean = true,
+        val tabs: List<FilterTabItem> = listOf(FilterTabItem(label = "Default")),
+        val selectedTabIndex: Int = 0,
         val isSearching: Boolean = false,
-        val stations: List<DataRadioStation> = emptyList(),
         val countries: List<CategoryItem> = emptyList(),
         val languages: List<CategoryItem> = emptyList(),
         val tags: List<CategoryItem> = emptyList(),
@@ -57,6 +67,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
     private val app = application as AMARadioApp
+    private val json = Json { ignoreUnknownKeys = true; encodeDefaults = true }
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "icons_only_favorites_style") {
@@ -69,8 +80,11 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             delay(100.milliseconds)
             fetchMetadata()
-            if (hasAnyFilter()) {
-                performSearch()
+            // Search all tabs on startup if they have filters
+            _uiState.value.tabs.forEachIndexed { index, tab ->
+                if (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.languageCode.isNotEmpty() || tab.tag.isNotEmpty()) {
+                    performSearch(index)
+                }
             }
         }
         refreshGridMode()
@@ -87,117 +101,91 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun loadSavedFilters() {
-        _uiState.update { 
-            val cCode = sharedPref.getString("filter_country_code", "") ?: ""
-            it.copy(
-                tabName = sharedPref.getString("filter_tab_name", "") ?: "",
-                name = sharedPref.getString("filter_name", "") ?: "",
-                countryCode = cCode,
-                countryLabel = sharedPref.getString("filter_country_label", "") ?: "",
-                countryEmoji = EmojiUtils.getFlagEmoji(cCode) ?: "",
-                languageCode = sharedPref.getString("filter_language_code", "") ?: "",
-                languageLabel = sharedPref.getString("filter_language_label", "") ?: "",
-                tag = sharedPref.getString("filter_tag", "") ?: "",
-                sortBy = sharedPref.getString("filter_sort", "clickcount") ?: "clickcount",
-                reverse = sharedPref.getBoolean("filter_reverse", true)
-            )
-        }
-    }
-
-    private fun saveFilters() {
-        val state = _uiState.value
-        sharedPref.edit {
-            putString("filter_tab_name", state.tabName)
-            putString("filter_name", state.name)
-            putString("filter_country_code", state.countryCode)
-            putString("filter_country_label", state.countryLabel)
-            putString("filter_language_code", state.languageCode)
-            putString("filter_language_label", state.languageLabel)
-            putString("filter_tag", state.tag)
-            putString("filter_sort", state.sortBy)
-            putBoolean("filter_reverse", state.reverse)
-        }
-    }
-
-    private fun hasAnyFilter(): Boolean {
-        val state = _uiState.value
-        return state.name.isNotEmpty() || state.countryCode.isNotEmpty() || state.languageCode.isNotEmpty() || state.tag.isNotEmpty()
-    }
-
-    fun onNameChange(newName: String) {
-        _uiState.update { it.copy(name = newName) }
-    }
-
-    fun onTabNameChange(newName: String) {
-        _uiState.update { it.copy(tabName = newName) }
-        saveFilters() // Immediate save for tab title responsiveness
-    }
-
-    fun onCountrySelect(code: String, label: String) {
-        val emoji = EmojiUtils.getFlagEmoji(code) ?: ""
-        _uiState.update { it.copy(countryCode = code, countryLabel = label, countryEmoji = emoji) }
-    }
-
-    fun clearCountry() {
-        _uiState.update { it.copy(countryCode = "", countryLabel = "", countryEmoji = "") }
-    }
-
-    fun onLanguageSelect(code: String, label: String) {
-        _uiState.update { it.copy(languageCode = code, languageLabel = label) }
-    }
-
-    fun clearLanguage() {
-        _uiState.update { it.copy(languageCode = "", languageLabel = "") }
-    }
-
-    fun onTagSelect(selectedTag: String) {
-        _uiState.update { it.copy(tag = selectedTag) }
-    }
-
-    fun clearTag() {
-        _uiState.update { it.copy(tag = "") }
-    }
-
-    fun onSortByChange(newSort: String) {
-        _uiState.update { it.copy(sortBy = newSort) }
-    }
-
-    fun onReverseChange(newReverse: Boolean) {
-        _uiState.update { it.copy(reverse = newReverse) }
-    }
-
-    private suspend fun loadLocalOrRemote(resName: String, remoteUrl: String, debugName: String): List<DataCategory> = withContext(Dispatchers.IO) {
-        val resId = app.resources.getIdentifier(resName, "raw", app.packageName)
-        if (resId != 0) {
+        val savedTabsJson = sharedPref.getString("filter_tabs_json", null)
+        val savedIndex = sharedPref.getInt("filter_selected_index", 0)
+        
+        if (savedTabsJson != null) {
             try {
-                val inputStream = app.resources.openRawResource(resId)
-                val content = inputStream.bufferedReader().use { it.readText() }.trim()
-                
-                val jsonToDecode = if (content.startsWith("{")) {
-                    val root = Json.parseToJsonElement(content).jsonObject
-                    if (root.containsKey("rows")) {
-                        root["rows"]?.jsonArray?.toString() ?: "[]"
-                    } else {
-                        "[$content]"
-                    }
-                } else {
-                    content
-                }
-
-                val decoded = DataCategory.DecodeJson(jsonToDecode).toList()
-                if (decoded.isNotEmpty()) {
-                    Log.d("FILTER_DEBUG", "Loaded local $debugName: ${decoded.size} items")
-                    return@withContext decoded
+                val decodedTabs = json.decodeFromString<List<FilterTabItem>>(savedTabsJson)
+                if (decodedTabs.isNotEmpty()) {
+                    _uiState.update { it.copy(tabs = decodedTabs, selectedTabIndex = savedIndex.coerceIn(0, decodedTabs.size - 1)) }
+                    return
                 }
             } catch (e: Exception) {
-                Log.w("FILTER_DEBUG", "Error parsing local $debugName: ${e.message}")
+                Log.e("FILTER", "Error loading tabs", e)
             }
         }
-        
-        Log.d("FILTER_DEBUG", "Local $debugName not found, trying remote: $remoteUrl")
-        val result = Utils.downloadFeedRelative(app.httpClient, app, remoteUrl, false, null)
-        DataCategory.DecodeJson(result).toList()
+        _uiState.update { it.copy(tabs = listOf(FilterTabItem(label = "Filter"))) }
     }
+
+    fun saveFilters() {
+        val state = _uiState.value
+        viewModelScope.launch(Dispatchers.IO) {
+            sharedPref.edit {
+                putString("filter_tabs_json", json.encodeToString(state.tabs))
+                putInt("filter_selected_index", state.selectedTabIndex)
+            }
+        }
+    }
+
+    // Tab Management
+    fun selectTab(index: Int) {
+        _uiState.update { it.copy(selectedTabIndex = index) }
+        saveFilters()
+    }
+
+    fun addTab() {
+        if (_uiState.value.tabs.size >= 5) return
+        _uiState.update { 
+            val newTabs = it.tabs + FilterTabItem(label = "")
+            it.copy(tabs = newTabs, selectedTabIndex = newTabs.size - 1)
+        }
+        saveFilters()
+    }
+
+    fun removeTab(index: Int) {
+        if (_uiState.value.tabs.size <= 1) return
+        _uiState.update { 
+            val newTabs = it.tabs.toMutableList().apply { removeAt(index) }
+            val newIndex = if (it.selectedTabIndex >= newTabs.size) newTabs.size - 1 else it.selectedTabIndex
+            it.copy(tabs = newTabs, selectedTabIndex = newIndex)
+        }
+        saveFilters()
+    }
+
+    fun updateTabLabel(index: Int, newLabel: String) {
+        _uiState.update { state ->
+            val newTabs = state.tabs.toMutableList()
+            if (index in newTabs.indices) {
+                newTabs[index] = newTabs[index].copy(label = newLabel)
+            }
+            state.copy(tabs = newTabs)
+        }
+        saveFilters()
+    }
+
+    // Indexed Filter Updates
+    private fun updateTabAt(index: Int, update: (FilterTabItem) -> FilterTabItem) {
+        _uiState.update { state ->
+            val newTabs = state.tabs.toMutableList()
+            if (index in newTabs.indices) {
+                newTabs[index] = update(newTabs[index])
+            }
+            state.copy(tabs = newTabs)
+        }
+    }
+
+    fun onNameChange(index: Int, newName: String) = updateTabAt(index) { it.copy(name = newName) }
+    fun onCountrySelect(index: Int, code: String, label: String) = updateTabAt(index) { 
+        it.copy(countryCode = code, countryLabel = label, countryEmoji = EmojiUtils.getFlagEmoji(code) ?: "") 
+    }
+    fun clearCountry(index: Int) = updateTabAt(index) { it.copy(countryCode = "", countryLabel = "", countryEmoji = "") }
+    fun onLanguageSelect(index: Int, code: String, label: String) = updateTabAt(index) { it.copy(languageCode = code, languageLabel = label) }
+    fun clearLanguage(index: Int) = updateTabAt(index) { it.copy(languageCode = "", languageLabel = "") }
+    fun onTagSelect(index: Int, selectedTag: String) = updateTabAt(index) { it.copy(tag = selectedTag) }
+    fun clearTag(index: Int) = updateTabAt(index) { it.copy(tag = "") }
+    fun onSortByChange(index: Int, newSort: String) = updateTabAt(index) { it.copy(sortBy = newSort) }
+    fun onReverseChange(index: Int, newReverse: Boolean) = updateTabAt(index) { it.copy(reverse = newReverse) }
 
     fun fetchMetadata() {
         viewModelScope.launch {
@@ -234,21 +222,39 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun performSearch() {
+    private suspend fun loadLocalOrRemote(resName: String, remoteUrl: String, debugName: String): List<DataCategory> = withContext(Dispatchers.IO) {
+        val resId = app.resources.getIdentifier(resName, "raw", app.packageName)
+        if (resId != 0) {
+            try {
+                val content = app.resources.openRawResource(resId).bufferedReader().use { it.readText() }.trim()
+                val jsonToDecode = if (content.startsWith("{")) {
+                    val root = json.parseToJsonElement(content).jsonObject
+                    if (root.containsKey("rows")) root["rows"]?.jsonArray?.toString() ?: "[]" else "[$content]"
+                } else content
+                DataCategory.DecodeJson(jsonToDecode).toList().ifEmpty { emptyList() }
+            } catch (e: Exception) { emptyList() }
+        } else {
+            val result = Utils.downloadFeedRelative(app.httpClient, app, remoteUrl, false, null)
+            DataCategory.DecodeJson(result).toList()
+        }
+    }
+
+    fun performSearch(index: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSearching = true, error = null) }
-            withContext(Dispatchers.IO) { saveFilters() }
+            saveFilters()
             
-            val params = mutableMapOf<String, String>()
             val state = _uiState.value
+            val tab = state.tabs.getOrNull(index) ?: return@launch
+            val params = mutableMapOf<String, String>()
             
-            if (state.name.isNotEmpty()) params["name"] = state.name
-            if (state.countryCode.isNotEmpty()) params["countrycode"] = state.countryCode
-            if (state.languageCode.isNotEmpty()) params["language"] = state.languageCode
-            if (state.tag.isNotEmpty()) params["tag"] = state.tag
+            if (tab.name.isNotEmpty()) params["name"] = tab.name
+            if (tab.countryCode.isNotEmpty()) params["countrycode"] = tab.countryCode
+            if (tab.languageCode.isNotEmpty()) params["language"] = tab.languageCode
+            if (tab.tag.isNotEmpty()) params["tag"] = tab.tag
             
-            params["order"] = state.sortBy
-            params["reverse"] = state.reverse.toString()
+            params["order"] = tab.sortBy
+            params["reverse"] = tab.reverse.toString()
             params["hidebroken"] = (!(sharedPref.getBoolean("show_broken", false))).toString()
             params["limit"] = "100"
 
@@ -260,7 +266,13 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 val filtered = withContext(Dispatchers.Default) {
                     DataRadioStation.DecodeJson(resultString) ?: emptyList()
                 }
-                _uiState.update { it.copy(stations = filtered, isSearching = false) }
+                _uiState.update { s ->
+                    val newTabs = s.tabs.toMutableList()
+                    if (index in newTabs.indices) {
+                        newTabs[index] = newTabs[index].copy(stations = filtered)
+                    }
+                    s.copy(tabs = newTabs, isSearching = false)
+                }
             } else {
                 _uiState.update { it.copy(isSearching = false, error = "Failed to fetch stations") }
             }

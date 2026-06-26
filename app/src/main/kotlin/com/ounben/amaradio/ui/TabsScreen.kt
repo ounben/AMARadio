@@ -2,45 +2,34 @@ package com.ounben.amaradio.ui
 
 import android.content.Context
 import android.telephony.TelephonyManager
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.station.StationActions
-import com.ounben.amaradio.station.SearchStyle
 import kotlinx.coroutines.launch
 
-private data class TabData(val id: Int, val titleRes: Int)
-
-private const val IDX_LOCAL = 0
-private const val IDX_FILTER = 1
-private const val IDX_TOP_CLICK = 2
-private const val IDX_CURRENTLY_HEARD = 3
-private const val IDX_COUNTRIES = 4
-private const val IDX_SEARCH = 5
-
-private val addresses = arrayOf(
-    "json/stations/bycountryexact/internet?order=clickcount&reverse=true",
-    "", // Filter handled via FilterScreen
-    "json/stations/topclick/100",
-    "json/stations/lastclick/100",
-    "json/countrycodes",
-    ""  // Search handled via StationsViewModel.search
-)
+private sealed class MainTab {
+    object Local : MainTab()
+    data class Filter(val index: Int, val id: String, val label: String) : MainTab()
+    object Search : MainTab()
+}
 
 @Composable
 fun TabsScreen(
@@ -51,72 +40,95 @@ fun TabsScreen(
     val context = LocalContext.current
     val app = context.applicationContext as AMARadioApp
     val countryCode = remember { getCountryCode(context) }
-    
-    val activeTabs = remember(countryCode) {
-        mutableListOf<TabData>().apply {
-            if (countryCode != null) add(TabData(IDX_LOCAL, R.string.action_local))
-            add(TabData(IDX_FILTER, R.string.action_filter))
-            add(TabData(IDX_TOP_CLICK, R.string.action_top_click))
-            add(TabData(IDX_CURRENTLY_HEARD, R.string.action_currently_playing))
-            add(TabData(IDX_COUNTRIES, R.string.action_countries))
-            add(TabData(IDX_SEARCH, R.string.action_search))
+    val filterViewModel: FilterViewModel = viewModel()
+    val filterState by filterViewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
+    // 1. Build Dynamic Tab List
+    val tabs = remember(countryCode, filterState.tabs) {
+        mutableListOf<MainTab>().apply {
+            if (countryCode != null) add(MainTab.Local)
+            filterState.tabs.forEachIndexed { index, tab ->
+                add(MainTab.Filter(index, tab.id, tab.label))
+            }
+            add(MainTab.Search)
         }
     }
 
     val pagerState = rememberPagerState(
-        initialPage = initialTab.coerceIn(0, activeTabs.size - 1),
-        pageCount = { activeTabs.size }
+        initialPage = initialTab.coerceIn(0, tabs.size - 1),
+        pageCount = { tabs.size }
     )
-    val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(initialTab) {
-        val targetPage = initialTab.coerceIn(0, activeTabs.size - 1)
-        if (pagerState.currentPage != targetPage) {
-            pagerState.scrollToPage(targetPage)
+    // Sync Pager -> ViewModel (so FilterScreen knows which tab is active)
+    LaunchedEffect(pagerState.currentPage, tabs) {
+        val currentTab = tabs.getOrNull(pagerState.currentPage)
+        if (currentTab is MainTab.Filter) {
+            filterViewModel.selectTab(currentTab.index)
         }
-    }
-
-    val sharedPref = remember { PreferenceManager.getDefaultSharedPreferences(context) }
-    var filterTabName by remember { mutableStateOf(sharedPref.getString("filter_tab_name", "") ?: "") }
-
-    DisposableEffect(Unit) {
-        val listener = android.content.SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
-            if (key == "filter_tab_name") {
-                filterTabName = sharedPref.getString("filter_tab_name", "") ?: ""
-            }
-        }
-        sharedPref.registerOnSharedPreferenceChangeListener(listener)
-        onDispose { sharedPref.unregisterOnSharedPreferenceChangeListener(listener) }
     }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ScrollableTabRow(
-            selectedTabIndex = pagerState.currentPage,
-            edgePadding = 16.dp,
-            containerColor = MaterialTheme.colorScheme.secondary,
-            contentColor = MaterialTheme.colorScheme.onSecondary,
-            indicator = { tabPositions ->
-                if (pagerState.currentPage < tabPositions.size) {
-                    TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                        color = MaterialTheme.colorScheme.primary
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            ScrollableTabRow(
+                selectedTabIndex = pagerState.currentPage,
+                modifier = Modifier.weight(1f),
+                edgePadding = 16.dp,
+                containerColor = MaterialTheme.colorScheme.secondary,
+                contentColor = MaterialTheme.colorScheme.onSecondary,
+                indicator = { tabPositions ->
+                    if (pagerState.currentPage < tabPositions.size) {
+                        TabRowDefaults.SecondaryIndicator(
+                            Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                },
+                divider = {}
+            ) {
+                tabs.forEachIndexed { index, tab ->
+                    Tab(
+                        selected = pagerState.currentPage == index,
+                        onClick = {
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
+                        },
+                        text = { 
+                            val title = when (tab) {
+                                is MainTab.Local -> stringResource(R.string.action_local)
+                                is MainTab.Filter -> tab.label.ifBlank { "..." }
+                                is MainTab.Search -> stringResource(R.string.action_search)
+                            }
+                            
+                            Text(
+                                text = title,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                style = MaterialTheme.typography.labelLarge
+                            )
+                        }
                     )
                 }
-            },
-            divider = {}
-        ) {
-            activeTabs.forEachIndexed { index, tab ->
-                val title = if (tab.id == IDX_FILTER && filterTabName.isNotEmpty()) filterTabName 
-                            else stringResource(id = tab.titleRes)
-                Tab(
-                    selected = pagerState.currentPage == index,
-                    onClick = {
+            }
+
+            // Global Add Filter Button next to tabs
+            if (filterState.tabs.size < 5) {
+                IconButton(
+                    onClick = { 
+                        filterViewModel.addTab()
                         coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
+                            // Find the index of the last filter tab (which is the new one)
+                            val lastFilterIndex = tabs.indexOfLast { it is MainTab.Filter }
+                            if (lastFilterIndex != -1) {
+                                pagerState.animateScrollToPage(lastFilterIndex + 1)
+                            }
                         }
                     },
-                    text = { Text(text = title) }
-                )
+                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSecondary)
+                ) {
+                    Icon(Icons.Default.Add, contentDescription = "Add Filter")
+                }
             }
         }
 
@@ -126,54 +138,46 @@ fun TabsScreen(
             beyondViewportPageCount = 0,
             verticalAlignment = Alignment.Top
         ) { pageIndex ->
-            val tab = activeTabs[pageIndex]
-            
-            when (tab.id) {
-                IDX_FILTER -> {
-                    val filterViewModel: FilterViewModel = viewModel()
-                    FilterScreen(
-                        viewModel = filterViewModel,
-                        onStationClick = onStationClick,
-                        onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) {
-                                app.favouriteManager.remove(station.StationUuid)
-                            } else {
-                                app.favouriteManager.add(station)
-                            }
-                        },
-                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
-                    )
-                }
-                IDX_LOCAL, IDX_TOP_CLICK, IDX_CURRENTLY_HEARD, IDX_SEARCH -> {
-                    val stationsViewModel: StationsViewModel = viewModel(key = "tab_${tab.id}")
-                    val url = if (tab.id == IDX_LOCAL && countryCode != null) {
-                        "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
-                    } else addresses[tab.id]
-                    
+            // Safety check for dynamic tabs
+            if (pageIndex >= tabs.size) return@HorizontalPager
+
+            when (val tab = tabs[pageIndex]) {
+                is MainTab.Local -> {
+                    val stationsViewModel: StationsViewModel = viewModel(key = "local_stations")
                     StationsScreen(
                         viewModel = stationsViewModel,
-                        url = url,
+                        url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true",
                         onStationClick = onStationClick,
                         onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) {
-                                app.favouriteManager.remove(station.StationUuid)
-                            } else {
-                                app.favouriteManager.add(station)
-                            }
+                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                            else app.favouriteManager.add(station)
                         },
                         isFavorite = { uuid -> app.favouriteManager.has(uuid) }
                     )
                 }
-                IDX_COUNTRIES -> {
-                    val categoriesViewModel: CategoriesViewModel = viewModel(key = "tab_${tab.id}")
-                    CategoriesScreen(
-                        viewModel = categoriesViewModel,
-                        url = addresses[tab.id],
-                        searchStyle = SearchStyle.ByCountryCodeExact,
-                        singleUseFilter = false,
-                        onCategoryClick = { category ->
-                            onCategoryClick(category.Name)
-                        }
+                is MainTab.Filter -> {
+                    FilterScreen(
+                        viewModel = filterViewModel,
+                        tabIndex = tab.index,
+                        onStationClick = onStationClick,
+                        onFavoriteClick = { station ->
+                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                            else app.favouriteManager.add(station)
+                        },
+                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                    )
+                }
+                is MainTab.Search -> {
+                    val stationsViewModel: StationsViewModel = viewModel(key = "search_stations")
+                    StationsScreen(
+                        viewModel = stationsViewModel,
+                        url = "",
+                        onStationClick = onStationClick,
+                        onFavoriteClick = { station ->
+                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                            else app.favouriteManager.add(station)
+                        },
+                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
                     )
                 }
             }
