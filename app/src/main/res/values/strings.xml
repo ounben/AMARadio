@@ -45,6 +45,7 @@
     <string name="action_languages">Languages</string>
     <string name="action_edit">Edit</string>
     <string name="action_copy_info">Copy Info</string>
+    <string name="action_rename_tab">Rename Tab</string>
     <string name="error_station_load">Could not connect to station</string>
     <string name="error_list_update">Could not connect to radio browser server</string>
 
@@ -171,6 +172,8 @@
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Resume on Bluetooth connection</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Resume playback on Bluetooth A2DP device connection</string>
+
+    <string name="settings_auto_resume_on_any_connected">Resume on any connection</string>
 
     <string name="settings_warn_no_wifi">Off-Wi-Fi warning</string>
     <string name="settings_warn_no_wifi_on">Warn when playing without Wi-Fi connection</string>
@@ -302,4 +305,43 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="action_add_mpd_server">Add MPD server</string>
+    <string name="action_alarm">Alarm</string>
+    <string name="action_disable_mpd">Disable MPD</string>
+    <string name="action_enable_mpd">Enable MPD</string>
+    <string name="action_mpd_connected">MPD connected</string>
+    <string name="action_mpd_nok">MPD error</string>
+    <string name="action_mpd_ok">MPD OK</string>
+    <string name="alarm_back_desc">Alarm back</string>
+    <string name="alarm_backup">Alarm backup</string>
+    <string name="alarm_fallback_info">Alarm fallback info</string>
+    <string name="alert_add_or_edit_mpd_server">Add or edit MPD server</string>
+    <string name="alert_alarm_not_working">Alarm not working</string>
+    <string name="alert_alarm_working">Alarm working</string>
+    <string name="alert_select_external_alarm_app">Select external alarm app</string>
+    <string name="alert_select_mpd_server">Select MPD server</string>
+    <string name="alert_select_mpd_server_add">Add MPD server</string>
+    <string name="alert_select_mpd_server_name">MPD server name</string>
+    <string name="alert_select_mpd_server_password">MPD server password</string>
+    <string name="alert_select_mpd_server_remove">Remove MPD server</string>
+    <string name="alert_select_mpd_server_save">Save MPD server</string>
+    <string name="app_id">AMARadio ID</string>
+    <string name="context_menu_add_alarm">Add alarm</string>
+    <string name="description_btn_setup_alarm">Setup alarm</string>
+    <string name="media_route_menu_title">Media route</string>
+    <string name="mpd_no_connection">No MPD connection</string>
+    <string name="nav_item_alarm">Alarm</string>
+    <string name="settings_alarm">Alarm settings</string>
+    <string name="settings_alarm_audio_player">Alarm audio player</string>
+    <string name="settings_alarm_external">External alarm</string>
+    <string name="settings_alarm_external_desc_off">Internal alarm used</string>
+    <string name="settings_alarm_external_desc_on">External alarm used</string>
+    <string name="settings_alarm_sleep_timer">Sleep timer</string>
+    <string name="settings_alarm_sleep_timer_desc">Sleep timer desc</string>
+    <string name="settings_mpd">MPD settings</string>
+    <string name="settings_mpd_port">MPD port</string>
+    <string name="settings_view_mpd_servers">View MPD servers</string>
+    <string name="settings_proxy_host">Proxy Host</string>
+    <string name="settings_proxy_port">Proxy Port</string>
 </resources>

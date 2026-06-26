@@ -2,6 +2,8 @@ package com.ounben.amaradio.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.station.DataRadioStation
@@ -65,5 +67,12 @@ class LocalStationsViewModel(application: Application, isHistory: Boolean) : And
             else state.stations.filter { it.Name.contains(query, ignoreCase = true) || it.TagsAll.contains(query, ignoreCase = true) }
             state.copy(query = query, filteredStations = filtered)
         }
+    }
+}
+
+class LocalStationsViewModelFactory(private val app: AMARadioApp, private val isHistory: Boolean) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        return LocalStationsViewModel(app, isHistory) as T
     }
 }

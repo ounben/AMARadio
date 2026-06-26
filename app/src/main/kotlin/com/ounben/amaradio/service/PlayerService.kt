@@ -313,7 +313,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun setStation(station: DataRadioStation) {
-        this.itsCurrentStation = station
+        val app = application as AMARadioApp
+        // Try to find the full station in local managers to restore metadata and queue
+        val fullStation = app.favouriteManager.getById(station.StationUuid) 
+                        ?: app.historyManager.getById(station.StationUuid)
+        
+        this.itsCurrentStation = fullStation ?: station
     }
 
     fun playCurrentStation() {

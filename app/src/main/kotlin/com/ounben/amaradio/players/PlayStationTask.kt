@@ -74,7 +74,11 @@ class PlayStationTask(
 
         // Parallel: Add to history and auto-favorite in background
         scope.launch(Dispatchers.Default) {
-            AMARadioApp.historyManager.add(stationToPlay)
+            // We only add to history here if it has full info (bitrate > 0 or tags not empty)
+            // Internal players add to history in PlayerServiceUtil to avoid metadata stripping issues.
+            if (stationToPlay.Bitrate > 0 || stationToPlay.TagsAll.isNotEmpty()) {
+                AMARadioApp.historyManager.add(stationToPlay)
+            }
             
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
             if (sharedPref.getBoolean("auto_favorite", false)) {

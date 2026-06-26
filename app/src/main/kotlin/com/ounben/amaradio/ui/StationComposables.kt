@@ -1,24 +1,25 @@
 package com.ounben.amaradio.ui
 
-import androidx.compose.animation.Crossfade
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.Radio
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -26,15 +27,62 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.core.graphics.drawable.toBitmap
 import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.itemKey
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
+
+@Composable
+fun StationListTemplate(
+    stations: List<DataRadioStation>,
+    isGrid: Boolean,
+    isLoading: Boolean = false,
+    error: String? = null,
+    emptyMessage: String = "No stations found",
+    onRetry: (() -> Unit)? = null,
+    onStationClick: (DataRadioStation) -> Unit,
+    onFavoriteClick: (DataRadioStation) -> Unit,
+    isFavorite: (String) -> Boolean,
+    modifier: Modifier = Modifier
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+        if (isLoading) {
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = AmaradioAmber
+            )
+        } else if (error != null) {
+            Column(
+                modifier = Modifier.align(Alignment.Center),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = error, color = MaterialTheme.colorScheme.error)
+                if (onRetry != null) {
+                    Button(onClick = onRetry, modifier = Modifier.padding(top = 8.dp)) {
+                        Text("Retry")
+                    }
+                }
+            }
+        } else if (stations.isEmpty()) {
+            Text(
+                text = emptyMessage,
+                modifier = Modifier.align(Alignment.Center),
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        } else {
+            StationList(
+                stations = stations,
+                isGrid = isGrid,
+                onStationClick = onStationClick,
+                onFavoriteClick = onFavoriteClick,
+                isFavorite = isFavorite
+            )
+        }
+    }
+}
 
 @Composable
 fun StationList(
@@ -45,45 +93,44 @@ fun StationList(
     isFavorite: (String) -> Boolean,
     modifier: Modifier = Modifier
 ) {
-    Crossfade(targetState = isGrid, label = "StationListFade", modifier = modifier.fillMaxSize()) { targetIsGrid ->
-        if (targetIsGrid) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 120.dp),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                itemsIndexed(
-                    items = stations,
-                    key = { index, station -> "${station.StationUuid}_$index" } // Safe from duplicates
-                ) { _, station ->
-                    StationGridItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) }
-                    )
-                }
-            }
-        } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(
-                    items = stations,
-                    key = { index, station -> "${station.StationUuid}_$index" } // Safe from duplicates
-                ) { _, station ->
-                    StationListItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) }
-                    )
-                    HorizontalDivider(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        thickness = 0.5.dp,
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
-                    )
-                }
+    var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+
+    if (isGrid) {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(140.dp),
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            items(stations, key = { it.StationUuid }) { station ->
+                StationGridItem(
+                    station = station,
+                    isFavorite = isFavorite(station.StationUuid),
+                    onClick = { onStationClick(station) },
+                    onFavoriteClick = { onFavoriteClick(station) },
+                    onLongClick = { stationWithOptions = station }
+                )
             }
         }
+    } else {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
+            items(stations, key = { it.StationUuid }) { station ->
+                StationListItem(
+                    station = station,
+                    isFavorite = isFavorite(station.StationUuid),
+                    onClick = { onStationClick(station) },
+                    onFavoriteClick = { onFavoriteClick(station) },
+                    onLongClick = { stationWithOptions = station }
+                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+            }
+        }
+    }
+
+    stationWithOptions?.let { station ->
+        StationOptionsDialog(
+            station = station,
+            onDismiss = { stationWithOptions = null }
+        )
     }
 }
 
@@ -94,17 +141,10 @@ fun TrackList(
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(
-            count = tracks.itemCount,
-            key = tracks.itemKey { it.uid }
-        ) { index ->
+        items(tracks.itemCount) { index ->
             tracks[index]?.let { track ->
                 TrackListItem(track = track, onClick = { onTrackClick(track) })
-                HorizontalDivider(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    thickness = 0.5.dp,
-                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
-                )
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
             }
         }
     }
@@ -115,6 +155,7 @@ fun TrackListItem(
     track: TrackHistoryEntry,
     onClick: () -> Unit
 ) {
+    val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -122,58 +163,82 @@ fun TrackListItem(
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = track.stationIconUrl,
-            contentDescription = null,
-            modifier = Modifier.size(40.dp),
-            error = painterResource(R.drawable.ic_radio_24dp),
-            placeholder = painterResource(R.drawable.ic_radio_24dp)
-        )
+        Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
+            AsyncImage(
+                model = track.stationIconUrl,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                error = rememberVectorPainter(Icons.Default.Radio),
+                placeholder = rememberVectorPainter(Icons.Default.Radio),
+                colorFilter = if (track.stationIconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+            )
+        }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
+            val headline = if (track.title.isNotEmpty()) track.title else track.track
+            val subline = if (track.title.isNotEmpty()) track.artist else ""
+
             Text(
-                text = track.track ?: "",
-                style = MaterialTheme.typography.bodyLarge,
+                text = headline,
+                style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            Text(
-                text = track.artist ?: "",
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                maxLines = 1
-            )
+            if (subline.isNotEmpty()) {
+                Text(
+                    text = subline,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
+        Text(
+            text = track.getFormattedTime(context),
+            style = MaterialTheme.typography.labelSmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+        )
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StationListItem(
     station: DataRadioStation,
     isFavorite: Boolean,
     onClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    onLongClick: () -> Unit
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
-    val details = remember(station.ClickCount, station.Votes, station.Language) { station.getShortDetails(context) }
+    val details = remember(station.ClickCount, station.Votes, station.Language, station.Bitrate, station.Codec) { 
+        station.getShortDetails(context) 
+    }
     
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        AsyncImage(
-            model = station.IconUrl,
-            contentDescription = null,
-            modifier = Modifier.size(44.dp),
-            error = painterResource(R.drawable.ic_radio_24dp),
-            placeholder = painterResource(R.drawable.ic_radio_24dp)
-        )
+        Box(modifier = Modifier.size(44.dp), contentAlignment = Alignment.Center) {
+            AsyncImage(
+                model = station.IconUrl,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                error = rememberVectorPainter(Icons.Default.Radio),
+                placeholder = rememberVectorPainter(Icons.Default.Radio),
+                colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+            )
+        }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
             Text(
@@ -190,6 +255,15 @@ fun StationListItem(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                 maxLines = 1
             )
+            if (station.TagsAll.isNotEmpty()) {
+                Text(
+                    text = station.TagsAll,
+                    style = MaterialTheme.typography.labelSmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
         IconButton(onClick = onFavoriteClick) {
             Icon(
@@ -201,54 +275,60 @@ fun StationListItem(
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun StationGridItem(
     station: DataRadioStation,
     isFavorite: Boolean,
     onClick: () -> Unit,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
+    onLongClick: () -> Unit
 ) {
     Card(
         modifier = Modifier
             .padding(4.dp)
-            .aspectRatio(1f)
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            ),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {
-            AsyncImage(
-                model = station.IconUrl,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize().padding(12.dp),
-                contentScale = ContentScale.Fit,
-                error = painterResource(R.drawable.ic_radio_24dp),
-                placeholder = painterResource(R.drawable.ic_radio_24dp)
-            )
-            
-            IconButton(
-                onClick = onFavoriteClick,
-                modifier = Modifier.align(Alignment.TopEnd).size(30.dp)
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+        Column(
+            modifier = Modifier.padding(8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Box(contentAlignment = Alignment.TopEnd) {
+                AsyncImage(
+                    model = station.IconUrl,
                     contentDescription = null,
-                    tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.size(16.dp)
+                    modifier = Modifier
+                        .size(80.dp)
+                        .padding(4.dp),
+                    contentScale = ContentScale.Fit,
+                    error = rememberVectorPainter(Icons.Default.Radio),
+                    placeholder = rememberVectorPainter(Icons.Default.Radio),
+                    colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
                 )
+                IconButton(
+                    onClick = onFavoriteClick,
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp),
+                        tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
             }
-            
             Text(
                 text = station.Name,
-                modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
-                    .background(Color.Black.copy(alpha = 0.5f))
-                    .padding(2.dp),
-                color = Color.White,
-                style = MaterialTheme.typography.labelSmall,
+                style = MaterialTheme.typography.labelMedium,
+                fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
                 textAlign = TextAlign.Center,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
+                modifier = Modifier.fillMaxWidth().heightIn(min = 32.dp)
             )
         }
     }
@@ -261,27 +341,21 @@ fun CategoryList(
     onCategoryClick: (DataCategory) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Crossfade(targetState = isGrid, label = "CategoryListFade", modifier = modifier.fillMaxSize()) { targetIsGrid ->
-        if (targetIsGrid) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 120.dp),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                itemsIndexed(categories, key = { index, category -> "${category.Name}_$index" }) { _, category ->
-                    CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
-                }
+    if (isGrid) {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(100.dp),
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            items(categories) { category ->
+                CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
             }
-        } else {
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                itemsIndexed(categories, key = { index, category -> "${category.Name}_$index" }) { _, category ->
-                    CategoryListItem(category = category, onClick = { onCategoryClick(category) })
-                    HorizontalDivider(
-                        modifier = Modifier.padding(horizontal = 16.dp),
-                        thickness = 0.5.dp,
-                        color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
-                    )
-                }
+        }
+    } else {
+        LazyColumn(modifier = modifier.fillMaxSize()) {
+            items(categories) { category ->
+                CategoryListItem(category = category, onClick = { onCategoryClick(category) })
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
             }
         }
     }
@@ -296,21 +370,20 @@ fun CategoryListItem(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(12.dp),
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CategoryIcon(category = category, modifier = Modifier.size(36.dp))
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
+        CategoryIcon(category = category, modifier = Modifier.size(24.dp))
+        Spacer(modifier = Modifier.width(16.dp))
+        Text(
+            text = category.Name,
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.weight(1f)
+        )
+        if (category.UsedCount > 0) {
             Text(
-                text = category.Label ?: category.Name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = "${category.UsedCount} stations",
-                style = MaterialTheme.typography.bodySmall,
+                text = category.UsedCount.toString(),
+                style = MaterialTheme.typography.labelSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -326,27 +399,20 @@ fun CategoryGridItem(
         modifier = Modifier
             .padding(4.dp)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
     ) {
         Column(
-            modifier = Modifier.padding(8.dp).fillMaxWidth(),
+            modifier = Modifier.padding(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CategoryIcon(category = category, modifier = Modifier.size(44.dp))
-            Spacer(modifier = Modifier.height(4.dp))
+            CategoryIcon(category = category, modifier = Modifier.size(32.dp))
+            Spacer(modifier = Modifier.height(8.dp))
             Text(
-                text = category.Label ?: category.Name,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = category.UsedCount.toString(),
+                text = category.Name,
                 style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
         }
     }
@@ -354,18 +420,18 @@ fun CategoryGridItem(
 
 @Composable
 fun CategoryIcon(category: DataCategory, modifier: Modifier = Modifier) {
-    if (category.Icon != null) {
-        Image(
-            bitmap = category.Icon!!.toBitmap().asImageBitmap(),
-            contentDescription = null,
-            modifier = modifier
-        )
+    val emoji = remember(category.Name) {
+        if (category.Name.length == 2) EmojiUtils.getFlagEmoji(category.Name) else null
+    }
+    
+    if (emoji != null) {
+        Text(text = emoji, modifier = modifier, textAlign = TextAlign.Center)
     } else {
         Icon(
-            painter = painterResource(id = R.drawable.ic_radio_24dp),
+            imageVector = Icons.Default.Folder,
             contentDescription = null,
             modifier = modifier,
-            tint = MaterialTheme.colorScheme.primary
+            tint = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }

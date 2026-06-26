@@ -7,17 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
-import android.view.View
 import androidx.core.net.toUri
 import androidx.fragment.app.FragmentActivity
-import com.google.android.material.snackbar.Snackbar
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.selector.PlayerType
-import com.ounben.amaradio.views.ItemListDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -30,25 +27,7 @@ object StationActions {
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     @JvmStatic
-    fun showWebLinks(activity: FragmentActivity, station: DataRadioStation) {
-        ItemListDialog.create(
-            activity,
-            intArrayOf(
-                R.string.action_station_visit_website,
-                R.string.action_station_copy_stream_url,
-                R.string.action_station_share,
-            ),
-        ) { resourceId ->
-            when (resourceId) {
-                R.string.action_station_visit_website -> openStationHomeUrl(activity, station)
-                R.string.action_station_copy_stream_url -> retrieveAndCopyStreamUrlToClipboard(activity, station)
-                R.string.action_station_share -> share(activity, station)
-            }
-        }.show()
-    }
-
-    @JvmStatic
-    fun openStationHomeUrl(activity: FragmentActivity, station: DataRadioStation) {
+    fun openStationHomeUrl(activity: Context, station: DataRadioStation) {
         if (!TextUtils.isEmpty(station.HomePageUrl)) {
             val stationUrl = station.HomePageUrl.toUri()
             val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
@@ -94,20 +73,11 @@ object StationActions {
     }
 
     @JvmStatic
-    fun removeFromFavourites(context: Context, view: View?, station: DataRadioStation) {
+    fun removeFromFavourites(context: Context, station: DataRadioStation) {
         val app = context.applicationContext as AMARadioApp
         val favouriteManager = app.favouriteManager
-        val removedIdx = favouriteManager.remove(station.StationUuid)
-
-        if (view != null) {
-            val viewAttachTo = view.rootView.findViewById<View>(R.id.fragment_player_small)
-            val snackbar = Snackbar.make(viewAttachTo, R.string.notify_station_removed_from_list, 6000)
-            snackbar.anchorView = viewAttachTo
-            snackbar.setAction(R.string.action_station_removed_from_list_undo) {
-                favouriteManager.restore(station, removedIdx)
-            }
-            snackbar.show()
-        }
+        favouriteManager.remove(station.StationUuid)
+        // Undo logic can be implemented via a generic Snackbar manager in Compose if needed
     }
 
     @JvmStatic

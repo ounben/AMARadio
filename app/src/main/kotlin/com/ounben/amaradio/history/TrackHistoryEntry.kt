@@ -1,5 +1,6 @@
 package com.ounben.amaradio.history
 
+import android.content.Context
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -58,6 +59,10 @@ class TrackHistoryEntry {
         result = 31 * result + startTime.hashCode()
         result = 31 * result + endTime.hashCode()
         return result
+    }
+
+    fun getFormattedTime(context: Context): String {
+        return android.text.format.DateFormat.getTimeFormat(context).format(startTime)
     }
 
     companion object {

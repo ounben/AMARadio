@@ -11,6 +11,7 @@ import android.util.TypedValue
 import android.widget.ImageView
 import coil.load
 import coil.request.CachePolicy
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.IPlayerService
 import com.ounben.amaradio.R
@@ -140,6 +141,9 @@ object PlayerServiceUtil {
     @JvmStatic
     fun play(station: DataRadioStation) {
         try {
+            val app = applicationContext as? AMARadioApp
+            app?.historyManager?.add(station)
+
             itsPlayerService?.let {
                 // Pre-strip heavy metadata to prevent TransactionTooLargeException
                 it.SetStation(station.getLightweightCopy())
@@ -241,6 +245,15 @@ object PlayerServiceUtil {
         } catch (e: RemoteException) {
             Log.e("", "$e")
             null
+        }
+    }
+
+    @JvmStatic
+    fun getTransferredBytes(): Long {
+        return try {
+            itsPlayerService?.transferredBytes ?: 0
+        } catch (_: RemoteException) {
+            0
         }
     }
 

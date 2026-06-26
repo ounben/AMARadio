@@ -13,39 +13,37 @@ object UiScaler {
     const val SCALE_EXTRA_LARGE = 1.5f
 
     fun getScaleFactor(context: Context): Float {
-        val prefs = PreferenceManager.getDefaultSharedPreferences(context)
-        return when (prefs.getString(PREF_KEY_UI_SCALE, "standard")) {
-            "compact" -> SCALE_COMPACT
-            "large" -> SCALE_LARGE
-            "extra_large" -> SCALE_EXTRA_LARGE
-            else -> SCALE_STANDARD
+        return try {
+            val prefs = PreferenceManager.getDefaultSharedPreferences(context)
+            when (prefs.getString(PREF_KEY_UI_SCALE, "standard")) {
+                "compact" -> SCALE_COMPACT
+                "large" -> SCALE_LARGE
+                "extra_large" -> SCALE_EXTRA_LARGE
+                else -> SCALE_STANDARD
+            }
+        } catch (_: Exception) {
+            SCALE_STANDARD
         }
     }
 
     fun wrapContext(context: Context): Context {
-        try {
+        return try {
             val factor = getScaleFactor(context)
             if (factor == SCALE_STANDARD) return context
             
             val config = Configuration(context.resources.configuration)
             config.fontScale = factor
-            return context.createConfigurationContext(config)
+            context.createConfigurationContext(config)
         } catch (e: Exception) {
-            return context
+            context
         }
     }
 
-    /**
-     * Scales a dimension value based on the current UI scale factor.
-     */
     fun scaleDimension(context: Context, dimenResId: Int): Int {
         val original = context.resources.getDimensionPixelSize(dimenResId)
         return (original * getScaleFactor(context)).toInt()
     }
 
-    /**
-     * Directly scales a raw pixel value.
-     */
     fun scaleValue(context: Context, value: Int): Int {
         return (value * getScaleFactor(context)).toInt()
     }
@@ -58,7 +56,7 @@ object UiScaler {
         val factor = getScaleFactor(context)
         val displayMetrics = context.resources.displayMetrics
         val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
-        val itemWidthDp = 100f * factor // base item width + padding
+        val itemWidthDp = 100f * factor
         return (screenWidthDp / itemWidthDp).toInt().coerceAtLeast(2)
     }
 }

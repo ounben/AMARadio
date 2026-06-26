@@ -1,7 +1,9 @@
 package com.ounben.amaradio.ui
 
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
@@ -12,13 +14,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
@@ -26,7 +35,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.history.TrackHistoryViewModel
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.utils.EmojiUtils
-import androidx.compose.ui.platform.LocalContext
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun MiniPlayer(
@@ -37,16 +46,19 @@ fun MiniPlayer(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     
-    val stationName = uiState.currentStation?.Name ?: ""
-    val streamTitle = uiState.liveInfo.title
+    val station = uiState.currentStation
+    val liveInfo = uiState.liveInfo
+    val stationName = station?.Name ?: ""
+    
+    val songTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else if (liveInfo.title.isNotEmpty()) liveInfo.title else ""
+    val artistName = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
     
     Box(
         modifier = Modifier
             .fillMaxSize()
             .clickable { onToggleBottomSheet() }
-            .background(MaterialTheme.colorScheme.surface)
+            .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
-        // Top Shadow/Divider
         HorizontalDivider(
             modifier = Modifier.align(Alignment.TopStart),
             thickness = 1.dp,
@@ -69,71 +81,91 @@ fun MiniPlayer(
             Row(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 8.dp),
+                    .padding(horizontal = 12.dp, vertical = 4.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                AsyncImage(
-                    model = uiState.currentStation?.IconUrl,
-                    contentDescription = null,
-                    modifier = Modifier.size(48.dp),
-                    error = painterResource(R.drawable.ic_radio_24dp),
-                    placeholder = painterResource(R.drawable.ic_radio_24dp)
-                )
+                // Left: Station Icon
+                Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
+                    AsyncImage(
+                        model = station?.IconUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize().clip(MaterialTheme.shapes.small),
+                        error = rememberVectorPainter(Icons.Default.Radio),
+                        placeholder = rememberVectorPainter(Icons.Default.Radio),
+                        colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                    )
+                }
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-                Column(modifier = Modifier.weight(1f)) {
-                    if (isHeaderRole) {
+                // Middle: Text Info (4 RIGID ROWS)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxHeight(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    // Row 1: Station Name (Fixed 24dp)
+                    Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.CenterStart) {
                         Text(
                             text = stationName,
-                            style = MaterialTheme.typography.titleMedium,
+                            style = MaterialTheme.typography.bodyLarge,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
+                            color = AmaradioAmber,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
-                    } else {
-                        Text(
-                            text = stationName,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                        if (streamTitle.isNotEmpty()) {
+                    }
+                    
+                    // Row 2: Song Title (Fixed 20dp)
+                    Box(modifier = Modifier.height(20.dp), contentAlignment = Alignment.CenterStart) {
+                        if (songTitle.isNotEmpty()) {
                             Text(
-                                text = streamTitle,
+                                text = songTitle,
                                 style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
+                    
+                    // Row 3: Artist (Fixed 18dp)
+                    Box(modifier = Modifier.height(18.dp), contentAlignment = Alignment.CenterStart) {
+                        if (artistName.isNotEmpty()) {
+                            Text(
+                                text = artistName,
+                                style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis
                             )
                         }
-                        PlayerStatusRow(state = uiState.playState)
+                    }
+                    
+                    // Row 4: Status Indicator (Fixed 22dp)
+                    Box(modifier = Modifier.height(22.dp), contentAlignment = Alignment.CenterStart) {
+                        PlayerStatusRow(
+                            playState = uiState.playState,
+                            bandwidthFlow = viewModel.bandwidth
+                        )
                     }
                 }
 
-                if (isHeaderRole) {
-                    IconButton(onClick = onMoreClick) {
-                        Icon(Icons.Default.MoreVert, contentDescription = null)
-                    }
-                } else {
-                    IconButton(
-                        onClick = { viewModel.togglePlayPause() },
-                        modifier = Modifier.size(48.dp)
-                    ) {
-                        Icon(
-                            painter = painterResource(
-                                if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                                    R.drawable.ic_pause_circle 
-                                else R.drawable.ic_play_circle
-                            ),
-                            contentDescription = null,
-                            modifier = Modifier.size(40.dp),
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                    }
+                // Right: Play/Pause (Enlarged to 72dp)
+                IconButton(
+                    onClick = { viewModel.togglePlayPause() },
+                    modifier = Modifier.size(72.dp)
+                ) {
+                    Icon(
+                        imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
+                            Icons.Default.PauseCircle 
+                        else Icons.Default.PlayCircle,
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
         }
@@ -152,61 +184,125 @@ fun FullPlayer(
     val context = LocalContext.current
     
     val station = uiState.currentStation
-    val streamTitle = uiState.liveInfo.title
-    val displayTitle = if (streamTitle.isNotEmpty()) streamTitle else station?.Name ?: ""
+    val liveInfo = uiState.liveInfo
+    
+    val mainHeadline = if (liveInfo.track.isNotEmpty()) liveInfo.track 
+                       else if (liveInfo.title.isNotEmpty()) liveInfo.title 
+                       else station?.Name ?: ""
+    
+    val artistLine = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
 
-    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface)) {
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceVariant)) {
         HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
         
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(16.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.Start
         ) {
-            Text(
-                text = displayTitle,
-                style = MaterialTheme.typography.headlineSmall,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth()
-            )
+            // Header Layout: Row with Icon Left and Text Right
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                // Large Station Icon
+                Surface(
+                    modifier = Modifier.size(100.dp),
+                    shape = MaterialTheme.shapes.medium,
+                    color = MaterialTheme.colorScheme.surface,
+                    tonalElevation = 2.dp
+                ) {
+                    AsyncImage(
+                        model = station?.IconUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize().padding(8.dp),
+                        contentScale = ContentScale.Fit,
+                        error = rememberVectorPainter(Icons.Default.Radio),
+                        placeholder = rememberVectorPainter(Icons.Default.Radio),
+                        colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                    )
+                }
 
-            Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.width(16.dp))
 
-            if (station != null) {
-                val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
-                val details = remember(station) { station.getLongDetails(context) }
-                
-                Text(
-                    text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    textAlign = TextAlign.Center
-                )
+                // Left-aligned Text Info
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = mainHeadline,
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold,
+                        color = if (liveInfo.title.isEmpty()) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
 
-                PlayerStatusRow(state = uiState.playState, showText = true)
+                    if (artistLine.isNotEmpty()) {
+                        Text(
+                            text = artistLine,
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                    if (station != null && liveInfo.title.isNotEmpty()) {
+                        Text(
+                            text = station.Name,
+                            style = MaterialTheme.typography.titleSmall,
+                            color = AmaradioAmber,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
 
+                    if (station != null) {
+                        val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
+                        val details = remember(station) { station.getShortDetails(context) }
+                        
+                        Text(
+                            text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
+                            style = MaterialTheme.typography.bodyMedium,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                    
+                    Spacer(modifier = Modifier.height(4.dp))
+                    PlayerStatusRow(
+                        playState = uiState.playState,
+                        bandwidthFlow = playerViewModel.bandwidth,
+                        showText = true
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            // Tags
+            if (station != null && station.TagsAll.isNotEmpty()) {
                 val tags = remember(station.TagsAll) { 
                     station.TagsAll.split(",").map { it.trim() }.filter { it.isNotEmpty() } 
                 }
                 
                 FlowRow(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
+                    horizontalArrangement = Arrangement.Start
                 ) {
-                    tags.take(6).forEach { tag ->
+                    tags.take(8).forEach { tag ->
                         Surface(
-                            modifier = Modifier.padding(4.dp),
+                            modifier = Modifier.padding(end = 6.dp, bottom = 6.dp),
                             shape = MaterialTheme.shapes.small,
-                            color = MaterialTheme.colorScheme.secondaryContainer
+                            color = MaterialTheme.colorScheme.surface,
+                            border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
                         ) {
                             Text(
                                 text = tag,
                                 modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
-                                style = MaterialTheme.typography.labelSmall
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
                     }
@@ -219,7 +315,7 @@ fun FullPlayer(
                 text = stringResource(R.string.tab_player_history),
                 style = MaterialTheme.typography.titleSmall,
                 modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
-                color = MaterialTheme.colorScheme.primary
+                color = MaterialTheme.colorScheme.onSurface
             )
             
             TrackList(
@@ -229,10 +325,11 @@ fun FullPlayer(
             )
         }
 
-        // Playback Controls
+        // Control Bar
         Surface(
             tonalElevation = 2.dp,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            color = MaterialTheme.colorScheme.surfaceVariant
         ) {
             Row(
                 modifier = Modifier
@@ -243,7 +340,7 @@ fun FullPlayer(
             ) {
                 IconButton(onClick = { playerViewModel.skipToPrevious() }) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_skip_previous_circle),
+                        imageVector = Icons.Default.SkipPrevious,
                         contentDescription = null,
                         modifier = Modifier.size(48.dp),
                         tint = MaterialTheme.colorScheme.onSurface
@@ -252,23 +349,21 @@ fun FullPlayer(
 
                 IconButton(
                     onClick = { playerViewModel.togglePlayPause() },
-                    modifier = Modifier.size(72.dp)
+                    modifier = Modifier.size(84.dp)
                 ) {
                     Icon(
-                        painter = painterResource(
-                            if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                                R.drawable.ic_pause_circle 
-                            else R.drawable.ic_play_circle
-                        ),
+                        imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
+                            Icons.Default.PauseCircle 
+                        else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(64.dp),
+                        modifier = Modifier.size(76.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
 
                 IconButton(onClick = { playerViewModel.skipToNext() }) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_skip_next_circle),
+                        imageVector = Icons.Default.SkipNext,
                         contentDescription = null,
                         modifier = Modifier.size(48.dp),
                         tint = MaterialTheme.colorScheme.onSurface
@@ -289,51 +384,53 @@ fun FullPlayer(
 }
 
 @Composable
-fun PlayerStatusRow(state: PlayState, showText: Boolean = false) {
-    if (state == PlayState.Idle || state == PlayState.Paused) return
-
-    val infiniteTransition = rememberInfiniteTransition(label = "status")
-    val alpha by infiniteTransition.animateFloat(
-        initialValue = 1f,
-        targetValue = 0.2f,
-        animationSpec = infiniteRepeatable(
-            animation = tween(600, easing = LinearEasing),
-            repeatMode = RepeatMode.Reverse
-        ),
-        label = "blink"
-    )
+fun PlayerStatusRow(
+    playState: PlayState,
+    bandwidthFlow: StateFlow<String>,
+    showText: Boolean = false
+) {
+    if (playState == PlayState.Idle || playState == PlayState.Paused) return
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        val color = when (state) {
-            PlayState.PrePlaying -> Color(0xFFFFA500) // Orange
+        val color = when (playState) {
+            PlayState.PrePlaying -> AmaradioAmber
             PlayState.Playing -> Color(0xFF4CAF50) // Green
             PlayState.Error -> Color(0xFFF44336) // Red
             else -> Color.Transparent
         }
 
-        Icon(
-            painter = painterResource(R.drawable.ic_sync_black_24dp),
-            contentDescription = null,
-            tint = color,
-            modifier = Modifier
-                .size(14.dp)
-                .then(if (state == PlayState.PrePlaying) Modifier.alpha(alpha) else Modifier)
-        )
+        if (playState == PlayState.PrePlaying || playState == PlayState.Playing) {
+            // HIGHLY OPTIMIZED: Only this tiny Text component recomposes every second.
+            val bandwidth by bandwidthFlow.collectAsState()
 
-        if (state == PlayState.Error) {
+            Text(
+                text = bandwidth.ifEmpty { "0.0 kB/s" },
+                color = color,
+                style = MaterialTheme.typography.labelSmall,
+                fontWeight = FontWeight.Bold
+            )
+            
+            if (showText && playState == PlayState.PrePlaying) {
+                Spacer(modifier = Modifier.width(6.dp))
+                Text(
+                    text = stringResource(R.string.notify_pre_play),
+                    color = color,
+                    style = MaterialTheme.typography.labelSmall
+                )
+            }
+        } else if (playState == PlayState.Error) {
+            Icon(
+                imageVector = Icons.Default.Error,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(16.dp)
+            )
             Spacer(modifier = Modifier.width(6.dp))
             Text(
                 text = stringResource(R.string.error_station_load),
                 color = color,
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold
-            )
-        } else if (showText && state == PlayState.PrePlaying) {
-            Spacer(modifier = Modifier.width(6.dp))
-            Text(
-                text = stringResource(R.string.notify_pre_play),
-                color = color,
-                style = MaterialTheme.typography.labelSmall
             )
         }
     }

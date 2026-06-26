@@ -187,7 +187,7 @@ fun SettingsCategory(title: String, content: @Composable ColumnScope.() -> Unit)
         Text(
             text = title,
             style = MaterialTheme.typography.titleSmall,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 4.dp)
         )
@@ -266,7 +266,7 @@ fun SettingsListPreference(
         Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = currentLabel, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.primary)
+            Text(text = currentLabel, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 

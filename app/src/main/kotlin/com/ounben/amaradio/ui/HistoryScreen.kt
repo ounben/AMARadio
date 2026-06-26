@@ -7,6 +7,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -62,12 +63,16 @@ fun HistoryScreen(
         HorizontalPager(
             state = pagerState,
             modifier = Modifier.weight(1f),
-            beyondViewportPageCount = 0
+            beyondViewportPageCount = 0,
+            verticalAlignment = Alignment.Top
         ) { pageIndex ->
             if (pageIndex == 0) {
-                StationList(
+                StationListTemplate(
                     stations = uiState.filteredStations,
                     isGrid = uiState.isGrid,
+                    isLoading = false,
+                    error = null,
+                    emptyMessage = stringResource(R.string.searchpreference_no_results),
                     onStationClick = onStationClick,
                     onFavoriteClick = onFavoriteClick,
                     isFavorite = isFavorite

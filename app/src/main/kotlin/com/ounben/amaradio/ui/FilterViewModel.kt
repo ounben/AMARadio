@@ -31,6 +31,7 @@ import kotlin.time.Duration.Companion.milliseconds
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
 
     data class FilterUiState(
+        val tabName: String = "",
         val name: String = "",
         val countryCode: String = "",
         val countryLabel: String = "",
@@ -89,6 +90,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         _uiState.update { 
             val cCode = sharedPref.getString("filter_country_code", "") ?: ""
             it.copy(
+                tabName = sharedPref.getString("filter_tab_name", "") ?: "",
                 name = sharedPref.getString("filter_name", "") ?: "",
                 countryCode = cCode,
                 countryLabel = sharedPref.getString("filter_country_label", "") ?: "",
@@ -105,6 +107,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private fun saveFilters() {
         val state = _uiState.value
         sharedPref.edit {
+            putString("filter_tab_name", state.tabName)
             putString("filter_name", state.name)
             putString("filter_country_code", state.countryCode)
             putString("filter_country_label", state.countryLabel)
@@ -123,6 +126,11 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     fun onNameChange(newName: String) {
         _uiState.update { it.copy(name = newName) }
+    }
+
+    fun onTabNameChange(newName: String) {
+        _uiState.update { it.copy(tabName = newName) }
+        saveFilters() // Immediate save for tab title responsiveness
     }
 
     fun onCountrySelect(code: String, label: String) {
@@ -191,7 +199,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         DataCategory.DecodeJson(result).toList()
     }
 
-    private fun fetchMetadata() {
+    fun fetchMetadata() {
         viewModelScope.launch {
             val tagsData = loadLocalOrRemote("radio_browser_tag_cache", "json/tags?limit=1000", "tags")
             val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")

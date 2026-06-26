@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
     </style>
@@ -6,7 +6,7 @@
     <style name="MyMaterialTheme.Dark" parent="MyMaterialTheme.Base.Dark">
     </style>
 
-    <style name="MyMaterialTheme.Base" parent="Theme.MaterialComponents.Light">
+    <style name="MyMaterialTheme.Base" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="dialogTheme">@style/DialogTheme</item>
@@ -14,10 +14,13 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#E0E0E0</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary</item>
+        <item name="actionMenuTextColor">@color/textColorPrimary</item>
 
         <item name="preferenceTheme">@style/MyPreferenceThemeOverlay</item>
 
@@ -33,9 +36,6 @@
         <item name="menuBottomTextColorDefault">@color/menuBottomTextColorDefault</item>
         <item name="menuBottomBackgroundColor">@color/menuBottomBackgroundColor</item>
 
-        <item name="swipeDeleteIconColor">@color/swipeDeleteIconColor</item>
-        <item name="swipeDeleteBackgroundColor">@color/swipeDeleteBackgroundColor</item>
-
         <item name="colorTabUnderline">@color/colorTabUnderline</item>
 
         <item name="android:itemBackground">@color/windowBackground</item>
@@ -46,13 +46,11 @@
         <item name="actionButtonStyle">@style/CompactActionButton</item>
         <item name="android:itemPadding">0dp</item>
 
-        <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccent</item>
-
-        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+        <item name="toolbarPopupTheme">@style/ToolbarPopupTheme.Light</item>
     </style>
 
-    <style name="MyMaterialTheme.Base.Dark" parent="Theme.MaterialComponents">
+    <style name="MyMaterialTheme.Base.Dark" parent="Theme.MaterialComponents.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="dialogTheme">@style/DialogTheme.Dark</item>
@@ -60,10 +58,13 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme.Dark</item>
         <item name="android:windowBackground">@color/windowBackgroundDark</item>
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">@color/colorAccentDark</item>
         <item name="colorControlActivated">@color/colorAccentDark</item>
         <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColorPrimary">@color/textColorPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/textColorSecondaryDark</item>
+        <item name="actionMenuTextColor">@color/textColorPrimaryDark</item>
 
         <item name="preferenceTheme">@style/MyPreferenceThemeOverlay.Dark</item>
 
@@ -80,9 +81,6 @@
         <item name="menuBottomTextColorDefault">@color/menuBottomTextColorDefaultDark</item>
         <item name="menuBottomBackgroundColor">@color/menuBottomBackgroundColorDark</item>
 
-        <item name="swipeDeleteIconColor">@color/swipeDeleteIconColorDark</item>
-        <item name="swipeDeleteBackgroundColor">@color/swipeDeleteBackgroundColorDark</item>
-
         <item name="colorTabUnderline">@color/colorTabUnderlineDark</item>
 
         <item name="android:itemBackground">@color/windowBackgroundDark</item>
@@ -93,22 +91,14 @@
         <item name="actionButtonStyle">@style/CompactActionButton</item>
         <item name="android:itemPadding">0dp</item>
 
-        <!-- workaround for lower API -->
         <item name="colorAccentMy">@color/colorAccentDark</item>
-
-        <item name="viewInflaterClass">androidx.appcompat.app.AppCompatViewInflater</item>
+        <item name="toolbarPopupTheme">@style/ToolbarPopupTheme.Dark</item>
     </style>
 
     <style name="MyPreferenceThemeOverlay" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="preferenceCategoryStyle">@style/MyPreferenceCategory</item>
     </style>
 
     <style name="MyPreferenceThemeOverlay.Dark" parent="@style/PreferenceThemeOverlay.v14.Material">
-        <item name="preferenceCategoryStyle">@style/MyPreferenceCategory</item>
-    </style>
-
-    <style name="MyPreferenceCategory" parent="Preference.Category.Material">
-        <item name="android:layout">@layout/preference_category_material_native</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
@@ -117,11 +107,17 @@
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
-    <style name="ToolbarTheme" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+    <!-- Robust Toolbar Theming -->
+    <style name="ToolbarTheme" parent="ThemeOverlay.MaterialComponents.ActionBar">
         <item name="actionButtonStyle">@style/CompactActionButton</item>
         <item name="android:actionButtonStyle">@style/CompactActionButton</item>
         <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
+        <item name="controlBackground">?attr/selectableItemBackgroundBorderless</item>
     </style>
+
+    <!-- Explicit Popup Themes -->
+    <style name="ToolbarPopupTheme.Light" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="ToolbarPopupTheme.Dark" parent="ThemeOverlay.AppCompat.Dark" />
 
     <style name="IconButton" parent="Widget.MaterialComponents.Button.TextButton">
         <item name="android:minHeight">48dip</item>
@@ -163,8 +159,7 @@
     </style>
 
     <style name="ProgressBarCircle" parent="Widget.AppCompat.ProgressBar">
-        <item name="colorAccent">@android:color/white</item>
-
+        <item name="android:indeterminateTint">@color/amaradioAmber</item>
     </style>
 
     <style name="MenuTextAppearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
@@ -182,8 +177,8 @@
     <style name="CompactActionButton" parent="Widget.AppCompat.ActionButton">
         <item name="android:minWidth">32dp</item>
         <item name="android:padding">0dp</item>
-        <item name="android:paddingStart">4dp</item>
-        <item name="android:paddingEnd">4dp</item>
+        <item name="android:paddingStart" tools:ignore="SpUsage">4dp</item>
+        <item name="android:paddingEnd" tools:ignore="SpUsage">4dp</item>
         <item name="android:layout_margin">0dp</item>
     </style>
 </resources>

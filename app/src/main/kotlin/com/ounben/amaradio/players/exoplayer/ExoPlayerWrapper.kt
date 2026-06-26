@@ -25,7 +25,6 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
-import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import androidx.media3.exoplayer.upstream.DefaultLoadErrorHandlingPolicy
 import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
 import androidx.media3.extractor.metadata.icy.IcyHeaders
@@ -87,8 +86,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
             .setLoadControl(loadControl)
-            // IMPORTANT: set handleAudioFocus to FALSE because PlayerService manages focus manually.
-            // This prevents a conflict where focus is requested twice and then revoked from the service.
             .setAudioAttributes(audioAttributes, false) 
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
@@ -107,8 +104,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .readTimeout(5, TimeUnit.SECONDS)
             .build()
 
-        // We don't send Icy-MetaData: 1 here to avoid interleaved stream chunks that OkHttpDataSource can't handle.
-        // ExoPlayer will still extract what it can from HTTP headers.
         val dataSourceFactory = OkHttpDataSource.Factory(dedicatedClient)
             .setUserAgent("AMARadio/0.99.2")
             .setTransferListener(this)
@@ -126,7 +121,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             internalPlayer.setMediaSource(audioSource!!, true)
             internalPlayer.prepare()
             internalPlayer.playWhenReady = true
-            Log.d("ExoPlayerWrapper", "Player preparing with OkHttpDataSource. Focus handling: OFF")
+            Log.d("ExoPlayerWrapper", "Player preparing. Focus handling: OFF")
         }
     }
 

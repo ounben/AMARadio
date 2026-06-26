@@ -17,7 +17,10 @@ fun ServerInfoScreen(viewModel: ServerInfoViewModel) {
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.isLoading) {
-            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            CircularProgressIndicator(
+                modifier = Modifier.align(Alignment.Center),
+                color = AmaradioAmber
+            )
         } else if (uiState.error != null) {
             Text(text = uiState.error!!, modifier = Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.error)
         } else {
@@ -28,8 +31,17 @@ fun ServerInfoScreen(viewModel: ServerInfoViewModel) {
             ) {
                 items(uiState.statistics) { item ->
                     Column {
-                        Text(text = item.Name, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.primary)
-                        Text(text = item.Value, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Bold)
+                        Text(
+                            text = item.Name, 
+                            style = MaterialTheme.typography.labelMedium, 
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                        Text(
+                            text = item.Value, 
+                            style = MaterialTheme.typography.bodyLarge, 
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
                         HorizontalDivider(modifier = Modifier.padding(top = 8.dp), thickness = 0.5.dp)
                     }
                 }

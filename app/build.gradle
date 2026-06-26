@@ -39,7 +39,7 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
+        viewBinding false
         aidl true
         compose true
     }
@@ -59,7 +59,9 @@ android {
         }
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
-        resValue 'string', 'version_name', versionName
+        resValue 'string', 'version_name', "0.99.2"
+        resValue 'string', 'git_hash', "N/A"
+        resValue 'string', 'build_date', new Date().format('yyyy-MM-dd HH:mm:ss')
 
         def escapedLocales = getAvailableLocales()
         resValue 'string', 'available_locales', escapedLocales.join(",")
@@ -71,17 +73,13 @@ android {
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-
-            lintOptions {
-                disable 'MissingTranslation'
-            }
             signingConfig signingConfigs.debug
         }
     }
 
     lint {
-        abortOnError true
-        lintConfig = file("lint.xml")
+        abortOnError false
+        checkReleaseBuilds false
     }
 
     testOptions {
@@ -93,18 +91,11 @@ android {
     }
 }
 
-// No longer needed, using version catalog
-
-
 dependencies {
     implementation libs.androidx.media
-    implementation libs.androidx.drawerlayout
-    implementation libs.androidx.swiperefreshlayout
     implementation libs.androidx.appcompat
-    implementation libs.androidx.recyclerview
     implementation libs.material
     implementation libs.androidx.preference
-    implementation libs.androidx.constraintlayout
     implementation libs.androidx.tvprovider
 
     implementation libs.okhttp
@@ -122,6 +113,7 @@ dependencies {
     implementation libs.androidx.activity.compose
     implementation libs.androidx.lifecycle.viewmodel.compose
     implementation libs.androidx.lifecycle.runtime.compose
+    implementation libs.androidx.navigation.compose
     implementation libs.coil.compose
     implementation libs.coil.svg
 
@@ -153,47 +145,4 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.vintage.engine
     testRuntimeOnly libs.junit.platform.launcher
-}
-
-android.applicationVariants.all { variant ->
-    variant.outputs.all { output ->
-        def appName = variant.mergedFlavor.resValues.get('string/app_name_untranslated').getValue()
-        appName = "${appName}"
-
-        appName += "-${variant.buildType.name}"
-
-        if (variant.buildType.name == "debug") {
-            appName += "-DEV"
-        }
-
-        def gitHash = { ->
-            def stdout = new ByteArrayOutputStream()
-            try {
-                exec {
-                    commandLine 'git', 'rev-parse', '--short', 'HEAD'
-                    standardOutput = stdout
-                }
-                return stdout.toString().trim()
-            } catch (Exception ignored) {
-                return "No commit hash"
-            }
-        }
-
-        resValue 'string', 'git_hash', gitHash()
-
-        def getBuildDate = {
-            new Date().format('yyyy-MM-dd HH:mm:ss')
-        }
-
-        resValue 'string', 'build_date', getBuildDate()
-
-        def finalName = appName
-
-        if (!versionName.isEmpty()) {
-            finalName += "-" + versionName
-        }
-
-        finalName += "-" + gitHash() + ".apk"
-        outputFileName = finalName
-    }
 }

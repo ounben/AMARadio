@@ -42,6 +42,7 @@
     <string name="action_languages">Sprachen</string>
     <string name="action_edit">Bearbeiten</string>
     <string name="action_copy_info">Info kopieren</string>
+    <string name="action_rename_tab">Tab umbenennen</string>
     <string name="error_station_load">Verbindung zum Sender fehlgeschlagen</string>
     <string name="error_list_update">Verbindung zum Radio-Browser-Server fehlgeschlagen</string>
 

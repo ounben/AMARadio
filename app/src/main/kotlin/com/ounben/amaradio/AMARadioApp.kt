@@ -5,7 +5,7 @@ import android.app.UiModeManager
 import android.content.res.Configuration
 import android.os.Handler
 import android.os.HandlerThread
-import android.widget.Toast
+import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.preference.PreferenceManager
 import coil.ImageLoader
@@ -43,8 +43,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
 
     private lateinit var connectionPool: ConnectionPool
-    lateinit var httpClient: OkHttpClient
-        private set
+    private var _httpClient: OkHttpClient? = null
+    val httpClient: OkHttpClient 
+        get() = _httpClient ?: rebuildHttpClient()
 
     private var testsInterceptor: Interceptor? = null
 
@@ -67,58 +68,68 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
     override fun onCreate() {
         super.onCreate()
-        Utils.init(this)
+        Log.d("APP", "onCreate started")
+        try {
+            Utils.init(this)
 
-        connectionPool = ConnectionPool()
+            connectionPool = ConnectionPool()
 
-        rebuildHttpClient()
+            rebuildHttpClient()
 
-        CountryCodeDictionary.instance.load(this)
-        CountryFlagsLoader.instance
+            CountryCodeDictionary.instance.load(this)
+            CountryFlagsLoader.instance
 
-        historyManager = HistoryManager(this)
-        favouriteManager = FavouriteManager(this)
-        fallbackStationsManager = FallbackStationsManager(this)
+            historyManager = HistoryManager(this)
+            favouriteManager = FavouriteManager(this)
+            fallbackStationsManager = FallbackStationsManager(this)
 
-        val uiModeManager = getSystemService(UI_MODE_SERVICE) as? UiModeManager
-        if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
-            tvChannelManager = TvChannelManager(this)
+            val uiModeManager = getSystemService(UI_MODE_SERVICE) as? UiModeManager
+            if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+                tvChannelManager = TvChannelManager(this)
+            }
+
+            trackHistoryRepository = TrackHistoryRepository(this)
+
+            val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
+            audioThread.start()
+            val looper = audioThread.looper
+            audioLooper = looper
+            audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
+            Log.d("APP", "onCreate finished")
+        } catch (e: Exception) {
+            Log.e("APP", "onCreate failed", e)
         }
-
-        trackHistoryRepository = TrackHistoryRepository(this)
-
-        val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
-        audioThread.start()
-        val looper = audioThread.looper
-        audioLooper = looper
-        audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
     }
 
-    fun rebuildHttpClient() {
+    fun rebuildHttpClient(): OkHttpClient {
         val builder = newHttpClient()
             .connectTimeout(10.seconds)
             .writeTimeout(10.seconds)
             .readTimeout(10.seconds)
-            .addInterceptor(UserAgentInterceptor("AMARadio/" + resources.getString(R.string.version_name)))
+            .addInterceptor(UserAgentInterceptor("AMARadio/0.99.2"))
 
-        httpClient = builder.build()
+        val client = builder.build()
+        _httpClient = client
+        return client
     }
 
     fun newHttpClient(): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder().connectionPool(connectionPool)
+        val pool = if (this::connectionPool.isInitialized) connectionPool else ConnectionPool()
+        val builder = OkHttpClient.Builder().connectionPool(pool)
 
         testsInterceptor?.let {
             builder.addInterceptor(it)
         }
 
         if (!setCurrentOkHttpProxy(builder)) {
-            Toast.makeText(this, resources.getString(R.string.ignore_proxy_settings_invalid), Toast.LENGTH_SHORT).show()
+            Log.w("APP", "Proxy settings invalid")
         }
         return Utils.enableTls12OnPreLollipop(builder)
     }
 
     fun newHttpClientWithoutProxy(): OkHttpClient.Builder {
-        val builder = OkHttpClient.Builder().connectionPool(connectionPool)
+        val pool = if (this::connectionPool.isInitialized) connectionPool else ConnectionPool()
+        val builder = OkHttpClient.Builder().connectionPool(pool)
 
         testsInterceptor?.let {
             builder.addInterceptor(it)

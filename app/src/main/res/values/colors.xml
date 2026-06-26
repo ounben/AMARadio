@@ -1,52 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Light Mode Base -->
-    <color name="windowBackground">#ffffff</color>
-    <color name="colorPrimary">#FF9800</color> <!-- Orange/Amber contrast -->
-    <color name="colorAccent">#FF5722</color> <!-- Deep Orange -->
+    <!-- Amaradio Brand Color (Replaces YouTube Red) -->
+    <color name="amaradioAmber">#FF9800</color>
 
-    <!-- Dark Mode Base -->
-    <color name="windowBackgroundDark">#121212</color>
-    <color name="colorPrimaryDark">#1F1B1B</color>
-    <color name="colorAccentDark">#FFB74D</color> <!-- Light Amber for Dark Mode contrast -->
+    <!-- Light Mode (YouTube Inspired) -->
+    <color name="windowBackground">#FFFFFF</color>
+    <color name="colorPrimary">#FFFFFF</color> <!-- YouTube Light Toolbar is white -->
+    <color name="colorAccent">#FF9800</color>
 
-    <color name="textColorPrimary">#FFFFFF</color>
+    <!-- Dark Mode (YouTube Inspired) -->
+    <color name="windowBackgroundDark">#0F0F0F</color>
+    <color name="colorPrimaryDark">#0F0F0F</color>
+    <color name="colorAccentDark">#FF9800</color>
+
+    <color name="textColorPrimary">#0F0F0F</color>
+    <color name="textColorPrimaryDark">#FFFFFF</color>
+
     <color name="navigationBarColor">#000000</color>
 
-    <color name="colorTabUnderline">#FFFFFF</color>
-    <color name="colorTabUnderlineDark">@color/colorAccentDark</color>
-    <color name="colorStationSwipeBackground">#FF4081</color>
+    <color name="colorTabUnderline">#FF9800</color>
+    <color name="colorTabUnderlineDark">#FF9800</color>
 
-    <color name="colorPlayerBackground">#ffffff</color>
-    <color name="colorPlayerBackgroundDark">#242424</color>
-    <color name="colorPlayerShadow">#e5e5e5</color>
+    <color name="colorPlayerBackground">#F9F9F9</color>
+    <color name="colorPlayerBackgroundDark">#212121</color>
+    <color name="colorPlayerShadow">#E5E5E5</color>
     <color name="colorPlayerShadowDark">#000000</color>
 
-    <color name="textColorSecondary">#777777</color>
-    <color name="tagBackgroundColor">#E0E0E0</color>
-    <color name="tagBackgroundColorDark">#333333</color>
+    <color name="textColorSecondary">#606060</color>
+    <color name="textColorSecondaryDark">#AAAAAA</color>
 
-    <color name="menuTextColorSelected">@color/colorPrimary</color>
-    <color name="menuTextColorSelectedDark">@color/colorAccentDark</color>
-    <color name="menuTextColorDefault">@android:color/black</color>
-    <color name="menuTextColorDefaultDark">@android:color/white</color>
+    <color name="tagBackgroundColor">#F2F2F2</color>
+    <color name="tagBackgroundColorDark">#212121</color>
 
-    <color name="menuBottomTextColorSelected">@android:color/white</color>
-    <color name="menuBottomTextColorSelectedDark">@color/colorAccentDark</color>
-    <color name="menuBottomTextColorDefault">#E1E1E1</color>
-    <color name="menuBottomTextColorDefaultDark">#BDBDBD</color>
-    <color name="menuBottomBackgroundColor">@color/colorPrimary</color>
-    <color name="menuBottomBackgroundColorDark">#1A1A1B</color>
+    <color name="menuTextColorSelected">#FF9800</color>
+    <color name="menuTextColorSelectedDark">#FF9800</color>
+    <color name="menuTextColorDefault">#0F0F0F</color>
+    <color name="menuTextColorDefaultDark">#FFFFFF</color>
 
-    <color name="iconsInItemBackgroundColor">#F5F5F5</color>
-    <color name="iconsInItemBackgroundColorDark">#2C2C2C</color>
+    <color name="menuBottomTextColorSelected">#FF9800</color>
+    <color name="menuBottomTextColorSelectedDark">#FF9800</color>
+    <color name="menuBottomTextColorDefault">#606060</color>
+    <color name="menuBottomTextColorDefaultDark">#AAAAAA</color>
+    <color name="menuBottomBackgroundColor">#FFFFFF</color>
+    <color name="menuBottomBackgroundColorDark">#0F0F0F</color>
 
-    <color name="swipeDeleteIconColor">@color/windowBackground</color>
-    <color name="swipeDeleteIconColorDark">@color/windowBackgroundDark</color>
+    <color name="iconsInItemBackgroundColor">#F9F9F9</color>
+    <color name="iconsInItemBackgroundColorDark">#212121</color>
+
+    <color name="snackBarButtonColor">#FF9800</color>
+    <color name="snackBarButtonColorDark">#FF9800</color>
+
+    <!-- Required by legacy styles/v21 -->
+    <color name="swipeDeleteIconColor">#FFFFFF</color>
+    <color name="swipeDeleteIconColorDark">#0F0F0F</color>
     <color name="swipeDeleteBackgroundColor">#EE0000</color>
     <color name="swipeDeleteBackgroundColorDark">#CC0000</color>
-
-
-    <color name="snackBarButtonColor">#FFB74D</color>
-    <color name="snackBarButtonColorDark">@color/snackBarButtonColor</color>
 </resources>

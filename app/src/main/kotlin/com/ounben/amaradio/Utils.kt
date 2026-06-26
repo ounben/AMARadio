@@ -24,7 +24,6 @@ import androidx.core.net.toUri
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.players.PlayStationTask
-import com.ounben.amaradio.players.selector.PlayerSelectorDialog
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.service.ConnectivityChecker
@@ -260,18 +259,6 @@ object Utils {
             station = app.historyManager.first
         }
         return station
-    }
-
-    @JvmStatic
-    fun showPlaySelection(context: Context, station: DataRadioStation, fragmentManager: FragmentManager) {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        if (sharedPref.getBoolean("play_external", false)) {
-            val old = fragmentManager.findFragmentByTag(PlayerSelectorDialog.FRAGMENT_TAG)
-            if (old != null && old.isVisible) return
-            PlayerSelectorDialog(station).show(fragmentManager, PlayerSelectorDialog.FRAGMENT_TAG)
-        } else {
-            playAndWarnIfMetered(context, station, PlayerType.AMARadio) { play(station) }
-        }
     }
 
     @JvmStatic

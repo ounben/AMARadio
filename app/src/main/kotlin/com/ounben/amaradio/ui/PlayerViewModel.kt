@@ -11,6 +11,8 @@ import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,6 +30,12 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     private val _uiState = MutableStateFlow(PlayerUiState())
     val uiState: StateFlow<PlayerUiState> = _uiState.asStateFlow()
+
+    private val _bandwidth = MutableStateFlow("")
+    val bandwidth: StateFlow<String> = _bandwidth.asStateFlow()
+
+    private var bandwidthJob: Job? = null
+    private var lastBytes: Long = 0
 
     init {
         updateState()
@@ -50,15 +58,46 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     private fun updateState() {
+        val state = PlayerServiceUtil.getPlayerState()
         val station = PlayerServiceUtil.getCurrentStation()
         _uiState.update {
             it.copy(
                 currentStation = station,
-                playState = PlayerServiceUtil.getPlayerState(),
+                playState = state,
                 liveInfo = PlayerServiceUtil.getMetadataLive(),
                 isFavorite = station?.let { s -> (getApplication<AMARadioApp>()).favouriteManager.has(s.StationUuid) } ?: false
             )
         }
+        
+        if (state == PlayState.Playing || state == PlayState.PrePlaying) {
+            startBandwidthTracking()
+        } else {
+            stopBandwidthTracking()
+        }
+    }
+
+    private fun startBandwidthTracking() {
+        if (bandwidthJob?.isActive == true) return
+        lastBytes = PlayerServiceUtil.getTransferredBytes()
+        bandwidthJob = viewModelScope.launch {
+            while (true) {
+                delay(1000)
+                val currentBytes = PlayerServiceUtil.getTransferredBytes()
+                val diff = currentBytes - lastBytes
+                lastBytes = currentBytes
+                
+                val speedKBs = if (diff > 0) diff / 1024.0 else 0.0
+                val speedString = if (speedKBs > 0) "%.1f kB/s".format(speedKBs) else "0.0 kB/s"
+                
+                _bandwidth.value = speedString
+            }
+        }
+    }
+
+    private fun stopBandwidthTracking() {
+        bandwidthJob?.cancel()
+        bandwidthJob = null
+        _bandwidth.value = ""
     }
 
     private fun updateFavoriteState() {
