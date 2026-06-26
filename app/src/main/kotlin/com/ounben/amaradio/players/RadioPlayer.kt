@@ -31,15 +31,34 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         fun foundLiveStreamInfo(liveInfo: StreamLiveInfo)
     }
 
-    private val currentPlayer: PlayerWrapper
+    private var currentPlayer: PlayerWrapper
     private var streamName: String? = null
     private val playerThreadHandler: Handler
     private var playerListener: PlayerListener? = null
     var playState = PlayState.Idle
         private set
+    
+    private var lastStationURL: String? = null
+    private var lastStreamName: String? = null
+    private var reconnectAttempts = 0
+    private val MAX_RECONNECT_ATTEMPTS = 3
+
+    private fun reinit() {
+        if (Utils.isDebug) Log.d(TAG, "Re-initializing Player to ensure fresh native state")
+        // Führe release() aus, um native Ressourcen (Codecs, Threads) sauber abzubauen
+        currentPlayer.release()
+        
+        // Wir bauen den Player-Wrapper neu auf
+        val app = mainContext.applicationContext as AMARadioApp
+        val newPlayer = ExoPlayerWrapper(mainContext, app.audioLooper)
+        newPlayer.setStateListener(this)
+        currentPlayer = newPlayer
+    }
+
     private var lastLiveInfo: StreamLiveInfo? = null
     private var playStationTask: PlayStationTask? = null
     private var stationLoadAttempts = 0
+    private var currentStation: DataRadioStation? = null
 
     private val bufferCheckRunnable = object : Runnable {
         override fun run() {
@@ -58,7 +77,24 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun play(stationURL: String?, streamName: String?) {
+        playInternal(stationURL, streamName, false)
+    }
+
+    private fun playInternal(stationURL: String?, streamName: String?, isReconnect: Boolean) {
         if (stationURL == null) return
+        
+        if (!isReconnect) {
+            reconnectAttempts = 0
+            lastStationURL = stationURL
+            lastStreamName = streamName
+        }
+
+        // Wenn der Player im Idle-Zustand ist, könnte die native Media-Engine 
+        // stale sein. Wir stellen sicher, dass wir mit einer frischen Instanz starten.
+        if (playState == PlayState.Idle) {
+             reinit()
+        }
+
         setState(PlayState.PrePlaying, -1)
         this.streamName = streamName
         val prefs = PreferenceManager.getDefaultSharedPreferences(mainContext.applicationContext)
@@ -73,14 +109,16 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun play(station: DataRadioStation) {
+        reconnectAttempts = 0
         stationLoadAttempts = 0
+        currentStation = station
         executePlayStationTask(station)
     }
 
     private fun executePlayStationTask(station: DataRadioStation) {
         setState(PlayState.PrePlaying, -1)
         playStationTask = PlayStationTask(station, mainContext,
-            { url -> this@RadioPlayer.play(url, station.Name) },
+            { url -> this@RadioPlayer.playInternal(url, station.Name, false) },
             { executionResult ->
                 if (executionResult == PlayStationTask.ExecutionResult.FAILURE) {
                     stationLoadAttempts++
@@ -136,6 +174,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
     fun destroy() {
         stop()
+        currentPlayer.release()
     }
 
     fun isPlaying(): Boolean = playState == PlayState.PrePlaying || playState == PlayState.Playing
@@ -164,6 +203,11 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private fun setState(state: PlayState, audioSessionId: Int) {
         if (Utils.isDebug) Log.d(TAG, "set state '${state.name}'")
         if (playState == state) return
+        
+        if (state == PlayState.Playing) {
+            reconnectAttempts = 0 // Reset on successful play
+        }
+
         if (Utils.isDebug) {
             if (state == PlayState.Playing) {
                 playerThreadHandler.removeCallbacks(bufferCheckRunnable)
@@ -197,9 +241,34 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         playerThreadHandler.post { 
             currentPlayer.stop()
             if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
-            playState = PlayState.Error
-            playerListener?.onStateChanged(PlayState.Error, audioSessionId)
-            playerListener?.onPlayerError(messageId) 
+            
+            if (reconnectAttempts < MAX_RECONNECT_ATTEMPTS) {
+                reconnectAttempts++
+                Log.w(TAG, "Player error encountered. Attempting automatic reconnect ($reconnectAttempts/$MAX_RECONNECT_ATTEMPTS) in 2s...")
+                
+                playerThreadHandler.postDelayed({
+                    reinit()
+                    
+                    // Falls wir eine Station-Task hatten, rotieren wir sicherheitshalber den Server
+                    if (currentStation != null) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            RadioBrowserServerManager.rotateServer()
+                            executePlayStationTask(currentStation!!)
+                        }
+                    } else if (lastStationURL != null) {
+                        playInternal(lastStationURL, lastStreamName, true)
+                    }
+                }, 2000)
+                
+                // Wir senden noch keinen finalen Fehler an die UI, da wir es erneut versuchen
+                setState(PlayState.PrePlaying, audioSessionId)
+            } else {
+                Log.e(TAG, "Max reconnect attempts reached. Notifying UI.")
+                reconnectAttempts = 0
+                playState = PlayState.Error
+                playerListener?.onStateChanged(PlayState.Error, audioSessionId)
+                playerListener?.onPlayerError(messageId) 
+            }
         }
     }
 

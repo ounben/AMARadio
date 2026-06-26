@@ -98,6 +98,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
         bytesTransferred = 0
 
+        // Wir erzwingen die Leerung des Pools, um sicherzustellen, dass keine 
+        // stale Sockets nach langer Hintergrund-Inaktivität genutzt werden.
+        httpClient.connectionPool.evictAll()
+
         // Dedicated OkHttpClient with requested timeouts
         val dedicatedClient = httpClient.newBuilder()
             .connectTimeout(2, TimeUnit.SECONDS)
@@ -136,6 +140,12 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         isPlayingFlag = false
         playerThreadHandler.post {
             internalPlayer.stop()
+        }
+    }
+
+    override fun release() {
+        playerThreadHandler.post {
+            internalPlayer.release()
         }
     }
 
@@ -192,11 +202,14 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         private val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
         
         override fun getRetryDelayMsFor(loadErrorInfo: LoadErrorHandlingPolicy.LoadErrorInfo): Long {
-            // Fail fast on network errors during opening (initial connect)
             val exception = loadErrorInfo.exception
+            
+            // Wenn der Fehler beim Öffnen der Verbindung auftritt (z.B. stale Socket aus dem Pool),
+            // geben wir ExoPlayer die Chance für einen sofortigen Neuversuch.
+            // Der erste Fehlversuch markiert den Pool-Socket als ungültig, der zweite Versuch öffnet einen frischen.
             if (exception is HttpDataSource.HttpDataSourceException && 
                 exception.type == HttpDataSource.HttpDataSourceException.TYPE_OPEN) {
-                return C.TIME_UNSET 
+                return 1000 // Kurze Verzögerung vor dem Neuversuch (1000ms)
             }
             
             val delay = try { sharedPrefs.getString("settings_retry_delay", "2")?.toInt() ?: 2 } catch (_: Exception) { 2 }

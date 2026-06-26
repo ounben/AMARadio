@@ -19,6 +19,7 @@ interface PlayerWrapper {
     fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context)
     fun pause()
     fun stop()
+    fun release()
     fun isPlaying(): Boolean
     val player: androidx.media3.common.Player?
     val bufferedMs: Long

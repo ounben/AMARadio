@@ -104,6 +104,10 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         stopProxy()
     }
 
+    override fun release() {
+        stop()
+    }
+
     override fun isPlaying(): Boolean {
         if (mediaPlayer == null) return false
         return !playerIsInLegalState.get() || mediaPlayer!!.isPlaying
