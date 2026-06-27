@@ -29,6 +29,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         fun onBufferedTimeUpdate(bufferedMs: Long)
         fun foundShoutcastStream(bitrate: ShoutcastInfo?, isHls: Boolean)
         fun foundLiveStreamInfo(liveInfo: StreamLiveInfo)
+        fun onPlayerCreated(player: androidx.media3.common.Player)
     }
 
     private var currentPlayer: PlayerWrapper
@@ -53,6 +54,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         val newPlayer = ExoPlayerWrapper(mainContext, app.audioLooper)
         newPlayer.setStateListener(this)
         currentPlayer = newPlayer
+        playerListener?.onPlayerCreated(currentPlayer.player!!)
     }
 
     private var lastLiveInfo: StreamLiveInfo? = null
@@ -202,6 +204,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
     fun setPlayerListener(listener: PlayerListener?) {
         playerListener = listener
+        playerListener?.onPlayerCreated(currentPlayer.player!!)
     }
 
     private fun setState(state: PlayState, audioSessionId: Int) {

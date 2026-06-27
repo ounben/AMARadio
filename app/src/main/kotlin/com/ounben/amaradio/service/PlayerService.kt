@@ -37,7 +37,9 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.applyCanvas
 import androidx.core.graphics.createBitmap
 import androidx.core.graphics.drawable.toDrawable
+import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.Player
 import androidx.media3.session.MediaLibraryService
 import androidx.media3.session.MediaSession
 import androidx.preference.PreferenceManager
@@ -75,6 +77,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var itsCurrentStation: DataRadioStation? = null
     private var radioIcon: BitmapDrawable? = null
     private var radioPlayer: RadioPlayer? = null
+    private var currentForwardingPlayer: Player? = null
     private var audioManager: AudioManager? = null
     private var mediaSession: MediaLibrarySession? = null
     private var powerManager: PowerManager? = null
@@ -221,7 +224,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
         val startActivityIntent = Intent(this, ActivityMain::class.java)
-        mediaSession = MediaLibrarySession.Builder(this, radioPlayer!!.player!!, MediaSessionCallback(this, amaradioBrowser))
+        mediaSession = MediaLibrarySession.Builder(this, currentForwardingPlayer!!, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(PendingIntent.getActivity(this, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag))
             .build()
 
@@ -679,6 +682,34 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     override fun onPlayerError(messageId: Int) {
         handler?.post { lastErrorFromPlayer = messageId; toastOnUi(messageId); updateNotification() }
+    }
+
+    override fun onPlayerCreated(player: Player) {
+        currentForwardingPlayer = object : ForwardingPlayer(player) {
+            override fun play() { this@PlayerService.resume() }
+            override fun pause() { this@PlayerService.pause(PauseReason.USER) }
+            override fun stop() { this@PlayerService.stop() }
+            override fun seekToNext() { this@PlayerService.next() }
+            override fun seekToPrevious() { this@PlayerService.previous() }
+            override fun prepare() { this@PlayerService.resume() }
+            
+            override fun getAvailableCommands(): Player.Commands {
+                return super.getAvailableCommands().buildUpon()
+                    .add(Player.COMMAND_PLAY_PAUSE)
+                    .add(Player.COMMAND_STOP)
+                    .add(Player.COMMAND_SEEK_TO_NEXT)
+                    .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                    .add(Player.COMMAND_PREPARE)
+                    .build()
+            }
+        }
+        val session = mediaSession
+        if (session != null) {
+            // MediaSession.setPlayer must be called on the session's application looper thread.
+            radioPlayer?.runInPlayerThread {
+                session.setPlayer(currentForwardingPlayer!!)
+            }
+        }
     }
     override fun onBufferedTimeUpdate(bufferedMs: Long) {}
     override fun foundShoutcastStream(bitrate: ShoutcastInfo?, isHls: Boolean) {
