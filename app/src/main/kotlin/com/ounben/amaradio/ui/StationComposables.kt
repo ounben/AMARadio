@@ -168,8 +168,8 @@ fun TrackListItem(
                 model = track.stationIconUrl,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                error = rememberVectorPainter(Icons.Default.Radio),
-                placeholder = rememberVectorPainter(Icons.Default.Radio),
+                error = painterResource(R.drawable.ic_radio_24dp),
+                placeholder = painterResource(R.drawable.ic_radio_24dp),
                 colorFilter = if (track.stationIconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
             )
         }
@@ -234,8 +234,8 @@ fun StationListItem(
                 model = station.IconUrl,
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
-                error = rememberVectorPainter(Icons.Default.Radio),
-                placeholder = rememberVectorPainter(Icons.Default.Radio),
+                error = painterResource(R.drawable.ic_radio_24dp),
+                placeholder = painterResource(R.drawable.ic_radio_24dp),
                 colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
             )
         }
@@ -305,8 +305,8 @@ fun StationGridItem(
                         .size(80.dp)
                         .padding(4.dp),
                     contentScale = ContentScale.Fit,
-                    error = rememberVectorPainter(Icons.Default.Radio),
-                    placeholder = rememberVectorPainter(Icons.Default.Radio),
+                    error = painterResource(R.drawable.ic_radio_24dp),
+                    placeholder = painterResource(R.drawable.ic_radio_24dp),
                     colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
                 )
                 IconButton(

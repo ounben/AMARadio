@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -90,8 +91,8 @@ fun MiniPlayer(
                         model = station?.IconUrl,
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize().clip(MaterialTheme.shapes.small),
-                        error = rememberVectorPainter(Icons.Default.Radio),
-                        placeholder = rememberVectorPainter(Icons.Default.Radio),
+                        error = painterResource(R.drawable.ic_radio_24dp),
+                        placeholder = painterResource(R.drawable.ic_radio_24dp),
                         colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
                     )
                 }
@@ -218,8 +219,8 @@ fun FullPlayer(
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize().padding(8.dp),
                         contentScale = ContentScale.Fit,
-                        error = rememberVectorPainter(Icons.Default.Radio),
-                        placeholder = rememberVectorPainter(Icons.Default.Radio),
+                        error = painterResource(R.drawable.ic_radio_24dp),
+                        placeholder = painterResource(R.drawable.ic_radio_24dp),
                         colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
                     )
                 }
