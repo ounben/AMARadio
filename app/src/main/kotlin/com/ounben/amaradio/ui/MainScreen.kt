@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -119,7 +120,7 @@ fun MainScreen(
                     NavigationBar(
                         containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.onSurface,
-                        tonalElevation = 0.dp // Strict Opaque
+                        tonalElevation = 0.dp
                     ) {
                         val items = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -315,15 +316,30 @@ fun MainScreen(
     showDeleteConfirmDialog?.let { msgRes ->
         AlertDialog(
             onDismissRequest = { showDeleteConfirmDialog = null },
-            text = { Text(stringResource(msgRes)) },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = { Text(stringResource(R.string.action_delete), fontWeight = FontWeight.Bold) },
+            text = { Text(stringResource(msgRes), color = MaterialTheme.colorScheme.onSurface) },
             confirmButton = {
-                TextButton(onClick = {
-                    if (msgRes == R.string.alert_delete_favorites) app.favouriteManager.clear()
-                    else app.historyManager.clear()
-                    showDeleteConfirmDialog = null
-                }) { Text(stringResource(R.string.yes), color = Color.Red) }
+                Button(
+                    onClick = {
+                        if (msgRes == R.string.alert_delete_favorites) app.favouriteManager.clear()
+                        else app.historyManager.clear()
+                        showDeleteConfirmDialog = null
+                    },
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color(0xFFB71C1C), 
+                        contentColor = Color.White
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) { Text(stringResource(R.string.yes)) }
             },
-            dismissButton = { TextButton(onClick = { showDeleteConfirmDialog = null }) { Text(stringResource(R.string.no)) } }
+            dismissButton = { 
+                TextButton(
+                    onClick = { showDeleteConfirmDialog = null },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                ) { Text(stringResource(R.string.no)) } 
+            }
         )
     }
 }

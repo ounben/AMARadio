@@ -63,7 +63,7 @@ fun MiniPlayer(
         HorizontalDivider(
             modifier = Modifier.align(Alignment.TopStart),
             thickness = 1.dp,
-            color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+            color = MaterialTheme.colorScheme.outline
         )
 
         Column(
@@ -75,8 +75,7 @@ fun MiniPlayer(
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .size(40.dp, 4.dp)
-                    .alpha(0.2f)
-                    .background(MaterialTheme.colorScheme.onSurface, shape = MaterialTheme.shapes.small)
+                    .background(MaterialTheme.colorScheme.onSurfaceVariant, shape = MaterialTheme.shapes.small)
             )
 
             Row(
@@ -98,7 +97,7 @@ fun MiniPlayer(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Middle: Text Info (Flexible rows for accessibility)
+                // Middle: Text Info (STRICT 4-ROW LAYOUT)
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -112,37 +111,38 @@ fun MiniPlayer(
                         fontWeight = FontWeight.Bold,
                         color = AmaradioAmber,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 22.dp)
                     )
                     
                     // Row 2: Song Title
-                    if (songTitle.isNotEmpty()) {
-                        Text(
-                            text = songTitle,
-                            style = MaterialTheme.typography.bodySmall,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    Text(
+                        text = songTitle.ifEmpty { " " },
+                        style = MaterialTheme.typography.bodySmall,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 18.dp)
+                    )
                     
                     // Row 3: Artist
-                    if (artistName.isNotEmpty()) {
-                        Text(
-                            text = artistName,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
+                    Text(
+                        text = artistName.ifEmpty { " " },
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 16.dp)
+                    )
                     
                     // Row 4: Status Indicator
-                    PlayerStatusRow(
-                        playState = uiState.playState,
-                        bandwidthFlow = viewModel.bandwidth
-                    )
+                    Box(modifier = Modifier.height(20.dp), contentAlignment = Alignment.CenterStart) {
+                        PlayerStatusRow(
+                            playState = uiState.playState,
+                            bandwidthFlow = viewModel.bandwidth
+                        )
+                    }
                 }
 
                 // Right: Play/Pause (Enlarged to 72dp)
@@ -183,7 +183,7 @@ fun FullPlayer(
     val artistName = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceVariant)) {
-        HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+        HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
         
         Column(
             modifier = Modifier
@@ -201,7 +201,7 @@ fun FullPlayer(
                     modifier = Modifier.size(100.dp),
                     shape = MaterialTheme.shapes.medium,
                     color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 2.dp
+                    tonalElevation = 0.dp
                 ) {
                     AsyncImage(
                         model = station?.IconUrl,
@@ -215,59 +215,59 @@ fun FullPlayer(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Left-aligned Text Info
+                // Left-aligned Text Info (STRICT 4-ROW LAYOUT)
                 Column(modifier = Modifier.weight(1f)) {
-                    // Row 1: Station Name (like bodyLarge in list)
+                    // Row 1: Station Name
                     Text(
                         text = station?.Name ?: "",
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
                         color = AmaradioAmber,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 22.dp)
                     )
 
-                    // Row 2: Song Title (like bodySmall in list)
-                    if (songTitle.isNotEmpty()) {
-                        Text(
-                            text = songTitle,
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurface,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-
-                    // Row 3: Artist (like labelSmall in list)
-                    if (artistName.isNotEmpty()) {
-                        Text(
-                            text = artistName,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-
-                    if (station != null) {
-                        val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
-                        val details = remember(station) { station.getShortDetails(context) }
-                        
-                        Text(
-                            text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
-                            style = MaterialTheme.typography.labelSmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
-                        )
-                    }
-                    
-                    Spacer(modifier = Modifier.height(4.dp))
-                    PlayerStatusRow(
-                        playState = uiState.playState,
-                        bandwidthFlow = playerViewModel.bandwidth,
-                        showText = true
+                    // Row 2: Song Title
+                    Text(
+                        text = songTitle.ifEmpty { " " },
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 18.dp)
                     )
+
+                    // Row 3: Artist
+                    Text(
+                        text = artistName.ifEmpty { " " },
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.heightIn(min = 16.dp)
+                    )
+
+                    // Row 4: Status / Metadata
+                    Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.CenterStart) {
+                        if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) {
+                            PlayerStatusRow(
+                                playState = uiState.playState,
+                                bandwidthFlow = playerViewModel.bandwidth,
+                                showText = true
+                            )
+                        } else if (station != null) {
+                            val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
+                            val details = remember(station) { station.getShortDetails(context) }
+                            Text(
+                                text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
+                                style = MaterialTheme.typography.labelSmall,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        }
+                    }
                 }
             }
 
@@ -288,7 +288,7 @@ fun FullPlayer(
                             modifier = Modifier.padding(end = 6.dp, bottom = 6.dp),
                             shape = MaterialTheme.shapes.small,
                             color = MaterialTheme.colorScheme.surface,
-                            border = BorderStroke(0.5.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f))
+                            border = BorderStroke(1.dp, MaterialTheme.colorScheme.outline)
                         ) {
                             Text(
                                 text = tag,
@@ -320,7 +320,7 @@ fun FullPlayer(
 
         // Control Bar
         Surface(
-            tonalElevation = 2.dp,
+            tonalElevation = 0.dp,
             modifier = Modifier.fillMaxWidth(),
             color = MaterialTheme.colorScheme.surfaceVariant
         ) {
@@ -368,7 +368,7 @@ fun FullPlayer(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
-                        tint = if (uiState.isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

@@ -58,7 +58,7 @@ fun FilterScreen(
                 .clickable { showFilterSheet = true },
             shape = RoundedCornerShape(12.dp),
             color = MaterialTheme.colorScheme.surfaceVariant,
-            tonalElevation = 0.dp // Strict Opaque
+            tonalElevation = 0.dp
         ) {
             Row(
                 modifier = Modifier.padding(16.dp),
@@ -112,6 +112,7 @@ fun FilterScreen(
             onDismissRequest = { showFilterSheet = false },
             sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
             containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
             dragHandle = { BottomSheetDefaults.DragHandle() }
         ) {
             Column(
@@ -132,7 +133,7 @@ fun FilterScreen(
                         fontWeight = FontWeight.Bold
                     )
                     IconButton(onClick = { showFilterSheet = false }) {
-                        Icon(Icons.Default.Close, contentDescription = "Close")
+                        Icon(Icons.Default.Close, contentDescription = "Close", tint = AmaradioAmber)
                     }
                 }
 
@@ -275,8 +276,8 @@ fun FilterScreen(
                         },
                         shape = RoundedCornerShape(8.dp),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFFFF8F00), // Precise Amaradio Amber
-                            contentColor = Color.Black // Better contrast on bright Amber
+                            containerColor = AmaradioAmber, // Solid Amber
+                            contentColor = Color.Black
                         )
                     ) {
                         Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
@@ -291,21 +292,28 @@ fun FilterScreen(
     if (showDeleteConfirm) {
         AlertDialog(
             onDismissRequest = { showDeleteConfirm = false },
-            title = { Text(stringResource(R.string.action_delete)) },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = { Text(stringResource(R.string.action_delete), fontWeight = FontWeight.Bold) },
             text = { Text(stringResource(R.string.confirm_delete_filter_tab, currentTab.label)) },
             confirmButton = {
-                TextButton(
+                Button(
                     onClick = {
                         viewModel.removeTab(tabIndex)
                         showDeleteConfirm = false
                         showFilterSheet = false
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB71C1C), contentColor = Color.White),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.yes), color = MaterialTheme.colorScheme.error)
+                    Text(stringResource(R.string.yes))
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDeleteConfirm = false }) {
+                TextButton(
+                    onClick = { showDeleteConfirm = false },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                ) {
                     Text(stringResource(R.string.no))
                 }
             }
@@ -354,7 +362,9 @@ fun FilterEmptyState() {
         
         Card(
             colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
-            modifier = Modifier.fillMaxWidth()
+            elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+            modifier = Modifier.fillMaxWidth(),
+            shape = RoundedCornerShape(12.dp)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
@@ -491,6 +501,7 @@ fun SearchableSelectionDialog(
         Surface(
             shape = RoundedCornerShape(16.dp),
             color = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
             modifier = Modifier.fillMaxWidth().fillMaxHeight(0.85f)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -506,11 +517,13 @@ fun SearchableSelectionDialog(
                     value = searchQuery,
                     onValueChange = { searchQuery = it },
                     placeholder = { Text(stringResource(R.string.searchpreference_search)) },
-                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null) },
+                    leadingIcon = { Icon(Icons.Default.Search, contentDescription = null, tint = AmaradioAmber) },
                     modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp),
                     singleLine = true,
                     shape = RoundedCornerShape(8.dp),
                     colors = OutlinedTextFieldDefaults.colors(
+                        focusedBorderColor = AmaradioAmber,
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                         unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                         focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
                     )
@@ -537,7 +550,10 @@ fun SearchableSelectionDialog(
                 }
 
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
-                    TextButton(onClick = onDismiss) {
+                    TextButton(
+                        onClick = onDismiss,
+                        colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                    ) {
                         Text(stringResource(R.string.label_button_cancel))
                     }
                 }
