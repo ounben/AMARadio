@@ -1,5 +1,8 @@
 package com.ounben.amaradio.ui
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -10,6 +13,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -19,6 +23,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -105,7 +110,8 @@ fun PlayerSelectorDialogCompose(
                             Utils.play(station)
                         }
                         onDismiss()
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_play_in_external)) },
@@ -121,7 +127,8 @@ fun PlayerSelectorDialogCompose(
                             PlayStationTask.playExternal(station, context).execute()
                         }
                         onDismiss()
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
         },
@@ -259,7 +266,8 @@ fun StationOptionsDialog(
                     modifier = Modifier.clickable {
                         StationActions.openStationHomeUrl(context, station)
                         onDismiss()
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_station_share)) },
@@ -267,7 +275,8 @@ fun StationOptionsDialog(
                     modifier = Modifier.clickable {
                         StationActions.share(context, station)
                         onDismiss()
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.detail_create_shortcut)) },
@@ -275,7 +284,8 @@ fun StationOptionsDialog(
                     modifier = Modifier.clickable {
                         // Shortcut logic
                         onDismiss()
-                    }
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
         },
@@ -286,3 +296,51 @@ fun StationOptionsDialog(
         }
     )
 }
+
+@Composable
+fun TrackOptionsDialog(
+    track: TrackHistoryEntry,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    val trackInfo = if (track.artist.isNotEmpty() && track.track.isNotEmpty()) {
+        "${track.artist} - ${track.track}"
+    } else {
+        track.title.ifEmpty { track.track }
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(stringResource(R.string.tab_player_history)) },
+        text = {
+            Column {
+                Text(
+                    text = trackInfo,
+                    style = MaterialTheme.typography.bodyMedium,
+                    modifier = Modifier.padding(bottom = 16.dp, start = 16.dp, end = 16.dp)
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_copy_info)) },
+                    leadingContent = { Icon(Icons.Default.ContentCopy, contentDescription = null) },
+                    modifier = Modifier.clickable {
+                        val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+                        if (clipboard != null) {
+                            val clip = ClipData.newPlainText("Track info", trackInfo)
+                            clipboard.setPrimaryClip(clip)
+                            // We don't have direct access to activity for modern toast here, but we can use context
+                            android.widget.Toast.makeText(context, R.string.notify_track_info_copied, android.widget.Toast.LENGTH_SHORT).show()
+                        }
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text(stringResource(R.string.action_cancel))
+            }
+        }
+    )
+}
+

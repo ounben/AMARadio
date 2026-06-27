@@ -183,6 +183,7 @@ fun FullPlayer(
     val uiState by playerViewModel.uiState.collectAsState()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
     val context = LocalContext.current
+    var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
     
     val station = uiState.currentStation
     val liveInfo = uiState.liveInfo
@@ -322,6 +323,7 @@ fun FullPlayer(
             TrackList(
                 tracks = tracks,
                 onTrackClick = onTrackClick,
+                onTrackLongClick = { trackWithOptions = it },
                 modifier = Modifier.fillMaxWidth()
             )
         }
@@ -382,7 +384,15 @@ fun FullPlayer(
             }
         }
     }
+
+    trackWithOptions?.let { track ->
+        TrackOptionsDialog(
+            track = track,
+            onDismiss = { trackWithOptions = null }
+        )
+    }
 }
+
 
 @Composable
 fun PlayerStatusRow(

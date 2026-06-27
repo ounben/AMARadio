@@ -138,28 +138,38 @@ fun StationList(
 fun TrackList(
     tracks: LazyPagingItems<TrackHistoryEntry>,
     onTrackClick: (TrackHistoryEntry) -> Unit,
+    onTrackLongClick: (TrackHistoryEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
     LazyColumn(modifier = modifier.fillMaxSize()) {
         items(tracks.itemCount) { index ->
             tracks[index]?.let { track ->
-                TrackListItem(track = track, onClick = { onTrackClick(track) })
+                TrackListItem(
+                    track = track, 
+                    onClick = { onTrackClick(track) },
+                    onLongClick = { onTrackLongClick(track) }
+                )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
             }
         }
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun TrackListItem(
     track: TrackHistoryEntry,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
 ) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick)
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

@@ -31,6 +31,7 @@ fun HistoryScreen(
     val coroutineScope = rememberCoroutineScope()
     val uiState by localStationsViewModel.uiState.collectAsState()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
+    var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         ScrollableTabRow(
@@ -80,9 +81,18 @@ fun HistoryScreen(
             } else {
                 TrackList(
                     tracks = tracks,
-                    onTrackClick = onTrackClick
+                    onTrackClick = onTrackClick,
+                    onTrackLongClick = { trackWithOptions = it }
                 )
             }
         }
     }
+
+    trackWithOptions?.let { track ->
+        TrackOptionsDialog(
+            track = track,
+            onDismiss = { trackWithOptions = null }
+        )
+    }
 }
+
