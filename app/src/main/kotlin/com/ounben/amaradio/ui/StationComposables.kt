@@ -197,8 +197,7 @@ fun TrackListItem(
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 error = painterResource(R.drawable.ic_radio_24dp),
-                placeholder = painterResource(R.drawable.ic_radio_24dp),
-                colorFilter = if (track.stationIconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                placeholder = painterResource(R.drawable.ic_radio_24dp)
             )
         }
         Spacer(modifier = Modifier.width(12.dp))
@@ -263,8 +262,7 @@ fun StationListItem(
                 contentDescription = null,
                 modifier = Modifier.fillMaxSize(),
                 error = painterResource(R.drawable.ic_radio_24dp),
-                placeholder = painterResource(R.drawable.ic_radio_24dp),
-                colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                placeholder = painterResource(R.drawable.ic_radio_24dp)
             )
         }
         Spacer(modifier = Modifier.width(12.dp))
@@ -334,8 +332,7 @@ fun StationGridItem(
                         .padding(4.dp),
                     contentScale = ContentScale.Fit,
                     error = painterResource(R.drawable.ic_radio_24dp),
-                    placeholder = painterResource(R.drawable.ic_radio_24dp),
-                    colorFilter = if (station.IconUrl.isEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                    placeholder = painterResource(R.drawable.ic_radio_24dp)
                 )
                 IconButton(
                     onClick = onFavoriteClick,

@@ -92,8 +92,7 @@ fun MiniPlayer(
                         contentDescription = null,
                         modifier = Modifier.fillMaxSize().clip(MaterialTheme.shapes.small),
                         error = painterResource(R.drawable.ic_radio_24dp),
-                        placeholder = painterResource(R.drawable.ic_radio_24dp),
-                        colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                        placeholder = painterResource(R.drawable.ic_radio_24dp)
                     )
                 }
 
@@ -210,8 +209,7 @@ fun FullPlayer(
                         modifier = Modifier.fillMaxSize().padding(8.dp),
                         contentScale = ContentScale.Fit,
                         error = painterResource(R.drawable.ic_radio_24dp),
-                        placeholder = painterResource(R.drawable.ic_radio_24dp),
-                        colorFilter = if (station?.IconUrl.isNullOrEmpty()) ColorFilter.tint(MaterialTheme.colorScheme.onSurfaceVariant) else null
+                        placeholder = painterResource(R.drawable.ic_radio_24dp)
                     )
                 }
 
