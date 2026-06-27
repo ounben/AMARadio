@@ -69,7 +69,12 @@ fun MainScreen(
     var isPlayerExpanded by remember { mutableStateOf(false) }
     val miniPlayerHeight = 104.dp
 
-    // Handle back button during search
+    // 1. Wenn der Player im Vollbild ist, klappt die "Zurück"-Taste ihn erst ein
+    BackHandler(enabled = isPlayerExpanded) {
+        isPlayerExpanded = false
+    }
+
+    // 2. Handle back button during search
     BackHandler(enabled = mainUiState.isSearching) {
         mainViewModel.setSearchActive(false)
         searchViewModel.clearResults()
@@ -87,10 +92,12 @@ fun MainScreen(
                         searchViewModel.search(query)
                     },
                     onSearchToggle = { active -> 
+                        if (active) isPlayerExpanded = false
                         mainViewModel.setSearchActive(active)
                         if (!active) searchViewModel.clearResults()
                     },
                     onFilterClick = { 
+                        isPlayerExpanded = false
                         mainViewModel.setStationsInitialTab(1)
                         navController.navigate(Screen.Stations.route)
                     },
@@ -123,6 +130,7 @@ fun MainScreen(
                                 label = { Text(stringResource(screen.titleRes)) },
                                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                 onClick = {
+                                    isPlayerExpanded = false
                                     if (screen == Screen.Stations) mainViewModel.setStationsInitialTab(0)
                                     navController.navigate(screen.route) {
                                         popUpTo(navController.graph.findStartDestination().id) {
@@ -233,8 +241,14 @@ fun MainScreen(
                             SettingsScreen(
                                 viewModel = viewModel,
                                 onOpenProxy = { showProxyDialog = true },
-                                onOpenAbout = { navController.navigate(Screen.About.route) },
-                                onOpenStatistics = { navController.navigate(Screen.Statistics.route) },
+                                onOpenAbout = { 
+                                    isPlayerExpanded = false
+                                    navController.navigate(Screen.About.route) 
+                                },
+                                onOpenStatistics = { 
+                                    isPlayerExpanded = false
+                                    navController.navigate(Screen.Statistics.route) 
+                                },
                                 onOpenEqualizer = { 
                                     val intent = Intent("android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL")
                                     intent.putExtra("android.media.extra.PACKAGE_NAME", context.packageName)
