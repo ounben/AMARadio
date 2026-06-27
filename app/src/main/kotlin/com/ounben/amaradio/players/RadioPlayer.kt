@@ -87,12 +87,11 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             reconnectAttempts = 0
             lastStationURL = stationURL
             lastStreamName = streamName
-        }
-
-        // Wenn der Player im Idle-Zustand ist, könnte die native Media-Engine 
-        // stale sein. Wir stellen sicher, dass wir mit einer frischen Instanz starten.
-        if (playState == PlayState.Idle) {
-             reinit()
+            
+            // Erzwinge bei manuellem Wechsel immer ein reinit(). 
+            // Das stellt sicher, dass hängende Netzwerk-Threads des vorherigen
+            // (vielleicht noch puffernden) Senders hart via release() beendet werden.
+            reinit()
         }
 
         setState(PlayState.PrePlaying, -1)
@@ -109,6 +108,10 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun play(station: DataRadioStation) {
+        // Breche alle laufenden Aktivitäten (Tasks und aktuelles Playback) sofort ab,
+        // um den hängenden Puffer-Vorgang des vorherigen Senders zu beenden.
+        stop()
+
         reconnectAttempts = 0
         stationLoadAttempts = 0
         currentStation = station
@@ -116,6 +119,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     private fun executePlayStationTask(station: DataRadioStation) {
+        // Zeige sofort im UI an, dass wir zum neuen Sender wechseln (PrePlaying)
         setState(PlayState.PrePlaying, -1)
         playStationTask = PlayStationTask(station, mainContext,
             { url -> this@RadioPlayer.playInternal(url, station.Name, false) },
