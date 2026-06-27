@@ -16,23 +16,24 @@ import androidx.core.view.WindowCompat
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.utils.UiScaler
 
-// Defined Brand Color - Used strictly for highlights
+// Solid Brand Color
 val AmaradioAmber = Color(0xFFFF8F00) 
 
-// Factual, Neutral Palette (No primary color mixing)
+// Opaque Light Palette
 val LightBackground = Color(0xFFFFFFFF)
 val LightSurface = Color(0xFFFFFFFF)
-val LightSurfaceVariant = Color(0xFFF2F2F2) // Neutral Light Gray
-val LightOnBackground = Color(0xFF1A1A1A)
-val LightOnSurfaceVariant = Color(0xFF505050)
-val LightOutline = Color(0xFFD1D1D1)
+val LightSurfaceVariant = Color(0xFFEBEBEB) // Solid Gray
+val LightOnBackground = Color(0xFF000000)
+val LightOnSurfaceVariant = Color(0xFF444444)
+val LightOutline = Color(0xFFBDBDBD) // Solid Outline
 
-val DarkBackground = Color(0xFF000000) // True Black for better contrast
+// Opaque Dark Palette
+val DarkBackground = Color(0xFF000000)
 val DarkSurface = Color(0xFF121212)
-val DarkSurfaceVariant = Color(0xFF1E1E1E) // Neutral Dark Gray
-val DarkOnBackground = Color(0xFFEEEEEE)
-val DarkOnSurfaceVariant = Color(0xFF9E9E9E)
-val DarkOutline = Color(0xFF333333)
+val DarkSurfaceVariant = Color(0xFF242424) // Solid Dark Gray
+val DarkOnBackground = Color(0xFFFFFFFF)
+val DarkOnSurfaceVariant = Color(0xFFBBBBBB)
+val DarkOutline = Color(0xFF444444) // Solid Outline
 
 @Composable
 fun AMARadioTheme(
@@ -48,34 +49,36 @@ fun AMARadioTheme(
     }
 
     val colorScheme = if (useDarkTheme) {
+        // STRICT OPAQUE DARK
         darkColorScheme(
             primary = AmaradioAmber,
             onPrimary = Color.Black,
             secondary = DarkSurfaceVariant,
-            onSecondary = DarkOnBackground,
+            onSecondary = Color.White,
             background = DarkBackground,
-            onBackground = DarkOnBackground,
+            onBackground = Color.White,
             surface = DarkSurface,
-            onSurface = DarkOnBackground,
+            onSurface = Color.White,
             surfaceVariant = DarkSurfaceVariant,
             onSurfaceVariant = DarkOnSurfaceVariant,
             outline = DarkOutline,
-            surfaceTint = Color.Transparent // CRITICAL: Disables the "pinkish" bleed
+            surfaceTint = Color.Transparent
         )
     } else {
+        // STRICT OPAQUE LIGHT
         lightColorScheme(
             primary = AmaradioAmber,
             onPrimary = Color.White,
             secondary = LightSurfaceVariant,
-            onSecondary = LightOnBackground,
+            onSecondary = Color.Black,
             background = LightBackground,
-            onBackground = LightOnBackground,
+            onBackground = Color.Black,
             surface = LightSurface,
-            onSurface = LightOnBackground,
+            onSurface = Color.Black,
             surfaceVariant = LightSurfaceVariant,
             onSurfaceVariant = LightOnSurfaceVariant,
             outline = LightOutline,
-            surfaceTint = Color.Transparent // CRITICAL: Disables the "pinkish" bleed
+            surfaceTint = Color.Transparent
         )
     }
 
@@ -83,8 +86,8 @@ fun AMARadioTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = Color.Transparent.toArgb()
-            window.navigationBarColor = Color.Transparent.toArgb()
+            window.statusBarColor = colorScheme.background.toArgb()
+            window.navigationBarColor = colorScheme.background.toArgb()
             WindowCompat.getInsetsController(window, view).apply {
                 isAppearanceLightStatusBars = !useDarkTheme
                 isAppearanceLightNavigationBars = !useDarkTheme

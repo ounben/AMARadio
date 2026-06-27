@@ -16,7 +16,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.*
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
@@ -36,6 +35,7 @@ import androidx.compose.ui.window.Dialog
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterScreen(
     viewModel: FilterViewModel,
@@ -47,225 +47,244 @@ fun FilterScreen(
     val uiState by viewModel.uiState.collectAsState()
     val currentTab = uiState.tabs.getOrNull(tabIndex) ?: return
     
-    // rememberSaveable ensures the state persists during scroll and pager recycling
-    var isExpanded by rememberSaveable(tabIndex) { mutableStateOf(currentTab.label.isBlank()) }
+    var showFilterSheet by remember { mutableStateOf(false) }
     var showDeleteConfirm by remember { mutableStateOf(false) }
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        // 1. FILTER CARD WITH COLLAPSIBLE MENU
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        // 1. STICKY FILTER HEADER
         Surface(
-            modifier = Modifier.fillMaxWidth().padding(8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp)
+                .clickable { showFilterSheet = true },
             shape = RoundedCornerShape(12.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant
+            color = MaterialTheme.colorScheme.surfaceVariant,
+            tonalElevation = 0.dp // Strict Opaque
         ) {
-            Column(modifier = Modifier.padding(12.dp)) {
-                // Header / Toggle Row (Always visible)
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null,
-                            onClick = { isExpanded = !isExpanded }
-                        ),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
+            Row(
+                modifier = Modifier.padding(16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
                     Text(
                         text = if (currentTab.label.isNotBlank()) currentTab.label else stringResource(R.string.action_filter),
-                        style = MaterialTheme.typography.titleSmall,
+                        style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = if (currentTab.label.isNotBlank()) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f)
+                        overflow = TextOverflow.Ellipsis
                     )
-                    Icon(
-                        imageVector = if (isExpanded) Icons.Default.ExpandLess else Icons.Default.FilterList,
-                        contentDescription = "Toggle",
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    Text(
+                        text = "Tippen zum Konfigurieren",
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-
-                AnimatedVisibility(visible = isExpanded) {
-                    Column(
-                        modifier = Modifier.padding(top = 12.dp),
-                        verticalArrangement = Arrangement.spacedBy(10.dp)
-                    ) {
-                        // RENAME FIELD (Styled to match other fields)
-                        CustomFilterField(
-                            label = stringResource(R.string.action_rename_tab),
-                            value = currentTab.label,
-                            icon = Icons.AutoMirrored.Filled.Label,
-                            onValueChange = { viewModel.updateTabLabel(tabIndex, it) },
-                            onClear = { viewModel.updateTabLabel(tabIndex, "") }
-                        )
-
-                        HorizontalDivider(
-                            modifier = Modifier.padding(vertical = 2.dp),
-                            thickness = 0.5.dp,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f)
-                        )
-
-                        // CRITERIA FIELDS
-                        CustomFilterField(
-                            label = stringResource(R.string.detail_name),
-                            value = currentTab.name,
-                            icon = Icons.Default.Search,
-                            onValueChange = { viewModel.onNameChange(tabIndex, it) },
-                            onClear = { viewModel.onNameChange(tabIndex, "") }
-                        )
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            CustomFilterField(
-                                label = stringResource(R.string.filter_country),
-                                value = if (currentTab.countryEmoji.isNotEmpty()) "${currentTab.countryEmoji} ${currentTab.countryLabel}" else currentTab.countryLabel,
-                                icon = Icons.Default.Public,
-                                isReadOnly = true,
-                                modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearCountry(tabIndex) },
-                                dialogContent = { onDismiss ->
-                                    SearchableSelectionDialog(
-                                        title = stringResource(R.string.filter_country),
-                                        options = uiState.countries,
-                                        onSelect = { item -> 
-                                            viewModel.onCountrySelect(tabIndex, item.code, item.label)
-                                            onDismiss()
-                                        },
-                                        onDismiss = onDismiss
-                                    )
-                                }
-                            )
-                            CustomFilterField(
-                                label = stringResource(R.string.filter_language),
-                                value = currentTab.languageLabel,
-                                icon = Icons.Default.Language,
-                                isReadOnly = true,
-                                modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearLanguage(tabIndex) },
-                                dialogContent = { onDismiss ->
-                                    SearchableSelectionDialog(
-                                        title = stringResource(R.string.filter_language),
-                                        options = uiState.languages,
-                                        onSelect = { item -> 
-                                            viewModel.onLanguageSelect(tabIndex, item.code, item.label)
-                                            onDismiss()
-                                        },
-                                        onDismiss = onDismiss
-                                    )
-                                }
-                            )
-                        }
-
-                        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            CustomFilterField(
-                                label = stringResource(R.string.filter_tag),
-                                value = currentTab.tag,
-                                icon = Icons.Default.Tag,
-                                isReadOnly = true,
-                                modifier = Modifier.weight(1f),
-                                onClear = { viewModel.clearTag(tabIndex) },
-                                dialogContent = { onDismiss ->
-                                    SearchableSelectionDialog(
-                                        title = stringResource(R.string.filter_tag),
-                                        options = uiState.tags,
-                                        onSelect = { item -> 
-                                            viewModel.onTagSelect(tabIndex, item.label)
-                                            onDismiss()
-                                        },
-                                        onDismiss = onDismiss
-                                    )
-                                }
-                            )
-                            SortField(
-                                selectedSort = currentTab.sortBy,
-                                onSortChange = { viewModel.onSortByChange(tabIndex, it) },
-                                modifier = Modifier.weight(1f)
-                            )
-                        }
-
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                IconButton(
-                                    onClick = { viewModel.onReverseChange(tabIndex, !currentTab.reverse) },
-                                    modifier = Modifier.size(36.dp)
-                                ) {
-                                    Icon(
-                                        imageVector = if (currentTab.reverse) Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
-                                        contentDescription = "Direction",
-                                        tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                    )
-                                }
-
-                                if (uiState.tabs.size > 1) {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    IconButton(
-                                        onClick = { showDeleteConfirm = true },
-                                        modifier = Modifier.size(36.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Delete,
-                                            contentDescription = "Delete Tab",
-                                            tint = MaterialTheme.colorScheme.onSurface // Requested White in Dark Mode / Black in Light
-                                        )
-                                    }
-                                }
-                            }
-
-                            val context = LocalContext.current
-                            Button(
-                                onClick = { 
-                                    if (currentTab.label.isBlank()) {
-                                        Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
-                                    } else {
-                                        isExpanded = false
-                                        viewModel.performSearch(tabIndex) 
-                                    }
-                                },
-                                shape = RoundedCornerShape(8.dp),
-                                contentPadding = PaddingValues(horizontal = 20.dp),
-                                modifier = Modifier.height(36.dp),
-                                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
-                            ) {
-                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                                Spacer(Modifier.width(8.dp))
-                                Text(stringResource(R.string.filter_apply))
-                            }
-                        }
-                    }
-                }
+                Icon(
+                    imageVector = Icons.Default.Tune,
+                    contentDescription = "Configure",
+                    tint = AmaradioAmber
+                )
             }
         }
 
-        // 2. CONTENT AREA / EMPTY STATE
-        if (currentTab.label.trim().isEmpty()) {
+        // 2. CONTENT AREA
+        if (currentTab.label.trim().isEmpty() && currentTab.name.isEmpty() && currentTab.countryCode.isEmpty() && currentTab.tag.isEmpty()) {
             FilterEmptyState()
         } else {
-            if (uiState.isSearching) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    CircularProgressIndicator(color = AmaradioAmber)
+            StationListTemplate(
+                stations = currentTab.stations,
+                isGrid = uiState.isGrid,
+                isLoading = uiState.isSearching,
+                error = uiState.error,
+                emptyMessage = stringResource(R.string.searchpreference_no_results),
+                onRefresh = { viewModel.performSearch(tabIndex) },
+                onStationClick = onStationClick,
+                onFavoriteClick = onFavoriteClick,
+                isFavorite = isFavorite,
+                modifier = Modifier.weight(1f)
+            )
+        }
+    }
+
+    if (showFilterSheet) {
+        ModalBottomSheet(
+            onDismissRequest = { showFilterSheet = false },
+            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            containerColor = MaterialTheme.colorScheme.surface,
+            dragHandle = { BottomSheetDefaults.DragHandle() }
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 20.dp, end = 20.dp, bottom = 40.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.action_filter),
+                        style = MaterialTheme.typography.headlineSmall,
+                        fontWeight = FontWeight.Bold
+                    )
+                    IconButton(onClick = { showFilterSheet = false }) {
+                        Icon(Icons.Default.Close, contentDescription = "Close")
+                    }
                 }
-            } else if (uiState.error != null) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text(text = uiState.error!!, color = MaterialTheme.colorScheme.error)
-                }
-            } else {
-                StationListTemplate(
-                    stations = currentTab.stations,
-                    isGrid = uiState.isGrid,
-                    isLoading = uiState.isSearching,
-                    error = uiState.error,
-                    emptyMessage = stringResource(R.string.searchpreference_no_results),
-                    onRefresh = { viewModel.performSearch(tabIndex) },
-                    onStationClick = onStationClick,
-                    onFavoriteClick = onFavoriteClick,
-                    isFavorite = isFavorite,
-                    modifier = Modifier.weight(1f)
+
+                // RENAME FIELD
+                CustomFilterField(
+                    label = stringResource(R.string.action_rename_tab),
+                    value = currentTab.label,
+                    icon = Icons.AutoMirrored.Filled.Label,
+                    onValueChange = { viewModel.updateTabLabel(tabIndex, it) },
+                    onClear = { viewModel.updateTabLabel(tabIndex, "") }
                 )
+
+                HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
+
+                // SEARCH NAME
+                CustomFilterField(
+                    label = stringResource(R.string.detail_name),
+                    value = currentTab.name,
+                    icon = Icons.Default.Search,
+                    onValueChange = { viewModel.onNameChange(tabIndex, it) },
+                    onClear = { viewModel.onNameChange(tabIndex, "") }
+                )
+
+                // COUNTRY / LANGUAGE / TAG
+                CustomFilterField(
+                    label = stringResource(R.string.filter_country),
+                    value = if (currentTab.countryEmoji.isNotEmpty()) "${currentTab.countryEmoji} ${currentTab.countryLabel}" else currentTab.countryLabel,
+                    icon = Icons.Default.Public,
+                    isReadOnly = true,
+                    onClear = { viewModel.clearCountry(tabIndex) },
+                    dialogContent = { onDismiss ->
+                        SearchableSelectionDialog(
+                            title = stringResource(R.string.filter_country),
+                            options = uiState.countries,
+                            onSelect = { item -> 
+                                viewModel.onCountrySelect(tabIndex, item.code, item.label)
+                                onDismiss()
+                            },
+                            onDismiss = onDismiss
+                        )
+                    }
+                )
+
+                CustomFilterField(
+                    label = stringResource(R.string.filter_language),
+                    value = currentTab.languageLabel,
+                    icon = Icons.Default.Language,
+                    isReadOnly = true,
+                    onClear = { viewModel.clearLanguage(tabIndex) },
+                    dialogContent = { onDismiss ->
+                        SearchableSelectionDialog(
+                            title = stringResource(R.string.filter_language),
+                            options = uiState.languages,
+                            onSelect = { item -> 
+                                viewModel.onLanguageSelect(tabIndex, item.code, item.label)
+                                onDismiss()
+                            },
+                            onDismiss = onDismiss
+                        )
+                    }
+                )
+
+                CustomFilterField(
+                    label = stringResource(R.string.filter_tag),
+                    value = currentTab.tag,
+                    icon = Icons.Default.Tag,
+                    isReadOnly = true,
+                    onClear = { viewModel.clearTag(tabIndex) },
+                    dialogContent = { onDismiss ->
+                        SearchableSelectionDialog(
+                            title = stringResource(R.string.filter_tag),
+                            options = uiState.tags,
+                            onSelect = { item -> 
+                                viewModel.onTagSelect(tabIndex, item.label)
+                                onDismiss()
+                            },
+                            onDismiss = onDismiss
+                        )
+                    }
+                )
+
+                // SORTING
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    SortField(
+                        selectedSort = currentTab.sortBy,
+                        onSortChange = { viewModel.onSortByChange(tabIndex, it) },
+                        modifier = Modifier.weight(1f)
+                    )
+                    
+                    IconButton(
+                        onClick = { viewModel.onReverseChange(tabIndex, !currentTab.reverse) },
+                        modifier = Modifier.padding(top = 20.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (currentTab.reverse) Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
+                            contentDescription = "Reverse",
+                            tint = AmaradioAmber
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // ACTIONS
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    if (uiState.tabs.size > 1) {
+                        Button(
+                            onClick = { showDeleteConfirm = true },
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB71C1C), // Solid Dark Red
+                                contentColor = Color.White
+                            ),
+                            shape = RoundedCornerShape(8.dp)
+                        ) {
+                            Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Spacer(Modifier.width(8.dp))
+                            Text(stringResource(R.string.action_delete))
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.width(1.dp))
+                    }
+
+                    val context = LocalContext.current
+                    Button(
+                        onClick = { 
+                            if (currentTab.label.isBlank()) {
+                                Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
+                            } else {
+                                showFilterSheet = false
+                                viewModel.performSearch(tabIndex) 
+                            }
+                        },
+                        shape = RoundedCornerShape(8.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color(0xFFFF8F00), // Precise Amaradio Amber
+                            contentColor = Color.Black // Better contrast on bright Amber
+                        )
+                    ) {
+                        Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(8.dp))
+                        Text(stringResource(R.string.filter_apply))
+                    }
+                }
             }
         }
     }
@@ -280,6 +299,7 @@ fun FilterScreen(
                     onClick = {
                         viewModel.removeTab(tabIndex)
                         showDeleteConfirm = false
+                        showFilterSheet = false
                     }
                 ) {
                     Text(stringResource(R.string.yes), color = MaterialTheme.colorScheme.error)
@@ -300,7 +320,8 @@ fun FilterEmptyState() {
         modifier = Modifier
             .fillMaxSize()
             .padding(horizontal = 32.dp)
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -333,7 +354,7 @@ fun FilterEmptyState() {
         Spacer(modifier = Modifier.height(16.dp))
         
         Card(
-            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -362,17 +383,6 @@ fun FilterEmptyState() {
                 )
             }
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Text(
-            text = stringResource(R.string.filter_empty_hint),
-            style = MaterialTheme.typography.bodySmall.copy(
-                fontStyle = FontStyle.Italic, 
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            ),
-            textAlign = TextAlign.Center
-        )
     }
 }
 
@@ -394,18 +404,15 @@ fun CustomFilterField(
             text = label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp),
-            maxLines = 1,
-            softWrap = false,
-            overflow = TextOverflow.Visible
+            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
         )
         
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
-                .background(Color.Transparent)
+                .height(44.dp)
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
         ) {
             Row(
                 modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
@@ -419,8 +426,7 @@ fun CustomFilterField(
                             text = value,
                             style = MaterialTheme.typography.bodyMedium,
                             maxLines = 1,
-                            softWrap = false,
-                            overflow = TextOverflow.Visible,
+                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.fillMaxSize()
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
@@ -485,8 +491,7 @@ fun SearchableSelectionDialog(
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(16.dp),
-            color = MaterialTheme.colorScheme.surfaceVariant,
-            tonalElevation = 0.dp,
+            color = MaterialTheme.colorScheme.surface,
             modifier = Modifier.fillMaxWidth().fillMaxHeight(0.85f)
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
@@ -507,8 +512,8 @@ fun SearchableSelectionDialog(
                     singleLine = true,
                     shape = RoundedCornerShape(8.dp),
                     colors = OutlinedTextFieldDefaults.colors(
-                        unfocusedContainerColor = Color.Transparent,
-                        focusedContainerColor = Color.Transparent
+                        unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                        focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant
                     )
                 )
 
@@ -526,9 +531,9 @@ fun SearchableSelectionDialog(
                                 { Text(item.emoji, style = MaterialTheme.typography.titleLarge) }
                             } else null,
                             modifier = Modifier.clickable { onSelect(item) },
-                            colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                            colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
-                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outline)
                     }
                 }
 
@@ -568,8 +573,9 @@ fun SortField(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(40.dp)
-                .border(1.dp, MaterialTheme.colorScheme.outline.copy(alpha = 0.2f), RoundedCornerShape(8.dp))
+                .height(44.dp)
+                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                 .clickable { expanded = true }
                 .padding(horizontal = 8.dp),
             contentAlignment = Alignment.CenterStart
@@ -588,7 +594,7 @@ fun SortField(
             DropdownMenu(
                 expanded = expanded,
                 onDismissRequest = { expanded = false },
-                modifier = Modifier.fillMaxWidth(0.45f).background(MaterialTheme.colorScheme.surfaceVariant)
+                modifier = Modifier.fillMaxWidth(0.45f).background(MaterialTheme.colorScheme.surface)
             ) {
                 options.forEach { (value, label) ->
                     DropdownMenuItem(

@@ -53,14 +53,12 @@
         <item>@string/ui_scale_compact</item>
         <item>@string/ui_scale_standard</item>
         <item>@string/ui_scale_large</item>
-        <item>@string/ui_scale_extra_large</item>
     </string-array>
 
     <string-array name="ui_scale_values" translatable="false">
         <item>compact</item>
         <item>standard</item>
         <item>large</item>
-        <item>extra_large</item>
     </string-array>
 
 </resources>

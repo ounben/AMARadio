@@ -10,7 +10,6 @@ object UiScaler {
     const val SCALE_COMPACT = 0.85f
     const val SCALE_STANDARD = 1.0f
     const val SCALE_LARGE = 1.25f
-    const val SCALE_EXTRA_LARGE = 1.5f
 
     fun getScaleFactor(context: Context): Float {
         return try {
@@ -18,7 +17,6 @@ object UiScaler {
             when (prefs.getString(PREF_KEY_UI_SCALE, "standard")) {
                 "compact" -> SCALE_COMPACT
                 "large" -> SCALE_LARGE
-                "extra_large" -> SCALE_EXTRA_LARGE
                 else -> SCALE_STANDARD
             }
         } catch (_: Exception) {

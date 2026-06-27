@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -65,22 +66,21 @@ fun MainScreen(
     var showPlayerSelectorDialog by remember { mutableStateOf<DataRadioStation?>(null) }
     var showDeleteConfirmDialog by remember { mutableStateOf<Int?>(null) } 
 
-    // Sliding Player State
     var isPlayerExpanded by remember { mutableStateOf(false) }
-    val miniPlayerHeight = 104.dp
-
-    // 1. Wenn der Player im Vollbild ist, klappt die "Zurück"-Taste ihn erst ein
-    BackHandler(enabled = isPlayerExpanded) {
-        isPlayerExpanded = false
+    
+    val density = androidx.compose.ui.platform.LocalDensity.current
+    val miniPlayerHeight = remember(density.fontScale) {
+        if (density.fontScale > 1.2f) 140.dp else 104.dp
     }
 
-    // 2. Handle back button during search
+    BackHandler(enabled = isPlayerExpanded) { isPlayerExpanded = false }
+
     BackHandler(enabled = mainUiState.isSearching) {
         mainViewModel.setSearchActive(false)
         searchViewModel.clearResults()
     }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         Scaffold(
             topBar = {
                 MainTopBar(
@@ -118,7 +118,8 @@ fun MainScreen(
                 if (!mainUiState.isSearching) {
                     NavigationBar(
                         containerColor = MaterialTheme.colorScheme.surface,
-                        contentColor = MaterialTheme.colorScheme.onSurface
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        tonalElevation = 0.dp // Strict Opaque
                     ) {
                         val items = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -126,8 +127,7 @@ fun MainScreen(
                         
                         items.forEach { screen ->
                             NavigationBarItem(
-                                icon = { Icon(screen.icon, contentDescription = null) },
-                                label = { Text(stringResource(screen.titleRes)) },
+                                icon = { Icon(screen.icon, contentDescription = stringResource(screen.titleRes)) },
                                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                                 onClick = {
                                     isPlayerExpanded = false
@@ -143,7 +143,8 @@ fun MainScreen(
                                 colors = NavigationBarItemDefaults.colors(
                                     selectedIconColor = AmaradioAmber,
                                     selectedTextColor = AmaradioAmber,
-                                    indicatorColor = Color.Transparent
+                                    indicatorColor = Color.Transparent,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurface
                                 )
                             )
                         }
@@ -155,11 +156,8 @@ fun MainScreen(
                 val availableHeight = this.maxHeight
                 
                 if (mainUiState.isSearching) {
-                    // --- SEARCH RESULTS MODE ---
                     Surface(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = if (playerUiState.currentStation != null) miniPlayerHeight else 0.dp),
+                        modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) miniPlayerHeight else 0.dp),
                         color = MaterialTheme.colorScheme.background
                     ) {
                         if (searchUiState.isSearching && searchUiState.results.isEmpty()) {
@@ -191,7 +189,6 @@ fun MainScreen(
                         }
                     }
                 } else {
-                    // --- NORMAL NAVIGATION MODE ---
                     NavHost(
                         navController = navController,
                         startDestination = Screen.Stations.route,
@@ -270,7 +267,6 @@ fun MainScreen(
                     }
                 }
 
-                // Sliding Player (Unified)
                 if (playerUiState.currentStation != null) {
                     Box(
                         modifier = Modifier
@@ -290,7 +286,7 @@ fun MainScreen(
                         if (isPlayerExpanded) {
                             Column {
                                 Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
-                                    Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.3f), RoundedCornerShape(2.dp)))
+                                    Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
                                 }
                                 FullPlayer(
                                     playerViewModel = playerViewModel,
@@ -324,7 +320,7 @@ fun MainScreen(
                     if (msgRes == R.string.alert_delete_favorites) app.favouriteManager.clear()
                     else app.historyManager.clear()
                     showDeleteConfirmDialog = null
-                }) { Text(stringResource(R.string.yes)) }
+                }) { Text(stringResource(R.string.yes), color = Color.Red) }
             },
             dismissButton = { TextButton(onClick = { showDeleteConfirmDialog = null }) { Text(stringResource(R.string.no)) } }
         )

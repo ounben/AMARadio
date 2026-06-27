@@ -99,59 +99,51 @@ fun MiniPlayer(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Middle: Text Info (4 RIGID ROWS)
+                // Middle: Text Info (Flexible rows for accessibility)
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight(),
                     verticalArrangement = Arrangement.Center
                 ) {
-                    // Row 1: Station Name (Fixed 24dp)
-                    Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.CenterStart) {
+                    // Row 1: Station Name
+                    Text(
+                        text = stationName,
+                        style = MaterialTheme.typography.bodyLarge,
+                        fontWeight = FontWeight.Bold,
+                        color = AmaradioAmber,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    
+                    // Row 2: Song Title
+                    if (songTitle.isNotEmpty()) {
                         Text(
-                            text = stationName,
-                            style = MaterialTheme.typography.bodyLarge,
+                            text = songTitle,
+                            style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
-                            color = AmaradioAmber,
+                            color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
                     
-                    // Row 2: Song Title (Fixed 20dp)
-                    Box(modifier = Modifier.height(20.dp), contentAlignment = Alignment.CenterStart) {
-                        if (songTitle.isNotEmpty()) {
-                            Text(
-                                text = songTitle,
-                                style = MaterialTheme.typography.bodySmall,
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onSurface,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    }
-                    
-                    // Row 3: Artist (Fixed 18dp)
-                    Box(modifier = Modifier.height(18.dp), contentAlignment = Alignment.CenterStart) {
-                        if (artistName.isNotEmpty()) {
-                            Text(
-                                text = artistName,
-                                style = MaterialTheme.typography.labelSmall,
-                                color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
-                            )
-                        }
-                    }
-                    
-                    // Row 4: Status Indicator (Fixed 22dp)
-                    Box(modifier = Modifier.height(22.dp), contentAlignment = Alignment.CenterStart) {
-                        PlayerStatusRow(
-                            playState = uiState.playState,
-                            bandwidthFlow = viewModel.bandwidth
+                    // Row 3: Artist
+                    if (artistName.isNotEmpty()) {
+                        Text(
+                            text = artistName,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
                         )
                     }
+                    
+                    // Row 4: Status Indicator
+                    PlayerStatusRow(
+                        playState = uiState.playState,
+                        bandwidthFlow = viewModel.bandwidth
+                    )
                 }
 
                 // Right: Play/Pause (Enlarged to 72dp)

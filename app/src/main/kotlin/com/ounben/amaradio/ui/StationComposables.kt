@@ -1,6 +1,7 @@
 package com.ounben.amaradio.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -16,10 +17,10 @@ import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
@@ -58,12 +59,12 @@ fun StationListTemplate(
         modifier = modifier.fillMaxSize()
     ) {
         if (isLoading && stations.isEmpty()) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = AmaradioAmber)
             }
         } else if (error != null) {
             Column(
-                modifier = Modifier.align(Alignment.Center),
+                modifier = Modifier.align(Alignment.Center).background(MaterialTheme.colorScheme.background),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(text = error, color = MaterialTheme.colorScheme.error)
@@ -74,7 +75,7 @@ fun StationListTemplate(
                 }
             }
         } else if (stations.isEmpty() && !isLoading) {
-            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
                 Text(
                     text = emptyMessage,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -106,7 +107,7 @@ fun StationList(
     if (isGrid) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(140.dp),
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(stations, key = { it.StationUuid }) { station ->
@@ -120,7 +121,7 @@ fun StationList(
             }
         }
     } else {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
+        LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             items(stations, key = { it.StationUuid }) { station ->
                 StationListItem(
                     station = station,
@@ -129,7 +130,7 @@ fun StationList(
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station }
                 )
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
         }
     }
@@ -155,7 +156,7 @@ fun TrackList(
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = { tracks.refresh() },
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(tracks.itemCount) { index ->
@@ -165,7 +166,7 @@ fun TrackList(
                         onClick = { onTrackClick(track) },
                         onLongClick = { onTrackLongClick(track) }
                     )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                 }
             }
         }
@@ -226,7 +227,7 @@ fun TrackListItem(
         Text(
             text = track.getFormattedTime(context),
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f)
+            color = MaterialTheme.colorScheme.onSurfaceVariant
         )
     }
 }
@@ -286,7 +287,7 @@ fun StationListItem(
                 Text(
                     text = station.TagsAll,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.8f),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -318,7 +319,7 @@ fun StationGridItem(
                 onClick = onClick,
                 onLongClick = onLongClick
             ),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.3f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
             modifier = Modifier.padding(8.dp),
@@ -371,7 +372,7 @@ fun CategoryList(
     if (isGrid) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(100.dp),
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(8.dp)
         ) {
             items(categories) { category ->
@@ -379,10 +380,10 @@ fun CategoryList(
             }
         }
     } else {
-        LazyColumn(modifier = modifier.fillMaxSize()) {
+        LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             items(categories) { category ->
                 CategoryListItem(category = category, onClick = { onCategoryClick(category) })
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
         }
     }
@@ -426,7 +427,7 @@ fun CategoryGridItem(
         modifier = Modifier
             .padding(4.dp)
             .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
     ) {
         Column(
             modifier = Modifier.padding(12.dp),
