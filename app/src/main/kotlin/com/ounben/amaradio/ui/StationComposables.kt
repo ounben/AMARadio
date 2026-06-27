@@ -293,11 +293,18 @@ fun StationListItem(
                 )
             }
         }
-        IconButton(
-            onClick = { 
-                if (!isFavorite) onFavoriteClick() 
-                // Misclick protection: Removal only via long-click context menu
-            }
+        Box(
+            modifier = Modifier
+                .minimumInteractiveComponentSize()
+                .size(48.dp)
+                .combinedClickable(
+                    onClick = { 
+                        if (!isFavorite) onFavoriteClick() 
+                        // Misclick protection: Removal only via long-click context menu
+                    },
+                    onLongClick = onLongClick
+                ),
+            contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
@@ -341,12 +348,17 @@ fun StationGridItem(
                     error = painterResource(R.drawable.ic_radio_24dp),
                     placeholder = painterResource(R.drawable.ic_radio_24dp)
                 )
-                IconButton(
-                    onClick = { 
-                        if (!isFavorite) onFavoriteClick() 
-                        // Misclick protection: Removal only via long-click context menu
-                    },
-                    modifier = Modifier.size(32.dp)
+                Box(
+                    modifier = Modifier
+                        .size(32.dp)
+                        .combinedClickable(
+                            onClick = { 
+                                if (!isFavorite) onFavoriteClick() 
+                                // Misclick protection: Removal only via long-click context menu
+                            },
+                            onLongClick = onLongClick
+                        ),
+                    contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
