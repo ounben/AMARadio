@@ -16,21 +16,23 @@ import androidx.core.view.WindowCompat
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.utils.UiScaler
 
-// Enhanced Amaradio Brand Color
+// Defined Brand Color - Used strictly for highlights
 val AmaradioAmber = Color(0xFFFF8F00) 
 
-// YouTube-inspired Palette
+// Factual, Neutral Palette (No primary color mixing)
 val LightBackground = Color(0xFFFFFFFF)
 val LightSurface = Color(0xFFFFFFFF)
-val LightSurfaceVariant = Color(0xFFF9F9F9)
-val LightOnBackground = Color(0xFF0F0F0F)
-val LightOnSurfaceVariant = Color(0xFF606060)
+val LightSurfaceVariant = Color(0xFFF2F2F2) // Neutral Light Gray
+val LightOnBackground = Color(0xFF1A1A1A)
+val LightOnSurfaceVariant = Color(0xFF505050)
+val LightOutline = Color(0xFFD1D1D1)
 
-val DarkBackground = Color(0xFF0F0F0F)
-val DarkSurface = Color(0xFF0F0F0F)
-val DarkSurfaceVariant = Color(0xFF212121)
-val DarkOnBackground = Color(0xFFFFFFFF)
-val DarkOnSurfaceVariant = Color(0xFFAAAAAA)
+val DarkBackground = Color(0xFF000000) // True Black for better contrast
+val DarkSurface = Color(0xFF121212)
+val DarkSurfaceVariant = Color(0xFF1E1E1E) // Neutral Dark Gray
+val DarkOnBackground = Color(0xFFEEEEEE)
+val DarkOnSurfaceVariant = Color(0xFF9E9E9E)
+val DarkOutline = Color(0xFF333333)
 
 @Composable
 fun AMARadioTheme(
@@ -57,7 +59,8 @@ fun AMARadioTheme(
             onSurface = DarkOnBackground,
             surfaceVariant = DarkSurfaceVariant,
             onSurfaceVariant = DarkOnSurfaceVariant,
-            outline = AmaradioAmber.copy(alpha = 0.5f)
+            outline = DarkOutline,
+            surfaceTint = Color.Transparent // CRITICAL: Disables the "pinkish" bleed
         )
     } else {
         lightColorScheme(
@@ -71,7 +74,8 @@ fun AMARadioTheme(
             onSurface = LightOnBackground,
             surfaceVariant = LightSurfaceVariant,
             onSurfaceVariant = LightOnSurfaceVariant,
-            outline = AmaradioAmber.copy(alpha = 0.5f)
+            outline = LightOutline,
+            surfaceTint = Color.Transparent // CRITICAL: Disables the "pinkish" bleed
         )
     }
 
