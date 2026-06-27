@@ -353,15 +353,23 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun next() {
+        Log.d(tag, "next() called")
         itsCurrentStation?.let {
-            val station = it.queue?.getNextById(it.StationUuid) ?: return@let
+            val station = it.queue?.getNextById(it.StationUuid) ?: run {
+                Log.w(tag, "next() - no queue or station found")
+                return@let
+            }
             if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
         }
     }
 
     fun previous() {
+        Log.d(tag, "previous() called")
         itsCurrentStation?.let {
-            val station = it.queue?.getPreviousById(it.StationUuid) ?: return@let
+            val station = it.queue?.getPreviousById(it.StationUuid) ?: run {
+                Log.w(tag, "previous() - no queue or station found")
+                return@let
+            }
             if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
         }
     }
@@ -689,8 +697,17 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             override fun play() { this@PlayerService.resume() }
             override fun pause() { this@PlayerService.pause(PauseReason.USER) }
             override fun stop() { this@PlayerService.stop() }
+            
+            // Override both sets of seek methods to ensure compatibility with different
+            // MediaSession controllers (System UI, Bluetooth, Android Auto, etc.)
             override fun seekToNext() { this@PlayerService.next() }
             override fun seekToPrevious() { this@PlayerService.previous() }
+            override fun seekToNextMediaItem() { this@PlayerService.next() }
+            override fun seekToPreviousMediaItem() { this@PlayerService.previous() }
+            
+            override fun hasNextMediaItem(): Boolean = true
+            override fun hasPreviousMediaItem(): Boolean = true
+            
             override fun prepare() { this@PlayerService.resume() }
             
             override fun getAvailableCommands(): Player.Commands {
@@ -699,6 +716,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     .add(Player.COMMAND_STOP)
                     .add(Player.COMMAND_SEEK_TO_NEXT)
                     .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+                    .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
+                    .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
                     .add(Player.COMMAND_PREPARE)
                     .build()
             }
