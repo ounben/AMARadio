@@ -23,6 +23,7 @@ fun StarredScreen(
             isLoading = false,
             error = null,
             emptyMessage = stringResource(R.string.searchpreference_no_results),
+            onRefresh = { /* Local data, already reactive */ },
             onStationClick = onStationClick,
             onFavoriteClick = onFavoriteClick,
             isFavorite = isFavorite

@@ -26,6 +26,7 @@ fun StationsScreen(
         error = uiState.error,
         emptyMessage = stringResource(R.string.searchpreference_no_results),
         onRetry = { url?.let { viewModel.loadStations(it, forceUpdate = true) } },
+        onRefresh = { url?.let { viewModel.loadStations(it, forceUpdate = true) } },
         onStationClick = onStationClick,
         onFavoriteClick = onFavoriteClick,
         isFavorite = isFavorite

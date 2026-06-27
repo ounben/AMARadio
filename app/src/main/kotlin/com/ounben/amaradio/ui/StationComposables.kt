@@ -15,6 +15,8 @@ import androidx.compose.material.icons.filled.Radio
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +37,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StationListTemplate(
     stations: List<DataRadioStation>,
@@ -43,17 +46,21 @@ fun StationListTemplate(
     error: String? = null,
     emptyMessage: String = "No stations found",
     onRetry: (() -> Unit)? = null,
+    onRefresh: (() -> Unit)? = null,
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean,
     modifier: Modifier = Modifier
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
-        if (isLoading) {
-            CircularProgressIndicator(
-                modifier = Modifier.align(Alignment.Center),
-                color = AmaradioAmber
-            )
+    PullToRefreshBox(
+        isRefreshing = isLoading,
+        onRefresh = { onRefresh?.invoke() },
+        modifier = modifier.fillMaxSize()
+    ) {
+        if (isLoading && stations.isEmpty()) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(color = AmaradioAmber)
+            }
         } else if (error != null) {
             Column(
                 modifier = Modifier.align(Alignment.Center),
@@ -66,12 +73,13 @@ fun StationListTemplate(
                     }
                 }
             }
-        } else if (stations.isEmpty()) {
-            Text(
-                text = emptyMessage,
-                modifier = Modifier.align(Alignment.Center),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
+        } else if (stations.isEmpty() && !isLoading) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    text = emptyMessage,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         } else {
             StationList(
                 stations = stations,
@@ -134,6 +142,7 @@ fun StationList(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TrackList(
     tracks: LazyPagingItems<TrackHistoryEntry>,
@@ -141,15 +150,23 @@ fun TrackList(
     onTrackLongClick: (TrackHistoryEntry) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    LazyColumn(modifier = modifier.fillMaxSize()) {
-        items(tracks.itemCount) { index ->
-            tracks[index]?.let { track ->
-                TrackListItem(
-                    track = track, 
-                    onClick = { onTrackClick(track) },
-                    onLongClick = { onTrackLongClick(track) }
-                )
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+    val isRefreshing = tracks.loadState.refresh is androidx.paging.LoadState.Loading
+    
+    PullToRefreshBox(
+        isRefreshing = isRefreshing,
+        onRefresh = { tracks.refresh() },
+        modifier = modifier.fillMaxSize()
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(tracks.itemCount) { index ->
+                tracks[index]?.let { track ->
+                    TrackListItem(
+                        track = track, 
+                        onClick = { onTrackClick(track) },
+                        onLongClick = { onTrackLongClick(track) }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+                }
             }
         }
     }

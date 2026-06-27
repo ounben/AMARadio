@@ -188,11 +188,8 @@ fun FullPlayer(
     val station = uiState.currentStation
     val liveInfo = uiState.liveInfo
     
-    val mainHeadline = if (liveInfo.track.isNotEmpty()) liveInfo.track 
-                       else if (liveInfo.title.isNotEmpty()) liveInfo.title 
-                       else station?.Name ?: ""
-    
-    val artistLine = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
+    val songTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else if (liveInfo.title.isNotEmpty()) liveInfo.title else ""
+    val artistName = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
 
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.surfaceVariant)) {
         HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
@@ -230,30 +227,33 @@ fun FullPlayer(
 
                 // Left-aligned Text Info
                 Column(modifier = Modifier.weight(1f)) {
+                    // Row 1: Station Name (like bodyLarge in list)
                     Text(
-                        text = mainHeadline,
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = station?.Name ?: "",
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
-                        color = if (liveInfo.title.isEmpty()) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
-                        maxLines = 2,
+                        color = AmaradioAmber,
+                        maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
 
-                    if (artistLine.isNotEmpty()) {
+                    // Row 2: Song Title (like bodySmall in list)
+                    if (songTitle.isNotEmpty()) {
                         Text(
-                            text = artistLine,
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            text = songTitle,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurface,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     }
 
-                    if (station != null && liveInfo.title.isNotEmpty()) {
+                    // Row 3: Artist (like labelSmall in list)
+                    if (artistName.isNotEmpty()) {
                         Text(
-                            text = station.Name,
-                            style = MaterialTheme.typography.titleSmall,
-                            color = AmaradioAmber,
+                            text = artistName,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -265,8 +265,8 @@ fun FullPlayer(
                         
                         Text(
                             text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.7f),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )

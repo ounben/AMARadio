@@ -257,9 +257,10 @@ fun FilterScreen(
                 StationListTemplate(
                     stations = currentTab.stations,
                     isGrid = uiState.isGrid,
-                    isLoading = false,
-                    error = null,
+                    isLoading = uiState.isSearching,
+                    error = uiState.error,
                     emptyMessage = stringResource(R.string.searchpreference_no_results),
+                    onRefresh = { viewModel.performSearch(tabIndex) },
                     onStationClick = onStationClick,
                     onFavoriteClick = onFavoriteClick,
                     isFavorite = isFavorite,
