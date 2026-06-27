@@ -42,147 +42,134 @@ fun MainTopBar(
 ) {
     val focusManager = LocalFocusManager.current
 
-    Box(modifier = Modifier.fillMaxWidth()) {
-        TopAppBar(
-            title = {
-                if (isSearching) {
-                    TextField(
-                        value = searchQuery,
-                        onValueChange = onSearchQueryChange,
-                        modifier = Modifier.fillMaxWidth().heightIn(max = 56.dp),
-                        placeholder = { Text(stringResource(R.string.searchpreference_search)) },
-                        singleLine = true,
-                        colors = TextFieldDefaults.colors(
-                            focusedContainerColor = Color.Transparent,
-                            unfocusedContainerColor = Color.Transparent,
-                            focusedIndicatorColor = Color.Transparent,
-                            unfocusedIndicatorColor = Color.Transparent
-                        ),
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                        keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() })
+    TopAppBar(
+        title = {
+            if (isSearching) {
+                // Search Input Field - Left aligned
+                TextField(
+                    value = searchQuery,
+                    onValueChange = onSearchQueryChange,
+                    modifier = Modifier.fillMaxWidth().heightIn(max = 56.dp),
+                    placeholder = { Text(stringResource(R.string.searchpreference_search)) },
+                    singleLine = true,
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                    keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() })
+                )
+            } else {
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    Image(
+                        painter = rememberAsyncImagePainter(R.drawable.ic_cat_face),
+                        contentDescription = null,
+                        modifier = Modifier.size(32.dp),
+                        contentScale = ContentScale.Fit
                     )
-                } else {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = rememberAsyncImagePainter(R.drawable.ic_cat_face),
-                            contentDescription = null,
-                            modifier = Modifier.size(32.dp),
-                            contentScale = ContentScale.Fit
-                        )
+                    Spacer(modifier = Modifier.width(12.dp))
+                    Text(
+                        text = stringResource(R.string.app_name),
+                        color = AmaradioAmber,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 18.sp
+                    )
+                    if (isLoading) {
                         Spacer(modifier = Modifier.width(12.dp))
-                        Text(
-                            text = stringResource(R.string.app_name),
-                            color = AmaradioAmber,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp),
+                            strokeWidth = 2.dp,
+                            color = AmaradioAmber
                         )
-                        if (isLoading) {
-                            Spacer(modifier = Modifier.width(12.dp))
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
-                                strokeWidth = 2.dp,
-                                color = AmaradioAmber
-                            )
-                        }
                     }
                 }
-            },
-            navigationIcon = {
-                if (isSearching) {
-                    IconButton(onClick = { onSearchToggle(false) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+            }
+        },
+        navigationIcon = {
+            if (isSearching) {
+                IconButton(onClick = { onSearchToggle(false) }) {
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                }
+            }
+        },
+        actions = {
+            if (isSearching) {
+                if (searchQuery.isNotEmpty()) {
+                    IconButton(onClick = { onSearchQueryChange("") }) {
+                        Icon(Icons.Default.Clear, contentDescription = "Clear")
                     }
                 }
-            },
-            actions = {
-                if (isSearching) {
-                    if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { onSearchQueryChange("") }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Clear")
-                        }
-                    }
-                } else {
-                    IconButton(onClick = { onSearchToggle(true) }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
-                    }
-                    IconButton(onClick = onFilterClick) {
-                        Icon(Icons.Default.FilterList, contentDescription = "Filter")
-                    }
-                    
-                    var showMenu by remember { mutableStateOf(false) }
-                    IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
-                    }
+            } else {
+                IconButton(onClick = { onSearchToggle(true) }) {
+                    Icon(Icons.Default.Search, contentDescription = "Search")
+                }
+                IconButton(onClick = onFilterClick) {
+                    Icon(Icons.Default.FilterList, contentDescription = "Filter")
+                }
+                
+                var showMenu by remember { mutableStateOf(false) }
+                IconButton(onClick = { showMenu = true }) {
+                    Icon(Icons.Default.MoreVert, contentDescription = "Menu")
+                }
 
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false }
-                    ) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(if (isGridView) R.string.action_list_view else R.string.action_grid_view)) },
-                            leadingIcon = { Icon(if (isGridView) Icons.Default.List else Icons.Default.GridView, contentDescription = null) },
-                            onClick = {
-                                onViewToggleClick()
-                                showMenu = false
-                            }
-                        )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.nav_item_add_sleep)) },
-                            leadingIcon = { Icon(Icons.Default.Timer, contentDescription = null) },
-                            onClick = {
-                                onSleepTimerClick()
-                                showMenu = false
-                            }
-                        )
+                DropdownMenu(
+                    expanded = showMenu,
+                    onDismissRequest = { showMenu = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text(stringResource(if (isGridView) R.string.action_list_view else R.string.action_grid_view)) },
+                        leadingIcon = { Icon(if (isGridView) Icons.Default.List else Icons.Default.GridView, contentDescription = null) },
+                        onClick = {
+                            onViewToggleClick()
+                            showMenu = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.nav_item_add_sleep)) },
+                        leadingIcon = { Icon(Icons.Default.Timer, contentDescription = null) },
+                        onClick = {
+                            onSleepTimerClick()
+                            showMenu = false
+                        }
+                    )
+                    HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.nav_item_save_playlist)) },
+                        leadingIcon = { Icon(Icons.Default.Save, contentDescription = null) },
+                        onClick = {
+                            onSaveClick()
+                            showMenu = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(stringResource(R.string.nav_item_load_playlist)) },
+                        leadingIcon = { Icon(Icons.Default.FileUpload, contentDescription = null) },
+                        onClick = {
+                            onLoadClick()
+                            showMenu = false
+                        }
+                    )
+                    if (isDeleteVisible) {
                         HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.nav_item_save_playlist)) },
-                            leadingIcon = { Icon(Icons.Default.Save, contentDescription = null) },
+                            text = { Text(stringResource(deleteTitleRes)) },
+                            leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
                             onClick = {
-                                onSaveClick()
+                                onDeleteClick()
                                 showMenu = false
                             }
                         )
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.nav_item_load_playlist)) },
-                            leadingIcon = { Icon(Icons.Default.FileUpload, contentDescription = null) },
-                            onClick = {
-                                onLoadClick()
-                                showMenu = false
-                            }
-                        )
-                        if (isDeleteVisible) {
-                            HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
-                            DropdownMenuItem(
-                                text = { Text(stringResource(deleteTitleRes)) },
-                                leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                                onClick = {
-                                    onDeleteClick()
-                                    showMenu = false
-                                }
-                            )
-                        }
                     }
                 }
-            },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-                titleContentColor = MaterialTheme.colorScheme.onSurface,
-                actionIconContentColor = MaterialTheme.colorScheme.onSurface,
-                navigationIconContentColor = MaterialTheme.colorScheme.onSurface
-            )
+            }
+        },
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            actionIconContentColor = MaterialTheme.colorScheme.onSurface,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface
         )
-        
-        // Progress indicator at the bottom of the TopBar
-        if (isLoading && isSearching) {
-            LinearProgressIndicator(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .height(2.dp),
-                color = AmaradioAmber,
-                trackColor = Color.Transparent
-            )
-        }
-    }
+    )
 }

@@ -124,8 +124,6 @@ dependencies {
     implementation libs.androidx.media3.common
     implementation libs.androidx.media3.session
 
-    implementation libs.apache.commons.text
-
     implementation libs.androidx.room.runtime
     ksp libs.androidx.room.compiler
     implementation libs.androidx.room.ktx
