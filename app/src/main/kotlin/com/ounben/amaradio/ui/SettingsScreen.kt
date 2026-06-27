@@ -68,58 +68,6 @@ fun SettingsScreen(
                     icon = Icons.Default.Home,
                     onValueChange = { viewModel.updateString("startup_action", it) }
                 )
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_auto_play_on_startup),
-                    checked = uiState.autoPlayOnStartup,
-                    icon = Icons.Default.PlayArrow,
-                    onCheckedChange = { viewModel.updateBoolean("auto_play_on_startup", it) }
-                )
-                if (uiState.autoPlayOnStartup) {
-                    SettingsSwitch(
-                        title = stringResource(R.string.settings_auto_off_on_startup),
-                        checked = uiState.autoOffOnStartup,
-                        icon = Icons.Default.Stop,
-                        onCheckedChange = { viewModel.updateBoolean("auto_off_on_startup", it) }
-                    )
-                    if (uiState.autoOffOnStartup) {
-                        SettingsListPreference(
-                            title = stringResource(R.string.settings_auto_off_sleep_timer),
-                            currentValue = uiState.autoOffTimeout,
-                            entries = stringArrayResource(R.array.timeout_minutes),
-                            entryValues = stringArrayResource(R.array.timeout_minutes_values),
-                            icon = Icons.Default.Timer,
-                            onValueChange = { viewModel.updateString("auto_off_timeout", it) }
-                        )
-                    }
-                }
-            }
-
-            // Interaction
-            SettingsCategory(title = stringResource(R.string.settings_interaction)) {
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_load_icons),
-                    checked = uiState.loadIcons,
-                    icon = Icons.Default.Radio,
-                    onCheckedChange = { viewModel.updateBoolean("load_icons", it) }
-                )
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_auto_favorite),
-                    checked = uiState.autoFavorite,
-                    icon = Icons.Default.StarBorder,
-                    onCheckedChange = { viewModel.updateBoolean("auto_favorite", it) }
-                )
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_show_broken),
-                    checked = uiState.showBroken,
-                    icon = Icons.Default.Warning,
-                    onCheckedChange = { viewModel.updateBoolean("show_broken", it) }
-                )
-                SettingsSwitch(
-                    title = stringResource(R.string.settings_single_use_tags),
-                    checked = uiState.singleUseTags,
-                    icon = Icons.Default.List,
-                    onCheckedChange = { viewModel.updateBoolean("single_use_tags", it) }
-                )
             }
 
             // Player

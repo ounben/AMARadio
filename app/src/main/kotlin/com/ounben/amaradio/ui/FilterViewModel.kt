@@ -255,7 +255,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             
             params["order"] = tab.sortBy
             params["reverse"] = tab.reverse.toString()
-            params["hidebroken"] = (!(sharedPref.getBoolean("show_broken", false))).toString()
+            params["hidebroken"] = "true"
             params["limit"] = "100"
 
             val resultString = withContext(Dispatchers.IO) {

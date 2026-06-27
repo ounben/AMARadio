@@ -66,9 +66,8 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             if (!forceUpdate) delay(50.milliseconds) // Small delay to let animations settle
             _uiState.update { it.copy(isLoading = true, error = null) }
             
-            val showBroken = sharedPref.getBoolean("show_broken", false)
             val params = HashMap<String, String>()
-            params["hidebroken"] = (!showBroken).toString()
+            params["hidebroken"] = "true"
 
             val result = withContext(Dispatchers.IO) {
                 Utils.downloadFeedRelative(app.httpClient, app, url, forceUpdate, params)
@@ -77,8 +76,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             if (result != null) {
                 withContext(Dispatchers.Default) {
                     val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
-                    val filtered = decoded.filter { showBroken || it.Working }
-                    _uiState.update { it.copy(stations = filtered, filteredStations = filtered, isLoading = false) }
+                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
                 }
             } else {
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
