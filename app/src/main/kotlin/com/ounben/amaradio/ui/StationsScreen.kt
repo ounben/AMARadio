@@ -10,8 +10,7 @@ fun StationsScreen(
     viewModel: StationsViewModel,
     url: String?,
     onStationClick: (DataRadioStation) -> Unit,
-    onFavoriteClick: (DataRadioStation) -> Unit,
-    isFavorite: (String) -> Boolean
+    onFavoriteClick: (DataRadioStation) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     
@@ -29,6 +28,6 @@ fun StationsScreen(
         onRefresh = { url?.let { viewModel.loadStations(it, forceUpdate = true) } },
         onStationClick = onStationClick,
         onFavoriteClick = onFavoriteClick,
-        isFavorite = isFavorite
+        isFavorite = { uuid -> uiState.favoriteIds.contains(uuid) }
     )
 }

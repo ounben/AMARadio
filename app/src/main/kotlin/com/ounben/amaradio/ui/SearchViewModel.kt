@@ -20,6 +20,7 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     data class SearchUiState(
         val results: List<DataRadioStation> = emptyList(),
+        val favoriteIds: Set<String> = emptySet(),
         val isSearching: Boolean = false,
         val error: String? = null
     )
@@ -29,6 +30,15 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
 
     private val app = application as AMARadioApp
     private var searchJob: Job? = null
+
+    init {
+        viewModelScope.launch {
+            app.favouriteManager.stationsFlow.collect { favorites ->
+                val ids = favorites.map { it.StationUuid }.toSet()
+                _uiState.update { it.copy(favoriteIds = ids) }
+            }
+        }
+    }
 
     fun search(query: String) {
         searchJob?.cancel()

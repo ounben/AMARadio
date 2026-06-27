@@ -25,6 +25,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     data class StationsUiState(
         val stations: List<DataRadioStation> = emptyList(),
         val filteredStations: List<DataRadioStation> = emptyList(),
+        val favoriteIds: Set<String> = emptySet(),
         val isLoading: Boolean = false,
         val error: String? = null,
         val isGrid: Boolean = false
@@ -46,6 +47,13 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
     init {
         refreshGridMode()
         sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
+        
+        viewModelScope.launch {
+            app.favouriteManager.stationsFlow.collect { favorites ->
+                val ids = favorites.map { it.StationUuid }.toSet()
+                _uiState.update { it.copy(favoriteIds = ids) }
+            }
+        }
     }
 
     override fun onCleared() {

@@ -174,6 +174,7 @@ fun MainScreen(
                                 isGrid = mainUiState.isGridView,
                                 isLoading = searchUiState.isSearching,
                                 error = searchUiState.error,
+                                emptyMessage = stringResource(R.string.searchpreference_no_results),
                                 onStationClick = { station ->
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
                                     else PlayerServiceUtil.play(station)
@@ -184,7 +185,7 @@ fun MainScreen(
                                     if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
                                     else app.favouriteManager.add(station)
                                 },
-                                isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                                isFavorite = { uuid -> searchUiState.favoriteIds.contains(uuid) }
                             )
                         }
                     }

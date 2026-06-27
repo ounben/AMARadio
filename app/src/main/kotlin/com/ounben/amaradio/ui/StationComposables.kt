@@ -138,6 +138,8 @@ fun StationList(
     stationWithOptions?.let { station ->
         StationOptionsDialog(
             station = station,
+            isFavorite = isFavorite(station.StationUuid),
+            onFavoriteClick = { onFavoriteClick(station) },
             onDismiss = { stationWithOptions = null }
         )
     }
@@ -291,11 +293,16 @@ fun StationListItem(
                 )
             }
         }
-        IconButton(onClick = onFavoriteClick) {
+        IconButton(
+            onClick = { 
+                if (!isFavorite) onFavoriteClick() 
+                // Misclick protection: Removal only via long-click context menu
+            }
+        ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                 contentDescription = null,
-                tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
     }
@@ -335,14 +342,17 @@ fun StationGridItem(
                     placeholder = painterResource(R.drawable.ic_radio_24dp)
                 )
                 IconButton(
-                    onClick = onFavoriteClick,
+                    onClick = { 
+                        if (!isFavorite) onFavoriteClick() 
+                        // Misclick protection: Removal only via long-click context menu
+                    },
                     modifier = Modifier.size(32.dp)
                 ) {
                     Icon(
                         imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
                         modifier = Modifier.size(20.dp),
-                        tint = if (isFavorite) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             }

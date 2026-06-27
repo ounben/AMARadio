@@ -143,8 +143,7 @@ fun TabsScreen(
                         onFavoriteClick = { station ->
                             if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
                             else app.favouriteManager.add(station)
-                        },
-                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                        }
                     )
                 }
                 is MainTab.Filter -> {
@@ -155,8 +154,7 @@ fun TabsScreen(
                         onFavoriteClick = { station ->
                             if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
                             else app.favouriteManager.add(station)
-                        },
-                        isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                        }
                     )
                 }
             }

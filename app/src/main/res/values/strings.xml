@@ -17,6 +17,8 @@
     <string name="action_links">Links</string>
     <string name="action_homepage">Homepage</string>
     <string name="action_favorite">Favorite</string>
+    <string name="action_starred_add">Add to favorites</string>
+    <string name="action_starred_remove">Remove from favorites</string>
 
     <string name="action_station_visit_website">Visit Website</string>
     <string name="action_station_copy_stream_url">Copy Stream URL</string>

@@ -41,8 +41,7 @@ fun FilterScreen(
     viewModel: FilterViewModel,
     tabIndex: Int,
     onStationClick: (DataRadioStation) -> Unit,
-    onFavoriteClick: (DataRadioStation) -> Unit,
-    isFavorite: (String) -> Boolean
+    onFavoriteClick: (DataRadioStation) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val currentTab = uiState.tabs.getOrNull(tabIndex) ?: return
@@ -102,7 +101,7 @@ fun FilterScreen(
                 onRefresh = { viewModel.performSearch(tabIndex) },
                 onStationClick = onStationClick,
                 onFavoriteClick = onFavoriteClick,
-                isFavorite = isFavorite,
+                isFavorite = { uuid -> uiState.favoriteIds.contains(uuid) },
                 modifier = Modifier.weight(1f)
             )
         }

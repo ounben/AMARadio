@@ -251,6 +251,8 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
 @Composable
 fun StationOptionsDialog(
     station: DataRadioStation,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -260,6 +262,23 @@ fun StationOptionsDialog(
         title = { Text(station.Name) },
         text = {
             Column {
+                ListItem(
+                    headlineContent = { 
+                        Text(stringResource(if (isFavorite) R.string.action_starred_remove else R.string.action_starred_add)) 
+                    },
+                    leadingContent = { 
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Default.Star else Icons.Default.StarBorder, 
+                            contentDescription = null,
+                            tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                        ) 
+                    },
+                    modifier = Modifier.clickable {
+                        onFavoriteClick()
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_station_visit_website)) },
                     leadingContent = { Icon(Icons.Default.Language, contentDescription = null) },

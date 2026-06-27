@@ -52,6 +52,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     data class FilterUiState(
         val tabs: List<FilterTabItem> = listOf(FilterTabItem(label = "Default")),
         val selectedTabIndex: Int = 0,
+        val favoriteIds: Set<String> = emptySet(),
         val isSearching: Boolean = false,
         val countries: List<CategoryItem> = emptyList(),
         val languages: List<CategoryItem> = emptyList(),
@@ -87,6 +88,14 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 }
             }
         }
+        
+        viewModelScope.launch {
+            app.favouriteManager.stationsFlow.collect { favorites ->
+                val ids = favorites.map { it.StationUuid }.toSet()
+                _uiState.update { it.copy(favoriteIds = ids) }
+            }
+        }
+
         refreshGridMode()
         sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
     }
