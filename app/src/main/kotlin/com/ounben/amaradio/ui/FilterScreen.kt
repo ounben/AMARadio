@@ -468,8 +468,17 @@ fun SearchableSelectionDialog(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val filteredOptions = remember(searchQuery, options) {
-        if (searchQuery.length < 2) options.take(200)
-        else options.filter { it.label.contains(searchQuery, ignoreCase = true) }
+        val q = searchQuery.trim()
+        if (q.length < 2) {
+            options.take(200)
+        } else {
+            options.filter { it.label.contains(q, ignoreCase = true) }
+                .sortedWith(
+                    compareByDescending<FilterViewModel.CategoryItem> { item ->
+                        SearchUtils.calculateScore(item.label, q)
+                    }.thenByDescending { it.count }
+                )
+        }
     }
 
     Dialog(onDismissRequest = onDismiss) {
