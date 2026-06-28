@@ -27,7 +27,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         private set
     private val playerIsInLegalState = AtomicBoolean(false)
 
-    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context) {
+    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: androidx.media3.common.MediaMetadata?) {
         if (streamUrl != this.streamUrl) {
             currentPlaybackTransferredBytes = 0
         }

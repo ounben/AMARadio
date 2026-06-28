@@ -78,11 +78,11 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         currentPlayer.setStateListener(this)
     }
 
-    fun play(stationURL: String?, streamName: String?) {
-        playInternal(stationURL, streamName, false)
+    fun play(stationURL: String?, streamName: String?, metadata: androidx.media3.common.MediaMetadata? = null) {
+        playInternal(stationURL, streamName, false, metadata)
     }
 
-    private fun playInternal(stationURL: String?, streamName: String?, isReconnect: Boolean) {
+    private fun playInternal(stationURL: String?, streamName: String?, isReconnect: Boolean, metadata: androidx.media3.common.MediaMetadata? = null) {
         if (stationURL == null) return
         
         if (!isReconnect) {
@@ -106,10 +106,10 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             .connectTimeout(connectTimeout.seconds)
             .readTimeout(readTimeout.seconds)
             .build()
-        playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext) }
+        playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, metadata) }
     }
 
-    fun play(station: DataRadioStation) {
+    fun play(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
         // Breche alle laufenden Aktivitäten (Tasks und aktuelles Playback) sofort ab,
         // um den hängenden Puffer-Vorgang des vorherigen Senders zu beenden.
         stop()
@@ -117,14 +117,14 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         reconnectAttempts = 0
         stationLoadAttempts = 0
         currentStation = station
-        executePlayStationTask(station)
+        executePlayStationTask(station, metadata)
     }
 
-    private fun executePlayStationTask(station: DataRadioStation) {
+    private fun executePlayStationTask(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
         // Zeige sofort im UI an, dass wir zum neuen Sender wechseln (PrePlaying)
         setState(PlayState.PrePlaying, -1)
         playStationTask = PlayStationTask(station, mainContext,
-            { url -> this@RadioPlayer.playInternal(url, station.Name, false) },
+            { url -> this@RadioPlayer.playInternal(url, station.Name, false, metadata) },
             { executionResult ->
                 if (executionResult == PlayStationTask.ExecutionResult.FAILURE) {
                     stationLoadAttempts++
@@ -133,7 +133,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
                         playerThreadHandler.post {
                             CoroutineScope(Dispatchers.Main).launch {
                                 RadioBrowserServerManager.rotateServer()
-                                executePlayStationTask(station)
+                                executePlayStationTask(station, metadata)
                             }
                         }
                     } else {

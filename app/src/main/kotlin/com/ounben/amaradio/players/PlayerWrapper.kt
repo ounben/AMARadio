@@ -16,7 +16,7 @@ interface PlayerWrapper {
         fun onDataSourceStreamLiveInfo(liveInfo: StreamLiveInfo)
     }
 
-    fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context)
+    fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: androidx.media3.common.MediaMetadata? = null)
     fun pause()
     fun stop()
     fun release()
