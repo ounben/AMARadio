@@ -19,7 +19,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.HttpDataSource
 import androidx.media3.datasource.TransferListener
-import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
@@ -68,25 +67,20 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         override fun onReceive(context: Context, intent: Intent) {
             @Suppress("DEPRECATION")
             if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action) {
-                if (Utils.hasAnyConnection(context)) {
-                    context.unregisterReceiver(this)
-                    resumeWhenNetworkConnected()
+                if (fullStopTask != null && audioSource != null && Utils.hasAnyConnection(context)) {
+                    Log.i("ExoPlayerWrapper", "Regained connection. Resuming playback.")
+                    cancelStopTask()
+                    playerThreadHandler.post {
+                        internalPlayer.setMediaSource(audioSource!!, false)
+                        internalPlayer.prepare()
+                        internalPlayer.playWhenReady = true
+                    }
                 }
             }
         }
     }
 
     init {
-        val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(
-                50_000, // Min buffer 50s
-                100_000, // Max buffer 100s
-                2_500, // Buffer for playback 2.5s
-                5_000 // Buffer for playback after rebuffer 5s
-            )
-            .setPrioritizeTimeOverSizeThresholds(true)
-            .build()
-
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
@@ -94,7 +88,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
-            .setLoadControl(loadControl)
             .setAudioAttributes(audioAttributes, false) 
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
@@ -130,7 +123,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .readTimeout(readTimeout, TimeUnit.SECONDS)
             .build()
 
-        val dataSourceFactory = RadioDataSourceFactory(dedicatedClient, bandwidthMeter!!, this)
+        val dataSourceFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
 
         val mediaItem = MediaItem.Builder()
             .setUri(streamUrl.toUri())
@@ -156,12 +149,18 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             internalPlayer.playWhenReady = true
             Log.d("ExoPlayerWrapper", "Player starting stream: $streamUrl")
         }
+        
         @Suppress("DEPRECATION")
-        try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
-        try { context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) } catch (_: Exception) {}
+        try { 
+            context.unregisterReceiver(networkChangedReceiver) 
+        } catch (_: Exception) {}
+        try { 
+            context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) 
+        } catch (_: Exception) {}
     }
 
     override fun pause() {
+        Log.i("ExoPlayerWrapper", "Pause. Stopping exoplayer.")
         cancelStopTask()
         playerThreadHandler.post {
             try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
@@ -171,6 +170,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun stop() {
+        Log.i("ExoPlayerWrapper", "Stopping exoplayer.")
         cancelStopTask()
         isPlayingFlag = false
         playerThreadHandler.post {
@@ -237,32 +237,22 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     private fun resumeWhenNetworkConnected() {
-        if (!isPlayingFlag) return
-        if (Utils.hasAnyConnection(context)) {
-            cancelStopTask()
-            playerThreadHandler.post {
-                audioSource?.let { internalPlayer.setMediaSource(it, false) }
-                internalPlayer.prepare()
-                internalPlayer.playWhenReady = true
-            }
-        } else {
-            playerThreadHandler.post {
-                val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
-                val resumeWithin = try { sharedPrefs.getInt("settings_resume_within", 60) } catch (_: Exception) { 60 }
-                if (resumeWithin > 0) {
-                    Log.d("ExoPlayerWrapper", "Trying to resume playback within ${resumeWithin}s.")
-                    cancelStopTask()
-                    fullStopTask = Runnable {
-                        stop()
-                        stateListener?.onPlayerError(R.string.giving_up_resume)
-                        fullStopTask = null
-                    }
-                    playerThreadHandler.postDelayed(fullStopTask!!, resumeWithin * 1000L)
-                    stateListener?.onPlayerWarning(R.string.warning_no_network_trying_resume)
-                } else {
+        playerThreadHandler.post {
+            val sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context)
+            val resumeWithin = try { sharedPrefs.getInt("settings_resume_within", 60) } catch (_: Exception) { 60 }
+            if (resumeWithin > 0) {
+                Log.d("ExoPlayerWrapper", "Trying to resume playback within ${resumeWithin}s.")
+                cancelStopTask()
+                fullStopTask = Runnable {
                     stop()
-                    stateListener?.onPlayerError(R.string.error_stream_reconnect_timeout)
+                    stateListener?.onPlayerError(R.string.giving_up_resume)
+                    fullStopTask = null
                 }
+                playerThreadHandler.postDelayed(fullStopTask!!, resumeWithin * 1000L)
+                stateListener?.onPlayerWarning(R.string.warning_no_network_trying_resume)
+            } else {
+                stop()
+                stateListener?.onPlayerError(R.string.error_stream_reconnect_timeout)
             }
         }
     }

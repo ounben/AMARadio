@@ -11,13 +11,10 @@ import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.playlist.PlaylistParser
 import com.ounben.amaradio.station.DataRadioStation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
+import okhttp3.Request
 import java.lang.ref.WeakReference
 
 class PlayStationTask(
@@ -58,34 +55,60 @@ class PlayStationTask(
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val AMARadioApp = ctx.applicationContext as AMARadioApp
         
-        // Instant Start using provided URL only. 
-        // No click tracking feedback is sent to the server.
-        if (stationToPlay.StreamUrl.isNotEmpty()) {
-            stationToPlay.playableUrl = stationToPlay.StreamUrl
-            playFunc.play(stationToPlay.StreamUrl)
-            postExecuteTask?.onPostExecute(ExecutionResult.SUCCESS)
-            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
-        } else {
-            // Should not happen with current API results
-            Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
-            postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
-            AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
-        }
-
-        // Parallel: Add to history and auto-favorite in background
-        scope.launch(Dispatchers.Default) {
-            // We only add to history here if it has full info (bitrate > 0 or tags not empty)
-            // Internal players add to history in PlayerServiceUtil to avoid metadata stripping issues.
-            if (stationToPlay.Bitrate > 0 || stationToPlay.TagsAll.isNotEmpty()) {
-                AMARadioApp.historyManager.add(stationToPlay)
-            }
+        job = scope.launch {
+            var streamUrl = stationToPlay.StreamUrl
             
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
-            if (sharedPref.getBoolean("auto_favorite", false)) {
-                if (!AMARadioApp.favouriteManager.has(stationToPlay.StationUuid)) {
-                    AMARadioApp.favouriteManager.add(stationToPlay)
-                    withContext(Dispatchers.Main) {
-                        Toast.makeText(ctx, R.string.notify_autostarred, Toast.LENGTH_SHORT).show()
+            if (streamUrl.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(ctx.applicationContext, R.string.error_station_load, Toast.LENGTH_SHORT).show()
+                    postExecuteTask?.onPostExecute(ExecutionResult.FAILURE)
+                    AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
+                }
+                return@launch
+            }
+
+            // Playlist resolution
+            if (PlaylistParser.isPlaylist(streamUrl)) {
+                try {
+                    val request = Request.Builder()
+                        .url(streamUrl)
+                        .header("User-Agent", "RadioDroid")
+                        .build()
+                    val response = withContext(Dispatchers.IO) { 
+                        AMARadioApp.httpClient.newCall(request).execute() 
+                    }
+                    if (response.isSuccessful) {
+                        val body = response.body.string()
+                        val resolvedUrl = PlaylistParser.parse(streamUrl, body)
+                        if (resolvedUrl != null) {
+                            streamUrl = resolvedUrl
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("PLAY", "Playlist resolution failed for $streamUrl", e)
+                }
+            }
+
+            withContext(Dispatchers.Main) {
+                stationToPlay.playableUrl = streamUrl
+                playFunc.play(streamUrl)
+                postExecuteTask?.onPostExecute(ExecutionResult.SUCCESS)
+                AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
+            }
+
+            // Parallel: Add to history and auto-favorite
+            withContext(Dispatchers.Default) {
+                if (stationToPlay.Bitrate > 0 || stationToPlay.TagsAll.isNotEmpty()) {
+                    AMARadioApp.historyManager.add(stationToPlay)
+                }
+                
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(ctx)
+                if (sharedPref.getBoolean("auto_favorite", false)) {
+                    if (!AMARadioApp.favouriteManager.has(stationToPlay.StationUuid)) {
+                        AMARadioApp.favouriteManager.add(stationToPlay)
+                        withContext(Dispatchers.Main) {
+                            Toast.makeText(ctx, R.string.notify_autostarred, Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
             }

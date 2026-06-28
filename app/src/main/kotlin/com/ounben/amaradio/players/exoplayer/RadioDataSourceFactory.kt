@@ -9,10 +9,11 @@ import okhttp3.OkHttpClient
 class RadioDataSourceFactory(
     private val httpClient: OkHttpClient,
     private val transferListener: TransferListener,
-    private val dataSourceListener: IcyDataSource.IcyDataSourceListener
+    private val dataSourceListener: IcyDataSource.IcyDataSourceListener,
+    private val isHls: Boolean
 ) : DataSource.Factory {
 
     override fun createDataSource(): DataSource {
-        return IcyDataSource(httpClient, transferListener, dataSourceListener)
+        return IcyDataSource(httpClient, transferListener, dataSourceListener, isHls)
     }
 }

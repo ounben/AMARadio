@@ -98,13 +98,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
         setState(PlayState.PrePlaying, -1)
         this.streamName = streamName
-        val prefs = PreferenceManager.getDefaultSharedPreferences(mainContext.applicationContext)
-        val connectTimeout = prefs.getInt("stream_connect_timeout", 4)
-        val readTimeout = prefs.getInt("stream_read_timeout", 10)
         val AMARadioApp = mainContext.applicationContext as AMARadioApp
-        val customizedHttpClient = AMARadioApp.httpClient.newBuilder()
-            .connectTimeout(connectTimeout.seconds)
-            .readTimeout(readTimeout.seconds)
+        val customizedHttpClient = AMARadioApp.newHttpClient()
             .build()
         playerThreadHandler.post { currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, metadata) }
     }
