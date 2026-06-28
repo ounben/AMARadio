@@ -157,7 +157,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             Log.d("ExoPlayerWrapper", "Player starting stream: $streamUrl")
         }
         @Suppress("DEPRECATION")
-        context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION))
+        try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
+        try { context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) } catch (_: Exception) {}
     }
 
     override fun pause() {
@@ -227,6 +228,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
+        Log.d("ExoPlayerWrapper", "New Live Info: ${streamLiveInfo.title}")
         stateListener?.onDataSourceStreamLiveInfo(streamLiveInfo)
     }
 
@@ -334,10 +336,19 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         override fun onPlayerError(error: PlaybackException) {
             Log.e("ExoPlayerWrapper", "onPlayerError: ${error.errorCodeName} (${error.errorCode})", error)
+            
+            val messageId = when (error.errorCode) {
+                PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_FAILED,
+                PlaybackException.ERROR_CODE_IO_BAD_HTTP_STATUS,
+                PlaybackException.ERROR_CODE_IO_INVALID_HTTP_CONTENT_TYPE -> R.string.error_station_load
+                PlaybackException.ERROR_CODE_IO_NETWORK_CONNECTION_TIMEOUT -> R.string.error_stream_reconnect_timeout
+                else -> R.string.error_play_stream
+            }
+            
             if (fullStopTask != null) {
                 stop()
-                stateListener?.onPlayerError(R.string.error_play_stream)
             }
+            stateListener?.onPlayerError(messageId)
         }
 
         override fun onMetadata(metadata: Metadata) {

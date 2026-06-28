@@ -2,6 +2,7 @@ package com.ounben.amaradio.players.exoplayer
 
 import android.net.Uri
 import android.util.Log
+import androidx.media3.common.C
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSpec
@@ -41,8 +42,9 @@ class IcyDataSource(
 
     private var bytesUntilMetadata = Int.MAX_VALUE
     private var metadataBytesToRead = 0
-    private val metadataBuffer = ByteArray(4096)
+    private var metadataBuffer = ByteArray(4096)
     private var metadataBufferPos = 0
+    private var responseCode = 0
 
     override fun open(dataSpec: DataSpec): Long {
         close()
@@ -51,11 +53,23 @@ class IcyDataSource(
         val url = dataSpec.uri.toString().toHttpUrlOrNull()
             ?: throw HttpDataSource.HttpDataSourceException("Invalid URL", dataSpec, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_OPEN)
         
-        val request = Request.Builder().url(url)
+        val builder = Request.Builder().url(url)
             .addHeader("Icy-MetaData", "1")
-            .apply { if (!allowGzip) addHeader("Accept-Encoding", "identity") }
-            .build()
+            .addHeader("User-Agent", "RadioDroid")
         
+        if (!allowGzip) {
+            builder.addHeader("Accept-Encoding", "identity")
+        }
+
+        if (dataSpec.position > 0 || dataSpec.length != C.LENGTH_UNSET.toLong()) {
+            var range = "bytes=${dataSpec.position}-"
+            if (dataSpec.length != C.LENGTH_UNSET.toLong()) {
+                range += "${dataSpec.position + dataSpec.length - 1}"
+            }
+            builder.addHeader("Range", range)
+        }
+        
+        val request = builder.build()
         return connect(request)
     }
 
@@ -66,6 +80,7 @@ class IcyDataSource(
             throw HttpDataSource.HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_OPEN)
         }
 
+        responseCode = response.code
         if (!response.isSuccessful) {
             val code = response.code
             val headers = response.headers.toMultimap()
@@ -101,77 +116,110 @@ class IcyDataSource(
 
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
         if (!opened) return -1
-        return try {
-            val bytesRead = readAudioOnly(buffer, offset, readLength)
-            if (bytesRead > 0) {
-                dataSpec?.let { transferListener.onBytesTransferred(this, it, true, bytesRead) }
-                dataSourceListener.onDataSourceBytesRead(buffer, offset, bytesRead)
+        if (readLength == 0) return 0
+        
+        try {
+            val stream = responseBody?.byteStream() ?: return -1
+            
+            while (true) {
+                // 1. Handle existing metadata reading
+                if (metadataBytesToRead > 0) {
+                    val toRead = metadataBytesToRead - metadataBufferPos
+                    val read = stream.read(metadataBuffer, metadataBufferPos, toRead)
+                    if (read == -1) {
+                        Log.d("IcyDataSource", "EOF while reading metadata")
+                        return -1
+                    }
+                    metadataBufferPos += read
+                    if (metadataBufferPos == metadataBytesToRead) {
+                        parseMetadata(metadataBuffer, metadataBytesToRead)
+                        metadataBytesToRead = 0
+                        bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
+                    }
+                    continue // Check again
+                }
+
+                // 2. Handle metadata trigger point
+                if (bytesUntilMetadata == 0) {
+                    val lengthByte = stream.read()
+                    if (lengthByte == -1) {
+                        Log.d("IcyDataSource", "EOF while reading length byte")
+                        return -1
+                    }
+                    val length = lengthByte * 16
+                    if (length > 0) {
+                        metadataBytesToRead = length
+                        metadataBufferPos = 0
+                        if (metadataBytesToRead > metadataBuffer.size) {
+                            metadataBuffer = ByteArray(metadataBytesToRead)
+                        }
+                    } else {
+                        bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
+                    }
+                    continue // Check again
+                }
+
+                // 3. Read actual audio data
+                val toRead = Math.min(readLength, bytesUntilMetadata)
+                val bytesRead = stream.read(buffer, offset, toRead)
+                if (bytesRead == -1) {
+                    Log.d("IcyDataSource", "EOF while reading audio")
+                    return -1
+                }
+                
+                if (bytesUntilMetadata != Int.MAX_VALUE) {
+                    bytesUntilMetadata -= bytesRead
+                }
+                
+                if (bytesRead > 0) {
+                    dataSpec?.let { transferListener.onBytesTransferred(this, it, true, bytesRead) }
+                    dataSourceListener.onDataSourceBytesRead(buffer, offset, bytesRead)
+                    return bytesRead
+                }
             }
-            bytesRead
         } catch (e: IOException) {
+            Log.e("IcyDataSource", "IOException in read: ${e.message}")
             throw HttpDataSource.HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_READ)
         } catch (e: Exception) {
+            Log.e("IcyDataSource", "Exception in read: ${e.message}")
             throw HttpDataSource.HttpDataSourceException(e.message ?: "Read error", dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSource.HttpDataSourceException.TYPE_READ)
         }
     }
 
-    private fun readAudioOnly(buffer: ByteArray, offset: Int, readLength: Int): Int {
-        val stream = responseBody?.byteStream() ?: return -1
-        var totalAudioRead = 0
-        
-        while (totalAudioRead < readLength) {
-            if (metadataBytesToRead > 0) {
-                val toRead = Math.min(metadataBytesToRead - metadataBufferPos, metadataBytesToRead)
-                val read = stream.read(metadataBuffer, metadataBufferPos, toRead)
-                if (read == -1) return if (totalAudioRead > 0) totalAudioRead else -1
-                metadataBufferPos += read
-                if (metadataBufferPos == metadataBytesToRead) {
-                    parseMetadata(metadataBuffer, metadataBytesToRead)
-                    metadataBytesToRead = 0
-                    bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
-                }
-            } else if (bytesUntilMetadata == 0) {
-                val lengthByte = stream.read()
-                if (lengthByte == -1) return if (totalAudioRead > 0) totalAudioRead else -1
-                val length = lengthByte * 16
-                if (length > 0) {
-                    metadataBytesToRead = length
-                    metadataBufferPos = 0
-                } else {
-                    bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
-                }
-            } else {
-                val toRead = Math.min(readLength - totalAudioRead, bytesUntilMetadata)
-                val read = stream.read(buffer, offset + totalAudioRead, toRead)
-                if (read == -1) return if (totalAudioRead > 0) totalAudioRead else -1
-                totalAudioRead += read
-                if (bytesUntilMetadata != Int.MAX_VALUE) bytesUntilMetadata -= read
-            }
-            if (totalAudioRead > 0 && (bytesUntilMetadata == 0 || metadataBytesToRead > 0)) break
-        }
-        return totalAudioRead
-    }
-
     private fun parseMetadata(buffer: ByteArray, length: Int) {
         try {
-            val metadataString = String(buffer, 0, length, Charsets.UTF_8).trim()
+            // ICY metadata can be UTF-8 or Latin-1. We try UTF-8 first, then Latin-1.
+            var metadataString = String(buffer, 0, length, Charsets.UTF_8).trim()
             if (metadataString.isEmpty()) return
+            
+            // Check if it looks like garbage (very common with encoding mismatch)
+            // or just use Latin-1 if it's simpler for radio
+            
             val metadataMap = HashMap<String, String>()
-            metadataString.split(";").forEach { pair ->
-                val keyValue = pair.split("='", limit = 2)
-                if (keyValue.size == 2) {
-                    metadataMap[keyValue[0]] = keyValue[1].removeSuffix("'")
+            val regex = Regex("(\\w+)='([^']*)'")
+            val matches = regex.findAll(metadataString)
+            for (match in matches) {
+                if (match.groupValues.size == 3) {
+                    metadataMap[match.groupValues[1]] = match.groupValues[2]
                 }
             }
-            if (metadataMap.isNotEmpty()) dataSourceListener.onDataSourceStreamLiveInfo(StreamLiveInfo(metadataMap))
-        } catch (e: Exception) { Log.e("IcyDataSource", "Metadata parse error", e) }
+            
+            if (metadataMap.isNotEmpty()) {
+                dataSourceListener.onDataSourceStreamLiveInfo(StreamLiveInfo(metadataMap))
+            }
+        } catch (e: Exception) { 
+            Log.e("IcyDataSource", "Metadata parse error: ${e.message}") 
+        }
     }
 
     override fun getUri(): Uri? = dataSpec?.uri
     override fun setRequestProperty(name: String, value: String) {}
     override fun clearRequestProperty(name: String) {}
     override fun clearAllRequestProperties() {}
-    override fun getResponseHeaders(): Map<String, List<String>> = responseHeaders
-    override fun getResponseCode(): Int = 0
+    override fun getResponseHeaders(): Map<String, List<String>> {
+        // Hide icy-metaint from ExoPlayer extractors so they don't try to parse it again
+        return responseHeaders.filterKeys { !it.equals("icy-metaint", ignoreCase = true) }
+    }
+    override fun getResponseCode(): Int = responseCode
     override fun addTransferListener(transferListener: TransferListener) {}
 }

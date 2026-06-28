@@ -65,7 +65,7 @@ class ShoutcastInfo(
                 }
             }
 
-            return if (info.metadataOffset == 0) null else info
+            return info
         }
 
         private fun splitAudioInfo(audioInfo: String): Map<String, String> {
