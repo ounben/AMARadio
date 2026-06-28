@@ -42,7 +42,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.99.2) introduces significant performance optimizations and advanced caching. You can download the application from the releases page or your preferred app store.
+The latest version (v0.99.3) introduces significant performance optimizations and advanced caching. You can download the application from the releases page or your preferred app store.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.

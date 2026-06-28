@@ -72,7 +72,7 @@ class PlayStationTask(
                 try {
                     val request = Request.Builder()
                         .url(streamUrl)
-                        .header("User-Agent", "RadioDroid")
+                        .header("User-Agent", "AMARadio")
                         .build()
                     val response = withContext(Dispatchers.IO) { 
                         AMARadioApp.httpClient.newCall(request).execute() 

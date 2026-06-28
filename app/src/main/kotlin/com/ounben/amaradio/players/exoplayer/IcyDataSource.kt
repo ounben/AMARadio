@@ -62,8 +62,8 @@ class IcyDataSource(
             builder.addHeader("Icy-MetaData", "1")
         }
         
-        // Use a consistent RadioDroid-like User-Agent as it's known to work
-        builder.header("User-Agent", "RadioDroid")
+        // Use a consistent AMARadio-like User-Agent as it's known to work
+        builder.header("User-Agent", "AMARadio")
         
         // Apply properties set by ExoPlayer (e.g. cookies, custom headers)
         synchronized(requestProperties) {

@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.3] - 2026-06-29
+### Fixed
+- **Stream Compatibility**: Implemented a robust playlist resolver that automatically handles `.m3u` and `.pls` files. This fixes playback for many stations (e.g., SRF Musikwelle) that were previously failing with container errors.
+- **Clean Audio Engine**: Rewrote the ICY metadata filter to be byte-accurate. By stripping metadata before it reaches the player and hiding the `icy-metaint` header from ExoPlayer, we've eliminated the "start-stop" stuttering and "UnrecognizedInputFormatException" errors.
+- **Server Connectivity**: 
+    - Standardized the User-Agent to "AMARadio" to ensure compatibility with restrictive radio servers.
+    - Added a `HEAD`-to-GET interceptor to support servers that fail on header-only probes.
+    - Integrated dynamic timeouts (Connect/Read) directly into the stream initialization from app settings.
+
+### Changed
+- **Metadata Resilience**: Switched to a regex-based ICY parser, making title and artist detection more reliable across various international encoding standards.
+
 ## [0.99.2] - 2026-06-25
 ### Added
 - **Instant UI Experience**: Migrated to an Activity-scoped ViewModel architecture and a persistent `hide/show` fragment navigation. This eliminates flickering and makes switching between Stations, Favorites, and History instantaneous.
