@@ -88,7 +88,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
-            .setAudioAttributes(audioAttributes, false) 
+            .setAudioAttributes(audioAttributes, true)
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .build()
         

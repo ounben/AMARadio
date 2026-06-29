@@ -165,11 +165,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
             AudioManager.AUDIOFOCUS_LOSS -> {
                 Log.d(tag, "audio focus loss")
-                if (radioPlayer?.isPlaying() == true) pause(PauseReason.FOCUS_LOSS)
+                pause(PauseReason.FOCUS_LOSS)
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
                 Log.d(tag, "audio focus loss transient")
-                if (radioPlayer?.isPlaying() == true) pause(PauseReason.FOCUS_LOSS_TRANSIENT)
+                pause(PauseReason.FOCUS_LOSS_TRANSIENT)
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
                 Log.d(tag, "audio focus loss transient can duck")
