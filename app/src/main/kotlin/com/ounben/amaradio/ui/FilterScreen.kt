@@ -75,7 +75,7 @@ fun FilterScreen(
                         overflow = TextOverflow.Ellipsis
                     )
                     Text(
-                        text = "Tippen zum Konfigurieren",
+                        text = stringResource(R.string.filter_tap_to_configure),
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )

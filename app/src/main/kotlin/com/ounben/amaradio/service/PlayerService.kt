@@ -220,12 +220,19 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         handler = Handler(mainLooper)
-        itsContext = this
-        powerManager = getSystemService(POWER_SERVICE) as? PowerManager
-        audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
+        
+        val contextForMedia = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            createAttributionContext("media_playback")
+        } else {
+            this
+        }
+        itsContext = contextForMedia
+
+        powerManager = contextForMedia.getSystemService(POWER_SERVICE) as? PowerManager
+        audioManager = contextForMedia.getSystemService(AUDIO_SERVICE) as? AudioManager
         
         // 1. Initialize RadioPlayer and set the listener first.
-        radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
+        radioPlayer = RadioPlayer(contextForMedia).apply { setPlayerListener(this@PlayerService) }
 
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
@@ -236,7 +243,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         // 3. Create MediaSession with the robust ForwardingPlayer
         val basePlayer = currentForwardingPlayer ?: radioPlayer?.player!!
         
-        mediaSession = MediaLibrarySession.Builder(this, basePlayer, MediaSessionCallback(this, amaradioBrowser))
+        mediaSession = MediaLibrarySession.Builder(contextForMedia, basePlayer, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(sessionActivityPendingIntent)
             .build()
 
@@ -458,7 +465,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         if (Utils.isDebug) Log.d(tag, "acquiring wake lock and wifi lock.")
         if (wakeLock == null) wakeLock = powerManager!!.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "PlayerService:")
         if (!wakeLock!!.isHeld) wakeLock!!.acquire(10 * 60 * 1000L /*10 minutes*/)
-        val wm = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager?
+        val wm = itsContext?.getSystemService(WIFI_SERVICE) as WifiManager?
         wm?.let {
             if (wifiLock == null) {
                 val mode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
@@ -498,8 +505,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         } else if (lastErrorFromPlayer != -1) {
             try { msg = resources.getString(lastErrorFromPlayer) } catch (_: Exception) {}
         }
-        val contentIntent = PendingIntent.getActivity(this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
-        val builder = NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID)
+        val contentIntent = PendingIntent.getActivity(itsContext!!, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
+        val builder = NotificationCompat.Builder(itsContext!!, NOTIFICATION_CHANNEL_ID)
             .setContentIntent(contentIntent)
             .setContentTitle(theTitle)
             .setContentText(msg)
@@ -545,7 +552,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     stopForeground(STOP_FOREGROUND_REMOVE)
                     notificationIsActive = false
                 } else {
-                    (getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
+                    (itsContext!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
                 }
             }
         } catch (e: Exception) {
