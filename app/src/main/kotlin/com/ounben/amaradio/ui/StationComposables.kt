@@ -337,11 +337,13 @@ fun StationGridItem(
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(8.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Box(contentAlignment = Alignment.TopEnd) {
+        Box(contentAlignment = Alignment.TopEnd) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
                 AsyncImage(
                     model = station.IconUrl,
                     contentDescription = null,
@@ -352,35 +354,39 @@ fun StationGridItem(
                     error = painterResource(R.drawable.ic_radio_24dp),
                     placeholder = painterResource(R.drawable.ic_radio_24dp)
                 )
-                Box(
+                Text(
+                    text = station.Name,
+                    style = MaterialTheme.typography.labelMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
-                        .size(32.dp)
-                        .combinedClickable(
-                            onClick = { 
-                                if (!isFavorite) onFavoriteClick() 
-                                // Misclick protection: Removal only via long-click context menu
-                            },
-                            onLongClick = onLongClick
-                        ),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = null,
-                        modifier = Modifier.size(20.dp),
-                        tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+                        .fillMaxWidth()
+                        .heightIn(min = 32.dp)
+                )
             }
-            Text(
-                text = station.Name,
-                style = MaterialTheme.typography.labelMedium,
-                fontWeight = FontWeight.Bold,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis,
-                textAlign = TextAlign.Center,
-                modifier = Modifier.fillMaxWidth().heightIn(min = 32.dp)
-            )
+
+            // Favorite Star - Positioned at top-right of the gray background rectangle
+            Box(
+                modifier = Modifier
+                    .minimumInteractiveComponentSize()
+                    .size(48.dp)
+                    .combinedClickable(
+                        onClick = {
+                            if (!isFavorite) onFavoriteClick()
+                            // Misclick protection: Removal only via long-click context menu
+                        },
+                        onLongClick = onLongClick
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                    contentDescription = null,
+                    tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
         }
     }
 }
