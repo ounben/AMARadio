@@ -19,8 +19,9 @@ Originally created as a personal project for the developer's mother to provide a
 - **Dynamic UI Scaling**: Built-in accessibility settings allow for dynamic adjustment of the user interface, including font and component sizes, ranging from Compact to Extra Large.
 - **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
 - **Global Station Database**: Instant access to a massive, community-maintained directory of international radio stations.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and MD5-hashed local caching for API responses.
+- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, strict audio focus handling, and MD5-hashed local caching for API responses.
 - **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
+- **Privacy & Compliance**: Fully compliant with modern Android privacy standards, including proper attribution tagging and secure background execution.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
 - **Sleep Timer**: Integrated sleep timer functionality to automatically stop playback after a set duration.
 - **Android TV Support**: Specialized user interface optimized for television and large-screen devices.
