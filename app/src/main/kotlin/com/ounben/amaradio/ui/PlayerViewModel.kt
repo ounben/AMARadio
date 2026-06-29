@@ -53,13 +53,36 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             app.favouriteManager.stationsFlow.collect {
                 updateFavoriteState()
+                if (_uiState.value.currentStation == null) updateState()
+            }
+        }
+
+        viewModelScope.launch {
+            app.historyManager.stationsFlow.collect {
+                if (_uiState.value.currentStation == null) updateState()
+            }
+        }
+
+        viewModelScope.launch {
+            app.fallbackStationsManager.stationsFlow.collect {
+                if (_uiState.value.currentStation == null) updateState()
             }
         }
     }
 
     private fun updateState() {
-        val state = PlayerServiceUtil.getPlayerState()
-        val station = PlayerServiceUtil.getCurrentStation()
+        var state = PlayerServiceUtil.getPlayerState()
+        var station = PlayerServiceUtil.getCurrentStation()
+        
+        // Initial fallback chain: History -> Favorites -> Defaults
+        if (station == null) {
+            val app = getApplication<AMARadioApp>()
+            station = app.historyManager.first 
+                ?: app.favouriteManager.first 
+                ?: app.fallbackStationsManager.first
+            state = PlayState.Idle
+        }
+
         _uiState.update {
             it.copy(
                 currentStation = station,

@@ -43,7 +43,8 @@ fun MiniPlayer(
     viewModel: PlayerViewModel,
     isHeaderRole: Boolean,
     onToggleBottomSheet: () -> Unit,
-    onMoreClick: () -> Unit
+    onMoreClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
     
@@ -55,8 +56,9 @@ fun MiniPlayer(
     val artistName = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
     
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight()
             .clickable { onToggleBottomSheet() }
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
@@ -67,7 +69,9 @@ fun MiniPlayer(
         )
 
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             // Drag Handle
@@ -80,8 +84,9 @@ fun MiniPlayer(
 
             Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 12.dp, vertical = 4.dp),
+                    .fillMaxWidth()
+                    .wrapContentHeight()
+                    .padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Left: Station Icon
@@ -98,21 +103,22 @@ fun MiniPlayer(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 // Middle: Text Info (STRICT 4-ROW LAYOUT)
+                // IMPORTANT: We always render exactly 4 lines to ensure constant height regardless of metadata availability.
+                // If a value is missing, we use " " as a placeholder so the line still takes up space in the system font.
                 Column(
                     modifier = Modifier
                         .weight(1f)
-                        .fillMaxHeight(),
+                        .wrapContentHeight(),
                     verticalArrangement = Arrangement.Center
                 ) {
                     // Row 1: Station Name
                     Text(
-                        text = stationName,
+                        text = stationName.ifEmpty { " " },
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
                         color = AmaradioAmber,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 22.dp)
+                        overflow = TextOverflow.Ellipsis
                     )
                     
                     // Row 2: Song Title
@@ -122,8 +128,7 @@ fun MiniPlayer(
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 18.dp)
+                        overflow = TextOverflow.Ellipsis
                     )
                     
                     // Row 3: Artist
@@ -132,12 +137,11 @@ fun MiniPlayer(
                         style = MaterialTheme.typography.labelSmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 16.dp)
+                        overflow = TextOverflow.Ellipsis
                     )
                     
                     // Row 4: Status Indicator
-                    Box(modifier = Modifier.height(20.dp), contentAlignment = Alignment.CenterStart) {
+                    Box(modifier = Modifier.wrapContentHeight().padding(top = 2.dp), contentAlignment = Alignment.CenterStart) {
                         PlayerStatusRow(
                             playState = uiState.playState,
                             bandwidthFlow = viewModel.bandwidth
@@ -145,17 +149,17 @@ fun MiniPlayer(
                     }
                 }
 
-                // Right: Play/Pause (Enlarged to 72dp)
+                // Right: Play/Pause
                 IconButton(
                     onClick = { viewModel.togglePlayPause() },
-                    modifier = Modifier.size(72.dp)
+                    modifier = Modifier.size(64.dp)
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(64.dp),
+                        modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -216,10 +220,12 @@ fun FullPlayer(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 // Left-aligned Text Info (STRICT 4-ROW LAYOUT)
+                // IMPORTANT: We always render exactly 4 lines to ensure constant height regardless of metadata availability.
+                // If a value is missing, we use " " as a placeholder so the line still takes up space in the system font.
                 Column(modifier = Modifier.weight(1f)) {
                     // Row 1: Station Name
                     Text(
-                        text = station?.Name ?: "",
+                        text = (station?.Name ?: "").ifEmpty { " " },
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
                         color = AmaradioAmber,
@@ -249,7 +255,7 @@ fun FullPlayer(
                     )
 
                     // Row 4: Status / Metadata
-                    Box(modifier = Modifier.height(24.dp), contentAlignment = Alignment.CenterStart) {
+                    Box(modifier = Modifier.wrapContentHeight().padding(top = 2.dp), contentAlignment = Alignment.CenterStart) {
                         if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) {
                             PlayerStatusRow(
                                 playState = uiState.playState,
@@ -390,20 +396,19 @@ fun PlayerStatusRow(
     bandwidthFlow: StateFlow<String>,
     showText: Boolean = false
 ) {
-    if (playState == PlayState.Idle || playState == PlayState.Paused) return
+    val color = when (playState) {
+        PlayState.PrePlaying -> AmaradioAmber
+        PlayState.Playing -> Color(0xFF4CAF50) // Green
+        PlayState.Error -> Color(0xFFF44336) // Red
+        else -> Color.Transparent
+    }
 
-    Row(verticalAlignment = Alignment.CenterVertically) {
-        val color = when (playState) {
-            PlayState.PrePlaying -> AmaradioAmber
-            PlayState.Playing -> Color(0xFF4CAF50) // Green
-            PlayState.Error -> Color(0xFFF44336) // Red
-            else -> Color.Transparent
-        }
-
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.wrapContentHeight()
+    ) {
         if (playState == PlayState.PrePlaying || playState == PlayState.Playing) {
-            // HIGHLY OPTIMIZED: Only this tiny Text component recomposes every second.
             val bandwidth by bandwidthFlow.collectAsState()
-
             Text(
                 text = bandwidth.ifEmpty { "0.0 kB/s" },
                 color = color,
@@ -432,6 +437,12 @@ fun PlayerStatusRow(
                 color = color,
                 style = MaterialTheme.typography.labelSmall,
                 fontWeight = FontWeight.Bold
+            )
+        } else {
+            // Placeholder to keep the 4th row height stable during Idle/Paused
+            Text(
+                text = " ",
+                style = MaterialTheme.typography.labelSmall
             )
         }
     }

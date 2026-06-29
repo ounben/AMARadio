@@ -19,7 +19,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -69,10 +71,8 @@ fun MainScreen(
 
     var isPlayerExpanded by remember { mutableStateOf(false) }
     
-    val density = androidx.compose.ui.platform.LocalDensity.current
-    val miniPlayerHeight = remember(density.fontScale) {
-        if (density.fontScale > 1.2f) 140.dp else 104.dp
-    }
+    val density = LocalDensity.current
+    var miniPlayerHeight by remember { mutableStateOf(110.dp) }
 
     BackHandler(enabled = isPlayerExpanded) { isPlayerExpanded = false }
 
@@ -118,6 +118,7 @@ fun MainScreen(
             bottomBar = {
                 if (!mainUiState.isSearching) {
                     NavigationBar(
+                        modifier = Modifier.height(56.dp),
                         containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.onSurface,
                         tonalElevation = 0.dp
@@ -269,41 +270,54 @@ fun MainScreen(
                     }
                 }
 
-                if (playerUiState.currentStation != null) {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(if (isPlayerExpanded) availableHeight else miniPlayerHeight)
-                            .align(Alignment.BottomCenter)
-                            .background(MaterialTheme.colorScheme.surfaceVariant)
-                            .draggable(
-                                orientation = Orientation.Vertical,
-                                state = rememberDraggableState { /* ignore delta */ },
-                                onDragStopped = { velocity ->
-                                    if (velocity < -500f) isPlayerExpanded = true
-                                    if (velocity > 500f) isPlayerExpanded = false
-                                }
-                            )
-                    ) {
-                        if (isPlayerExpanded) {
-                            Column {
-                                Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
-                                    Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
-                                }
-                                FullPlayer(
-                                    playerViewModel = playerViewModel,
-                                    trackHistoryViewModel = trackHistoryViewModel,
-                                    onTrackClick = { }
-                                )
+                // MiniPlayer / FullPlayer Container
+                // Always visible to prevent "empty placeholder" gap at the bottom
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .then(
+                            if (isPlayerExpanded && playerUiState.currentStation != null) 
+                                Modifier.height(availableHeight)
+                            else 
+                                Modifier.wrapContentHeight()
+                        )
+                        .align(Alignment.BottomCenter)
+                        .background(MaterialTheme.colorScheme.surfaceVariant)
+                        .draggable(
+                            orientation = Orientation.Vertical,
+                            state = rememberDraggableState { /* ignore delta */ },
+                            onDragStopped = { velocity ->
+                                if (velocity < -500f && playerUiState.currentStation != null) isPlayerExpanded = true
+                                if (velocity > 500f) isPlayerExpanded = false
                             }
-                        } else {
-                            MiniPlayer(
-                                viewModel = playerViewModel,
-                                isHeaderRole = false,
-                                onToggleBottomSheet = { isPlayerExpanded = true },
-                                onMoreClick = { }
+                        )
+                ) {
+                    if (isPlayerExpanded && playerUiState.currentStation != null) {
+                        Column {
+                            Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
+                                Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
+                            }
+                            FullPlayer(
+                                playerViewModel = playerViewModel,
+                                trackHistoryViewModel = trackHistoryViewModel,
+                                onTrackClick = { }
                             )
                         }
+                    } else {
+                        MiniPlayer(
+                            viewModel = playerViewModel,
+                            isHeaderRole = false,
+                            onToggleBottomSheet = { 
+                                if (playerUiState.currentStation != null) isPlayerExpanded = true 
+                            },
+                            onMoreClick = { },
+                            modifier = Modifier.onSizeChanged { size ->
+                                val h = with(density) { size.height.toDp() }
+                                if (h != miniPlayerHeight) {
+                                    miniPlayerHeight = h
+                                }
+                            }
+                        )
                     }
                 }
             }
