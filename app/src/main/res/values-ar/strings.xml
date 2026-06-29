@@ -16,7 +16,8 @@
     <string name="action_links">الروابط</string>
     <string name="action_homepage">الصفحة الرئيسية</string>
     <string name="action_favorite">المفضلة</string>
-    <string name="action_alarm">المنبه</string>
+    <string name="action_starred_add">إضافة إلى المفضلة</string>
+    <string name="action_starred_remove">حذف من المفضلة</string>
 
     <string name="action_station_visit_website">زيارة الموقع الإلكتروني</string>
     <string name="action_station_copy_stream_url">نسخ رابط البث</string>
@@ -45,6 +46,16 @@
     <string name="action_languages">اللغات</string>
     <string name="action_edit">تعديل</string>
     <string name="action_copy_info">نسخ المعلومات</string>
+    <string name="action_rename_tab">تغيير اسم التبويب</string>
+    <string name="error_filter_name_required">يرجى إدخال اسم لتبويب الفلتر هذا أولاً</string>
+    <string name="confirm_delete_filter_tab">هل أنت متأكد من رغبتك في حذف الفلتر \"%1$s\"؟</string>
+    <string name="filter_empty_title">أنشئ تغذية محطات الراديو الخاصة بك</string>
+    <string name="filter_empty_desc">قم بإنشاء عرض مخصص من خلال دمج معايير متعددة. يمكنك تضييق نطاق البحث باستخدام:</string>
+    <string name="filter_empty_filter_by">تصفية حسب</string>
+    <string name="filter_empty_filter_desc">البلد، اسم المحطة، الوسوم، أو اللغة</string>
+    <string name="filter_empty_sort_by">فرز حسب</string>
+    <string name="filter_empty_sort_desc">النقرات، الترتيب الأبجدي، التصويتات، أو آخر تغيير</string>
+    <string name="filter_empty_hint">اكتب اسماً في الحقل أعلاه لحفظ هذا العرض المخصص!</string>
     <string name="error_station_load">تعذر الاتصال بالمحطة</string>
     <string name="error_list_update">تعذر الاتصال بخادم دليل الراديو</string>
 
@@ -54,9 +65,8 @@
     <string name="nav_item_starred">المفضلة</string>
     <string name="nav_item_history">السجل</string>
     <string name="nav_item_settings">الإعدادات</string>
-    <string name="nav_item_alarm">المنبه</string>
 
-    <string name="about_text">تطبيق AMARadio خالٍ تماماً من الإعلانات بنسبة 100٪ ويهتم بالخصوصية.\n\nلقد قمت بتطوير هذا التطبيق في الأصل لوالدتي لتزويدها بتجربة راديو بسيطة وصادقة دون إعلانات مزعجة أو تتبع. لهذا السبب سيبقى AMARadio دائماً خالياً من الإعلانات – هذا وعد لها، وأشاركه معكم جميعاً.\n\nهذا المشروع هو نسخة مشتقة (Fork) من التطبيق المتميز https://github.com/segler-alex/RadioDroid . تم نقل قاعدة الكود بالكامل من Java إلى Kotlin لضمان بقاء التطبيق حديثاً ومتوافقاً مع إصدارات أندرويد المستقبلية.\n\nكود المصدر متاح على: https://github.com/ounben/AMARadio\n\nيعتمد هذا التطبيق على دليل محطات الراديو المجاني المتاح على https://www.radio-browser.info .\nيمكن لأي شخص إضافة محطات إليه. فهو يعمل مثل ويكيبيديا لمحطات الراديو عبر الإنترنت.\n\nللتواصل: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nإذا كان البرنامج يعجبك وترغب في المساعدة، فلا تتردد في إرسال بريد إلكتروني إليّ.\nالأفكار للميزات الجديدة مرحب بها دائماً أيضاً!\n\nهذا التطبيق هو برنامج حر مرخص بموجب رخصة GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">تطبيق AMARadio خالٍ تماماً من الإعلانات بنسبة 100٪ ويهتم بالخصوصية.\n\nلقد قمت بتطوير هذا التطبيق في الأصل لوالدتي لتزويدها بتجربة راديو بسيطة وصادقة دون إعلانات مزعجة أو تتبع. لهذا السبب سيبقى AMARadio دائماً خالياً من الإعلانات – هذا وعد لها، وأشاركه معكم جميعاً.\n\nهذا المشروع هو نسخة مشتقة (Fork) من تطبيق RadioDroid المتميز. تم نقل قاعدة الكود بالكامل من Java إلى Kotlin لضمان بقاء التطبيق حديثاً ومتوافقاً مع إصدارات أندرويد المستقبل.\n\nيعتمد هذا التطبيق على دليل محطات الراديو المجاني المتاح على https://www.radio-browser.info .\nيمكن لأي شخص إضافة محطات إليه. فهو يعمل مثل ويكيبيديا لمحطات الراديو عبر الإنترنت.\n\nللتواصل: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nإذا كان البرنامج يعجبك وترغب في المساعدة، فلا تتردد في إرسال بريد إلكتروني إليّ.\nالأفكار للميزات الجديدة مرحب بها دائماً أيضاً!\n\nهذا التطبيق هو برنامج حر مرخص بموجب رخصة GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">الإصدار: %1$s</string>
     <string name="detail_star">إضافة إلى المفضلة</string>
     <string name="detail_unstar">حذف من المفضلة</string>
@@ -114,6 +124,9 @@
     <string name="settings_show_broken_off">عدم إظهار المحطات المعطلة في القوائم</string>
 
     <string name="settings_startup_behaviour">سلوك البدء</string>
+    <string name="action_grid_view">عرض الشبكة</string>
+    <string name="action_list_view">عرض القائمة</string>
+
     <string name="startup_action_title">إجراء البدء</string>
     <string name="startup_action_title_desc">%s</string>
     <string name="startup_show_all_stations">إظهار جميع المحطات</string>
@@ -129,13 +142,6 @@
     <string name="settings_auto_favorite_on">إضافة المحطات تلقائياً إلى المفضلة عند التشغيل</string>
     <string name="settings_auto_favorite_off">عدم إضافة المحطات تلقائياً إلى المفضلة عند التشغيل</string>
 
-    <string name="settings_alarm">المنبه</string>
-    <string name="settings_alarm_external">تمكين تطبيق خارجي</string>
-    <string name="settings_alarm_external_desc_on">فتح المنبه باستخدام التطبيق الخارجي الافتراضي</string>
-    <string name="settings_alarm_external_desc_off">فتح المنبه باستخدام AMARadio</string>
-    <string name="settings_alarm_audio_player">مشغل الصوت</string>
-    <string name="settings_alarm_sleep_timer">مؤقت النوم</string>
-    <string name="settings_alarm_sleep_timer_desc">إيقاف التشغيل بعد %1$s دقيقة</string>
     <string name="settings_play">المشغل</string>
     <string name="settings_auto_play_on_startup">التشغيل التلقائي</string>
     <string name="settings_auto_play_on_startup_on">تشغيل المحطة الأخيرة عند بدء التطبيق</string>
@@ -177,6 +183,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">الاستئناف عند اتصال البلوتوث</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">استئناف التشغيل عند اتصال جهاز Bluetooth A2DP</string>
 
+    <string name="settings_auto_resume_on_any_connected">الاستئناف عند أي اتصال</string>
+
     <string name="settings_warn_no_wifi">تحذير غياب الواي فاي</string>
     <string name="settings_warn_no_wifi_on">التحذير عند التشغيل بدون اتصال واي فاي</string>
     <string name="settings_warn_no_wifi_off">عدم التحذير عند عدم الاتصال بالواي فاي</string>
@@ -202,19 +210,10 @@
     <string name="yes">نعم</string>
     <string name="no">لا</string>
 
-    <string name="alert_select_mpd_server">يرجى تحديد خادم</string>
-    <string name="alert_select_mpd_server_name">اسم الخادم</string>
-    <string name="alert_select_mpd_server_password">كلمة مرور الخادم</string>
+    <string name="alert_select_player">يرجى اختيار مشغل</string>
+    <string name="alert_select_player_name">الاسم</string>
     <string name="hostname">اسم المضيف (Hostname)</string>
     <string name="port">المنفذ (Port)</string>
-
-    <string name="alert_select_mpd_server_add">إضافة</string>
-    <string name="alert_select_mpd_server_save">حفظ</string>
-    <string name="alert_select_mpd_server_remove">إزالة</string>
-    <string name="alert_add_or_edit_mpd_server">أدخل بيانات الخادم</string>
-    <string name="alert_alarm_working">حان وقت المنبه الآن</string>
-    <string name="alert_alarm_not_working">لا توجد معلومات كافية للمنبه</string>
-    <string name="alert_select_external_alarm_app">اختر مشغل الصوت</string>
 
     <string name="alert_press_back_to_exit">اضغط على زر الرجوع مرة أخرى للخروج</string>
 
@@ -255,22 +254,8 @@
     <string name="icon_click_trend_increasing">الشهرة تزداد</string>
     <string name="icon_click_trend_stable">الشهرة مستقرة</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">خالٍ من الإعلانات 100٪ وخاص</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">منفذ MPD</string>
-    <string name="settings_view_mpd_servers">الخوادم الخاصة بك</string>
-    <string name="action_mpd_nok">MPD غير متصل</string>
-    <string name="action_mpd_ok">MPD متصل</string>
-    <string name="action_mpd_connected">متصل بالخادم: %1$s</string>
-
-    <string name="mpd_no_connection">لا يوجد اتصال</string>
-    <string name="action_enable_mpd">تمكين MPD</string>
-    <string name="action_disable_mpd">تعطيل MPD</string>
-    <string name="action_add_mpd_server">إضافة خادم MPD</string>
 
     <string name="action_play_in_external">التشغيل في مشغل خارجي</string>
     <string name="action_choose_external_player">اختر مشغلاً خارجياً</string>
@@ -285,8 +270,6 @@
 
     <string name="description_btn_skip_to_next">الانتقال إلى التالي</string>
     <string name="description_btn_skip_to_previous">الانتقال إلى السابق</string>
-
-    <string name="description_btn_setup_alarm">ضبط المنبه</string>
 
     <string-array name="weekdays">
         <item>ح</item>
@@ -311,16 +294,30 @@
     <string name="nav_item_statistics">الإحصائيات</string>
     <string name="nav_item_about">حول التطبيق</string>
     <string name="refresh">تحديث</string>
-
-    <string name="alarm_backup">منبه بديل</string>
-    <string name="alarm_fallback_info">تم اعتماد منبه النظام نظراً لفشل تحميل محطة الراديو المحددة</string>
-    <string name="alarm_back_desc">يتم اعتماد منبه النظام البديل عندما تفشل محطة الراديو في التحميل</string>
+    <string name="action_filter">تصفية</string>
+    <string name="filter_country">البلد</string>
+    <string name="filter_tag">الوسم</string>
+    <string name="filter_language">اللغة</string>
+    <string name="filter_sort_by">فرز حسب</string>
+    <string name="filter_reverse">ترتيب عكسي</string>
+    <string name="filter_apply">تطبيق الفلتر</string>
+    <string name="sort_name">الاسم</string>
+    <string name="sort_votes">التصويتات</string>
+    <string name="sort_clicks">النقرات</string>
+    <string name="sort_lastchange">آخر تغيير</string>
+    <string name="filter_select_country">اختر بلداً</string>
+    <string name="filter_select_language">اختر لغة</string>
+    <string name="filter_type_tag">اكتب وسماً…</string>
+    <string name="filter_tap_to_configure">اضغط للضبط</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="alarm_backup">منبه بديل</string>
+    <string name="alarm_fallback_info">تم اعتماد منبه النظام نظراً لفشل تحميل محطة الراديو المحددة</string>
+    <string name="alarm_back_desc">يتم اعتماد منبه النظام البديل عندما تفشل محطة الراديو في التحميل</string>
 </resources>
