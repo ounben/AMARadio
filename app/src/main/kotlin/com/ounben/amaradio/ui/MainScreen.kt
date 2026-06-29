@@ -19,12 +19,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -71,8 +68,13 @@ fun MainScreen(
 
     var isPlayerExpanded by remember { mutableStateOf(false) }
     
-    val density = LocalDensity.current
-    var miniPlayerHeight by remember { mutableStateOf(110.dp) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = navBackStackEntry?.destination
+    val currentRoute = currentDestination?.route
+
+    // Fix: Identify if we are in Settings sub-screens
+    val isSettingsSubScreen = currentRoute == Screen.About.route || currentRoute == Screen.Statistics.route
+    val isSettingsActive = currentRoute == Screen.Settings.route || isSettingsSubScreen
 
     BackHandler(enabled = isPlayerExpanded) { isPlayerExpanded = false }
 
@@ -106,12 +108,11 @@ fun MainScreen(
                     onSaveClick = onSaveM3U,
                     onLoadClick = onLoadM3U,
                     onDeleteClick = { 
-                        val currentRoute = navController.currentBackStackEntry?.destination?.route
                         showDeleteConfirmDialog = if (currentRoute == Screen.Favourites.route) R.string.alert_delete_favorites else R.string.alert_delete_history 
                     },
                     onViewToggleClick = { mainViewModel.toggleGridView() },
                     isGridView = mainUiState.isGridView,
-                    isDeleteVisible = true,
+                    isDeleteVisible = currentRoute == Screen.Favourites.route || currentRoute == Screen.History.route,
                     deleteTitleRes = R.string.action_delete
                 )
             },
@@ -127,22 +128,28 @@ fun MainScreen(
                         windowInsets = WindowInsets(0, 0, 0, 0)
                     ) {
                         val items = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
-                        val navBackStackEntry by navController.currentBackStackEntryAsState()
-                        val currentDestination = navBackStackEntry?.destination
                         
                         items.forEach { screen ->
+                            val isSelected = if (screen == Screen.Settings) isSettingsActive 
+                                           else currentDestination?.hierarchy?.any { it.route == screen.route } == true
+
                             NavigationBarItem(
                                 icon = { Icon(screen.icon, contentDescription = stringResource(screen.titleRes)) },
-                                selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
+                                selected = isSelected,
                                 onClick = {
-                                    isPlayerExpanded = false
-                                    if (screen == Screen.Stations) mainViewModel.setStationsInitialTab(0)
-                                    navController.navigate(screen.route) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
+                                    if (screen == Screen.Settings && isSettingsSubScreen) {
+                                        // Jump back to main settings if on sub-screen
+                                        navController.popBackStack(Screen.Settings.route, false)
+                                    } else {
+                                        isPlayerExpanded = false
+                                        if (screen == Screen.Stations) mainViewModel.setStationsInitialTab(0)
+                                        navController.navigate(screen.route) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
                                         }
-                                        launchSingleTop = true
-                                        restoreState = true
                                     }
                                 },
                                 colors = NavigationBarItemDefaults.colors(
@@ -157,12 +164,13 @@ fun MainScreen(
                 }
             }
         ) { innerPadding ->
-            BoxWithConstraints(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-                val availableHeight = this.maxHeight
+            Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                // Fixed bottom padding to avoid measurement loops during scrolling
+                val contentBottomPadding = 110.dp 
                 
                 if (mainUiState.isSearching) {
                     Surface(
-                        modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) miniPlayerHeight else 0.dp),
+                        modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) contentBottomPadding else 0.dp),
                         color = MaterialTheme.colorScheme.background
                     ) {
                         if (searchUiState.isSearching && searchUiState.results.isEmpty()) {
@@ -198,7 +206,7 @@ fun MainScreen(
                     NavHost(
                         navController = navController,
                         startDestination = Screen.Stations.route,
-                        modifier = Modifier.fillMaxSize().padding(bottom = miniPlayerHeight)
+                        modifier = Modifier.fillMaxSize().padding(bottom = contentBottomPadding)
                     ) {
                         composable(Screen.Stations.route) {
                             TabsScreen(
@@ -265,22 +273,21 @@ fun MainScreen(
                                 batterySummary = ""
                             )
                         }
-                        composable(Screen.About.route) { AboutScreen() }
+                        composable(Screen.About.route) { AboutScreen { navController.popBackStack() } }
                         composable(Screen.Statistics.route) { 
                             val viewModel: ServerInfoViewModel = viewModel()
-                            ServerInfoScreen(viewModel = viewModel)
+                            ServerInfoScreen(viewModel = viewModel) { navController.popBackStack() }
                         }
                     }
                 }
 
                 // MiniPlayer / FullPlayer Container
-                // Always visible to prevent "empty placeholder" gap at the bottom
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .then(
                             if (isPlayerExpanded && playerUiState.currentStation != null) 
-                                Modifier.height(availableHeight)
+                                Modifier.fillMaxHeight()
                             else 
                                 Modifier.wrapContentHeight()
                         )
@@ -313,13 +320,7 @@ fun MainScreen(
                             onToggleBottomSheet = { 
                                 if (playerUiState.currentStation != null) isPlayerExpanded = true 
                             },
-                            onMoreClick = { },
-                            modifier = Modifier.onSizeChanged { size ->
-                                val h = with(density) { size.height.toDp() }
-                                if (h != miniPlayerHeight) {
-                                    miniPlayerHeight = h
-                                }
-                            }
+                            onMoreClick = { }
                         )
                     }
                 }
