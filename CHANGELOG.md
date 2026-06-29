@@ -4,9 +4,26 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
+
+## [0.99.4] - 2026-06-30
 ### Added
+- **Language Support**:
+    - Added full support for **Hindi (hi)** with a complete translation of all app features.
+    - Completed and updated the **Arabic (ar)** translation.
+- **Visual Branding**:
+    - Updated the Splash Screen with the brand's Amber color for the "AMARadio" title.
+    - Added the version number to the Splash Screen for easier identification.
+    - Modernized the logo presentation with rounded corners in both the Splash Screen and the main Toolbar.
+- **Improved Navigation**:
+    - Added a dedicated Back button to the Statistics and About screens within the settings.
+    - Optimized the bottom navigation behavior: clicking "Settings" while in a sub-screen now returns you directly to the main settings menu.
 - **Play Integrity Migration**: Replaced the deprecated SafetyNet Attestation API with the modern **Play Integrity API**. This ensures long-term support for device and app integrity checks.
 - **System Privacy Compliance**: Added formal `attributionTag` declaration in the manifest and implemented `AttributionContext` for all media operations. This resolves system-level "attributionTag not declared" errors on modern Android versions (API 31+).
+
+### Fixed
+- **Player Stability**: Resolved a race condition where the player would occasionally stop immediately after starting a new station. The "Idle" state from a stopping station no longer interferes with the "PrePlaying" state of a new one.
+- **Audio Focus Management**: Hardened the audio focus logic to ensure AMARadio reliably stops when other media apps (like YouTube or TikTok) start playing. 
+- **Automatic Media Handling**: Enabled modern Media3 automatic focus management, providing a more consistent behavior when competing with system sounds or other media players.
 
 ### Changed
 - **Translation Maintenance**:
@@ -14,10 +31,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
     - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
     - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
-
-### Fixed
-- **Audio Focus Management**: Hardened the audio focus logic to ensure AMARadio reliably stops when other media apps (like YouTube or TikTok) start playing. 
-- **Automatic Media Handling**: Enabled modern Media3 automatic focus management, providing a more consistent behavior when competing with system sounds or other media players.
 
 ## [0.99.3] - 2026-06-29
 ### Changed

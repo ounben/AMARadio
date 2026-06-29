@@ -49,8 +49,8 @@ android {
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 109
-        versionName "0.99.3"
+        versionCode 110
+        versionName "0.99.4"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -59,7 +59,7 @@ android {
         }
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
-        resValue 'string', 'version_name', "0.99.3"
+        resValue 'string', 'version_name', "0.99.4"
         resValue 'string', 'git_hash', "N/A"
         resValue 'string', 'build_date', new Date().format('yyyy-MM-dd HH:mm:ss')
 
