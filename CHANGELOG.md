@@ -5,6 +5,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 ### Added
+- **Play Integrity Migration**: Replaced the deprecated SafetyNet Attestation API with the modern **Play Integrity API**. This ensures long-term support for device and app integrity checks.
 - **System Privacy Compliance**: Added formal `attributionTag` declaration in the manifest and implemented `AttributionContext` for all media operations. This resolves system-level "attributionTag not declared" errors on modern Android versions (API 31+).
 
 ### Fixed

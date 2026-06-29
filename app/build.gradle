@@ -142,8 +142,8 @@ dependencies {
     implementation libs.androidx.paging.runtime
     implementation libs.androidx.paging.compose
 
-    // Google Cast & SafetyNet
-    implementation libs.play.services.safetynet
+    // Google Cast & Integrity
+    implementation libs.play.services.integrity
 
     testImplementation libs.junit
     testImplementation libs.junit.jupiter
