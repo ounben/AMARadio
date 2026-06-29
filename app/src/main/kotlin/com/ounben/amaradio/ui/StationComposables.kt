@@ -205,8 +205,8 @@ fun TrackListItem(
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            val headline = if (track.title.isNotEmpty()) track.title else track.track
-            val subline = if (track.title.isNotEmpty()) track.artist else ""
+            val headline = track.track.ifEmpty { track.title }
+            val subline = if (track.track.isNotEmpty()) track.artist else ""
 
             Text(
                 text = headline,
