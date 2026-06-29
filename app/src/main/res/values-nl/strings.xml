@@ -329,6 +329,7 @@
     <string name="filter_select_country">Selecteer land</string>
     <string name="filter_select_language">Selecteer taal</string>
     <string name="filter_type_tag">Typ label…</string>
+    <string name="filter_tap_to_configure">Tik om te configureren</string>
 
     <string name="alarm_backup">Reserve-alarm</string>
     <string name="alarm_fallback_info">Systeemalarm gebruikt omdat het geselecteerde radiostation niet kon worden geladen</string>

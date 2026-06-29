@@ -260,18 +260,6 @@
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% werbefrei &amp; privat</string>
 
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">MPD Port</string>
-    <string name="settings_view_mpd_servers">Deine Server</string>
-    <string name="action_mpd_nok">MPD nicht verbunden</string>
-    <string name="action_mpd_ok">MPD verbunden</string>
-    <string name="action_mpd_connected">Verbunden mit Server: %1$s</string>
-
-    <string name="mpd_no_connection">Keine Verbindung</string>
-    <string name="action_enable_mpd">MPD aktivieren</string>
-    <string name="action_disable_mpd">MPD deaktivieren</string>
-    <string name="action_add_mpd_server">MPD Server hinzufügen</string>
-
     <string name="action_play_in_external">Mit externem Player abspielen</string>
     <string name="action_choose_external_player">Externen Player wählen</string>
 
@@ -323,6 +311,7 @@
     <string name="filter_select_country">Land wählen</string>
     <string name="filter_select_language">Sprache wählen</string>
     <string name="filter_type_tag">Tag eingeben…</string>
+    <string name="filter_tap_to_configure">Tippen zum Konfigurieren</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

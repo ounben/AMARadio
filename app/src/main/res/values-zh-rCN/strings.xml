@@ -264,18 +264,6 @@
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% 无广告且隐私</string>
 
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">MPD 端口</string>
-    <string name="settings_view_mpd_servers">您的服务器</string>
-    <string name="action_mpd_nok">MPD 未连接</string>
-    <string name="action_mpd_ok">MPD 已连接</string>
-    <string name="action_mpd_connected">已连接到服务器：%1$s</string>
-
-    <string name="mpd_no_connection">未连接</string>
-    <string name="action_enable_mpd">启用 MPD</string>
-    <string name="action_disable_mpd">停用 MPD</string>
-    <string name="action_add_mpd_server">添加 MPD 服务器</string>
-    
     <string name="action_play_in_external">使用外部播放器播放</string>
     <string name="action_choose_external_player">选择外部播放器</string>
 
@@ -331,15 +319,10 @@
     <string name="filter_select_language">选择语言</string>
     <string name="filter_type_tag">输入标签…</string>
 
-    <string name="alarm_backup">备用闹钟</string>
-    <string name="alarm_fallback_info">所选电台载入失败，已使用系统闹钟</string>
-    <string name="alarm_back_desc">当电台载入失败时使用的备用系统闹钟</string>
-
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>

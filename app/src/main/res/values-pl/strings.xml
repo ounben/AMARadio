@@ -325,6 +325,7 @@
     <string name="filter_select_country">Wybierz kraj</string>
     <string name="filter_select_language">Wybierz język</string>
     <string name="filter_type_tag">Wpisz tag…</string>
+    <string name="filter_tap_to_configure">Dotknij, aby skonfigurować</string>
 
     <string name="alarm_backup">Alarm zapasowy</string>
     <string name="alarm_fallback_info">Uruchomiono alarm systemowy, ponieważ wybrana stacja radiowa nie została załadowana</string>

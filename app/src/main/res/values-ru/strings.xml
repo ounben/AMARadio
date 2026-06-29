@@ -16,7 +16,6 @@
     <string name="action_links">Ссылки</string>
     <string name="action_homepage">Главная страница</string>
     <string name="action_favorite">Избранное</string>
-    <string name="action_alarm">Будильник</string>
 
     <string name="action_station_visit_website">Посетить веб-сайт</string>
     <string name="action_station_copy_stream_url">Копировать URL потока</string>
@@ -54,7 +53,6 @@
     <string name="nav_item_starred">Избранное</string>
     <string name="nav_item_history">История</string>
     <string name="nav_item_settings">Настройки</string>
-    <string name="nav_item_alarm">Будильник</string>
 
     <string name="about_text">AMARadio на 100% свободно от рекламы и ориентировано на конфиденциальность.\n\nИзначально я разработал это приложение для своей мамы, чтобы обеспечить ей простой и честный радио-опыт без раздражающей рекламы и слежки. Вот почему AMARadio всегда будет оставаться бесплатным – это обещание ей, которым я делюсь со всеми вами.\n\nЭтот проект является форком отличного https://github.com/segler-alex/RadioDroid . Весь код был перенесен с Java на Kotlin, чтобы приложение оставалось современным и совместимым с будущими версиями Android.\n\nИсходный код доступен по адресу: https://github.com/ounben/AMARadio\n\nЭто приложение использует свободную базу станций на https://www.radio-browser.info .\nКаждый может добавить станцию. База работает как вики для онлайн радиостанций.\n\nКонтакты: ben@ounben.com\n\nБаг-трекер: https://github.com/ounben/AMARadio/issues\n\nЕсли вам понравилось программное обеспечение и вы хотите помочь, напишите мне.\nИдеи для новых функций также всегда приветствуются!\n\nЭто свободное программное обеспечение, лицензированное под GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Версия: %1$s</string>
@@ -132,13 +130,6 @@
     <string name="settings_auto_favorite_on">Автоматически добавлять в избранное при воспроизведении</string>
     <string name="settings_auto_favorite_off">Не добавлять в избранное автоматически при воспроизведении</string>
 
-    <string name="settings_alarm">Будильник</string>
-    <string name="settings_alarm_external">Использовать внешнее приложение</string>
-    <string name="settings_alarm_external_desc_on">Открывать будильник внешним приложением по умолчанию</string>
-    <string name="settings_alarm_external_desc_off">Открывать будильник в AMARadio</string>
-    <string name="settings_alarm_audio_player">Аудиоплеер</string>
-    <string name="settings_alarm_sleep_timer">Таймер сна</string>
-    <string name="settings_alarm_sleep_timer_desc">Остановить воспроизведение через %1$s мин.</string>
     <string name="settings_play">Плеер</string>
     <string name="settings_auto_play_on_startup">Автозапуск</string>
     <string name="settings_auto_play_on_startup_on">Играть последнюю станцию при запуске</string>
@@ -205,20 +196,6 @@
     <string name="yes">Да</string>
     <string name="no">Нет</string>
 
-    <string name="alert_select_mpd_server">Пожалуйста, выберите сервер</string>
-    <string name="alert_select_mpd_server_name">Имя сервера</string>
-    <string name="alert_select_mpd_server_password">Пароль сервера</string>
-    <string name="hostname">Имя хоста</string>
-    <string name="port">Порт</string>
-
-    <string name="alert_select_mpd_server_add">Добавить</string>
-    <string name="alert_select_mpd_server_save">Сохранить</string>
-    <string name="alert_select_mpd_server_remove">Удалить</string>
-    <string name="alert_add_or_edit_mpd_server">Введите данные сервера</string>
-    <string name="alert_alarm_working">Время будильника</string>
-    <string name="alert_alarm_not_working">Недостаточно данных для будильника</string>
-    <string name="alert_select_external_alarm_app">Выберите аудиоплеер</string>
-
     <string name="alert_press_back_to_exit">Нажмите «Назад» ещё раз для выхода</string>
 
     <string name="error_stream_url">Ошибка URL потока</string>
@@ -263,18 +240,6 @@
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% без рекламы и приватно</string>
 
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Порт MPD</string>
-    <string name="settings_view_mpd_servers">Ваши серверы</string>
-    <string name="action_mpd_nok">MPD не подключен</string>
-    <string name="action_mpd_ok">MPD подключен</string>
-    <string name="action_mpd_connected">Подключен к серверу: %1$s</string>
-
-    <string name="mpd_no_connection">Нет соединения</string>
-    <string name="action_enable_mpd">Включить MPD</string>
-    <string name="action_disable_mpd">Выключить MPD</string>
-    <string name="action_add_mpd_server">Добавить сервер MPD</string>
-
     <string name="action_play_in_external">Играть во внешнем плеере</string>
     <string name="action_choose_external_player">Выбрать внешний плеер</string>
 
@@ -288,8 +253,6 @@
 
     <string name="description_btn_skip_to_next">Перейти к следующему</string>
     <string name="description_btn_skip_to_previous">Перейти к предыдущему</string>
-
-    <string name="description_btn_setup_alarm">Установить будильник</string>
 
     <string-array name="weekdays">
         <item>Вс</item>
@@ -329,15 +292,10 @@
     <string name="filter_select_language">Выбрать язык</string>
     <string name="filter_type_tag">Введите тег…</string>
 
-    <string name="alarm_backup">Резервный будильник</string>
-    <string name="alarm_fallback_info">Используется системный будильник, так как не удалось загрузить выбранную радиостанцию</string>
-    <string name="alarm_back_desc">Резервный системный будильник при ошибке загрузки станции</string>
-
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>

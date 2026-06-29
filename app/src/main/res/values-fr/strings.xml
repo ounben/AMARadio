@@ -264,18 +264,6 @@
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% sans publicité &amp; Privé</string>
 
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Port MPD</string>
-    <string name="settings_view_mpd_servers">Vos serveurs</string>
-    <string name="action_mpd_nok">MPD non connecté</string>
-    <string name="action_mpd_ok">MPD connecté</string>
-    <string name="action_mpd_connected">Connecté au serveur : %1$s</string>
-
-    <string name="mpd_no_connection">Pas de connexion</string>
-    <string name="action_enable_mpd">Activer MPD</string>
-    <string name="action_disable_mpd">Désactiver MPD</string>
-    <string name="action_add_mpd_server">Ajouter un serveur MPD</string>
-
     <string name="action_play_in_external">Lire dans un lecteur externe</string>
     <string name="action_choose_external_player">Choisir un lecteur externe</string>
 
@@ -329,16 +317,12 @@
     <string name="filter_select_country">Sélectionner le pays</string>
     <string name="filter_select_language">Sélectionner la langue</string>
     <string name="filter_type_tag">Saisir l\'étiquette…</string>
-
-    <string name="alarm_backup">Alarme de secours</string>
-    <string name="alarm_fallback_info">Alarme système adoptée car la station de radio sélectionnée n\'a pas pu être chargée</string>
-    <string name="alarm_back_desc">Système d\'alarme alternatif adopté lorsque la station de radio ne se charge pas</string>
+    <string name="filter_tap_to_configure">Appuyer pour configurer</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>

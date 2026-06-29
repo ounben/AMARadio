@@ -8,11 +8,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Play Integrity Migration**: Replaced the deprecated SafetyNet Attestation API with the modern **Play Integrity API**. This ensures long-term support for device and app integrity checks.
 - **System Privacy Compliance**: Added formal `attributionTag` declaration in the manifest and implemented `AttributionContext` for all media operations. This resolves system-level "attributionTag not declared" errors on modern Android versions (API 31+).
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Audio Focus Management**: Hardened the audio focus logic to ensure AMARadio reliably stops when other media apps (like YouTube or TikTok) start playing. 
 - **Automatic Media Handling**: Enabled modern Media3 automatic focus management, providing a more consistent behavior when competing with system sounds or other media players.
 
 ## [0.99.3] - 2026-06-29
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Stream Compatibility**: Implemented a robust playlist resolver that automatically handles `.m3u` and `.pls` files. This fixes playback for many stations (e.g., SRF Musikwelle) that were previously failing with container errors.
 - **Clean Audio Engine**: Rewrote the ICY metadata filter to be byte-accurate. By stripping metadata before it reaches the player and hiding the `icy-metaint` header from ExoPlayer, we've eliminated the "start-stop" stuttering and "UnrecognizedInputFormatException" errors.
@@ -37,6 +51,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Decoupled playback start from background storage tasks (History/Favorites) for a faster "Play" response.
 - **Data Resilience**: Implemented a "lightweight copy" mechanism for inter-process communication to prevent `TransactionTooLargeException` crashes when handling stations with extensive metadata or Chinese characters.
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Favorites Management**: Fully restored and modernized the Favorites Import/Export (M3U) functionality with support for large lists and UTF-8 encoding.
 - **Stability**: 
@@ -60,6 +81,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Replaced inefficient `notifyDataSetChanged()` calls with `DiffUtil` in `ItemAdapterStation` and `ItemAdapterCategory`, resulting in smoother animations and better list performance.
     - Optimized connectivity checks by removing legacy `BroadcastReceiver` logic in favor of the modern `NetworkCallback` API.
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Stability & Cleanliness**:
     - Resolved over 50 lint warnings, including redundant safe calls, unnecessary non-null assertions, and qualified names.
@@ -78,6 +106,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Changed
 - **Sturdier Buffer Management**: Significantly increased player buffers (50s min, 100s max) and enabled `setPrioritizeTimeOverSizeThresholds`. This provides much better stability on devices with aggressive CPU throttling (Xiaomi/Oplus).
 - **Persistent Media Resources**: The player now keeps hardware resources (MediaCodec, AudioTrack) active during temporary buffering or idle states, preventing the "clicks" and silence gaps caused by hardware re-initialization.
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - **Stability Fixes**:
@@ -100,6 +135,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Privacy Audit**: Completed a full audit of app permissions and dependencies. Verified that the app is 100% Java-free and utilizes only essential permissions.
 - **Notification Refinement**: Set the notification category to `CATEGORY_TRANSPORT` for improved system-level media handling.
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Foreground Service Compliance**: Optimized the service start logic to strictly comply with Android 15+ background start restrictions, preventing potential crashes when starting playback.
 - **Alarm Logic**: Cleaned up legacy `AlarmManager` checks to ensure seamless operation on API 33-36 without unnecessary user prompts.
@@ -108,6 +150,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Added
 - **AndroidX Media3 Migration**: Completed the transition of the entire media playback and session architecture to the modern Media3 framework.
 - **Library Browser**: Re-implemented the Media Library Service to support improved media browsing and Android Auto integration.
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - **Type Safety**: Resolved several generic and type-related compilation errors in the service layer.
@@ -126,6 +175,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **System UI**: Implemented `enableEdgeToEdge` with a forced white status bar style for consistent high contrast across all themes.
 - **Unified Station Icons**: Standardized the radio placeholder icon to a consistent light gray and unified the loading logic to prevent flickering or incorrect images when scrolling.
 - **Service Management**: Optimized the background service to promote itself to the foreground only when active, improving battery life and system compliance.
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - **Stability**: 
@@ -159,6 +215,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Compacted icon spacing for a cleaner look on all screen sizes.
 - **System Integration**: Fixed layout issues where the app was partially covered by system bars (YouTube-style). The toolbar now remains fixed at the top for a smoother scrolling experience.
 - **Navigation Icon**: Updated the stations list icon in the bottom menu to a radio symbol for better clarity.
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - **Search Reliability**: Resolved an issue where specific stations (like "Tlemcen") were buried by mid-word matches. Search results are now intelligently ranked.
@@ -218,6 +281,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Favoriting stations is now exclusively handled by the dedicated star icon to prevent accidental triggers.
     - Standardized all settings icons to a uniform size (24dp).
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Settings Stability**: Fixed issues where selection menus (Theme, UI Scaling) would not appear on certain devices.
 - **UI Scaling**: Improved the reliability of the "recreate" logic when changing UI scale or themes, preventing potential app freezes.
@@ -236,6 +306,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - **Android SDK Update**: Now targeting Android 15 (API 37) to ensure maximum security and support for new devices.
 - **Code Modernization**: Replaced deprecated navigation and back-button logic with modern Android Architecture components (`OnBackPressedDispatcher`).
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - **Build System**: Resolved several compilation errors and warnings related to library updates and Kotlin 1.9 compatibility.
 - **Stability**: Fixed potential crashes when handling intents and improved null-safety in the ExoPlayer wrapper.
@@ -251,6 +328,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Improved cursor visibility using the app's accent color in input fields.
 - **User Experience**: Station images now act as play buttons, while the star icon exclusively handles favorites to prevent accidental removals.
 - **Placeholders**: Added placeholder icons for stations without logos to ensure a stable and consistent layout.
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - **Settings**: Fixed the "About AMARadio" link in settings which was previously non-responsive.
@@ -270,6 +354,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Documentation: Major update to GitHub README with store badges and clearer info.
 - Standards: Uniform project structure and file naming for better GitHub Workflow compatibility.
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - Connectivity: Resolved a loop issue with metered connection warnings on mobile data.
 - UI Layout: Fixed small player being partially covered by the system navigation bar.
@@ -285,6 +376,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Sorting of entries from loaded files is now the same as the file
 
 ## [0.85] - 2023-09-27
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - Building works again
 - File dialog on android 13 uses system dialog and works now
@@ -306,6 +404,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Very basic android TV support
 - LastFM Api key changeable by user in settings menu
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - Recording in android 10
 - Correctly display audio players in list of external play
@@ -317,6 +422,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - "Remove from favorites" usability
 - Track history with icons disabled (#774)
 
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - Added fallback if dns resolve does not return anything
 - Fix state updating of record button (#785)
@@ -324,6 +436,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - Start recording after storage permissions are granted (#783)
 
 ## [0.82] - 2020-03-07
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
+
 ### Fixed
 - Audio focus on pause
 - Sudden stop of playback after it beeing resumed after connection loss
@@ -334,6 +453,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.81] - 2020-03-03
 ### Added
 - Export history to m3u
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - Make sure all.api.radio-browser.info is not used directly
@@ -359,6 +485,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 - History of the played tracks
 - Stations search now shows results as you type
 - Option to resume on wired or bluetooth device reconnection
+
+### Changed
+- **Translation Maintenance**:
+    - Performed a comprehensive cleanup of localized strings across all languages, removing obsolete entries for retired features (MPD, Alarm Clock, Recording).
+    - Fully modernized the **Basque (eu)** translation, bringing it up to date with all recent UI features and settings.
+    - Standardized resource naming across the project, ensuring all languages use `strings.xml` consistency.
+    - Replaced manual "..." with proper ellipsis characters in several language files for better typography.
 
 ### Fixed
 - Connection issues with android 4 for most people

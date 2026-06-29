@@ -264,18 +264,6 @@
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% livre de publicidade e privado</string>
 
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Porta MPD</string>
-    <string name="settings_view_mpd_servers">Seus servidores</string>
-    <string name="action_mpd_nok">MPD não conectado</string>
-    <string name="action_mpd_ok">MPD conectado</string>
-    <string name="action_mpd_connected">Conectado ao servidor: %1$s</string>
-
-    <string name="mpd_no_connection">Sem conexão</string>
-    <string name="action_enable_mpd">Ativar MPD</string>
-    <string name="action_disable_mpd">Desativar MPD</string>
-    <string name="action_add_mpd_server">Adicionar servidor MPD</string>
-
     <string name="action_play_in_external">Reproduzir no app externo</string>
     <string name="action_choose_external_player">Escolha um app externo</string>
 
@@ -329,16 +317,12 @@
     <string name="filter_select_country">Selecionar país</string>
     <string name="filter_select_language">Selecionar idioma</string>
     <string name="filter_type_tag">Digite a etiqueta…</string>
-
-    <string name="alarm_backup">Alarme de reserva</string>
-    <string name="alarm_fallback_info">Alarme do sistema usado porque a rádio selecionada falhou ao carregar</string>
-    <string name="alarm_back_desc">Alarme do sistema alternativo usado quando a rádio não carrega</string>
+    <string name="filter_tap_to_configure">Toque para configurar</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>
