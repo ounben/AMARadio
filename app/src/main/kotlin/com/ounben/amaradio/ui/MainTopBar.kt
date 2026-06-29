@@ -1,8 +1,8 @@
 package com.ounben.amaradio.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -12,15 +12,15 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.rememberAsyncImagePainter
 import com.ounben.amaradio.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,11 +65,13 @@ fun MainTopBar(
                     )
                 } else {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Image(
-                            painter = rememberAsyncImagePainter(R.drawable.ic_cat_face),
+                        Icon(
+                            painter = painterResource(R.drawable.ic_cat_face),
                             contentDescription = null,
-                            modifier = Modifier.size(32.dp),
-                            contentScale = ContentScale.Fit
+                            modifier = Modifier
+                                .size(32.dp)
+                                .clip(RoundedCornerShape(8.dp)),
+                            tint = Color.Unspecified
                         )
                         Spacer(modifier = Modifier.width(12.dp))
                         Text(
