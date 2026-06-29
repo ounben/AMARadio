@@ -340,7 +340,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun playCurrentStation() {
         val station = itsCurrentStation
         if (station != null) {
-            val displayTitle = if (liveInfo.hasArtistAndTrack()) "${liveInfo.artist} - ${liveInfo.track}" else liveInfo.title.ifEmpty { station.Name }
+            val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
             updateMetadata(station, displayTitle)
         }
         
@@ -677,7 +677,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun updateMetadata() {
         val station = itsCurrentStation ?: return
-        val displayTitle = if (liveInfo.hasArtistAndTrack()) "${liveInfo.artist} - ${liveInfo.track}" else liveInfo.title.ifEmpty { station.Name }
+        val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
         updateMetadata(station, displayTitle)
     }
 

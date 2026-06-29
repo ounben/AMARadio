@@ -2,6 +2,8 @@ package com.ounben.amaradio.ui
 
 import android.content.Context
 import android.telephony.TelephonyManager
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
@@ -13,6 +15,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -64,13 +67,27 @@ fun TabsScreen(
         }
     }
 
+    // Auto-scroll to new tab when added
+    var lastTabCount by remember { mutableIntStateOf(tabs.size) }
+    LaunchedEffect(tabs.size) {
+        if (tabs.size > lastTabCount) {
+            pagerState.animateScrollToPage(tabs.size - 1)
+        }
+        lastTabCount = tabs.size
+    }
+
     Column(modifier = Modifier.fillMaxSize()) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(MaterialTheme.colorScheme.secondary),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
             ScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = Modifier.weight(1f),
                 edgePadding = 16.dp,
-                containerColor = MaterialTheme.colorScheme.secondary,
+                containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onSecondary,
                 indicator = { tabPositions ->
                     if (pagerState.currentPage < tabPositions.size) {
@@ -108,20 +125,14 @@ fun TabsScreen(
             }
 
             if (filterState.tabs.size < 5) {
-                IconButton(
-                    onClick = { 
-                        filterViewModel.addTab()
-                        coroutineScope.launch {
-                            val lastFilterIndex = tabs.indexOfLast { it is MainTab.Filter }
-                            if (lastFilterIndex != -1) {
-                                pagerState.animateScrollToPage(lastFilterIndex + 1)
-                            }
-                        }
-                    },
-                    colors = IconButtonDefaults.iconButtonColors(contentColor = MaterialTheme.colorScheme.onSecondary)
-                ) {
-                    Icon(Icons.Default.Add, contentDescription = "Add Filter")
-                }
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "Add Filter",
+                    tint = AmaradioAmber,
+                    modifier = Modifier
+                        .clickable { filterViewModel.addTab() }
+                        .padding(16.dp)
+                )
             }
         }
 

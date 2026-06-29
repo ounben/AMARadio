@@ -205,20 +205,21 @@ fun TrackListItem(
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            val headline = track.track.ifEmpty { track.title }
-            val subline = if (track.track.isNotEmpty()) track.artist else ""
+            // Desired format: Line 1 = Title, Line 2 = Artist
+            val displayTitle = track.track.ifBlank { track.title }
+            val displayArtist = if (track.track.isNotBlank()) track.artist else ""
 
             Text(
-                text = headline,
+                text = displayTitle,
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
                 color = MaterialTheme.colorScheme.onSurface
             )
-            if (subline.isNotEmpty()) {
+            if (displayArtist.isNotBlank() && displayArtist != displayTitle) {
                 Text(
-                    text = subline,
+                    text = displayArtist,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,

@@ -26,11 +26,18 @@ class StreamLiveInfo(
     private fun updateFromMetadata() {
         rawMetadata?.let {
             if (it.containsKey("StreamTitle")) {
-                title = it["StreamTitle"] ?: ""
-                if (!TextUtils.isEmpty(title)) {
-                    val artistAndTrack = title.split(" - ".toRegex(), 2).toTypedArray()
-                    artist = artistAndTrack[0]
-                    track = if (artistAndTrack.size == 2) artistAndTrack[1] else ""
+                val fullTitle = it["StreamTitle"] ?: ""
+                title = fullTitle
+                if (fullTitle.isNotEmpty()) {
+                    // Split by common separators: " - ", " – ", " : ", " by "
+                    val parts = fullTitle.split(Regex(" [-–:] | by ", RegexOption.IGNORE_CASE), 2)
+                    if (parts.size == 2) {
+                        artist = parts[0].trim()
+                        track = parts[1].trim()
+                    } else {
+                        artist = "" // Clear fallback to avoid duplication
+                        track = fullTitle.trim()
+                    }
                 }
             }
         }
