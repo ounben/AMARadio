@@ -20,6 +20,7 @@ import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.HttpDataSource
 import androidx.media3.datasource.TransferListener
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
@@ -86,10 +87,21 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
             .build()
 
+        val loadControl = DefaultLoadControl.Builder()
+            .setBufferDurationsMs(
+                5000,  // Min buffer: 5s
+                15000, // Max buffer: 15s
+                1000,  // Buffer for playback: 1s
+                2000   // Buffer for playback after rebuffer: 2s
+            )
+            .setPrioritizeTimeOverSizeThresholds(true)
+            .build()
+
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
-            .setAudioAttributes(audioAttributes, true)
+            .setAudioAttributes(audioAttributes, false) // Handle focus manually in PlayerService
             .setWakeMode(C.WAKE_MODE_NETWORK)
+            .setLoadControl(loadControl)
             .build()
         
         internalPlayer.addListener(PlayerEventListener())

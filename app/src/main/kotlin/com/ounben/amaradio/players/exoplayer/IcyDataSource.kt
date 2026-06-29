@@ -37,10 +37,12 @@ class IcyDataSource(
 
     private var dataSpec: DataSpec? = null
     private var responseBody: ResponseBody? = null
+    private var byteStream: java.io.InputStream? = null
     private var responseHeaders: Map<String, List<String>> = HashMap()
     private var opened = false
     private var shoutcastInfo: ShoutcastInfo? = null
 
+    private var lastMetadataString: String? = null
     private var bytesUntilMetadata = Int.MAX_VALUE
     private var metadataBytesToRead = 0
     private var metadataBuffer = ByteArray(4096)
@@ -92,6 +94,7 @@ class IcyDataSource(
         }
 
         responseBody = response.body
+        byteStream = responseBody?.byteStream()
         responseHeaders = response.headers.toMultimap()
         
         opened = true
@@ -118,8 +121,11 @@ class IcyDataSource(
             opened = false
             dataSpec?.let { transferListener.onTransferEnd(this, it, true) }
         }
+        byteStream?.closeQuietly()
+        byteStream = null
         responseBody?.closeQuietly()
         responseBody = null
+        lastMetadataString = null
     }
 
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
@@ -127,7 +133,7 @@ class IcyDataSource(
         if (readLength == 0) return 0
         
         try {
-            val stream = responseBody?.byteStream() ?: return -1
+            val stream = byteStream ?: return -1
             
             while (true) {
                 if (metadataBytesToRead > 0) {
@@ -140,6 +146,7 @@ class IcyDataSource(
                         metadataBytesToRead = 0
                         bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
                     }
+                    if (read == 0) return 0 // Don't loop infinitely on 0-byte reads
                     continue
                 }
 
@@ -172,6 +179,8 @@ class IcyDataSource(
                     dataSourceListener.onDataSourceBytesRead(buffer, offset, bytesRead)
                     return bytesRead
                 }
+                
+                if (bytesRead == 0) return 0 // Handle non-blocking 0-byte reads
             }
         } catch (e: IOException) {
             throw HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_READ)
@@ -183,7 +192,8 @@ class IcyDataSource(
     private fun parseMetadata(buffer: ByteArray, length: Int) {
         try {
             val metadataString = String(buffer, 0, length, Charsets.UTF_8).trim()
-            if (metadataString.isEmpty()) return
+            if (metadataString.isEmpty() || metadataString == lastMetadataString) return
+            lastMetadataString = metadataString
             
             val metadataMap = HashMap<String, String>()
             val regex = Regex("(\\w+)='([^']*)'")

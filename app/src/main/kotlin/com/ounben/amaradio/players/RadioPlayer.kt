@@ -36,6 +36,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private var streamName: String? = null
     private val playerThreadHandler: Handler
     private var playerListener: PlayerListener? = null
+    @Volatile
     var playState = PlayState.Idle
         private set
     
@@ -47,6 +48,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private fun reinit() {
         if (Utils.isDebug) Log.d(TAG, "Re-initializing Player to ensure fresh native state")
         // Führe release() aus, um native Ressourcen (Codecs, Threads) sauber abzubauen
+        currentPlayer.setStateListener(null)
         currentPlayer.release()
         
         // Wir bauen den Player-Wrapper neu auf
@@ -105,10 +107,13 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun play(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
-        // Breche alle laufenden Aktivitäten (Tasks und aktuelles Playback) sofort ab,
-        // um den hängenden Puffer-Vorgang des vorherigen Senders zu beenden.
-        stop()
-
+        // 1. Cancel running link tasks immediately
+        cancelStationLinkRetrieval()
+        
+        // 2. We don't call stop() here to avoid asynchronous Idle state switches 
+        // that could interfere with the new playback. reinit() will release 
+        // the old player resources.
+        
         reconnectAttempts = 0
         stationLoadAttempts = 0
         currentStation = station
@@ -163,13 +168,19 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun stop() {
-        if (playState == PlayState.Idle) return
         cancelStationLinkRetrieval()
+        currentStation = null
+
+        if (playState == PlayState.Idle) return
+
+        // Set state to Idle immediately on the UI thread to prevent race conditions
+        val audioSessionId = audioSessionId
+        setState(PlayState.Idle, audioSessionId)
+
+        val playerToStop = currentPlayer
         playerThreadHandler.post {
-            val audioSessionId = audioSessionId
-            currentPlayer.stop()
+            playerToStop.stop()
             if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
-            setState(PlayState.Idle, audioSessionId)
         }
     }
 
