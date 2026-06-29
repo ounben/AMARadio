@@ -303,18 +303,21 @@ fun FilterScreen(
                         showDeleteConfirm = false
                         showFilterSheet = false
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFB71C1C), contentColor = Color.White),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.yes))
+                    Text(stringResource(R.string.yes), fontWeight = FontWeight.Bold)
                 }
             },
             dismissButton = {
                 TextButton(
                     onClick = { showDeleteConfirm = false },
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                    colors = ButtonDefaults.textButtonColors(contentColor = Color.White)
                 ) {
-                    Text(stringResource(R.string.no))
+                    Text(stringResource(R.string.no), fontWeight = FontWeight.Bold)
                 }
             }
         )

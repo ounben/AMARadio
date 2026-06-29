@@ -89,6 +89,12 @@ android {
         animationsDisabled = true
         unitTests.returnDefaultValues = true
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all {
+            outputFileName = "AMARadio_${variant.versionName}.apk"
+        }
+    }
 }
 
 dependencies {

@@ -48,7 +48,7 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(stringResource(R.string.sleep_timer_title), fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.sleep_timer_title), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 val totalMinutes = sliderValue.toInt()
@@ -79,21 +79,22 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                     sharedPref.edit { putInt("sleep_timer_default_minutes", sliderValue.toInt()) }
                     onDismiss()
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber, contentColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.sleep_timer_apply))
+                Text(stringResource(R.string.sleep_timer_apply), fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
-            TextButton(
+            Button(
                 onClick = {
                     PlayerServiceUtil.clearTimer()
                     onDismiss()
                 },
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.sleep_timer_clear))
+                Text(stringResource(R.string.sleep_timer_clear), fontWeight = FontWeight.Bold)
             }
         }
     )
@@ -110,11 +111,11 @@ fun PlayerSelectorDialogCompose(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(stringResource(R.string.alert_select_player), fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.alert_select_player), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.app_name)) },
+                    headlineContent = { Text(stringResource(R.string.app_name), color = MaterialTheme.colorScheme.onSurface) },
                     leadingContent = { 
                         Icon(
                             imageVector = Icons.Default.PlayCircle,
@@ -131,7 +132,7 @@ fun PlayerSelectorDialogCompose(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.action_play_in_external)) },
+                    headlineContent = { Text(stringResource(R.string.action_play_in_external), color = MaterialTheme.colorScheme.onSurface) },
                     leadingContent = { 
                         Icon(
                             Icons.Default.PlayArrow, 
@@ -150,11 +151,12 @@ fun PlayerSelectorDialogCompose(
             }
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.action_cancel))
+                Text(stringResource(R.string.action_cancel), fontWeight = FontWeight.Bold)
             }
         }
     )
@@ -170,7 +172,7 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(stringResource(R.string.settings_proxy), fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.settings_proxy), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column(
                 modifier = Modifier
@@ -186,7 +188,9 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = AmaradioAmber,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 OutlinedTextField(
@@ -197,7 +201,9 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = AmaradioAmber,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 
@@ -212,7 +218,9 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                         trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = AmaradioAmber,
-                            unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                            unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                            focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                         )
                     )
                     Box(modifier = Modifier.matchParentSize().clickable { expanded = true })
@@ -223,7 +231,7 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     ) {
                         listOf(Proxy.Type.DIRECT, Proxy.Type.HTTP, Proxy.Type.SOCKS).forEach { type ->
                             DropdownMenuItem(
-                                text = { Text(type.name) },
+                                text = { Text(type.name, color = MaterialTheme.colorScheme.onSurface) },
                                 onClick = {
                                     viewModel.onTypeChange(type)
                                     expanded = false
@@ -241,7 +249,9 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = AmaradioAmber,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
                 OutlinedTextField(
@@ -252,7 +262,9 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     singleLine = true,
                     colors = OutlinedTextFieldDefaults.colors(
                         focusedBorderColor = AmaradioAmber,
-                        unfocusedBorderColor = MaterialTheme.colorScheme.outline
+                        unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                        focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
 
@@ -280,26 +292,29 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
                     viewModel.save()
                     onDismiss()
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber, contentColor = Color.Black),
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.action_ok))
+                Text(stringResource(R.string.action_ok), fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
             Row {
-                TextButton(
+                Button(
                     onClick = { viewModel.testProxy() }, 
                     enabled = !uiState.isTesting,
-                    colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.settings_proxy_action_test))
+                    Text(stringResource(R.string.settings_proxy_action_test), fontWeight = FontWeight.Bold)
                 }
-                TextButton(
+                Spacer(modifier = Modifier.width(8.dp))
+                Button(
                     onClick = onDismiss,
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                    shape = RoundedCornerShape(8.dp)
                 ) {
-                    Text(stringResource(R.string.action_cancel))
+                    Text(stringResource(R.string.action_cancel), fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -319,12 +334,15 @@ fun StationOptionsDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(station.Name, fontWeight = FontWeight.Bold) },
+        title = { Text(station.Name, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column {
                 ListItem(
                     headlineContent = { 
-                        Text(stringResource(if (isFavorite) R.string.action_starred_remove else R.string.action_starred_add)) 
+                        Text(
+                            text = stringResource(if (isFavorite) R.string.action_starred_remove else R.string.action_starred_add),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
                     },
                     leadingContent = { 
                         Icon(
@@ -340,8 +358,13 @@ fun StationOptionsDialog(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.action_station_visit_website)) },
-                    leadingContent = { Icon(Icons.Default.Language, contentDescription = null) },
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.action_station_visit_website),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         StationActions.openStationHomeUrl(context, station)
                         onDismiss()
@@ -349,8 +372,13 @@ fun StationOptionsDialog(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.action_station_share)) },
-                    leadingContent = { Icon(Icons.Default.Share, contentDescription = null) },
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.action_station_share),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.Share, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         StationActions.share(context, station)
                         onDismiss()
@@ -358,8 +386,13 @@ fun StationOptionsDialog(
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.detail_create_shortcut)) },
-                    leadingContent = { Icon(Icons.Default.Shortcut, contentDescription = null) },
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.detail_create_shortcut),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.Shortcut, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         // Shortcut logic
                         onDismiss()
@@ -369,11 +402,12 @@ fun StationOptionsDialog(
             }
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.action_cancel))
+                Text(stringResource(R.string.action_cancel), fontWeight = FontWeight.Bold)
             }
         }
     )
@@ -395,7 +429,7 @@ fun TrackOptionsDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(stringResource(R.string.tab_player_history), fontWeight = FontWeight.Bold) },
+        title = { Text(stringResource(R.string.tab_player_history), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column {
                 Text(
@@ -405,8 +439,13 @@ fun TrackOptionsDialog(
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.action_copy_info)) },
-                    leadingContent = { Icon(Icons.Default.ContentCopy, contentDescription = null) },
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.action_copy_info),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.ContentCopy, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                         if (clipboard != null) {
@@ -421,11 +460,12 @@ fun TrackOptionsDialog(
             }
         },
         confirmButton = {
-            TextButton(
+            Button(
                 onClick = onDismiss,
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                colors = ButtonDefaults.buttonColors(containerColor = Color.White, contentColor = Color.Black),
+                shape = RoundedCornerShape(8.dp)
             ) {
-                Text(stringResource(R.string.action_cancel))
+                Text(stringResource(R.string.action_cancel), fontWeight = FontWeight.Bold)
             }
         }
     )

@@ -118,10 +118,13 @@ fun MainScreen(
             bottomBar = {
                 if (!mainUiState.isSearching) {
                     NavigationBar(
-                        modifier = Modifier.height(56.dp),
+                        modifier = Modifier
+                            .navigationBarsPadding()
+                            .height(64.dp),
                         containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.onSurface,
-                        tonalElevation = 0.dp
+                        tonalElevation = 0.dp,
+                        windowInsets = WindowInsets(0, 0, 0, 0)
                     ) {
                         val items = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
                         val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -342,17 +345,21 @@ fun MainScreen(
                         showDeleteConfirmDialog = null
                     },
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFFB71C1C), 
-                        contentColor = Color.White
+                        containerColor = Color.White,
+                        contentColor = Color.Black
                     ),
                     shape = RoundedCornerShape(8.dp)
-                ) { Text(stringResource(R.string.yes)) }
+                ) { Text(stringResource(R.string.yes), fontWeight = FontWeight.Bold) }
             },
             dismissButton = { 
-                TextButton(
+                Button(
                     onClick = { showDeleteConfirmDialog = null },
-                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
-                ) { Text(stringResource(R.string.no)) } 
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.White,
+                        contentColor = Color.Black
+                    ),
+                    shape = RoundedCornerShape(8.dp)
+                ) { Text(stringResource(R.string.no), fontWeight = FontWeight.Bold) }
             }
         )
     }
