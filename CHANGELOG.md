@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.6] - 2026-06-30
+### Changed
+- **Stability**: Finalized language management and improved locale switching reliability on older Android devices.
+- **Resource Optimization**: Minor cleanup of string resources and localized assets.
+
+## [0.99.5] - 2026-06-30
+### Added
+- **Language Selection**:
+    - Introduced a new "Language" setting in the appearance menu.
+    - Users can now manually override the system language and choose from over 25 supported languages.
+    - Added a persistent locale management system that ensures the selected language is applied across app restarts.
+- **Enhanced Localization**:
+    - Updated native language names in the selection list for better accessibility.
+    - Integrated proper `AppCompatDelegate` per-app language support.
+
 ## [0.99.4] - 2026-06-30
 ### Added
 - **Language Support**:

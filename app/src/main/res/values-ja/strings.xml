@@ -109,6 +109,7 @@
     <string name="settings_compact_style_desc_on">小さなアイコンのみ表示</string>
     <string name="settings_bottom_navigation">ボトムナビゲーション</string>
     <string name="settings_ui_scale">UIのスケーリング</string>
+    <string name="settings_language">言語</string>
     <string name="ui_scale_compact">コンパクト</string>
     <string name="ui_scale_standard">システム標準</string>
     <string name="ui_scale_large">大きく</string>

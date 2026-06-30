@@ -61,4 +61,64 @@
         <item>large</item>
     </string-array>
 
+    <string-array name="language_entries">
+        <item>@string/theme_system</item>
+        <item>English</item>
+        <item>Deutsch</item>
+        <item>العربية</item>
+        <item>Català</item>
+        <item>Čeština</item>
+        <item>Dansk</item>
+        <item>Ελληνικά</item>
+        <item>Español</item>
+        <item>Euskara</item>
+        <item>Suomi</item>
+        <item>Français</item>
+        <item>Galego</item>
+        <item>Magyar</item>
+        <item>Indonesia</item>
+        <item>Italiano</item>
+        <item>日本語</item>
+        <item>Norsk bokmål</item>
+        <item>Nederlands</item>
+        <item>Norsk nynorsk</item>
+        <item>Polski</item>
+        <item>Português (Brasil)</item>
+        <item>Русский</item>
+        <item>Slovenčina</item>
+        <item>Türkçe</item>
+        <item>中文 (简体)</item>
+        <item>हिन्दी</item>
+    </string-array>
+
+    <string-array name="language_values" translatable="false">
+        <item>system</item>
+        <item>en</item>
+        <item>de</item>
+        <item>ar</item>
+        <item>ca</item>
+        <item>cs</item>
+        <item>da</item>
+        <item>el</item>
+        <item>es</item>
+        <item>eu</item>
+        <item>fi</item>
+        <item>fr</item>
+        <item>gl</item>
+        <item>hu</item>
+        <item>in</item>
+        <item>it</item>
+        <item>ja</item>
+        <item>nb</item>
+        <item>nl</item>
+        <item>nn</item>
+        <item>pl</item>
+        <item>pt-rBR</item>
+        <item>ru</item>
+        <item>sk</item>
+        <item>tr</item>
+        <item>zh-rCN</item>
+        <item>hi</item>
+    </string-array>
+
 </resources>

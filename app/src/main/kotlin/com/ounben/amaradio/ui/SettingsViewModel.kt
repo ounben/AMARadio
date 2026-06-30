@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
+import com.ounben.amaradio.utils.LocaleUtils
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,6 +17,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     data class SettingsUiState(
         val themeName: String = "system",
         val uiScaleLevel: String = "standard",
+        val language: String = "system",
         val startupAction: String = "",
         val playExternal: Boolean = false,
         val warnNoWifi: Boolean = false,
@@ -52,6 +54,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             it.copy(
                 themeName = sharedPref.getString("theme_name", "system") ?: "system",
                 uiScaleLevel = sharedPref.getString("ui_scale_level", "standard") ?: "standard",
+                language = sharedPref.getString("settings_language", "system") ?: "system",
                 startupAction = sharedPref.getString("startup_action", defaultStartupAction) ?: defaultStartupAction,
                 playExternal = sharedPref.getBoolean("play_external", false),
                 warnNoWifi = sharedPref.getBoolean("warn_no_wifi", false),
@@ -69,6 +72,9 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun updateString(key: String, value: String) {
         sharedPref.edit().putString(key, value).apply()
+        if (key == "settings_language") {
+            LocaleUtils.applyLocale(value)
+        }
     }
 
     fun updateBoolean(key: String, value: Boolean) {

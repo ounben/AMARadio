@@ -109,6 +109,7 @@
     <string name="settings_compact_style_desc_on">स्टेशन विवरण के बिना छोटा आइकन</string>
     <string name="settings_bottom_navigation">नीचे नेविगेशन</string>
     <string name="settings_ui_scale">UI स्केलिंग</string>
+    <string name="settings_language">भाषा</string>
     <string name="ui_scale_compact">कॉम्पैक्ट</string>
     <string name="ui_scale_standard">सिस्टम मानक</string>
     <string name="ui_scale_large">बड़ा</string>

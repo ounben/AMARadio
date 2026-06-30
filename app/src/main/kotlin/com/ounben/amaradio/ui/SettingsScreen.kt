@@ -2,6 +2,8 @@ package com.ounben.amaradio.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -57,6 +59,14 @@ fun SettingsScreen(
                     entryValues = stringArrayResource(R.array.ui_scale_values),
                     icon = Icons.Default.FormatSize,
                     onValueChange = { viewModel.updateString("ui_scale_level", it) }
+                )
+                SettingsListPreference(
+                    title = stringResource(R.string.settings_language),
+                    currentValue = uiState.language,
+                    entries = stringArrayResource(R.array.language_entries),
+                    entryValues = stringArrayResource(R.array.language_values),
+                    icon = Icons.Default.Language,
+                    onValueChange = { viewModel.updateString("settings_language", it) }
                 )
             }
 
@@ -234,36 +244,40 @@ fun SettingsListPreference(
                 ) 
             },
             text = {
-                Column(
+                // LazyColumn with a fixed max height to ensure scrollability in the dialog
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .heightIn(max = 400.dp)
                 ) {
-                    entries.forEachIndexed { index, label ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .clickable { 
-                                    onValueChange(entryValues[index])
-                                    showDialog = false 
-                                }
-                                .padding(vertical = 12.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = (index == currentIndex),
-                                onClick = null,
-                                colors = RadioButtonDefaults.colors(
-                                    selectedColor = AmaradioAmber,
-                                    unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                    itemsIndexed(entries) { index, label ->
+                        // Only show non-empty entries and ensure we have a corresponding value
+                        if (label.trim().isNotEmpty() && index < entryValues.size) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable { 
+                                        onValueChange(entryValues[index])
+                                        showDialog = false 
+                                    }
+                                    .padding(vertical = 12.dp, horizontal = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                RadioButton(
+                                    selected = (index == currentIndex),
+                                    onClick = null,
+                                    colors = RadioButtonDefaults.colors(
+                                        selectedColor = AmaradioAmber,
+                                        unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
                                 )
-                            )
-                            Spacer(modifier = Modifier.width(12.dp))
-                            Text(
-                                text = label,
-                                style = MaterialTheme.typography.bodyLarge,
-                                color = MaterialTheme.colorScheme.onSurface
-                            )
+                                Spacer(modifier = Modifier.width(12.dp))
+                                Text(
+                                    text = label,
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
                         }
                     }
                 }

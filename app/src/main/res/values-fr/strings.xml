@@ -100,6 +100,7 @@
     <string name="settings_compact_style_desc_on">Petite icône adoptée sans les détails de la station</string>
     <string name="settings_bottom_navigation">Navigation inférieure</string>
     <string name="settings_ui_scale">Échelle de l\'interface</string>
+    <string name="settings_language">Langue</string>
     <string name="ui_scale_compact">Compact</string>
     <string name="ui_scale_standard">Défaut système</string>
     <string name="ui_scale_large">Grand</string>

@@ -13,6 +13,7 @@ import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.proxy.ProxySettings
+import com.ounben.amaradio.utils.LocaleUtils
 import com.ounben.amaradio.utils.TvChannelManager
 import kotlinx.coroutines.android.asCoroutineDispatcher
 import okhttp3.ConnectionPool
@@ -71,6 +72,11 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         Log.d("APP", "onCreate started")
         try {
             Utils.init(this)
+
+            // Apply selected language on startup
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+            val selectedLang = sharedPref.getString("settings_language", "system") ?: "system"
+            LocaleUtils.applyLocale(selectedLang)
 
             connectionPool = ConnectionPool()
 

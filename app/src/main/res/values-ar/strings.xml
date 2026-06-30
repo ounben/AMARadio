@@ -109,6 +109,7 @@
     <string name="settings_compact_style_desc_on">أيقونة صغيرة بدون تفاصيل المحطة</string>
     <string name="settings_bottom_navigation">شريط التنقل السفلي</string>
     <string name="settings_ui_scale">تحجيم واجهة المستخدم</string>
+    <string name="settings_language">اللغة</string>
     <string name="ui_scale_compact">مدمج</string>
     <string name="ui_scale_standard">قياسي</string>
     <string name="ui_scale_large">كبير</string>

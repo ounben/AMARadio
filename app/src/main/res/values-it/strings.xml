@@ -100,6 +100,7 @@
     <string name="settings_compact_style_desc_on">Icone piccole per i dettagli della stazione</string>
     <string name="settings_bottom_navigation">Navigazione in basso</string>
     <string name="settings_ui_scale">Scala UI</string>
+    <string name="settings_language">Lingua</string>
     <string name="ui_scale_compact">Compatta</string>
     <string name="ui_scale_standard">Standard di sistema</string>
     <string name="ui_scale_large">Grande</string>

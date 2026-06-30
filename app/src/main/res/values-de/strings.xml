@@ -107,6 +107,7 @@
     <string name="settings_compact_style_desc_on">Kleines Icon ohne Senderdetails</string>
     <string name="settings_bottom_navigation">Navigation unten</string>
     <string name="settings_ui_scale">UI Skalierung</string>
+    <string name="settings_language">Sprache</string>
     <string name="ui_scale_compact">Kompakt</string>
     <string name="ui_scale_standard">Systemstandard</string>
     <string name="ui_scale_large">Groß</string>

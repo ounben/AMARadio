@@ -100,6 +100,7 @@
     <string name="settings_compact_style_desc_on">Icono pequeño sin detalles de la emisora</string>
     <string name="settings_bottom_navigation">Navegación inferior</string>
     <string name="settings_ui_scale">Escalado de interfaz</string>
+    <string name="settings_language">Idioma</string>
     <string name="ui_scale_compact">Compacto</string>
     <string name="ui_scale_standard">Estándar del sistema</string>
     <string name="ui_scale_large">Grande</string>

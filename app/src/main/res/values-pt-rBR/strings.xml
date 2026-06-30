@@ -100,6 +100,7 @@
     <string name="settings_compact_style_desc_on">Ícone pequeno sem detalhes do rádio</string>
     <string name="settings_bottom_navigation">Navegação no fundo</string>
     <string name="settings_ui_scale">Escala de UI</string>
+    <string name="settings_language">Idioma</string>
     <string name="ui_scale_compact">Compacto</string>
     <string name="ui_scale_standard">Padrão do sistema</string>
     <string name="ui_scale_large">Grande</string>

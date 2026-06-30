@@ -15,6 +15,7 @@ import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.MainScreen
 import com.ounben.amaradio.ui.MainViewModel
+import com.ounben.amaradio.utils.LocaleUtils
 import com.ounben.amaradio.utils.UiScaler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -75,7 +76,10 @@ class ActivityMain : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(UiScaler.wrapContext(newBase))
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPref.getString("settings_language", "system") ?: "system"
+        val localeContext = LocaleUtils.wrapContext(newBase, lang)
+        super.attachBaseContext(UiScaler.wrapContext(localeContext))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -135,7 +139,7 @@ class ActivityMain : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
-        if (key == "theme_name" || key == UiScaler.PREF_KEY_UI_SCALE) {
+        if (key == "theme_name" || key == UiScaler.PREF_KEY_UI_SCALE || key == "settings_language") {
             recreate()
         }
     }

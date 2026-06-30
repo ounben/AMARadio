@@ -28,12 +28,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.AmaradioAmber
+import com.ounben.amaradio.utils.LocaleUtils
 import com.ounben.amaradio.utils.UiScaler
 import kotlinx.coroutines.delay
+import androidx.preference.PreferenceManager
 
 class SplashActivity : ComponentActivity() {
     override fun attachBaseContext(newBase: Context) {
-        super.attachBaseContext(UiScaler.wrapContext(newBase))
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(newBase)
+        val lang = sharedPref.getString("settings_language", "system") ?: "system"
+        val localeContext = LocaleUtils.wrapContext(newBase, lang)
+        super.attachBaseContext(UiScaler.wrapContext(localeContext))
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

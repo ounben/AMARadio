@@ -97,6 +97,7 @@
     <string name="settings_compact_style_desc_on">Маленькая иконка без деталей станции</string>
     <string name="settings_bottom_navigation">Нижняя навигация</string>
     <string name="settings_ui_scale">Масштаб интерфейса</string>
+    <string name="settings_language">Язык</string>
     <string name="ui_scale_compact">Компактный</string>
     <string name="ui_scale_standard">Стандартный</string>
     <string name="ui_scale_large">Крупный</string>
