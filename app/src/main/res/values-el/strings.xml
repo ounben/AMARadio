@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Όνομα</string>
     <string name="detail_tags">Καρτέλες</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Σύνδεσμοι</string>
     <string name="action_homepage">Αρχική σελίδα</string>
     <string name="action_favorite">Αγαπημένο</string>
-    <string name="action_alarm">Ειδοποίηση</string>
+    <string name="action_starred_add">Προσθήκη στα αγαπημένα</string>
+    <string name="action_starred_remove">Αφαίρεση από τα αγαπημένα</string>
 
     <string name="action_station_visit_website">Επίσκεψη στον Ιστότοπο</string>
     <string name="action_station_copy_stream_url">Αντιγραφή της Διεύθυνσης Url της Ροής</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Γλώσσες</string>
     <string name="action_edit">Επεξεργασία</string>
     <string name="action_copy_info">Αντιγραφή Πληροφοριών</string>
+    <string name="action_rename_tab">Μετονομασία καρτέλας</string>
+    <string name="error_filter_name_required">Παρακαλούμε εισαγάγετε πρώτα ένα όνομα για αυτήν την καρτέλα φίλτρου</string>
+    <string name="confirm_delete_filter_tab">Είστε σίγουροι ότι θέλετε να διαγράψετε το φίλτρο \"%1$s\";</string>
+    <string name="filter_empty_title">Δημιουργήστε τη δική σας ροή σταθμών</string>
+    <string name="filter_empty_desc">Δημιουργήστε μια εξατομικευμένη προβολή συνδυάζοντας πολλαπλά κριτήρια. Μπορείτε να περιορίσετε την αναζήτησή σας χρησιμοποιώντας:</string>
+    <string name="filter_empty_filter_by">Φιλτράρισμα κατά</string>
+    <string name="filter_empty_filter_desc">Χώρα, Όνομα σταθμού, Ετικέτες ή Γλώσσα</string>
+    <string name="filter_empty_sort_by">Ταξινόμηση κατά</string>
+    <string name="filter_empty_sort_desc">Κλικ, Αλφάβητο, Ψήφοι ή Τελευταία αλλαγή</string>
+    <string name="filter_empty_hint">Πληκτρολογήστε ένα όνομα στο παραπάνω πεδίο για να αποθηκεύσετε αυτήν την προσαρμοσμένη προβολή!</string>
     <string name="error_station_load">Αδυναμία σύνδεσης στο σταθμό</string>
     <string name="error_list_update">Αδυναμία σύνδεσης στον διακομιστή radio browser</string>
 
-    <string name="share_action">Μοίρασμα συνδέσμου σταθμού με...</string>
+    <string name="share_action">Μοίρασμα συνδέσμου σταθμού με&#8230;</string>
 
     <string name="nav_item_stations">Σταθμοί</string>
     <string name="nav_item_starred">Αγαπημένα</string>
     <string name="nav_item_history">Ιστορικό</string>
     <string name="nav_item_settings">Ρυθμίσεις</string>
-    <string name="nav_item_alarm">Ξυπνητήρι</string>
 
-    <string name="about_text">Το AMARadio είναι 100% χωρίς διαφημίσεις και εστιασμένο στην ιδιωτικότητα.\n\nΑρχικά ανέπτυξα αυτήν την εφαρμογή για τη μητέρα μου για να της παρέχω μια απλή, ειλικρινή εμπειρία ραδιοφώνου χωρίς ενοχλητικές διαφημίσεις ή παρακολούθηση. Αυτός είναι ο λόγος για τον οποίο το AMARadio θα παραμείνει πάντα δωρεάν από διαφημίσεις – είναι μια υπόσχεση προς αυτήν, την οποία μοιράζομαι με όλους εσάς.\n\nΑυτό το έργο είναι ένα fork του εξαιρετικού https://github.com/segler-alex/RadioDroid . Ολόκληρη η βάση κώδικα έχει μεταφερθεί από Java σε Kotlin για να διασφαλιστεί ότι η εφαρμογή παραμένει σύγχρονη και συμβατή με μελλοντικές εκδόσεις Android.\n\nΟ πηγαίος κώδικας είναι διαθέσιμος στη διεύθυνση: https://github.com/ounben/AMARadio\n\nΑυτή η εφαρμογή χρησιμοποιεί τον δωρεάν κατάλογο ραδιοφωνικών σταθμών στο https://www.radio-browser.info .\nΌλοι μπορούν να προσθέσουν σταθμούς σε αυτόν. Λειτουργεί σαν wiki για διαδικτυακούς ραδιοφωνικούς σταθμούς.\n\nΕπικοινωνία: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nΑν σας αρέσει το λογισμικό και θέλετε να βοηθήσετε, μη διστάσετε να μου στείλετε ένα email.\nΙδέες για νέες λειτουργίες είναι επίσης πάντα ευπρόσδεκτες!\n\nΑυτή η εφαρμογή είναι ελεύθερο λογισμικό με άδεια χρήσης GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">Το AMARadio είναι 100% χωρίς διαφημίσεις και εστιασμένο στην ιδιωτικότητα.\n\nΑρχικά ανέπτυξα αυτήν την εφαρμογή για τη μητέρα μου για να της παρέχω μια απλή, ειλικρινή εμπειρία ραδιοφώνου χωρίς ενοχλητικές διαφημίσεις ή παρακολούθηση. Αυτός είναι ο λόγος για τον οποίο το AMARadio θα παραμείνει πάντα δωρεάν από διαφημίσεις – είναι μια υπόσχεση προς αυτήν, την οποία μοιράζομαι με όλους εσάς.\n\nΑυτό το έργο είναι ένα fork του εξαιρετικού RadioDroid. Ολόκληρη η βάση κώδικα έχει μεταφερθεί από Java σε Kotlin για να διασφαλιστεί ότι η εφαρμογή παραμένει σύγχρονη και συμβατή με μελλοντικές εκδόσεις Android.\n\nΑυτή η εφαρμογή χρησιμοποιεί τον δωρεάν κατάλογο ραδιοφωνικών σταθμών στο https://www.radio-browser.info .\nΌλοι μπορούν να προσθέσουν σταθμούς σε αυτόν. Λειτουργεί σαν wiki για διαδικτυακούς ραδιοφωνικούς σταθμούς.\n\nΕπικοινωνία: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nΑν σας αρέσει το λογισμικό και θέλετε να βοηθήσετε, μη διστάσετε να μου στείλετε ένα email.\nΙδέες για νέες λειτουργίες είναι επίσης πάντα ευπρόσδεκτες!\n\nΑυτή η εφαρμογή είναι ελεύθερο λογισμικό με άδεια χρήσης GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Έκδοση: %1$s</string>
     <string name="detail_star">Προσθήκη στα αγαπημένα</string>
     <string name="detail_unstar">Αφαίρεση από τα αγαπημένα</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Φόρτωση...</string>
+    <string name="progress_loading">Φόρτωση&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Χρονοδιακόπτης ύπνου: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Διακοπή αναπαραγωγής μετά το επιλεγμένο λεπτό</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Εκκαθάριση ιστορικού</string>
     <string name="searchpreference_no_results">Δεν βρέθηκαν αποτελέσματα</string>
-    <string name="searchpreference_search">Αναζήτηση…</string>
+    <string name="searchpreference_search">Αναζήτηση&#8230;</string>
     <string name="settings_appearance">Εμφάνιση</string>
     <string name="settings_theme_selection_title">Θέμα</string>
     <string name="theme_light">Φωτεινό</string>
@@ -100,6 +109,7 @@
     <string name="settings_compact_style_desc_on">Μικρό εικονίδιο χωρίς λεπτομέρειες σταθμού</string>
     <string name="settings_bottom_navigation">Πλοήγηση στο κάτω μέρος</string>
     <string name="settings_ui_scale">Κλίμακα UI</string>
+    <string name="settings_language">Γλώσσα</string>
     <string name="ui_scale_compact">Συμπαγής</string>
     <string name="ui_scale_standard">Πρότυπο συστήματος</string>
     <string name="ui_scale_large">Μεγάλο</string>
@@ -133,13 +143,6 @@
     <string name="settings_auto_favorite_on">Αυτόματη προσθήκη σταθμών στα αγαπημένα κατά την αναπαραγωγή</string>
     <string name="settings_auto_favorite_off">Όχι αυτόματη προσθήκη σταθμών στα αγαπημένα κατά την αναπαραγωγή</string>
 
-    <string name="settings_alarm">Ξυπνητήρι</string>
-    <string name="settings_alarm_external">Ενεργοποίηση εξωτερικής εφαρμογής</string>
-    <string name="settings_alarm_external_desc_on">Άνοιγμα ειδοποίησης με την προεπιλεγμένη εξωτερική εφαρμογή</string>
-    <string name="settings_alarm_external_desc_off">Άνοιγμα ειδοποίησης με το AMARadio</string>
-    <string name="settings_alarm_audio_player">Αναπαραγωγός ήχου</string>
-    <string name="settings_alarm_sleep_timer">Χρονοδιακόπτης ύπνου</string>
-    <string name="settings_alarm_sleep_timer_desc">Διακοπή αναπαραγωγής μετά από %1$s λεπτά</string>
     <string name="settings_play">Αναπαραγωγός</string>
     <string name="settings_auto_play_on_startup">Αυτόματη αναπαραγωγή</string>
     <string name="settings_auto_play_on_startup_on">Αναπαραγωγή τελευταίου σταθμού κατά την έναρξη</string>
@@ -181,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Συνέχιση σε σύνδεση Bluetooth</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Συνέχιση αναπαραγωγής κατά τη σύνδεση συσκευής Bluetooth A2DP</string>
 
+    <string name="settings_auto_resume_on_any_connected">Συνέχιση σε οποιαδήποτε σύνδεση</string>
+
     <string name="settings_warn_no_wifi">Προειδοποίηση απουσίας Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Προειδοποίηση κατά την αναπαραγωγή χωρίς σύνδεση Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Καμία προειδοποίηση κατά την αναπαραγωγή χωρίς σύνδεση Wi-Fi</string>
@@ -206,19 +211,10 @@
     <string name="yes">Ναι</string>
     <string name="no">Όχι</string>
 
-    <string name="alert_select_mpd_server">Παρακαλώ επιλέξτε έναν διακομιστή</string>
-    <string name="alert_select_mpd_server_name">Όνομα διακομιστή</string>
-    <string name="alert_select_mpd_server_password">Κωδικός διακομιστή</string>
-    <string name="hostname">Hostname</string>
+    <string name="alert_select_player">Παρακαλώ επιλέξτε έναν αναπαραγωγό</string>
+    <string name="alert_select_player_name">Όνομα</string>
+    <string name="hostname">Όνομα κεντρικού υπολογιστή</string>
     <string name="port">Θύρα</string>
-
-    <string name="alert_select_mpd_server_add">Προσθήκη</string>
-    <string name="alert_select_mpd_server_save">Αποθήκευση</string>
-    <string name="alert_select_mpd_server_remove">Αφαίρεση</string>
-    <string name="alert_add_or_edit_mpd_server">Εισαγάγετε λεπτομέρειες για έναν διακομιστή</string>
-    <string name="alert_alarm_working">Ώρα ειδοποίησης τώρα</string>
-    <string name="alert_alarm_not_working">Όχι αρκετές πληροφορίες για ειδοποίηση</string>
-    <string name="alert_select_external_alarm_app">Επιλέξτε αναπαραγωγό ήχου</string>
 
     <string name="alert_press_back_to_exit">Πιέστε πίσω άλλη μια φορά για έξοδο</string>
 
@@ -259,34 +255,22 @@
     <string name="icon_click_trend_increasing">Η δημοτικότητα αυξάνεται</string>
     <string name="icon_click_trend_stable">Σταθερή δημοτικότητα</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% χωρίς διαφημίσεις &amp; Ιδιωτικό</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Θύρα MPD</string>
-    <string name="settings_view_mpd_servers">Οι διακομιστές σας</string>
-    <string name="action_mpd_nok">Το MPD δεν είναι συνδεδεμένο</string>
-    <string name="action_mpd_ok">Το MPD είναι συνδεδεμένο</string>
-    <string name="action_mpd_connected">Συνδέθηκε στον διακομιστή: %1$s</string>
-
-    <string name="mpd_no_connection">Δεν υπάρχει σύνδεση</string>
-    <string name="action_enable_mpd">Ενεργοποίηση MPD</string>
-    <string name="action_disable_mpd">Απενεργοποίηση MPD</string>
-    <string name="action_add_mpd_server">Προσθήκη διακομιστή MPD</string>
 
     <string name="action_play_in_external">Αναπαραγωγή σε εξωτερικό αναπαραγωγό</string>
     <string name="action_choose_external_player">Επιλέξτε εξωτερικό αναπαραγωγό</string>
 
+    <string name="settings_disable_battery_optimization">Βελτιστοποίηση μπαταρίας</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Η βελτιστοποίηση μπαταρίας αγνοείται, το AMARadio θα πρέπει πάντα να μπορεί να ανακτά την εστίαση μετά από απώλεια.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Η βελτιστοποίηση μπαταρίας είναι ενεργοποιημένη, το AMARadio ενδέχεται να μην μπορεί να ανακτήσει την εστίαση εάν βρίσκεται στο παρασκήνιο.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Άλλα</string>
     <string name="settings_statistics">Στατιστικά</string>
     <string name="settings_about">Σχετικά με το AMARadio</string>
 
     <string name="description_btn_skip_to_next">Μετάβαση στο επόμενο</string>
     <string name="description_btn_skip_to_previous">Μετάβαση στο προηγούμενο</string>
-
-    <string name="description_btn_setup_alarm">Ορισμός ειδοποίησης</string>
 
     <string-array name="weekdays">
         <item>Κ</item>
@@ -324,17 +308,17 @@
     <string name="sort_lastchange">Τελευταία Αλλαγή</string>
     <string name="filter_select_country">Επιλέξτε Χώρα</string>
     <string name="filter_select_language">Επιλέξτε Γλώσσα</string>
-    <string name="filter_type_tag">Πληκτρολογήστε ετικέτα…</string>
-
-    <string name="alarm_backup">Εναλλακτική ειδοποίηση</string>
-    <string name="alarm_fallback_info">Χρησιμοποιήθηκε η ειδοποίηση συστήματος καθώς ο επιλεγμένος ραδιοφωνικός σταθμός απέτυχε να φορτώσει</string>
-    <string name="alarm_back_desc">Εναλλακτική ειδοποίηση συστήματος όταν ο ραδιοφωνικός σταθμός αποτυγχάνει να φορτώσει</string>
+    <string name="filter_type_tag">Πληκτρολογήστε ετικέτα&#8230;</string>
+    <string name="filter_tap_to_configure">Πατήστε για διαμόρφωση</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="alarm_backup">Εναλλακτική ειδοποίηση</string>
+    <string name="alarm_fallback_info">Χρησιμοποιήθηκε η ειδοποίηση συστήματος καθώς ο επιλεγμένος ραδιοφωνικός σταθμός απέτυχε να φορτώσει</string>
+    <string name="alarm_back_desc">Εναλλακτική ειδοποίηση συστήματος όταν ο ραδιοφωνικός σταθμός αποτυγχάνει να φορτώσει</string>
 </resources>

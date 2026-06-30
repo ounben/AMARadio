@@ -256,14 +256,14 @@
     <string name="icon_click_trend_stable">الشهرة مستقرة</string>
 
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">خالٍ من الإعلانات 100٪ وخاص</string>
+    <string name="ad_free_promise">100% خالٍ من الإعلانات وخاص</string>
 
     <string name="action_play_in_external">التشغيل في مشغل خارجي</string>
     <string name="action_choose_external_player">اختر مشغلاً خارجياً</string>
 
     <string name="settings_disable_battery_optimization">تحسين البطارية</string>
     <string name="settings_ignore_battery_optimization_summary_on">يتم تجاهل تحسين البطارية، يجب أن يكون AMARadio قادراً دائماً على استعادة التركيز بعد فقدانه.</string>
-    <string name="settings_ignore_battery_optimization_summary_off">تم تفعيل تحسين البطارية، لن يتمكن AMARadio von استعادة التركيز بعد فقدانه إذا كان في الخلفية.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">تم تفعيل تحسين البطارية، لن يتمكن AMARadio من استعادة التركيز بعد فقدانه إذا كان في الخلفية.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">أخرى</string>
     <string name="settings_statistics">الإحصائيات</string>
@@ -317,8 +317,4 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
-
-    <string name="alarm_backup">منبه بديل</string>
-    <string name="alarm_fallback_info">تم اعتماد منبه النظام نظراً لفشل تحميل محطة الراديو المحددة</string>
-    <string name="alarm_back_desc">يتم اعتماد منبه النظام البديل عندما تفشل محطة الراديو في التحميل</string>
 </resources>

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Navn</string>
     <string name="detail_tags">Mærker</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Henvisninger</string>
     <string name="action_homepage">Hjemmeside</string>
     <string name="action_favorite">Favorit</string>
-    <string name="action_alarm">Alarm</string>
+    <string name="action_starred_add">Føj til favoritter</string>
+    <string name="action_starred_remove">Fjern fra favoritter</string>
 
     <string name="action_station_visit_website">Besøg netsted</string>
     <string name="action_station_copy_stream_url">Kopiere strøm URL</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Sprog</string>
     <string name="action_edit">Rediger</string>
     <string name="action_copy_info">Kopiér info</string>
+    <string name="action_rename_tab">Omdøb fane</string>
+    <string name="error_filter_name_required">Indtast venligst et navn til denne filterfane først</string>
+    <string name="confirm_delete_filter_tab">Er du sikker på, at du vil slette filteret \"%1$s\"?</string>
+    <string name="filter_empty_title">Byg dit eget station-feed</string>
+    <string name="filter_empty_desc">Opret en personlig visning ved at kombinere flere kriterier. Du kan indsnævre din søgning ved hjælp af:</string>
+    <string name="filter_empty_filter_by">Filtrer efter</string>
+    <string name="filter_empty_filter_desc">Land, stationsnavn, mærker eller sprog</string>
+    <string name="filter_empty_sort_by">Sorter efter</string>
+    <string name="filter_empty_sort_desc">Klik, Alfabet, Stemmer oder Sidste ændring</string>
+    <string name="filter_empty_hint">Skriv et navn i feltet ovenfor for at gemme denne brugerdefinerede visning!</string>
     <string name="error_station_load">Kunne ikke forbinde til station</string>
-    <string name="error_list_update">Kunne nicht Verbinden til radio browser server</string>
+    <string name="error_list_update">Kunne ikke forbinde til radio browser server</string>
 
-    <string name="share_action">Del station henvisning med..</string>
+    <string name="share_action">Del station henvisning med&#8230;</string>
 
     <string name="nav_item_stations">Stationer</string>
     <string name="nav_item_starred">Favoritter</string>
     <string name="nav_item_history">Historik</string>
     <string name="nav_item_settings">Opsætning</string>
-    <string name="nav_item_alarm">Alarm</string>
 
-    <string name="about_text">AMARadio er 100% reklamefri og privatlivsfokuseret.\n\nJeg udviklede oprindeligt denne app til min mor for at give hende en enkel, ærlig radiooplevelse uden irriterende reklamer eller sporing. Derfor vil AMARadio altid forblive reklamefri – det er et løfte til hende, delt med jer alle.\n\nDette projekt er en fork af den fremragende https://github.com/segler-alex/RadioDroid . Hele kildekoden er migreret fra Java til Kotlin for at sikre, at appen forbliver moderne og kompatibel med fremtidige Android-versioner.\n\nKildekoden er tilgængelig på: https://github.com/ounben/AMARadio\n\nDenne app bruger det gratis radiostationskatalog på https://www.radio-browser.info .\nAlle kan tilføje stationer. Det fungerer som en wiki for online radiostationer.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nHvis du kan lide softwaren og vil hjælpe, er du velkommen til at sende mig en e-mail.\nIdéer til nye funktioner er også altid velkomne!\n\nDenne app er gratis software licenseret under GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio er 100% reklamefri og privatlivsfokuseret.\n\nJeg udviklede oprindeligt diese app til min mor for at give hende en enkel, ærlig radiooplevelse uden irriterende reklamer eller sporing. Derfor vil AMARadio altid forblive reklamefri – det er et løfte til hende, delt med jer alle.\n\nDette projekt er en fork af den fremragende RadioDroid. Hele kildekoden er migreret fra Java til Kotlin for at sikre, at appen forbliver moderne og kompatibel med fremtidige Android-versioner.\n\nDenne app bruger det gratis radiostationskatalog på https://www.radio-browser.info .\nAlle kan tilføje stationer. Det fungerer som en wiki for online radiostationer.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nHvis du kan lide softwaren og vil hjælpe, er du velkommen til at sende mig en e-mail.\nIdéer til nye funktioner er også altid velkomne!\n\nDenne app er gratis software licenseret under GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Version: %1$s</string>
     <string name="detail_star">Tilføj til favoritter</string>
     <string name="detail_unstar">Slet fra favoritter</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Indlæser...</string>
+    <string name="progress_loading">Indlæser&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Sove tidsforsinkelse: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Stop afspilning efter det valgte minut</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Ryd historik</string>
     <string name="searchpreference_no_results">Intet resultat</string>
-    <string name="searchpreference_search">Søg…</string>
+    <string name="searchpreference_search">Søg&#8230;</string>
     <string name="settings_appearance">Udseende</string>
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Lys</string>
@@ -100,6 +109,7 @@
     <string name="settings_compact_style_desc_on">Lille ikon tilføjet uden station detaljer</string>
     <string name="settings_bottom_navigation">Bundnavigation</string>
     <string name="settings_ui_scale">UI-skalering</string>
+    <string name="settings_language">Sprog</string>
     <string name="ui_scale_compact">Kompakt</string>
     <string name="ui_scale_standard">Systemstandard</string>
     <string name="ui_scale_large">Stor</string>
@@ -133,20 +143,13 @@
     <string name="settings_auto_favorite_on">Tilføj stationer automatisk til favoritter når der afspilles</string>
     <string name="settings_auto_favorite_off">Tilføj ikke stationer automatisk til favoritter når der afspilles</string>
 
-    <string name="settings_alarm">Alarm</string>
-    <string name="settings_alarm_external">Aktivere eksternt program</string>
-    <string name="settings_alarm_external_desc_on">Åbne alarm med standard eksternt program</string>
-    <string name="settings_alarm_external_desc_off">Åbne alarm mit AMARadio</string>
-    <string name="settings_alarm_audio_player">Lyd afspiller</string>
-    <string name="settings_alarm_sleep_timer">Sove tidsforsinkelse</string>
-    <string name="settings_alarm_sleep_timer_desc">Stop afspilning efter %1$s minutter</string>
     <string name="settings_play">Afspiller</string>
     <string name="settings_auto_play_on_startup">Automatisk afspilning</string>
     <string name="settings_auto_play_on_startup_on">Afspil seneste station ved opstart</string>
     <string name="settings_auto_play_on_startup_off">Afspil ikke seneste station ved opstart</string>
     <string name="settings_auto_off_on_startup">Auto-stop</string>
     <string name="settings_auto_off_on_startup_on">Brug auto-stop timer med auto-play</string>
-    <string name="settings_auto_off_on_startup_off">Brug ikke auto-stop timer med auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Brug ikke auto-stop timer mit auto-play</string>
     <string name="settings_auto_off_sleep_timer">Auto-stop timer</string>
     <string name="settings_auto_off_sleep_timer_desc">Stop afspilning efter %1$s minutter</string>
     <string name="settings_play_external">Aktivere ekstern afspiller</string>
@@ -179,7 +182,9 @@
     <string name="settings_auto_resume_on_wired_headset_connected_on">Genoptag afspilning ved trådet hovedtelefon tisluttet</string>
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Genoptag ved Bluetooth forbindelse</string>
-    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Genoptag afspilning ved  Bluetooth A2DP enhed forbindelse</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Genoptag afspilning ved Bluetooth A2DP enhed forbindelse</string>
+
+    <string name="settings_auto_resume_on_any_connected">Genoptag ved enhver forbindelse</string>
 
     <string name="settings_warn_no_wifi">Trådløst slukke advarsel</string>
     <string name="settings_warn_no_wifi_on">Advare når der afspilles uden trådløst tilslutning</string>
@@ -206,19 +211,10 @@
     <string name="yes">Ja</string>
     <string name="no">Nej</string>
 
-    <string name="alert_select_mpd_server">Vælg server</string>
-    <string name="alert_select_mpd_server_name">Server navn</string>
-    <string name="alert_select_mpd_server_password">Server adgangskode</string>
+    <string name="alert_select_player">Vælg server</string>
+    <string name="alert_select_player_name">Navn</string>
     <string name="hostname">Værtsnavn</string>
     <string name="port">Port</string>
-
-    <string name="alert_select_mpd_server_add">Tilføj</string>
-    <string name="alert_select_mpd_server_save">Gem</string>
-    <string name="alert_select_mpd_server_remove">Fjern</string>
-    <string name="alert_add_or_edit_mpd_server">Indtast server oplysninger</string>
-    <string name="alert_alarm_working">Alarm tid nu</string>
-    <string name="alert_alarm_not_working">Ikke nok alarm oplysning</string>
-    <string name="alert_select_external_alarm_app">Vælg lyd afspiller</string>
 
     <string name="alert_press_back_to_exit">Tryk tilbage én gang mere for at afslutte</string>
 
@@ -259,33 +255,22 @@
     <string name="icon_click_trend_increasing">Popularitet stigende</string>
     <string name="icon_click_trend_stable">Popularitet stabil</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-
-    <string name="settings_mpd">Musik afspiller tjeneste</string>
-    <string name="settings_mpd_port">MPD port</string>
-    <string name="settings_view_mpd_servers">Dine servere</string>
-    <string name="action_mpd_nok">MPD ikke forbundet</string>
-    <string name="action_mpd_ok">MPD forbundet</string>
-    <string name="action_mpd_connected">Forbundet til server: %1$s</string>
-
-    <string name="mpd_no_connection">Ingen forbindelse</string>
-    <string name="action_enable_mpd">Slå på MPD</string>
-    <string name="action_disable_mpd">Slå af MPD</string>
-    <string name="action_add_mpd_server">Tilføje MPD server</string>
+    <string name="ad_free_promise">100% reklamefri &amp; privat</string>
 
     <string name="action_play_in_external">Afspil i ekstern afspiller</string>
     <string name="action_choose_external_player">Vælg ekstern afspiller</string>
 
+    <string name="settings_disable_battery_optimization">Batterioptimering</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Batterioptimierung ignoreres, AMARadio bør altid kunne genvinde fokus efter tab af fokus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Batterioptimering er aktiveret, AMARadio kan muligvis ikke genvinde fokus efter tab af fokus, hvis den er i baggrunden.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Andet</string>
     <string name="settings_statistics">Statistikker</string>
     <string name="settings_about">Om AMARadio</string>
 
     <string name="description_btn_skip_to_next">Hop til næste</string>
     <string name="description_btn_skip_to_previous">Hop til forrige</string>
-
-    <string name="description_btn_setup_alarm">Indstil alarm</string>
 
     <string-array name="weekdays">
         <item>S</item>
@@ -323,17 +308,13 @@
     <string name="sort_lastchange">Sidste ændring</string>
     <string name="filter_select_country">Vælg land</string>
     <string name="filter_select_language">Vælg sprog</string>
-    <string name="filter_type_tag">Indtast mærke…</string>
-
-    <string name="alarm_backup">Alternativ alarm</string>
-    <string name="alarm_fallback_info">System alarm vedtaget som valgt radiostation kunne ikke indlæses</string>
-    <string name="alarm_back_desc">Alternativ system alarm vedtaget når radiostation ikke indlæses</string>
+    <string name="filter_type_tag">Indtast mærke&#8230;</string>
+    <string name="filter_tap_to_configure">Tryk for at konfigurere</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>

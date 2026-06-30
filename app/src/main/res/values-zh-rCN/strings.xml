@@ -1,5 +1,4 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">名称</string>
     <string name="detail_tags">标签</string>
@@ -17,7 +16,8 @@
     <string name="action_links">链接</string>
     <string name="action_homepage">主页</string>
     <string name="action_favorite">收藏</string>
-    <string name="action_alarm">闹钟</string>
+    <string name="action_starred_add">添加到收藏</string>
+    <string name="action_starred_remove">从收藏删除</string>
 
     <string name="action_station_visit_website">访问网站</string>
     <string name="action_station_copy_stream_url">复制流媒体地址</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">语言</string>
     <string name="action_edit">编辑</string>
     <string name="action_copy_info">复制信息</string>
+    <string name="action_rename_tab">重命名标签页</string>
+    <string name="error_filter_name_required">请先输入此过滤标签的名称</string>
+    <string name="confirm_delete_filter_tab">您确定要删除过滤器 \"%1$s\" 吗？</string>
+    <string name="filter_empty_title">构建您的自定义电台提要</string>
+    <string name="filter_empty_desc">通过结合多个标准创建个性化视图。您可以使用以下方式缩小搜索范围：</string>
+    <string name="filter_empty_filter_by">筛选依据</string>
+    <string name="filter_empty_filter_desc">国家、电台名称、标签或语言</string>
+    <string name="filter_empty_sort_by">排序依据</string>
+    <string name="filter_empty_sort_desc">点击量、字母顺序、票数 oder 最后修改</string>
+    <string name="filter_empty_hint">在上方字段中输入名称以保存此自定义视图！</string>
     <string name="error_station_load">无法连接电台</string>
     <string name="error_list_update">无法连接 radio browser 服务器</string>
 
-    <string name="share_action">分享电台链接到..</string>
+    <string name="share_action">分享电台链接到&#8230;</string>
 
     <string name="nav_item_stations">电台</string>
     <string name="nav_item_starred">收藏</string>
     <string name="nav_item_history">历史</string>
     <string name="nav_item_settings">设置</string>
-    <string name="nav_item_alarm">闹钟</string>
 
-    <string name="about_text">AMARadio 100% 无广告且注重隐私。\n\n我最初为我的母亲开发了这个应用程序，旨在为她提供一个简单、诚实的收音机体验，没有烦人的广告或跟踪。这就是为什么 AMARadio 将始终保持无广告 – 这是对她的承诺，并与你们所有人分享。\n\n此项目是基于 https://github.com/segler-alex/RadioDroid 开发的优秀应用的分支。整个代码库已从 Java 迁移到 Kotlin，以确保应用保持现代性并兼容未来的 Android 版本。\n\n源代码可在以下地址获得：https://github.com/ounben/AMARadio\n\n此程序使用位于 https://www.radio-browser.info 的免费广播电台目录。\n任何人都可以添加电台。它就像一个在线广播电台的维基一样。\n\n联系：ben@ounben.com\n\n漏洞跟踪：https://github.com/ounben/AMARadio/issues\n\n如果您喜欢此软件并愿意提供帮助，请随时给我发送电子邮件。\n关于新功能的建议也一向非常感谢！\n\n此程序是在 GPLv3 授权下的免费软件。https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio 100% 无广告且注重隐私。\n\n我最初为我的母亲开发了这个应用程序，旨在为她提供一个简单、诚实的收音机体验，没有烦人的广告或跟踪。这就是为什么 AMARadio 将始终保持无广告 – 这是对她的承诺，并与你们所有人分享。\n\n此项目是基于 RadioDroid 开发的优秀应用的分支。整个代码库已从 Java 迁移到 Kotlin，以确保应用保持现代性并兼容未来的 Android 版本。\n\n此程序使用位于 https://www.radio-browser.info 的免费广播电台目录。\n任何人都可以添加电台。它就像一个在线广播电台的维基一样。\n\n联系：ben@ounben.com\n\n漏洞跟踪：https://github.com/ounben/AMARadio/issues\n\n如果您喜欢此软件并愿意提供帮助，请随时给我发送电子邮件。\n关于新功能的建议也一向非常感谢！\n\n此程序是在 GPLv3 授权下的免费软件。https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">版本：%1$s</string>
     <string name="detail_star">添加到收藏</string>
     <string name="detail_unstar">从收藏删除</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">正在载入...</string>
+    <string name="progress_loading">正在载入&#8230;</string>
 
     <string name="sleep_timer" formatted="true">睡眠定时器：%1$02d:%2$02d</string>
     <string name="sleep_timer_title">在选定的分钟后停止播放</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">清除历史</string>
     <string name="searchpreference_no_results">无匹配项</string>
-    <string name="searchpreference_search">搜索…</string>
+    <string name="searchpreference_search">搜索&#8230;</string>
     <string name="settings_appearance">外观</string>
     <string name="settings_theme_selection_title">主题</string>
     <string name="theme_light">亮色</string>
@@ -134,13 +143,6 @@
     <string name="settings_auto_favorite_on">播放时自动收藏电台</string>
     <string name="settings_auto_favorite_off">播放时不自动收藏电台</string>
 
-    <string name="settings_alarm">闹钟</string>
-    <string name="settings_alarm_external">使用外部程序</string>
-    <string name="settings_alarm_external_desc_on">使用默认外部程序打开闹钟</string>
-    <string name="settings_alarm_external_desc_off">使用 AMARadio 打开闹钟</string>
-    <string name="settings_alarm_audio_player">音频播放器</string>
-    <string name="settings_alarm_sleep_timer">睡眠定时器</string>
-    <string name="settings_alarm_sleep_timer_desc">在 %1$s 分钟后停止播放</string>
     <string name="settings_play">播放器</string>
     <string name="settings_auto_play_on_startup">自动播放</string>
     <string name="settings_auto_play_on_startup_on">启动时播放上一个电台</string>
@@ -181,7 +183,9 @@
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">蓝牙连接时恢复</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">蓝牙 A2DP 设备连接时恢复播放</string>
-    
+
+    <string name="settings_auto_resume_on_any_connected">任何连接时均恢复</string>
+
     <string name="settings_warn_no_wifi">未使用 Wi-Fi 时警告</string>
     <string name="settings_warn_no_wifi_on">播放时无 Wi-Fi 连接警告</string>
     <string name="settings_warn_no_wifi_off">未使用 Wi-Fi 连接时不警告</string>
@@ -206,20 +210,6 @@
     <string name="alert_delete_favorites">您真要删除全部收藏吗？</string>
     <string name="yes">确认</string>
     <string name="no">取消</string>
-
-    <string name="alert_select_mpd_server">请选择服务器</string>
-    <string name="alert_select_mpd_server_name">服务器名</string>
-    <string name="alert_select_mpd_server_password">服务器密码</string>
-    <string name="hostname">主机名</string>
-    <string name="port">端口</string>
-
-    <string name="alert_select_mpd_server_add">添加</string>
-    <string name="alert_select_mpd_server_save">保存</string>
-    <string name="alert_select_mpd_server_remove">移除</string>
-    <string name="alert_add_or_edit_mpd_server">输入服务器详情</string>
-    <string name="alert_alarm_working">闹钟时间到</string>
-    <string name="alert_alarm_not_working">无足够信息启动闹钟</string>
-    <string name="alert_select_external_alarm_app">选择音频播放器</string>
 
     <string name="alert_press_back_to_exit">再按一次返回退出</string>
 
@@ -260,8 +250,6 @@
     <string name="icon_click_trend_increasing">热度正在上升</string>
     <string name="icon_click_trend_stable">热度稳定</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% 无广告且隐私</string>
 
@@ -279,8 +267,6 @@
     <string name="description_btn_skip_to_next">转到下一个</string>
     <string name="description_btn_skip_to_previous">转到上一个</string>
 
-    <string name="description_btn_setup_alarm">设置闹钟</string>
-    
     <string-array name="weekdays">
         <item>周日</item>
         <item>周一</item>
@@ -318,7 +304,8 @@
     <string name="sort_lastchange">最后修改</string>
     <string name="filter_select_country">选择国家</string>
     <string name="filter_select_language">选择语言</string>
-    <string name="filter_type_tag">输入标签…</string>
+    <string name="filter_type_tag">输入标签&#8230;</string>
+    <string name="filter_tap_to_configure">点击进行配置</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

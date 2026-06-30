@@ -16,6 +16,8 @@
     <string name="action_links">Ссылки</string>
     <string name="action_homepage">Главная страница</string>
     <string name="action_favorite">Избранное</string>
+    <string name="action_starred_add">Добавить в избранное</string>
+    <string name="action_starred_remove">Удалить из избранного</string>
 
     <string name="action_station_visit_website">Посетить веб-сайт</string>
     <string name="action_station_copy_stream_url">Копировать URL потока</string>
@@ -44,22 +46,32 @@
     <string name="action_languages">Языки</string>
     <string name="action_edit">Изменить</string>
     <string name="action_copy_info">Копировать инфо</string>
+    <string name="action_rename_tab">Переименовать вкладку</string>
+    <string name="error_filter_name_required">Сначала введите имя для этой вкладки фильтра</string>
+    <string name="confirm_delete_filter_tab">Вы уверены, что хотите удалить фильтр \"%1$s\"?</string>
+    <string name="filter_empty_title">Создайте свою ленту станций</string>
+    <string name="filter_empty_desc">Создайте персонализированный вид, комбинируя несколько критериев. Вы можете сузить поиск с помощью:</string>
+    <string name="filter_empty_filter_by">Фильтровать по</string>
+    <string name="filter_empty_filter_desc">Стране, названию станции, тегам или языку</string>
+    <string name="filter_empty_sort_by">Сортировать по</string>
+    <string name="filter_empty_sort_desc">Кликам, алфавиту, голосам или последним изменениям</string>
+    <string name="filter_empty_hint">Введите имя в поле выше, чтобы сохранить этот вид!</string>
     <string name="error_station_load">Не удалось подключиться к станции</string>
     <string name="error_list_update">Не удалось подключиться к серверу radio browser</string>
 
-    <string name="share_action">Поделиться ссылкой на станцию с…</string>
+    <string name="share_action">Поделиться ссылкой на станцию с&#8230;</string>
 
     <string name="nav_item_stations">Станции</string>
     <string name="nav_item_starred">Избранное</string>
     <string name="nav_item_history">История</string>
     <string name="nav_item_settings">Настройки</string>
 
-    <string name="about_text">AMARadio на 100% свободно от рекламы и ориентировано на конфиденциальность.\n\nИзначально я разработал это приложение для своей мамы, чтобы обеспечить ей простой и честный радио-опыт без раздражающей рекламы и слежки. Вот почему AMARadio всегда будет оставаться бесплатным – это обещание ей, которым я делюсь со всеми вами.\n\nЭтот проект является форком отличного https://github.com/segler-alex/RadioDroid . Весь код был перенесен с Java на Kotlin, чтобы приложение оставалось современным и совместимым с будущими версиями Android.\n\nИсходный код доступен по адресу: https://github.com/ounben/AMARadio\n\nЭто приложение использует свободную базу станций на https://www.radio-browser.info .\nКаждый может добавить станцию. База работает как вики для онлайн радиостанций.\n\nКонтакты: ben@ounben.com\n\nБаг-трекер: https://github.com/ounben/AMARadio/issues\n\nЕсли вам понравилось программное обеспечение и вы хотите помочь, напишите мне.\nИдеи для новых функций также всегда приветствуются!\n\nЭто свободное программное обеспечение, лицензированное под GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio на 100% свободно от рекламы и ориентировано на конфиденциальность.\n\nИзначально я разработал это приложение для своей мамы, чтобы обеспечить ей простой и честный радио-опыт без раздражающей рекламы и слежки. Вот почему AMARadio всегда будет оставаться бесплатным – это обещание ей, которым я делюсь со всеми вами.\n\nЭтот проект является форком отличного RadioDroid. Весь код был перенесен с Java на Kotlin, чтобы приложение оставалось современным и совместимым с будущими версиями Android.\n\nИсходный код доступен по адресу: https://github.com/ounben/AMARadio\n\nЭто приложение использует свободную базу станций на https://www.radio-browser.info .\nКаждый может добавить станцию. База работает как вики для онлайн радиостанций.\n\nКонтакты: ben@ounben.com\n\nБаг-трекер: https://github.com/ounben/AMARadio/issues\n\nЕсли вам понравилось программное обеспечение и вы хотите помочь, напишите мне.\nИдеи для новых функций также всегда приветствуются!\n\nЭто свободное программное обеспечение, лицензированное под GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Версия: %1$s</string>
     <string name="detail_star">Добавить в избранное</string>
     <string name="detail_unstar">Удалить из избранного</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Загрузка…</string>
+    <string name="progress_loading">Загрузка&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Таймер сна: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Остановить воспроизведение через указанное время</string>
@@ -86,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Очистить историю</string>
     <string name="searchpreference_no_results">Нет результатов</string>
-    <string name="searchpreference_search">Поиск…</string>
+    <string name="searchpreference_search">Поиск&#8230;</string>
     <string name="settings_appearance">Внешний вид</string>
     <string name="settings_theme_selection_title">Тема</string>
     <string name="theme_light">Светлая</string>
@@ -172,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">При Bluetooth подключении</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Возобновлять при подключении Bluetooth A2DP</string>
 
+    <string name="settings_auto_resume_on_any_connected">При любом подключении</string>
+
     <string name="settings_warn_no_wifi">Предупреждать об отсутствии Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Предупреждать при воспроизведении без Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Не предупреждать при отсутствии Wi-Fi</string>
@@ -236,8 +250,6 @@
     <string name="icon_click_trend_increasing">Популярность растёт</string>
     <string name="icon_click_trend_stable">Стабильная популярность</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% без рекламы и приватно</string>
 
@@ -291,7 +303,8 @@
     <string name="sort_lastchange">Последнее изменение</string>
     <string name="filter_select_country">Выбрать страну</string>
     <string name="filter_select_language">Выбрать язык</string>
-    <string name="filter_type_tag">Введите тег…</string>
+    <string name="filter_type_tag">Введите тег&#8230;</string>
+    <string name="filter_tap_to_configure">Нажмите для настройки</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>

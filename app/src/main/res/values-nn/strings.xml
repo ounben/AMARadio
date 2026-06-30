@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="detail_name">Namn</string>
   <string name="detail_tags">Merkelappar</string>
@@ -16,7 +16,8 @@
   <string name="action_links">Lenkjer</string>
   <string name="action_homepage">Heimeside</string>
   <string name="action_favorite">Favoritt</string>
-  <string name="action_alarm">Varsling</string>
+  <string name="action_starred_add">Legg til i favorittar</string>
+  <string name="action_starred_remove">Fjern frå favorittar</string>
 
   <string name="action_station_visit_website">Besøk heimesida</string>
   <string name="action_station_copy_stream_url">Kopier adressa til radiostraumen</string>
@@ -45,21 +46,30 @@
   <string name="action_languages">Språk</string>
   <string name="action_edit">Rediger</string>
   <string name="action_copy_info">Kopier info</string>
+  <string name="action_rename_tab">Gje nytt namn til fana</string>
+  <string name="error_filter_name_required">Ver venleg og skriv inn eit namn for denne filterfana først</string>
+  <string name="confirm_delete_filter_tab">Er du sikker på at du vil sletta filteret \"%1$s\"?</string>
+  <string name="filter_empty_title">Bygg din eigen kanal-straum</string>
+  <string name="filter_empty_desc">Lag ei personleg vising ved å kombinera fleire kriterium. Du kan avgrensa søket ved hjelp av:</string>
+  <string name="filter_empty_filter_by">Filtrer etter</string>
+  <string name="filter_empty_filter_desc">Land, kanalnamn, merkelappar eller språk</string>
+  <string name="filter_empty_sort_by">Sorter etter</string>
+  <string name="filter_empty_sort_desc">Klikk, Alfabet, Røyster oder Siste endring</string>
+  <string name="filter_empty_hint">Skriv eit namn i feltet over for å lagra denne tilpassa visinga!</string>
   <string name="error_station_load">Klarte ikkje kopla til kanalen</string>
   <string name="error_list_update">Klarte ikkje kopla til radio browser-tenaren</string>
-  <string name="share_action">Del kanallenkje med …</string>
+  <string name="share_action">Del kanallenkje med&#8230;</string>
   <string name="nav_item_stations">Kanalar</string>
   <string name="nav_item_starred">Favorittar</string>
   <string name="nav_item_history">Spelelogg</string>
   <string name="nav_item_settings">Innstillingar</string>
-  <string name="nav_item_alarm">Varsling</string>
 
-  <string name="about_text">AMARadio er 100% reklamefri og personvernfokusert.\n\nEg utvikla opphavleg denne appen for mor mi for å gje henne ei enkel, ærleg radiooppleving utan irriterande reklame eller sporing. Det er difor AMARadio alltid vil vera reklamefri – det er eit løfte til henne, delt med dykk alle.\n\nDette prosjektet er ein fork av den framifrå https://github.com/segler-alex/RadioDroid . Heile kodebasen har vorte migrert frå Java til Kotlin for å sikra at appen held seg moderne og kompatibel med framtidige Android-versjonar.\n\nKjeldekoden er tilgjengeleg på: https://github.com/ounben/AMARadio\n\nDenne appen brukar radiokanaloversikta på https://www.radio-browser.info .\nAlle kan leggja til nye radiokanalar. Nettsida fungerer som ein wiki om radiokanalar som tilbyr strauming over nettet.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nViss du likar dette programmet og ønskjer å hjelpa til, ta gjerne kontakt med meg på e-post.\nForslag til nye funksjonar vert òg sette pris på!\n\nDenne appen er fri programvare tilgjengeleg under GPLv3-lisensen. https://www.gnu.org/licenses/gpl-3.0.html</string>
+  <string name="about_text">AMARadio er 100% reklamefri og personvernfokusert.\n\nEg utvikla opphavleg denne appen for mor mi for å gje henne ei enkel, ærleg radiooppleving utan irriterande reklame eller sporing. Det er difor AMARadio alltid vil vera reklamefri – det er eit løfte til henne, delt med dykk alle.\n\nDette prosjektet er ein fork av den framifrå RadioDroid. Heile kodebasen har vorte migrert frå Java til Kotlin for å sikra at appen held seg moderne og kompatibel med framtidige Android-versjoner.\n\nKjeldekoden er tilgjengeleg på: https://github.com/ounben/AMARadio\n\nDenne appen brukar radiokanaloversikta på https://www.radio-browser.info .\nAlle kan leggja til nye radiokanalar. Nettsida fungerer som ein wiki om radiokanalar som tilbyr strauming over nettet.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nViss du likar dette programmet og ønskjer å hjelpa til, ta gjerne kontakt med meg på e-post.\nForslag til nye funksjonar vert òg sette pris på!\n\nDenne appen er fri programvare tilgjengeleg under GPLv3-lisensen. https://www.gnu.org/licenses/gpl-3.0.html</string>
   <string name="about_version">Versjon: %1$s</string>
   <string name="detail_star">Merk som favoritt</string>
   <string name="detail_unstar">Slett frå favorittar</string>
   <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-  <string name="progress_loading">Lastar …</string>
+  <string name="progress_loading">Lastar&#8230;</string>
 
   <string name="sleep_timer">Nedteljing: %1$02d:%2$02d</string>
   <string name="sleep_timer_title">Stopp avspeling etter valte minutt</string>
@@ -86,7 +96,7 @@
 
   <string name="searchpreference_clear_history">Tøm logg</string>
   <string name="searchpreference_no_results">Ingen resultat</string>
-  <string name="searchpreference_search">Søk …</string>
+  <string name="searchpreference_search">Søk&#8230;</string>
   <string name="settings_appearance">Pamne</string>
   <string name="settings_theme_selection_title">Tema</string>
   <string name="theme_light">Lyst</string>
@@ -97,6 +107,7 @@
   <string name="settings_compact_style_desc_on">Små ikon utan kanaldetaljar</string>
   <string name="settings_bottom_navigation">Navigering nedst</string>
   <string name="settings_ui_scale">UI-skalering</string>
+  <string name="settings_language">Språk</string>
   <string name="ui_scale_compact">Kompakt</string>
   <string name="ui_scale_standard">Systemstandard</string>
   <string name="ui_scale_large">Stor</string>
@@ -130,13 +141,6 @@
   <string name="settings_auto_favorite_on">Lagra automatisk kanalar som favorittar ved avspeling</string>
   <string name="settings_auto_favorite_off">Lagra ikkje automatisk kanalar som favorittar ved avspeling</string>
 
-  <string name="settings_alarm">Varsling</string>
-  <string name="settings_alarm_external">Bruk ekstern app</string>
-  <string name="settings_alarm_external_desc_on">Opna varslinga med standard ekstern app</string>
-  <string name="settings_alarm_external_desc_off">Opna varslinga med AMARadio</string>
-  <string name="settings_alarm_audio_player">Musikkspelar</string>
-  <string name="settings_alarm_sleep_timer">Nedteljing</string>
-  <string name="settings_alarm_sleep_timer_desc">Stopp avspeling etter %1$s minutt</string>
   <string name="settings_play">Avspeling</string>
   <string name="settings_auto_play_on_startup">Auto-spel</string>
   <string name="settings_auto_play_on_startup_on">Spel siste kanal ved oppstart</string>
@@ -178,6 +182,8 @@
   <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Hald fram ved Bluetooth tilkopling</string>
   <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Hald fram avspeling når Bluetooth A2DP-eining vert kopla til</string>
 
+  <string name="settings_auto_resume_on_any_connected">Hald fram ved eitkvart samband</string>
+
   <string name="settings_warn_no_wifi">Åtvaring utan Wi-Fi</string>
   <string name="settings_warn_no_wifi_on">Åtvar ved avspeling utan Wi-Fi-samband</string>
   <string name="settings_warn_no_wifi_off">Ikkje åtvar når det manglar Wi-Fi-samband</string>
@@ -203,19 +209,10 @@
   <string name="yes">Ja</string>
   <string name="no">Nei</string>
 
-  <string name="alert_select_mpd_server">Vel ein tenar</string>
-  <string name="alert_select_mpd_server_name">Tenarnamn</string>
-  <string name="alert_select_mpd_server_password">Tenarpassord</string>
+  <string name="alert_select_player">Vel ein tenar</string>
+  <string name="alert_select_player_name">Namn</string>
   <string name="hostname">Vertsnamn</string>
   <string name="port">Port</string>
-
-  <string name="alert_select_mpd_server_add">Legg til</string>
-  <string name="alert_select_mpd_server_save">Lagra</string>
-  <string name="alert_select_mpd_server_remove">Fjern</string>
-  <string name="alert_add_or_edit_mpd_server">Skriv inn informasjon om ein tenar</string>
-  <string name="alert_alarm_working">Varslingstid no</string>
-  <string name="alert_alarm_not_working">Mangler info for varsling</string>
-  <string name="alert_select_external_alarm_app">Vel musikkspelar</string>
 
   <string name="alert_press_back_to_exit">Trykk «Tilbake» ein gong til for å avslutta</string>
 
@@ -256,34 +253,22 @@
   <string name="icon_click_trend_increasing">Aukande popularitet</string>
   <string name="icon_click_trend_stable">Stabil popularitet</string>
 
-  <string name="media_route_menu_title">GoogleCast</string>
-  <string name="app_id">5A97BAE4</string>
   <string name="app_name">AMARadio</string>
   <string name="ad_free_promise">100% reklamefri &amp; privat</string>
-
-  <string name="settings_mpd">Music Player Daemon</string>
-  <string name="settings_mpd_port">MPD-port</string>
-  <string name="settings_view_mpd_servers">Tenarane dine</string>
-  <string name="action_mpd_nok">MPD ikkje kopla til</string>
-  <string name="action_mpd_ok">MPD kopla til</string>
-  <string name="action_mpd_connected">Kopla til tenar: %1$s</string>
-
-  <string name="mpd_no_connection">Manglar samband</string>
-  <string name="action_enable_mpd">Slå på MPD</string>
-  <string name="action_disable_mpd">Slå av MPD</string>
-  <string name="action_add_mpd_server">Legg til MPD-tenar</string>
 
   <string name="action_play_in_external">Spel av i ekstern spelar</string>
   <string name="action_choose_external_player">Vel ekstern spelar</string>
 
+  <string name="settings_disable_battery_optimization">Batterioptimalisering</string>
+  <string name="settings_ignore_battery_optimization_summary_on">Batterioptimalisering vert ignorert, AMARadio bør alltid kunne vinna att fokus.</string>
+  <string name="settings_ignore_battery_optimization_summary_off">Batterioptimalisering er aktivert, AMARadio kan kanskje ikkje vinna att fokus i bakgrunnen.</string>
+  <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
   <string name="settings_other">Anna</string>
   <string name="settings_statistics">Statistikk</string>
   <string name="settings_about">Om AMARadio</string>
 
   <string name="description_btn_skip_to_next">Hopp til neste</string>
   <string name="description_btn_skip_to_previous">Hopp til førre</string>
-
-  <string name="description_btn_setup_alarm">Set varsling</string>
 
   <string-array name="weekdays">
     <item>S</item>
@@ -321,17 +306,17 @@
     <string name="sort_lastchange">Siste endring</string>
     <string name="filter_select_country">Vel land</string>
     <string name="filter_select_language">Vel språk</string>
-    <string name="filter_type_tag">Skriv inn merkelapp…</string>
+    <string name="filter_type_tag">Skriv inn merkelapp&#8230;</string>
+    <string name="filter_tap_to_configure">Trykk for å konfigurera</string>
 
-  <string name="alarm_backup">Reservevarsling</string>
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="alarm_backup">Reservevarsling</string>
     <string name="alarm_fallback_info">Systemvarsling vald sidan den valde radiostasjonen ikkje kunne lastast inn</string>
     <string name="alarm_back_desc">Alternativ systemvarsling vald når radiostasjonen ikkje vert lasta inn</string>
-
-  <string name="context_menu_share">@string/detail_share</string>
-  <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
-  <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
-  <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-  <string name="context_menu_add_alarm">@string/action_alarm</string>
-  <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
-  <string name="context_menu_delete">@string/action_delete</string>
 </resources>

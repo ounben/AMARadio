@@ -16,7 +16,8 @@
     <string name="action_links">Linkit</string>
     <string name="action_homepage">Kotisivu</string>
     <string name="action_favorite">Suosikki</string>
-    <string name="action_alarm">Hälytys</string>
+    <string name="action_starred_add">Lisää suosikkeihin</string>
+    <string name="action_starred_remove">Poista suosikeista</string>
 
     <string name="action_station_visit_website">Vieraile verkkosivustolla</string>
     <string name="action_station_copy_stream_url">Kopioi suoratoiston URL</string>
@@ -45,23 +46,32 @@
     <string name="action_languages">Kielet</string>
     <string name="action_edit">Muokkaa</string>
     <string name="action_copy_info">Kopioi tiedot</string>
+    <string name="action_rename_tab">Nimeä välilehti uudelleen</string>
+    <string name="error_filter_name_required">Anna ensin nimi tälle suodatinnäkymälle</string>
+    <string name="confirm_delete_filter_tab">Haluatko varmasti poistaa suodattimen \"%1$s\"?</string>
+    <string name="filter_empty_title">Luo oma radioasemanäkymäsi</string>
+    <string name="filter_empty_desc">Luo henkilökohtainen näkymä yhdistämällä useita kriteerejä. Voit rajata hakuasi seuraavilla:</string>
+    <string name="filter_empty_filter_by">Suodata haun mukaan</string>
+    <string name="filter_empty_filter_desc">Maa, aseman nimi, tunnisteet tai kieli</string>
+    <string name="filter_empty_sort_by">Järjestä</string>
+    <string name="filter_empty_sort_desc">Klikkaukset, aakkosjärjestys, äänet tai viimeisin muutos</string>
+    <string name="filter_empty_hint">Kirjoita nimi yllä olevaan kenttään tallentaaksesi tämän näkymän!</string>
     <string name="error_station_load">Ei voitu yhdistää asemaan</string>
     <string name="error_list_update">Ei voitu yhdistää radio browser -palvelimeen</string>
 
-    <string name="share_action">Jaa aseman osoite sovelluksella..</string>
+    <string name="share_action">Jaa aseman osoite sovelluksella&#8230;</string>
 
     <string name="nav_item_stations">Asemat</string>
     <string name="nav_item_starred">Suosikit</string>
     <string name="nav_item_history">Historia</string>
     <string name="nav_item_settings">Asetukset</string>
-    <string name="nav_item_alarm">Hälytys</string>
 
-    <string name="about_text">AMARadio on 100% mainosvapaa ja yksityisyyteen keskittyvä sovellus.\n\nKehitin tämän sovelluksen alun perin äidilleni tarjotakseni hänelle yksinkertaisen, rehellisen radiokokemuksen ilman ärsyttäviä mainoksia tai seurantaa. Siksi AMARadio pysyy aina mainosvapaana – se on lupaus hänelle ja jaettu teidän kaikkien kanssanne.\n\nTämä projekti on fork erinomaisesta https://github.com/segler-alex/RadioDroid -sovelluksesta. Koko koodikanta on siirretty Javasta Kotliniin sen varmistamiseksi, että sovellus pysyy nykyaikaisena ja yhteensopivana tulevien Android-versioiden kanssa.\n\nLähdekoodi on saatavilla osoitteessa: https://github.com/ounben/AMARadio\n\nTämä sovellus käyttää ilmaista radioasemaluetteloa osoitteessa https://www.radio-browser.info .\nKuka tahansa voi lisätä asemia. Se toimii kuin wiki online-radioasemille.\n\nOta yhteyttä: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nJos pidät ohjelmistosta ja haluat auttaa, lähetä minulle sähköpostia.\nIdeoita uusiin ominaisuuksiin otetaan myös aina vastaan!\n\nTämä sovellus on ilmainen ohjelmisto, joka on lisensoitu GPLv3:lla. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio on 100% mainosvapaa ja yksityisyyteen keskittyvä sovellus.\n\nKehitin tämän sovelluksen alun perin äidilleni tarjotakseni hänelle yksinkertaisen, rehellisen radiokokemuksen ilman ärsyttäviä mainoksia tai seurantaa. Siksi AMARadio pysyy aina mainosvapaana – se on lupaus hänelle ja jaettu teidän kaikkien kanssanne.\n\nTämä projekti on fork erinomaisesta RadioDroid-sovelluksesta. Koko koodikanta on siirretty Javasta Kotliniin sen varmistamiseksi, että sovellus pysyy nykyaikaisena ja yhteensopivana tulevien Android-versioiden kanssa.\n\nLähdekoodi on saatavilla osoitteessa: https://github.com/ounben/AMARadio\n\nTämä sovellus käyttää ilmaista radioasemaluetteloa osoitteessa https://www.radio-browser.info .\nKuka tahansa voi lisätä asemia. Se toimii kuin wiki online-radioasemille.\n\nOta yhteyttä: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nJos pidät ohjelmistosta ja haluat auttaa, lähetä minulle sähköpostia.\nIdeoita uusiin ominaisuuksiin otetaan myös aina vastaan!\n\nTämä sovellus on ilmainen ohjelmisto, joka on lisensoitu GPLv3:lla. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versio: %1$s</string>
     <string name="detail_star">Lisää suosikkeihin</string>
     <string name="detail_unstar">Poista suosikeista</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Ladataan...</string>
+    <string name="progress_loading">Ladataan&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Uniajastin: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Pysäytä toisto valitun minuutin kuluttua</string>
@@ -88,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Tyhjennä historia</string>
     <string name="searchpreference_no_results">Ei tuloksia</string>
-    <string name="searchpreference_search">Hae…</string>
+    <string name="searchpreference_search">Hae&#8230;</string>
     <string name="settings_appearance">Ulkoasu</string>
     <string name="settings_theme_selection_title">Teema</string>
     <string name="theme_light">Vaalea</string>
@@ -99,6 +109,7 @@
     <string name="settings_compact_style_desc_on">Pieni kuvake ilman aseman tietoja</string>
     <string name="settings_bottom_navigation">Alapalkki</string>
     <string name="settings_ui_scale">Käyttöliittymän skaalaus</string>
+    <string name="settings_language">Kieli</string>
     <string name="ui_scale_compact">Tiivis</string>
     <string name="ui_scale_standard">Järjestelmän oletus</string>
     <string name="ui_scale_large">Suuri</string>
@@ -132,13 +143,6 @@
     <string name="settings_auto_favorite_on">Lisää asemat automaattisesti suosikkeihin toistettaessa</string>
     <string name="settings_auto_favorite_off">Älä lisää asemia automaattisesti suosikkeihin toistettaessa</string>
 
-    <string name="settings_alarm">Hälytys</string>
-    <string name="settings_alarm_external">Käytä ulkoista sovellusta</string>
-    <string name="settings_alarm_external_desc_on">Avaa hälytys oletusarvoisella ulkoisella sovelluksella</string>
-    <string name="settings_alarm_external_desc_off">Avaa hälytys AMARadiolla</string>
-    <string name="settings_alarm_audio_player">Audiosoitin</string>
-    <string name="settings_alarm_sleep_timer">Uniajastin</string>
-    <string name="settings_alarm_sleep_timer_desc">Pysäytä toisto %1$s minuutin jälkeen</string>
     <string name="settings_play">Soitin</string>
     <string name="settings_auto_play_on_startup">Automaattinen toisto</string>
     <string name="settings_auto_play_on_startup_on">Toista viimeisin asema käynnistettäessä</string>
@@ -180,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Jatka Bluetooth-yhteydessä</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Jatka toistoa, kun Bluetooth A2DP -laite kytketään</string>
 
+    <string name="settings_auto_resume_on_any_connected">Jatka millä tahansa yhteydellä</string>
+
     <string name="settings_warn_no_wifi">Varoitus ilman Wi-Fi-yhteyttä</string>
     <string name="settings_warn_no_wifi_on">Varoita, kun toistetaan ilman Wi-Fi-yhteyttä</string>
     <string name="settings_warn_no_wifi_off">Ei varoitusta, kun Wi-Fi-yhteyttä ei ole</string>
@@ -205,19 +211,10 @@
     <string name="yes">Kyllä</string>
     <string name="no">Ei</string>
 
-    <string name="alert_select_mpd_server">Valitse palvelin</string>
-    <string name="alert_select_mpd_server_name">Palvelimen nimi</string>
-    <string name="alert_select_mpd_server_password">Palvelimen salasana</string>
+    <string name="alert_select_player">Valitse ohjelma</string>
+    <string name="alert_select_player_name">Nimi</string>
     <string name="hostname">Isäntänimi</string>
     <string name="port">Portti</string>
-
-    <string name="alert_select_mpd_server_add">Lisää</string>
-    <string name="alert_select_mpd_server_save">Tallenna</string>
-    <string name="alert_select_mpd_server_remove">Poista</string>
-    <string name="alert_add_or_edit_mpd_server">Syötä palvelimen tiedot</string>
-    <string name="alert_alarm_working">Hälytysaika nyt</string>
-    <string name="alert_alarm_not_working">Ei riittävästi tietoja hälytystä varten</string>
-    <string name="alert_select_external_alarm_app">Valitse audiosoitin</string>
 
     <string name="alert_press_back_to_exit">Paina takaisin vielä kerran poistuaksesi</string>
 
@@ -258,22 +255,8 @@
     <string name="icon_click_trend_increasing">Suosio kasvaa</string>
     <string name="icon_click_trend_stable">Suosio vakaa</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% mainosvapaa &amp; yksityinen</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">MPD-portti</string>
-    <string name="settings_view_mpd_servers">Palvelimesi</string>
-    <string name="action_mpd_nok">MPD ei ole yhdistetty</string>
-    <string name="action_mpd_ok">MPD yhdistetty</string>
-    <string name="action_mpd_connected">Yhdistetty palvelimeen: %1$s</string>
-
-    <string name="mpd_no_connection">Ei yhteyttä</string>
-    <string name="action_enable_mpd">Ota MPD käyttöön</string>
-    <string name="action_disable_mpd">Poista MPD käytöstä</string>
-    <string name="action_add_mpd_server">Lisää MPD-palvelin</string>
 
     <string name="action_play_in_external">Toista ulkoisella soittimella</string>
     <string name="action_choose_external_player">Valitse ulkoinen soitin</string>
@@ -288,8 +271,6 @@
 
     <string name="description_btn_skip_to_next">Siirry seuraavaan</string>
     <string name="description_btn_skip_to_previous">Siirry edelliseen</string>
-
-    <string name="description_btn_setup_alarm">Aseta hälytys</string>
 
     <string-array name="weekdays">        
         <item>S</item>        
@@ -318,7 +299,7 @@
     <string name="filter_country">Maa</string>
     <string name="filter_tag">Tunniste</string>
     <string name="filter_language">Kieli</string>
-    <string name="filter_sort_by">Lajitteluperuste</string>
+    <string name="filter_sort_by">Järjestys</string>
     <string name="filter_reverse">Käänteinen järjestys</string>
     <string name="filter_apply">Käytä suodatinta</string>
     <string name="sort_name">Nimi</string>
@@ -327,17 +308,17 @@
     <string name="sort_lastchange">Viimeisin muutos</string>
     <string name="filter_select_country">Valitse maa</string>
     <string name="filter_select_language">Valitse kieli</string>
-    <string name="filter_type_tag">Kirjoita tunniste…</string>
-
-    <string name="alarm_backup">Varahälytys</string>
-    <string name="alarm_fallback_info">Käytetään järjestelmän hälytystä, koska valittua radioasemaa ei voitu ladata</string>
-    <string name="alarm_back_desc">Järjestelmän varahälytys, kun radioasema ei lataudu</string>
+    <string name="filter_type_tag">Kirjoita tunniste&#8230;</string>
+    <string name="filter_tap_to_configure">Napauta konfiguroidaksesi</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="alarm_backup">Varahälytys</string>
+    <string name="alarm_fallback_info">Käytetään järjestelmän hälytystä, koska valittua radioasemaa ei voitu ladata</string>
+    <string name="alarm_back_desc">Järjestelmän varahälytys, kun radioasema ei lataudu</string>
 </resources>

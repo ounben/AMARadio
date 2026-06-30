@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Ad</string>
     <string name="detail_tags">Etiketler</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Bağlantılar</string>
     <string name="action_homepage">Ana sayfa</string>
     <string name="action_favorite">Favori</string>
-    <string name="action_alarm">Alarm</string>
+    <string name="action_starred_add">Favorilere ekle</string>
+    <string name="action_starred_remove">Favorilerden çıkar</string>
 
     <string name="action_station_visit_website">Web sitesini ziyaret et</string>
     <string name="action_station_copy_stream_url">Yayın URL\'sini kopyala</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Diller</string>
     <string name="action_edit">Düzenle</string>
     <string name="action_copy_info">Bilgiyi kopyala</string>
+    <string name="action_rename_tab">Sekmeyi yeniden adlandır</string>
+    <string name="error_filter_name_required">Lütfen önce bu filtre sekmesi için bir isim girin</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" filtresini silmek istediğinizden emin misiniz?</string>
+    <string name="filter_empty_title">Kendi özel istasyon akışınızı oluşturun</string>
+    <string name="filter_empty_desc">Birden fazla kriteri birleştirerek kişiselleştirilmiş bir görünüm oluşturun. Aramanızı şunlarla daraltabilirsiniz:</string>
+    <string name="filter_empty_filter_by">Filtreleme kriteri</string>
+    <string name="filter_empty_filter_desc">Ülke, İstasyon Adı, Etiketler veya Dil</string>
+    <string name="filter_empty_sort_by">Sıralama ölçütü</string>
+    <string name="filter_empty_sort_desc">Tıklamalar, Alfabe, Oylar oder Son Değişiklik</string>
+    <string name="filter_empty_hint">Bu özel görünümü kaydetmek için yukarıdaki alana bir isim yazın!</string>
     <string name="error_station_load">İstasyona bağlanılamadı</string>
     <string name="error_list_update">Radio browser sunucusuna bağlanılamadı</string>
 
-    <string name="share_action">İstasyon bağlantısını paylaş..</string>
+    <string name="share_action">İstasyon bağlantısını paylaş&#8230;</string>
 
     <string name="nav_item_stations">İstasyonlar</string>
     <string name="nav_item_starred">Favoriler</string>
     <string name="nav_item_history">Geçmiş</string>
     <string name="nav_item_settings">Ayarlar</string>
-    <string name="nav_item_alarm">Alarm</string>
 
-    <string name="about_text">AMARadio %100 reklamsızdır ve gizlilik odaklıdır.\n\nBu uygulamayı başlangıçta annem için, ona sinir bozucu reklamlar veya takip mekanizmaları olmadan basit ve dürüst bir radyo deneyimi sunmak için geliştirdim. Bu nedenle AMARadio her zaman reklamsız kalacaktır – bu ona verdiğim ve hepinizle paylaştığım bir sözdür.\n\nBu proje, mükemmel https://github.com/segler-alex/RadioDroid \'in bir çatalıdır (fork). Tüm kod tabanı, uygulamanın modern kalmasını ve gelecekteki Android sürümleriyle uyumlu olmasını sağlamak için Java\'dan Kotlin\'e taşınmıştır.\n\nKaynak kodu şu adreste mevcuttur: https://github.com/ounben/AMARadio\n\nBu uygulama https://www.radio-browser.info adresindeki ücretsiz radyo istasyon dizinini kullanır.\nHerkes istasyon ekleyebilir. Çevrimiçi radyo istasyonları için bir viki gibi çalışır.\n\nİletişim: ben@ounben.com\n\nHata izleyici: https://github.com/ounben/AMARadio/issues\n\nBu yazılımı beğendiyseniz ve yardım etmek isterseniz, bana bir e-posta göndermekten çekinmeyin.\nYeni özellikler için fikirler de her zaman memnuniyetle karşılanır!\n\nBu uygulama GPLv3 altında lisanslanmış özgür yazılımdır. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio %100 reklamsızdır ve gizlilik odaklıdır.\n\nBu uygulamayı başlangıçta annem için, ona sinir bozucu reklamlar veya takip mekanizmaları olmadan basit ve dürüst bir radyo deneyimi sunmak için geliştirdim. Bu nedenle AMARadio her zaman reklamsız kalacaktır – bu ona verdiğim ve hepinizle paylaştığım bir sözdür.\n\nBu proje, mükemmel RadioDroid. Tüm kod tabanı, uygulamanın modern kalmasını ve gelecekteki Android sürümleriyle uyumlu olmasını sağlamak için Java\'dan Kotlin\'e taşınmıştır.\n\nBu uygulama https://www.radio-browser.info adresindeki ücretsiz radyo istasyon dizinini kullanır.\nHerkes istasyon ekleyebilir. Çevrimiçi radyo istasyonları için bir viki gibi çalışır.\n\nİletişim: ben@ounben.com\n\nHata izleyici: https://github.com/ounben/AMARadio/issues\n\nBu yazılımı beğendiyseniz ve yardım etmek isterseniz, bana bir e-posta göndermekten çekinmeyin.\nYeni özellikler için fikirler de her zaman memnuniyetle karşılanır!\n\nBu uygulama GPLv3 altında lisanslanmış özgür yazılımdır. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Sürüm: %1$s</string>
     <string name="detail_star">Favorilere ekle</string>
     <string name="detail_unstar">Favorilerden çıkar</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Yükleniyor...</string>
+    <string name="progress_loading">Yükleniyor&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Uyku zamanlayıcısı: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Seçilen dakikadan sonra oynatmayı durdur</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Geçmişi temizle</string>
     <string name="searchpreference_no_results">Sonuç yok</string>
-    <string name="searchpreference_search">Ara…</string>
+    <string name="searchpreference_search">Ara&#8230;</string>
     <string name="settings_appearance">Görünüm</string>
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Aydınlık</string>
@@ -100,6 +109,7 @@
     <string name="settings_compact_style_desc_on">İstasyon detayları olmadan küçük simge</string>
     <string name="settings_bottom_navigation">Alt gezinme</string>
     <string name="settings_ui_scale">UI Ölçeklendirme</string>
+    <string name="settings_language">Dil</string>
     <string name="ui_scale_compact">Sıkışık</string>
     <string name="ui_scale_standard">Sistem Standartı</string>
     <string name="ui_scale_large">Büyük</string>
@@ -133,13 +143,6 @@
     <string name="settings_auto_favorite_on">Oynatılırken istasyonu otomatik olarak favorilere ekle</string>
     <string name="settings_auto_favorite_off">Oynatılırken istasyonu otomatik olarak favorilere ekleme</string>
 
-    <string name="settings_alarm">Alarm</string>
-    <string name="settings_alarm_external">Harici uygulama kullan</string>
-    <string name="settings_alarm_external_desc_on">Alarmı varsayılan harici uygulama ile aç</string>
-    <string name="settings_alarm_external_desc_off">Alarmı AMARadio ile aç</string>
-    <string name="settings_alarm_audio_player">Ses oynatıcı</string>
-    <string name="settings_alarm_sleep_timer">Uyku zamanlayıcısı</string>
-    <string name="settings_alarm_sleep_timer_desc">Oynatmayı %1$s dakika sonra durdur</string>
     <string name="settings_play">Oynatıcı</string>
     <string name="settings_auto_play_on_startup">Otomatik oynat</string>
     <string name="settings_auto_play_on_startup_on">Başlangıçta son istasyonu oynat</string>
@@ -206,20 +209,6 @@
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
 
-    <string name="alert_select_mpd_server">Lütfen bir sunucu seçin</string>
-    <string name="alert_select_mpd_server_name">Sunucu adı</string>
-    <string name="alert_select_mpd_server_password">Sunucu parolası</string>
-    <string name="hostname">Ana bilgisayar adı</string>
-    <string name="port">Port</string>
-
-    <string name="alert_select_mpd_server_add">Ekle</string>
-    <string name="alert_select_mpd_server_save">Kaydet</string>
-    <string name="alert_select_mpd_server_remove">Kaldır</string>
-    <string name="alert_add_or_edit_mpd_server">Bir sunucu için ayrıntıları girin</string>
-    <string name="alert_alarm_working">Şimdi alarm zamanı</string>
-    <string name="alert_alarm_not_working">Alarm için yeterli bilgi yok</string>
-    <string name="alert_select_external_alarm_app">Ses oynatıcı seçin</string>
-
     <string name="alert_press_back_to_exit">Çıkmak için geri tuşuna bir kez daha basın</string>
 
     <string name="error_stream_url">Yayın URL sorunu</string>
@@ -259,22 +248,8 @@
     <string name="icon_click_trend_increasing">Popülerlik artıyor</string>
     <string name="icon_click_trend_stable">Popülerlik kararlı</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
-    <string name="ad_free_promise">%%100 reklamsız ve gizli</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">MPD portu</string>
-    <string name="settings_view_mpd_servers">Sunucularınız</string>
-    <string name="action_mpd_nok">MPD bağlı değil</string>
-    <string name="action_mpd_ok">MPD bağlı</string>
-    <string name="action_mpd_connected">Sunucuya bağlandı: %1$s</string>
-
-    <string name="mpd_no_connection">Bağlantı yok</string>
-    <string name="action_enable_mpd">MPD\'yi etkinleştir</string>
-    <string name="action_disable_mpd">MPD\'yi devre dışı bırak</string>
-    <string name="action_add_mpd_server">MPD sunucusu ekle</string>
+    <string name="ad_free_promise">100% reklamsız ve gizli</string>
 
     <string name="action_play_in_external">Harici oynatıcıda oynat</string>
     <string name="action_choose_external_player">Harici oynatıcı seçin</string>
@@ -289,8 +264,6 @@
 
     <string name="description_btn_skip_to_next">Sonrakine atla</string>
     <string name="description_btn_skip_to_previous">Öncekine atla</string>
-
-    <string name="description_btn_setup_alarm">Alarmı kur</string>
 
     <string-array name="weekdays">
         <item>Pz</item>
@@ -329,16 +302,12 @@
     <string name="filter_select_country">Ülke Seçin</string>
     <string name="filter_select_language">Dil Seçin</string>
     <string name="filter_type_tag">Etiket yazın…</string>
-
-    <string name="alarm_backup">Yedek alarm</string>
-    <string name="alarm_fallback_info">Seçilen radyo istasyonu yüklenemediği için sistem alarmı kullanıldı</string>
-    <string name="alarm_back_desc">Radyo istasyonu yüklenemediğinde kullanılan yedek sistem alarmı</string>
+    <string name="filter_tap_to_configure">Yapılandırmak için dokunun</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>

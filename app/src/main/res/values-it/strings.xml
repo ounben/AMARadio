@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Nome</string>
     <string name="detail_tags">Etichette</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Collegamenti</string>
     <string name="action_homepage">Pagina iniziale</string>
     <string name="action_favorite">Preferito</string>
-    <string name="action_alarm">Sveglia</string>
+    <string name="action_starred_add">Aggiungi ai preferiti</string>
+    <string name="action_starred_remove">Rimuovi dai preferiti</string>
 
     <string name="action_station_visit_website">Visita sito web</string>
     <string name="action_station_copy_stream_url">Copia URL del flusso</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Lingue</string>
     <string name="action_edit">Modifica</string>
     <string name="action_copy_info">Copia info</string>
+    <string name="action_rename_tab">Rinomina scheda</string>
+    <string name="error_filter_name_required">Inserire prima un nome per questa scheda di filtro</string>
+    <string name="confirm_delete_filter_tab">Sei sicuro di voler eliminare il filtro \"%1$s\"?</string>
+    <string name="filter_empty_title">Crea il tuo feed di stazioni personalizzato</string>
+    <string name="filter_empty_desc">Crea una vista personalizzata combinando più criteri. Puoi restringere la ricerca usando:</string>
+    <string name="filter_empty_filter_by">Filtra per</string>
+    <string name="filter_empty_filter_desc">Paese, Nome stazione, Tag o Lingua</string>
+    <string name="filter_empty_sort_by">Ordina per</string>
+    <string name="filter_empty_sort_desc">Clic, Alfabeto, Voti oder Ultima modifica</string>
+    <string name="filter_empty_hint">Digita un nome nel campo sopra per salvare questa vista personalizzata!</string>
     <string name="error_station_load">Impossibile connettersi alla stazione</string>
     <string name="error_list_update">Impossibile connettersi al server radio browser</string>
 
-    <string name="share_action">Condividi collegamento alla stazione con...</string>
+    <string name="share_action">Condividi collegamento alla stazione con&#8230;</string>
 
     <string name="nav_item_stations">Stazioni</string>
     <string name="nav_item_starred">Preferiti</string>
     <string name="nav_item_history">Cronologia</string>
     <string name="nav_item_settings">Impostazioni</string>
-    <string name="nav_item_alarm">Sveglia</string>
 
-    <string name="about_text">AMARadio è al 100% privo di pubblicità e focalizzato sulla privacy.\n\nHo originariamente sviluppato questa applicazione per mia madre per offrirle un\'esperienza radio semplice e onesta senza pubblicità fastidiose o tracciamento. Per questo motivo AMARadio rimarrà sempre privo di pubblicità – è una promessa fatta a lei, condivisa con tutti voi.\n\nQuesto progetto è un fork dell\'eccellente https://github.com/segler-alex/RadioDroid . L\'intera base di codice è stata migrata da Java a Kotlin per garantire che l\'applicazione rimanga moderna e compatibile con le future versioni di Android.\n\nIl codice sorgente è disponibile su: https://github.com/ounben/AMARadio\n\nQuesta applicazione usa il direttorio libero di radio presso https://www.radio-browser.info .\nChiunque può aggiungere stazioni radio. Funziona como una wiki per le stazioni radio in streaming.\n\nContatti: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe ti piace questo software e vuoi aiutare, sentiti libero di inviare un email.\nInoltre sono sempre apprezzate idee per nuove caratteristiche!\n\nQuesta applicazione è software libero sotto la licenza GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio è al 100% privo di pubblicità e focalizzato sulla privacy.\n\nHo originariamente sviluppato questa applicazione per mia madre per offrirle un\'esperienza radio semplice e onesta senza pubblicità fastidiose o tracciamento. Per questo motivo AMARadio rimarrà sempre privo di pubblicità – è una promessa fatta a lei, condivisa con tutti voi.\n\nQuesto progetto è un fork dell\'eccellente RadioDroid. L\'intera base di codice è stata migrata da Java a Kotlin per garantire che l\'applicazione rimanga moderna e compatibile con le future versioni di Android.\n\nIl codice sorgente è disponibile su: https://github.com/ounben/AMARadio\n\nQuesta applicazione usa il direttorio libero di radio presso https://www.radio-browser.info .\nChiunque può aggiungere stazioni radio. Funziona como una wiki per le stazioni radio in streaming.\n\nContatti: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe ti piace questo software e vuoi aiutare, sentiti libero di inviare un email.\nInoltre sono sempre apprezzate idee per nuove caratteristiche!\n\nQuesta applicazione è software libero sotto la licenza GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versione: %1$s</string>
     <string name="detail_star">Aggiungi ai preferiti</string>
     <string name="detail_unstar">Cancella dai favoriti</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Caricamento...</string>
+    <string name="progress_loading">Caricamento&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Tempo di sonno: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Smetti la riproduzione dopo il minuto selezionato</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Svuota cronologia</string>
     <string name="searchpreference_no_results">Nessun risultato</string>
-    <string name="searchpreference_search">Cerca…</string>
+    <string name="searchpreference_search">Cerca&#8230;</string>
     <string name="settings_appearance">Aspetto</string>
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Chiaro</string>
@@ -134,13 +143,6 @@
     <string name="settings_auto_favorite_on">Aggiungi automaticamente ai preferiti durante la riproduzione</string>
     <string name="settings_auto_favorite_off">Non aggiungere automaticamente ai preferiti durante la riproduzione</string>
 
-    <string name="settings_alarm">Sveglia</string>
-    <string name="settings_alarm_external">Apri applicazione esterna</string>
-    <string name="settings_alarm_external_desc_on">Apri la sveglia con l\'applicazione esterna predefinita</string>
-    <string name="settings_alarm_external_desc_off">Apri la sveglia con AMARadio</string>
-    <string name="settings_alarm_audio_player">Riproduttore di audio</string>
-    <string name="settings_alarm_sleep_timer">Tempo di sonno</string>
-    <string name="settings_alarm_sleep_timer_desc">Smetti di riprodurre dopo %1$s minuti</string>
     <string name="settings_play">Riproduttore</string>
     <string name="settings_auto_play_on_startup">Auto-riproduzione</string>
     <string name="settings_auto_play_on_startup_on">Riproduci l\'ultima stazione all\'avvio</string>
@@ -182,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Riprendi con connessione Bluetooth</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Riprendi la riproduzione alla connessione di dispositivi A2DP Bluetooth</string>
 
+    <string name="settings_auto_resume_on_any_connected">Riprendi con qualsiasi connessione</string>
+
     <string name="settings_warn_no_wifi">Avviso senza Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Avvisa quando si riproduce senza connessione Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Non avvisare quando non c\'è connessione Wi-Fi</string>
@@ -207,19 +211,10 @@
     <string name="yes">Sì</string>
     <string name="no">No</string>
 
-    <string name="alert_select_mpd_server">Per favore scegli un server</string>
-    <string name="alert_select_mpd_server_name">Nome del server</string>
-    <string name="alert_select_mpd_server_password">Password del server</string>
+    <string name="alert_select_player">Scegli un riproduttore</string>
+    <string name="alert_select_player_name">Nome</string>
     <string name="hostname">Hostname</string>
     <string name="port">Porta</string>
-
-    <string name="alert_select_mpd_server_add">Aggiungi</string>
-    <string name="alert_select_mpd_server_save">Salva</string>
-    <string name="alert_select_mpd_server_remove">Rimuovi</string>
-    <string name="alert_add_or_edit_mpd_server">Inserisci i dettagli del server</string>
-    <string name="alert_alarm_working">Ora della sveglia</string>
-    <string name="alert_alarm_not_working">Non ci sono abbastanza informazioni per la sveglia</string>
-    <string name="alert_select_external_alarm_app">Scegli riproduttore audio</string>
 
     <string name="alert_press_back_to_exit">Premi indietro ancora una volta per uscire</string>
 
@@ -260,8 +255,6 @@
     <string name="icon_click_trend_increasing">Popolarità crescente</string>
     <string name="icon_click_trend_stable">Popolarità stabile</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% privo di pubblicità e privato</string>
 
@@ -278,8 +271,6 @@
 
     <string name="description_btn_skip_to_next">Salta al seguente</string>
     <string name="description_btn_skip_to_previous">Salta al precedente</string>
-
-    <string name="description_btn_setup_alarm">Imposta sveglia</string>
 
     <string-array name="weekdays">
         <item>D</item>
@@ -317,7 +308,7 @@
     <string name="sort_lastchange">Ultima modifica</string>
     <string name="filter_select_country">Seleziona nazione</string>
     <string name="filter_select_language">Seleziona lingua</string>
-    <string name="filter_type_tag">Digita etichetta…</string>
+    <string name="filter_type_tag">Digita etichetta&#8230;</string>
     <string name="filter_tap_to_configure">Tocca per configurare</string>
 
     <string name="context_menu_share">@string/detail_share</string>

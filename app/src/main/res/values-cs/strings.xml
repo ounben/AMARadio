@@ -3,71 +3,318 @@
     <string name="detail_name">Jméno</string>
     <string name="detail_tags">Tagy</string>
     <string name="detail_country">Země</string>
+    <string name="detail_create_shortcut">Přidat na domovskou obrazovku</string>
     <string name="detail_language">Jazyk</string>
-    <string name="detail_weblink">Web</string>
-    <string name="detail_play">Hrát</string>
+    <string name="detail_weblink">Webový odkaz</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Přehrát</string>
+    <string name="detail_pause">Pozastavit</string>
     <string name="detail_stop">Zastavit</string>
-    <string name="action_search">Hledat</string>
-    <string name="action_top_click">Prohlížené</string>
-    <string name="action_top_vote">Volené</string>
-    <string name="action_changed_lately">Nedávno změněné</string>
-    <string name="action_currently_playing">Hrající</string>
-    <string name="action_tags">Tagy</string>
-    <string name="action_countries">Země</string>
-    <string name="action_languages">Jazyky</string>
-    <string name="error_station_load">Nelze připojit ke stanici</string>
-    <string name="error_list_update">Nelze připojit k serveru prohlížeče rádií</string>
+    <string name="detail_share">Sdílet</string>
+    <string name="detail_play_in_AMARadio">Přehrát v AMARadio</string>
 
-    <string name="share_action">Sdílet odkaz stanice s</string>
+    <string name="action_links">Odkazy</string>
+    <string name="action_homepage">Domovská stránka</string>
+    <string name="action_favorite">Oblíbené</string>
+    <string name="action_starred_add">Přidat k oblíbeným</string>
+    <string name="action_starred_remove">Odebrat z oblíbených</string>
 
+    <string name="action_station_visit_website">Navštívit webovou stránku</string>
+    <string name="action_station_copy_stream_url">Kopírovat URL streamu</string>
     <string name="action_station_share">Sdílet</string>
+
+    <string name="action_local">Místní</string>
+    <string name="action_skip_to_next">Další</string>
+    <string name="action_pause">Pozastavit</string>
+    <string name="action_skip_to_previous">Předchozí</string>
+    <string name="action_resume">Pokračovat</string>
+    <string name="action_stop">Zastavit</string>
+    <string name="action_search">Hledat</string>
+    <string name="action_delete">Smazat</string>
+    <string name="action_delete_history">Smazat historii</string>
+    <string name="action_delete_favorites">Smazat oblíbené</string>
+    <string name="action_delete_stream_history">Vymazat historii skladeb</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Zrušit</string>
+    <string name="action_top_click">Nejsledovanější</string>
+    <string name="action_toggle_view">Přepnout zobrazení</string>
+    <string name="action_top_vote">Nejlépe hodnocené</string>
+    <string name="action_changed_lately">Nedávno změněné</string>
+    <string name="action_currently_playing">Právě hraje</string>
+    <string name="action_tags">Tagy</string>
+    <string name="action_countries">Země/Regiony</string>
+    <string name="action_languages">Jazyky</string>
+    <string name="action_edit">Upravit</string>
+    <string name="action_copy_info">Kopírovat informace</string>
+    <string name="action_rename_tab">Přejmenovat kartu</string>
+    <string name="error_filter_name_required">Zadejte prosím nejprve název pro tuto kartu filtru</string>
+    <string name="confirm_delete_filter_tab">Opravdu chcete smazat filtr \"%1$s\"?</string>
+    <string name="filter_empty_title">Vytvořte si vlastní kanál rádiových stanic</string>
+    <string name="filter_empty_desc">Vytvořte si personalizované zobrazení kombinací více kritérií. Hledání můžete zúžit pomocí:</string>
+    <string name="filter_empty_filter_by">Filtrovat podle</string>
+    <string name="filter_empty_filter_desc">Země, Název stanice, Tagy nebo Jazyk</string>
+    <string name="filter_empty_sort_by">Seřadit podle</string>
+    <string name="filter_empty_sort_desc">Kliknutí, Abeceda, Hlasy nebo Poslední změna</string>
+    <string name="filter_empty_hint">Zadejte název do pole výše a uložte toto vlastní zobrazení!</string>
+    <string name="error_station_load">Nepodařilo se připojit ke stanici</string>
+    <string name="error_list_update">Nepodařilo se připojit k serveru radio browser</string>
+
+    <string name="share_action">Sdílet odkaz na stanici s&#8230;</string>
 
     <string name="nav_item_stations">Stanice</string>
     <string name="nav_item_starred">Oblíbené</string>
     <string name="nav_item_history">Historie</string>
     <string name="nav_item_settings">Nastavení</string>
-    <string name="nav_item_alarm">Alarm</string>
 
-    <string name="about_text">AMARadio je 100% bez reklam a zaměřený na soukromí.\n\nTuto aplikaci jsem původně vyvinul pro svou matku, abych jí poskytl jednoduchý a upřímný zážitek z rádia bez otravných reklam nebo sledování. Proto AMARadio vždy zůstane bez reklam – je to slib jí, sdílený s vámi všemi.\n\nTento projekt je forkem vynikajícího https://github.com/segler-alex/RadioDroid . Celá kódová základna byla migrována z Javy do Kotlinu, aby aplikace zůstala moderní a kompatibilní s budoucími verzemi Androidu.\n\nZdrojový kód je k dispozici na: https://github.com/ounben/AMARadio\n\nTato aplikace využívá bezplatný adresář rozhlasových stanic na https://www.radio-browser.info .\nKaždý tam může přidávat stanice. Funguje to jako wiki pro online rozhlasové stanice.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nPokud se vám software líbí a chcete pomoci, neváhejte mi poslat e-mail.\nNápady na nové funkce jsou také vždy vítány!\n\nTato aplikace je svobodný software licencovaný pod GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
-    <string name="progress_loading">Načítání...</string>
+    <string name="about_text">AMARadio je 100% bez reklam a zaměřený na soukromí.\n\nTuto aplikaci jsem původně vyvinul pro svou matku, abych jí poskytl jednoduchý a upřímný zážitek z rádia bez otravných reklam nebo sledování. Proto AMARadio vždy zůstane bez reklam – je to slib jí, sdílený s vámi všemi.\n\nTento projekt je forkem vynikajícího RadioDroid. Celá kódová základna byla migrována z Javy do Kotlinu, aby aplikace zůstala moderní a kompatibilní s budoucími verzemi Androidu.\n\nTato aplikace využívá bezplatný adresář rozhlasových stanic na https://www.radio-browser.info .\nKaždý tam může přidávat stanice. Funguje to jako wiki pro online rozhlasové stanice.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nPokud se vám software líbí a chcete pomoci, neváhejte mi poslat e-mail.\nNápady na nové funkce jsou také vždy vítány!\n\nTato aplikace je svobodný software licencovaný pod GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Verze: %1$s</string>
+    <string name="detail_star">Přidat k oblíbeným</string>
+    <string name="detail_unstar">Odebrat z oblíbených</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Načítání&#8230;</string>
 
-    <string name="sleep_timer" formatted="true">Časovač před spaním: %1$02d:%2$02d</string>
-    <string name="nav_item_add_sleep">Časovač před spaním</string>
+    <string name="sleep_timer" formatted="true">Časovač spánku: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Zastavit přehrávání po zvolené minutě</string>
+    <string name="sleep_timer_apply">Použít</string>
+    <string name="sleep_timer_clear">Vymazat</string>
+    <string name="nav_item_add_sleep">Časovač spánku</string>
 
-    <string name="settings_single_use_tags">Zobrazit osamocené tagy</string>
-    <string name="settings_single_use_tags_desc_off">Tagy použité pouze jednou nebudou zobrazeny</string>
-    <string name="settings_single_use_tags_desc_on">Tagy použité pouze jednou budou zobrazeny</string>
+    <string name="nav_item_save_playlist">Exportovat oblíbené jako playlist</string>
+    <string name="nav_item_load_playlist">Importovat oblíbené z playlistu</string>
+    <string name="nav_item_save_history_playlist">Exportovat historii jako playlist</string>
+    <string name="confirm_overwrite_file">Přepsat soubor?</string>
+    <string name="dialog_hint_file_name">Zadejte název souboru</string>
+    <string name="error_empty_field">Toto pole je povinné</string>
+    <string name="error_invalid_file_name">Neplatný název souboru</string>
+    <string name="label_button_cancel">Zrušit</string>
+    <string name="label_button_overwrite">Přepsat</string>
+    <string name="notify_load_playlist_nok">Nepodařilo se importovat z %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Importuji z %1$s&#47;%2$s, čekejte prosím.</string>
+    <string name="notify_load_playlist_ok">Importováno %1$d stanic z %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Nepodařilo se exportovat do %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Exportuji do %1$s&#47;%2$s, čekejte prosím.</string>
+    <string name="notify_save_playlist_ok">Export do %1$s&#47;%2$s byl úspěšný</string>
+    <string name="notify_sync_list_deleted_entries">%1$d z %2$d místních stanic v seznamu označeno jako neexistující na serveru</string>
+
+    <string name="searchpreference_clear_history">Vymazat historii</string>
+    <string name="searchpreference_no_results">Žádné výsledky</string>
+    <string name="searchpreference_search">Hledat&#8230;</string>
+    <string name="settings_appearance">Vzhled</string>
+    <string name="settings_theme_selection_title">Motiv</string>
+    <string name="theme_light">Světlý</string>
+    <string name="theme_dark">Tmavý</string>
+    <string name="theme_system">Podle systému</string>
+    <string name="settings_compact_style">Kompaktní režim</string>
+    <string name="settings_compact_style_desc_off">Velká ikona s detaily stanice</string>
+    <string name="settings_compact_style_desc_on">Malá ikona bez detailů stanice</string>
+    <string name="settings_bottom_navigation">Dolní navigace</string>
+    <string name="settings_ui_scale">Měřítko UI</string>
+    <string name="settings_language">Jazyk</string>
+    <string name="ui_scale_compact">Kompaktní</string>
+    <string name="ui_scale_standard">Standardní</string>
+    <string name="ui_scale_large">Velké</string>
+    <string name="ui_scale_extra_large">Velmi velké</string>
+
+    <string name="settings_interaction">Interakce</string>
+    <string name="settings_single_use_tags">Zobrazit zřídka používané tagy</string>
+    <string name="settings_single_use_tags_desc_off">Zřídka používané tagy se nebudou zobrazovat</string>
+    <string name="settings_single_use_tags_desc_on">Zřídka používané tagy se budou zobrazovat</string>
 
     <string name="settings_show_broken">Nefunkční stanice</string>
     <string name="settings_show_broken_on">Zobrazovat nefunkční stanice v seznamech</string>
     <string name="settings_show_broken_off">Nezobrazovat nefunkční stanice v seznamech</string>
 
-    <string name="settings_alarm">Alarm</string>
-    <string name="settings_alarm_external">Otevřít externě</string>
-    <string name="settings_alarm_audio_player">Audiopřehrávač</string>
-    <string name="settings_alarm_sleep_timer">Časovač před spaním</string>
-    <string name="settings_alarm_sleep_timer_desc">Ukončit přehrávání po %1$s minutách</string>
+    <string name="settings_startup_behaviour">Chování při spuštění</string>
+    <string name="action_grid_view">Zobrazení mřížky</string>
+    <string name="action_list_view">Zobrazení seznamu</string>
+
+    <string name="startup_action_title">Akce při spuštění</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Zobrazit všechny stanice</string>
+    <string name="startup_show_favorites">Zobrazit oblíbené</string>
+    <string name="startup_show_history">Zobrazit historii</string>
+    <string name="startup_show_last_view">Poslední zobrazení</string>
+
+    <string name="settings_load_icons">Zobrazit ikony stanic</string>
+    <string name="settings_load_icons_on">Ikony budou staženy</string>
+    <string name="settings_load_icons_off">Ikony nebudou staženy</string>
+
+    <string name="settings_auto_favorite">Automatické oblíbené</string>
+    <string name="settings_auto_favorite_on">Při přehrávání automaticky přidávat stanice k oblíbeným</string>
+    <string name="settings_auto_favorite_off">Nepřidávat stanice automaticky k oblíbeným při přehrávání</string>
+
     <string name="settings_play">Přehrávač</string>
-    <string name="settings_play_external">Otevřít externě</string>
+    <string name="settings_auto_play_on_startup">Automatické přehrávání</string>
+    <string name="settings_auto_play_on_startup_on">Při spuštění přehrát poslední stanici</string>
+    <string name="settings_auto_play_on_startup_off">Nepřehrávat poslední stanici při spuštění</string>
+    <string name="settings_auto_off_on_startup">Automatické zastavení</string>
+    <string name="settings_auto_off_on_startup_on">Použít časovač automatického zastavení s automatickým přehráváním</string>
+    <string name="settings_auto_off_on_startup_off">Nepoužívat časovač automatického zastavení s automatickým přehráváním</string>
+    <string name="settings_auto_off_sleep_timer">Časovač automatického zastavení</string>
+    <string name="settings_auto_off_sleep_timer_desc">Zastavit přehrávání po %1$s minutách</string>
+    <string name="settings_play_external">Povolit externí přehrávač</string>
+    <string name="settings_play_external_desc_on">Přehrávat stanice v externím přehrávači</string>
+    <string name="settings_play_external_desc_off">Přehrávat stanice v AMARadio</string>
+    <string name="settings_equalizer">Ekvalizér</string>
 
-    <string name="settings_statistics">Statistiky</string>
-    <string name="settings_about">O aplikaci</string>
+    <string name="settings_connectivity">Konektivita</string>
+    <string name="settings_connect_timeout">Časový limit připojení</string>
+    <string name="settings_read_timeout">Časový limit čtení</string>
+    <string name="settings_resume_timeout">Časový limit pokračování</string>
+    <string name="settings_retry_timeout">Časový limit opakování</string>
+    <string name="settings_retry_delay">Zpoždění opětovného připojení</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Uživatelské jméno</string>
+    <string name="settings_proxy_password">Heslo</string>
+    <string name="settings_proxy_action_test">Testovat</string>
+    <string name="settings_proxy_working">Úspěšně připojeno k %s</string>
+    <string name="settings_proxy_not_working">Nepodařilo se připojit k %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Zadané hodnoty pro proxy jsou neplatné</string>
+    <string name="ignore_proxy_settings_invalid">Ignorováno neplatné nastavení proxy</string>
+    <string name="settings_seconds_format">%d sekund</string>
+    <string name="settings_milliseconds_format">%d milisekund</string>
 
-    <string name="notify_play">Hrající</string>
+    <string name="settings_pause_when_noisy">Pozastavit při odpojení náhlavní soupravy</string>
+
+    <string name="settings_auto_resume_do_not_resume">Nepokračovat</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Pokračovat při kabelovém připojení</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Pokračovat v přehrávání po připojení kabelové náhlavní soupravy</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Pokračovat při Bluetooth připojení</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Pokračovat v přehrávání po připojení Bluetooth A2DP zařízení</string>
+
+    <string name="settings_auto_resume_on_any_connected">Pokračovat při jakémkoliv připojení</string>
+
+    <string name="settings_warn_no_wifi">Upozornění na chybějící Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Upozornit při přehrávání bez Wi-Fi připojení</string>
+    <string name="settings_warn_no_wifi_off">Žádné upozornění při přehrávání bez Wi-Fi</string>
+
+    <string name="notify_pre_play">Připojování</string>
+    <string name="notify_play">Přehrávání</string>
+    <string name="notify_paused">Pozastaveno</string>
+    <string name="notify_metered_connection">Měřené připojení</string>
+
+    <string name="notify_starred">Stanice byla přidána k oblíbeným</string>
+    <string name="notify_autostarred">Stanice byla automaticky přidána k oblíbeným</string>
+    <string name="notify_unstarred">Stanice byla odebrána z oblíbených</string>
+    <string name="notify_deleted_favorites">Oblíbené byly smazány</string>
+    <string name="notify_deleted_history">Historie byla smazána</string>
+
+    <string name="notify_open_link_failure">Nebyla nalezena žádná aplikace pro otevření odkazu</string>
+
+    <string name="notify_station_removed_from_list">1 Odstraněno</string>
+    <string name="action_station_removed_from_list_undo">ZPĚT</string>
+
+    <string name="alert_delete_history">Opravdu chcete smazat historii?</string>
+    <string name="alert_delete_favorites">Opravdu chcete smazat všechny oblíbené?</string>
+    <string name="yes">Ano</string>
+    <string name="no">Ne</string>
+
+    <string name="alert_select_player">Vyberte prosím přehrávač</string>
+    <string name="alert_select_player_name">Jméno</string>
+    <string name="hostname">Hostitel</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Stiskněte znovu zpět pro ukončení</string>
 
     <string name="error_stream_url">Problém s URL streamu</string>
-    <string name="error_caching_stream">Problém s cache streamu</string>
-    <string name="error_play_stream">Nelze přehrát stream</string>
+    <string name="error_caching_stream">Problém s ukládáním streamu do mezipaměti</string>
+    <string name="error_play_stream">Nepodařilo se přehrát stream</string>
+    <string name="error_stream_reconnect_timeout">Nepodařilo se znovu připojit ke streamu: časový limit vypršel</string>
+    <string name="warning_no_network_trying_resume">Žádné síťové připojení. Pokus o obnovení po obnovení připojení.</string>
+    <string name="giving_up_resume">Vzdávám pokus o obnovení přehrávání</string>
 
-    <string name="player_info_status">STAV:</string>
-    <string name="player_info_status_stopped">Zastaveno</string>
-    <string name="player_info_status_playing">Hrající</string>
+    <string name="error_grant_audiofocus">Žádost o audio focus nebyla systémem udělena</string>
+
+    <string name="error_no_equalizer_found">Nebyla nalezena žádná aplikace ekvalizéru</string>
+
+    <string name="player_info_status">Stav:&#160;</string>
+    <string name="player_info_status_stopped">zastaveno</string>
+    <string name="player_info_status_playing">hraje</string>
     <string name="player_info_transferred">Přenesená data: %1$s</string>
 
-    <string name="station_detail_bitrate">%1$1d kbps</string>
-    <string name="station_detail_broken">ROZBITÉ</string>
+    <string name="tab_player_art">Přebal alba</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Historie skladeb</string>
 
-    <string name="image_button_disable">Vypnout</string>
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">NEFUNKČNÍ</string>
+    <string name="station_detail_deleted_on_server">SMAZÁNO</string>
+
+    <string name="station_details_clicks">%1$d kliknutí</string>
+    <string name="station_details_votes">%1$d hlasů</string>
+
+    <string name="image_button_disable">Zakázat</string>
     <string name="image_button_delete">Smazat</string>
     <string name="image_button_more">Více</string>
+    <string name="image_button_less">Méně</string>
+    <string name="image_button_repeat">Opakovat</string>
+    <string name="image_button_dont_repeat">Neopakovat</string>
+    <string name="icon_click_trend_decreasing">Popularita klesá</string>
+    <string name="icon_click_trend_increasing">Popularita stoupá</string>
+    <string name="icon_click_trend_stable">Popularita je stabilní</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% bez reklam a soukromé</string>
+
+    <string name="action_play_in_external">Přehrát v externím přehrávači</string>
+    <string name="action_choose_external_player">Vybrat externí přehrávač</string>
+
+    <string name="settings_disable_battery_optimization">Optimalizace baterie</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Optimalizace baterie je ignorována, AMARadio by mělo být vždy schopno znovu získat fokus po jeho ztrátě.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Optimalizace baterie je aktivována, AMARadio nemusí být schopno znovu získat fokus po jeho ztrátě, pokud je na pozadí.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Ostatní</string>
+    <string name="settings_statistics">Statistiky</string>
+    <string name="settings_about">O AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Skočit na další</string>
+    <string name="description_btn_skip_to_previous">Skočit na předchozí</string>
+
+    <string-array name="weekdays">
+        <item>N</item>
+        <item>P</item>
+        <item>Ú</item>
+        <item>S</item>
+        <item>Č</item>
+        <item>P</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL streamu úspěšně zkopírováno</string>
+    <string name="notify_track_info_copied">Informace o skladbě úspěšně zkopírovány</string>
+
+    <string-array name="actions_station_link">
+        <item>Navštívit webovou stránku</item>
+        <item>Kopírovat URL streamu</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Detekováno měřené připojení</string>
+    <string name="alert_metered_connection_message">Měřené připojení může být zpoplatněno, pokračujte stisknutím \'OK\'.</string>
+    <string name="nav_item_statistics">Statistiky</string>
+    <string name="nav_item_about">O aplikaci</string>
+    <string name="refresh">Obnovit</string>
+    <string name="action_filter">Filtr</string>
+    <string name="filter_country">Země</string>
+    <string name="filter_tag">Tag</string>
+    <string name="filter_language">Jazyk</string>
+    <string name="filter_sort_by">Seřadit podle</string>
+    <string name="filter_reverse">Obrátit pořadí</string>
+    <string name="filter_apply">Použít filtr</string>
+    <string name="sort_name">Jméno</string>
+    <string name="sort_votes">Hlasy</string>
+    <string name="sort_clicks">Kliknutí</string>
+    <string name="sort_lastchange">Poslední změna</string>
+    <string name="filter_select_country">Vyberte zemi</string>
+    <string name="filter_select_language">Vyberte jazyk</string>
+    <string name="filter_type_tag">Zadejte tag&#8230;</string>
+    <string name="filter_tap_to_configure">Klepnutím nakonfigurujete</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
 </resources>

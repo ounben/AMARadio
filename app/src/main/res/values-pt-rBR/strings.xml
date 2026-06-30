@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Nome</string>
     <string name="detail_tags">Etiquetas</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Links</string>
     <string name="action_homepage">Página inicial</string>
     <string name="action_favorite">Favorito</string>
-    <string name="action_alarm">Alarme</string>
+    <string name="action_starred_add">Adicionar aos favoritos</string>
+    <string name="action_starred_remove">Remover dos favoritos</string>
 
     <string name="action_station_visit_website">Visite o site</string>
     <string name="action_station_copy_stream_url">Copiar URL da transmissão</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Idiomas</string>
     <string name="action_edit">Editar</string>
     <string name="action_copy_info">Copiar informações</string>
+    <string name="action_rename_tab">Renomear aba</string>
+    <string name="error_filter_name_required">Por favor, insira primeiro um nome para esta aba de filtro</string>
+    <string name="confirm_delete_filter_tab">Tem certeza de que deseja excluir o filtro \"%1$s\"?</string>
+    <string name="filter_empty_title">Construa seu próprio feed de rádios</string>
+    <string name="filter_empty_desc">Crie uma visualização personalizada combinando vários critérios. Você pode filtrar por:</string>
+    <string name="filter_empty_filter_by">Filtrar por</string>
+    <string name="filter_empty_filter_desc">País, nome da rádio, etiquetas ou idioma</string>
+    <string name="filter_empty_sort_by">Ordenar por</string>
+    <string name="filter_empty_sort_desc">Cliques, Alfabeto, Votos oder Última mudança</string>
+    <string name="filter_empty_hint">Digite um nome no campo acima para salvar esta visualização personalizada!</string>
     <string name="error_station_load">Não foi possível conectar ao rádio</string>
     <string name="error_list_update">Não foi possível conectar ao servidor radio browser</string>
 
-    <string name="share_action">Compartilhar link de rádio com...</string>
+    <string name="share_action">Compartilhar link de rádio com&#8230;</string>
 
     <string name="nav_item_stations">Rádios</string>
     <string name="nav_item_starred">Favoritos</string>
     <string name="nav_item_history">História</string>
     <string name="nav_item_settings">Ajustes</string>
-    <string name="nav_item_alarm">Alarme</string>
 
-    <string name="about_text">O AMARadio é 100% livre de publicidade e focado na privacidade.\n\nOriginalmente desenvolvi este aplicativo para minha mãe, para proporcionar a ela uma experiência de rádio simples e honesta, sem anúncios irritantes ou rastreamento. É por isso que o AMARadio sempre permanecerá livre de anúncios – é uma promessa a ela, compartilhada com todos vocês.\n\nEste projeto é um fork do excelente https://github.com/segler-alex/RadioDroid . Toda a base de código foi migrada de Java para Kotlin para garantir que o aplicativo permaneça moderno e compatível com as futuras versões do Android.\n\nO código-fonte está disponível em: https://github.com/ounben/AMARadio\n\nEste aplicativo usa o catálogo gratuito de rádios em https://www.radio-browser.info .\nTodos podem adicionar rádios. Funciona como uma wiki para rádios na rede.\n\nContato: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe você gosta do software e quer ajudar, fique à vontade para enviar um e-mail.\nTambém ideias para novas funcionalidades são sempre bem-vindas!\n\nEste aplicativo é de software livre licenciado sob a GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">O AMARadio é 100% livre de publicidade e focado na privacidade.\n\nOriginalmente desenvolvi este aplicativo para minha mãe, para proporcionar a ela uma experiência de rádio simples e honesta, sem anúncios irritantes ou rastreamento. É por isso que o AMARadio sempre permanecerá livre de anúncios – é uma promessa a ela, compartilhada com todos vocês.\n\nEste projeto é um fork do excelente RadioDroid. Toda a base de código foi migrada de Java para Kotlin para garantir que o aplicativo permaneça moderno e compatível com as futuras versões do Android.\n\nEste aplicativo usa o catálogo gratuito de rádios em https://www.radio-browser.info .\nTodos podem adicionar rádios. Funciona como uma wiki para rádios na rede.\n\nContato: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSe você gosta do software e quer ajudar, fique à vontade para enviar um e-mail.\nTambém ideias para novas funcionalidades são sempre bem-vindas!\n\nEste aplicativo é de software livre licenciado sob a GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versão: %1$s</string>
     <string name="detail_star">Adicionar aos favoritos</string>
     <string name="detail_unstar">Excluir dos favoritos</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Carregando...</string>
+    <string name="progress_loading">Carregando&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Despertador do sono: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Parar de reproduzir após o tempo selecionado</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Excluir histórico</string>
     <string name="searchpreference_no_results">Nenhum resultado</string>
-    <string name="searchpreference_search">Pesquisar...</string>
+    <string name="searchpreference_search">Pesquisar&#8230;</string>
     <string name="settings_appearance">Aparência</string>
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Claro</string>
@@ -132,15 +141,8 @@
 
     <string name="settings_auto_favorite">Auto-favoritos</string>
     <string name="settings_auto_favorite_on">Adicionar rádios automaticamente aos favoritos ao reproduzir</string>
-    <string name="settings_auto_favorite_off">Não adicionar rádios automaticamente aos favoritos</string>
+    <string name="settings_auto_favorite_off">Não adicionar rádios automaticamente aos favoritos ao reproduzir</string>
 
-    <string name="settings_alarm">Alarme</string>
-    <string name="settings_alarm_external">Usar aplicativo externo</string>
-    <string name="settings_alarm_external_desc_on">Abra o alarme com o aplicativo externo padrão</string>
-    <string name="settings_alarm_external_desc_off">Abra o alarme com AMARadio</string>
-    <string name="settings_alarm_audio_player">Reprodutor de áudio</string>
-    <string name="settings_alarm_sleep_timer">Despertador do sono</string>
-    <string name="settings_alarm_sleep_timer_desc">Parar de reproduzir após %1$s minutos</string>
     <string name="settings_play">Reprodutor</string>
     <string name="settings_auto_play_on_startup">Auto-reproduzir</string>
     <string name="settings_auto_play_on_startup_on">Reproduzir último rádio ao iniciar</string>
@@ -182,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Retomar com Bluetooth</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Retomar a reprodução ao conectar com Bluetooth A2DP</string>
 
+    <string name="settings_auto_resume_on_any_connected">Retomar com qualquer conexão</string>
+
     <string name="settings_warn_no_wifi">Aviso de falta de Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Avisar quando estiver reproduzindo sem Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Não avisar quando não estiver com Wi-Fi</string>
@@ -197,7 +201,7 @@
     <string name="notify_deleted_favorites">Os favoritos foram excluídos</string>
     <string name="notify_deleted_history">O histórico foi excluído</string>
 
-    <string name="notify_open_link_failure">Nenhum aplicativo encontrado para abrir o link</string>
+    <string name="notify_open_link_failure">Nenhum aplicativo encontrado para abrir le link</string>
 
     <string name="notify_station_removed_from_list">1 Excluído</string>
     <string name="action_station_removed_from_list_undo">DESFAZER</string>
@@ -207,25 +211,16 @@
     <string name="yes">Sim</string>
     <string name="no">Não</string>
 
-    <string name="alert_select_mpd_server">Favor selecione um servidor</string>
-    <string name="alert_select_mpd_server_name">Nome do servidor</string>
-    <string name="alert_select_mpd_server_password">Senha do servidor</string>
+    <string name="alert_select_player">Por favor selecione um reprodutor</string>
+    <string name="alert_select_player_name">Nome</string>
     <string name="hostname">Hostname</string>
     <string name="port">Porta</string>
-
-    <string name="alert_select_mpd_server_add">Adicionar</string>
-    <string name="alert_select_mpd_server_save">Salvar</string>
-    <string name="alert_select_mpd_server_remove">Remover</string>
-    <string name="alert_add_or_edit_mpd_server">Digite os detalhes do servidor</string>
-    <string name="alert_alarm_working">Hora do alarme</string>
-    <string name="alert_alarm_not_working">Não há informações suficientes para o alarme</string>
-    <string name="alert_select_external_alarm_app">Escolha o reprodutor de áudio</string>
 
     <string name="alert_press_back_to_exit">Clique de novo para sair</string>
 
     <string name="error_stream_url">Problema na URL da transmissão</string>
     <string name="error_caching_stream">Problema no cache da transmissão</string>
-    <string name="error_play_stream">Incapaz de reproduzir</string>
+    <string name="error_play_stream">Incapaz de reproduzir fluxo</string>
     <string name="error_stream_reconnect_timeout">Incapaz de reconectar à transmissão: tempo esgotado</string>
     <string name="warning_no_network_trying_resume">Nenhuma conexão de rede. Tentando retomar quando a conexão voltar.</string>
     <string name="giving_up_resume">Desistindo da tentativa de retomar a reprodução</string>
@@ -260,8 +255,6 @@
     <string name="icon_click_trend_increasing">Popularidade aumentando</string>
     <string name="icon_click_trend_stable">Popularidade estável</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% livre de publicidade e privado</string>
 
@@ -278,8 +271,6 @@
 
     <string name="description_btn_skip_to_next">Pular para a próxima</string>
     <string name="description_btn_skip_to_previous">Voltar para a anterior</string>
-
-    <string name="description_btn_setup_alarm">Ajustar alarme</string>
 
     <string-array name="weekdays">
         <item>D</item>
@@ -326,4 +317,8 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <string name="alarm_backup">Alarme reserva</string>
+    <string name="alarm_fallback_info">Alarme do sistema adotado porque a rádio selecionada falhou ao carregar</string>
+    <string name="alarm_back_desc">Alarme do sistema alternativo adotado quando a rádio não carrega</string>
 </resources>

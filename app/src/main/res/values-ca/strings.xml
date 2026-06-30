@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <resources>
     <string name="detail_name">Nom</string>
     <string name="detail_tags">Etiquetes</string>
@@ -17,7 +16,8 @@
     <string name="action_links">Links</string>
     <string name="action_homepage">Pàgina inicial</string>
     <string name="action_favorite">Favorit</string>
-    <string name="action_alarm">Alarma</string>
+    <string name="action_starred_add">Afegeix a preferides</string>
+    <string name="action_starred_remove">Elimina de preferides</string>
 
     <string name="action_station_visit_website">Visitar el lloc web</string>
     <string name="action_station_copy_stream_url">Copia l\'URL del flux</string>
@@ -46,23 +46,32 @@
     <string name="action_languages">Idiomes</string>
     <string name="action_edit">Edita</string>
     <string name="action_copy_info">Copia Info</string>
+    <string name="action_rename_tab">Reanomenar pestanya</string>
+    <string name="error_filter_name_required">Introduïu primer un nom per a aquesta pestanya de filtre</string>
+    <string name="confirm_delete_filter_tab">Esteu segur que voleu suprimir el filtre \"%1$s\"?</string>
+    <string name="filter_empty_title">Construeix el teu propi feed d\'emissores</string>
+    <string name="filter_empty_desc">Creeu una vista personalitzada combinant diversos criteris. Podeu restringir la cerca mitjançant:</string>
+    <string name="filter_empty_filter_by">Filtra per</string>
+    <string name="filter_empty_filter_desc">País, Nom de l\'emissora, Etiquetes o Idioma</string>
+    <string name="filter_empty_sort_by">Ordena per</string>
+    <string name="filter_empty_sort_desc">Clics, Alfabet, Vots o Últim canvi</string>
+    <string name="filter_empty_hint">Escriviu un nom al camp anterior per desar aquesta vista personalitzada!</string>
     <string name="error_station_load">No s\'ha pogut connectar a l\'emissora</string>
     <string name="error_list_update">No s\'ha pogut connectar al servidor</string>
 
-    <string name="share_action">Compartir emissora amb...</string>
+    <string name="share_action">Compartir emissora amb&#8230;</string>
 
     <string name="nav_item_stations">Emissores</string>
     <string name="nav_item_starred">Preferides</string>
     <string name="nav_item_history">Historial</string>
     <string name="nav_item_settings">Configuració</string>
-    <string name="nav_item_alarm">Alarma</string>
 
-    <string name="about_text">AMARadio és 100% lliure de publicitat i centrat en la privadesa.\n\nOriginalment vaig desenvolupar aquesta aplicació per a la meva mare per oferir-li una experiència de ràdio senzilla i honesta sense anuncis molestos ni seguiment. Per això AMARadio sempre romandrà lliure d\'anuncis: és una promesa per a ella, compartida amb tots vosaltres.\n\nAquest projecte és un fork de l\'excel·lent RadioDroid per ounben. Tota la base de codi s\'ha migrat de Java a Kotlin per garantir que l\'aplicació es mantingui moderna i compatible amb les futures versions d\'Android.\n\nAquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a https://www.radio-browser.info .\nTothom hi pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia.\n\nContacte: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic. Necessitem algú amb experiència en disseny gràfic per fer que l\'aplicació sigui més agradable a la vista :) Potser algú que pugui dibuixar icones, imatges... però també programadors que arreglin errors, o desenvolupin funcionalitats!\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. http://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio és 100% lliure de publicitat i centrat en la privadesa.\n\nOriginalment vaig desenvolupar aquesta aplicació per a la meva mare per oferir-li una experiència de ràdio senzilla i honesta sense anuncis molestos ni seguiment. Per això AMARadio sempre romandrà lliure d\'anuncis: és una promesa per a ella, compartida amb tots vosaltres.\n\nAquest projecte és un fork de l\'excel·lent RadioDroid. Tota la base de codi s\'ha migrat de Java a Kotlin per garantir que l\'aplicació es mantingui moderna i compatible amb les futures versions d\'Android.\n\nAquesta aplicació utilitza el directori d\'emissores de ràdio gratuïtes a https://www.radio-browser.info .\nTothom hi pot afegir emissores. Funciona com un wiki per a emissores de ràdio en línia.\n\nContacte: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nSi us agrada aquest programari i voleu ajudar-nos, no dubteu a enviar-nos un correu electrònic.\nLes idees per a noves funcionalitats també són benvingudes!\n\nAquesta aplicació és un programari lliure llicenciat sota la llicència GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Versió: %1$s</string>
     <string name="detail_star">Afegir a preferides</string>
     <string name="detail_unstar">Suprimeix de preferides</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
-    <string name="progress_loading">Carregant ...</string>
+    <string name="progress_loading">Carregant&#8230;</string>
 
     <string formatted="true" name="sleep_timer">Temporitzador: %1$02d:%2$02d</string>
     <string name="sleep_timer_title">Atura la reproducció després del minut seleccionat</string>
@@ -89,7 +98,7 @@
 
     <string name="searchpreference_clear_history">Esborra historial</string>
     <string name="searchpreference_no_results">Sense resultats</string>
-    <string name="searchpreference_search">Cerca...</string>
+    <string name="searchpreference_search">Cerca&#8230;</string>
     <string name="settings_appearance">Aparença</string>
     <string name="settings_theme_selection_title">Tema</string>
     <string name="theme_light">Clar</string>
@@ -100,6 +109,7 @@
     <string name="settings_compact_style_desc_on">Icona petita adoptada sense detalls d\'emissora</string>
     <string name="settings_bottom_navigation">Navegació inferior</string>
     <string name="settings_ui_scale">Escala d\'UI</string>
+    <string name="settings_language">Idioma</string>
     <string name="ui_scale_compact">Compacte</string>
     <string name="ui_scale_standard">Estàndard del sistema</string>
     <string name="ui_scale_large">Gran</string>
@@ -133,13 +143,6 @@
     <string name="settings_auto_favorite_on">Afegir emissores automàticament a les preferides quan s\'estan reproduint</string>
     <string name="settings_auto_favorite_off">No afegir emissores automàticament a les preferides quan s\'estan reproduint</string>
 
-    <string name="settings_alarm">Alarma</string>
-    <string name="settings_alarm_external">Habiliteu l\'aplicació externa</string>
-    <string name="settings_alarm_external_desc_on">Obriu l\'alarma amb una aplicació externa predeterminada</string>
-    <string name="settings_alarm_external_desc_off">Obriu l\'alarma amb AMARadio</string>
-    <string name="settings_alarm_audio_player">Reproductor d\'àudio</string>
-    <string name="settings_alarm_sleep_timer">Temporitzador</string>
-    <string name="settings_alarm_sleep_timer_desc">Deixa de reproduir després de %1$s minuts</string>
     <string name="settings_play">Reproducció</string>
     <string name="settings_auto_play_on_startup">Auto-reproducció</string>
     <string name="settings_auto_play_on_startup_on">Reproduir la darrera emissora a l\'inici</string>
@@ -181,6 +184,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Reprendre amb connexió Bluetooth</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Reprendre la reproducció en connectar dispositius Bluetooth A2DP</string>
 
+    <string name="settings_auto_resume_on_any_connected">Reprendre amb qualsevol connexió</string>
+
     <string name="settings_warn_no_wifi">Avís sense Wi-Fi</string>
     <string name="settings_warn_no_wifi_on">Avisa quan es reprodueix sense connexió Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">No avisar quan no hi ha connexió Wi-Fi</string>
@@ -206,19 +211,10 @@
     <string name="yes">Sí</string>
     <string name="no">No</string>
 
-    <string name="alert_select_mpd_server">Seleccioneu un servidor</string>
-    <string name="alert_select_mpd_server_name">Nom del servidor</string>
-    <string name="alert_select_mpd_server_password">Contrasenya del servidor</string>
+    <string name="alert_select_player">Seleccioneu un reproductor</string>
+    <string name="alert_select_player_name">Nom</string>
     <string name="hostname">Nom d\'amfitrió</string>
     <string name="port">Port</string>
-
-    <string name="alert_select_mpd_server_add">Afegeix</string>
-    <string name="alert_select_mpd_server_save">Desa</string>
-    <string name="alert_select_mpd_server_remove">Elimina</string>
-    <string name="alert_add_or_edit_mpd_server">Introduïu detalls sobre un servidor</string>
-    <string name="alert_alarm_working">Hora d\'alarma</string>
-    <string name="alert_alarm_not_working">No hi ha informació suficient per l\'alarma</string>
-    <string name="alert_select_external_alarm_app">Trieu el reproductor d\'àudio</string>
 
     <string name="alert_press_back_to_exit">Torneu a prémer enrere per sortir</string>
 
@@ -259,34 +255,22 @@
     <string name="icon_click_trend_increasing">Popularitat creixent</string>
     <string name="icon_click_trend_stable">Popularitat estable</string>
 
-    <string name="media_route_menu_title">GoogleCast</string>
-    <string name="app_id">5A97BAE4</string>
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% lliure de publicitat i privat</string>
-
-    <string name="settings_mpd">Music Player Daemon</string>
-    <string name="settings_mpd_port">Port MPD</string>
-    <string name="settings_view_mpd_servers">Els vostres servidors</string>
-    <string name="action_mpd_nok">MPD no connectat</string>
-    <string name="action_mpd_ok">MPD connectat</string>
-    <string name="action_mpd_connected">Connectat al servidor: %1$s</string>
-
-    <string name="mpd_no_connection">Sense connexió</string>
-    <string name="action_enable_mpd">Activa MPD</string>
-    <string name="action_disable_mpd">Inhabilita MPD</string>
-    <string name="action_add_mpd_server">Afegeix un servidor MPD</string>
 
     <string name="action_play_in_external">Reprodueix en un reproductor extern</string>
     <string name="action_choose_external_player">Tria un reproductor extern</string>
 
+    <string name="settings_disable_battery_optimization">Optimització de la bateria</string>
+    <string name="settings_ignore_battery_optimization_summary_on">S\'ignora l\'optimització de la bateria, AMARadio sempre hauria de poder tornar a centrar-se després de la pèrdua de focus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">S\'activa l\'optimització de la bateria, és possible que AMARadio no pugui recuperar el focus després de la pèrdua de focus si es troba en segon pla.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Altres</string>
     <string name="settings_statistics">Estadístiques</string>
     <string name="settings_about">Sobre AMARadio</string>
 
     <string name="description_btn_skip_to_next">Salta al següent</string>
     <string name="description_btn_skip_to_previous">Salta a l\'anterior</string>
-
-    <string name="description_btn_setup_alarm">Configura l\'alarma</string>
 
     <string-array name="weekdays">
         <item>dg</item>
@@ -324,17 +308,13 @@
     <string name="sort_lastchange">Últim canvi</string>
     <string name="filter_select_country">Selecciona el país</string>
     <string name="filter_select_language">Selecciona l\'idioma</string>
-    <string name="filter_type_tag">Escriu l\'etiqueta…</string>
-
-    <string name="alarm_backup">Alarma alternativa</string>
-    <string name="alarm_fallback_info">Alarma del sistema adoptada ja que l\'emissora de ràdio seleccionada no s\'ha pogut carregar</string>
-    <string name="alarm_back_desc">Alarma del sistema alternativa adoptada quan l\'emissora de ràdio no es carrega</string>
+    <string name="filter_type_tag">Escriu l\'etiqueta&#8230;</string>
+    <string name="filter_tap_to_configure">Toqueu per configurar</string>
 
     <string name="context_menu_share">@string/detail_share</string>
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_add_alarm">@string/action_alarm</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 </resources>
