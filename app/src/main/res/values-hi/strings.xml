@@ -52,7 +52,7 @@
     <string name="filter_empty_title">अपनी कस्टम रेडियो स्टेशन फ़ीड बनाएं</string>
     <string name="filter_empty_desc">कई मानदंडों को मिलाकर एक व्यक्तिगत दृश्य बनाएं। आप अपनी खोज को इनके द्वारा सीमित कर सकते हैं:</string>
     <string name="filter_empty_filter_by">इसके द्वारा फ़िल्टर करें</string>
-    <string name="filter_empty_filter_desc">देश, स्टेशन का नाम, टैگ, या भाषा</string>
+    <string name="filter_empty_filter_desc">देश, स्टेशन का नाम, टैग, या भाषा</string>
     <string name="filter_empty_sort_by">इसके अनुसार क्रमबद्ध करें</string>
     <string name="filter_empty_sort_desc">क्लिक, वर्णमाला, वोट, या अंतिम परिवर्तन</string>
     <string name="filter_empty_hint">इस कस्टम दृश्य को सहेजने के लिए ऊपर दिए गए फ़ील्ड में एक नाम टाइप करें!</string>
@@ -66,7 +66,7 @@
     <string name="nav_item_history">इतिहास</string>
     <string name="nav_item_settings">सेटिंग्स</string>
 
-    <string name="about_text">AMARadio 100% विज्ञापन-मुक्त है और गोपनीयता पर केंद्रित है।\n\nमैंने मूल रूप से यह ऐप अपनी माँ के लिए विकसित किया था ताकि उन्हें कष्टप्रद विज्ञापनों या ट्रैकिंग के बिना एक सरल, ईमानदार रेडियो अनुभव प्रदान किया जा सके। यही कारण है कि AMARadio हमेशा विज्ञापनों से मुक्त रहेगा - यह उनके लिए एक वादा है, जो आप सभी के साथ साझा किया गया है।\n\nयह प्रोजेक्ट उत्कृष्ट RadioDroid का एक फोर्क है। ऐप को आधुनिक बनाए रखने और भविष्य के Android संस्करणों के साथ संगत सुनिश्चित करने के लिए संपूर्ण कोडबेस को Java से Kotlin में माइग्रेट किया गया है।\n\nयह ऐप https://www.radio-browser.info पर मुफ्त रेडियो स्टेशन निर्देशिका का उपयोग करता है।\nकोई भी इसमें स्टेशन जोड़ सकता है। यह ऑनलाइन रेडियो स्टेशनों के लिए विकी की तरह काम करता. है।\n\nसंपर्क: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nयदि आपको सॉफ़्टवेयर पसंद है और आप मदद करना चाहते हैं, तो बेझिझक मुझे एक ईमेल भेजें।\nसाथ ही नई सुविधाओं के लिए विचारों की हमेशा सराहना की जाती है!\n\nयह ऐप मुफ्त सॉफ़्टवेयर है, जो GPLv3 के तहत लाइसेंस प्राप्त है। https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio 100% विज्ञापन-मुक्त है और गोपनीयता पर केंद्रित है।\n\nमैंने मूल रूप से यह ऐप अपनी माँ के लिए विकसित किया था ताकि उन्हें कष्टप्रद विज्ञापनों या ट्रैकिंग के बिना एक सरल, ईमानदार रेडियो अनुभव प्रदान किया जा सके। यही कारण है कि AMARadio हमेशा विज्ञापनों से मुक्त रहेगा - यह उनके लिए एक वादा है, जो आप सभी के साथ साझा किया गया है।\n\nयह प्रोजेक्ट उत्कृष्ट RadioDroid का एक फोर्क है। ऐप को आधुनिक बनाए रखने और भविष्य के Android संस्करणों के साथ संगत सुनिश्चित करने के लिए संपूर्ण कोडबेस को Java से Kotlin में माइग्रेट किया गया है।\n\nयह ऐप https://www.radio-browser.info पर मुफ्त रेडियो स्टेशन निर्देशिका का उपयोग करता है।\nकोई भी इसमें स्टेशन जोड़ सकता है। यह ऑनलाइन रेडियो स्टेशनों के लिए विकी की तरह काम करता है।\n\nसंपर्क: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nयदि आपको सॉफ़्टवेयर पसंद है और आप मदद करना चाहते हैं, तो बेझिझक मुझे एक ईमेल भेजें।\nसाथ ही नई सुविधाओं के लिए विचारों की हमेशा सराहना की जाती है!\n\nयह ऐप मुफ्त सॉफ़्टवेयर है, जो GPLv3 के तहत लाइसेंस प्राप्त है। https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">संस्करण: %1$s</string>
     <string name="detail_star">पसंदीदा में जोड़ें</string>
     <string name="detail_unstar">पसंदीदा से हटाएं</string>
@@ -149,7 +149,7 @@
     <string name="settings_auto_off_on_startup">ऑटो-स्टॉप</string>
     <string name="settings_auto_off_on_startup_on">ऑटो-प्ले के साथ ऑटो-स्टॉप टाइमर का उपयोग करें</string>
     <string name="settings_auto_off_on_startup_off">ऑटो-प्ले के साथ ऑटो-स्टॉप टाइमर का उपयोग न करें</string>
-    <string name="settings_auto_off_sleep_timer">ऑटो-स्टॉप टाइमر</string>
+    <string name="settings_auto_off_sleep_timer">ऑटो-स्टॉप टाइमर</string>
     <string name="settings_auto_off_sleep_timer_desc">%1$s मिनट के बाद चलना बंद करें</string>
     <string name="settings_play_external">बाहरी प्लेयर सक्षम करें</string>
     <string name="settings_play_external_desc_on">बाहरी प्लेयर के साथ स्टेशन चलाएं</string>
@@ -173,7 +173,7 @@
     <string name="settings_seconds_format">%d सेकंड</string>
     <string name="settings_milliseconds_format">%d मिलीसेकंड</string>
 
-    <string name="settings_pause_when_noisy">हेडसेट डिस्कनेcht होने पर विराम दें</string>
+    <string name="settings_pause_when_noisy">हेडसेट डिस्कनेक्ट होने पर विराम दें</string>
 
     <string name="settings_auto_resume_do_not_resume">फिर से शुरू न करें</string>
 

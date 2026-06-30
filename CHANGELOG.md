@@ -8,7 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [0.99.4] - 2026-06-30
 ### Added
 - **Language Support**:
-    - Added full support for **Hindi (hi)** with a complete translation of all app features.
+    - Added full support for **Japanese (ja)** and **Hindi (hi)** with complete translations of all app features.
     - Completed and updated the **Arabic (ar)** translation.
 - **Visual Branding**:
     - Updated the Splash Screen with the brand's Amber color for the "AMARadio" title.

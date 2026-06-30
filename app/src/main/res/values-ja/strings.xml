@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">名前</string>
+    <string name="detail_tags">タグ</string>
+    <string name="detail_country">国</string>
+    <string name="detail_create_shortcut">ホーム画面に追加</string>
+    <string name="detail_language">言語</string>
+    <string name="detail_weblink">ウェブリンク</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">再生</string>
+    <string name="detail_pause">一時停止</string>
+    <string name="detail_stop">停止</string>
+    <string name="detail_share">共有</string>
+    <string name="detail_play_in_AMARadio">AMARadioで再生</string>
+
+    <string name="action_links">リンク</string>
+    <string name="action_homepage">ホームページ</string>
+    <string name="action_favorite">お気に入り</string>
+    <string name="action_starred_add">お気に入りに追加</string>
+    <string name="action_starred_remove">お気に入りから削除</string>
+
+    <string name="action_station_visit_website">ウェブサイトを表示</string>
+    <string name="action_station_copy_stream_url">ストリームURLをコピー</string>
+    <string name="action_station_share">共有</string>
+
+    <string name="action_local">ローカル</string>
+    <string name="action_skip_to_next">次へ</string>
+    <string name="action_pause">一時停止</string>
+    <string name="action_skip_to_previous">前へ</string>
+    <string name="action_resume">再開</string>
+    <string name="action_stop">停止</string>
+    <string name="action_search">検索</string>
+    <string name="action_delete">削除</string>
+    <string name="action_delete_history">履歴を削除</string>
+    <string name="action_delete_favorites">お気に入りを削除</string>
+    <string name="action_delete_stream_history">トラック履歴を消去</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">キャンセル</string>
+    <string name="action_top_click">トップクリック</string>
+    <string name="action_toggle_view">表示切替</string>
+    <string name="action_top_vote">トップ投票</string>
+    <string name="action_changed_lately">最近の変更</string>
+    <string name="action_currently_playing">再生中</string>
+    <string name="action_tags">タグ</string>
+    <string name="action_countries">国/地域</string>
+    <string name="action_languages">言語</string>
+    <string name="action_edit">編集</string>
+    <string name="action_copy_info">情報をコピー</string>
+    <string name="action_rename_tab">タブ名の変更</string>
+    <string name="error_filter_name_required">まずこのフィルタータブの名前を入力してください</string>
+    <string name="confirm_delete_filter_tab">フィルター「%1$s」を削除してもよろしいですか？</string>
+    <string name="filter_empty_title">カスタムラジオ局フィードを作成</string>
+    <string name="filter_empty_desc">複数の条件を組み合わせて、自分専用の表示を作成できます。以下の項目で検索を絞り込めます：</string>
+    <string name="filter_empty_filter_by">フィルター条件</string>
+    <string name="filter_empty_filter_desc">国、局名、タグ、または言語</string>
+    <string name="filter_empty_sort_by">並べ替え</string>
+    <string name="filter_empty_sort_desc">クリック数、アルファベット順、投票数、または最終更新日</string>
+    <string name="filter_empty_hint">上のフィールドに名前を入力して、このカスタム表示を保存しましょう！</string>
+    <string name="error_station_load">局に接続できませんでした</string>
+    <string name="error_list_update">ラジオブラウザサーバーに接続できませんでした</string>
+
+    <string name="share_action">局のリンクを共有&#8230;</string>
+
+    <string name="nav_item_stations">放送局</string>
+    <string name="nav_item_starred">お気に入り</string>
+    <string name="nav_item_history">履歴</string>
+    <string name="nav_item_settings">設定</string>
+
+    <string name="about_text">AMARadioは100%広告なしで、プライバシーを重視しています。\n\nもともと私は、母に迷惑な広告やトラッキングのない、シンプルで誠実なラジオ体験を提供するためにこのアプリを開発しました。そのため、AMARadioは常に広告なしであり続けます。これは母への約束であり、皆さんと共有する約束でもあります。\n\nこのプロジェクトは、優れた RadioDroid のフォークです。アプリの現代性と将来のAndroidバージョンへの互換性を保つため、コードベース全体をJavaからKotlinに移行しました。\n\nソースコードは https://github.com/ounben/AMARadio で公開されています。\n\nこのアプリは https://www.radio-browser.info の無料ラジオ局ディレクトリを使用しています。\n誰でも局を追加でき、オンラインラジオ局のウィキのように機能します。\n\n連絡先: ben@ounben.com\n\nバグトラッカー: https://github.com/ounben/AMARadio/issues\n\nソフトウェアを気に入っていただき、協力したいという方は、お気軽にメールをお送りください。\n新機能のアイデアも常に歓迎しています！\n\nこのアプリはGPLv3ライセンスの下で提供されるフリーソフトウェアです。 https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">バージョン: %1$s</string>
+    <string name="detail_star">お気に入りに追加</string>
+    <string name="detail_unstar">お気に入りから削除</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">読み込み中&#8230;</string>
+
+    <string name="sleep_timer" formatted="true">スリープタイマー: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">指定した時間後に再生を停止</string>
+    <string name="sleep_timer_apply">適用</string>
+    <string name="sleep_timer_clear">解除</string>
+    <string name="nav_item_add_sleep">スリープタイマー</string>
+
+    <string name="nav_item_save_playlist">お気に入り、をプレイリストとして書き出し</string>
+    <string name="nav_item_load_playlist">プレイリストからお気に入りを読み込み</string>
+    <string name="nav_item_save_history_playlist">履歴をプレイリストとして書き出し</string>
+    <string name="confirm_overwrite_file">ファイルを上書きしますか？</string>
+    <string name="dialog_hint_file_name">ファイル名を入力</string>
+    <string name="error_empty_field">この項目は必須です</string>
+    <string name="error_invalid_file_name">無効なファイル名です</string>
+    <string name="label_button_cancel">キャンセル</string>
+    <string name="label_button_overwrite">上書き</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s から読み込めませんでした</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s から読み込み中、しばらくお待ちください。</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s から %1$d 局を読み込みました</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s への書き出しに失敗しました</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s へ書き出し中、しばらくお待ちください。</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s への書き出しが成功しました</string>
+    <string name="notify_sync_list_deleted_entries">リスト内のローカル局 %2$d 局のうち %1$d 局がサーバー上に存在しないとマークされました</string>
+
+    <string name="searchpreference_clear_history">履歴を消去</string>
+    <string name="searchpreference_no_results">結果なし</string>
+    <string name="searchpreference_search">検索&#8230;</string>
+    <string name="settings_appearance">外観</string>
+    <string name="settings_theme_selection_title">テーマ</string>
+    <string name="theme_light">ライト</string>
+    <string name="theme_dark">ダーク</string>
+    <string name="theme_system">システムの設定に従う</string>
+    <string name="settings_compact_style">コンパクトモード</string>
+    <string name="settings_compact_style_desc_off">大きなアイコンと局の詳細を表示</string>
+    <string name="settings_compact_style_desc_on">小さなアイコンのみ表示</string>
+    <string name="settings_bottom_navigation">ボトムナビゲーション</string>
+    <string name="settings_ui_scale">UIのスケーリング</string>
+    <string name="ui_scale_compact">コンパクト</string>
+    <string name="ui_scale_standard">システム標準</string>
+    <string name="ui_scale_large">大きく</string>
+    <string name="ui_scale_extra_large">非常に大きく</string>
+
+    <string name="settings_interaction">操作</string>
+    <string name="settings_single_use_tags">使用頻度の低いタグを表示</string>
+    <string name="settings_single_use_tags_desc_off">使用頻度の低いタグは表示されません</string>
+    <string name="settings_single_use_tags_desc_on">使用頻度の低いタグも表示されます</string>
+
+    <string name="settings_show_broken">動作しない局</string>
+    <string name="settings_show_broken_on">リストに動作しない局を表示する</string>
+    <string name="settings_show_broken_off">リストに動作しない局を表示しない</string>
+
+    <string name="settings_startup_behaviour">起動時の動作</string>
+    <string name="action_grid_view">グリッド表示</string>
+    <string name="action_list_view">リスト表示</string>
+
+    <string name="startup_action_title">起動時のアクション</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">すべての局を表示</string>
+    <string name="startup_show_favorites">お気に入りを表示</string>
+    <string name="startup_show_history">履歴を表示</string>
+    <string name="startup_show_last_view">前回の画面を表示</string>
+
+    <string name="settings_load_icons">局のアイコンを表示</string>
+    <string name="settings_load_icons_on">アイコンをダウンロードします</string>
+    <string name="settings_load_icons_off">アイコンをダウンロードしません</string>
+
+    <string name="settings_auto_favorite">自動お気に入り</string>
+    <string name="settings_auto_favorite_on">再生時に局を自動的にお気に入りに追加する</string>
+    <string name="settings_auto_favorite_off">再生時に局を自動的にお気に入りに追加しない</string>
+
+    <string name="settings_play">プレイヤー</string>
+    <string name="settings_auto_play_on_startup">自動再生</string>
+    <string name="settings_auto_play_on_startup_on">起動時に最後に聴いた局を再生する</string>
+    <string name="settings_auto_play_on_startup_off">起動時に最後に聴いた局を再生しない</string>
+    <string name="settings_auto_off_on_startup">自動停止</string>
+    <string name="settings_auto_off_on_startup_on">自動再生時に自動停止タイマーを使用する</string>
+    <string name="settings_auto_off_on_startup_off">自動再生時に自動停止タイマーを使用しない</string>
+    <string name="settings_auto_off_sleep_timer">自動停止タイマー</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s 分後に再生を停止</string>
+    <string name="settings_play_external">外部プレイヤーを有効にする</string>
+    <string name="settings_play_external_desc_on">外部プレイヤーで再生する</string>
+    <string name="settings_play_external_desc_off">AMARadioで再生する</string>
+    <string name="settings_equalizer">イコライザー</string>
+
+    <string name="settings_connectivity">接続</string>
+    <string name="settings_connect_timeout">接続タイムアウト</string>
+    <string name="settings_read_timeout">読み込みタイムアウト</string>
+    <string name="settings_resume_timeout">再開タイムアウト</string>
+    <string name="settings_retry_timeout">再試行タイムアウト</string>
+    <string name="settings_retry_delay">再接続の遅延</string>
+    <string name="settings_proxy">プロキシ</string>
+    <string name="settings_proxy_login">ユーザー名</string>
+    <string name="settings_proxy_password">パスワード</string>
+    <string name="settings_proxy_action_test">テスト</string>
+    <string name="settings_proxy_working">%s への接続に成功しました</string>
+    <string name="settings_proxy_not_working">%1$s への接続に失敗しました\n%2$s</string>
+    <string name="settings_proxy_invalid">プロキシの値が無効です</string>
+    <string name="ignore_proxy_settings_invalid">無効なプロキシ設定を無視しました</string>
+    <string name="settings_seconds_format">%d 秒</string>
+    <string name="settings_milliseconds_format">%d ミリ秒</string>
+
+    <string name="settings_pause_when_noisy">ヘッドセット切断時に一時停止</string>
+
+    <string name="settings_auto_resume_do_not_resume">再開しない</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">有線接続時に再開</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">有線ヘッドセット接続時に再生を再開する</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth接続時に再開</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DPデバイス接続時に再生を再開する</string>
+
+    <string name="settings_auto_resume_on_any_connected">あらゆる接続時に再開</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi未接続時の警告</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi未接続での再生時に警告を表示する</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi未接続でも警告を表示しない</string>
+
+    <string name="notify_pre_play">接続中</string>
+    <string name="notify_play">再生中</string>
+    <string name="notify_paused">一時停止中</string>
+    <string name="notify_metered_connection">従量制接続</string>
+
+    <string name="notify_starred">局をお気に入りに追加しました</string>
+    <string name="notify_autostarred">局を自動的にお気に入りに追加しました</string>
+    <string name="notify_unstarred">局をお気に入りから削除しました</string>
+    <string name="notify_deleted_favorites">お気に入りを削除しました</string>
+    <string name="notify_deleted_history">履歴を削除しました</string>
+
+    <string name="notify_open_link_failure">リンクを開くためのアプリが見つかりません</string>
+
+    <string name="notify_station_removed_from_list">1局削除しました</string>
+    <string name="action_station_removed_from_list_undo">元に戻す</string>
+
+    <string name="alert_delete_history">履歴を本当に削除しますか？</string>
+    <string name="alert_delete_favorites">すべてのお気に入りを本当に削除しますか？</string>
+    <string name="yes">はい</string>
+    <string name="no">いいえ</string>
+
+    <string name="alert_select_player">プレイヤーを選択してください</string>
+    <string name="alert_select_player_name">名前</string>
+    <string name="hostname">ホスト名</string>
+    <string name="port">ポート</string>
+
+    <string name="alert_press_back_to_exit">終了するにはもう一度「戻る」を押してください</string>
+
+    <string name="error_stream_url">ストリームURLの問題</string>
+    <string name="error_caching_stream">ストリームのキャッシュの問題</string>
+    <string name="error_play_stream">ストリームを再生できません</string>
+    <string name="error_stream_reconnect_timeout">ストリームへの再接続ができませんでした：タイムアウト</string>
+    <string name="warning_no_network_trying_resume">ネットワーク接続がありません。接続回復時に再開を試みます。</string>
+    <string name="giving_up_resume">再生の再開を断念しました</string>
+
+    <string name="error_grant_audiofocus">システムからオーディオフォーカスの権限が得られませんでした</string>
+
+    <string name="error_no_equalizer_found">イコライザーアプリが見つかりません</string>
+
+    <string name="player_info_status">ステータス：&#160;</string>
+    <string name="player_info_status_stopped">停止</string>
+    <string name="player_info_status_playing">再生中</string>
+    <string name="player_info_transferred">転送済みデータ: %1$s</string>
+
+    <string name="tab_player_art">アルバムアート</string>
+    <string name="tab_player_info">情報</string>
+    <string name="tab_player_history">トラック履歴</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">エラー</string>
+    <string name="station_detail_deleted_on_server">削除済み</string>
+
+    <string name="station_details_clicks">%1$d クリック</string>
+    <string name="station_details_votes">%1$d 投票</string>
+
+    <string name="image_button_disable">無効</string>
+    <string name="image_button_delete">削除</string>
+    <string name="image_button_more">詳細</string>
+    <string name="image_button_less">簡略</string>
+    <string name="image_button_repeat">リピート</string>
+    <string name="image_button_dont_repeat">リピートしない</string>
+    <string name="icon_click_trend_decreasing">人気下降中</string>
+    <string name="icon_click_trend_increasing">人気上昇中</string>
+    <string name="icon_click_trend_stable">人気安定</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% 広告なし ＆ プライバシー重視</string>
+
+    <string name="action_play_in_external">外部プレイヤーで再生</string>
+    <string name="action_choose_external_player">外部プレイヤーを選択</string>
+
+    <string name="settings_disable_battery_optimization">バッテリーの最適化</string>
+    <string name="settings_ignore_battery_optimization_summary_on">バッテリーの最適化は無視されます。AMARadioはフォーカスを失った後でも常に復帰できるはずです。</string>
+    <string name="settings_ignore_battery_optimization_summary_off">バッテリーの最適化が有効です。AMARadioがバックグラウンドにある場合、復帰できない可能性があります。</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">その他</string>
+    <string name="settings_statistics">統計</string>
+    <string name="settings_about">AMARadioについて</string>
+
+    <string name="description_btn_skip_to_next">次へスキップ</string>
+    <string name="description_btn_skip_to_previous">前へスキップ</string>
+
+    <string-array name="weekdays">
+        <item>日</item>
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">ストリームURLをコピーしました</string>
+    <string name="notify_track_info_copied">トラック情報をコピーしました</string>
+
+    <string-array name="actions_station_link">
+        <item>ウェブサイトを表示</item>
+        <item>ストリームURLをコピー</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">従量制接続を検出</string>
+    <string name="alert_metered_connection_message">従量制接続では追加料金が発生する場合があります。「OK」を押して続行してください。</string>
+    <string name="nav_item_statistics">統計</string>
+    <string name="nav_item_about">について</string>
+    <string name="refresh">更新</string>
+    <string name="action_filter">フィルター</string>
+    <string name="filter_country">国</string>
+    <string name="filter_tag">タグ</string>
+    <string name="filter_language">言語</string>
+    <string name="filter_sort_by">並べ替え</string>
+    <string name="filter_reverse">逆順</string>
+    <string name="filter_apply">フィルターを適用</string>
+    <string name="sort_name">名前</string>
+    <string name="sort_votes">投票数</string>
+    <string name="sort_clicks">クリック数</string>
+    <string name="sort_lastchange">最終更新日</string>
+    <string name="filter_select_country">国を選択</string>
+    <string name="filter_select_language">言語を選択</string>
+    <string name="filter_type_tag">タグを入力&#8230;</string>
+    <string name="filter_tap_to_configure">タップして設定</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>
