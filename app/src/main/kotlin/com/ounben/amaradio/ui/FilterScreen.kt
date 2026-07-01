@@ -488,8 +488,8 @@ fun SearchableSelectionDialog(
     var searchQuery by remember { mutableStateOf("") }
     val filteredOptions = remember(searchQuery, options) {
         val q = searchQuery.trim()
-        if (q.length < 2) {
-            options.take(200)
+        if (q.isEmpty()) {
+            options
         } else {
             options.filter { it.label.contains(q, ignoreCase = true) }
                 .sortedWith(

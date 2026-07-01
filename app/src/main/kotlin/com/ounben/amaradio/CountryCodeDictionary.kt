@@ -15,7 +15,6 @@ class CountryCodeDictionary private constructor() {
     }
 
     private val codeToCountry = HashMap<String, String>()
-    private val displayCountryCache = HashMap<String, String>()
 
     fun load(context: Context) {
         val resources = context.resources
@@ -23,7 +22,11 @@ class CountryCodeDictionary private constructor() {
         val reader = BufferedReader(InputStreamReader(inputStream))
         val jsonContent = reader.use { it.readText() }
 
-        val countries = Json.decodeFromString<List<Country>>(jsonContent)
+        val countries = try {
+            Json.decodeFromString<List<Country>>(jsonContent)
+        } catch (e: Exception) {
+            emptyList()
+        }
 
         for (country in countries) {
             val code = country.code
@@ -36,22 +39,19 @@ class CountryCodeDictionary private constructor() {
 
     fun getCountryByCode(code: String): String? {
         val lowerCode = code.lowercase(Locale.ENGLISH)
-        displayCountryCache[lowerCode]?.let { return it }
 
         val locale = try {
             Locale.Builder().setRegion(code).build()
         } catch (_: Exception) {
             Locale.Builder().setLanguage("").setRegion(code).build()
         }
+        
         val displayCountry = locale.getDisplayCountry(Locale.getDefault())
-        val result = if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {
+        return if (displayCountry.isNotEmpty() && !displayCountry.equals(code, ignoreCase = true)) {
             displayCountry
         } else {
             codeToCountry[lowerCode]
         }
-        
-        result?.let { displayCountryCache[lowerCode] = it }
-        return result
     }
 
     companion object {

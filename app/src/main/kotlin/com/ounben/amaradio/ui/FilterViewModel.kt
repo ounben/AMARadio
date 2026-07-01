@@ -73,6 +73,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         if (key == "icons_only_favorites_style") {
             refreshGridMode()
+        } else if (key == "settings_language") {
+            fetchMetadata()
         }
     }
 

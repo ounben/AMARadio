@@ -8,9 +8,13 @@ import java.util.Locale
 object LocaleUtils {
     fun applyLocale(languageCode: String) {
         val appLocales = if (languageCode == "system") {
+            val systemLocale = android.content.res.Resources.getSystem().configuration.locales[0]
+            Locale.setDefault(systemLocale)
             LocaleListCompat.getEmptyLocaleList()
         } else {
             val tag = languageCode.replace("-r", "-")
+            val locale = Locale.forLanguageTag(tag)
+            Locale.setDefault(locale)
             LocaleListCompat.forLanguageTags(tag)
         }
         AppCompatDelegate.setApplicationLocales(appLocales)
