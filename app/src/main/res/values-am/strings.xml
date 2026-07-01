@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">ስም</string>
+    <string name="detail_tags">መለያዎች</string>
+    <string name="detail_country">ሀገር</string>
+    <string name="detail_create_shortcut">ወደ መነሻ ስክሪን አክል</string>
+    <string name="detail_language">ቋንቋ</string>
+    <string name="detail_weblink">የድር አገናኝ</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">አጫውት</string>
+    <string name="detail_pause">አቁም</string>
+    <string name="detail_stop">አቁም</string>
+    <string name="detail_share">አጋራ</string>
+    <string name="detail_play_in_AMARadio">በAMARadio አጫውት</string>
+
+    <string name="action_links">አገናኞች</string>
+    <string name="action_homepage">መነሻ ገጽ</string>
+    <string name="action_favorite">ተወዳጅ</string>
+    <string name="action_starred_add">ወደ ተወዳጆች አክል</string>
+    <string name="action_starred_remove">ከተወዳጆች አስወግድ</string>
+
+    <string name="action_station_visit_website">ድህረ ገጽ ይጎብኙ</string>
+    <string name="action_station_copy_stream_url">የዥረት ዩአርኤል ቅዳ</string>
+    <string name="action_station_share">አጋራ</string>
+
+    <string name="action_local">አካባቢያዊ</string>
+    <string name="action_skip_to_next">ቀጣይ</string>
+    <string name="action_pause">አቁም</string>
+    <string name="action_skip_to_previous">ቀዳሚ</string>
+    <string name="action_resume">ቀጥል</string>
+    <string name="action_stop">አቁም</string>
+    <string name="action_search">ፈልግ</string>
+    <string name="action_delete">ሰርዝ</string>
+    <string name="action_delete_history">ታሪክ ሰርዝ</string>
+    <string name="action_delete_favorites">ሁሉንም ተወዳጆች ሰርዝ</string>
+    <string name="action_delete_stream_history">የዘፈን ታሪክ አጽዳ</string>
+    <string name="action_ok">እሺ</string>
+    <string name="action_cancel">ሰርዝ</string>
+    <string name="action_top_click">ከፍተኛ ጠቅታ</string>
+    <string name="action_toggle_view">እይታ ቀይር</string>
+    <string name="action_top_vote">ከፍተኛ ድምጽ</string>
+    <string name="action_changed_lately">በቅርብ የተለወጠ</string>
+    <string name="action_currently_playing">አሁን በመጫወት ላይ</string>
+    <string name="action_tags">መለያዎች</string>
+    <string name="action_countries">ሀገራት/ክልሎች</string>
+    <string name="action_languages">ቋንቋዎች</string>
+    <string name="action_edit">አስተካክል</string>
+    <string name="action_copy_info">መረጃ ቅዳ</string>
+    <string name="action_rename_tab">ታብ ስም ቀይር</string>
+    <string name="error_filter_name_required">እባክዎ መጀመሪያ ለዚህ ማጣሪያ ስም ያስገቡ</string>
+    <string name="confirm_delete_filter_tab">ማጣሪያውን \"%1$s\" ለመሰረዝ እርግጠኛ ነዎት?</string>
+    <string name="filter_empty_title">የራስዎን የሬዲዮ ጣቢያ ዝርዝር ይገንቡ</string>
+    <string name="filter_empty_desc">በርካታ መስፈርቶችን በማጣመር ግላዊ እይታ ይፍጠሩ። ፍለጋዎን በሚከተሉት ማጥበብ ይችላሉ፡</string>
+    <string name="filter_empty_filter_by">አጣራ በ፡</string>
+    <string name="filter_empty_filter_desc">ሀገር፣ የጣቢያ ስም፣ መለያዎች ወይም ቋንቋ</string>
+    <string name="filter_empty_sort_by">ደርድር በ፡</string>
+    <string name="filter_empty_sort_desc">ጠቅታዎች፣ ፊደላት፣ ድምጾች ወይም የመጨረሻ ለውጥ</string>
+    <string name="filter_empty_hint">ይህንን እይታ ለማስቀመጥ ከላይ ባለው ሳጥን ውስጥ ስም ይተይቡ!</string>
+    <string name="error_station_load">ከጣቢያው ጋር መገናኘት አልተቻለም</string>
+    <string name="error_list_update">ከሬዲዮ ብሮውዘር አገልጋይ ጋር መገናኘት አልተቻለም</string>
+
+    <string name="share_action">የጣቢያ አገናኝ አጋራ ከ...</string>
+
+    <string name="nav_item_stations">ጣቢያዎች</string>
+    <string name="nav_item_starred">ተወዳጆች</string>
+    <string name="nav_item_history">ታሪክ</string>
+    <string name="nav_item_settings">ቅንብሮች</string>
+
+    <string name="about_text">AMARadio 100% ከማስታወቂያ ነጻ እና በግላዊነት ላይ ያተኮረ ነው።\n\nመጀመሪያ ላይ ይህን መተግበሪያ ያዘጋጀሁት ለእናቴ ያለምንም የሚያበሳጭ ማስታወቂያ ወይም ክትትል ቀላል እና እውነተኛ የሬዲዮ ተሞክሮ እንዲኖራት ነው። ለዚህም ነው AMARadio ሁልጊዜ ከማስታወቂያ ነጻ ሆኖ የሚቀጥለው - ይህ ለእሷ የተገባ ቃል ነው፣ ለሁላችሁም የሚጋራ።\n\nይህ ፕሮጀክት የጥሩው https://github.com/segler-alex/RadioDroid ፎርክ (fork) ነው። መተግበሪያው ዘመናዊ ሆኖ እንዲቀጥል እና ወደፊት ከሚመጡት የአንድሮይድ ስሪቶች ጋር ተኳሃኝ እንዲሆን ሙሉው የኮድ መሰረት ከጃቫ ወደ ኮትሊን ተቀይሯል።\n\nየምንጭ ኮዱ እዚህ ይገኛል፡ https://github.com/ounben/AMARadio\n\nይህ መተግበሪያ በ https://www.radio-browser.info የሚገኘውን ነጻ የሬዲዮ ጣቢያ ዝርዝር ይጠቀማል። ማንኛውም ሰው ጣቢያዎችን በእሱ ላይ ማከል ይችላል። ለኦንላይን የሬዲዮ ጣቢያዎች እንደ ዊኪ ይሰራል::\n\nእውቂያ: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nሶፍትዌሩን ከወደዱት እና መርዳት ከፈለጉ ኢሜል ለመላክ ነፃነት ይሰማዎ። እንዲሁም ለአዳዲስ ባህሪያት ሀሳቦች ሁል ጊዜ አድናቆት አላቸው!\n\nይህ መተግበሪያ በGPLv3 ስር ፍቃድ ያለው ነጻ ሶፍትዌር ነው። https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">ስሪት፡ %1$s</string>
+    <string name="detail_star">ወደ ተወዳጆች አክል</string>
+    <string name="detail_unstar">ከተወዳጆች ሰርዝ</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">በመጫን ላይ…</string>
+
+    <string name="sleep_timer" formatted="true">የእንቅልፍ ሰዓት ቆጣሪ፡ %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">ከተመረጠው ደቂቃ በኋላ መጫወቱን አቁም</string>
+    <string name="sleep_timer_apply">ተግብር</string>
+    <string name="sleep_timer_clear">አጽዳ</string>
+    <string name="nav_item_add_sleep">የእንቅልፍ ሰዓት ቆጣሪ</string>
+
+    <string name="nav_item_save_playlist">ተወዳጆችን እንደ አጫዋች ዝርዝር ላክ</string>
+    <string name="nav_item_load_playlist">ተወዳጆችን ከአጫዋች ዝርዝር አስገባ</string>
+    <string name="nav_item_save_history_playlist">ታሪክን እንደ አጫዋች ዝርዝር ላክ</string>
+    <string name="confirm_overwrite_file">ፋይሉን ልተካው?</string>
+    <string name="dialog_hint_file_name">የፋይል ስም ያስገቡ</string>
+    <string name="error_empty_field">ይህ ቦታ መሞላት አለበት</string>
+    <string name="error_invalid_file_name">ልክ ያልሆነ የፋይል ስም</string>
+    <string name="label_button_cancel">ሰርዝ</string>
+    <string name="label_button_overwrite">ተካ</string>
+    <string name="notify_load_playlist_nok">ከ %1$s&#47;%2$s ማስገባት አልተቻለም</string>
+    <string name="notify_load_playlist_now">ከ %1$s&#47;%2$s በማስገባት ላይ፣ እባክዎ ይጠብቁ።</string>
+    <string name="notify_load_playlist_ok">%1$d ጣቢያዎች ከ %2$s&#47;%3$s ገብተዋል</string>
+    <string name="notify_save_playlist_nok">ወደ %1$s&#47;%2$s መላክ አልተቻለም</string>
+    <string name="notify_save_playlist_now">ወደ %1$s&#47;%2$s በመላክ ላይ፣ እባክዎ ይጠብቁ።</string>
+    <string name="notify_save_playlist_ok">ወደ %1$s&#47;%2$s በተሳካ ሁኔታ ተልኳል</string>
+    <string name="notify_sync_list_deleted_entries">በዝርዝሩ ውስጥ ካሉት %2$d የአካባቢ ጣቢያዎች %1$d በአገልጋዩ ላይ እንደሌሉ ተለይተዋል</string>
+
+    <string name="searchpreference_clear_history">ታሪክ አጽዳ</string>
+    <string name="searchpreference_no_results">ምንም ውጤት አልተገኘም</string>
+    <string name="searchpreference_search">ፈልግ…</string>
+    <string name="settings_appearance">መልክ</string>
+    <string name="settings_theme_selection_title">ጭብጥ</string>
+    <string name="theme_light">ብርሃን</string>
+    <string name="theme_dark">ጨለማ</string>
+    <string name="theme_system">የስርዓቱን ተከተል</string>
+    <string name="settings_compact_style">አነስተኛ ሁነታ</string>
+    <string name="settings_compact_style_desc_off">ትልቅ አዶ ከጣቢያ ዝርዝሮች ጋር</string>
+    <string name="settings_compact_style_desc_on">ትንሽ አዶ ያለ ጣቢያ ዝርዝሮች</string>
+    <string name="settings_bottom_navigation">የታችኛው ዳሰሳ</string>
+    <string name="settings_ui_scale">የተጠቃሚ በይነገጽ መጠን</string>
+    <string name="settings_language">ቋንቋ</string>
+    <string name="ui_scale_compact">አነስተኛ</string>
+    <string name="ui_scale_standard">የስርዓት ደረጃ</string>
+    <string name="ui_scale_large">ትልቅ</string>
+    <string name="ui_scale_extra_large">በጣም ትልቅ</string>
+
+    <string name="settings_interaction">መስተጋብር</string>
+    <string name="settings_single_use_tags">አልፎ አልፎ ጥቅም ላይ የሚውሉ መለያዎችን አሳይ</string>
+    <string name="settings_single_use_tags_desc_off">አልፎ አልፎ ጥቅም ላይ የሚውሉ መለያዎች አይታዩም</string>
+    <string name="settings_single_use_tags_desc_on">አልፎ አልፎ ጥቅም ላይ የሚውሉ መለያዎች ይታያሉ</string>
+
+    <string name="settings_show_broken">የተበላሹ ጣቢያዎች</string>
+    <string name="settings_show_broken_on">የተበላሹ ጣቢያዎችን በዝርዝሮች ውስጥ አሳይ</string>
+    <string name="settings_show_broken_off">የተበላሹ ጣቢያዎችን በዝርዝሮች ውስጥ አታሳይ</string>
+
+    <string name="settings_startup_behaviour">የመጀመሪያ ባህሪ</string>
+    <string name="action_grid_view">የፍርግርግ እይታ</string>
+    <string name="action_list_view">የዝርዝር እይታ</string>
+
+    <string name="startup_action_title">የመጀመሪያ ተግባር</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">ሁሉንም ጣቢያዎች አሳይ</string>
+    <string name="startup_show_favorites">ተወዳጆችን አሳይ</string>
+    <string name="startup_show_history">ታሪክን አሳይ</string>
+    <string name="startup_show_last_view">የመጨረሻ እይታ</string>
+
+    <string name="settings_load_icons">የጣቢያ አዶዎችን አሳይ</string>
+    <string name="settings_load_icons_on">አዶዎች ይወርዳሉ</string>
+    <string name="settings_load_icons_off">አዶዎች አይወርዱም</string>
+
+    <string name="settings_auto_favorite">ራስ-ተወዳጅ</string>
+    <string name="settings_auto_favorite_on">ጣቢያዎች በሚጫወቱበት ጊዜ በራስ-ሰር ወደ ተወዳጆች ይታከላሉ</string>
+    <string name="settings_auto_favorite_off">ጣቢያዎች በሚጫወቱበት ጊዜ በራስ-ሰር ወደ ተወዳጆች አይታከሉም</string>
+
+    <string name="settings_play">ማጫወቻ</string>
+    <string name="settings_auto_play_on_startup">ራስ-አጫውት</string>
+    <string name="settings_auto_play_on_startup_on">መተግበሪያው ሲጀምር የመጨረሻውን ጣቢያ አጫውት</string>
+    <string name="settings_auto_play_on_startup_off">መተግበሪያው ሲጀምር የመጨረሻውን ጣቢያ አታጫውት</string>
+    <string name="settings_auto_off_on_startup">ራስ-አቁም</string>
+    <string name="settings_auto_off_on_startup_on">ከራስ-አጫውት ጋር የራስ-አቁም ሰዓት ቆጣሪን ተጠቀም</string>
+    <string name="settings_auto_off_on_startup_off">ከራስ-አጫውት ጋር የራስ-አቁም ሰዓት ቆጣሪን አትጠቀም</string>
+    <string name="settings_auto_off_sleep_timer">የራስ-አቁም ሰዓት ቆጣሪ</string>
+    <string name="settings_auto_off_sleep_timer_desc">ከ %1$s ደቂቃዎች በኋላ መጫወቱን አቁም</string>
+    <string name="settings_play_external">ውጫዊ ማጫወቻን አንቃ</string>
+    <string name="settings_play_external_desc_on">ጣቢያዎችን በውጫዊ ማጫወቻ አጫውት</string>
+    <string name="settings_play_external_desc_off">ጣቢያዎችን በAMARadio አጫውት</string>
+    <string name="settings_equalizer">ኢኳላይዘር</string>
+
+    <string name="settings_connectivity">ግንኙነት</string>
+    <string name="settings_connect_timeout">የግንኙነት ጊዜ ማብቂያ</string>
+    <string name="settings_read_timeout">የንባብ ጊዜ ማብቂያ</string>
+    <string name="settings_resume_timeout">የመቀጠል ጊዜ ማብቂያ</string>
+    <string name="settings_retry_timeout">የድጋሚ ሙከራ ጊዜ ማብቂያ</string>
+    <string name="settings_retry_delay">የድጋሚ ግንኙነት መዘግየት</string>
+    <string name="settings_proxy">ፕሮክሲ</string>
+    <string name="settings_proxy_login">የተጠቃሚ ስም</string>
+    <string name="settings_proxy_password">የይለፍ ቃል</string>
+    <string name="settings_proxy_action_test">ሙከራ</string>
+    <string name="settings_proxy_working">በተሳካ ሁኔታ ከ %s ጋር ተገናኝቷል</string>
+    <string name="settings_proxy_not_working">ከ %1$s ጋር መገናኘት አልተቻለም\n%2$s</string>
+    <string name="settings_proxy_invalid">ለፕሮክሲው የሰጡት እሴቶች ልክ አይደሉም</string>
+    <string name="ignore_proxy_settings_invalid">ልክ ያልሆኑ የፕሮክሲ ቅንብሮች ችላ ተብለዋል</string>
+    <string name="settings_seconds_format">%d ሰከንዶች</string>
+    <string name="settings_milliseconds_format">%d ሚሊሰከንዶች</string>
+
+    <string name="settings_pause_when_noisy">የጆሮ ማዳመጫ ሲነቀል አቁም</string>
+
+    <string name="settings_auto_resume_do_not_resume">አትቀጥል</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">በባለገመድ ግንኙነት ላይ ቀጥል</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">ባለገመድ የጆሮ ማዳመጫ ሲሰካ መልሶ ማጫወትን ቀጥል</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">በብሉቱዝ ግንኙነት ላይ ቀጥል</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">የብሉቱዝ A2DP መሳሪያ ሲገናኝ መልሶ ማጫወትን ቀጥል</string>
+
+    <string name="settings_auto_resume_on_any_connected">በማንኛውም ግንኙነት ላይ ቀጥል</string>
+
+    <string name="settings_warn_no_wifi">ያለ ዋይፋይ ማስጠንቀቂያ</string>
+    <string name="settings_warn_no_wifi_on">ያለ ዋይፋይ ግንኙነት ሲጫወት አስጠንቅቅ</string>
+    <string name="settings_warn_no_wifi_off">የዋይፋይ ግንኙነት በማይኖርበት ጊዜ ማስጠንቀቂያ የለም</string>
+
+    <string name="notify_pre_play">በመገናኘት ላይ</string>
+    <string name="notify_play">በመጫወት ላይ</string>
+    <string name="notify_paused">ቆሟል</string>
+    <string name="notify_metered_connection">የተገደበ ግንኙነት</string>
+
+    <string name="notify_starred">ጣቢያ ወደ ተወዳጆች ታክሏል</string>
+    <string name="notify_autostarred">ጣቢያ በራስ-ሰር ወደ ተወዳጆች ታክሏል</string>
+    <string name="notify_unstarred">ጣቢያ ከተወዳጆች ተወግዷል</string>
+    <string name="notify_deleted_favorites">ተወዳጆቹ ተሰርዘዋል</string>
+    <string name="notify_deleted_history">ታሪኩ ተሰርዟል</string>
+
+    <string name="notify_open_link_failure">አገናኙን ለመክፈት ምንም መተግበሪያ አልተገኘም</string>
+
+    <string name="notify_station_removed_from_list">1 ተወግዷል</string>
+    <string name="action_station_removed_from_list_undo">መልስ</string>
+
+    <string name="alert_delete_history">በእርግጥ ታሪኩን መሰረዝ ይፈልጋሉ?</string>
+    <string name="alert_delete_favorites">በእርግጥ ሁሉንም ተወዳጆች መሰረዝ ይፈልጋሉ?</string>
+    <string name="yes">አዎ</string>
+    <string name="no">አይ</string>
+
+    <string name="alert_select_player">እባክዎ ማጫወቻ ይምረጡ</string>
+    <string name="alert_select_player_name">ስም</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">ለመውጣት አንዴ ድጋሚ የኋሊት ቁልፍን ይጫኑ</string>
+
+    <string name="error_stream_url">የዥረት ዩአርኤል ችግር</string>
+    <string name="error_caching_stream">የዥረት መሸጎጫ ችግር</string>
+    <string name="error_play_stream">ዥረቱን ማጫወት አልተቻለም</string>
+    <string name="error_stream_reconnect_timeout">ከዥረቱ ጋር እንደገና መገናኘት አልተቻለም፡ ጊዜው አልቋል</string>
+    <string name="warning_no_network_trying_resume">ምንም የአውታረ መረብ ግንኙነት የለም። ግንኙነቱ ሲመለስ ለመቀጠል እየሞከረ ነው።</string>
+    <string name="giving_up_resume">መልሶ ማጫወትን ለመቀጠል የሚደረገው ሙከራ ተቋርጧል</string>
+
+    <string name="error_grant_audiofocus">የኦዲዮ ፎከስ ጥያቄ በስርዓቱ አልተፈቀደም</string>
+
+    <string name="error_no_equalizer_found">ምንም የኢኳላይዘር መተግበሪያ አልተገኘም</string>
+
+    <string name="player_info_status">ሁኔታ፡&#160;</string>
+    <string name="player_info_status_stopped">ቆሟል</string>
+    <string name="player_info_status_playing">በመጫወት ላይ</string>
+    <string name="player_info_transferred">የተላለፈ ውሂብ፡ %1$s</string>
+
+    <string name="tab_player_art">የአልበም ምስል</string>
+    <string name="tab_player_info">መረጃ</string>
+    <string name="tab_player_history">የዘፈን ታሪክ</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">የተበላሸ</string>
+    <string name="station_detail_deleted_on_server">ተሰርዟል</string>
+
+    <string name="station_details_clicks">%1$d ጠቅታዎች</string>
+    <string name="station_details_votes">%1$d ድምጾች</string>
+
+    <string name="image_button_disable">አሰናክል</string>
+    <string name="image_button_delete">ሰርዝ</string>
+    <string name="image_button_more">ተጨማሪ</string>
+    <string name="image_button_less">ያነሰ</string>
+    <string name="image_button_repeat">ድገም</string>
+    <string name="image_button_dont_repeat">አትድገም</string>
+    <string name="icon_click_trend_decreasing">ተወዳጅነት እየቀነሰ ነው</string>
+    <string name="icon_click_trend_increasing">ተወዳጅነት እየጨመረ ነው</string>
+    <string name="icon_click_trend_stable">ተወዳጅነት የተረጋጋ ነው</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% ከማስታወቂያ ነጻ እና ግላዊ</string>
+
+    <string name="action_play_in_external">በውጫዊ ማጫወቻ አጫውት</string>
+    <string name="action_choose_external_player">ውጫዊ ማጫወቻ ይምረጡ</string>
+
+    <string name="settings_disable_battery_optimization">የባትሪ ማመቻቸት</string>
+    <string name="settings_ignore_battery_optimization_summary_on">የባትሪ ማመቻቸት ችላ ተብሏል፣ AMARadio ሁልጊዜ ፎከስን መልሶ ማግኘት መቻል አለበት።</string>
+    <string name="settings_ignore_battery_optimization_summary_off">የባትሪ ማመቻቸት ነቅቷል፣ AMARadio ከበስተጀርባ ከሆነ ፎከስን መልሶ ማግኘት ላይችል ይችላል።</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">ሌላ</string>
+    <string name="settings_statistics">ስታቲስቲክስ</string>
+    <string name="settings_about">ስለ AMARadio</string>
+
+    <string name="description_btn_skip_to_next">ወደ ቀጣዩ ዝለል</string>
+    <string name="description_btn_skip_to_previous">ወደ ቀዳሚው ዝለል</string>
+
+    <string-array name="weekdays">
+        <item>እ</item>
+        <item>ሰ</item>
+        <item>ማ</item>
+        <item>ረ</item>
+        <item>ሐ</item>
+        <item>ዓ</item>
+        <item>ቅ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">የዥረት ዩአርኤል በተሳካ ሁኔታ ተቀድቷል</string>
+    <string name="notify_track_info_copied">የዘፈን መረጃ በተሳካ ሁኔታ ተቀድቷል</string>
+
+    <string-array name="actions_station_link">
+        <item>ድህረ ገጽ ይጎብኙ</item>
+        <item>የዥረት ዩአርኤል ቅዳ</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">የተገደበ ግንኙነት ተገኝቷል</string>
+    <string name="alert_metered_connection_message">የተገደበ ግንኙነት ተጨማሪ ክፍያ ሊያስከትል ይችላል፣ ለመቀጠል \'እሺ\' ይጫኑ።</string>
+    <string name="nav_item_statistics">ስታቲስቲክስ</string>
+    <string name="nav_item_about">ስለ</string>
+    <string name="refresh">አድስ</string>
+    <string name="action_filter">ማጣሪያ</string>
+    <string name="filter_country">ሀገር</string>
+    <string name="filter_tag">መለያ</string>
+    <string name="filter_language">ቋንቋ</string>
+    <string name="filter_sort_by">ደርድር በ</string>
+    <string name="filter_reverse">ተገላቢጦሽ ቅደም ተከተል</string>
+    <string name="filter_apply">ማጣሪያን ተግብር</string>
+    <string name="sort_name">ስም</string>
+    <string name="sort_votes">ድምጾች</string>
+    <string name="sort_clicks">ጠቅታዎች</string>
+    <string name="sort_lastchange">የመጨረሻ ለውጥ</string>
+    <string name="filter_select_country">ሀገር ይምረጡ</string>
+    <string name="filter_select_language">ቋንቋ ይምረጡ</string>
+    <string name="filter_type_tag">መለያ ይተይቡ…</string>
+    <string name="filter_tap_to_configure">ለማዋቀር ይንኩ</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

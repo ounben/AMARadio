@@ -115,7 +115,7 @@
         <item>Filipino</item>
         <item>Bahasa Melayu</item>
         <item>မြန်မာဘာသာ</item>
-        <item>ភាสาខ្មែរ</item>
+        <item>ភាសាខ្មែរ</item>
         <item>বাংলা</item>
         <item>اردو</item>
         <item>தமிழ்</item>
@@ -133,6 +133,10 @@
         <item>Azərbaycan dili</item>
         <item>Қазақ тілі</item>
         <item>Oʻzbek tili</item>
+        <item>Afrikaans</item>
+        <item>አማርኛ</item>
+        <item>Kiswahili</item>
+        <item>isiZulu</item>
     </string-array>
 
     <string-array name="language_values" translatable="false">
@@ -207,6 +211,10 @@
         <item>az</item>
         <item>kk</item>
         <item>uz</item>
+        <item>af</item>
+        <item>am</item>
+        <item>sw</item>
+        <item>zu</item>
     </string-array>
 
 </resources>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Naam</string>
+    <string name="detail_tags">Etikette</string>
+    <string name="detail_country">Land</string>
+    <string name="detail_create_shortcut">Voeg by tuisskerm</string>
+    <string name="detail_language">Taal</string>
+    <string name="detail_weblink">Webskakel</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Speel</string>
+    <string name="detail_pause">Pouse</string>
+    <string name="detail_stop">Stop</string>
+    <string name="detail_share">Deel</string>
+    <string name="detail_play_in_AMARadio">Speel in AMARadio</string>
+
+    <string name="action_links">Skakels</string>
+    <string name="action_homepage">Tuisblad</string>
+    <string name="action_favorite">Gunsteling</string>
+    <string name="action_starred_add">Voeg by gunstelinge</string>
+    <string name="action_starred_remove">Verwyder uit gunstelinge</string>
+
+    <string name="action_station_visit_website">Besoek webtuiste</string>
+    <string name="action_station_copy_stream_url">Kopieer stroom-URL</string>
+    <string name="action_station_share">Deel</string>
+
+    <string name="action_local">Plaaslik</string>
+    <string name="action_skip_to_next">Volgende</string>
+    <string name="action_pause">Pouse</string>
+    <string name="action_skip_to_previous">Vorige</string>
+    <string name="action_resume">Hervat</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_search">Soek</string>
+    <string name="action_delete">Vee uit</string>
+    <string name="action_delete_history">Vee geskiedenis uit</string>
+    <string name="action_delete_favorites">Vee alle gunstelinge uit</string>
+    <string name="action_delete_stream_history">Maak snitgeskiedenis skoon</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Kanselleer</string>
+    <string name="action_top_click">Gewildste klieks</string>
+    <string name="action_toggle_view">Verander aansig</string>
+    <string name="action_top_vote">Gewildste stemme</string>
+    <string name="action_changed_lately">Onlangs verander</string>
+    <string name="action_currently_playing">Speel tans</string>
+    <string name="action_tags">Etikette</string>
+    <string name="action_countries">Lande/Streke</string>
+    <string name="action_languages">Tale</string>
+    <string name="action_edit">Wysig</string>
+    <string name="action_copy_info">Kopieer inligting</string>
+    <string name="action_rename_tab">Hernoem oortjie</string>
+    <string name="error_filter_name_required">Voer asseblief eers \'n naam vir hierdie filteroortjie in</string>
+    <string name="confirm_delete_filter_tab">Is jy seker jy wil die filter \"%1$s\" uitvee?</string>
+    <string name="filter_empty_title">Bou jou eie radiostasie-voer</string>
+    <string name="filter_empty_desc">Skep \'n persoonlike aansig deur verskeie kriteria te kombineer. Jy kan jou soektog beperk deur:</string>
+    <string name="filter_empty_filter_by">Filter volgens:</string>
+    <string name="filter_empty_filter_desc">Land, Stasienaam, Etikette of Taal</string>
+    <string name="filter_empty_sort_by">Sorteer volgens:</string>
+    <string name="filter_empty_sort_desc">Klieks, Alfabet, Stemme of Laaste verandering</string>
+    <string name="filter_empty_hint">Tik \'n naam in die veld hierbo om hierdie aansig te stoor!</string>
+    <string name="error_station_load">Kon nie aan stasie koppel nie</string>
+    <string name="error_list_update">Kon nie aan radiobrowser-bediener koppel nie</string>
+
+    <string name="share_action">Deel stasieskakel met…</string>
+
+    <string name="nav_item_stations">Stasies</string>
+    <string name="nav_item_starred">Gunstelinge</string>
+    <string name="nav_item_history">Geskiedenis</string>
+    <string name="nav_item_settings">Instellings</string>
+
+    <string name="about_text">AMARadio is 100% advertensievry en gefokus op privaatheid.\n\nEk het hierdie toepassing oorspronklik vir my ma ontwikkel om haar \'n eenvoudige, eerlike radio-ervaring te gee sonder irriterende advertensies of nasporing. Dit is hoekom AMARadio altyd vry van advertensies sal bly – dit is \'n belofte aan haar, wat met julle almal gedeel word.\n\nHierdie projek is \'n vurk van die uitstekende https://github.com/segler-alex/RadioDroid . Die hele kodebasis is van Java na Kotlin migreer om te verseker dat die toepassing modern bly en versoenbaar is met toekomstige Android-weergawes.\n\nDie bronkode is beskikbaar by: https://github.com/ounben/AMARadio\n\nHierdie toepassing gebruik die gratis radiostasiegids by https://www.radio-browser.info .\nEnigeen kan stasies daarby voeg. Dit werk soos \'n wiki vir aanlyn radiostasies.\n\nKontak: ben@ounben.com\n\nFoutspoorder: https://github.com/ounben/AMARadio/issues\n\nas jy van die sagteware hou en wil help, stuur gerus vir my \'n e-pos.\nIdees vir nuwe kenmerke word ook altyd waardeer!\n\nHierdie toepassing is vrye sagteware, gelisensieer onder die GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Weergawe: %1$s</string>
+    <string name="detail_star">Voeg by gunstelinge</string>
+    <string name="detail_unstar">Vee uit gunstelinge uit</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Laai tans…</string>
+
+    <string name="sleep_timer" formatted="true">Slaapafteller: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Stop speel na die gekose minuut</string>
+    <string name="sleep_timer_apply">Pas toe</string>
+    <string name="sleep_timer_clear">Maak skoon</string>
+    <string name="nav_item_add_sleep">Slaapafteller</string>
+
+    <string name="nav_item_save_playlist">Voer gunstelinge uit as snitlys</string>
+    <string name="nav_item_load_playlist">Voer gunstelinge in vanaf snitlys</string>
+    <string name="nav_item_save_history_playlist">Voer geskiedenis uit as snitlys</string>
+    <string name="confirm_overwrite_file">Oorskryf die lêer?</string>
+    <string name="dialog_hint_file_name">Voer lêernaam in</string>
+    <string name="error_empty_field">Hierdie veld word vereis</string>
+    <string name="error_invalid_file_name">Ongeldige lêernaam</string>
+    <string name="label_button_cancel">Kanselleer</string>
+    <string name="label_button_overwrite">Oorskryf</string>
+    <string name="notify_load_playlist_nok">Kon nie invoer vanaf %1$s&#47;%2$s nie</string>
+    <string name="notify_load_playlist_now">Voer in vanaf %1$s&#47;%2$s, wag asseblief.</string>
+    <string name="notify_load_playlist_ok">%1$d stasies vanaf %2$s&#47;%3$s ingevoer</string>
+    <string name="notify_save_playlist_nok">Kon nie uitvoer na %1$s&#47;%2$s nie</string>
+    <string name="notify_save_playlist_now">Voer tans uit na %1$s&#47;%2$s, wag asseblief.</string>
+    <string name="notify_save_playlist_ok">Suksesvol uitgevoer na %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d van %2$d plaaslike stasies in die lys is as nie-bestaande op die bediener gemerk</string>
+
+    <string name="searchpreference_clear_history">Vee geskiedenis uit</string>
+    <string name="searchpreference_no_results">Geen resultate nie</string>
+    <string name="searchpreference_search">Soek…</string>
+    <string name="settings_appearance">Voorkoms</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Lig</string>
+    <string name="theme_dark">Donker</string>
+    <string name="theme_system">Volg stelsel</string>
+    <string name="settings_compact_style">Kompakte modus</string>
+    <string name="settings_compact_style_desc_off">Groot ikoon met stasiedetails</string>
+    <string name="settings_compact_style_desc_on">Klein ikoon sonder stasiedetails</string>
+    <string name="settings_bottom_navigation">Onderste navigasie</string>
+    <string name="settings_ui_scale">UI-skalering</string>
+    <string name="settings_language">Taal</string>
+    <string name="ui_scale_compact">Kompak</string>
+    <string name="ui_scale_standard">Stelselstandaard</string>
+    <string name="ui_scale_large">Groot</string>
+    <string name="ui_scale_extra_large">Baie groot</string>
+
+    <string name="settings_interaction">Interaksie</string>
+    <string name="settings_single_use_tags">Wys etikette wat min gebruik word</string>
+    <string name="settings_single_use_tags_desc_off">Etikette wat min gebruik word, sal nie gewys word nie</string>
+    <string name="settings_single_use_tags_desc_on">Etikette wat min gebruik word, sal gewys word</string>
+
+    <string name="settings_show_broken">Gebreekte stasies</string>
+    <string name="settings_show_broken_on">Wys gebreekte stasies in lyste</string>
+    <string name="settings_show_broken_off">Moenie gebreekte stasies in lyste wys nie</string>
+
+    <string name="settings_startup_behaviour">Begin-gedrag</string>
+    <string name="action_grid_view">Rooster-aansig</string>
+    <string name="action_list_view">Lys-aansig</string>
+
+    <string name="startup_action_title">Begin-aksie</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Wys alle stasies</string>
+    <string name="startup_show_favorites">Wys gunstelinge</string>
+    <string name="startup_show_history">Wys geskiedenis</string>
+    <string name="startup_show_last_view">Laaste aansig</string>
+
+    <string name="settings_load_icons">Wys stasie-ikone</string>
+    <string name="settings_load_icons_on">Ikone sal afgelaai word</string>
+    <string name="settings_load_icons_off">Ikone sal nie afgelaai word nie</string>
+
+    <string name="settings_auto_favorite">Outo-gunstelinge</string>
+    <string name="settings_auto_favorite_on">Voeg stasies outomaties by gunstelinge wanneer dit gespeel word</string>
+    <string name="settings_auto_favorite_off">Moenie stasies outomaties by gunstelinge voeg wanneer dit gespeel word nie</string>
+
+    <string name="settings_play">Speler</string>
+    <string name="settings_auto_play_on_startup">Outo-speel</string>
+    <string name="settings_auto_play_on_startup_on">Speel laaste stasie by begin</string>
+    <string name="settings_auto_play_on_startup_off">Moenie laaste stasie by begin speel nie</string>
+    <string name="settings_auto_off_on_startup">Outo-stop</string>
+    <string name="settings_auto_off_on_startup_on">Gebruik outo-stop-afteller met outo-speel</string>
+    <string name="settings_auto_off_on_startup_off">Moenie outo-stop-afteller met outo-speel gebruik nie</string>
+    <string name="settings_auto_off_sleep_timer">Outo-stop-afteller</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stop speel na %1$s minute</string>
+    <string name="settings_play_external">Aktiveer eksterne speler</string>
+    <string name="settings_play_external_desc_on">Speel stasies met eksterne speler</string>
+    <string name="settings_play_external_desc_off">Speel stasies met AMARadio</string>
+    <string name="settings_equalizer">Toonbeheer (Equalizer)</string>
+
+    <string name="settings_connectivity">Konnektiwiteit</string>
+    <string name="settings_connect_timeout">Konneksie-uitteltyd</string>
+    <string name="settings_read_timeout">Lees-uitteltyd</string>
+    <string name="settings_resume_timeout">Hervat-uitteltyd</string>
+    <string name="settings_retry_timeout">Herprobeer-uitteltyd</string>
+    <string name="settings_retry_delay">Herverbinding-vertraging</string>
+    <string name="settings_proxy">Instaanbediener (Proxy)</string>
+    <string name="settings_proxy_login">Gebruikersnaam</string>
+    <string name="settings_proxy_password">Wagwoord</string>
+    <string name="settings_proxy_action_test">Toets</string>
+    <string name="settings_proxy_working">Suksesvol verbind met %s</string>
+    <string name="settings_proxy_not_working">Kon nie verbind met %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Die waardes wat jy verskaf het vir die instaanbediener is ongeldig</string>
+    <string name="ignore_proxy_settings_invalid">Ongeldige instaanbediener-instellings is geïgnoreer</string>
+    <string name="settings_seconds_format">%d sekondes</string>
+    <string name="settings_milliseconds_format">%d millisekondes</string>
+
+    <string name="settings_pause_when_noisy">Pouseer wanneer koptelefoon ontkoppel word</string>
+
+    <string name="settings_auto_resume_do_not_resume">Moenie hervat nie</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Hervat op bedrade verbinding</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Hervat terugspeel wanneer bedrade koptelefoon ingeprop word</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Hervat op Bluetooth-verbinding</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Hervat terugspeel wanneer Bluetooth A2DP-toestel verbind word</string>
+
+    <string name="settings_auto_resume_on_any_connected">Hervat op enige verbinding</string>
+
+    <string name="settings_warn_no_wifi">Waarskuwing vir geen Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Waarsku wanneer gespeel word sonder Wi-Fi-verbinding</string>
+    <string name="settings_warn_no_wifi_off">Geen waarskuwing wanneer nie op Wi-Fi-verbinding nie</string>
+
+    <string name="notify_pre_play">Verbind tans</string>
+    <string name="notify_play">Speel tans</string>
+    <string name="notify_paused">Gepouseer</string>
+    <string name="notify_metered_connection">Gemonitorde verbinding</string>
+
+    <string name="notify_starred">Stasie is by gunstelinge gevoeg</string>
+    <string name="notify_autostarred">Stasie is outomaties by gunstelinge gevoeg</string>
+    <string name="notify_unstarred">Stasie is uit gunstelinge verwyder</string>
+    <string name="notify_deleted_favorites">Die gunstelinge is uitgevee</string>
+    <string name="notify_deleted_history">Die geskiedenis is uitgevee</string>
+
+    <string name="notify_open_link_failure">Geen toepassing gevind om die skakel oop te maak nie</string>
+
+    <string name="notify_station_removed_from_list">1 Verwyder</string>
+    <string name="action_station_removed_from_list_undo">ONGEDAAN MAAK</string>
+
+    <string name="alert_delete_history">Wil jy regtig die geskiedenis uitvee?</string>
+    <string name="alert_delete_favorites">Wil jy regtig alle gunstelinge uitvee?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nee</string>
+
+    <string name="alert_select_player">Kies asseblief \'n speler</string>
+    <string name="alert_select_player_name">Naam</string>
+    <string name="hostname">Gasheernaam</string>
+    <string name="port">Poort</string>
+
+    <string name="alert_press_back_to_exit">Druk weer terug om af te sluit</string>
+
+    <string name="error_stream_url">Stroom-URL probleem</string>
+    <string name="error_caching_stream">Stroom-geheue probleem</string>
+    <string name="error_play_stream">Kon nie stroom speel nie</string>
+    <string name="error_stream_reconnect_timeout">Kon nie herverbind met die stroom nie: uitteltyd</string>
+    <string name="warning_no_network_trying_resume">Geen netwerkverbinding nie. Probeer hervat wanneer verbinding terug is.</string>
+    <string name="giving_up_resume">Laat vaar poging om terugspeel te hervat</string>
+
+    <string name="error_grant_audiofocus">Versoek vir oudiofokus is nie deur die stelsel toegestaan nie</string>
+
+    <string name="error_no_equalizer_found">Geen toonbeheer-toepassing gevind nie</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">gestop</string>
+    <string name="player_info_status_playing">speel</string>
+    <string name="player_info_transferred">Oorgedraagde data: %1$s</string>
+
+    <string name="tab_player_art">Albumkuns</string>
+    <string name="tab_player_info">Inligting</string>
+    <string name="tab_player_history">Snitgeskiedenis</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">GEBREEK</string>
+    <string name="station_detail_deleted_on_server">GEVEE</string>
+
+    <string name="station_details_clicks">%1$d klieks</string>
+    <string name="station_details_votes">%1$d stemme</string>
+
+    <string name="image_button_disable">Deaktiveer</string>
+    <string name="image_button_delete">Vee uit</string>
+    <string name="image_button_more">Meer</string>
+    <string name="image_button_less">Minder</string>
+    <string name="image_button_repeat">Herhaal</string>
+    <string name="image_button_dont_repeat">Moenie herhaal nie</string>
+    <string name="icon_click_trend_decreasing">Gewildheid neem af</string>
+    <string name="icon_click_trend_increasing">Gewildheid neem toe</string>
+    <string name="icon_click_trend_stable">Gewildheid stabiel</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Advertensievry &amp; Privaat</string>
+
+    <string name="action_play_in_external">Speel in eksterne speler</string>
+    <string name="action_choose_external_player">Kies eksterne speler</string>
+
+    <string name="settings_disable_battery_optimization">Battery-optimering</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Battery-optimering word geïgnoreer, AMARadio behoort altyd fokus te kan herwin.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Battery-optimering is geaktiveer, AMARadio sal dalk nie fokus kan herwin as dit in die agtergrond is nie.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Ander</string>
+    <string name="settings_statistics">Statistiek</string>
+    <string name="settings_about">Oor AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Spring na volgende</string>
+    <string name="description_btn_skip_to_previous">Spring na vorige</string>
+
+    <string-array name="weekdays">
+        <item>S</item>
+        <item>M</item>
+        <item>D</item>
+        <item>W</item>
+        <item>D</item>
+        <item>V</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Stroom-URL suksesvol gekopieer</string>
+    <string name="notify_track_info_copied">Snitinligting suksesvol gekopieer</string>
+
+    <string-array name="actions_station_link">
+        <item>Besoek webtuiste</item>
+        <item>Kopieer stroom-URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Gemonitorde verbinding bespeur</string>
+    <string name="alert_metered_connection_message">Gemonitorde verbinding kan addisionele koste aangaan, druk \'OK\' om voort te gaan.</string>
+    <string name="nav_item_statistics">Statistiek</string>
+    <string name="nav_item_about">Oor</string>
+    <string name="refresh">Verfris</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_tag">Etiket</string>
+    <string name="filter_language">Taal</string>
+    <string name="filter_sort_by">Sorteer volgens</string>
+    <string name="filter_reverse">Omgekeerde volgorde</string>
+    <string name="filter_apply">Pas filter toe</string>
+    <string name="sort_name">Naam</string>
+    <string name="sort_votes">Stemme</string>
+    <string name="sort_clicks">Klieks</string>
+    <string name="sort_lastchange">Laaste verandering</string>
+    <string name="filter_select_country">Kies Land</string>
+    <string name="filter_select_language">Kies Taal</string>
+    <string name="filter_type_tag">Tik etiket…</string>
+    <string name="filter_tap_to_configure">Tik om op te stel</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

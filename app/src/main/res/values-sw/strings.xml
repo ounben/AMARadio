@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Jina</string>
+    <string name="detail_tags">Lebo</string>
+    <string name="detail_country">Nchi</string>
+    <string name="detail_create_shortcut">Ongeza kwenye skrini ya kwanza</string>
+    <string name="detail_language">Lugha</string>
+    <string name="detail_weblink">Kiungo cha wavuti</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Cheza</string>
+    <string name="detail_pause">Sitisha</string>
+    <string name="detail_stop">Simama</string>
+    <string name="detail_share">Shiriki</string>
+    <string name="detail_play_in_AMARadio">Cheza katika AMARadio</string>
+
+    <string name="action_links">Viungo</string>
+    <string name="action_homepage">Ukurasa wa nyumbani</string>
+    <string name="action_favorite">Kipendwa</string>
+    <string name="action_starred_add">Ongeza kwenye vipendwa</string>
+    <string name="action_starred_remove">Ondoa kwenye vipendwa</string>
+
+    <string name="action_station_visit_website">Tembelea Tovuti</string>
+    <string name="action_station_copy_stream_url">Nakili URL ya Mtiririko</string>
+    <string name="action_station_share">Shiriki</string>
+
+    <string name="action_local">Ya ndani</string>
+    <string name="action_skip_to_next">Inayofuata</string>
+    <string name="action_pause">Sitisha</string>
+    <string name="action_skip_to_previous">Iliyopita</string>
+    <string name="action_resume">Endelea</string>
+    <string name="action_stop">Simama</string>
+    <string name="action_search">Tafuta</string>
+    <string name="action_delete">Futa</string>
+    <string name="action_delete_history">Futa historia</string>
+    <string name="action_delete_favorites">Futa vipendwa vyote</string>
+    <string name="action_delete_stream_history">Futa historia ya nyimbo</string>
+    <string name="action_ok">Sawa</string>
+    <string name="action_cancel">Ghairi</string>
+    <string name="action_top_click">Mibofyo ya Juu</string>
+    <string name="action_toggle_view">Badilisha mtazamo</string>
+    <string name="action_top_vote">Kura za Juu</string>
+    <string name="action_changed_lately">Iliyobadilishwa Hivi Karibuni</string>
+    <string name="action_currently_playing">Inacheza</string>
+    <string name="action_tags">Lebo</string>
+    <string name="action_countries">Nchi/Mikoa</string>
+    <string name="action_languages">Lugha</string>
+    <string name="action_edit">Hariri</string>
+    <string name="action_copy_info">Nakili Maelezo</string>
+    <string name="action_rename_tab">Badilisha jina la kichupo</string>
+    <string name="error_filter_name_required">Tafadhali ingiza jina la kichupo hiki cha kichujio kwanza</string>
+    <string name="confirm_delete_filter_tab">Je, una uhakika unataka kufuta kichujio \"%1$s\"?</string>
+    <string name="filter_empty_title">Unda Milisho Yako ya Vituo vya Redio</string>
+    <string name="filter_empty_desc">Unda mtazamo wa kibinafsi kwa kuchanganya vigezo vingi. Unaweza kupunguza utafutaji wako kwa kutumia:</string>
+    <string name="filter_empty_filter_by">Chuja kwa:</string>
+    <string name="filter_empty_filter_desc">Nchi, Jina la Kituo, Lebo, au Lugha</string>
+    <string name="filter_empty_sort_by">Panga kwa:</string>
+    <string name="filter_empty_sort_desc">Mibofyo, Alfabeti, Kura, au Mabadiliko ya Mwisho</string>
+    <string name="filter_empty_hint">Andika jina kwenye uwanja hapo juu ili kuhifadhi mtazamo huu!</string>
+    <string name="error_station_load">Haikuweza kuunganishwa na kituo</string>
+    <string name="error_list_update">Haikuweza kuunganishwa na seva ya redio browser</string>
+
+    <string name="share_action">Shiriki kiungo cha kituo na…</string>
+
+    <string name="nav_item_stations">Vituo</string>
+    <string name="nav_item_starred">Vipendwa</string>
+    <string name="nav_item_history">Historia</string>
+    <string name="nav_item_settings">Mipangilio</string>
+
+    <string name="about_text">AMARadio haina matangazo 100% na imezingatia faragha.\n\nMimi awali nilitengeneza programu hii kwa ajili ya mama yangu ili kumpa uzoefu rahisi na wa kweli wa redio bila matangazo ya kero au ufuatiliaji. Hii ndiyo sababu AMARadio itabaki bila matangazo daima – ni ahadi kwake, iliyoshirikiwa nanyi nyote.\n\nMradi huu ni fork ya https://github.com/segler-alex/RadioDroid bora. Kanuni nzima imehama kutoka Java hadi Kotlin ili kuhakikisha programu inabaki ya kisasa na inaendana na matoleo ya baadaye ya Android.\n\nSource code inapatikana katika: https://github.com/ounben/AMARadio\n\nProgramu hii inatumia saraka ya kituo cha redio cha bure katika https://www.radio-browser.info .\nKila mtu anaweza kuongeza vituo kwake. Inafanya kazi kama wiki kwa vituo vya redio mtandaoni.\n\nWasiliana: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nIkiwa unapenda programu na unataka kusaidia, jisikie huru kunitumia barua pepe.\nPia mawazo kwa vipengele vipya yanathaminiwa daima!\n\nProgramu hii ni programu huru, iliyopewa leseni chini ya GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Toleo: %1$s</string>
+    <string name="detail_star">Ongeza kwenye vipendwa</string>
+    <string name="detail_unstar">Futa kwenye vipendwa</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Inapakia…</string>
+
+    <string name="sleep_timer" formatted="true">Kipima muda cha kulala: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Acha kucheza baada ya dakika iliyochaguliwa</string>
+    <string name="sleep_timer_apply">Tumia</string>
+    <string name="sleep_timer_clear">Futa</string>
+    <string name="nav_item_add_sleep">Kipima muda cha kulala</string>
+
+    <string name="nav_item_save_playlist">Hamisha vipendwa kama orodha ya kucheza</string>
+    <string name="nav_item_load_playlist">Ingiza vipendwa kutoka kwenye orodha ya kucheza</string>
+    <string name="nav_item_save_history_playlist">Hamisha historia kama orodha ya kucheza</string>
+    <string name="confirm_overwrite_file">Badilisha faili?</string>
+    <string name="dialog_hint_file_name">Ingiza jina la faili</string>
+    <string name="error_empty_field">Uwanja huu unahitajika</string>
+    <string name="error_invalid_file_name">Jina la faili si sahihi</string>
+    <string name="label_button_cancel">Ghairi</string>
+    <string name="label_button_overwrite">Badilisha</string>
+    <string name="notify_load_playlist_nok">Haikuweza kuingiza kutoka %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Inaingiza kutoka %1$s&#47;%2$s, tafadhali subiri.</string>
+    <string name="notify_load_playlist_ok">Imeingiza vituo %1$d kutoka %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Haikuweza kuhamisha kwenda %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Inahamisha kwenda %1$s&#47;%2$s, tafadhali subiri.</string>
+    <string name="notify_save_playlist_ok">Imehamishwa kwenda %1$s&#47;%2$s kwa mafanikio</string>
+    <string name="notify_sync_list_deleted_entries">%1$d kati ya %2$d ya vituo vya ndani kwenye orodha vimetiwa alama kama havipo kwenye seva</string>
+
+    <string name="searchpreference_clear_history">Futa historia</string>
+    <string name="searchpreference_no_results">Hakuna matokeo</string>
+    <string name="searchpreference_search">Tafuta…</string>
+    <string name="settings_appearance">Muonekano</string>
+    <string name="settings_theme_selection_title">Mandhari</string>
+    <string name="theme_light">Nuru</string>
+    <string name="theme_dark">Giza</string>
+    <string name="theme_system">Fuata mfumo</string>
+    <string name="settings_compact_style">Njia ya mkato</string>
+    <string name="settings_compact_style_desc_off">Ikon kubwa iliyochukuliwa na maelezo ya kituo</string>
+    <string name="settings_compact_style_desc_on">Ikon ndogo iliyochukuliwa bila maelezo ya kituo</string>
+    <string name="settings_bottom_navigation">Urambazaji wa chini</string>
+    <string name="settings_ui_scale">Kiwango cha UI</string>
+    <string name="settings_language">Lugha</string>
+    <string name="ui_scale_compact">Ndogo</string>
+    <string name="ui_scale_standard">Kiwango cha Mfumo</string>
+    <string name="ui_scale_large">Kubwa</string>
+    <string name="ui_scale_extra_large">Kubwa Sana</string>
+
+    <string name="settings_interaction">Uingiliano</string>
+    <string name="settings_single_use_tags">Onyesha lebo zinazotumiwa mara chache</string>
+    <string name="settings_single_use_tags_desc_off">Lebo zinazotumiwa mara chache hazitaonyeshwa</string>
+    <string name="settings_single_use_tags_desc_on">Lebo zinazotumiwa mara chache zitaonyeshwa</string>
+
+    <string name="settings_show_broken">Vituo vilivyoharibika</string>
+    <string name="settings_show_broken_on">Onyesha vituo vilivyoharibika kwenye orodha</string>
+    <string name="settings_show_broken_off">Usionyeshe vituo vilivyoharibika kwenye orodha</string>
+
+    <string name="settings_startup_behaviour">Tabia ya Kuanza</string>
+    <string name="action_grid_view">Mwonekano wa Gridi</string>
+    <string name="action_list_view">Mwonekano wa Orodha</string>
+
+    <string name="startup_action_title">Hatua ya kuanza</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Onyesha vituo vyote</string>
+    <string name="startup_show_favorites">Onyesha vipendwa</string>
+    <string name="startup_show_history">Onyesha historia</string>
+    <string name="startup_show_last_view">Mtazamo wa mwisho</string>
+
+    <string name="settings_load_icons">Onyesha ikon za kituo</string>
+    <string name="settings_load_icons_on">Ikon zitapakuliwa</string>
+    <string name="settings_load_icons_off">Ikon hazitapakuliwa</string>
+
+    <string name="settings_auto_favorite">Vipendwa vya kiotomatiki</string>
+    <string name="settings_auto_favorite_on">Ongeza vituo kiotomatiki kwenye vipendwa wakati unacheza</string>
+    <string name="settings_auto_favorite_off">Usiongeze vituo kiotomatiki kwenye vipendwa wakati unacheza</string>
+
+    <string name="settings_play">Mchezaji</string>
+    <string name="settings_auto_play_on_startup">Cheza kiotomatiki</string>
+    <string name="settings_auto_play_on_startup_on">Cheza kituo cha mwisho unapoanza</string>
+    <string name="settings_auto_play_on_startup_off">Usicheze kituo cha mwisho unapoanza</string>
+    <string name="settings_auto_off_on_startup">Acha kiotomatiki</string>
+    <string name="settings_auto_off_on_startup_on">Tumia kipima muda cha kuacha kiotomatiki na uchezaji wa kiotomatiki</string>
+    <string name="settings_auto_off_on_startup_off">Usitumie kipima muda cha kuacha kiotomatiki na uchezaji wa kiotomatiki</string>
+    <string name="settings_auto_off_sleep_timer">Kipima muda cha kuacha kiotomatiki</string>
+    <string name="settings_auto_off_sleep_timer_desc">Acha kucheza baada ya dakika %1$s</string>
+    <string name="settings_play_external">Washa mchezaji wa nje</string>
+    <string name="settings_play_external_desc_on">Cheza vituo na mchezaji wa nje</string>
+    <string name="settings_play_external_desc_off">Cheza vituo na AMARadio</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">Uunganishaji</string>
+    <string name="settings_connect_timeout">Muda wa kuunganisha umekwisha</string>
+    <string name="settings_read_timeout">Muda wa kusoma umekwisha</string>
+    <string name="settings_resume_timeout">Muda wa kuanza tena umekwisha</string>
+    <string name="settings_retry_timeout">Muda wa kujaribu tena umekwisha</string>
+    <string name="settings_retry_delay">Ucheleweshaji wa kuunganisha tena</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Jina la mtumiaji</string>
+    <string name="settings_proxy_password">Nywila</string>
+    <string name="settings_proxy_action_test">Jaribio</string>
+    <string name="settings_proxy_working">Imefanikiwa kuunganishwa na %s</string>
+    <string name="settings_proxy_not_working">Imeshindwa kuunganishwa na %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Maadili uliyotoa kwa proxy si sahihi</string>
+    <string name="ignore_proxy_settings_invalid">Imepuuzwa mipangilio ya proxy isiyo sahihi</string>
+    <string name="settings_seconds_format">sekunde %d</string>
+    <string name="settings_milliseconds_format">milisetikundi %d</string>
+
+    <string name="settings_pause_when_noisy">Sitisha wakati vichwa vya habari vimezimwa</string>
+
+    <string name="settings_auto_resume_do_not_resume">Usianze tena</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Anza tena kwenye unganisho la waya</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Anza tena kucheza wakati vichwa vya habari vya waya vimechomekwa</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Anza tena kwenye unganisho la Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Anza tena kucheza wakati kifaa cha Bluetooth A2DP kimeunganishwa</string>
+
+    <string name="settings_auto_resume_on_any_connected">Anza tena kwenye unganisho lolote</string>
+
+    <string name="settings_warn_no_wifi">Onyo la kuzima Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Onyesha onyo wakati unacheza bila unganisho la Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Hakuna onyo wakati hauko kwenye unganisho la Wi-Fi</string>
+
+    <string name="notify_pre_play">Inaunganisha</string>
+    <string name="notify_play">Inacheza</string>
+    <string name="notify_paused">Imesitishwa</string>
+    <string name="notify_metered_connection">Muunganisho uliopimwa</string>
+
+    <string name="notify_starred">Kituo kimeongezwa kwenye vipendwa</string>
+    <string name="notify_autostarred">Kituo kimeongezwa kiotomatiki kwenye vipendwa</string>
+    <string name="notify_unstarred">Kituo kimeondolewa kwenye vipendwa</string>
+    <string name="notify_deleted_favorites">Vipendwa vimefutwa</string>
+    <string name="notify_deleted_history">Historia imefutwa</string>
+
+    <string name="notify_open_link_failure">Hakuna programu iliyopatikana kufungua kiungo</string>
+
+    <string name="notify_station_removed_from_list">1 Imeondolewa</string>
+    <string name="action_station_removed_from_list_undo">UNDO</string>
+
+    <string name="alert_delete_history">Je, kweli unataka kufuta historia?</string>
+    <string name="alert_delete_favorites">Je, kweli unataka kufuta vipendwa vyote?</string>
+    <string name="yes">Ndiyo</string>
+    <string name="no">Hapana</string>
+
+    <string name="alert_select_player">Tafadhali chagua mchezaji</string>
+    <string name="alert_select_player_name">Jina</string>
+    <string name="hostname">Jina la mwenyeji</string>
+    <string name="port">Mlango</string>
+
+    <string name="alert_press_back_to_exit">Bonyeza nyuma mara moja zaidi ili kutoka</string>
+
+    <string name="error_stream_url">Tatizo la URL ya Mtiririko</string>
+    <string name="error_caching_stream">Tatizo la kuhifadhi mtiririko</string>
+    <string name="error_play_stream">Haikuwezi kucheza mtiririko</string>
+    <string name="error_stream_reconnect_timeout">Haikuwezi kuunganisha tena kwenye mtiririko: muda umekwisha</string>
+    <string name="warning_no_network_trying_resume">Hakuna muunganisho wa mtandao. Inajaribu kuanza tena wakati muunganisho unarudi.</string>
+    <string name="giving_up_resume">Kuacha jaribio la kuanza tena uchezaji</string>
+
+    <string name="error_grant_audiofocus">Ombi la kuzingatia sauti halikukubaliwa na mfumo</string>
+
+    <string name="error_no_equalizer_found">Hakuna programu ya kusawazisha iliyopatikana</string>
+
+    <string name="player_info_status">Hali:&#160;</string>
+    <string name="player_info_status_stopped">imesimama</string>
+    <string name="player_info_status_playing">inacheza</string>
+    <string name="player_info_transferred">Data iliyohamishwa: %1$s</string>
+
+    <string name="tab_player_art">Sanaa ya albamu</string>
+    <string name="tab_player_info">Maelezo</string>
+    <string name="tab_player_history">Historia ya nyimbo</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">IMEHARIBIKA</string>
+    <string name="station_detail_deleted_on_server">IMEFUTWA</string>
+
+    <string name="station_details_clicks">mibofyo %1$d</string>
+    <string name="station_details_votes">kura %1$d</string>
+
+    <string name="image_button_disable">Zima</string>
+    <string name="image_button_delete">Futa</string>
+    <string name="image_button_more">Zaidi</string>
+    <string name="image_button_less">Chache</string>
+    <string name="image_button_repeat">Rudia</string>
+    <string name="image_button_dont_repeat">Usirudie</string>
+    <string name="icon_click_trend_decreasing">Umaarufu unapungua</string>
+    <string name="icon_click_trend_increasing">Umaarufu unaongezeka</string>
+    <string name="icon_click_trend_stable">Umaarufu uko thabiti</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Bila Matangazo &amp; Ya Faragha</string>
+
+    <string name="action_play_in_external">Cheza katika mchezaji wa nje</string>
+    <string name="action_choose_external_player">Chagua mchezaji wa nje</string>
+
+    <string name="settings_disable_battery_optimization">Uboreshaji wa betri</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Uboreshaji wa betri umepuuzwa, AMARadio inapaswa kuwa na uwezo wa kupata tena umakini kila wakati.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Uboreshaji wa betri umeamilishwa, AMARadio haitaweza kupata tena umakini ikiwa iko nyuma.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Nyingine</string>
+    <string name="settings_statistics">Takwimu</string>
+    <string name="settings_about">Kuhusu AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Ruka hadi inayofuata</string>
+    <string name="description_btn_skip_to_previous">Ruka hadi iliyopita</string>
+
+    <string-array name="weekdays">
+        <item>Jp</item>
+        <item>Jt</item>
+        <item>Jn</item>
+        <item>Jt</item>
+        <item>Al</item>
+        <item>Ij</item>
+        <item>Jm</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL ya mtiririko imenakiliwa kwa mafanikio</string>
+    <string name="notify_track_info_copied">Maelezo ya wimbo yamenakiliwa kwa mafanikio</string>
+
+    <string-array name="actions_station_link">
+        <item>Tembelea Tovuti</item>
+        <item>Nakili URL ya Mtiririko</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Muunganisho uliopimwa umegunduliwa</string>
+    <string name="alert_metered_connection_message">Muunganisho uliopimwa unaweza kusababisha gharama za ziada, bonyeza \'Sawa\' ili kuendelea.</string>
+    <string name="nav_item_statistics">Takwimu</string>
+    <string name="nav_item_about">Kuhusu</string>
+    <string name="refresh">Zizimua</string>
+    <string name="action_filter">Chuja</string>
+    <string name="filter_country">Nchi</string>
+    <string name="filter_tag">Lebo</string>
+    <string name="filter_language">Lugha</string>
+    <string name="filter_sort_by">Panga kwa</string>
+    <string name="filter_reverse">Badilisha mpangilio</string>
+    <string name="filter_apply">Tumia Kichujio</string>
+    <string name="sort_name">Jina</string>
+    <string name="sort_votes">Kura</string>
+    <string name="sort_clicks">Mibofyo</string>
+    <string name="sort_lastchange">Mabadiliko ya Mwisho</string>
+    <string name="filter_select_country">Chagua Nchi</string>
+    <string name="filter_select_language">Chagua Lugha</string>
+    <string name="filter_type_tag">Andika Lebo…</string>
+    <string name="filter_tap_to_configure">Gusa ili kusanidi</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

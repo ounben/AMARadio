@@ -70,4 +70,8 @@
     <locale android:name="az"/>
     <locale android:name="kk"/>
     <locale android:name="uz"/>
+    <locale android:name="af"/>
+    <locale android:name="am"/>
+    <locale android:name="sw"/>
+    <locale android:name="zu"/>
 </locale-config>
