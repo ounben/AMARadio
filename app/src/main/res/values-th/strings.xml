@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">ชื่อ</string>
+    <string name="detail_tags">แท็ก</string>
+    <string name="detail_country">ประเทศ</string>
+    <string name="detail_create_shortcut">เพิ่มในหน้าจอหลัก</string>
+    <string name="detail_language">ภาษา</string>
+    <string name="detail_weblink">ลิงก์เว็บ</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">เล่น</string>
+    <string name="detail_pause">หยุดชั่วคราว</string>
+    <string name="detail_stop">หยุด</string>
+    <string name="detail_share">แชร์</string>
+    <string name="detail_play_in_AMARadio">เล่นใน AMARadio</string>
+
+    <string name="action_links">ลิงก์</string>
+    <string name="action_homepage">หน้าแรก</string>
+    <string name="action_favorite">รายการโปรด</string>
+    <string name="action_starred_add">เพิ่มในรายการโปรด</string>
+    <string name="action_starred_remove">ลบออกจากรายการโปรด</string>
+
+    <string name="action_station_visit_website">ไปที่เว็บไซต์</string>
+    <string name="action_station_copy_stream_url">คัดลอก URL สตรีม</string>
+    <string name="action_station_share">แชร์</string>
+
+    <string name="action_local">ในเครื่อง</string>
+    <string name="action_skip_to_next">ถัดไป</string>
+    <string name="action_pause">หยุดชั่วคราว</string>
+    <string name="action_skip_to_previous">ก่อนหน้า</string>
+    <string name="action_resume">เล่นต่อ</string>
+    <string name="action_stop">หยุด</string>
+    <string name="action_search">ค้นหา</string>
+    <string name="action_delete">ลบ</string>
+    <string name="action_delete_history">ลบประวัติ</string>
+    <string name="action_delete_favorites">ลบรายการโปรดทั้งหมด</string>
+    <string name="action_delete_stream_history">ล้างประวัติเพลง</string>
+    <string name="action_ok">ตกลง</string>
+    <string name="action_cancel">ยกเลิก</string>
+    <string name="action_top_click">ยอดนิยม (คลิก)</string>
+    <string name="action_toggle_view">สลับมุมมอง</string>
+    <string name="action_top_vote">ยอดนิยม (โหวต)</string>
+    <string name="action_changed_lately">แก้ไขล่าสุด</string>
+    <string name="action_currently_playing">กำลังเล่น</string>
+    <string name="action_tags">แท็ก</string>
+    <string name="action_countries">ประเทศ/ภูมิภาค</string>
+    <string name="action_languages">ภาษา</string>
+    <string name="action_edit">แก้ไข</string>
+    <string name="action_copy_info">คัดลอกข้อมูล</string>
+    <string name="action_rename_tab">เปลี่ยนชื่อแท็บ</string>
+    <string name="error_filter_name_required">กรุณาตั้งชื่อแท็บตัวกรองนี้ก่อน</string>
+    <string name="confirm_delete_filter_tab">คุณแน่ใจหรือไม่ว่าต้องการลบตัวกรอง \"%1$s\"?</string>
+    <string name="filter_empty_title">สร้างฟีดสถานีวิทยุของคุณเอง</string>
+    <string name="filter_empty_desc">สร้างมุมมองส่วนตัวโดยรวมหลายเกณฑ์เข้าด้วยกัน คุณสามารถจำกัดการค้นหาให้แคบลงได้โดยใช้:</string>
+    <string name="filter_empty_filter_by">กรองโดย</string>
+    <string name="filter_empty_filter_desc">ประเทศ, ชื่อสถานี, แท็ก หรือภาษา</string>
+    <string name="filter_empty_sort_by">จัดเรียงโดย</string>
+    <string name="filter_empty_sort_desc">คลิก, ลำดับอักษร, โหวต หรือการเปลี่ยนแปลงล่าสุด</string>
+    <string name="filter_empty_hint">พิมพ์ชื่อในช่องด้านบนเพื่อบันทึกมุมมองนี้!</string>
+    <string name="error_station_load">ไม่สามารถเชื่อมต่อกับสถานีได้</string>
+    <string name="error_list_update">ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ radio browser ได้</string>
+
+    <string name="share_action">แชร์ลิงก์สถานีไปยัง…</string>
+
+    <string name="nav_item_stations">สถานี</string>
+    <string name="nav_item_starred">รายการโปรด</string>
+    <string name="nav_item_history">ประวัติ</string>
+    <string name="nav_item_settings">ตั้งค่า</string>
+
+    <string name="about_text">AMARadio ปราศจากโฆษณา 100% และมุ่งเน้นความเป็นส่วนตัว\n\nเดิมทีผมพัฒนาแอปนี้ให้แม่เพื่อให้ท่านได้รับประสบการณ์การฟังวิทยุที่เรียบง่ายและจริงใจ โดยไม่มีโฆษณาที่น่ารำคาญหรือการติดตาม นี่คือเหตุผลที่ AMARadio จะยังคงไม่มีโฆษณาตลอดไป – เป็นสัญญาที่ให้ไว้กับท่าน และแชร์ให้กับทุกคน\n\nโครงการนี้เป็นการ Fork มาจาก https://github.com/segler-alex/RadioDroid ที่ยอดเยี่ยม โค้ดทั้งหมดได้รับการพอร์ตจาก Java เป็น Kotlin เพื่อให้แน่ใจว่าแอปจะทันสมัยและเข้ากันได้กับ Android เวอร์ชันในอนาคต\n\nดูโค้ดต้นฉบับได้ที่: https://github.com/ounben/AMARadio\n\nแอปนี้ใช้ไดเรกทอรีสถานีวิทยุฟรีที่ https://www.radio-browser.info ทุกคนสามารถเพิ่มสถานีลงไปได้ ทำงานเหมือนวิกิสำหรับสถานีวิทยุออนไลน์\n\nติดต่อ: ben@ounben.com\n\nรายงานปัญหา: https://github.com/ounben/AMARadio/issues\n\nหากคุณชอบซอฟต์แวร์นี้และต้องการช่วยเหลือ สามารถส่งอีเมลหาผมได้ นอกจากนี้เรายังยินดีรับฟังไอเดียสำหรับคุณสมบัติใหม่ๆ เสมอ!\n\nแอปนี้เป็นซอฟต์แวร์เสรี ภายใต้ลิขสิทธิ์ GPLv3 https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">เวอร์ชัน: %1$s</string>
+    <string name="detail_star">เพิ่มในรายการโปรด</string>
+    <string name="detail_unstar">ลบออกจากรายการโปรด</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">กำลังโหลด…</string>
+
+    <string name="sleep_timer" formatted="true">ตั้งเวลาปิด: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">หยุดเล่นหลังจากเวลาที่เลือก</string>
+    <string name="sleep_timer_apply">ใช้งาน</string>
+    <string name="sleep_timer_clear">ยกเลิก</string>
+    <string name="nav_item_add_sleep">ตั้งเวลาปิด</string>
+
+    <string name="nav_item_save_playlist">ส่งออกรายการโปรดเป็นเพลย์ลิสต์</string>
+    <string name="nav_item_load_playlist">นำเข้ารายการโปรดจากเพลย์ลิสต์</string>
+    <string name="nav_item_save_history_playlist">ส่งออกประวัติเป็นเพลย์ลิสต์</string>
+    <string name="confirm_overwrite_file">เขียนทับไฟล์หรือไม่?</string>
+    <string name="dialog_hint_file_name">ใส่ชื่อไฟล์</string>
+    <string name="error_empty_field">จำเป็นต้องกรอกข้อมูลในช่องนี้</string>
+    <string name="error_invalid_file_name">ชื่อไฟล์ไม่ถูกต้อง</string>
+    <string name="label_button_cancel">ยกเลิก</string>
+    <string name="label_button_overwrite">เขียนทับ</string>
+    <string name="notify_load_playlist_nok">ไม่สามารถนำเข้าจาก %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">กำลังนำเข้าจาก %1$s&#47;%2$s กรุณารอสักครู่</string>
+    <string name="notify_load_playlist_ok">นำเข้าสถานี %1$d สถานีจาก %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">ไม่สามารถส่งออกไปยัง %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">กำลังส่งออกไปยัง %1$s&#47;%2$s กรุณารอสักครู่</string>
+    <string name="notify_save_playlist_ok">ส่งออกไปยัง %1$s&#47;%2$s สำเร็จ</string>
+    <string name="notify_sync_list_deleted_entries">%1$d จาก %2$d สถานีในเครื่องถูกระบุว่าไม่มีอยู่บนเซิร์ฟเวอร์</string>
+
+    <string name="searchpreference_clear_history">ล้างประวัติ</string>
+    <string name="searchpreference_no_results">ไม่พบผลลัพธ์</string>
+    <string name="searchpreference_search">ค้นหา…</string>
+    <string name="settings_appearance">รูปลักษณ์</string>
+    <string name="settings_theme_selection_title">ธีม</string>
+    <string name="theme_light">สว่าง</string>
+    <string name="theme_dark">มืด</string>
+    <string name="theme_system">ตามระบบ</string>
+    <string name="settings_compact_style">โหมดกะทัดรัด</string>
+    <string name="settings_compact_style_desc_off">แสดงไอคอนขนาดใหญ่พร้อมรายละเอียดสถานี</string>
+    <string name="settings_compact_style_desc_on">แสดงไอคอนขนาดเล็กโดยไม่มีรายละเอียดสถานี</string>
+    <string name="settings_bottom_navigation">แถบนำทางด้านล่าง</string>
+    <string name="settings_ui_scale">การปรับขนาด UI</string>
+    <string name="settings_language">ภาษา</string>
+    <string name="ui_scale_compact">เล็ก</string>
+    <string name="ui_scale_standard">มาตรฐานระบบ</string>
+    <string name="ui_scale_large">ใหญ่</string>
+    <string name="ui_scale_extra_large">ใหญ่มาก</string>
+
+    <string name="settings_interaction">การโต้ตอบ</string>
+    <string name="settings_single_use_tags">แสดงแท็กที่ไม่ค่อยได้ใช้</string>
+    <string name="settings_single_use_tags_desc_off">แท็กที่ไม่ค่อยได้ใช้จะไม่แสดง</string>
+    <string name="settings_single_use_tags_desc_on">แท็กที่ไม่ค่อยได้ใช้จะแสดง</string>
+
+    <string name="settings_show_broken">สถานีที่ขัดข้อง</string>
+    <string name="settings_show_broken_on">แสดงสถานีที่ขัดข้องในรายการ</string>
+    <string name="settings_show_broken_off">ไม่แสดงสถานีที่ขัดข้องในรายการ</string>
+
+    <string name="settings_startup_behaviour">พฤติกรรมการเริ่ม</string>
+    <string name="action_grid_view">มุมมองตาราง</string>
+    <string name="action_list_view">มุมมองรายการ</string>
+
+    <string name="startup_action_title">การทำงานเมื่อเริ่ม</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">แสดงสถานีทั้งหมด</string>
+    <string name="startup_show_favorites">แสดงรายการโปรด</string>
+    <string name="startup_show_history">แสดงประวัติ</string>
+    <string name="startup_show_last_view">มุมมองล่าสุด</string>
+
+    <string name="settings_load_icons">แสดงไอคอนสถานี</string>
+    <string name="settings_load_icons_on">จะดาวน์โหลดไอคอน</string>
+    <string name="settings_load_icons_off">จะไม่ดาวน์โหลดไอคอน</string>
+
+    <string name="settings_auto_favorite">เพิ่มรายการโปรดอัตโนมัติ</string>
+    <string name="settings_auto_favorite_on">เพิ่มสถานีในรายการโปรดอัตโนมัติเมื่อเล่น</string>
+    <string name="settings_auto_favorite_off">ไม่เพิ่มสถานีในรายการโปรดอัตโนมัติเมื่อเล่น</string>
+
+    <string name="settings_play">เครื่องเล่น</string>
+    <string name="settings_auto_play_on_startup">เล่นอัตโนมัติ</string>
+    <string name="settings_auto_play_on_startup_on">เล่นสถานีล่าสุดเมื่อเปิดแอป</string>
+    <string name="settings_auto_play_on_startup_off">ไม่เล่นสถานีล่าสุดเมื่อเปิดแอป</string>
+    <string name="settings_auto_off_on_startup">หยุดอัตโนมัติ</string>
+    <string name="settings_auto_off_on_startup_on">ใช้ตัวตั้งเวลาหยุดอัตโนมัติร่วมกับเล่นอัตโนมัติ</string>
+    <string name="settings_auto_off_on_startup_off">ไม่ใช้ตัวตั้งเวลาหยุดอัตโนมัติร่วมกับเล่นอัตโนมัติ</string>
+    <string name="settings_auto_off_sleep_timer">ตัวตั้งเวลาหยุดอัตโนมัติ</string>
+    <string name="settings_auto_off_sleep_timer_desc">หยุดเล่นหลังจาก %1$s นาที</string>
+    <string name="settings_play_external">ใช้เครื่องเล่นภายนอก</string>
+    <string name="settings_play_external_desc_on">เล่นสถานีด้วยเครื่องเล่นภายนอก</string>
+    <string name="settings_play_external_desc_off">เล่นสถานีด้วย AMARadio</string>
+    <string name="settings_equalizer">อีควอไลเซอร์</string>
+
+    <string name="settings_connectivity">การเชื่อมต่อ</string>
+    <string name="settings_connect_timeout">เวลาหมดอายุการเชื่อมต่อ</string>
+    <string name="settings_read_timeout">เวลาหมดอายุการอ่าน</string>
+    <string name="settings_resume_timeout">เวลาหมดอายุการเล่นต่อ</string>
+    <string name="settings_retry_timeout">เวลาหมดอายุการลองใหม่</string>
+    <string name="settings_retry_delay">ความหน่วงการเชื่อมต่อใหม่</string>
+    <string name="settings_proxy">พร็อกซี</string>
+    <string name="settings_proxy_login">ชื่อผู้ใช้</string>
+    <string name="settings_proxy_password">รหัสผ่าน</string>
+    <string name="settings_proxy_action_test">ทดสอบ</string>
+    <string name="settings_proxy_working">เชื่อมต่อกับ %s สำเร็จ</string>
+    <string name="settings_proxy_not_working">ไม่สามารถเชื่อมต่อกับ %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">ค่าที่คุณระบุสำหรับพร็อกซีไม่ถูกต้อง</string>
+    <string name="ignore_proxy_settings_invalid">ข้ามการตั้งค่าพร็อกซีที่ไม่ถูกต้อง</string>
+    <string name="settings_seconds_format">%d วินาที</string>
+    <string name="settings_milliseconds_format">%d มิลลิวินาที</string>
+
+    <string name="settings_pause_when_noisy">หยุดเมื่อถอดหูฟัง</string>
+
+    <string name="settings_auto_resume_do_not_resume">ไม่ต้องเล่นต่อ</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">เล่นต่อเมื่อเสียบหูฟัง</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">เริ่มเล่นต่อเมื่อเสียบหูฟังแบบสาย</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">เล่นต่อเมื่อเชื่อมต่อบลูทูธ</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">เริ่มเล่นต่อเมื่อเชื่อมต่ออุปกรณ์ Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">เล่นต่อเมื่อมีการเชื่อมต่อใดๆ</string>
+
+    <string name="settings_warn_no_wifi">คำเตือนเมื่อไม่มี Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">เตือนเมื่อเล่นโดยไม่มีการเชื่อมต่อ Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">ไม่มีการเตือนเมื่อไม่มีการเชื่อมต่อ Wi-Fi</string>
+
+    <string name="notify_pre_play">กำลังเชื่อมต่อ</string>
+    <string name="notify_play">กำลังเล่น</string>
+    <string name="notify_paused">หยุดชั่วคราว</string>
+    <string name="notify_metered_connection">การเชื่อมต่อแบบจำกัดปริมาณข้อมูล</string>
+
+    <string name="notify_starred">เพิ่มสถานีในรายการโปรดแล้ว</string>
+    <string name="notify_autostarred">เพิ่มสถานีในรายการโปรดโดยอัตโนมัติแล้ว</string>
+    <string name="notify_unstarred">ลบสถานีออกจากรายการโปรดแล้ว</string>
+    <string name="notify_deleted_favorites">ลบรายการโปรดแล้ว</string>
+    <string name="notify_deleted_history">ลบประวัติแล้ว</string>
+
+    <string name="notify_open_link_failure">ไม่พบแอปพลิเคชันสำหรับเปิดลิงก์</string>
+
+    <string name="notify_station_removed_from_list">ลบออกแล้ว 1</string>
+    <string name="action_station_removed_from_list_undo">เลิกทำ</string>
+
+    <string name="alert_delete_history">คุณต้องการลบประวัติจริงหรือไม่?</string>
+    <string name="alert_delete_favorites">คุณต้องการลบรายการโปรดทั้งหมดจริงหรือไม่?</string>
+    <string name="yes">ใช่</string>
+    <string name="no">ไม่</string>
+
+    <string name="alert_select_player">กรุณาเลือกเครื่องเล่น</string>
+    <string name="alert_select_player_name">ชื่อ</string>
+    <string name="hostname">ชื่อโฮสต์</string>
+    <string name="port">พอร์ต</string>
+
+    <string name="alert_press_back_to_exit">กดกลับอีกครั้งเพื่อออก</string>
+
+    <string name="error_stream_url">ปัญหา URL สตรีม</string>
+    <string name="error_caching_stream">ปัญหาการแคชสตรีม</string>
+    <string name="error_play_stream">ไม่สามารถเล่นสตรีมได้</string>
+    <string name="error_stream_reconnect_timeout">ไม่สามารถเชื่อมต่อสตรีมใหม่ได้: หมดเวลา</string>
+    <string name="warning_no_network_trying_resume">ไม่มีการเชื่อมต่อเครือข่าย กำลังพยายามเล่นต่อเมื่อเชื่อมต่อได้</string>
+    <string name="giving_up_resume">ยกเลิกความพยายามในการเล่นต่อ</string>
+
+    <string name="error_grant_audiofocus">ระบบไม่อนุญาตการเข้าถึง Audio Focus</string>
+
+    <string name="error_no_equalizer_found">ไม่พบแอปอีควอไลเซอร์</string>
+
+    <string name="player_info_status">สถานะ:&#160;</string>
+    <string name="player_info_status_stopped">หยุด</string>
+    <string name="player_info_status_playing">กำลังเล่น</string>
+    <string name="player_info_transferred">ข้อมูลที่โอนถ่าย: %1$s</string>
+
+    <string name="tab_player_art">หน้าปกอัลบั้ม</string>
+    <string name="tab_player_info">ข้อมูล</string>
+    <string name="tab_player_history">ประวัติเพลง</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">เสีย</string>
+    <string name="station_detail_deleted_on_server">ถูกลบ</string>
+
+    <string name="station_details_clicks">%1$d คลิก</string>
+    <string name="station_details_votes">%1$d โหวต</string>
+
+    <string name="image_button_disable">ปิดใช้งาน</string>
+    <string name="image_button_delete">ลบ</string>
+    <string name="image_button_more">เพิ่มเติม</string>
+    <string name="image_button_less">น้อยลง</string>
+    <string name="image_button_repeat">ทำซ้ำ</string>
+    <string name="image_button_dont_repeat">ไม่ทำซ้ำ</string>
+    <string name="icon_click_trend_decreasing">ความนิยมลดลง</string>
+    <string name="icon_click_trend_increasing">ความนิยมเพิ่มขึ้น</string>
+    <string name="icon_click_trend_stable">ความนิยมคงที่</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">ไม่มีโฆษณา 100% &amp; เป็นส่วนตัว</string>
+
+    <string name="action_play_in_external">เล่นในเครื่องเล่นภายนอก</string>
+    <string name="action_choose_external_player">เลือกเครื่องเล่นภายนอก</string>
+
+    <string name="settings_disable_battery_optimization">การปรับปรุงแบตเตอรี่</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ละเว้นการปรับปรุงแบตเตอรี่ AMARadio ควรจะสามารถดึงโฟกัสกลับมาได้เสมอ</string>
+    <string name="settings_ignore_battery_optimization_summary_off">เปิดใช้งานการปรับปรุงแบตเตอรี่ AMARadio อาจไม่สามารถดึงโฟกัสกลับมาได้หากทำงานในเบื้องหลัง</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">อื่นๆ</string>
+    <string name="settings_statistics">สถิติ</string>
+    <string name="settings_about">เกี่ยวกับ AMARadio</string>
+
+    <string name="description_btn_skip_to_next">ข้ามไปถัดไป</string>
+    <string name="description_btn_skip_to_previous">ข้ามไปก่อนหน้า</string>
+
+    <string-array name="weekdays">
+        <item>อา</item>
+        <item>จ</item>
+        <item>อ</item>
+        <item>พ</item>
+        <item>พฤ</item>
+        <item>ศ</item>
+        <item>ส</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">คัดลอก URL สตรีมสำเร็จแล้ว</string>
+    <string name="notify_track_info_copied">คัดลอกข้อมูลเพลงสำเร็จแล้ว</string>
+
+    <string-array name="actions_station_link">
+        <item>ไปที่เว็บไซต์</item>
+        <item>คัดลอก URL สตรีม</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">ตรวจพบการเชื่อมต่อแบบจำกัดปริมาณข้อมูล</string>
+    <string name="alert_metered_connection_message">การเชื่อมต่อแบบจำกัดปริมาณข้อมูลอาจมีค่าใช้จ่ายเพิ่มเติม กด \'ตกลง\' เพื่อดำเนินการต่อ</string>
+    <string name="nav_item_statistics">สถิติ</string>
+    <string name="nav_item_about">เกี่ยวกับ</string>
+    <string name="refresh">รีเฟรช</string>
+    <string name="action_filter">ตัวกรอง</string>
+    <string name="filter_country">ประเทศ</string>
+    <string name="filter_tag">แท็ก</string>
+    <string name="filter_language">ภาษา</string>
+    <string name="filter_sort_by">จัดเรียงโดย</string>
+    <string name="filter_reverse">ย้อนลำดับ</string>
+    <string name="filter_apply">ใช้ตัวกรอง</string>
+    <string name="sort_name">ชื่อ</string>
+    <string name="sort_votes">คะแนนโหวต</string>
+    <string name="sort_clicks">จำนวนคลิก</string>
+    <string name="sort_lastchange">การเปลี่ยนแปลงล่าสุด</string>
+    <string name="filter_select_country">เลือกประเทศ</string>
+    <string name="filter_select_language">เลือกภาษา</string>
+    <string name="filter_type_tag">พิมพ์แท็ก…</string>
+    <string name="filter_tap_to_configure">แตะเพื่อตั้งค่า</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

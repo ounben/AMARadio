@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Pangalan</string>
+    <string name="detail_tags">Mga Tag</string>
+    <string name="detail_country">Bansa</string>
+    <string name="detail_create_shortcut">Idagdag sa home screen</string>
+    <string name="detail_language">Wika</string>
+    <string name="detail_weblink">Weblink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">I-play</string>
+    <string name="detail_pause">I-pause</string>
+    <string name="detail_stop">I-stop</string>
+    <string name="detail_share">Ibahagi</string>
+    <string name="detail_play_in_AMARadio">I-play sa AMARadio</string>
+
+    <string name="action_links">Mga Link</string>
+    <string name="action_homepage">Homepage</string>
+    <string name="action_favorite">Paborito</string>
+    <string name="action_starred_add">Idagdag sa mga paborito</string>
+    <string name="action_starred_remove">Alisin sa mga paborito</string>
+
+    <string name="action_station_visit_website">Bisitahin ang Website</string>
+    <string name="action_station_copy_stream_url">Kopyahin ang Stream URL</string>
+    <string name="action_station_share">Ibahagi</string>
+
+    <string name="action_local">Lokal</string>
+    <string name="action_skip_to_next">Susunod</string>
+    <string name="action_pause">I-pause</string>
+    <string name="action_skip_to_previous">Nakaraan</string>
+    <string name="action_resume">Ipagpatuloy</string>
+    <string name="action_stop">I-stop</string>
+    <string name="action_search">Maghanap</string>
+    <string name="action_delete">I-delete</string>
+    <string name="action_delete_history">I-delete ang history</string>
+    <string name="action_delete_favorites">I-delete lahat ng paborito</string>
+    <string name="action_delete_stream_history">I-clear ang history ng track</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">I-cancel</string>
+    <string name="action_top_click">Top Click</string>
+    <string name="action_toggle_view">I-toggle ang view</string>
+    <string name="action_top_vote">Top Vote</string>
+    <string name="action_changed_lately">Kamakailang Binago</string>
+    <string name="action_currently_playing">Nagpapatugtog</string>
+    <string name="action_tags">Mga Tag</string>
+    <string name="action_countries">Mga Bansa/Rehiyon</string>
+    <string name="action_languages">Mga Wika</string>
+    <string name="action_edit">I-edit</string>
+    <string name="action_copy_info">Kopyahin ang Info</string>
+    <string name="action_rename_tab">I-rename ang Tab</string>
+    <string name="error_filter_name_required">Mangyaring maglagay muna ng pangalan para sa filter tab na ito</string>
+    <string name="confirm_delete_filter_tab">Sigurado ka bang gusto mong i-delete ang filter na \"%1$s\"?</string>
+    <string name="filter_empty_title">Buuin ang Iyong Custom Radio Station Feed</string>
+    <string name="filter_empty_desc">Gumawa ng personalized na view sa pamamagitan ng pagsasama ng maraming criteria. Maaari mong paliitin ang iyong paghahanap gamit ang:</string>
+    <string name="filter_empty_filter_by">I-filter ayon sa</string>
+    <string name="filter_empty_filter_desc">Bansa, Pangalan ng Station, Mga Tag, o Wika</string>
+    <string name="filter_empty_sort_by">I-sort ayon sa</string>
+    <string name="filter_empty_sort_desc">Mga Click, Alphabet, Mga Boto, o Huling Pagbabago</string>
+    <string name="filter_empty_hint">Mag-type ng pangalan sa field sa itaas para i-save ang view na ito!</string>
+    <string name="error_station_load">Hindi makakonekta sa station</string>
+    <string name="error_list_update">Hindi makakonekta sa radio browser server</string>
+
+    <string name="share_action">Ibahagi ang link ng station sa…</string>
+
+    <string name="nav_item_stations">Mga Station</string>
+    <string name="nav_item_starred">Mga Paborito</string>
+    <string name="nav_item_history">History</string>
+    <string name="nav_item_settings">Mga Setting</string>
+
+    <string name="about_text">Ang AMARadio ay 100% ad-free at nakatuon sa privacy.\n\nOrihinal kong binuo ang app na ito para sa aking ina upang mabigyan siya ng simple at tapat na karanasan sa radyo nang walang nakakainis na mga ad o tracking. Ito ang dahilan kung bakit mananatiling libre sa mga advertisement ang AMARadio – ito ay isang pangako sa kanya, na ibinabahagi sa inyong lahat.\n\nAng proyektong ito ay isang fork ng mahusay na https://github.com/segler-alex/RadioDroid . Ang buong codebase ay inilipat mula Java patungong Kotlin upang matiyak na mananatiling modern at compatible ang app sa mga susunod na bersyon ng Android.\n\nAng source code ay makukuha sa: https://github.com/ounben/AMARadio\n\nGinagamit ng app na ito ang libreng radio station directory sa https://www.radio-browser.info .\nKahit sino ay maaaring magdagdag ng mga station dito. Gumagana ito na parang wiki para sa mga online radio station.\n\nContact: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nKung gusto mo ang software at nais mong tumulong, huwag mag-atubiling magpadala sa akin ng email.\nAng mga ideya para sa mga bagong feature ay laging pinapahalagahan!\n\nAng app na ito ay libreng software, na lisensyado sa ilalim ng GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Bersyon: %1$s</string>
+    <string name="detail_star">Idagdag sa mga paborito</string>
+    <string name="detail_unstar">Alisin sa mga paborito</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Naglo-load…</string>
+
+    <string name="sleep_timer" formatted="true">Sleep timer: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">I-stop ang pag-play pagkatapos ng napiling minuto</string>
+    <string name="sleep_timer_apply">I-apply</string>
+    <string name="sleep_timer_clear">I-clear</string>
+    <string name="nav_item_add_sleep">Sleep timer</string>
+
+    <string name="nav_item_save_playlist">I-export ang mga paborito bilang playlist</string>
+    <string name="nav_item_load_playlist">Mag-import ng mga paborito mula sa playlist</string>
+    <string name="nav_item_save_history_playlist">I-export ang history bilang playlist</string>
+    <string name="confirm_overwrite_file">I-overwrite ang file?</string>
+    <string name="dialog_hint_file_name">Ilagay ang pangalan ng file</string>
+    <string name="error_empty_field">Ang field na ito ay kinakailangan</string>
+    <string name="error_invalid_file_name">Invalid na pangalan ng file</string>
+    <string name="label_button_cancel">I-cancel</string>
+    <string name="label_button_overwrite">I-overwrite</string>
+    <string name="notify_load_playlist_nok">Hindi ma-import mula sa %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Nag-i-import mula sa %1$s&#47;%2$s, mangyaring maghintay.</string>
+    <string name="notify_load_playlist_ok">Nag-import ng %1$d station mula sa %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Hindi ma-export sa %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Nag-e-export sa %1$s&#47;%2$s, mangyaring maghintay.</string>
+    <string name="notify_save_playlist_ok">Matagumpay na na-export sa %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d sa %2$d lokal na station sa listahan ay minarkahang hindi umiiral sa server</string>
+
+    <string name="searchpreference_clear_history">I-clear ang history</string>
+    <string name="searchpreference_no_results">Walang resulta</string>
+    <string name="searchpreference_search">Maghanap…</string>
+    <string name="settings_appearance">Hitsura</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Maliwanag</string>
+    <string name="theme_dark">Madilim</string>
+    <string name="theme_system">Sundin ang system</string>
+    <string name="settings_compact_style">Compact mode</string>
+    <string name="settings_compact_style_desc_off">Malaking icon na may mga detalye ng station</string>
+    <string name="settings_compact_style_desc_on">Maliit na icon na walang mga detalye ng station</string>
+    <string name="settings_bottom_navigation">Bottom navigation</string>
+    <string name="settings_ui_scale">UI Scaling</string>
+    <string name="settings_language">Wika</string>
+    <string name="ui_scale_compact">Compact</string>
+    <string name="ui_scale_standard">System Standard</string>
+    <string name="ui_scale_large">Malaki</string>
+    <string name="ui_scale_extra_large">Napakalaki</string>
+
+    <string name="settings_interaction">Pakikipag-ugnayan</string>
+    <string name="settings_single_use_tags">Ipakita ang mga bihirang gamiting tag</string>
+    <string name="settings_single_use_tags_desc_off">Ang mga bihirang gamiting tag ay hindi ipakikita</string>
+    <string name="settings_single_use_tags_desc_on">Ang mga bihirang gamiting tag ay ipakikita</string>
+
+    <string name="settings_show_broken">Sira na mga station</string>
+    <string name="settings_show_broken_on">Ipakita ang mga sirang station sa mga listahan</string>
+    <string name="settings_show_broken_off">Huwag ipakita ang mga sirang station sa mga listahan</string>
+
+    <string name="settings_startup_behaviour">Gawi sa Pagsisimula</string>
+    <string name="action_grid_view">Grid View</string>
+    <string name="action_list_view">List View</string>
+
+    <string name="startup_action_title">Action sa pagsisimula</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Ipakita lahat ng station</string>
+    <string name="startup_show_favorites">Ipakita ang mga paborito</string>
+    <string name="startup_show_history">Ipakita ang history</string>
+    <string name="startup_show_last_view">Huling view</string>
+
+    <string name="settings_load_icons">Ipakita ang mga icon ng station</string>
+    <string name="settings_load_icons_on">Mada-download ang mga icon</string>
+    <string name="settings_load_icons_off">Hindi mada-download ang mga icon</string>
+
+    <string name="settings_auto_favorite">Auto-paborito</string>
+    <string name="settings_auto_favorite_on">Awtomatikong idagdag ang mga station sa mga paborito kapag pinapatugtog</string>
+    <string name="settings_auto_favorite_off">Huwag awtomatikong idagdag ang mga station sa mga paborito</string>
+
+    <string name="settings_play">Player</string>
+    <string name="settings_auto_play_on_startup">Auto-play</string>
+    <string name="settings_auto_play_on_startup_on">I-play ang huling station sa pagsisimula</string>
+    <string name="settings_auto_play_on_startup_off">Huwag i-play ang huling station sa pagsisimula</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Gamitin ang auto-stop timer sa auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Huwag gamitin ang auto-stop timer sa auto-play</string>
+    <string name="settings_auto_off_sleep_timer">Auto-stop timer</string>
+    <string name="settings_auto_off_sleep_timer_desc">I-stop ang pag-play pagkatapos ng %1$s minuto</string>
+    <string name="settings_play_external">I-enable ang external player</string>
+    <string name="settings_play_external_desc_on">I-play ang mga station gamit ang external player</string>
+    <string name="settings_play_external_desc_off">I-play ang mga station gamit ang AMARadio</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">Koneksyon</string>
+    <string name="settings_connect_timeout">Connection timeout</string>
+    <string name="settings_read_timeout">Read timeout</string>
+    <string name="settings_resume_timeout">Resume timeout</string>
+    <string name="settings_retry_timeout">Retry timeout</string>
+    <string name="settings_retry_delay">Reconnection delay</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Username</string>
+    <string name="settings_proxy_password">Password</string>
+    <string name="settings_proxy_action_test">Subukan</string>
+    <string name="settings_proxy_working">Matagumpay na nakakonekta sa %s</string>
+    <string name="settings_proxy_not_working">Nabigong kumonekta sa %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Ang mga value na ibinigay mo para sa proxy ay invalid</string>
+    <string name="ignore_proxy_settings_invalid">In-ignore ang invalid na mga setting ng proxy</string>
+    <string name="settings_seconds_format">%d segundo</string>
+    <string name="settings_milliseconds_format">%d milliseundo</string>
+
+    <string name="settings_pause_when_noisy">I-pause kapag nadiskonekta ang headset</string>
+
+    <string name="settings_auto_resume_do_not_resume">Huwag ipagpatuloy</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Ipagpatuloy sa wired connection</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Ipagpatuloy ang playback kapag nag-plug-in ng wired headset</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Ipagpatuloy sa Bluetooth connection</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Ipagpatuloy ang playback kapag kumonekta ang Bluetooth A2DP device</string>
+
+    <string name="settings_auto_resume_on_any_connected">Ipagpatuloy sa anumang koneksyon</string>
+
+    <string name="settings_warn_no_wifi">Babala kung walang Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Magbabala kapag nagpapatugtog nang walang Wi-Fi connection</string>
+    <string name="settings_warn_no_wifi_off">Walang babala kapag wala sa Wi-Fi connection</string>
+
+    <string name="notify_pre_play">Kumokonekta</string>
+    <string name="notify_play">Nagpapatugtog</string>
+    <string name="notify_paused">Naka-pause</string>
+    <string name="notify_metered_connection">Metered connection</string>
+
+    <string name="notify_starred">Naidagdag na ang station sa mga paborito</string>
+    <string name="notify_autostarred">Awtomatikong naidagdag ang station sa mga paborito</string>
+    <string name="notify_unstarred">Naalis na ang station sa mga paborito</string>
+    <string name="notify_deleted_favorites">Na-delete na ang mga paborito</string>
+    <string name="notify_deleted_history">Na-delete na ang history</string>
+
+    <string name="notify_open_link_failure">Walang nahanap na application para buksan ang link</string>
+
+    <string name="notify_station_removed_from_list">1 Inalis</string>
+    <string name="action_station_removed_from_list_undo">I-UNDO</string>
+
+    <string name="alert_delete_history">Gusto mo ba talagang i-delete ang history?</string>
+    <string name="alert_delete_favorites">Gusto mo ba talagang i-delete ang lahat ng paborito?</string>
+    <string name="yes">Oo</string>
+    <string name="no">Hindi</string>
+
+    <string name="alert_select_player">Mangyaring pumili ng player</string>
+    <string name="alert_select_player_name">Pangalan</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Pindutin ang back nang isa pang beses para lumabas</string>
+
+    <string name="error_stream_url">Problema sa Stream URL</string>
+    <string name="error_caching_stream">Problema sa stream caching</string>
+    <string name="error_play_stream">Hindi ma-play ang stream</string>
+    <string name="error_stream_reconnect_timeout">Hindi muling makakonekta sa stream: timeout</string>
+    <string name="warning_no_network_trying_resume">Walang network connection. Sinusubukang ipagpatuloy kapag bumalik ang koneksyon.</string>
+    <string name="giving_up_resume">Itinitigil na ang pagtatangkang ipagpatuloy ang playback</string>
+
+    <string name="error_grant_audiofocus">Ang kahilingan para sa audio focus ay hindi pinagbigyan ng system</string>
+
+    <string name="error_no_equalizer_found">Walang nahanap na equalizer app</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">naka-stop</string>
+    <string name="player_info_status_playing">nagpapatugtog</string>
+    <string name="player_info_transferred">Inilipat na data: %1$s</string>
+
+    <string name="tab_player_art">Album art</string>
+    <string name="tab_player_info">Impormasyon</string>
+    <string name="tab_player_history">History ng track</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">SIRA</string>
+    <string name="station_detail_deleted_on_server">NA-DELETE</string>
+
+    <string name="station_details_clicks">%1$d click</string>
+    <string name="station_details_votes">%1$d boto</string>
+
+    <string name="image_button_disable">I-disable</string>
+    <string name="image_button_delete">I-delete</string>
+    <string name="image_button_more">Higit pa</string>
+    <string name="image_button_less">Mas kaunti</string>
+    <string name="image_button_repeat">I-repeat</string>
+    <string name="image_button_dont_repeat">Huwag i-repeat</string>
+    <string name="icon_click_trend_decreasing">Bumababa ang katanyagan</string>
+    <string name="icon_click_trend_increasing">Tumataas ang katanyagan</string>
+    <string name="icon_click_trend_stable">Stable ang katanyagan</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Ad-Free &amp; Pribado</string>
+
+    <string name="action_play_in_external">I-play sa external player</string>
+    <string name="action_choose_external_player">Pumili ng external player</string>
+
+    <string name="settings_disable_battery_optimization">Battery optimization</string>
+    <string name="settings_ignore_battery_optimization_summary_on">In-ignore ang battery optimization, dapat laging makuha muli ng AMARadio ang focus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Naka-activate ang battery optimization, maaaring hindi makuha muli ng AMARadio ang focus kung nasa background.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Iba pa</string>
+    <string name="settings_statistics">Mga Istatistika</string>
+    <string name="settings_about">Tungkol sa AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Lumaktaw sa susunod</string>
+    <string name="description_btn_skip_to_previous">Lumaktaw sa nakaraan</string>
+
+    <string-array name="weekdays">
+        <item>L</item>
+        <item>L</item>
+        <item>M</item>
+        <item>M</item>
+        <item>H</item>
+        <item>B</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Matagumpay na nakopya ang Stream URL</string>
+    <string name="notify_track_info_copied">Matagumpay na nakopya ang impormasyon ng track</string>
+
+    <string-array name="actions_station_link">
+        <item>Bisitahin ang Website</item>
+        <item>Kopyahin ang Stream URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">May na-detect na metered connection</string>
+    <string name="alert_metered_connection_message">Ang metered connection ay maaaring magkaroon ng karagdagang bayad, pindutin ang \'OK\' para magpatuloy.</string>
+    <string name="nav_item_statistics">Mga Istatistika</string>
+    <string name="nav_item_about">Tungkol sa</string>
+    <string name="refresh">I-refresh</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Bansa</string>
+    <string name="filter_tag">Tag</string>
+    <string name="filter_language">Wika</string>
+    <string name="filter_sort_by">I-sort ayon sa</string>
+    <string name="filter_reverse">Baligtad na pagkakasunod-sunod</string>
+    <string name="filter_apply">I-apply ang Filter</string>
+    <string name="sort_name">Pangalan</string>
+    <string name="sort_votes">Mga Boto</string>
+    <string name="sort_clicks">Mga Click</string>
+    <string name="sort_lastchange">Huling Pagbabago</string>
+    <string name="filter_select_country">Pumili ng Bansa</string>
+    <string name="filter_select_language">Pumili ng Wika</string>
+    <string name="filter_type_tag">Mag-type ng Tag…</string>
+    <string name="filter_tap_to_configure">I-tap para i-configure</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

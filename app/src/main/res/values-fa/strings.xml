@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">نام</string>
+    <string name="detail_tags">برچسب‌ها</string>
+    <string name="detail_country">کشور</string>
+    <string name="detail_create_shortcut">افزودن به صفحه اصلی</string>
+    <string name="detail_language">زبان</string>
+    <string name="detail_weblink">لینک وب</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">پخش</string>
+    <string name="detail_pause">توقف موقت</string>
+    <string name="detail_stop">توقف</string>
+    <string name="detail_share">اشتراک‌گذاری</string>
+    <string name="detail_play_in_AMARadio">پخش در AMARadio</string>
+
+    <string name="action_links">لینک‌ها</string>
+    <string name="action_homepage">صفحه اصلی</string>
+    <string name="action_favorite">علاقه‌مندی</string>
+    <string name="action_starred_add">افزودن به علاقه‌مندی‌ها</string>
+    <string name="action_starred_remove">حذف از علاقه‌مندی‌ها</string>
+
+    <string name="action_station_visit_website">مشاهده وب‌سایت</string>
+    <string name="action_station_copy_stream_url">کپی لینک پخش</string>
+    <string name="action_station_share">اشتراک‌گذاری</string>
+
+    <string name="action_local">محلی</string>
+    <string name="action_skip_to_next">بعدی</string>
+    <string name="action_pause">توقف موقت</string>
+    <string name="action_skip_to_previous">قبلی</string>
+    <string name="action_resume">ادامه</string>
+    <string name="action_stop">توقف</string>
+    <string name="action_search">جستجو</string>
+    <string name="action_delete">حذف</string>
+    <string name="action_delete_history">پاکسازی تاریخچه</string>
+    <string name="action_delete_favorites">حذف همه علاقه‌مندی‌ها</string>
+    <string name="action_delete_stream_history">پاکسازی تاریخچه آهنگ‌ها</string>
+    <string name="action_ok">تایید</string>
+    <string name="action_cancel">لغو</string>
+    <string name="action_top_click">بیشترین کلیک</string>
+    <string name="action_toggle_view">تغییر نما</string>
+    <string name="action_top_vote">بیشترین رای</string>
+    <string name="action_changed_lately">آخرین تغییرات</string>
+    <string name="action_currently_playing">در حال پخش</string>
+    <string name="action_tags">برچسب‌ها</string>
+    <string name="action_countries">کشورها/مناطق</string>
+    <string name="action_languages">زبان‌ها</string>
+    <string name="action_edit">ویرایش</string>
+    <string name="action_copy_info">کپی اطلاعات</string>
+    <string name="action_rename_tab">تغییر نام زبانه</string>
+    <string name="error_filter_name_required">لطفاً ابتدا یک نام برای این زبانه فیلتر وارد کنید</string>
+    <string name="confirm_delete_filter_tab">آیا از حذف فیلتر \"%1$s\" اطمینان دارید؟</string>
+    <string name="filter_empty_title">فهرست رادیویی سفارشی خود را بسازید</string>
+    <string name="filter_empty_desc">با ترکیب چندین معیار، یک نمای شخصی‌سازی شده ایجاد کنید. می‌توانید جستجوی خود را محدود کنید با:</string>
+    <string name="filter_empty_filter_by">فیلتر بر اساس:</string>
+    <string name="filter_empty_filter_desc">کشور، نام ایستگاه، برچسب‌ها یا زبان</string>
+    <string name="filter_empty_sort_by">مرتب‌سازی بر اساس:</string>
+    <string name="filter_empty_sort_desc">کلیک‌ها، الفبا، رای‌ها یا آخرین تغییر</string>
+    <string name="filter_empty_hint">برای ذخیره این نما، یک نام در فیلد بالا تایپ کنید!</string>
+    <string name="error_station_load">اتصال به ایستگاه برقرار نشد</string>
+    <string name="error_list_update">اتصال به سرور radio browser برقرار نشد</string>
+
+    <string name="share_action">اشتراک‌گذاری لینک ایستگاه با…</string>
+
+    <string name="nav_item_stations">ایستگاه‌ها</string>
+    <string name="nav_item_starred">علاقه‌مندی‌ها</string>
+    <string name="nav_item_history">تاریخچه</string>
+    <string name="nav_item_settings">تنظیمات</string>
+
+    <string name="about_text">برنامه AMARadio ۱۰۰٪ بدون تبلیغات و متمرکز بر حریم خصوصی است.\n\nمن این برنامه را در ابتدا برای مادرم توسعه دادم تا تجربه رادیویی ساده و صادقانه‌ای بدون تبلیغات آزاردهنده یا ردیابی داشته باشد. به همین دلیل AMARadio همیشه بدون تبلیغات باقی خواهد ماند – این قولی است به او که با همه شما به اشتراک گذاشته شده است.\n\nاین پروژه انشعابی (fork) از برنامه عالی https://github.com/segler-alex/RadioDroid است. کل کدها از جاوا به کاتلین منتقل شده است تا برنامه مدرن و با نسخه‌های آینده اندروید سازگار بماند.\n\nسورس کد در این آدرس در دسترس است: https://github.com/ounben/AMARadio\n\nاین برنامه از فهرست رایگان ایستگاه‌های رادیویی در https://www.radio-browser.info استفاده می‌کند. هر کسی می‌تواند به آن ایستگاه اضافه کند. این سایت مانند ویکی‌پدیا برای ایستگاه‌های رادیویی آنلاین عمل می‌کند.\n\nتماس: ben@ounben.com\n\nگزارش مشکلات: https://github.com/ounben/AMARadio/issues\n\nاگر از این نرم‌افزار خوشتان می‌آید و می‌خواهید کمک کنید، در ارسال ایمیل به من تردید نکنید. همچنین ایده‌ها برای ویژگی‌های جدید همیشه مورد استقبال قرار می‌گیرند!\n\nاین برنامه یک نرم‌افزار آزاد است که تحت لایسنس GPLv3 منتشر شده است. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">نسخه: %1$s</string>
+    <string name="detail_star">افزودن به علاقه‌مندی‌ها</string>
+    <string name="detail_unstar">حذف از علاقه‌مندی‌ها</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">در حال بارگذاری…</string>
+
+    <string name="sleep_timer" formatted="true">تایمر خواب: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">توقف پخش بعد از زمان انتخاب شده</string>
+    <string name="sleep_timer_apply">اعمال</string>
+    <string name="sleep_timer_clear">لغو</string>
+    <string name="nav_item_add_sleep">تایمر خواب</string>
+
+    <string name="nav_item_save_playlist">خروجی علاقه‌مندی‌ها به صورت لیست پخش</string>
+    <string name="nav_item_load_playlist">ورود علاقه‌مندی‌ها از لیست پخش</string>
+    <string name="nav_item_save_history_playlist">خروجی تاریخچه به صورت لیست پخش</string>
+    <string name="confirm_overwrite_file">فایل جایگزین شود؟</string>
+    <string name="dialog_hint_file_name">نام فایل را وارد کنید</string>
+    <string name="error_empty_field">این فیلد الزامی است</string>
+    <string name="error_invalid_file_name">نام فایل نامعتبر است</string>
+    <string name="label_button_cancel">لغو</string>
+    <string name="label_button_overwrite">جایگزینی</string>
+    <string name="notify_load_playlist_nok">بارگذاری از %1$s&#47;%2$s انجام نشد</string>
+    <string name="notify_load_playlist_now">در حال بارگذاری از %1$s&#47;%2$s، لطفاً منتظر بمانید.</string>
+    <string name="notify_load_playlist_ok">%1$d ایستگاه از %2$s&#47;%3$s وارد شد</string>
+    <string name="notify_save_playlist_nok">خروجی به %1$s&#47;%2$s انجام نشد</string>
+    <string name="notify_save_playlist_now">در حال خروجی به %1$s&#47;%2$s، لطفاً منتظر بمانید.</string>
+    <string name="notify_save_playlist_ok">خروجی به %1$s&#47;%2$s با موفقیت انجام شد</string>
+    <string name="notify_sync_list_deleted_entries">%1$d از %2$d ایستگاه محلی در لیست، در سرور موجود نیستند</string>
+
+    <string name="searchpreference_clear_history">پاکسازی تاریخچه</string>
+    <string name="searchpreference_no_results">نتیجه‌ای یافت نشد</string>
+    <string name="searchpreference_search">جستجو…</string>
+    <string name="settings_appearance">ظاهر</string>
+    <string name="settings_theme_selection_title">پوسته</string>
+    <string name="theme_light">روشن</string>
+    <string name="theme_dark">تاریک</string>
+    <string name="theme_system">مطابق سیستم</string>
+    <string name="settings_compact_style">حالت فشرده</string>
+    <string name="settings_compact_style_desc_off">آیکون بزرگ به همراه جزئیات ایستگاه</string>
+    <string name="settings_compact_style_desc_on">آیکون کوچک بدون جزئیات ایستگاه</string>
+    <string name="settings_bottom_navigation">ناوبری پایین</string>
+    <string name="settings_ui_scale">مقیاس رابط کاربری</string>
+    <string name="settings_language">زبان</string>
+    <string name="ui_scale_compact">فشرده</string>
+    <string name="ui_scale_standard">استاندارد سیستم</string>
+    <string name="ui_scale_large">بزرگ</string>
+    <string name="ui_scale_extra_large">خیلی بزرگ</string>
+
+    <string name="settings_interaction">تعامل</string>
+    <string name="settings_single_use_tags">نمایش برچسب‌های کم‌کاربرد</string>
+    <string name="settings_single_use_tags_desc_off">برچسب‌های کم‌کاربرد نشان داده نمی‌شوند</string>
+    <string name="settings_single_use_tags_desc_on">برچسب‌های کم‌کاربرد نشان داده می‌شوند</string>
+
+    <string name="settings_show_broken">ایستگاه‌های خراب</string>
+    <string name="settings_show_broken_on">نمایش ایستگاه‌های خراب در لیست‌ها</string>
+    <string name="settings_show_broken_off">عدم نمایش ایستگاه‌های خراب در لیست‌ها</string>
+
+    <string name="settings_startup_behaviour">رفتار هنگام شروع</string>
+    <string name="action_grid_view">نمای شبکه‌ای</string>
+    <string name="action_list_view">نمای لیستی</string>
+
+    <string name="startup_action_title">عملیات شروع</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">نمایش همه ایستگاه‌ها</string>
+    <string name="startup_show_favorites">نمایش علاقه‌مندی‌ها</string>
+    <string name="startup_show_history">نمایش تاریخچه</string>
+    <string name="startup_show_last_view">آخرین نما</string>
+
+    <string name="settings_load_icons">نمایش آیکون ایستگاه‌ها</string>
+    <string name="settings_load_icons_on">آیکون‌ها دانلود خواهند شد</string>
+    <string name="settings_load_icons_off">آیکون‌ها دانلود نخواهند شد</string>
+
+    <string name="settings_auto_favorite">علاقه‌مندی خودکار</string>
+    <string name="settings_auto_favorite_on">افزودن خودکار ایستگاه‌ها به علاقه‌مندی هنگام پخش</string>
+    <string name="settings_auto_favorite_off">عدم افزودن خودکار ایستگاه‌ها به علاقه‌مندی هنگام پخش</string>
+
+    <string name="settings_play">پخش‌کننده</string>
+    <string name="settings_auto_play_on_startup">پخش خودکار</string>
+    <string name="settings_auto_play_on_startup_on">پخش آخرین ایستگاه هنگام شروع برنامه</string>
+    <string name="settings_auto_play_on_startup_off">عدم پخش آخرین ایستگاه هنگام شروع برنامه</string>
+    <string name="settings_auto_off_on_startup">توقف خودکار</string>
+    <string name="settings_auto_off_on_startup_on">استفاده از تایمر توقف با پخش خودکار</string>
+    <string name="settings_auto_off_on_startup_off">عدم استفاده از تایمر توقف با پخش خودکار</string>
+    <string name="settings_auto_off_sleep_timer">تایمر توقف خودکار</string>
+    <string name="settings_auto_off_sleep_timer_desc">توقف پخش بعد از %1$s دقیقه</string>
+    <string name="settings_play_external">فعال‌سازی پخش‌کننده خارجی</string>
+    <string name="settings_play_external_desc_on">پخش ایستگاه‌ها با پخش‌کننده خارجی</string>
+    <string name="settings_play_external_desc_off">پخش ایستگاه‌ها با AMARadio</string>
+    <string name="settings_equalizer">اکولایزر</string>
+
+    <string name="settings_connectivity">اتصال</string>
+    <string name="settings_connect_timeout">زمان انتظار اتصال</string>
+    <string name="settings_read_timeout">زمان انتظار خواندن</string>
+    <string name="settings_resume_timeout">زمان انتظار بازگشت</string>
+    <string name="settings_retry_timeout">زمان انتظار تلاش مجدد</string>
+    <string name="settings_retry_delay">تاخیر اتصال مجدد</string>
+    <string name="settings_proxy">پروکسی</string>
+    <string name="settings_proxy_login">نام کاربری</string>
+    <string name="settings_proxy_password">رمز عبور</string>
+    <string name="settings_proxy_action_test">تست</string>
+    <string name="settings_proxy_working">با موفقیت به %s متصل شد</string>
+    <string name="settings_proxy_not_working">خطا در اتصال به %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">مقادیر وارد شده برای پروکسی معتبر نیستند</string>
+    <string name="ignore_proxy_settings_invalid">تنظیمات نامعتبر پروکسی نادیده گرفته شد</string>
+    <string name="settings_seconds_format">%d ثانیه</string>
+    <string name="settings_milliseconds_format">%d میلی‌ثانیه</string>
+
+    <string name="settings_pause_when_noisy">توقف هنگام قطع شدن هندزفری</string>
+
+    <string name="settings_auto_resume_do_not_resume">عدم ادامه پخش</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">ادامه پخش در اتصال با سیم</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">ادامه پخش هنگام وصل کردن هندزفری با سیم</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">ادامه پخش در اتصال بلوتوث</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">ادامه پخش هنگام وصل شدن دستگاه بلوتوث A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">ادامه پخش در هر نوع اتصال</string>
+
+    <string name="settings_warn_no_wifi">هشدار عدم استفاده از وای‌فای</string>
+    <string name="settings_warn_no_wifi_on">هشدار هنگام پخش بدون اتصال وای‌فای</string>
+    <string name="settings_warn_no_wifi_off">عدم هشدار هنگام پخش بدون اتصال وای‌فای</string>
+
+    <string name="notify_pre_play">در حال اتصال</string>
+    <string name="notify_play">در حال پخش</string>
+    <string name="notify_paused">متوقف شده</string>
+    <string name="notify_metered_connection">اتصال با هزینه داده</string>
+
+    <string name="notify_starred">ایستگاه به علاقه‌مندی‌ها اضافه شد</string>
+    <string name="notify_autostarred">ایستگاه به طور خودکار به علاقه‌مندی‌ها اضافه شد</string>
+    <string name="notify_unstarred">ایستگاه از علاقه‌مندی‌ها حذف شد</string>
+    <string name="notify_deleted_favorites">علاقه‌مندی‌ها حذف شدند</string>
+    <string name="notify_deleted_history">تاریخچه حذف شد</string>
+
+    <string name="notify_open_link_failure">برنامه‌ای برای باز کردن لینک یافت نشد</string>
+
+    <string name="notify_station_removed_from_list">۱ مورد حذف شد</string>
+    <string name="action_station_removed_from_list_undo">بازگشت</string>
+
+    <string name="alert_delete_history">آیا واقعاً می‌خواهید تاریخچه را حذف کنید؟</string>
+    <string name="alert_delete_favorites">آیا واقعاً می‌خواهید همه علاقه‌مندی‌ها را حذف کنید؟</string>
+    <string name="yes">بله</string>
+    <string name="no">خیر</string>
+
+    <string name="alert_select_player">لطفاً یک پخش‌کننده انتخاب کنید</string>
+    <string name="alert_select_player_name">نام</string>
+    <string name="hostname">نام میزبان (Hostname)</string>
+    <string name="port">پورت</string>
+
+    <string name="alert_press_back_to_exit">برای خروج، یک بار دیگر دکمه بازگشت را بزنید</string>
+
+    <string name="error_stream_url">مشکل در لینک پخش</string>
+    <string name="error_caching_stream">مشکل در ذخیره‌سازی پخش (Caching)</string>
+    <string name="error_play_stream">امکان پخش وجود ندارد</string>
+    <string name="error_stream_reconnect_timeout">امکان اتصال مجدد وجود ندارد: زمان تمام شد</string>
+    <string name="warning_no_network_trying_resume">اتصال شبکه وجود ندارد. تلاش برای ادامه پخش هنگام وصل شدن شبکه.</string>
+    <string name="giving_up_resume">انصراف از تلاش برای ادامه پخش</string>
+
+    <string name="error_grant_audiofocus">مجوز دسترسی به صدا توسط سیستم صادر نشد</string>
+
+    <string name="error_no_equalizer_found">برنامه اکولایزر یافت نشد</string>
+
+    <string name="player_info_status">وضعیت:&#160;</string>
+    <string name="player_info_status_stopped">متوقف شده</string>
+    <string name="player_info_status_playing">در حال پخش</string>
+    <string name="player_info_transferred">داده‌های منتقل شده: %1$s</string>
+
+    <string name="tab_player_art">کاور آلبوم</string>
+    <string name="tab_player_info">اطلاعات</string>
+    <string name="tab_player_history">تاریخچه آهنگ‌ها</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">خراب</string>
+    <string name="station_detail_deleted_on_server">حذف شده</string>
+
+    <string name="station_details_clicks">%1$d کلیک</string>
+    <string name="station_details_votes">%1$d رای</string>
+
+    <string name="image_button_disable">غیرفعال کردن</string>
+    <string name="image_button_delete">حذف</string>
+    <string name="image_button_more">بیشتر</string>
+    <string name="image_button_less">کمتر</string>
+    <string name="image_button_repeat">تکرار</string>
+    <string name="image_button_dont_repeat">عدم تکرار</string>
+    <string name="icon_click_trend_decreasing">کاهش محبوبیت</string>
+    <string name="icon_click_trend_increasing">افزایش محبوبیت</string>
+    <string name="icon_click_trend_stable">محبوبیت پایدار</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">۱۰۰٪ بدون تبلیغات و خصوصی</string>
+
+    <string name="action_play_in_external">پخش در پخش‌کننده خارجی</string>
+    <string name="action_choose_external_player">انتخاب پخش‌کننده خارجی</string>
+
+    <string name="settings_disable_battery_optimization">بهینه‌سازی باتری</string>
+    <string name="settings_ignore_battery_optimization_summary_on">بهینه‌سازی باتری نادیده گرفته می‌شود، برنامه باید همیشه بتواند صدا را پخش کند.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">بهینه‌سازی باتری فعال است، ممکن است برنامه در پس‌زمینه متوقف شود.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">سایر</string>
+    <string name="settings_statistics">آمار</string>
+    <string name="settings_about">درباره AMARadio</string>
+
+    <string name="description_btn_skip_to_next">رفتن به بعدی</string>
+    <string name="description_btn_skip_to_previous">رفتن به قبلی</string>
+
+    <string-array name="weekdays">
+        <item>ی</item>
+        <item>د</item>
+        <item>س</item>
+        <item>چ</item>
+        <item>پ</item>
+        <item>ج</item>
+        <item>ش</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">لینک پخش با موفقیت کپی شد</string>
+    <string name="notify_track_info_copied">اطلاعات آهنگ با موفقیت کپی شد</string>
+
+    <string-array name="actions_station_link">
+        <item>مشاهده وب‌سایت</item>
+        <item>کپی لینک پخش</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">اتصال با هزینه داده شناسایی شد</string>
+    <string name="alert_metered_connection_message">این اتصال ممکن است شامل هزینه‌های اضافی باشد، برای ادامه تایید را بزنید.</string>
+    <string name="nav_item_statistics">آمار</string>
+    <string name="nav_item_about">درباره</string>
+    <string name="refresh">بروزرسانی</string>
+    <string name="action_filter">فیلتر</string>
+    <string name="filter_country">کشور</string>
+    <string name="filter_tag">برچسب</string>
+    <string name="filter_language">زبان</string>
+    <string name="filter_sort_by">مرتب‌سازی بر اساس</string>
+    <string name="filter_reverse">ترتیب معکوس</string>
+    <string name="filter_apply">اعمال فیلتر</string>
+    <string name="sort_name">نام</string>
+    <string name="sort_votes">رای‌ها</string>
+    <string name="sort_clicks">کلیک‌ها</string>
+    <string name="sort_lastchange">آخرین تغییر</string>
+    <string name="filter_select_country">انتخاب کشور</string>
+    <string name="filter_select_language">انتخاب زبان</string>
+    <string name="filter_type_tag">تایپ برچسب…</string>
+    <string name="filter_tap_to_configure">برای تنظیم ضربه بزنید</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

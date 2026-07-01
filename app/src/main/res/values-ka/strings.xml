@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">სახელი</string>
+    <string name="detail_tags">ტეგები</string>
+    <string name="detail_country">ქვეყანა</string>
+    <string name="detail_create_shortcut">მთავარ ეკრანზე დამატება</string>
+    <string name="detail_language">ენა</string>
+    <string name="detail_weblink">ვებ-ბმული</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">დაკვრა</string>
+    <string name="detail_pause">პაუზა</string>
+    <string name="detail_stop">შეწყვეტა</string>
+    <string name="detail_share">გაზიარება</string>
+    <string name="detail_play_in_AMARadio">AMARadio-ში დაკვრა</string>
+
+    <string name="action_links">ბმულები</string>
+    <string name="action_homepage">მთავარი გვერდი</string>
+    <string name="action_favorite">ფავორიტი</string>
+    <string name="action_starred_add">ფავორიტებში დამატება</string>
+    <string name="action_starred_remove">ფავორიტებიდან ამოშლა</string>
+
+    <string name="action_station_visit_website">ვებ-საიტზე გადასვლა</string>
+    <string name="action_station_copy_stream_url">ნაკადის URL-ის კოპირება</string>
+    <string name="action_station_share">გაზიარება</string>
+
+    <string name="action_local">ლოკალური</string>
+    <string name="action_skip_to_next">შემდეგი</string>
+    <string name="action_pause">პაუზა</string>
+    <string name="action_skip_to_previous">წინა</string>
+    <string name="action_resume">გაგრძელება</string>
+    <string name="action_stop">შეწყვეტა</string>
+    <string name="action_search">ძიება</string>
+    <string name="action_delete">წაშლა</string>
+    <string name="action_delete_history">ისტორიის წაშლა</string>
+    <string name="action_delete_favorites">ყველა ფავორიტის წაშლა</string>
+    <string name="action_delete_stream_history">ტრეკების ისტორიის გასუფთავება</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">გაუქმება</string>
+    <string name="action_top_click">ყველაზე პოპულარული</string>
+    <string name="action_toggle_view">ხედვის შეცვლა</string>
+    <string name="action_top_vote">ყველაზე მეტი ხმა</string>
+    <string name="action_changed_lately">ბოლოს შეცვლილი</string>
+    <string name="action_currently_playing">ახლა უკრავს</string>
+    <string name="action_tags">ტეგები</string>
+    <string name="action_countries">ქვეყნები/რეგიონები</string>
+    <string name="action_languages">ენები</string>
+    <string name="action_edit">რედაქტირება</string>
+    <string name="action_copy_info">ინფოს კოპირება</string>
+    <string name="action_rename_tab">ჩანართის სახელის შეცვლა</string>
+    <string name="error_filter_name_required">გთხოვთ, ჯერ შეიყვანოთ ამ ფილტრის ჩანართის სახელი</string>
+    <string name="confirm_delete_filter_tab">დარწმუნებული ხართ, რომ გსურთ ფილტრის \"%1$s\" წაშლა?</string>
+    <string name="filter_empty_title">შექმენით თქვენი რადიოსადგურების არხი</string>
+    <string name="filter_empty_desc">შექმენით პერსონალიზებული ხედი რამდენიმე კრიტერიუმის კომბინაციით. შეგიძლიათ შეამციროთ ძიება შემდეგით:</string>
+    <string name="filter_empty_filter_by">ფილტრაცია:</string>
+    <string name="filter_empty_filter_desc">ქვეყანა, სადგურის სახელი, ტეგები ან ენა</string>
+    <string name="filter_empty_sort_by">სორტირება:</string>
+    <string name="filter_empty_sort_desc">კლიკები, ანბანი, ხმები ან ბოლო ცვლილება</string>
+    <string name="filter_empty_hint">ჩაწერეთ სახელი ზედა ველში ამ ხედის შესანახად!</string>
+    <string name="error_station_load">სადგურთან დაკავშირება ვერ მოხერხდა</string>
+    <string name="error_list_update">Radio Browser სერვერთან დაკავშირება ვერ მოხერხდა</string>
+
+    <string name="share_action">სადგურის ბმულის გაზიარება…</string>
+
+    <string name="nav_item_stations">სადგურები</string>
+    <string name="nav_item_starred">ფავორიტები</string>
+    <string name="nav_item_history">ისტორია</string>
+    <string name="nav_item_settings">პარამეტრები</string>
+
+    <string name="about_text">AMARadio 100%-ით თავისუფალია რეკლამისგან და ორიენტირებულია კონფიდენციალურობაზე.\n\nმე თავდაპირველად ეს აპლიკაცია დედაჩემისთვის შევქმენი, რათა მისთვის მარტივი, პატიოსანი რადიო გამოცდილება მიმეცა გამაღიზიანებელი რეკლამებისა და თვალთვალის გარეშე. სწორედ ამიტომ AMARadio ყოველთვის დარჩება უფასო – ეს არის მისთვის მიცემული დაპირება, რომელიც ყველას გიზიარებთ.\n\nეს პროექტი შესანიშნავი https://github.com/segler-alex/RadioDroid-ის ფორკია. მთელი კოდი გადატანილია Java-დან Kotlin-ზე, რათა აპლიკაცია დარჩეს თანამედროვე და თავსებადი Android-ის მომავალ ვერსიებთან.\n\nწყარო ხელმისაწვდომია: https://github.com/ounben/AMARadio\n\nეს აპლიკაცია იყენებს უფასო რადიოსადგურების დირექტორიას https://www.radio-browser.info . ნებისმიერ მსურველს შეუძლია მასში სადგურების დამატება. ის მუშაობს როგორც ვიკიპედია ონლაინ რადიოსადგურებისთვის.\n\nკონტაქტი: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nთუ მოგწონთ პროგრამა და გსურთ დახმარება, ნუ მოგერიდებათ გამომიგზავნოთ ელფოსტა. ასევე იდეები ახალი ფუნქციებისთვის ყოველთვის მისასალმებელია!\n\nეს აპლიკაცია არის თავისუფალი პროგრამული უზრუნველყოფა, ლიცენზირებული GPLv3-ით. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">ვერსია: %1$s</string>
+    <string name="detail_star">ფავორიტებში დამატება</string>
+    <string name="detail_unstar">ფავორიტებიდან ამოშლა</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">იტვირთება…</string>
+
+    <string name="sleep_timer" formatted="true">ძილის ტაიმერი: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">დაკვრის შეწყვეტა არჩეული დროის შემდეგ</string>
+    <string name="sleep_timer_apply">გამოყენება</string>
+    <string name="sleep_timer_clear">გაუქმება</string>
+    <string name="nav_item_add_sleep">ძილის ტაიმერი</string>
+
+    <string name="nav_item_save_playlist">ფავორიტების ექსპორტი პლეილისტად</string>
+    <string name="nav_item_load_playlist">ფავორიტების იმპორტი პლეილისტიდან</string>
+    <string name="nav_item_save_history_playlist">ისტორიის ექსპორტი პლეილისტად</string>
+    <string name="confirm_overwrite_file">გსურთ ფაილის გადაწერა?</string>
+    <string name="dialog_hint_file_name">შეიყვანეთ ფაილის სახელი</string>
+    <string name="error_empty_field">ეს ველი აუცილებელია</string>
+    <string name="error_invalid_file_name">ფაილის არასწორი სახელი</string>
+    <string name="label_button_cancel">გაუქმება</string>
+    <string name="label_button_overwrite">გადაწერა</string>
+    <string name="notify_load_playlist_nok">ვერ მოხერხდა იმპორტი აქედან: %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">მიმდინარეობს იმპორტი აქედან: %1$s&#47;%2$s, გთხოვთ დაელოდოთ.</string>
+    <string name="notify_load_playlist_ok">იმპორტირებულია %1$d სადგური აქედან: %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">ვერ მოხერხდა ექსპორტი აქ: %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">მიმდინარეობს ექსპორტი აქ: %1$s&#47;%2$s, გთხოვთ დაელოდოთ.</string>
+    <string name="notify_save_playlist_ok">ექსპორტი აქ: %1$s&#47;%2$s წარმატებით დასრულდა</string>
+    <string name="notify_sync_list_deleted_entries">სიიდან %2$d ლოკალური სადგურიდან %1$d მონიშნულია როგორც სერვერზე არარსებული</string>
+
+    <string name="searchpreference_clear_history">ისტორიის გასუფთავება</string>
+    <string name="searchpreference_no_results">შედეგი ვერ მოიძებნა</string>
+    <string name="searchpreference_search">ძიება…</string>
+    <string name="settings_appearance">გარეგნობა</string>
+    <string name="settings_theme_selection_title">თემა</string>
+    <string name="theme_light">ნათელი</string>
+    <string name="theme_dark">ბნელი</string>
+    <string name="theme_system">სისტემის მიხედვით</string>
+    <string name="settings_compact_style">კომპაქტური რეჟიმი</string>
+    <string name="settings_compact_style_desc_off">დიდი ხატულა სადგურის დეტალებით</string>
+    <string name="settings_compact_style_desc_on">პატარა ხატულა დეტალების გარეშე</string>
+    <string name="settings_bottom_navigation">ქვედა ნავიგაცია</string>
+    <string name="settings_ui_scale">ინტერფეისის მასშტაბირება</string>
+    <string name="settings_language">ენა</string>
+    <string name="ui_scale_compact">კომპაქტური</string>
+    <string name="ui_scale_standard">სისტემური სტანდარტი</string>
+    <string name="ui_scale_large">დიდი</string>
+    <string name="ui_scale_extra_large">ძალიან დიდი</string>
+
+    <string name="settings_interaction">ინტერაქცია</string>
+    <string name="settings_single_use_tags">იშვიათი ტეგების ჩვენება</string>
+    <string name="settings_single_use_tags_desc_off">იშვიათი ტეგები არ გამოჩნდება</string>
+    <string name="settings_single_use_tags_desc_on">იშვიათი ტეგები გამოჩნდება</string>
+
+    <string name="settings_show_broken">გაუმართავი სადგურები</string>
+    <string name="settings_show_broken_on">გაუმართავი სადგურების ჩვენება სიებში</string>
+    <string name="settings_show_broken_off">გაუმართავი სადგურების დამალვა სიებში</string>
+
+    <string name="settings_startup_behaviour">ქცევა გაშვებისას</string>
+    <string name="action_grid_view">ბადისებრი ხედი</string>
+    <string name="action_list_view">სიისებრი ხედი</string>
+
+    <string name="startup_action_title">მოქმედება გაშვებისას</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">ყველა სადგურის ჩვენება</string>
+    <string name="startup_show_favorites">ფავორიტების ჩვენება</string>
+    <string name="startup_show_history">ისტორიის ჩვენება</string>
+    <string name="startup_show_last_view">ბოლო ხედი</string>
+
+    <string name="settings_load_icons">სადგურის ხატულების ჩვენება</string>
+    <string name="settings_load_icons_on">ხატულები ჩამოიტვირთება</string>
+    <string name="settings_load_icons_off">ხატულები არ ჩამოიტვირთება</string>
+
+    <string name="settings_auto_favorite">ავტო-ფავორიტი</string>
+    <string name="settings_auto_favorite_on">სადგურების ავტომატური დამატება ფავორიტებში დაკვრისას</string>
+    <string name="settings_auto_favorite_off">სადგურების ავტომატური დამატების გამორთვა</string>
+
+    <string name="settings_play">ფლეიერი</string>
+    <string name="settings_auto_play_on_startup">ავტო-დაკვრა</string>
+    <string name="settings_auto_play_on_startup_on">ბოლო სადგურის დაკვრა გაშვებისას</string>
+    <string name="settings_auto_play_on_startup_off">ბოლო სადგურის დაკვრის გამორთვა გაშვებისას</string>
+    <string name="settings_auto_off_on_startup">ავტო-შეწყვეტა</string>
+    <string name="settings_auto_off_on_startup_on">ავტო-შეწყვეტის ტაიმერის გამოყენება ავტო-დაკვრასთან ერთად</string>
+    <string name="settings_auto_off_on_startup_off">ავტო-შეწყვეტის ტაიმერის გამორთვა</string>
+    <string name="settings_auto_off_sleep_timer">ავტო-შეწყვეტის ტაიმერი</string>
+    <string name="settings_auto_off_sleep_timer_desc">შეწყვიტე დაკვრა %1$s წუთის შემდეგ</string>
+    <string name="settings_play_external">გარე ფლეიერის ჩართვა</string>
+    <string name="settings_play_external_desc_on">სადგურების დაკვრა გარე ფლეიერით</string>
+    <string name="settings_play_external_desc_off">სადგურების დაკვრა AMARadio-თი</string>
+    <string name="settings_equalizer">ეკვალაიზერი</string>
+
+    <string name="settings_connectivity">კავშირი</string>
+    <string name="settings_connect_timeout">კავშირის მოლოდინის დრო</string>
+    <string name="settings_read_timeout">კითხვის მოლოდინის დრო</string>
+    <string name="settings_resume_timeout">გაგრძელების მოლოდინის დრო</string>
+    <string name="settings_retry_timeout">ხელახალი მცდელობის დრო</string>
+    <string name="settings_retry_delay">ხელახალი კავშირის დაყოვნება</string>
+    <string name="settings_proxy">პროქსი</string>
+    <string name="settings_proxy_login">მომხმარებლის სახელი</string>
+    <string name="settings_proxy_password">პაროლი</string>
+    <string name="settings_proxy_action_test">ტესტი</string>
+    <string name="settings_proxy_working">წარმატებით დაუკავშირდა: %s</string>
+    <string name="settings_proxy_not_working">ვერ დაუკავშირდა: %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">პროქსისთვის შეყვანილი მნიშვნელობები არასწორია</string>
+    <string name="ignore_proxy_settings_invalid">არასწორი პროქსი პარამეტრები იგნორირებულია</string>
+    <string name="settings_seconds_format">%d წამი</string>
+    <string name="settings_milliseconds_format">%d მილიწამი</string>
+
+    <string name="settings_pause_when_noisy">პაუზა ყურსასმენების გამორთვისას</string>
+
+    <string name="settings_auto_resume_do_not_resume">არ გააგრძელო</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">გააგრძელე კაბელიან კავშირზე</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">დაკვრის გაგრძელება ყურსასმენების შეერთებისას</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">გააგრძელე Bluetooth კავშირზე</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">დაკვრის გაგრძელება Bluetooth A2DP მოწყობილობის შეერთებისას</string>
+
+    <string name="settings_auto_resume_on_any_connected">გააგრძელე ნებისმიერ კავშირზე</string>
+
+    <string name="settings_warn_no_wifi">გაფრთხილება Wi-Fi-ს გარეშე</string>
+    <string name="settings_warn_no_wifi_on">გაფრთხილება Wi-Fi-ს გარეშე დაკვრისას</string>
+    <string name="settings_warn_no_wifi_off">გაფრთხილების გარეშე Wi-Fi-ს გარეშე</string>
+
+    <string name="notify_pre_play">მიმდინარეობს დაკავშირება</string>
+    <string name="notify_play">უკრავს</string>
+    <string name="notify_paused">პაუზა</string>
+    <string name="notify_metered_connection">ლიმიტირებული კავშირი</string>
+
+    <string name="notify_starred">სადგური დაემატა ფავორიტებში</string>
+    <string name="notify_autostarred">სადგური ავტომატურად დაემატა ფავორიტებში</string>
+    <string name="notify_unstarred">სადგური ამოიშალა ფავორიტებიდან</string>
+    <string name="notify_deleted_favorites">ფავორიტები წაიშალა</string>
+    <string name="notify_deleted_history">ისტორია წაიშალა</string>
+
+    <string name="notify_open_link_failure">ბმულის გასახსნელი აპლიკაცია ვერ მოიძებნა</string>
+
+    <string name="notify_station_removed_from_list">1 ამოშლილია</string>
+    <string name="action_station_removed_from_list_undo">დაბრუნება</string>
+
+    <string name="alert_delete_history">ნამდვილად გსურთ ისტორიის წაშლა?</string>
+    <string name="alert_delete_favorites">ნამდვილად გსურთ ყველა ფავორიტის წაშლა?</string>
+    <string name="yes">დიახ</string>
+    <string name="no">არა</string>
+
+    <string name="alert_select_player">გთხოვთ აირჩიოთ ფლეიერი</string>
+    <string name="alert_select_player_name">სახელი</string>
+    <string name="hostname">ჰოსტის სახელი</string>
+    <string name="port">პორტი</string>
+
+    <string name="alert_press_back_to_exit">გასასვლელად კიდევ ერთხელ დააჭირეთ „უკან“ ღილაკს</string>
+
+    <string name="error_stream_url">ნაკადის URL-ის პრობლემა</string>
+    <string name="error_caching_stream">ნაკადის კეშირების პრობლემა</string>
+    <string name="error_play_stream">ნაკადის დაკვრა ვერ მოხერხდა</string>
+    <string name="error_stream_reconnect_timeout">ნაკადთან ხელახალი დაკავშირება ვერ მოხერხდა: დრო ამოიწურა</string>
+    <string name="warning_no_network_trying_resume">ინტერნეტი არ არის. კავშირის აღდგენისას დაკვრა გაგრძელდება.</string>
+    <string name="giving_up_resume">დაკვრის გაგრძელების მცდელობა შეწყვეტილია</string>
+
+    <string name="error_grant_audiofocus">სისტემამ აუდიო ფოკუსზე უარი თქვა</string>
+
+    <string name="error_no_equalizer_found">ეკვალაიზერის აპლიკაცია ვერ მოიძებნა</string>
+
+    <string name="player_info_status">სტატუსი:&#160;</string>
+    <string name="player_info_status_stopped">შეჩერებული</string>
+    <string name="player_info_status_playing">უკრავს</string>
+    <string name="player_info_transferred">გადაცემული მონაცემები: %1$s</string>
+
+    <string name="tab_player_art">ალბომის ყდა</string>
+    <string name="tab_player_info">ინფო</string>
+    <string name="tab_player_history">ტრეკების ისტორია</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">გაუმართავი</string>
+    <string name="station_detail_deleted_on_server">წაშლილია</string>
+
+    <string name="station_details_clicks">%1$d კლიკი</string>
+    <string name="station_details_votes">%1$d ხმა</string>
+
+    <string name="image_button_disable">გამორთვა</string>
+    <string name="image_button_delete">წაშლა</string>
+    <string name="image_button_more">მეტი</string>
+    <string name="image_button_less">ნაკლები</string>
+    <string name="image_button_repeat">გამეორება</string>
+    <string name="image_button_dont_repeat">არ გაიმეორო</string>
+    <string name="icon_click_trend_decreasing">პოპულარობა იკლებს</string>
+    <string name="icon_click_trend_increasing">პოპულარობა იმატებს</string>
+    <string name="icon_click_trend_stable">პოპულარობა სტაბილურია</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100%-ით რეკლამის გარეშე</string>
+
+    <string name="action_play_in_external">დაკვრა გარე ფლეიერში</string>
+    <string name="action_choose_external_player">გარე ფლეიერის არჩევა</string>
+
+    <string name="settings_disable_battery_optimization">ბატარეის ოპტიმიზაცია</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ბატარეის ოპტიმიზაცია იგნორირებულია, AMARadio ყოველთვის შეძლებს ფოკუსის დაბრუნებას.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">ბატარეის ოპტიმიზაცია ჩართულია, AMARadio-მ შესაძლოა ვერ დაიბრუნოს ფოკუსი ფონურ რეჟიმში.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">სხვა</string>
+    <string name="settings_statistics">სტატისტიკა</string>
+    <string name="settings_about">AMARadio-ს შესახებ</string>
+
+    <string name="description_btn_skip_to_next">შემდეგზე გადასვლა</string>
+    <string name="description_btn_skip_to_previous">წინაზე გადასვლა</string>
+
+    <string-array name="weekdays">
+        <item>კვ</item>
+        <item>ორ</item>
+        <item>სამ</item>
+        <item>ოთხ</item>
+        <item>ხუთ</item>
+        <item>პარ</item>
+        <item>შაბ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">ნაკადის URL კოპირებულია</string>
+    <string name="notify_track_info_copied">ტრეკის ინფორმაცია კოპირებულია</string>
+
+    <string-array name="actions_station_link">
+        <item>ვებ-საიტზე გადასვლა</item>
+        <item>ნაკადის URL-ის კოპირება</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">აღმოჩენილია ლიმიტირებული კავშირი</string>
+    <string name="alert_metered_connection_message">ლიმიტირებულმა კავშირმა შესაძლოა გამოიწვიოს დამატებითი ხარჯები, გასაგრძელებლად დააჭირეთ „OK“-ს.</string>
+    <string name="nav_item_statistics">სტატისტიკა</string>
+    <string name="nav_item_about">შესახებ</string>
+    <string name="refresh">განახლება</string>
+    <string name="action_filter">ფილტრი</string>
+    <string name="filter_country">ქვეყანა</string>
+    <string name="filter_tag">ტეგი</string>
+    <string name="filter_language">ენა</string>
+    <string name="filter_sort_by">სორტირება</string>
+    <string name="filter_reverse">უკუთანმიმდევრობა</string>
+    <string name="filter_apply">ფილტრის გამოყენება</string>
+    <string name="sort_name">სახელი</string>
+    <string name="sort_votes">ხმები</string>
+    <string name="sort_clicks">კლიკები</string>
+    <string name="sort_lastchange">ბოლო ცვლილება</string>
+    <string name="filter_select_country">აირჩიეთ ქვეყანა</string>
+    <string name="filter_select_language">აირჩიეთ ენა</string>
+    <string name="filter_type_tag">ჩაწერეთ ტეგი…</string>
+    <string name="filter_tap_to_configure">შეეხეთ პარამეტრებისთვის</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

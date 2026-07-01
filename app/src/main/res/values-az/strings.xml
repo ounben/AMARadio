@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Ad</string>
+    <string name="detail_tags">Teqlər</string>
+    <string name="detail_country">Ölkə</string>
+    <string name="detail_create_shortcut">Əsas ekrana əlavə et</string>
+    <string name="detail_language">Dil</string>
+    <string name="detail_weblink">Veb link</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Oynat</string>
+    <string name="detail_pause">Pauza</string>
+    <string name="detail_stop">Dayandır</string>
+    <string name="detail_share">Paylaş</string>
+    <string name="detail_play_in_AMARadio">AMARadio-da oynat</string>
+
+    <string name="action_links">Linklər</string>
+    <string name="action_homepage">Ana səhifə</string>
+    <string name="action_favorite">Sevimlilər</string>
+    <string name="action_starred_add">Sevimlilərə əlavə et</string>
+    <string name="action_starred_remove">Sevimlilərdən sil</string>
+
+    <string name="action_station_visit_website">Vebsayta daxil ol</string>
+    <string name="action_station_copy_stream_url">Axın URL-ni kopyala</string>
+    <string name="action_station_share">Paylaş</string>
+
+    <string name="action_local">Yerli</string>
+    <string name="action_skip_to_next">Növbəti</string>
+    <string name="action_pause">Pauza</string>
+    <string name="action_skip_to_previous">Əvvəlki</string>
+    <string name="action_resume">Davam et</string>
+    <string name="action_stop">Dayandır</string>
+    <string name="action_search">Axtar</string>
+    <string name="action_delete">Sil</string>
+    <string name="action_delete_history">Tarixçəni sil</string>
+    <string name="action_delete_favorites">Bütün sevimliləri sil</string>
+    <string name="action_delete_stream_history">Mahnı tarixçəsini təmizlə</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Ləğv et</string>
+    <string name="action_top_click">Ən çox kliklənənlər</string>
+    <string name="action_toggle_view">Görünüşü dəyiş</string>
+    <string name="action_top_vote">Ən çox səs alanlar</string>
+    <string name="action_changed_lately">Son dəyişikliklər</string>
+    <string name="action_currently_playing">İndi oxunur</string>
+    <string name="action_tags">Teqlər</string>
+    <string name="action_countries">Ölkələr/Regionlar</string>
+    <string name="action_languages">Dillər</string>
+    <string name="action_edit">Redaktə et</string>
+    <string name="action_copy_info">Məlumatı kopyala</string>
+    <string name="action_rename_tab">Nişanın adını dəyiş</string>
+    <string name="error_filter_name_required">Zəhmət olmasa, əvvəlcə bu filtr üçün bir ad daxil edin</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" filtrini silmək istədiyinizə əminsiniz?</string>
+    <string name="filter_empty_title">Öz xüsusi radio kanalınızı yaradın</string>
+    <string name="filter_empty_desc">Bir neçə kriteriyanı birləşdirərək fərdiləşdirilmiş görünüş yaradın. Axtarışınızı aşağıdakılarla daralda bilərsiniz:</string>
+    <string name="filter_empty_filter_by">Filtrlə:</string>
+    <string name="filter_empty_filter_desc">Ölkə, Stansiya adı, Teqlər və ya Dil</string>
+    <string name="filter_empty_sort_by">Sırala:</string>
+    <string name="filter_empty_sort_desc">Kliklər, Əlifba sırası, Səslər və ya Son dəyişiklik</string>
+    <string name="filter_empty_hint">Bu görünüşü yadda saxlamaq üçün yuxarıdakı sahəyə ad yazın!</string>
+    <string name="error_station_load">Stansiyaya qoşulmaq mümkün olmadı</string>
+    <string name="error_list_update">Radio brauzer serverinə qoşulmaq mümkün olmadı</string>
+
+    <string name="share_action">Stansiya linkini paylaş…</string>
+
+    <string name="nav_item_stations">Stansiyalar</string>
+    <string name="nav_item_starred">Sevimlilər</string>
+    <string name="nav_item_history">Tarixçə</string>
+    <string name="nav_item_settings">Parametrlər</string>
+
+    <string name="about_text">AMARadio 100% reklamsızdır və gizliliyə yönəlib.\n\nMən bu tətbiqi ilk növbədə anam üçün bezdirici reklamlar və ya izləmə olmadan sadə və dürüst bir radio təcrübəsi təmin etmək üçün hazırladım. Buna görə də AMARadio həmişə reklamsız qalacaq – bu, ona verilmiş bir sözdür və hamınızla paylaşılır.\n\nBu layihə əla https://github.com/segler-alex/RadioDroid tətbiqinin bir çəngəlidir (fork). Tətbiqin müasir qalması və gələcək Android versiyaları ilə uyğunlaşması üçün bütün mənbə kodu Java-dan Kotlin-ə köçürülüb.\n\nMənbə kodu bu ünvanda mövcuddur: https://github.com/ounben/AMARadio\n\nBu tətbiq https://www.radio-browser.info ünvanındakı pulsuz radio stansiyaları kataloqundan istifadə edir. Hər kəs oraya stansiya əlavə edə bilər. Bu, onlayn radio stansiyaları üçün viki kimi fəaliyyət göstərir.\n\nƏlaqə: ben@ounben.com\n\nSəhv izləyicisi: https://github.com/ounben/AMARadio/issues\n\nƏgər proqramı bəyənirsinizsə və kömək etmək istəyirsinizsə, mənə e-poçt göndərməkdən çəkinməyin. Yeni funksiyalar üçün ideyalar da həmişə xoş qarşılanır!\n\nBu tətbiq GPLv3 lisenziyası altında olan azad proqram təminatıdır. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versiya: %1$s</string>
+    <string name="detail_star">Sevimlilərə əlavə et</string>
+    <string name="detail_unstar">Sevimlilərdən sil</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Yüklənir…</string>
+
+    <string name="sleep_timer" formatted="true">Yuxu taymeri: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Seçilmiş dəqiqədən sonra oynatmağı dayandır</string>
+    <string name="sleep_timer_apply">Tətbiq et</string>
+    <string name="sleep_timer_clear">Təmizlə</string>
+    <string name="nav_item_add_sleep">Yuxu taymeri</string>
+
+    <string name="nav_item_save_playlist">Sevimliləri pleylist kimi ixrac et</string>
+    <string name="nav_item_load_playlist">Sevimliləri pleylistdən idxal et</string>
+    <string name="nav_item_save_history_playlist">Tarixçəni pleylist kimi ixrac et</string>
+    <string name="confirm_overwrite_file">Faylın üzərinə yazılsın?</string>
+    <string name="dialog_hint_file_name">Fayl adını daxil edin</string>
+    <string name="error_empty_field">Bu sahə mütləqdir</string>
+    <string name="error_invalid_file_name">Yanlış fayl adı</string>
+    <string name="label_button_cancel">Ləğv et</string>
+    <string name="label_button_overwrite">Üzərinə yaz</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s ünvanından idxal etmək mümkün olmadı</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s ünvanından idxal edilir, zəhmət olmasa gözləyin.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s ünvanından %1$d stansiya idxal edildi</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s ünvanına ixrac etmək mümkün olmadı</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s ünvanına ixrac edilir, zəhmət olmasa gözləyin.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s ünvanına uğurla ixrac edildi</string>
+    <string name="notify_sync_list_deleted_entries">Siyahıdakı %2$d yerli stansiyadan %1$d-i serverdə yoxdur kimi işarələnib</string>
+
+    <string name="searchpreference_clear_history">Tarixçəni təmizlə</string>
+    <string name="searchpreference_no_results">Nəticə yoxdur</string>
+    <string name="searchpreference_search">Axtar…</string>
+    <string name="settings_appearance">Görünüş</string>
+    <string name="settings_theme_selection_title">Mövzu</string>
+    <string name="theme_light">Açıq</string>
+    <string name="theme_dark">Tünd</string>
+    <string name="theme_system">Sistemi izlə</string>
+    <string name="settings_compact_style">Yığcam rejim</string>
+    <string name="settings_compact_style_desc_off">Stansiya detalları ilə böyük nişan</string>
+    <string name="settings_compact_style_desc_on">Detallar olmadan kiçik nişan</string>
+    <string name="settings_bottom_navigation">Aşağı naviqasiya</string>
+    <string name="settings_ui_scale">UI Ölçüsü</string>
+    <string name="settings_language">Dil</string>
+    <string name="ui_scale_compact">Yığcam</string>
+    <string name="ui_scale_standard">Sistem Standartı</string>
+    <string name="ui_scale_large">Böyük</string>
+    <string name="ui_scale_extra_large">Çox Böyük</string>
+
+    <string name="settings_interaction">Qarşılıqlı əlaqə</string>
+    <string name="settings_single_use_tags">Nadir teqləri göstər</string>
+    <string name="settings_single_use_tags_desc_off">Nadir istifadə olunan teqlər göstərilməyəcək</string>
+    <string name="settings_single_use_tags_desc_on">Nadir istifadə olunan teqlər göstəriləcək</string>
+
+    <string name="settings_show_broken">İşləməyən stansiyalar</string>
+    <string name="settings_show_broken_on">İşləməyən stansiyaları siyahılarda göstər</string>
+    <string name="settings_show_broken_off">İşləməyən stansiyaları siyahılarda göstərmə</string>
+
+    <string name="settings_startup_behaviour">Başlanğıc Davranışı</string>
+    <string name="action_grid_view">Tor Görünüşü</string>
+    <string name="action_list_view">Siyahı Görünüşü</string>
+
+    <string name="startup_action_title">Başlanğıc hərəkəti</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Bütün stansiyaları göstər</string>
+    <string name="startup_show_favorites">Sevimliləri göstər</string>
+    <string name="startup_show_history">Tarixçəni göstər</string>
+    <string name="startup_show_last_view">Son görünüş</string>
+
+    <string name="settings_load_icons">Stansiya nişanlarını göstər</string>
+    <string name="settings_load_icons_on">Nişanlar yüklənəcək</string>
+    <string name="settings_load_icons_off">Nişanlar yüklənməyəcək</string>
+
+    <string name="settings_auto_favorite">Avto-sevimlilər</string>
+    <string name="settings_auto_favorite_on">Oynatdıqda stansiyaları avtomatik sevimlilərə əlavə et</string>
+    <string name="settings_auto_favorite_off">Oynatdıqda stansiyaları avtomatik sevimlilərə əlavə etmə</string>
+
+    <string name="settings_play">Pleyer</string>
+    <string name="settings_auto_play_on_startup">Avto-oynat</string>
+    <string name="settings_auto_play_on_startup_on">Başladıqda son stansiyanı oynat</string>
+    <string name="settings_auto_play_on_startup_off">Başladıqda son stansiyanı oynatma</string>
+    <string name="settings_auto_off_on_startup">Avto-dayandır</string>
+    <string name="settings_auto_off_on_startup_on">Avto-oynatma ilə avto-dayandırma taymerini istifadə et</string>
+    <string name="settings_auto_off_on_startup_off">Avto-oynatma ilə avto-dayandırma taymerini istifadə etmə</string>
+    <string name="settings_auto_off_sleep_timer">Avto-dayandırma taymeri</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s dəqiqədən sonra oynatmağı dayandır</string>
+    <string name="settings_play_external">Xarici pleyeri aktivləşdir</string>
+    <string name="settings_play_external_desc_on">Stansiyaları xarici pleyerlə oynat</string>
+    <string name="settings_play_external_desc_off">Stansiyaları AMARadio ilə oynat</string>
+    <string name="settings_equalizer">Ekvalayzer</string>
+
+    <string name="settings_connectivity">Bağlantı</string>
+    <string name="settings_connect_timeout">Bağlantı vaxt aşımı</string>
+    <string name="settings_read_timeout">Oxuma vaxt aşımı</string>
+    <string name="settings_resume_timeout">Davam etmə vaxt aşımı</string>
+    <string name="settings_retry_timeout">Yenidən cəhd vaxt aşımı</string>
+    <string name="settings_retry_delay">Yenidən qoşulma gecikməsi</string>
+    <string name="settings_proxy">Proksi</string>
+    <string name="settings_proxy_login">İstifadəçi adı</string>
+    <string name="settings_proxy_password">Parol</string>
+    <string name="settings_proxy_action_test">Test et</string>
+    <string name="settings_proxy_working">%s ünvanına uğurla qoşuldu</string>
+    <string name="settings_proxy_not_working">%1$s ünvanına qoşulmaq alınmadı\n%2$s</string>
+    <string name="settings_proxy_invalid">Proksi üçün daxil etdiyiniz dəyərlər yanlışdır</string>
+    <string name="ignore_proxy_settings_invalid">Yanlış proksi parametrləri nəzərə alınmadı</string>
+    <string name="settings_seconds_format">%d saniyə</string>
+    <string name="settings_milliseconds_format">%d millisaniyə</string>
+
+    <string name="settings_pause_when_noisy">Qulaqlıq çıxarıldıqda dayandır</string>
+
+    <string name="settings_auto_resume_do_not_resume">Davam etmə</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Məftilli bağlantıda davam et</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Məftilli qulaqlıq taxıldıqda oynatmağa davam et</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth bağlantısında davam et</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP cihazı qoşulduqda oynatmağa davam et</string>
+
+    <string name="settings_auto_resume_on_any_connected">Hər hansı bir bağlantıda davam et</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi yoxdur xəbərdarlığı</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi bağlantısı olmadan oynatdıqda xəbərdarlıq et</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi bağlantısı olmadıqda xəbərdarlıq etmə</string>
+
+    <string name="notify_pre_play">Qoşulur</string>
+    <string name="notify_play">Oynadılır</string>
+    <string name="notify_paused">Pauzadadır</string>
+    <string name="notify_metered_connection">Ödənişli bağlantı</string>
+
+    <string name="notify_starred">Stansiya sevimlilərə əlavə edildi</string>
+    <string name="notify_autostarred">Stansiya avtomatik sevimlilərə əlavə edildi</string>
+    <string name="notify_unstarred">Stansiya sevimlilərdən silindi</string>
+    <string name="notify_deleted_favorites">Sevimlilər silindi</string>
+    <string name="notify_deleted_history">Tarixçə silindi</string>
+
+    <string name="notify_open_link_failure">Linki açmaq üçün heç bir tətbiq tapılmadı</string>
+
+    <string name="notify_station_removed_from_list">1 ədəd silindi</string>
+    <string name="action_station_removed_from_list_undo">GERİ QAYTAR</string>
+
+    <string name="alert_delete_history">Həqiqətən tarixçəni silmək istəyirsiniz?</string>
+    <string name="alert_delete_favorites">Həqiqətən bütün sevimliləri silmək istəyirsiniz?</string>
+    <string name="yes">Bəli</string>
+    <string name="no">Xeyr</string>
+
+    <string name="alert_select_player">Zəhmət olmasa pleyer seçin</string>
+    <string name="alert_select_player_name">Ad</string>
+    <string name="hostname">Host adı</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Çıxmaq üçün geri düyməsini bir daha sıxın</string>
+
+    <string name="error_stream_url">Axın URL problemi</string>
+    <string name="error_caching_stream">Axın keşləmə problemi</string>
+    <string name="error_play_stream">Axını oynatmaq mümkün deyil</string>
+    <string name="error_stream_reconnect_timeout">Axına yenidən qoşulmaq mümkün deyil: vaxt aşımı</string>
+    <string name="warning_no_network_trying_resume">Şəbəkə bağlantısı yoxdur. Bağlantı bərpa olunduqda davam etməyə çalışılır.</string>
+    <string name="giving_up_resume">Oynatmağa davam etmək cəhdindən imtina edilir</string>
+
+    <string name="error_grant_audiofocus">Audio fokus sorğusu sistem tərəfindən rədd edildi</string>
+
+    <string name="error_no_equalizer_found">Heç bir ekvalayzer tətbiqi tapılmadı</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">dayandı</string>
+    <string name="player_info_status_playing">oynayır</string>
+    <string name="player_info_transferred">Köçürülən məlumat: %1$s</string>
+
+    <string name="tab_player_art">Albom şəkli</string>
+    <string name="tab_player_info">Məlumat</string>
+    <string name="tab_player_history">Mahnı tarixçəsi</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">XARAB</string>
+    <string name="station_detail_deleted_on_server">SİLİNİB</string>
+
+    <string name="station_details_clicks">%1$d klik</string>
+    <string name="station_details_votes">%1$d səs</string>
+
+    <string name="image_button_disable">Deaktiv et</string>
+    <string name="image_button_delete">Sil</string>
+    <string name="image_button_more">Daha çox</string>
+    <string name="image_button_less">Daha az</string>
+    <string name="image_button_repeat">Təkrarla</string>
+    <string name="image_button_dont_repeat">Təkrarlama</string>
+    <string name="icon_click_trend_decreasing">Populyarlıq azalır</string>
+    <string name="icon_click_trend_increasing">Populyarlıq artır</string>
+    <string name="icon_click_trend_stable">Populyarlıq stabildir</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Reklamsız və Şəxsi</string>
+
+    <string name="action_play_in_external">Xarici pleyerdə oynat</string>
+    <string name="action_choose_external_player">Xarici pleyer seç</string>
+
+    <string name="settings_disable_battery_optimization">Batareya optimallaşdırılması</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Batareya optimallaşdırılmasına məhəl qoyulmur, AMARadio həmişə fokusu geri ala bilməlidir.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Batareya optimallaşdırılması aktivdir, AMARadio arxa fonda olduqda fokusu geri ala bilməyə bilər.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Digər</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">AMARadio haqqında</string>
+
+    <string name="description_btn_skip_to_next">Növbətiyə keç</string>
+    <string name="description_btn_skip_to_previous">Əvvəlkiyə keç</string>
+
+    <string-array name="weekdays">
+        <item>B.e</item>
+        <item>B.e</item>
+        <item>Ç.a</item>
+        <item>Ç.</item>
+        <item>C.a</item>
+        <item>C.</item>
+        <item>Ş.</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Axın URL-i uğurla kopyalandı</string>
+    <string name="notify_track_info_copied">Mahnı məlumatı uğurla kopyalandı</string>
+
+    <string-array name="actions_station_link">
+        <item>Vebsayta daxil ol</item>
+        <item>Axın URL-ni kopyala</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Ödənişli bağlantı aşkar edildi</string>
+    <string name="alert_metered_connection_message">Ödənişli bağlantı əlavə xərclərə səbəb ola bilər, davam etmək üçün \'OK\' sıxın.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Haqqında</string>
+    <string name="refresh">Yenilə</string>
+    <string name="action_filter">Filtr</string>
+    <string name="filter_country">Ölkə</string>
+    <string name="filter_tag">Teq</string>
+    <string name="filter_language">Dil</string>
+    <string name="filter_sort_by">Sırala</string>
+    <string name="filter_reverse">Tərs sıra</string>
+    <string name="filter_apply">Filtri tətbiq et</string>
+    <string name="sort_name">Ad</string>
+    <string name="sort_votes">Səslər</string>
+    <string name="sort_clicks">Kliklər</string>
+    <string name="sort_lastchange">Son dəyişiklik</string>
+    <string name="filter_select_country">Ölkə seçin</string>
+    <string name="filter_select_language">Dil seçin</string>
+    <string name="filter_type_tag">Teq yazın…</string>
+    <string name="filter_tap_to_configure">Quraşdırmaq üçün toxunun</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

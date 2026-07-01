@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Tên</string>
+    <string name="detail_tags">Thẻ</string>
+    <string name="detail_country">Quốc gia</string>
+    <string name="detail_create_shortcut">Thêm vào màn hình chính</string>
+    <string name="detail_language">Ngôn ngữ</string>
+    <string name="detail_weblink">Liên kết web</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Phát</string>
+    <string name="detail_pause">Tạm dừng</string>
+    <string name="detail_stop">Dừng</string>
+    <string name="detail_share">Chia sẻ</string>
+    <string name="detail_play_in_AMARadio">Phát trong AMARadio</string>
+
+    <string name="action_links">Liên kết</string>
+    <string name="action_homepage">Trang chủ</string>
+    <string name="action_favorite">Yêu thích</string>
+    <string name="action_starred_add">Thêm vào yêu thích</string>
+    <string name="action_starred_remove">Xóa khỏi yêu thích</string>
+
+    <string name="action_station_visit_website">Truy cập trang web</string>
+    <string name="action_station_copy_stream_url">Sao chép URL luồng</string>
+    <string name="action_station_share">Chia sẻ</string>
+
+    <string name="action_local">Nội bộ</string>
+    <string name="action_skip_to_next">Tiếp theo</string>
+    <string name="action_pause">Tạm dừng</string>
+    <string name="action_skip_to_previous">Trước đó</string>
+    <string name="action_resume">Tiếp tục</string>
+    <string name="action_stop">Dừng</string>
+    <string name="action_search">Tìm kiếm</string>
+    <string name="action_delete">Xóa</string>
+    <string name="action_delete_history">Xóa lịch sử</string>
+    <string name="action_delete_favorites">Xóa tất cả yêu thích</string>
+    <string name="action_delete_stream_history">Xóa lịch sử bài hát</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Hủy</string>
+    <string name="action_top_click">Lượt nghe nhiều</string>
+    <string name="action_toggle_view">Chế độ xem</string>
+    <string name="action_top_vote">Bình chọn nhiều</string>
+    <string name="action_changed_lately">Thay đổi gần đây</string>
+    <string name="action_currently_playing">Đang phát</string>
+    <string name="action_tags">Thẻ</string>
+    <string name="action_countries">Quốc gia/Vùng</string>
+    <string name="action_languages">Ngôn ngữ</string>
+    <string name="action_edit">Chỉnh sửa</string>
+    <string name="action_copy_info">Sao chép thông tin</string>
+    <string name="action_rename_tab">Đổi tên tab</string>
+    <string name="error_filter_name_required">Vui lòng nhập tên cho tab bộ lọc này</string>
+    <string name="confirm_delete_filter_tab">Bạn có chắc muốn xóa bộ lọc \"%1$s\" không?</string>
+    <string name="filter_empty_title">Xây dựng danh sách đài radio của riêng bạn</string>
+    <string name="filter_empty_desc">Tạo chế độ xem cá nhân bằng cách kết hợp nhiều tiêu chí. Bạn có thể thu hẹp tìm kiếm bằng:</string>
+    <string name="filter_empty_filter_by">Lọc theo</string>
+    <string name="filter_empty_filter_desc">Quốc gia, Tên đài, Thẻ hoặc Ngôn ngữ</string>
+    <string name="filter_empty_sort_by">Sắp xếp theo</string>
+    <string name="filter_empty_sort_desc">Lượt click, Chữ cái, Bình chọn hoặc Thay đổi cuối</string>
+    <string name="filter_empty_hint">Nhập tên vào ô trên để lưu chế độ xem này!</string>
+    <string name="error_station_load">Không thể kết nối đến đài</string>
+    <string name="error_list_update">Không thể kết nối đến máy chủ radio browser</string>
+
+    <string name="share_action">Chia sẻ liên kết đài với…</string>
+
+    <string name="nav_item_stations">Đài</string>
+    <string name="nav_item_starred">Yêu thích</string>
+    <string name="nav_item_history">Lịch sử</string>
+    <string name="nav_item_settings">Cài đặt</string>
+
+    <string name="about_text">AMARadio 100% không quảng cáo và tập trung vào quyền riêng tư.\n\nBan đầu tôi phát triển ứng dụng này cho mẹ mình để mang đến cho bà một trải nghiệm radio đơn giản, trung thực mà không có quảng cáo phiền phức hay theo dõi. Đó là lý do tại sao AMARadio sẽ luôn miễn phí quảng cáo – đó là lời hứa với bà, được chia sẻ với tất cả các bạn.\n\nDự án này là một nhánh của https://github.com/segler-alex/RadioDroid tuyệt vời. Toàn bộ mã nguồn đã được chuyển từ Java sang Kotlin để đảm bảo ứng dụng luôn hiện đại và tương thích với các phiên bản Android trong tương lai.\n\nMã nguồn có tại: https://github.com/ounben/AMARadio\n\nỨng dụng này sử dụng danh mục đài phát thanh miễn phí tại https://www.radio-browser.info .\nMọi người đều có thể thêm đài vào đó. Nó hoạt động như một wiki cho các đài phát thanh trực tuyến.\n\nLiên hệ: ben@ounben.com\n\nTheo dõi lỗi: https://github.com/ounben/AMARadio/issues\n\nNếu bạn thích phần mềm này và muốn giúp đỡ, đừng ngần ngại gửi email cho tôi.\nCác ý tưởng cho tính năng mới cũng luôn được trân trọng!\n\nỨng dụng này là phần mềm tự do, được cấp phép theo GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Phiên bản: %1$s</string>
+    <string name="detail_star">Thêm vào yêu thích</string>
+    <string name="detail_unstar">Xóa khỏi yêu thích</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Đang tải…</string>
+
+    <string name="sleep_timer" formatted="true">Hẹn giờ ngủ: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Dừng phát sau số phút đã chọn</string>
+    <string name="sleep_timer_apply">Áp dụng</string>
+    <string name="sleep_timer_clear">Xóa</string>
+    <string name="nav_item_add_sleep">Hẹn giờ ngủ</string>
+
+    <string name="nav_item_save_playlist">Xuất yêu thích thành danh sách phát</string>
+    <string name="nav_item_load_playlist">Nhập yêu thích từ danh sách phát</string>
+    <string name="nav_item_save_history_playlist">Xuất lịch sử thành danh sách phát</string>
+    <string name="confirm_overwrite_file">Ghi đè tệp?</string>
+    <string name="dialog_hint_file_name">Nhập tên tệp</string>
+    <string name="error_empty_field">Trường này là bắt buộc</string>
+    <string name="error_invalid_file_name">Tên tệp không hợp lệ</string>
+    <string name="label_button_cancel">Hủy</string>
+    <string name="label_button_overwrite">Ghi đè</string>
+    <string name="notify_load_playlist_nok">Không thể nhập từ %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Đang nhập từ %1$s&#47;%2$s, vui lòng đợi.</string>
+    <string name="notify_load_playlist_ok">Đã nhập %1$d đài từ %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Không thể xuất sang %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Đang xuất sang %1$s&#47;%2$s, vui lòng đợi.</string>
+    <string name="notify_save_playlist_ok">Đã xuất sang %1$s&#47;%2$s thành công</string>
+    <string name="notify_sync_list_deleted_entries">%1$d trong số %2$d đài nội bộ trong danh sách được đánh dấu không tồn tại trên máy chủ</string>
+
+    <string name="searchpreference_clear_history">Xóa lịch sử</string>
+    <string name="searchpreference_no_results">Không có kết quả</string>
+    <string name="searchpreference_search">Tìm kiếm…</string>
+    <string name="settings_appearance">Giao diện</string>
+    <string name="settings_theme_selection_title">Chủ đề</string>
+    <string name="theme_light">Sáng</string>
+    <string name="theme_dark">Tối</string>
+    <string name="theme_system">Theo hệ thống</string>
+    <string name="settings_compact_style">Chế độ thu gọn</string>
+    <string name="settings_compact_style_desc_off">Sử dụng biểu tượng lớn với thông tin chi tiết</string>
+    <string name="settings_compact_style_desc_on">Sử dụng biểu tượng nhỏ không có thông tin chi tiết</string>
+    <string name="settings_bottom_navigation">Thanh điều hướng dưới</string>
+    <string name="settings_ui_scale">Tỷ lệ giao diện</string>
+    <string name="settings_language">Ngôn ngữ</string>
+    <string name="ui_scale_compact">Nhỏ</string>
+    <string name="ui_scale_standard">Tiêu chuẩn</string>
+    <string name="ui_scale_large">Lớn</string>
+    <string name="ui_scale_extra_large">Rất lớn</string>
+
+    <string name="settings_interaction">Tương tác</string>
+    <string name="settings_single_use_tags">Hiện thẻ hiếm dùng</string>
+    <string name="settings_single_use_tags_desc_off">Các thẻ hiếm khi được sử dụng sẽ không được hiển thị</string>
+    <string name="settings_single_use_tags_desc_on">Các thẻ hiếm khi được sử dụng sẽ được hiển thị</string>
+
+    <string name="settings_show_broken">Đài bị lỗi</string>
+    <string name="settings_show_broken_on">Hiện đài bị lỗi trong danh sách</string>
+    <string name="settings_show_broken_off">Không hiện đài bị lỗi trong danh sách</string>
+
+    <string name="settings_startup_behaviour">Hành vi khi khởi động</string>
+    <string name="action_grid_view">Xem dạng lưới</string>
+    <string name="action_list_view">Xem dạng danh sách</string>
+
+    <string name="startup_action_title">Hành động khi khởi động</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Hiện tất cả đài</string>
+    <string name="startup_show_favorites">Hiện yêu thích</string>
+    <string name="startup_show_history">Hiện lịch sử</string>
+    <string name="startup_show_last_view">Xem lần cuối</string>
+
+    <string name="settings_load_icons">Hiện biểu tượng đài</string>
+    <string name="settings_load_icons_on">Biểu tượng sẽ được tải xuống</string>
+    <string name="settings_load_icons_off">Biểu tượng sẽ không được tải xuống</string>
+
+    <string name="settings_auto_favorite">Tự động yêu thích</string>
+    <string name="settings_auto_favorite_on">Tự động thêm đài vào yêu thích khi phát</string>
+    <string name="settings_auto_favorite_off">Không tự động thêm đài vào yêu thích khi phát</string>
+
+    <string name="settings_play">Trình phát</string>
+    <string name="settings_auto_play_on_startup">Tự động phát</string>
+    <string name="settings_auto_play_on_startup_on">Phát đài cuối cùng khi khởi động</string>
+    <string name="settings_auto_play_on_startup_off">Không phát đài cuối cùng khi khởi động</string>
+    <string name="settings_auto_off_on_startup">Tự động dừng</string>
+    <string name="settings_auto_off_on_startup_on">Dùng hẹn giờ tự dừng với tự động phát</string>
+    <string name="settings_auto_off_on_startup_off">Không dùng hẹn giờ tự dừng với tự động phát</string>
+    <string name="settings_auto_off_sleep_timer">Hẹn giờ tự động dừng</string>
+    <string name="settings_auto_off_sleep_timer_desc">Dừng phát sau %1$s phút</string>
+    <string name="settings_play_external">Bật trình phát ngoài</string>
+    <string name="settings_play_external_desc_on">Phát đài bằng trình phát bên ngoài</string>
+    <string name="settings_play_external_desc_off">Phát đài bằng AMARadio</string>
+    <string name="settings_equalizer">Bộ cân bằng (Equalizer)</string>
+
+    <string name="settings_connectivity">Kết nối</string>
+    <string name="settings_connect_timeout">Thời gian chờ kết nối</string>
+    <string name="settings_read_timeout">Thời gian chờ đọc</string>
+    <string name="settings_resume_timeout">Thời gian chờ tiếp tục</string>
+    <string name="settings_retry_timeout">Thời gian chờ thử lại</string>
+    <string name="settings_retry_delay">Độ trễ kết nối lại</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Tên đăng nhập</string>
+    <string name="settings_proxy_password">Mật khẩu</string>
+    <string name="settings_proxy_action_test">Kiểm tra</string>
+    <string name="settings_proxy_working">Đã kết nối thành công đến %s</string>
+    <string name="settings_proxy_not_working">Lỗi kết nối đến %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Giá trị proxy bạn cung cấp không hợp lệ</string>
+    <string name="ignore_proxy_settings_invalid">Đã bỏ qua cài đặt proxy không hợp lệ</string>
+    <string name="settings_seconds_format">%d giây</string>
+    <string name="settings_milliseconds_format">%d mili giây</string>
+
+    <string name="settings_pause_when_noisy">Tạm dừng khi rút tai nghe</string>
+
+    <string name="settings_auto_resume_do_not_resume">Không tiếp tục</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Tiếp tục khi cắm dây</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Tiếp tục phát khi cắm tai nghe có dây</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Tiếp tục khi kết nối Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Tiếp tục phát khi kết nối thiết bị Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">Tiếp tục khi có bất kỳ kết nối nào</string>
+
+    <string name="settings_warn_no_wifi">Cảnh báo khi không có Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Cảnh báo khi phát mà không có kết nối Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Không cảnh báo khi không có kết nối Wi-Fi</string>
+
+    <string name="notify_pre_play">Đang kết nối</string>
+    <string name="notify_play">Đang phát</string>
+    <string name="notify_paused">Đã tạm dừng</string>
+    <string name="notify_metered_connection">Kết nối có tính phí</string>
+
+    <string name="notify_starred">Đài đã được thêm vào yêu thích</string>
+    <string name="notify_autostarred">Đài đã được tự động thêm vào yêu thích</string>
+    <string name="notify_unstarred">Đài đã được xóa khỏi yêu thích</string>
+    <string name="notify_deleted_favorites">Yêu thích đã bị xóa</string>
+    <string name="notify_deleted_history">Lịch sử đã bị xóa</string>
+
+    <string name="notify_open_link_failure">Không tìm thấy ứng dụng để mở liên kết</string>
+
+    <string name="notify_station_removed_from_list">Đã xóa 1</string>
+    <string name="action_station_removed_from_list_undo">HOÀN TÁC</string>
+
+    <string name="alert_delete_history">Bạn có thực sự muốn xóa lịch sử không?</string>
+    <string name="alert_delete_favorites">Bạn có thực sự muốn xóa tất cả yêu thích không?</string>
+    <string name="yes">Có</string>
+    <string name="no">Không</string>
+
+    <string name="alert_select_player">Vui lòng chọn một trình phát</string>
+    <string name="alert_select_player_name">Tên</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Cổng</string>
+
+    <string name="alert_press_back_to_exit">Nhấn quay lại lần nữa để thoát</string>
+
+    <string name="error_stream_url">Sự cố URL luồng</string>
+    <string name="error_caching_stream">Sự cố lưu đệm luồng</string>
+    <string name="error_play_stream">Không thể phát luồng</string>
+    <string name="error_stream_reconnect_timeout">Không thể kết nối lại luồng: quá thời gian</string>
+    <string name="warning_no_network_trying_resume">Không có kết nối mạng. Đang thử tiếp tục khi có mạng lại.</string>
+    <string name="giving_up_resume">Đã ngừng thử tiếp tục phát</string>
+
+    <string name="error_grant_audiofocus">Yêu cầu quyền âm thanh không được hệ thống chấp nhận</string>
+
+    <string name="error_no_equalizer_found">Không tìm thấy ứng dụng bộ cân bằng</string>
+
+    <string name="player_info_status">Trạng thái:&#160;</string>
+    <string name="player_info_status_stopped">đã dừng</string>
+    <string name="player_info_status_playing">đang phát</string>
+    <string name="player_info_transferred">Dữ liệu đã chuyển: %1$s</string>
+
+    <string name="tab_player_art">Ảnh album</string>
+    <string name="tab_player_info">Thông tin</string>
+    <string name="tab_player_history">Lịch sử bài hát</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">BỊ LỖI</string>
+    <string name="station_detail_deleted_on_server">ĐÃ XÓA</string>
+
+    <string name="station_details_clicks">%1$d lượt click</string>
+    <string name="station_details_votes">%1$d bình chọn</string>
+
+    <string name="image_button_disable">Vô hiệu hóa</string>
+    <string name="image_button_delete">Xóa</string>
+    <string name="image_button_more">Thêm</string>
+    <string name="image_button_less">Bớt</string>
+    <string name="image_button_repeat">Lặp lại</string>
+    <string name="image_button_dont_repeat">Không lặp lại</string>
+    <string name="icon_click_trend_decreasing">Phổ biến đang giảm</string>
+    <string name="icon_click_trend_increasing">Phổ biến đang tăng</string>
+    <string name="icon_click_trend_stable">Phổ biến ổn định</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Không quảng cáo &amp; Riêng tư</string>
+
+    <string name="action_play_in_external">Phát bằng trình phát ngoài</string>
+    <string name="action_choose_external_player">Chọn trình phát bên ngoài</string>
+
+    <string name="settings_disable_battery_optimization">Tối ưu hóa pin</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Bỏ qua tối ưu hóa pin, AMARadio sẽ luôn có thể lấy lại quyền ưu tiên âm thanh.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Đã bật tối ưu hóa pin, AMARadio có thể không lấy lại được quyền ưu tiên khi chạy nền.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Khác</string>
+    <string name="settings_statistics">Thống kê</string>
+    <string name="settings_about">Về AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Chuyển tiếp</string>
+    <string name="description_btn_skip_to_previous">Quay lại</string>
+
+    <string-array name="weekdays">
+        <item>CN</item>
+        <item>T2</item>
+        <item>T3</item>
+        <item>T4</item>
+        <item>T5</item>
+        <item>T6</item>
+        <item>T7</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Đã sao chép URL luồng thành công</string>
+    <string name="notify_track_info_copied">Đã sao chép thông tin bài hát thành công</string>
+
+    <string-array name="actions_station_link">
+        <item>Truy cập trang web</item>
+        <item>Sao chép URL luồng</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Phát hiện kết nối có tính phí</string>
+    <string name="alert_metered_connection_message">Kết nối có tính phí có thể phát sinh thêm chi phí, nhấn \'OK\' để tiếp tục.</string>
+    <string name="nav_item_statistics">Thống kê</string>
+    <string name="nav_item_about">Giới thiệu</string>
+    <string name="refresh">Làm mới</string>
+    <string name="action_filter">Bộ lọc</string>
+    <string name="filter_country">Quốc gia</string>
+    <string name="filter_tag">Thẻ</string>
+    <string name="filter_language">Ngôn ngữ</string>
+    <string name="filter_sort_by">Sắp xếp</string>
+    <string name="filter_reverse">Đảo ngược thứ tự</string>
+    <string name="filter_apply">Áp dụng bộ lọc</string>
+    <string name="sort_name">Tên</string>
+    <string name="sort_votes">Bình chọn</string>
+    <string name="sort_clicks">Lượt nghe</string>
+    <string name="sort_lastchange">Thay đổi cuối</string>
+    <string name="filter_select_country">Chọn Quốc gia</string>
+    <string name="filter_select_language">Chọn Ngôn ngữ</string>
+    <string name="filter_type_tag">Nhập thẻ…</string>
+    <string name="filter_tap_to_configure">Chạm để thiết lập</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

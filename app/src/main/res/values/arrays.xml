@@ -107,6 +107,32 @@
         <item>Malti</item>
         <item>Gaeilge</item>
         <item>Português (Portugal)</item>
+        <item>한국어</item>
+        <item>中文 (繁體 - 台灣)</item>
+        <item>中文 (繁體 - 香港)</item>
+        <item>Tiếng Việt</item>
+        <item>ไทย</item>
+        <item>Filipino</item>
+        <item>Bahasa Melayu</item>
+        <item>မြန်မာဘာသာ</item>
+        <item>ភាสาខ្មែរ</item>
+        <item>বাংলা</item>
+        <item>اردو</item>
+        <item>தமிழ்</item>
+        <item>తెలుగు</item>
+        <item>मराठी</item>
+        <item>ગુજરાતી</item>
+        <item>ಕನ್ನಡ</item>
+        <item>മലയാളം</item>
+        <item>සිංහල</item>
+        <item>नेपाली</item>
+        <item>עברית</item>
+        <item>فارسی</item>
+        <item>ქართული</item>
+        <item>Հայերեն</item>
+        <item>Azərbaycan dili</item>
+        <item>Қазақ тілі</item>
+        <item>Oʻzbek tili</item>
     </string-array>
 
     <string-array name="language_values" translatable="false">
@@ -155,6 +181,32 @@
         <item>mt</item>
         <item>ga</item>
         <item>pt</item>
+        <item>ko</item>
+        <item>zh-rTW</item>
+        <item>zh-rHK</item>
+        <item>vi</item>
+        <item>th</item>
+        <item>fil</item>
+        <item>ms</item>
+        <item>my</item>
+        <item>km</item>
+        <item>bn</item>
+        <item>ur</item>
+        <item>ta</item>
+        <item>te</item>
+        <item>mr</item>
+        <item>gu</item>
+        <item>kn</item>
+        <item>ml</item>
+        <item>si</item>
+        <item>ne</item>
+        <item>he</item>
+        <item>fa</item>
+        <item>ka</item>
+        <item>hy</item>
+        <item>az</item>
+        <item>kk</item>
+        <item>uz</item>
     </string-array>
 
 </resources>

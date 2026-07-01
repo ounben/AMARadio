@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">အမည်</string>
+    <string name="detail_tags">တဂ်များ</string>
+    <string name="detail_country">နိုင်ငံ</string>
+    <string name="detail_create_shortcut">ပင်မမျက်နှာပြင်သို့ ထည့်ရန်</string>
+    <string name="detail_language">ဘာသာစကား</string>
+    <string name="detail_weblink">ဝဘ်လင့်ခ်</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">ဖွင့်ရန်</string>
+    <string name="detail_pause">ခေတ္တရပ်ရန်</string>
+    <string name="detail_stop">ရပ်ရန်</string>
+    <string name="detail_share">မျှဝေရန်</string>
+    <string name="detail_play_in_AMARadio">AMARadio ဖြင့် ဖွင့်ရန်</string>
+
+    <string name="action_links">လင့်ခ်များ</string>
+    <string name="action_homepage">ပင်မစာမျက်နှာ</string>
+    <string name="action_favorite">အကြိုက်ဆုံး</string>
+    <string name="action_starred_add">အကြိုက်ဆုံးထဲသို့ ထည့်ရန်</string>
+    <string name="action_starred_remove">အကြိုက်ဆုံးထဲမှ ဖယ်ရန်</string>
+
+    <string name="action_station_visit_website">ဝဘ်ဆိုဒ်သို့ သွားရန်</string>
+    <string name="action_station_copy_stream_url">Stream URL ကို ကူးယူရန်</string>
+    <string name="action_station_share">မျှဝေရန်</string>
+
+    <string name="action_local">ဒေသတွင်း</string>
+    <string name="action_skip_to_next">နောက်တစ်ခု</string>
+    <string name="action_pause">ခေတ္တရပ်ရန်</string>
+    <string name="action_skip_to_previous">ယခင်တစ်ခု</string>
+    <string name="action_resume">ပြန်ဖွင့်ရန်</string>
+    <string name="action_stop">ရပ်ရန်</string>
+    <string name="action_search">ရှာဖွေရန်</string>
+    <string name="action_delete">ဖျက်ရန်</string>
+    <string name="action_delete_history">မှတ်တမ်းဖျက်ရန်</string>
+    <string name="action_delete_favorites">အကြိုက်ဆုံးအားလုံး ဖျက်ရန်</string>
+    <string name="action_delete_stream_history">သီချင်းမှတ်တမ်း ရှင်းရန်</string>
+    <string name="action_ok">အိုကေ</string>
+    <string name="action_cancel">မလုပ်တော့ပါ</string>
+    <string name="action_top_click">လူကြိုက်အများဆုံး (ကလစ်)</string>
+    <string name="action_toggle_view">မြင်ကွင်းပြောင်းရန်</string>
+    <string name="action_top_vote">လူကြိုက်အများဆုံး (မဲ)</string>
+    <string name="action_changed_lately">မကြာသေးမီက ပြောင်းလဲမှုများ</string>
+    <string name="action_currently_playing">လက်ရှိဖွင့်နေသည်</string>
+    <string name="action_tags">တဂ်များ</string>
+    <string name="action_countries">နိုင်ငံများ/ဒေသများ</string>
+    <string name="action_languages">ဘာသာစကားများ</string>
+    <string name="action_edit">ပြင်ဆင်ရန်</string>
+    <string name="action_copy_info">အချက်အလက် ကူးယူရန်</string>
+    <string name="action_rename_tab">Tab အမည်ပြောင်းရန်</string>
+    <string name="error_filter_name_required">ဤစစ်ထုတ်မှုအတွက် အမည်တစ်ခု အရင်ထည့်ပါ</string>
+    <string name="confirm_delete_filter_tab">စစ်ထုတ်မှု \"%1$s\" ကို ဖျက်ရန် သေချာပါသလား?</string>
+    <string name="filter_empty_title">မိမိစိတ်ကြိုက် ရေဒီယိုလိုင်းများကို ဖန်တီးပါ</string>
+    <string name="filter_empty_desc">အချက်အလက် အမျိုးမျိုးကို ပေါင်းစပ်ပြီး စိတ်ကြိုက်မြင်ကွင်း ဖန်တီးပါ။ အောက်ပါတို့ဖြင့် ရှာဖွေနိုင်ပါသည် -</string>
+    <string name="filter_empty_filter_by">စစ်ထုတ်ရန် -</string>
+    <string name="filter_empty_filter_desc">နိုင်ငံ၊ ရေဒီယိုအမည်၊ တဂ် သို့မဟုတ် ဘာသာစကား</string>
+    <string name="filter_empty_sort_by">စီရန် -</string>
+    <string name="filter_empty_sort_desc">ကလစ်များ၊ အက္ခရာစဉ်၊ မဲများ သို့မဟုတ် နောက်ဆုံးပြောင်းလဲမှု</string>
+    <string name="filter_empty_hint">ဤမြင်ကွင်းကို သိမ်းဆည်းရန် အပေါ်ရှိ အကွက်တွင် အမည်တစ်ခု ရိုက်ထည့်ပါ!</string>
+    <string name="error_station_load">ရေဒီယိုလိုင်းသို့ ချိတ်ဆက်၍မရပါ</string>
+    <string name="error_list_update">ရေဒီယို ဆာဗာသို့ ချိတ်ဆက်၍မရပါ</string>
+
+    <string name="share_action">ရေဒီယိုလင့်ခ်ကို မျှဝေရန်…</string>
+
+    <string name="nav_item_stations">ရေဒီယိုလိုင်းများ</string>
+    <string name="nav_item_starred">အကြိုက်ဆုံးများ</string>
+    <string name="nav_item_history">မှတ်တမ်း</string>
+    <string name="nav_item_settings">ဆက်တင်များ</string>
+
+    <string name="about_text">AMARadio သည် ၁၀၀% ကြော်ငြာမပါဘဲ ကိုယ်ရေးကိုယ်တာ လုံခြုံမှုကို အလေးထားပါသည်။\n\nကျွန်တော်သည် ဤအက်ပ်ကို ကျွန်တော့်အမေအတွက် ကြော်ငြာများ သို့မဟုတ် ခြေရာခံမှုများမပါဘဲ ရိုးရှင်းပြီး ရိုးသားသော ရေဒီယိုအတွေ့အကြုံကို ပေးနိုင်ရန် မူလက ဖန်တီးခဲ့ခြင်းဖြစ်ပါသည်။ ထို့ကြောင့် AMARadio သည် အမြဲတမ်း ကြော်ငြာမပါဘဲ ရှိနေပါလိမ့်မည် - ၎င်းမှာ ကျွန်တော့်အမေကို ပေးထားသော ကတိဖြစ်ပြီး သင်တို့အားလုံးကိုလည်း ဝေမျှပါသည်။\n\nဤပရောဂျက်သည် ကောင်းမွန်လှသော https://github.com/segler-alex/RadioDroid မှ ခွဲထွက်လာခြင်းဖြစ်သည်။ အက်ပ်သည် ခေတ်မီနေစေရန်နှင့် နောက်ပိုင်းထွက်မည့် Android ဗားရှင်းများနှင့် ကိုက်ညီမှုရှိစေရန် Source Code အားလုံးကို Java မှ Kotlin သို့ ပြောင်းလဲထားပါသည်။\n\nSource Code ကို ဤနေရာတွင် ရနိုင်ပါသည် - https://github.com/ounben/AMARadio\n\nဤအက်ပ်သည် https://www.radio-browser.info ရှိ အခမဲ့ ရေဒီယိုလိုင်း လမ်းညွှန်ကို အသုံးပြုပါသည်။ မည်သူမဆို ရေဒီယိုလိုင်းများ ထည့်သွင်းနိုင်ပါသည်။ ၎င်းသည် အွန်လိုင်း ရေဒီယိုလိုင်းများအတွက် ဝီကီပီးဒီးယားကဲ့သို့ အလုပ်လုပ်ပါသည်။\n\nဆက်သွယ်ရန် - ben@ounben.com\n\nBugtracker - https://github.com/ounben/AMARadio/issues\n\nအကယ်၍ သင်သည် ဤဆော့ဖ်ဝဲလ်ကို နှစ်သက်ပြီး ကူညီလိုပါက ကျွန်တော့်ထံ အီးမေးလ် ပေးပို့နိုင်ပါသည်။ ဝန်ဆောင်မှုအသစ်များအတွက် အကြံဉာဏ်များကိုလည်း အမြဲတမ်း ကြိုဆိုလျက်ရှိပါသည်။\n\nဤအက်ပ်သည် GPLv3 လိုင်စင်အောက်တွင် ရှိသော အခမဲ့ ဆော့ဖ်ဝဲလ် ဖြစ်ပါသည်။ https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">ဗားရှင်း - %1$s</string>
+    <string name="detail_star">အကြိုက်ဆုံးထဲသို့ ထည့်ရန်</string>
+    <string name="detail_unstar">အကြိုက်ဆုံးထဲမှ ဖယ်ရန်</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">ဖွင့်နေသည်…</string>
+
+    <string name="sleep_timer" formatted="true">အိပ်စက်ချိန်စက် - %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">သတ်မှတ်ထားသော အချိန်ရောက်လျှင် ရပ်ရန်</string>
+    <string name="sleep_timer_apply">သတ်မှတ်မည်</string>
+    <string name="sleep_timer_clear">ပယ်ဖျက်မည်</string>
+    <string name="nav_item_add_sleep">အိပ်စက်ချိန်စက်</string>
+
+    <string name="nav_item_save_playlist">အကြိုက်ဆုံးများကို ပလေးလစ်အဖြစ် သိမ်းရန်</string>
+    <string name="nav_item_load_playlist">ပလေးလစ်မှ အကြိုက်ဆုံးများ ထည့်ရန်</string>
+    <string name="nav_item_save_history_playlist">မှတ်တမ်းကို ပလေးလစ်အဖြစ် သိမ်းရန်</string>
+    <string name="confirm_overwrite_file">ဖိုင်ကို ထပ်ရေးမလား?</string>
+    <string name="dialog_hint_file_name">ဖိုင်အမည် ရိုက်ထည့်ပါ</string>
+    <string name="error_empty_field">ဤအကွက်ကို ဖြည့်ရန် လိုအပ်သည်</string>
+    <string name="error_invalid_file_name">ဖိုင်အမည် မမှန်ကန်ပါ</string>
+    <string name="label_button_cancel">မလုပ်တော့ပါ</string>
+    <string name="label_button_overwrite">ထပ်ရေးမည်</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s မှ ထည့်သွင်း၍မရပါ</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s မှ ထည့်သွင်းနေသည်၊ ခေတ္တစောင့်ပါ။</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s မှ လိုင်းပေါင်း %1$d ခု ထည့်သွင်းပြီးပါပြီ</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s သို့ သိမ်းဆည်း၍မရပါ</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s သို့ သိမ်းဆည်းနေသည်၊ ခေတ္တစောင့်ပါ။</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s သို့ အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ</string>
+    <string name="notify_sync_list_deleted_entries">ဒေသတွင်းလိုင်း %2$d ခုတွင် %1$d ခုမှာ ဆာဗာတွင် မရှိတော့ကြောင်း တွေ့ရပါသည်</string>
+
+    <string name="searchpreference_clear_history">မှတ်တမ်း ရှင်းရန်</string>
+    <string name="searchpreference_no_results">ရှာမတွေ့ပါ</string>
+    <string name="searchpreference_search">ရှာဖွေရန်…</string>
+    <string name="settings_appearance">မြင်ကွင်း</string>
+    <string name="settings_theme_selection_title">သီးမ် (Theme)</string>
+    <string name="theme_light">အလင်း</string>
+    <string name="theme_dark">အမှောင်</string>
+    <string name="theme_system">စနစ်အတိုင်း</string>
+    <string name="settings_compact_style">ကျဉ်းမြောင်းသော ပုံစံ</string>
+    <string name="settings_compact_style_desc_off">အိုင်ကွန်ကြီးများနှင့် အသေးစိတ် အချက်အလက်များ ပြမည်</string>
+    <string name="settings_compact_style_desc_on">အိုင်ကွန်အသေးများနှင့် အချက်အလက်များ ပြမည်မဟုတ်</string>
+    <string name="settings_bottom_navigation">အောက်ခြေ လမ်းညွှန်</string>
+    <string name="settings_ui_scale">UI အရွယ်အစား</string>
+    <string name="settings_language">ဘာသာစကား</string>
+    <string name="ui_scale_compact">ကျဉ်းမြောင်း</string>
+    <string name="ui_scale_standard">စနစ်စံနှုန်း</string>
+    <string name="ui_scale_large">ကြီးသော</string>
+    <string name="ui_scale_extra_large">အလွန်ကြီးသော</string>
+
+    <string name="settings_interaction">အပြန်အလှန် လုပ်ဆောင်မှု</string>
+    <string name="settings_single_use_tags">အသုံးနည်းသော တဂ်များပြရန်</string>
+    <string name="settings_single_use_tags_desc_off">အသုံးနည်းသော တဂ်များပြမည်မဟုတ်</string>
+    <string name="settings_single_use_tags_desc_on">အသုံးနည်းသော တဂ်များပြမည်</string>
+
+    <string name="settings_show_broken">အလုပ်မလုပ်သော လိုင်းများ</string>
+    <string name="settings_show_broken_on">စာရင်းတွင် အလုပ်မလုပ်သော လိုင်းများ ပြမည်</string>
+    <string name="settings_show_broken_off">စာရင်းတွင် အလုပ်မလုပ်သော လိုင်းများ ပြမည်မဟုတ်</string>
+
+    <string name="settings_startup_behaviour">စတင်ချိန် လုပ်ဆောင်ချက်</string>
+    <string name="action_grid_view">ဇယားကွက် မြင်ကွင်း</string>
+    <string name="action_list_view">စာရင်း မြင်ကွင်း</string>
+
+    <string name="startup_action_title">စတင်ချိန် လုပ်ဆောင်ချက်</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">လိုင်းအားလုံး ပြရန်</string>
+    <string name="startup_show_favorites">အကြိုက်ဆုံးများ ပြရန်</string>
+    <string name="startup_show_history">မှတ်တမ်း ပြရန်</string>
+    <string name="startup_show_last_view">နောက်ဆုံး မြင်ကွင်း</string>
+
+    <string name="settings_load_icons">လိုင်းအိုင်ကွန်များ ပြရန်</string>
+    <string name="settings_load_icons_on">အိုင်ကွန်များ ဒေါင်းလုဒ်လုပ်မည်</string>
+    <string name="settings_load_icons_off">အိုင်ကွန်များ ဒေါင်းလုဒ်လုပ်မည်မဟုတ်</string>
+
+    <string name="settings_auto_favorite">အလိုအလျောက် အကြိုက်ဆုံးလုပ်ရန်</string>
+    <string name="settings_auto_favorite_on">ဖွင့်နေချိန်တွင် လိုင်းများကို အကြိုက်ဆုံးထဲသို့ အလိုအလျောက် ထည့်မည်</string>
+    <string name="settings_auto_favorite_off">ဖွင့်နေချိန်တွင် လိုင်းများကို အကြိုက်ဆုံးထဲသို့ အလိုအလျောက် ထည့်မည်မဟုတ်</string>
+
+    <string name="settings_play">ပလေယာ</string>
+    <string name="settings_auto_play_on_startup">အလိုအလျောက် ဖွင့်ရန်</string>
+    <string name="settings_auto_play_on_startup_on">စတင်ချိန်တွင် နောက်ဆုံးဖွင့်ခဲ့သောလိုင်းကို ဖွင့်မည်</string>
+    <string name="settings_auto_play_on_startup_off">စတင်ချိန်တွင် နောက်ဆုံးဖွင့်ခဲ့သောလိုင်းကို ဖွင့်မည်မဟုတ်</string>
+    <string name="settings_auto_off_on_startup">အလိုအလျောက် ရပ်ရန်</string>
+    <string name="settings_auto_off_on_startup_on">အလိုအလျောက် ဖွင့်ခြင်းနှင့်အတူ အလိုအလျောက် ရပ်ချိန်စက်ကို သုံးမည်</string>
+    <string name="settings_auto_off_on_startup_off">အလိုအလျောက် ဖွင့်ခြင်းနှင့်အတူ အလိုအလျောက် ရပ်ချိန်စက်ကို သုံးမည်မဟုတ်</string>
+    <string name="settings_auto_off_sleep_timer">အလိုအလျောက် ရပ်ချိန်စက်</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s မိနစ်အကြာတွင် ရပ်ရန်</string>
+    <string name="settings_play_external">အပြင်ပလေယာ သုံးရန်</string>
+    <string name="settings_play_external_desc_on">ရေဒီယိုလိုင်းများကို အပြင်ပလေယာဖြင့် ဖွင့်မည်</string>
+    <string name="settings_play_external_desc_off">ရေဒီယိုလိုင်းများကို AMARadio ဖြင့် ဖွင့်မည်</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">ချိတ်ဆက်မှု</string>
+    <string name="settings_connect_timeout">ချိတ်ဆက်မှု ကြာချိန်</string>
+    <string name="settings_read_timeout">ဖတ်ရှုမှု ကြာချိန်</string>
+    <string name="settings_resume_timeout">ပြန်လည်စတင်မှု ကြာချိန်</string>
+    <string name="settings_retry_timeout">ထပ်မံကြိုးစားမှု ကြာချိန်</string>
+    <string name="settings_retry_delay">ပြန်လည်ချိတ်ဆက်မှု ကြာမြင့်ချိန်</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">အသုံးပြုသူအမည်</string>
+    <string name="settings_proxy_password">စကားဝှက်</string>
+    <string name="settings_proxy_action_test">စမ်းသပ်ရန်</string>
+    <string name="settings_proxy_working">%s သို့ အောင်မြင်စွာ ချိတ်ဆက်ပြီးပါပြီ</string>
+    <string name="settings_proxy_not_working">%1$s သို့ ချိတ်ဆက်၍မရပါ\n%2$s</string>
+    <string name="settings_proxy_invalid">Proxy အတွက် ထည့်သွင်းချက်များ မမှန်ကန်ပါ</string>
+    <string name="ignore_proxy_settings_invalid">မမှန်ကန်သော Proxy ဆက်တင်များကို လျစ်လျူရှုခဲ့သည်</string>
+    <string name="settings_seconds_format">%d စက္ကန့်</string>
+    <string name="settings_milliseconds_format">%d မီလီစက္ကန့်</string>
+
+    <string name="settings_pause_when_noisy">နားကြပ်ဖြုတ်လျှင် ခေတ္တရပ်ရန်</string>
+
+    <string name="settings_auto_resume_do_not_resume">ပြန်မဖွင့်ရန်</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">ကြိုးနားကြပ်တပ်လျှင် ပြန်ဖွင့်ရန်</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">ကြိုးနားကြပ်တပ်လျှင် ဖွင့်လက်စကို ပြန်ဖွင့်မည်</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth ချိတ်လျှင် ပြန်ဖွင့်ရန်</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP ကိရိယာ ချိတ်ဆက်လျှင် ဖွင့်လက်စကို ပြန်ဖွင့်မည်</string>
+
+    <string name="settings_auto_resume_on_any_connected">မည်သည့်အရာမဆို ချိတ်လျှင် ပြန်ဖွင့်ရန်</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi မရှိလျှင် သတိပေးရန်</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi မပါဘဲ ဖွင့်နေလျှင် သတိပေးမည်</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi မပါဘဲ ဖွင့်နေလျှင် သတိပေးမည်မဟုတ်</string>
+
+    <string name="notify_pre_play">ချိတ်ဆက်နေသည်</string>
+    <string name="notify_play">ဖွင့်နေသည်</string>
+    <string name="notify_paused">ခေတ္တရပ်ထားသည်</string>
+    <string name="notify_metered_connection">ကုန်ကျစရိတ်ရှိသော ချိတ်ဆက်မှု</string>
+
+    <string name="notify_starred">ရေဒီယိုလိုင်းကို အကြိုက်ဆုံးထဲသို့ ထည့်ပြီးပါပြီ</string>
+    <string name="notify_autostarred">ရေဒီယိုလိုင်းကို အကြိုက်ဆုံးထဲသို့ အလိုအလျောက် ထည့်ပြီးပါပြီ</string>
+    <string name="notify_unstarred">ရေဒီယိုလိုင်းကို အကြိုက်ဆုံးထဲမှ ဖယ်ပြီးပါပြီ</string>
+    <string name="notify_deleted_favorites">အကြိုက်ဆုံးများ ဖျက်ပြီးပါပြီ</string>
+    <string name="notify_deleted_history">မှတ်တမ်း ဖျက်ပြီးပါပြီ</string>
+
+    <string name="notify_open_link_failure">လင့်ခ်ကို ဖွင့်ရန် အက်ပ်ရှာမတွေ့ပါ</string>
+
+    <string name="notify_station_removed_from_list">၁ ခု ဖယ်ရှားပြီးပါပြီ</string>
+    <string name="action_station_removed_from_list_undo">ပြန်ပြင်ရန်</string>
+
+    <string name="alert_delete_history">မှတ်တမ်းကို တကယ်ဖျက်ချင်ပါသလား?</string>
+    <string name="alert_delete_favorites">အကြိုက်ဆုံးအားလုံးကို တကယ်ဖျက်ချင်ပါသလား?</string>
+    <string name="yes">ဟုတ်ကဲ့</string>
+    <string name="no">မဟုတ်ပါ</string>
+
+    <string name="alert_select_player">ပလေယာတစ်ခု ရွေးပါ</string>
+    <string name="alert_select_player_name">အမည်</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">ထွက်ရန် နောက်ပြန်ခလုတ်ကို နောက်တစ်ကြိမ် နှိပ်ပါ</string>
+
+    <string name="error_stream_url">Stream URL ပြဿနာ</string>
+    <string name="error_caching_stream">Stream Caching ပြဿနာ</string>
+    <string name="error_play_stream">ဖွင့်၍မရပါ</string>
+    <string name="error_stream_reconnect_timeout">ပြန်လည်ချိတ်ဆက်၍မရပါ - အချိန်ကုန်သွားပါသည်</string>
+    <string name="warning_no_network_trying_resume">အင်တာနက်မရှိပါ။ အင်တာနက်ပြန်ရလျှင် ပြန်ဖွင့်ရန် ကြိုးစားနေပါသည်။</string>
+    <string name="giving_up_resume">ပြန်ဖွင့်ရန် ကြိုးစားမှုကို ရပ်ဆိုင်းလိုက်ပါသည်</string>
+
+    <string name="error_grant_audiofocus">စနစ်မှ အသံဆိုင်ရာခွင့်ပြုချက် မပေးပါ</string>
+
+    <string name="error_no_equalizer_found">Equalizer အက်ပ် ရှာမတွေ့ပါ</string>
+
+    <string name="player_info_status">အခြေအနေ -&#160;</string>
+    <string name="player_info_status_stopped">ရပ်ထားသည်</string>
+    <string name="player_info_status_playing">ဖွင့်နေသည်</string>
+    <string name="player_info_transferred">ဒေတာအသုံးပြုမှု - %1$s</string>
+
+    <string name="tab_player_art">အယ်လ်ဘမ်ကာဗာ</string>
+    <string name="tab_player_info">အချက်အလက်</string>
+    <string name="tab_player_history">သီချင်းမှတ်တမ်း</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">အလုပ်မလုပ်ပါ</string>
+    <string name="station_detail_deleted_on_server">ဖျက်လိုက်ပါသည်</string>
+
+    <string name="station_details_clicks">ကလစ် %1$d ခု</string>
+    <string name="station_details_votes">မဲ %1$d မဲ</string>
+
+    <string name="image_button_disable">ပိတ်ရန်</string>
+    <string name="image_button_delete">ဖျက်ရန်</string>
+    <string name="image_button_more">ပို၍</string>
+    <string name="image_button_less">လျော့၍</string>
+    <string name="image_button_repeat">ထပ်ခါထပ်ခါ</string>
+    <string name="image_button_dont_repeat">ထပ်ခါထပ်ခါ မဟုတ်</string>
+    <string name="icon_click_trend_decreasing">လူကြိုက်နည်းလာသည်</string>
+    <string name="icon_click_trend_increasing">လူကြိုက်များလာသည်</string>
+    <string name="icon_click_trend_stable">ပုံမှန်ရှိသည်</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">၁၀၀% ကြော်ငြာမပါ ကိုယ်ရေးလုံခြုံမှု အလေးထားသည်</string>
+
+    <string name="action_play_in_external">အပြင်ပလေယာဖြင့် ဖွင့်ရန်</string>
+    <string name="action_choose_external_player">အပြင်ပလေယာ ရွေးရန်</string>
+
+    <string name="settings_disable_battery_optimization">ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင်လုပ်ခြင်း</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ဘက်ထရီ ချွေတာမှုကို လျစ်လျူရှုထားသည်၊ AMARadio သည် အမြဲတမ်း ပုံမှန်အလုပ်လုပ်နိုင်ပါလိမ့်မည်။</string>
+    <string name="settings_ignore_battery_optimization_summary_off">ဘက်ထရီ ချွေတာမှုကို ဖွင့်ထားသည်၊ AMARadio သည် နောက်ကွယ်မှ အလုပ်လုပ်ရန် အခက်အခဲ ရှိနိုင်ပါသည်။</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">အခြား</string>
+    <string name="settings_statistics">စာရင်းဇယားများ</string>
+    <string name="settings_about">AMARadio အကြောင်း</string>
+
+    <string name="description_btn_skip_to_next">နောက်တစ်ခုသို့ ကျော်ရန်</string>
+    <string name="description_btn_skip_to_previous">ယခင်တစ်ခုသို့ ကျော်ရန်</string>
+
+    <string-array name="weekdays">
+        <item>တ</item>
+        <item>တ</item>
+        <item>အ</item>
+        <item>ဗု</item>
+        <item>က</item>
+        <item>သု</item>
+        <item>စ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Stream URL ကူးယူပြီးပါပြီ</string>
+    <string name="notify_track_info_copied">သီချင်းအချက်အလက် ကူးယူပြီးပါပြီ</string>
+
+    <string-array name="actions_station_link">
+        <item>ဝဘ်ဆိုဒ်သို့ သွားရန်</item>
+        <item>Stream URL ကို ကူးယူရန်</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">ကုန်ကျစရိတ်ရှိနိုင်သော ချိတ်ဆက်မှုဖြစ်သည်</string>
+    <string name="alert_metered_connection_message">ဤချိတ်ဆက်မှုသည် အပိုဒေတာဖိုး ကုန်ကျနိုင်ပါသည်၊ ဆက်လုပ်ရန် \'အိုကေ\' ကို နှိပ်ပါ။</string>
+    <string name="nav_item_statistics">စာရင်းဇယားများ</string>
+    <string name="nav_item_about">အကြောင်းအရာ</string>
+    <string name="refresh">ပြန်လည်စတင်ရန်</string>
+    <string name="action_filter">စစ်ထုတ်ရန်</string>
+    <string name="filter_country">နိုင်ငံ</string>
+    <string name="filter_tag">တဂ်</string>
+    <string name="filter_language">ဘာသာစကား</string>
+    <string name="filter_sort_by">စီရန်ပုံစံ</string>
+    <string name="filter_reverse">ပြောင်းပြန်စီရန်</string>
+    <string name="filter_apply">စစ်ထုတ်မှုကို အသုံးပြုရန်</string>
+    <string name="sort_name">အမည်</string>
+    <string name="sort_votes">မဲများ</string>
+    <string name="sort_clicks">ကလစ်များ</string>
+    <string name="sort_lastchange">နောက်ဆုံးပြောင်းလဲမှု</string>
+    <string name="filter_select_country">နိုင်ငံရွေးရန်</string>
+    <string name="filter_select_language">ဘာသာစကားရွေးရန်</string>
+    <string name="filter_type_tag">တဂ်ရိုက်ထည့်ပါ…</string>
+    <string name="filter_tap_to_configure">ပြင်ဆင်ရန် နှိပ်ပါ</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

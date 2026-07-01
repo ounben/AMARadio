@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">名稱</string>
+    <string name="detail_tags">標籤</string>
+    <string name="detail_country">國家/地區</string>
+    <string name="detail_create_shortcut">新增至主畫面</string>
+    <string name="detail_language">語言</string>
+    <string name="detail_weblink">網頁連結</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">播放</string>
+    <string name="detail_pause">暫停</string>
+    <string name="detail_stop">停止</string>
+    <string name="detail_share">分享</string>
+    <string name="detail_play_in_AMARadio">在 AMARadio 中播放</string>
+
+    <string name="action_links">連結</string>
+    <string name="action_homepage">首頁</string>
+    <string name="action_favorite">收藏</string>
+    <string name="action_starred_add">加入收藏</string>
+    <string name="action_starred_remove">從收藏中移除</string>
+
+    <string name="action_station_visit_website">造訪網站</string>
+    <string name="action_station_copy_stream_url">複製串流網址</string>
+    <string name="action_station_share">分享</string>
+
+    <string name="action_local">本地</string>
+    <string name="action_skip_to_next">下一首</string>
+    <string name="action_pause">暫停</string>
+    <string name="action_skip_to_previous">上一首</string>
+    <string name="action_resume">繼續</string>
+    <string name="action_stop">停止</string>
+    <string name="action_search">搜尋</string>
+    <string name="action_delete">刪除</string>
+    <string name="action_delete_history">刪除歷史記錄</string>
+    <string name="action_delete_favorites">刪除所有收藏</string>
+    <string name="action_delete_stream_history">清除曲目歷史</string>
+    <string name="action_ok">確定</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_top_click">熱門點擊</string>
+    <string name="action_toggle_view">切換檢視</string>
+    <string name="action_top_vote">熱門投票</string>
+    <string name="action_changed_lately">最近變更</string>
+    <string name="action_currently_playing">正在播放</string>
+    <string name="action_tags">標籤</string>
+    <string name="action_countries">國家/地區</string>
+    <string name="action_languages">語言</string>
+    <string name="action_edit">編輯</string>
+    <string name="action_copy_info">複製資訊</string>
+    <string name="action_rename_tab">重新命名標籤頁</string>
+    <string name="error_filter_name_required">請先輸入此篩選標籤頁的名稱</string>
+    <string name="confirm_delete_filter_tab">您確定要刪除篩選器 \"%1$s\" 嗎？</string>
+    <string name="filter_empty_title">建立您的自定義電台資訊流</string>
+    <string name="filter_empty_desc">結合多個標準建立個人化檢視。您可以使用以下方式縮小搜尋範圍：</string>
+    <string name="filter_empty_filter_by">篩選依據</string>
+    <string name="filter_empty_filter_desc">國家、電台名稱、標籤或語言</string>
+    <string name="filter_empty_sort_by">排序依據</string>
+    <string name="filter_empty_sort_desc">點擊次數、字母順序、得票數或最後變更</string>
+    <string name="filter_empty_hint">在上方欄位輸入名稱以儲存此檢視！</string>
+    <string name="error_station_load">無法連線至電台</string>
+    <string name="error_list_update">無法連線至 radio browser 伺服器</string>
+
+    <string name="share_action">分享電台連結至…</string>
+
+    <string name="nav_item_stations">電台</string>
+    <string name="nav_item_starred">收藏</string>
+    <string name="nav_item_history">歷史</string>
+    <string name="nav_item_settings">設定</string>
+
+    <string name="about_text">AMARadio 100% 無廣告並注重隱私。\n\n我最初是為我母親開發這個應用程式，為她提供簡單、誠實且沒有煩人廣告或追蹤的廣播體驗。這就是為什麼 AMARadio 將永遠保持無廣告 – 這是對她的承諾，並與大家分享。\n\n此專案是優秀的 https://github.com/segler-alex/RadioDroid 的分支。整個程式碼庫已從 Java 遷移到 Kotlin，以確保應用程式保持現代化並相容於未來的 Android 版本。\n\n源代碼可在以下網址取得：https://github.com/ounben/AMARadio\n\n此應用程式使用來自 https://www.radio-browser.info 的免費廣播電台目錄。任何人都可以向其中添加電台。它的運作方式就像在線廣播電台的維基百科。\n\n聯絡方式：ben@ounben.com\n\n問題追蹤：https://github.com/ounben/AMARadio/issues\n\n如果您喜歡這個軟體並想提供幫助，歡迎給我發送電子郵件。我們也隨時歡迎關於新功能的想法！\n\n此應用程式是自由軟體，採用 GPLv3 授權。 https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">版本：%1$s</string>
+    <string name="detail_star">加入收藏</string>
+    <string name="detail_unstar">從收藏中移除</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">載入中…</string>
+
+    <string name="sleep_timer" formatted="true">睡眠定時器：%1$02d:%2$02d</string>
+    <string name="sleep_timer_title">在所選分鐘後停止播放</string>
+    <string name="sleep_timer_apply">套用</string>
+    <string name="sleep_timer_clear">清除</string>
+    <string name="nav_item_add_sleep">睡眠定時器</string>
+
+    <string name="nav_item_save_playlist">將收藏匯出為播放清單</string>
+    <string name="nav_item_load_playlist">從播放清單匯入收藏</string>
+    <string name="nav_item_save_history_playlist">將歷史匯出為播放清單</string>
+    <string name="confirm_overwrite_file">是否覆蓋文件？</string>
+    <string name="dialog_hint_file_name">輸入檔案名稱</string>
+    <string name="error_empty_field">此欄位為必填項</string>
+    <string name="error_invalid_file_name">檔案名稱無效</string>
+    <string name="label_button_cancel">取消</string>
+    <string name="label_button_overwrite">覆蓋</string>
+    <string name="notify_load_playlist_nok">無法從 %1$s&#47;%2$s 匯入</string>
+    <string name="notify_load_playlist_now">正在從 %1$s&#47;%2$s 匯入，請稍候。</string>
+    <string name="notify_load_playlist_ok">已從 %2$s&#47;%3$s 匯入 %1$d 個電台</string>
+    <string name="notify_save_playlist_nok">無法匯出至 %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">正在匯出至 %1$s&#47;%2$s，請稍候。</string>
+    <string name="notify_save_playlist_ok">已成功匯出至 %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">清單中 %2$d 個本地電台中的 %1$d 個已被伺服器標記為不存在</string>
+
+    <string name="searchpreference_clear_history">清除歷史記錄</string>
+    <string name="searchpreference_no_results">無結果</string>
+    <string name="searchpreference_search">搜尋…</string>
+    <string name="settings_appearance">外觀設定</string>
+    <string name="settings_theme_selection_title">主題</string>
+    <string name="theme_light">淺色</string>
+    <string name="theme_dark">深色</string>
+    <string name="theme_system">跟隨系統設定</string>
+    <string name="settings_compact_style">精簡模式</string>
+    <string name="settings_compact_style_desc_off">採用大圖示及電台詳情</string>
+    <string name="settings_compact_style_desc_on">採用小圖示且不含電台詳情</string>
+    <string name="settings_bottom_navigation">底部導覽列</string>
+    <string name="settings_ui_scale">介面縮放</string>
+    <string name="settings_language">語言</string>
+    <string name="ui_scale_compact">精簡</string>
+    <string name="ui_scale_standard">系統標準</string>
+    <string name="ui_scale_large">大</string>
+    <string name="ui_scale_extra_large">超大</string>
+
+    <string name="settings_interaction">互動設定</string>
+    <string name="settings_single_use_tags">顯示罕用標籤</string>
+    <string name="settings_single_use_tags_desc_off">不顯示鮮少使用的標籤</string>
+    <string name="settings_single_use_tags_desc_on">顯示鮮少使用的標籤</string>
+
+    <string name="settings_show_broken">損壞的電台</string>
+    <string name="settings_show_broken_on">在清單中顯示損壞的電台</string>
+    <string name="settings_show_broken_off">不在清單中顯示損壞的電台</string>
+
+    <string name="settings_startup_behaviour">啟動行為</string>
+    <string name="action_grid_view">網格檢視</string>
+    <string name="action_list_view">清單檢視</string>
+
+    <string name="startup_action_title">啟動動作</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">顯示所有電台</string>
+    <string name="startup_show_favorites">顯示收藏</string>
+    <string name="startup_show_history">顯示歷史</string>
+    <string name="startup_show_last_view">上次檢視</string>
+
+    <string name="settings_load_icons">顯示電台圖示</string>
+    <string name="settings_load_icons_on">將下載圖示</string>
+    <string name="settings_load_icons_off">將不下載圖示</string>
+
+    <string name="settings_auto_favorite">自動收藏</string>
+    <string name="settings_auto_favorite_on">播放時自動將電台加入收藏</string>
+    <string name="settings_auto_favorite_off">播放時不自動將電台加入收藏</string>
+
+    <string name="settings_play">播放器</string>
+    <string name="settings_auto_play_on_startup">自動播放</string>
+    <string name="settings_auto_play_on_startup_on">啟動時播放最後一個電台</string>
+    <string name="settings_auto_play_on_startup_off">啟動時不播放最後一個電台</string>
+    <string name="settings_auto_off_on_startup">自動停止</string>
+    <string name="settings_auto_off_on_startup_on">自動播放時使用自動停止定時器</string>
+    <string name="settings_auto_off_on_startup_off">自動播放時不使用自動停止定時器</string>
+    <string name="settings_auto_off_sleep_timer">自動停止定時器</string>
+    <string name="settings_auto_off_sleep_timer_desc">在 %1$s 分鐘後停止播放</string>
+    <string name="settings_play_external">啟用外部播放器</string>
+    <string name="settings_play_external_desc_on">使用外部播放器播放電台</string>
+    <string name="settings_play_external_desc_off">使用 AMARadio 播放電台</string>
+    <string name="settings_equalizer">等化器</string>
+
+    <string name="settings_connectivity">連線設定</string>
+    <string name="settings_connect_timeout">連線逾時</string>
+    <string name="settings_read_timeout">讀取逾時</string>
+    <string name="settings_resume_timeout">恢復逾時</string>
+    <string name="settings_retry_timeout">重試逾時</string>
+    <string name="settings_retry_delay">重新連線延遲</string>
+    <string name="settings_proxy">代理伺服器</string>
+    <string name="settings_proxy_login">使用者名稱</string>
+    <string name="settings_proxy_password">密碼</string>
+    <string name="settings_proxy_action_test">測試</string>
+    <string name="settings_proxy_working">成功連線至 %s</string>
+    <string name="settings_proxy_not_working">無法連線至 %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">您提供的代理伺服器數值無效</string>
+    <string name="ignore_proxy_settings_invalid">已忽略無效的代理伺服器設定</string>
+    <string name="settings_seconds_format">%d 秒</string>
+    <string name="settings_milliseconds_format">%d 毫秒</string>
+
+    <string name="settings_pause_when_noisy">耳機斷開時暫停</string>
+
+    <string name="settings_auto_resume_do_not_resume">不恢復播放</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">有線連接時恢復</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">插入有線耳機時恢復播放</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">藍牙連接時恢復</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">連接藍牙 A2DP 裝置時恢復播放</string>
+
+    <string name="settings_auto_resume_on_any_connected">任何連線時恢復</string>
+
+    <string name="settings_warn_no_wifi">非 Wi-Fi 警示</string>
+    <string name="settings_warn_no_wifi_on">在沒有 Wi-Fi 連線下播放時警示</string>
+    <string name="settings_warn_no_wifi_off">在沒有 Wi-Fi 連線下播放時不警示</string>
+
+    <string name="notify_pre_play">連線中</string>
+    <string name="notify_play">播放中</string>
+    <string name="notify_paused">已暫停</string>
+    <string name="notify_metered_connection">計量付費連線</string>
+
+    <string name="notify_starred">電台已加入收藏</string>
+    <string name="notify_autostarred">電台已自動加入收藏</string>
+    <string name="notify_unstarred">電台已從收藏中移除</string>
+    <string name="notify_deleted_favorites">收藏已刪除</string>
+    <string name="notify_deleted_history">歷史記錄已刪除</string>
+
+    <string name="notify_open_link_failure">找不到可開啟連結的應用程式</string>
+
+    <string name="notify_station_removed_from_list">已移除 1 個</string>
+    <string name="action_station_removed_from_list_undo">復原</string>
+
+    <string name="alert_delete_history">您確定要刪除歷史記錄嗎？</string>
+    <string name="alert_delete_favorites">您確定要刪除所有收藏嗎？</string>
+    <string name="yes">是</string>
+    <string name="no">否</string>
+
+    <string name="alert_select_player">請選擇播放器</string>
+    <string name="alert_select_player_name">名稱</string>
+    <string name="hostname">主機名稱</string>
+    <string name="port">連接埠</string>
+
+    <string name="alert_press_back_to_exit">再按一次返回鍵以退出</string>
+
+    <string name="error_stream_url">串流網址問題</string>
+    <string name="error_caching_stream">串流緩存問題</string>
+    <string name="error_play_stream">無法播放串流</string>
+    <string name="error_stream_reconnect_timeout">無法重新連線至串流：逾時</string>
+    <string name="warning_no_network_trying_resume">無網路連線。嘗試在恢復連線時繼續播放。</string>
+    <string name="giving_up_resume">放棄恢復播放嘗試</string>
+
+    <string name="error_grant_audiofocus">系統未授予音訊焦點請求</string>
+
+    <string name="error_no_equalizer_found">找不到等化器應用程式</string>
+
+    <string name="player_info_status">狀態：&#160;</string>
+    <string name="player_info_status_stopped">已停止</string>
+    <string name="player_info_status_playing">播放中</string>
+    <string name="player_info_transferred">傳輸數據：%1$s</string>
+
+    <string name="tab_player_art">專輯封面</string>
+    <string name="tab_player_info">資訊</string>
+    <string name="tab_player_history">曲目歷史</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">損壞</string>
+    <string name="station_detail_deleted_on_server">已刪除</string>
+
+    <string name="station_details_clicks">%1$d 次點擊</string>
+    <string name="station_details_votes">%1$d 次投票</string>
+
+    <string name="image_button_disable">停用</string>
+    <string name="image_button_delete">刪除</string>
+    <string name="image_button_more">更多</string>
+    <string name="image_button_less">較少</string>
+    <string name="image_button_repeat">重複</string>
+    <string name="image_button_dont_repeat">不重複</string>
+    <string name="icon_click_trend_decreasing">熱度下降中</string>
+    <string name="icon_click_trend_increasing">熱度上升中</string>
+    <string name="icon_click_trend_stable">熱度穩定</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% 無廣告且重視隱私</string>
+
+    <string name="action_play_in_external">使用外部播放器播放</string>
+    <string name="action_choose_external_player">選擇外部播放器</string>
+
+    <string name="settings_disable_battery_optimization">電池最佳化</string>
+    <string name="settings_ignore_battery_optimization_summary_on">忽略電池最佳化，AMARadio 應隨時能重新獲取焦點。</string>
+    <string name="settings_ignore_battery_optimization_summary_off">電池最佳化已啟動，若在背景執行，AMARadio 可能無法重新獲取焦點。</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">其他</string>
+    <string name="settings_statistics">統計資料</string>
+    <string name="settings_about">關於 AMARadio</string>
+
+    <string name="description_btn_skip_to_next">跳至下一首</string>
+    <string name="description_btn_skip_to_previous">跳至上一首</string>
+
+    <string-array name="weekdays">
+        <item>日</item>
+        <item>一</item>
+        <item>二</item>
+        <item>三</item>
+        <item>四</item>
+        <item>五</item>
+        <item>六</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">串流網址已成功複製</string>
+    <string name="notify_track_info_copied">曲目資訊已成功複製</string>
+
+    <string-array name="actions_station_link">
+        <item>造訪網站</item>
+        <item>複製串流網址</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">偵測到計量付費連線</string>
+    <string name="alert_metered_connection_message">計量付費連線可能會產生額外費用，按「確定」繼續。</string>
+    <string name="nav_item_statistics">統計資料</string>
+    <string name="nav_item_about">關於</string>
+    <string name="refresh">重新整理</string>
+    <string name="action_filter">篩選器</string>
+    <string name="filter_country">國家/地區</string>
+    <string name="filter_tag">標籤</string>
+    <string name="filter_language">語言</string>
+    <string name="filter_sort_by">排序方式</string>
+    <string name="filter_reverse">反向排序</string>
+    <string name="filter_apply">套用篩選器</string>
+    <string name="sort_name">名稱</string>
+    <string name="sort_votes">投票數</string>
+    <string name="sort_clicks">點擊數</string>
+    <string name="sort_lastchange">最後變更</string>
+    <string name="filter_select_country">選擇國家/地區</string>
+    <string name="filter_select_language">選擇語言</string>
+    <string name="filter_type_tag">輸入標籤…</string>
+    <string name="filter_tap_to_configure">輕觸以設定</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

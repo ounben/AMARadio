@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">പേര്</string>
+    <string name="detail_tags">ടാഗുകൾ</string>
+    <string name="detail_country">രാജ്യം</string>
+    <string name="detail_create_shortcut">ഹോം സ്ക്രീനിൽ ചേർക്കുക</string>
+    <string name="detail_language">ഭാഷ</string>
+    <string name="detail_weblink">വെബ് ലിങ്ക്</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">പ്ലേ ചെയ്യുക</string>
+    <string name="detail_pause">താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="detail_stop">നിർത്തുക</string>
+    <string name="detail_share">പങ്കുവെക്കുക</string>
+    <string name="detail_play_in_AMARadio">AMARadio-യിൽ പ്ലേ ചെയ്യുക</string>
+
+    <string name="action_links">ലിങ്കുകൾ</string>
+    <string name="action_homepage">ഹോംപേജ്</string>
+    <string name="action_favorite">പ്രിയപ്പെട്ടവ</string>
+    <string name="action_starred_add">പ്രിയപ്പെട്ടവയിൽ ചേർക്കുക</string>
+    <string name="action_starred_remove">പ്രിയപ്പെട്ടവയിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+
+    <string name="action_station_visit_website">വെബ്സൈറ്റ് സന്ദർശിക്കുക</string>
+    <string name="action_station_copy_stream_url">സ്ട്രീം URL പകർത്തെടുക്കുക</string>
+    <string name="action_station_share">പങ്കുവെക്കുക</string>
+
+    <string name="action_local">ലോക്കൽ</string>
+    <string name="action_skip_to_next">അടുത്തത്</string>
+    <string name="action_pause">താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="action_skip_to_previous">മുമ്പത്തേത്</string>
+    <string name="action_resume">പുനരാരംഭിക്കുക</string>
+    <string name="action_stop">നിർത്തുക</string>
+    <string name="action_search">തിരയുക</string>
+    <string name="action_delete">ഇല്ലാതാക്കുക</string>
+    <string name="action_delete_history">ചരിത്രം ഇല്ലാതാക്കുക</string>
+    <string name="action_delete_favorites">പ്രിയപ്പെട്ടവയെല്ലാം ഇല്ലാതാക്കുക</string>
+    <string name="action_delete_stream_history">പാട്ടുകളുടെ ചരിത്രം നീക്കം ചെയ്യുക</string>
+    <string name="action_ok">ശരി</string>
+    <string name="action_cancel">റദ്ദാക്കുക</string>
+    <string name="action_top_click">കൂടുതൽ കേൾക്കുന്നവ</string>
+    <string name="action_toggle_view">കാഴ്ച മാറ്റുക</string>
+    <string name="action_top_vote">കൂടുതൽ വോട്ട് ലഭിച്ചവ</string>
+    <string name="action_changed_lately">അടുത്തിടെ മാറ്റം വന്നവ</string>
+    <string name="action_currently_playing">ഇപ്പോൾ പ്ലേ ചെയ്യുന്നത്</string>
+    <string name="action_tags">ടാഗുകൾ</string>
+    <string name="action_countries">രാജ്യങ്ങൾ/പ്രദേശങ്ങൾ</string>
+    <string name="action_languages">ഭാഷകൾ</string>
+    <string name="action_edit">തിരുത്തുക</string>
+    <string name="action_copy_info">വിവരങ്ങൾ പകർത്തെടുക്കുക</string>
+    <string name="action_rename_tab">ടാബിന്റെ പേര് മാറ്റുക</string>
+    <string name="error_filter_name_required">ആദ്യം ഈ ഫിൽട്ടർ ടാബിന് ഒരു പേര് നൽകുക</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" എന്ന ഫിൽട്ടർ ഇല്ലാതാക്കണമെന്ന് ഉറപ്പാണോ?</string>
+    <string name="filter_empty_title">നിങ്ങളുടെ സ്വന്തം റേഡിയോ സ്റ്റേഷൻ ലിസ്റ്റ് ഉണ്ടാക്കുക</string>
+    <string name="filter_empty_desc">നിരവധി മാനദണ്ഡങ്ങൾ സംയോജിപ്പിച്ച് വ്യക്തിഗതമാക്കിയ കാഴ്ച സൃഷ്ടിക്കുക. നിങ്ങൾക്ക് ഇനിപ്പറയുന്നവ ഉപയോഗിച്ച് തിരയൽ പരിമിതപ്പെടുത്താം:</string>
+    <string name="filter_empty_filter_by">ഫിൽട്ടർ ചെയ്യുക:</string>
+    <string name="filter_empty_filter_desc">രാജ്യം, സ്റ്റേഷൻ പേര്, ടാഗുകൾ അല്ലെങ്കിൽ ഭാഷ</string>
+    <string name="filter_empty_sort_by">ക്രമീകരിക്കുക:</string>
+    <string name="filter_empty_sort_desc">ക്ലിക്കുകൾ, അക്ഷരമാല, വോട്ടുകൾ അല്ലെങ്കിൽ അവസാന മാറ്റം</string>
+    <string name="filter_empty_hint">ഈ കാഴ്ച സേവ് ചെയ്യാൻ മുകളിലെ ഫീൽഡിൽ ഒരു പേര് ടൈപ്പ് ചെയ്യുക!</string>
+    <string name="error_station_load">സ്റ്റേഷനുമായി ബന്ധപ്പെടാൻ കഴിഞ്ഞില്ല</string>
+    <string name="error_list_update">റേഡിയോ ബ്രൗസർ സെർവറുമായി ബന്ധപ്പെടാൻ കഴിഞ്ഞില്ല</string>
+
+    <string name="share_action">സ്റ്റേഷൻ ലിങ്ക് പങ്കുവെക്കുക…</string>
+
+    <string name="nav_item_stations">സ്റ്റേഷനുകൾ</string>
+    <string name="nav_item_starred">പ്രിയപ്പെട്ടവ</string>
+    <string name="nav_item_history">ചരിത്രം</string>
+    <string name="nav_item_settings">ക്രമീകരണങ്ങൾ</string>
+
+    <string name="about_text">AMARadio 100% പരസ്യരഹിതവും സ്വകാര്യതയിൽ ഊന്നിയതുമാണ്.\n\nശല്യപ്പെടുത്തുന്ന പരസ്യങ്ങളോ ട്രാക്കിംഗോ ഇല്ലാതെ ലളിതവും സത്യസന്ധവുമായ റേഡിയോ അനുഭവം നൽകുന്നതിനായി എന്റെ അമ്മയ്ക്ക് വേണ്ടിയാണ് ഞാൻ ആദ്യം ഈ ആപ്പ് വികസിപ്പിച്ചത്. അതുകൊണ്ടാണ് AMARadio എല്ലായ്പ്പോഴും പരസ്യരഹിതമായി തുടരുന്നത് - ഇത് അവർക്ക് നൽകിയ വാഗ്ദാനമാണ്, അത് നിങ്ങളുമായെല്ലാം പങ്കിടുന്നു.\n\nഈ പ്രോജക്റ്റ് മികച്ച https://github.com/segler-alex/RadioDroid-ന്റെ ഒരു ഫോർക്ക് (fork) ആണ്. ആപ്പ് ആധുനികമായി തുടരാനും ഭാവിയിലെ ആൻഡ്രോയിഡ് പതിപ്പുകളുമായി പൊരുത്തപ്പെടാനും മുഴുവൻ സോഴ്സ് കോഡും ജാവയിൽ നിന്ന് കോട്ട്ലിനിലേക്ക് മാറ്റി.\n\nസോഴ്സ് കോഡ് ഇവിടെ ലഭ്യമാണ്: https://github.com/ounben/AMARadio\n\nഈ ആപ്പ് https://www.radio-browser.info എന്നതിലെ സൗജന്യ റേഡിയോ സ്റ്റേഷൻ ഡയറക്ടറി ഉപയോഗിക്കുന്നു. ആർക്കും ഇതിൽ സ്റ്റേഷനുകൾ ചേർക്കാം. ഇത് ഓൺലൈൻ റേഡിയോ സ്റ്റേഷനുകൾക്കായുള്ള ഒരു വിക്കി പോലെ പ്രവർത്തിക്കുന്നു.\n\nബന്ധപ്പെടുക: ben@ounben.com\n\nബഗ് ട്രാക്കർ: https://github.com/ounben/AMARadio/issues\n\nനിങ്ങൾക്ക് ഈ സോഫ്റ്റ്‌വെയർ ഇഷ്ടപ്പെടുകയും സഹായിക്കാൻ ആഗ്രഹിക്കുകയും ചെയ്യുന്നുവെങ്കിൽ, എനിക്ക് ഒരു ഇമെയിൽ അയക്കാൻ മടിക്കരുത്. പുതിയ ഫീച്ചറുകൾക്കുള്ള ആശയങ്ങളും എപ്പോഴും സ്വാഗതം ചെയ്യുന്നു!\n\nഈ ആപ്പ് GPLv3 ലൈസൻസിന് കീഴിലുള്ള ഒരു സ്വതന്ത്ര സോഫ്റ്റ്‌വെയറാണ്. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">പതിപ്പ്: %1$s</string>
+    <string name="detail_star">പ്രിയപ്പെട്ടവയിൽ ചേർക്കുക</string>
+    <string name="detail_unstar">പ്രിയപ്പെട്ടവയിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">ലോഡ് ചെയ്യുന്നു…</string>
+
+    <string name="sleep_timer" formatted="true">സ്ലീപ്പ് ടൈമർ: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">തിരഞ്ഞെടുത്ത മിനിറ്റിന് ശേഷം പ്ലേ ചെയ്യുന്നത് നിർത്തുക</string>
+    <string name="sleep_timer_apply">ഉപയോഗിക്കുക</string>
+    <string name="sleep_timer_clear">നീക്കം ചെയ്യുക</string>
+    <string name="nav_item_add_sleep">സ്ലീപ്പ് ടൈമർ</string>
+
+    <string name="nav_item_save_playlist">പ്രിയപ്പെട്ടവ പ്ലേലിസ്റ്റായി എക്‌സ്‌പോർട്ട് ചെയ്യുക</string>
+    <string name="nav_item_load_playlist">പ്ലേലിസ്റ്റിൽ നിന്ന് പ്രിയപ്പെട്ടവ ഇമ്പോർട്ട് ചെയ്യുക</string>
+    <string name="nav_item_save_history_playlist">ചരിത്രം പ്ലേലിസ്റ്റായി എക്‌സ്‌പോർട്ട് ചെയ്യുക</string>
+    <string name="confirm_overwrite_file">ഫയൽ ഓവർറൈറ്റ് ചെയ്യണോ?</string>
+    <string name="dialog_hint_file_name">ഫയലിന്റെ പേര് നൽകുക</string>
+    <string name="error_empty_field">ഈ ഫീൽഡ് നിർബന്ധമാണ്</string>
+    <string name="error_invalid_file_name">അസാധുവായ ഫയൽ നാമം</string>
+    <string name="label_button_cancel">റദ്ദാക്കുക</string>
+    <string name="label_button_overwrite">ഓവർറൈറ്റ് ചെയ്യുക</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s-ൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s-ൽ നിന്ന് ഇമ്പോർട്ട് ചെയ്യുന്നു, ദയവായി കാത്തിരിക്കുക.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s-ൽ നിന്ന് %1$d സ്റ്റേഷനുകൾ ഇമ്പോർട്ട് ചെയ്തു</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s-ലേക്ക് എക്‌സ്‌പോർട്ട് ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s-ലേക്ക് എക്‌സ്‌പോർട്ട് ചെയ്യുന്നു, ദയവായി കാത്തിരിക്കുക.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s-ലേക്ക് വിജയകരമായി എക്‌സ്‌പോർട്ട് ചെയ്തു</string>
+    <string name="notify_sync_list_deleted_entries">പട്ടികയിലെ %2$d ലോക്കൽ സ്റ്റേഷനുകളിൽ %1$d എണ്ണം സെർവറിൽ ഇല്ലെന്ന് അടയാളപ്പെടുത്തിയിരിക്കുന്നു</string>
+
+    <string name="searchpreference_clear_history">ചരിത്രം നീക്കം ചെയ്യുക</string>
+    <string name="searchpreference_no_results">ഫലങ്ങളൊന്നുമില്ല</string>
+    <string name="searchpreference_search">തിരയുക…</string>
+    <string name="settings_appearance">രൂപഭാവം</string>
+    <string name="settings_theme_selection_title">തീം</string>
+    <string name="theme_light">ലൈറ്റ്</string>
+    <string name="theme_dark">ഡാർക്ക്</string>
+    <string name="theme_system">സിസ്റ്റം ക്രമീകരണം പാലിപ്പിക്കുക</string>
+    <string name="settings_compact_style">കോംപാക്ട് മോഡ്</string>
+    <string name="settings_compact_style_desc_off">സ്റ്റേഷൻ വിവരങ്ങളോടു കൂടിയ വലിയ ഐക്കൺ</string>
+    <string name="settings_compact_style_desc_on">വിവരങ്ങളില്ലാത്ത ചെറിയ ഐക്കൺ</string>
+    <string name="settings_bottom_navigation">താഴത്തെ നാവിഗേഷൻ</string>
+    <string name="settings_ui_scale">UI സ്കെയിലിംഗ്</string>
+    <string name="settings_language">ഭാഷ</string>
+    <string name="ui_scale_compact">ചെറുത്</string>
+    <string name="ui_scale_standard">സിസ്റ്റം സ്റ്റാൻഡേർഡ്</string>
+    <string name="ui_scale_large">വലുത്</string>
+    <string name="ui_scale_extra_large">വളരെ വലുത്</string>
+
+    <string name="settings_interaction">ഇടപെടൽ</string>
+    <string name="settings_single_use_tags">അപൂർവ്വമായി ഉപയോഗിക്കുന്ന ടാഗുകൾ കാണിക്കുക</string>
+    <string name="settings_single_use_tags_desc_off">അപൂർവ്വമായി ഉപയോഗിക്കുന്ന ടാഗുകൾ കാണിക്കില്ല</string>
+    <string name="settings_single_use_tags_desc_on">അപൂർവ്വമായി ഉപയോഗിക്കുന്ന ടാഗുകൾ കാണിക്കും</string>
+
+    <string name="settings_show_broken">പ്രവർത്തനരഹിതമായ സ്റ്റേഷനുകൾ</string>
+    <string name="settings_show_broken_on">പട്ടികയിൽ പ്രവർത്തനരഹിതമായ സ്റ്റേഷനുകൾ കാണിക്കുക</string>
+    <string name="settings_show_broken_off">പട്ടികയിൽ പ്രവർത്തനരഹിതമായ സ്റ്റേഷനുകൾ കാണിക്കരുത്</string>
+
+    <string name="settings_startup_behaviour">പ്രാരംഭ പ്രവർത്തനം</string>
+    <string name="action_grid_view">ഗ്രിഡ് കാഴ്ച</string>
+    <string name="action_list_view">ലിസ്റ്റ് കാഴ്ച</string>
+
+    <string name="startup_action_title">തുടങ്ങുമ്പോൾ ചെയ്യേണ്ടത്</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">എല്ലാ സ്റ്റേഷനുകളും കാണിക്കുക</string>
+    <string name="startup_show_favorites">പ്രിയപ്പെട്ടവ കാണിക്കുക</string>
+    <string name="startup_show_history">ചരിത്രം കാണിക്കുക</string>
+    <string name="startup_show_last_view">അവസാന കാഴ്ച</string>
+
+    <string name="settings_load_icons">സ്റ്റേഷൻ ഐക്കണുകൾ കാണിക്കുക</string>
+    <string name="settings_load_icons_on">ഐക്കണുകൾ ഡൗൺലോഡ് ചെയ്യും</string>
+    <string name="settings_load_icons_off">ഐക്കണുകൾ ഡൗൺലോഡ് ചെയ്യില്ല</string>
+
+    <string name="settings_auto_favorite">ഓട്ടോ-ഫേവറിറ്റ്</string>
+    <string name="settings_auto_favorite_on">പ്ലേ ചെയ്യുമ്പോൾ സ്റ്റേഷനുകൾ സ്വയമേവ പ്രിയപ്പെട്ടവയിൽ ചേർക്കുക</string>
+    <string name="settings_auto_favorite_off">പ്ലേ ചെയ്യുമ്പോൾ സ്റ്റേഷനുകൾ സ്വയമേവ പ്രിയപ്പെട്ടവയിൽ ചേർക്കരുത്</string>
+
+    <string name="settings_play">പ്ലെയർ</string>
+    <string name="settings_auto_play_on_startup">ഓട്ടോ-പ്ലേ</string>
+    <string name="settings_auto_play_on_startup_on">ആരംഭിക്കുമ്പോൾ അവസാന സ്റ്റേഷൻ പ്ലേ ചെയ്യുക</string>
+    <string name="settings_auto_play_on_startup_off">ആരംഭിക്കുമ്പോൾ അവസാന സ്റ്റേഷൻ പ്ലേ ചെയ്യരുത്</string>
+    <string name="settings_auto_off_on_startup">ഓട്ടോ-സ്റ്റോപ്പ്</string>
+    <string name="settings_auto_off_on_startup_on">ഓട്ടോ-പ്ലെയോടൊപ്പം ഓട്ടോ-സ്റ്റോപ്പ് ടൈമർ ഉപയോഗിക്കുക</string>
+    <string name="settings_auto_off_on_startup_off">ഓട്ടോ-പ്ലെയോടൊപ്പം ഓട്ടോ-സ്റ്റോപ്പ് ടൈമർ ഉപയോഗിക്കരുത്</string>
+    <string name="settings_auto_off_sleep_timer">ഓട്ടോ-സ്റ്റോപ്പ് ടൈമർ</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s മിനിറ്റിന് ശേഷം പ്ലേ ചെയ്യുന്നത് നിർത്തുക</string>
+    <string name="settings_play_external">എക്‌സ്‌റ്റേണൽ പ്ലെയർ അനുവദിക്കുക</string>
+    <string name="settings_play_external_desc_on">എക്‌സ്‌റ്റേണൽ പ്ലെയർ വഴി സ്റ്റേഷനുകൾ പ്ലേ ചെയ്യുക</string>
+    <string name="settings_play_external_desc_off">AMARadio വഴി സ്റ്റേഷനുകൾ പ്ലേ ചെയ്യുക</string>
+    <string name="settings_equalizer">ഇക്വലൈസർ</string>
+
+    <string name="settings_connectivity">ബന്ധിപ്പിക്കൽ</string>
+    <string name="settings_connect_timeout">കണക്ഷൻ ടൈം ഔട്ട്</string>
+    <string name="settings_read_timeout">റീഡിംഗ് ടൈം ഔട്ട്</string>
+    <string name="settings_resume_timeout">പുനരാരംഭിക്കൽ ടൈം ഔട്ട്</string>
+    <string name="settings_retry_timeout">വീണ്ടും ശ്രമിക്കൽ ടൈം ഔട്ട്</string>
+    <string name="settings_retry_delay">വീണ്ടും കണക്ട് ചെയ്യാനുള്ള താമസം</string>
+    <string name="settings_proxy">പ്രോക്സി</string>
+    <string name="settings_proxy_login">ഉപയോക്തൃനാമം</string>
+    <string name="settings_proxy_password">പാസ്‌വേഡ്</string>
+    <string name="settings_proxy_action_test">പരിശോധിക്കുക</string>
+    <string name="settings_proxy_working">%s-ലേക്ക് വിജയകരമായി ബന്ധിപ്പിച്ചു</string>
+    <string name="settings_proxy_not_working">%1$s-ലേക്ക് ബന്ധിപ്പിക്കാൻ കഴിഞ്ഞില്ല\n%2$s</string>
+    <string name="settings_proxy_invalid">നിങ്ങൾ നൽകിയ പ്രോക്സി മൂല്യങ്ങൾ അസാധുവാണ്</string>
+    <string name="ignore_proxy_settings_invalid">അസാധുവായ പ്രോക്സി ക്രമീകരണങ്ങൾ അവഗണിച്ചു</string>
+    <string name="settings_seconds_format">%d സെക്കൻഡ്</string>
+    <string name="settings_milliseconds_format">%d മില്ലിസെക്കൻഡ്</string>
+
+    <string name="settings_pause_when_noisy">ഹെഡ്‌സെറ്റ് വേർപെടുത്തുമ്പോൾ പ്ലേ ചെയ്യുന്നത് നിർത്തുക</string>
+
+    <string name="settings_auto_resume_do_not_resume">പുനരാരംഭിക്കരുത്</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">വയർഡ് കണക്ഷനിൽ പുനരാരംഭിക്കുക</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">വയർഡ് ഹെഡ്‌സെറ്റ് കുത്തുമ്പോൾ പ്ലേബാക്ക് പുനരാരംഭിക്കുക</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">ബ്ലൂടൂത്ത് കണക്ഷനിൽ പുനരാരംഭിക്കുക</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">ബ്ലൂടൂത്ത് A2DP ഉപകരണം കണക്ട് ചെയ്യുമ്പോൾ പ്ലേബാക്ക് പുനരാരംഭിക്കുക</string>
+
+    <string name="settings_auto_resume_on_any_connected">ഏത് കണക്ഷനിലും പുനരാരംഭിക്കുക</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi ഇല്ലാത്തപ്പോഴുള്ള മുന്നറിയിപ്പ്</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi കണക്ഷൻ ഇല്ലാതെ പ്ലേ ചെയ്യുമ്പോൾ മുന്നറിയിപ്പ് നൽകുക</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi കണക്ഷൻ ഇല്ലാത്തപ്പോൾ മുന്നറിയിപ്പ് നൽകരുത്</string>
+
+    <string name="notify_pre_play">ബന്ധിപ്പിക്കുന്നു</string>
+    <string name="notify_play">പ്ലേ ചെയ്യുന്നു</string>
+    <string name="notify_paused">താൽക്കാലികമായി നിർത്തിയിരിക്കുന്നു</string>
+    <string name="notify_metered_connection">മീറ്റർ ചെയ്ത കണക്ഷൻ</string>
+
+    <string name="notify_starred">സ്റ്റേഷൻ പ്രിയപ്പെട്ടവയിൽ ചേർത്തു</string>
+    <string name="notify_autostarred">സ്റ്റേഷൻ സ്വയമേവ പ്രിയപ്പെട്ടവയിൽ ചേർത്തു</string>
+    <string name="notify_unstarred">സ്റ്റേഷൻ പ്രിയപ്പെട്ടവയിൽ നിന്ന് നീക്കം ചെയ്തു</string>
+    <string name="notify_deleted_favorites">പ്രിയപ്പെട്ടവ ഇല്ലാതാക്കി</string>
+    <string name="notify_deleted_history">ചരിത്രം ഇല്ലാതാക്കി</string>
+
+    <string name="notify_open_link_failure">ലിങ്ക് തുറക്കാൻ ആപ്പൊന്നും കണ്ടെത്തിയില്ല</string>
+
+    <string name="notify_station_removed_from_list">1 എണ്ണം നീക്കം ചെയ്തു</string>
+    <string name="action_station_removed_from_list_undo">പഴയപടിയാക്കുക</string>
+
+    <string name="alert_delete_history">ചരിത്രം ഇല്ലാതാക്കണമെന്ന് ഉറപ്പാണോ?</string>
+    <string name="alert_delete_favorites">പ്രിയപ്പെട്ടവയെല്ലാം ഇല്ലാതാക്കണമെന്ന് ഉറപ്പാണോ?</string>
+    <string name="yes">അതെ</string>
+    <string name="no">അല്ല</string>
+
+    <string name="alert_select_player">ദയവായി ഒരു പ്ലെയർ തിരഞ്ഞെടുക്കുക</string>
+    <string name="alert_select_player_name">പേര്</string>
+    <string name="hostname">ഹോസ്റ്റ് നാമം</string>
+    <string name="port">പോർട്ട്</string>
+
+    <string name="alert_press_back_to_exit">പുറത്തുകടക്കാൻ ഒരിക്കൽ കൂടി ബാക്ക് അമർത്തുക</string>
+
+    <string name="error_stream_url">സ്ട്രീം URL പ്രശ്നം</string>
+    <string name="error_caching_stream">സ്ട്രീം കാഷിംഗ് പ്രശ്നം</string>
+    <string name="error_play_stream">സ്ട്രീം പ്ലേ ചെയ്യാൻ കഴിഞ്ഞില്ല</string>
+    <string name="error_stream_reconnect_timeout">സ്ട്രീമുമായി വീണ്ടും ബന്ധപ്പെടാൻ കഴിഞ്ഞില്ല: സമയം കഴിഞ്ഞു</string>
+    <string name="warning_no_network_trying_resume">നെറ്റ്‌വർക്ക് കണക്ഷൻ ഇല്ല. കണക്ഷൻ തിരികെ ലഭിക്കുമ്പോൾ പുനരാരംഭിക്കാൻ ശ്രമിക്കുന്നു.</string>
+    <string name="giving_up_resume">പ്ലേബാക്ക് പുനരാരംഭിക്കാനുള്ള ശ്രമം ഉപേക്ഷിക്കുന്നു</string>
+
+    <string name="error_grant_audiofocus">സിസ്റ്റം ഓഡിയോ ഫോക്കസ് അനുവദിച്ചില്ല</string>
+
+    <string name="error_no_equalizer_found">ഇക്വലൈസർ ആപ്പൊന്നും കണ്ടെത്തിയില്ല</string>
+
+    <string name="player_info_status">നില:&#160;</string>
+    <string name="player_info_status_stopped">നിർത്തിയിരിക്കുന്നു</string>
+    <string name="player_info_status_playing">പ്ലേ ചെയ്യുന്നു</string>
+    <string name="player_info_transferred">കൈമാറിയ ഡാറ്റ: %1$s</string>
+
+    <string name="tab_player_art">ആൽബം ആർട്ട്</string>
+    <string name="tab_player_info">വിവരങ്ങൾ</string>
+    <string name="tab_player_history">പാട്ടുകളുടെ ചരിത്രം</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">തകരാറിലായവ</string>
+    <string name="station_detail_deleted_on_server">നീക്കം ചെയ്തവ</string>
+
+    <string name="station_details_clicks">%1$d ക്ലിക്കുകൾ</string>
+    <string name="station_details_votes">%1$d വോട്ടുകൾ</string>
+
+    <string name="image_button_disable">പ്രവർത്തനരഹിതമാക്കുക</string>
+    <string name="image_button_delete">ഇല്ലാതാക്കുക</string>
+    <string name="image_button_more">കൂടുതൽ</string>
+    <string name="image_button_less">കുറച്ച്</string>
+    <string name="image_button_repeat">ആവർത്തിക്കുക</string>
+    <string name="image_button_dont_repeat">ആവർത്തിക്കരുത്</string>
+    <string name="icon_click_trend_decreasing">ജനപ്രീതി കുറയുന്നു</string>
+    <string name="icon_click_trend_increasing">ജനപ്രീതി കൂടുന്നു</string>
+    <string name="icon_click_trend_stable">ജനപ്രീതി സ്ഥിരമാണ്</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% പരസ്യരഹിതവും സ്വകാര്യവും</string>
+
+    <string name="action_play_in_external">എക്‌സ്‌റ്റേണൽ പ്ലെയറിൽ പ്ലേ ചെയ്യുക</string>
+    <string name="action_choose_external_player">എക്‌സ്‌റ്റേണൽ പ്ലെയർ തിരഞ്ഞെടുക്കുക</string>
+
+    <string name="settings_disable_battery_optimization">ബാറ്ററി ഒപ്റ്റിമൈസേഷൻ</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ബാറ്ററി ഒപ്റ്റിമൈസേഷൻ അവഗണിച്ചു, AMARadio-യ്ക്ക് എപ്പോഴും ഫോക്കസ് തിരികെ ലഭിക്കണം.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">ബാറ്ററി ഒപ്റ്റിമൈസേഷൻ സജീവമാക്കി, ബാക്ക്ഗ്രൗണ്ടിലാണെങ്കിൽ AMARadio-യ്ക്ക് ഫോക്കസ് തിരികെ ലഭിക്കില്ല.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">മറ്റുള്ളവ</string>
+    <string name="settings_statistics">സ്ഥിതിവിവരക്കണക്കുകൾ</string>
+    <string name="settings_about">AMARadio-യെ കുറിച്ച്</string>
+
+    <string name="description_btn_skip_to_next">അടുത്തതിലേക്ക് പോവുക</string>
+    <string name="description_btn_skip_to_previous">മുമ്പത്തേതിലേക്ക് പോവുക</string>
+
+    <string-array name="weekdays">
+        <item>ഞാ</item>
+        <item>തി</item>
+        <item>ചൊ</item>
+        <item>ബു</item>
+        <item>വ്യാ</item>
+        <item>വെ</item>
+        <item>ശ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">സ്ട്രീം URL വിജയകരമായി പകർത്തി</string>
+    <string name="notify_track_info_copied">പാട്ടിന്റെ വിവരങ്ങൾ വിജയകരമായി പകർത്തി</string>
+
+    <string-array name="actions_station_link">
+        <item>വെബ്സൈറ്റ് സന്ദർശിക്കുക</item>
+        <item>സ്ട്രീം URL പകർത്തെടുക്കുക</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">മീറ്റർ ചെയ്ത കണക്ഷൻ കണ്ടെത്തി</string>
+    <string name="alert_metered_connection_message">മീറ്റർ ചെയ്ത കണക്ഷൻ അധിക ചിലവുകൾക്ക് കാരണമായേക്കാം, തുടരാൻ \'ശരി\' അമർത്തുക.</string>
+    <string name="nav_item_statistics">സ്ഥിതിവിവരക്കണക്കുകൾ</string>
+    <string name="nav_item_about">വിവരങ്ങൾ</string>
+    <string name="refresh">പുതുക്കുക</string>
+    <string name="action_filter">ഫിൽട്ടർ</string>
+    <string name="filter_country">രാജ്യം</string>
+    <string name="filter_tag">ടാഗ്</string>
+    <string name="filter_language">ഭാഷ</string>
+    <string name="filter_sort_by">ക്രമീകരിക്കുക</string>
+    <string name="filter_reverse">വിപരീത ക്രമം</string>
+    <string name="filter_apply">ഫിൽട്ടർ ഉപയോഗിക്കുക</string>
+    <string name="sort_name">പേര്</string>
+    <string name="sort_votes">വോട്ടുകൾ</string>
+    <string name="sort_clicks">ക്ലിക്കുകൾ</string>
+    <string name="sort_lastchange">അവസാന മാറ്റം</string>
+    <string name="filter_select_country">രാജ്യം തിരഞ്ഞെടുക്കുക</string>
+    <string name="filter_select_language">ഭാഷ തിരഞ്ഞെടുക്കുക</string>
+    <string name="filter_type_tag">ടാഗ് ടൈപ്പ് ചെയ്യുക…</string>
+    <string name="filter_tap_to_configure">ക്രമീകരിക്കാൻ ടാപ്പ് ചെയ്യുക</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

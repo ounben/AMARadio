@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Nama</string>
+    <string name="detail_tags">Tag</string>
+    <string name="detail_country">Negara</string>
+    <string name="detail_create_shortcut">Tambah ke skrin utama</string>
+    <string name="detail_language">Bahasa</string>
+    <string name="detail_weblink">Pautan web</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Main</string>
+    <string name="detail_pause">Jeda</string>
+    <string name="detail_stop">Berhenti</string>
+    <string name="detail_share">Kongsi</string>
+    <string name="detail_play_in_AMARadio">Main dalam AMARadio</string>
+
+    <string name="action_links">Pautan</string>
+    <string name="action_homepage">Laman utama</string>
+    <string name="action_favorite">Kegemaran</string>
+    <string name="action_starred_add">Tambah ke kegemaran</string>
+    <string name="action_starred_remove">Buang daripada kegemaran</string>
+
+    <string name="action_station_visit_website">Lawati Laman Web</string>
+    <string name="action_station_copy_stream_url">Salin URL Penstriman</string>
+    <string name="action_station_share">Kongsi</string>
+
+    <string name="action_local">Tempatan</string>
+    <string name="action_skip_to_next">Seterusnya</string>
+    <string name="action_pause">Jeda</string>
+    <string name="action_skip_to_previous">Sebelumnya</string>
+    <string name="action_resume">Sambung</string>
+    <string name="action_stop">Berhenti</string>
+    <string name="action_search">Cari</string>
+    <string name="action_delete">Padam</string>
+    <string name="action_delete_history">Padam sejarah</string>
+    <string name="action_delete_favorites">Padam semua kegemaran</string>
+    <string name="action_delete_stream_history">Padam sejarah trek</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Batal</string>
+    <string name="action_top_click">Klik Teratas</string>
+    <string name="action_toggle_view">Tukar paparan</string>
+    <string name="action_top_vote">Undian Teratas</string>
+    <string name="action_changed_lately">Baru Diubah</string>
+    <string name="action_currently_playing">Sedang dimainkan</string>
+    <string name="action_tags">Tag</string>
+    <string name="action_countries">Negara/Rantau</string>
+    <string name="action_languages">Bahasa</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_copy_info">Salin Info</string>
+    <string name="action_rename_tab">Tukar Nama Tab</string>
+    <string name="error_filter_name_required">Sila masukkan nama untuk tab penapis ini terlebih dahulu</string>
+    <string name="confirm_delete_filter_tab">Adakah anda pasti mahu memadam penapis \"%1$s\"?</string>
+    <string name="filter_empty_title">Bina Suapan Stesen Radio Tersuai Anda</string>
+    <string name="filter_empty_desc">Cipta paparan diperibadikan dengan menggabungkan pelbagai kriteria. Anda boleh mengecilkan carian anda menggunakan:</string>
+    <string name="filter_empty_filter_by">Tapis mengikut</string>
+    <string name="filter_empty_filter_desc">Negara, Nama Stesen, Tag, atau Bahasa</string>
+    <string name="filter_empty_sort_by">Susun mengikut</string>
+    <string name="filter_empty_sort_desc">Klik, Abjad, Undian, atau Perubahan Terakhir</string>
+    <string name="filter_empty_hint">Taip nama dalam medan di atas untuk menyimpan paparan ini!</string>
+    <string name="error_station_load">Tidak dapat menyambung ke stesen</string>
+    <string name="error_list_update">Tidak dapat menyambung ke pelayan radio browser</string>
+
+    <string name="share_action">Kongsi pautan stesen dengan…</string>
+
+    <string name="nav_item_stations">Stesen</string>
+    <string name="nav_item_starred">Kegemaran</string>
+    <string name="nav_item_history">Sejarah</string>
+    <string name="nav_item_settings">Tetapan</string>
+
+    <string name="about_text">AMARadio adalah 100% bebas iklan dan memfokuskan privasi.\n\nSaya pada asalnya membangunkan aplikasi ini untuk ibu saya bagi memberikan pengalaman radio yang ringkas dan jujur tanpa iklan atau penjejakan yang menjengkelkan. Itulah sebabnya AMARadio akan sentiasa bebas daripada iklan – ini adalah janji kepada beliau, yang dikongsi dengan anda semua.\n\nProjek ini adalah fork daripada https://github.com/segler-alex/RadioDroid yang cemerlang. Keseluruhan pangkalan kod telah dipindahkan daripada Java ke Kotlin untuk memastikan aplikasi kekal moden dan serasi dengan versi Android masa hadapan.\n\nKod sumber tersedia di: https://github.com/ounben/AMARadio\n\nAplikasi ini menggunakan direktori stesen radio percuma di https://www.radio-browser.info .\nSesiapa sahaja boleh menambah stesen ke dalamnya. Ia berfungsi seperti wiki untuk stesen radio dalam talian.\n\nHubungi: ben@ounben.com\n\nPenjejak pepijat: https://github.com/ounben/AMARadio/issues\n\nJika anda menyukai perisian ini dan ingin membantu, sila hantarkan e-mel kepada saya.\nJuga idea untuk ciri baharu sentiasa dihargai!\n\nAplikasi ini adalah perisian bebas, dilesenkan di bawah GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versi: %1$s</string>
+    <string name="detail_star">Tambah ke kegemaran</string>
+    <string name="detail_unstar">Buang daripada kegemaran</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Memuatkan…</string>
+
+    <string name="sleep_timer" formatted="true">Pemasa tidur: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Hentikan mainan selepas minit yang dipilih</string>
+    <string name="sleep_timer_apply">Guna</string>
+    <string name="sleep_timer_clear">Kosongkan</string>
+    <string name="nav_item_add_sleep">Pemasa tidur</string>
+
+    <string name="nav_item_save_playlist">Eksport kegemaran sebagai senarai main</string>
+    <string name="nav_item_load_playlist">Import kegemaran daripada senarai main</string>
+    <string name="nav_item_save_history_playlist">Eksport sejarah sebagai senarai main</string>
+    <string name="confirm_overwrite_file">Tulis ganti fail?</string>
+    <string name="dialog_hint_file_name">Masukkan nama fail</string>
+    <string name="error_empty_field">Medan ini diperlukan</string>
+    <string name="error_invalid_file_name">Nama fail tidak sah</string>
+    <string name="label_button_cancel">Batal</string>
+    <string name="label_button_overwrite">Tulis ganti</string>
+    <string name="notify_load_playlist_nok">Tidak dapat mengimport daripada %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Mengimport daripada %1$s&#47;%2$s, sila tunggu.</string>
+    <string name="notify_load_playlist_ok">Diimport %1$d stesen daripada %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Tidak dapat mengeksport ke %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Mengeksport ke %1$s&#47;%2$s, sila tunggu.</string>
+    <string name="notify_save_playlist_ok">Berjaya dieksport ke %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d daripada %2$d stesen tempatan dalam senarai ditandakan sebagai tidak wujud pada pelayan</string>
+
+    <string name="searchpreference_clear_history">Kosongkan sejarah</string>
+    <string name="searchpreference_no_results">Tiada hasil</string>
+    <string name="searchpreference_search">Cari…</string>
+    <string name="settings_appearance">Rupa Bentuk</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Cerah</string>
+    <string name="theme_dark">Gelap</string>
+    <string name="theme_system">Ikut sistem</string>
+    <string name="settings_compact_style">Mod kompak</string>
+    <string name="settings_compact_style_desc_off">Ikon besar digunakan dengan butiran stesen</string>
+    <string name="settings_compact_style_desc_on">Ikon kecil digunakan tanpa butiran stesen</string>
+    <string name="settings_bottom_navigation">Navigasi bawah</string>
+    <string name="settings_ui_scale">Penskalaan UI</string>
+    <string name="settings_language">Bahasa</string>
+    <string name="ui_scale_compact">Kompak</string>
+    <string name="ui_scale_standard">Standard Sistem</string>
+    <string name="ui_scale_large">Besar</string>
+    <string name="ui_scale_extra_large">Sangat Besar</string>
+
+    <string name="settings_interaction">Interaksi</string>
+    <string name="settings_single_use_tags">Tunjukkan tag yang jarang digunakan</string>
+    <string name="settings_single_use_tags_desc_off">Tag yang jarang digunakan tidak akan ditunjukkan</string>
+    <string name="settings_single_use_tags_desc_on">Tag yang jarang digunakan akan ditunjukkan</string>
+
+    <string name="settings_show_broken">Stesen yang rosak</string>
+    <string name="settings_show_broken_on">Tunjukkan stesen yang rosak dalam senarai</string>
+    <string name="settings_show_broken_off">Jangan tunjukkan stesen yang rosak dalam senarai</string>
+
+    <string name="settings_startup_behaviour">Gelagat Mula</string>
+    <string name="action_grid_view">Paparan Grid</string>
+    <string name="action_list_view">Paparan Senarai</string>
+
+    <string name="startup_action_title">Tindakan mula</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Tunjukkan semua stesen</string>
+    <string name="startup_show_favorites">Tunjukkan kegemaran</string>
+    <string name="startup_show_history">Tunjukkan sejarah</string>
+    <string name="startup_show_last_view">Paparan terakhir</string>
+
+    <string name="settings_load_icons">Tunjukkan ikon stesen</string>
+    <string name="settings_load_icons_on">Ikon akan dimuat turun</string>
+    <string name="settings_load_icons_off">Ikon tidak akan dimuat turun</string>
+
+    <string name="settings_auto_favorite">Kegemaran automatik</string>
+    <string name="settings_auto_favorite_on">Tambah stesen secara automatik ke kegemaran apabila dimainkan</string>
+    <string name="settings_auto_favorite_off">Jangan tambah stesen secara automatik ke kegemaran apabila dimainkan</string>
+
+    <string name="settings_play">Pemain</string>
+    <string name="settings_auto_play_on_startup">Main automatik</string>
+    <string name="settings_auto_play_on_startup_on">Main stesen terakhir semasa mula</string>
+    <string name="settings_auto_play_on_startup_off">Jangan main stesen terakhir semasa mula</string>
+    <string name="settings_auto_off_on_startup">Berhenti automatik</string>
+    <string name="settings_auto_off_on_startup_on">Gunakan pemasa henti automatik dengan main automatik</string>
+    <string name="settings_auto_off_on_startup_off">Jangan gunakan pemasa henti automatik dengan main automatik</string>
+    <string name="settings_auto_off_sleep_timer">Pemasa henti automatik</string>
+    <string name="settings_auto_off_sleep_timer_desc">Berhenti bermain selepas %1$s minit</string>
+    <string name="settings_play_external">Dayakan pemain luaran</string>
+    <string name="settings_play_external_desc_on">Main stesen dengan pemain luaran</string>
+    <string name="settings_play_external_desc_off">Main stesen dengan AMARadio</string>
+    <string name="settings_equalizer">Penyama</string>
+
+    <string name="settings_connectivity">Ketersambungan</string>
+    <string name="settings_connect_timeout">Masa tamat sambungan</string>
+    <string name="settings_read_timeout">Masa tamat bacaan</string>
+    <string name="settings_resume_timeout">Masa tamat sambung semula</string>
+    <string name="settings_retry_timeout">Masa tamat percubaan semula</string>
+    <string name="settings_retry_delay">Lengah penyambungan semula</string>
+    <string name="settings_proxy">Proksi</string>
+    <string name="settings_proxy_login">Nama pengguna</string>
+    <string name="settings_proxy_password">Kata laluan</string>
+    <string name="settings_proxy_action_test">Uji</string>
+    <string name="settings_proxy_working">Berjaya disambungkan ke %s</string>
+    <string name="settings_proxy_not_working">Gagal menyambung ke %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Nilai yang anda berikan untuk proksi adalah tidak sah</string>
+    <string name="ignore_proxy_settings_invalid">Mengabaikan tetapan proksi yang tidak sah</string>
+    <string name="settings_seconds_format">%d saat</string>
+    <string name="settings_milliseconds_format">%d milisaat</string>
+
+    <string name="settings_pause_when_noisy">Jeda apabila set kepala dicabut</string>
+
+    <string name="settings_auto_resume_do_not_resume">Jangan sambung semula</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Sambung semula pada sambungan berwayar</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Sambung semula mainan apabila set kepala berwayar dipasang</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Sambung semula pada sambungan Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Sambung semula mainan apabila peranti Bluetooth A2DP disambungkan</string>
+
+    <string name="settings_auto_resume_on_any_connected">Sambung semula pada sebarang sambungan</string>
+
+    <string name="settings_warn_no_wifi">Amaran luar Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Beri amaran apabila bermain tanpa sambungan Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Tiada amaran apabila tiada sambungan Wi-Fi</string>
+
+    <string name="notify_pre_play">Menyambung</string>
+    <string name="notify_play">Dimainkan</string>
+    <string name="notify_paused">Dijeda</string>
+    <string name="notify_metered_connection">Sambungan bermeter</string>
+
+    <string name="notify_starred">Stesen telah ditambahkan ke kegemaran</string>
+    <string name="notify_autostarred">Stesen telah ditambahkan secara automatik ke kegemaran</string>
+    <string name="notify_unstarred">Stesen telah dibuang daripada kegemaran</string>
+    <string name="notify_deleted_favorites">Kegemaran telah dipadamkan</string>
+    <string name="notify_deleted_history">Sejarah telah dipadamkan</string>
+
+    <string name="notify_open_link_failure">Tiada aplikasi ditemui untuk membuka pautan</string>
+
+    <string name="notify_station_removed_from_list">1 Dibuang</string>
+    <string name="action_station_removed_from_list_undo">BATAL</string>
+
+    <string name="alert_delete_history">Adakah anda benar-benar mahu memadamkan sejarah?</string>
+    <string name="alert_delete_favorites">Adakah anda benar-benar mahu memadamkan semua kegemaran?</string>
+    <string name="yes">Ya</string>
+    <string name="no">Tidak</string>
+
+    <string name="alert_select_player">Sila pilih pemain</string>
+    <string name="alert_select_player_name">Nama</string>
+    <string name="hostname">Nama hos</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Tekan kembali sekali lagi untuk keluar</string>
+
+    <string name="error_stream_url">Masalah URL penstriman</string>
+    <string name="error_caching_stream">Masalah caching penstriman</string>
+    <string name="error_play_stream">Tidak dapat memainkan aliran</string>
+    <string name="error_stream_reconnect_timeout">Tidak dapat menyambung semula ke penstriman: masa tamat</string>
+    <string name="warning_no_network_trying_resume">Tiada sambungan rangkaian. Cuba menyambung semula apabila sambungan kembali.</string>
+    <string name="giving_up_resume">Berhenti cuba untuk menyambung semula mainan</string>
+
+    <string name="error_grant_audiofocus">Permintaan untuk fokus audio tidak diberikan oleh sistem</string>
+
+    <string name="error_no_equalizer_found">Tiada aplikasi penyama ditemui</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">berhenti</string>
+    <string name="player_info_status_playing">bermain</string>
+    <string name="player_info_transferred">Data dipindahkan: %1$s</string>
+
+    <string name="tab_player_art">Seni album</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Sejarah trek</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ROSAK</string>
+    <string name="station_detail_deleted_on_server">DIPADAM</string>
+
+    <string name="station_details_clicks">%1$d klik</string>
+    <string name="station_details_votes">%1$d undian</string>
+
+    <string name="image_button_disable">Lumpuhkan</string>
+    <string name="image_button_delete">Padam</string>
+    <string name="image_button_more">Lagi</string>
+    <string name="image_button_less">Kurang</string>
+    <string name="image_button_repeat">Ulang</string>
+    <string name="image_button_dont_repeat">Jangan ulang</string>
+    <string name="icon_click_trend_decreasing">Populariti menurun</string>
+    <string name="icon_click_trend_increasing">Populariti meningkat</string>
+    <string name="icon_click_trend_stable">Populariti stabil</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Bebas Iklan &amp; Peribadi</string>
+
+    <string name="action_play_in_external">Main dalam pemain luaran</string>
+    <string name="action_choose_external_player">Pilih pemain luaran</string>
+
+    <string name="settings_disable_battery_optimization">Pengoptimuman bateri</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Pengoptimuman bateri diabaikan, AMARadio harus sentiasa dapat memperoleh semula fokus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Pengoptimuman bateri diaktifkan, AMARadio mungkin tidak dapat memperoleh semula fokus jika berada di latar belakang.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Lain-lain</string>
+    <string name="settings_statistics">Statistik</string>
+    <string name="settings_about">Mengenai AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Langkau ke seterusnya</string>
+    <string name="description_btn_skip_to_previous">Langkau ke sebelumnya</string>
+
+    <string-array name="weekdays">
+        <item>A</item>
+        <item>I</item>
+        <item>S</item>
+        <item>R</item>
+        <item>K</item>
+        <item>J</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL Penstriman berjaya disalin</string>
+    <string name="notify_track_info_copied">Info trek berjaya disalin</string>
+
+    <string-array name="actions_station_link">
+        <item>Lawati Laman Web</item>
+        <item>Salin URL Penstriman</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Sambungan bermeter dikesan</string>
+    <string name="alert_metered_connection_message">Sambungan bermeter mungkin mengenakan caj tambahan, tekan \'OK\' untuk meneruskan.</string>
+    <string name="nav_item_statistics">Statistik</string>
+    <string name="nav_item_about">Mengenai</string>
+    <string name="refresh">Segar semula</string>
+    <string name="action_filter">Penapis</string>
+    <string name="filter_country">Negara</string>
+    <string name="filter_tag">Tag</string>
+    <string name="filter_language">Bahasa</string>
+    <string name="filter_sort_by">Susun mengikut</string>
+    <string name="filter_reverse">Urutan terbalik</string>
+    <string name="filter_apply">Guna Penapis</string>
+    <string name="sort_name">Nama</string>
+    <string name="sort_votes">Undian</string>
+    <string name="sort_clicks">Klik</string>
+    <string name="sort_lastchange">Perubahan Terakhir</string>
+    <string name="filter_select_country">Pilih Negara</string>
+    <string name="filter_select_language">Pilih Bahasa</string>
+    <string name="filter_type_tag">Taip Tag…</string>
+    <string name="filter_tap_to_configure">Ketik untuk mengkonfigurasi</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

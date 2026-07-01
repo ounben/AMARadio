@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Nomi</string>
+    <string name="detail_tags">Teglar</string>
+    <string name="detail_country">Mamlakat</string>
+    <string name="detail_create_shortcut">Asosiy ekranga qoʻshish</string>
+    <string name="detail_language">Til</string>
+    <string name="detail_weblink">Veb havola</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Tinglash</string>
+    <string name="detail_pause">Pauza</string>
+    <string name="detail_stop">Toʻxtatish</string>
+    <string name="detail_share">Ulashish</string>
+    <string name="detail_play_in_AMARadio">AMARadio-da tinglash</string>
+
+    <string name="action_links">Havolalar</string>
+    <string name="action_homepage">Bosh sahifa</string>
+    <string name="action_favorite">Saralangan</string>
+    <string name="action_starred_add">Saralanganlarga qoʻshish</string>
+    <string name="action_starred_remove">Saralanganlardan olib tashlash</string>
+
+    <string name="action_station_visit_website">Veb-saytga oʻtish</string>
+    <string name="action_station_copy_stream_url">Oqim URL-ni nusxalash</string>
+    <string name="action_station_share">Ulashish</string>
+
+    <string name="action_local">Mahalliy</string>
+    <string name="action_skip_to_next">Keyingi</string>
+    <string name="action_pause">Pauza</string>
+    <string name="action_skip_to_previous">Oldingi</string>
+    <string name="action_resume">Davom ettirish</string>
+    <string name="action_stop">Toʻxtatish</string>
+    <string name="action_search">Qidirish</string>
+    <string name="action_delete">Oʻchirish</string>
+    <string name="action_delete_history">Tarixni oʻchirish</string>
+    <string name="action_delete_favorites">Barcha saralanganlarni oʻchirish</string>
+    <string name="action_delete_stream_history">Treklar tarixini tozalash</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Bekor qilish</string>
+    <string name="action_top_click">Eng koʻp tinglangan</string>
+    <string name="action_toggle_view">Koʻrinishni oʻzgartirish</string>
+    <string name="action_top_vote">Eng koʻp ovoz olgan</string>
+    <string name="action_changed_lately">Yaqinda oʻzgartirilgan</string>
+    <string name="action_currently_playing">Hozir tinglanmoqda</string>
+    <string name="action_tags">Teglar</string>
+    <string name="action_countries">Mamlakatlar/Hududlar</string>
+    <string name="action_languages">Tillar</string>
+    <string name="action_edit">Tahrirlash</string>
+    <string name="action_copy_info">Maʻlumotni nusxalash</string>
+    <string name="action_rename_tab">Varaq nomini oʻzgartirish</string>
+    <string name="error_filter_name_required">Iltimos, avval ushbu filtr varagʻi uchun nom kiriting</string>
+    <string name="confirm_delete_filter_tab">Haqiqatan ham \"%1$s\" filtrini oʻchirmoqchimisiz?</string>
+    <string name="filter_empty_title">Oʻz radio stansiyalar tasmangizni yarating</string>
+    <string name="filter_empty_desc">Bir nechta mezonlarni birlashtirib, shaxsiy koʻrinish yarating. Qidiruvni quyidagilar orqali cheklashingiz mumkin:</string>
+    <string name="filter_empty_filter_by">Saralash turi:</string>
+    <string name="filter_empty_filter_desc">Mamlakat, Stansiya nomi, Teglar yoki Til</string>
+    <string name="filter_empty_sort_by">Tartiblash:</string>
+    <string name="filter_empty_sort_desc">Kliklar, Alifbo, Ovozlar yoki Oxirgi oʻzgarish</string>
+    <string name="filter_empty_hint">Ushbu koʻrinishni saqlash uchun yuqoridagi maydonga nom yozing!</string>
+    <string name="error_station_load">Stansiyaga ulanib boʻlmadi</string>
+    <string name="error_list_update">Radio brauzer serveriga ulanib boʻlmadi</string>
+
+    <string name="share_action">Stansiya havolasini ulashish…</string>
+
+    <string name="nav_item_stations">Stansiyalar</string>
+    <string name="nav_item_starred">Saralanganlar</string>
+    <string name="nav_item_history">Tarix</string>
+    <string name="nav_item_settings">Sozlamalar</string>
+
+    <string name="about_text">AMARadio 100% reklamasiz va maxfiylikka yoʻnaltirilgan.\n\nMen ushbu ilovani dastlab onam uchun, unga bezovta qiluvchi reklamalar yoki kuzatuvlarsiz oddiy va halol radio tajribasini taqdim etish uchun ishlab chiqqanman. Shuning uchun AMARadio doimo reklamasiz qoladi – bu unga berilgan vaʼda boʻlib, uni barchangiz bilan baham koʻraman.\n\nUshbu loyiha ajoyib https://github.com/segler-alex/RadioDroid loyihasining forki (fork) hisoblanadi. Ilova zamonaviy boʻlib qolishi va kelajakdagi Android versiyalari bilan mos kelishi uchun barcha manba kodi Java-dan Kotlin-ga oʻtkazildi.\n\nManba kodi ushbu manzilda mavjud: https://github.com/ounben/AMARadio\n\nUshbu ilova https://www.radio-browser.info saytidagi bepul radio stansiyalar katalogidan foydalanadi. Har kim unga stansiyalar qoʻshishi mumkin. U onlayn radio stansiyalar uchun viki kabi ishlaydi.\n\nBogʻlanish: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nAgar sizga dastur yoqsa va yordam bermoqchi boʻlsangiz, menga elektron pochta orqali xabar yuboring. Shuningdek, yangi xususiyatlar boʻyicha gʻoyalar doimo mamnuniyat bilan qabul qilinadi!\n\nUshbu ilova GPLv3 litsenziyasi ostidagi bepul dasturiy taʼminotdir. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versiya: %1$s</string>
+    <string name="detail_star">Saralanganlarga qoʻshish</string>
+    <string name="detail_unstar">Saralanganlardan olib tashlash</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Yuklanmoqda…</string>
+
+    <string name="sleep_timer" formatted="true">Uyqu taymeri: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Tanlangan vaqtdan soʻng tinglashni toʻxtatish</string>
+    <string name="sleep_timer_apply">Qoʻllash</string>
+    <string name="sleep_timer_clear">Oʻchirish</string>
+    <string name="nav_item_add_sleep">Uyqu taymeri</string>
+
+    <string name="nav_item_save_playlist">Saralanganlarni pleylist sifatida eksport qilish</string>
+    <string name="nav_item_load_playlist">Pleylistdan saralanganlarni import qilish</string>
+    <string name="nav_item_save_history_playlist">Tarixni pleylist sifatida eksport qilish</string>
+    <string name="confirm_overwrite_file">Faylni almashtirishni xohlaysizmi?</string>
+    <string name="dialog_hint_file_name">Fayl nomini kiriting</string>
+    <string name="error_empty_field">Bu maydon toʻldirilishi shart</string>
+    <string name="error_invalid_file_name">Fayl nomi notoʻgʻri</string>
+    <string name="label_button_cancel">Bekor qilish</string>
+    <string name="label_button_overwrite">Almashtirish</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s dan import qilib boʻlmadi</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s dan import qilinmoqda, iltimos kuting.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s dan %1$d ta stansiya import qilindi</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s ga eksport qilib boʻlmadi</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s ga eksport qilinmoqda, iltimos kuting.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s ga muvaffaqiyatli eksport qilindi</string>
+    <string name="notify_sync_list_deleted_entries">Roʻyxatdagi %2$d ta mahalliy stansiyadan %1$d tasi serverda mavjud emas deb belgilandi</string>
+
+    <string name="searchpreference_clear_history">Tarixni tozalash</string>
+    <string name="searchpreference_no_results">Natijalar yoʻq</string>
+    <string name="searchpreference_search">Qidirish…</string>
+    <string name="settings_appearance">Koʻrinish</string>
+    <string name="settings_theme_selection_title">Mavzu</string>
+    <string name="theme_light">Yorugʻ</string>
+    <string name="theme_dark">Qorongʻu</string>
+    <string name="theme_system">Tizimga mos</string>
+    <string name="settings_compact_style">Ixcham rejim</string>
+    <string name="settings_compact_style_desc_off">Katta piktogramma va stansiya maʻlumotlari</string>
+    <string name="settings_compact_style_desc_on">Kichik piktogramma va maʻlumotlarsiz</string>
+    <string name="settings_bottom_navigation">Pastki navigatsiya</string>
+    <string name="settings_ui_scale">UI masshtabi</string>
+    <string name="settings_language">Til</string>
+    <string name="ui_scale_compact">Ixcham</string>
+    <string name="ui_scale_standard">Tizim standarti</string>
+    <string name="ui_scale_large">Katta</string>
+    <string name="ui_scale_extra_large">Juda katta</string>
+
+    <string name="settings_interaction">Oʻzaro taʻsir</string>
+    <string name="settings_single_use_tags">Kam foydalaniladigan teglarni koʻrsatish</string>
+    <string name="settings_single_use_tags_desc_off">Kam foydalaniladigan teglar koʻrsatilmaydi</string>
+    <string name="settings_single_use_tags_desc_on">Kam foydalaniladigan teglar koʻrsatiladi</string>
+
+    <string name="settings_show_broken">Ishlamayotgan stansiyalar</string>
+    <string name="settings_show_broken_on">Ishlamayotgan stansiyalarni roʻyxatda koʻrsatish</string>
+    <string name="settings_show_broken_off">Ishlamayotgan stansiyalarni roʻyxatda koʻrsatmaslik</string>
+
+    <string name="settings_startup_behaviour">Boshlanish harakati</string>
+    <string name="action_grid_view">Toʻr koʻrinishi</string>
+    <string name="action_list_view">Roʻyxat koʻrinishi</string>
+
+    <string name="startup_action_title">Boshlanish harakati</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Barcha stansiyalarni koʻrsatish</string>
+    <string name="startup_show_favorites">Saralanganlarni koʻrsatish</string>
+    <string name="startup_show_history">Tarixni koʻrsatish</string>
+    <string name="startup_show_last_view">Oxirgi koʻrinish</string>
+
+    <string name="settings_load_icons">Stansiya piktogrammalarini koʻrsatish</string>
+    <string name="settings_load_icons_on">Piktogrammalar yuklab olinadi</string>
+    <string name="settings_load_icons_off">Piktogrammalar yuklab olinmaydi</string>
+
+    <string name="settings_auto_favorite">Avto-saralangan</string>
+    <string name="settings_auto_favorite_on">Tinglash vaqtida stansiyalarni avtomatik ravishda saralanganlarga qoʻshish</string>
+    <string name="settings_auto_favorite_off">Tinglash vaqtida stansiyalarni avtomatik ravishda saralanganlarga qoʻshmaslik</string>
+
+    <string name="settings_play">Pleyer</string>
+    <string name="settings_auto_play_on_startup">Avto-tinglash</string>
+    <string name="settings_auto_play_on_startup_on">Ilovaga kirganda oxirgi stansiyani tinglash</string>
+    <string name="settings_auto_play_on_startup_off">Ilovaga kirganda oxirgi stansiyani tinglamaslik</string>
+    <string name="settings_auto_off_on_startup">Avto-toʻxtatish</string>
+    <string name="settings_auto_off_on_startup_on">Avto-tinglash bilan avto-toʻxtatish taymeridan foydalanish</string>
+    <string name="settings_auto_off_on_startup_off">Avto-tinglash bilan avto-toʻxtatish taymeridan foydalanmaslik</string>
+    <string name="settings_auto_off_sleep_timer">Avto-toʻxtatish taymeri</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s daqiqadan soʻng toʻxtatish</string>
+    <string name="settings_play_external">Tashqi pleyerni yoqish</string>
+    <string name="settings_play_external_desc_on">Stansiyalarni tashqi pleyerda tinglash</string>
+    <string name="settings_play_external_desc_off">Stansiyalarni AMARadio-da tinglash</string>
+    <string name="settings_equalizer">Ekvalayzer</string>
+
+    <string name="settings_connectivity">Ulanish</string>
+    <string name="settings_connect_timeout">Ulanish kutish vaqti</string>
+    <string name="settings_read_timeout">Oʻqish kutish vaqti</string>
+    <string name="settings_resume_timeout">Davom ettirish kutish vaqti</string>
+    <string name="settings_retry_timeout">Qayta urinish kutish vaqti</string>
+    <string name="settings_retry_delay">Qayta ulanish kechikishi</string>
+    <string name="settings_proxy">Proksi</string>
+    <string name="settings_proxy_login">Foydalanuvchi nomi</string>
+    <string name="settings_proxy_password">Parol</string>
+    <string name="settings_proxy_action_test">Tekshirish</string>
+    <string name="settings_proxy_working">%s ga muvaffaqiyatli ulandi</string>
+    <string name="settings_proxy_not_working">%1$s ga ulanib boʻlmadi\n%2$s</string>
+    <string name="settings_proxy_invalid">Proksi uchun kiritilgan qiymatlar notoʻgʻri</string>
+    <string name="ignore_proxy_settings_invalid">Notoʻgʻri proksi sozlamalari eʼtiborga olinmadi</string>
+    <string name="settings_seconds_format">%d soniya</string>
+    <string name="settings_milliseconds_format">%d millisoniya</string>
+
+    <string name="settings_pause_when_noisy">Quloqchin uzilganda toʻxtatish</string>
+
+    <string name="settings_auto_resume_do_not_resume">Davom ettirmaslik</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Simli ulanishda davom ettirish</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Simli quloqchin ulanganda tinglashni davom ettirish</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth ulanishda davom ettirish</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP qurilmasi ulanganda tinglashni davom ettirish</string>
+
+    <string name="settings_auto_resume_on_any_connected">Har qanday ulanishda davom ettirish</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi yoʻqligi haqida ogohlantirish</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi ulanishisiz tinglaganda ogohlantirish</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi ulanishi boʻlmasa ham ogohlantirmaslik</string>
+
+    <string name="notify_pre_play">Ulanmoqda</string>
+    <string name="notify_play">Tinglanmoqda</string>
+    <string name="notify_paused">Toʻxtatib turildi</string>
+    <string name="notify_metered_connection">Pullik ulanish</string>
+
+    <string name="notify_starred">Stansiya saralanganlarga qoʻshildi</string>
+    <string name="notify_autostarred">Stansiya avtomatik ravishda saralanganlarga qoʻshildi</string>
+    <string name="notify_unstarred">Stansiya saralanganlardan olib tashlandi</string>
+    <string name="notify_deleted_favorites">Saralanganlar oʻchirildi</string>
+    <string name="notify_deleted_history">Tarix oʻchirildi</string>
+
+    <string name="notify_open_link_failure">Havolani ochish uchun ilova topilmadi</string>
+
+    <string name="notify_station_removed_from_list">1 tasi olib tashlandi</string>
+    <string name="action_station_removed_from_list_undo">QAYTARISH</string>
+
+    <string name="alert_delete_history">Haqiqatan ham tarixni oʻchirmoqchimisiz?</string>
+    <string name="alert_delete_favorites">Haqiqatan ham barcha saralanganlarni oʻchirmoqchimisiz?</string>
+    <string name="yes">Ha</string>
+    <string name="no">Yoʻq</string>
+
+    <string name="alert_select_player">Iltimos, pleyerni tanlang</string>
+    <string name="alert_select_player_name">Nomi</string>
+    <string name="hostname">Xost nomi (Hostname)</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Chiqish uchun orqaga tugmasini yana bir marta bosing</string>
+
+    <string name="error_stream_url">Oqim URL manzili bilan muammo</string>
+    <string name="error_caching_stream">Oqim keshlanishi bilan muammo</string>
+    <string name="error_play_stream">Oqimni tinglab boʻlmadi</string>
+    <string name="error_stream_reconnect_timeout">Oqimga qayta ulanib boʻlmadi: vaqt tugadi</string>
+    <string name="warning_no_network_trying_resume">Internet aloqasi yoʻq. Aloqa tiklanganda davom ettirishga harakat qilinadi.</string>
+    <string name="giving_up_resume">Tinglashni davom ettirish harakati toʻxtatildi</string>
+
+    <string name="error_grant_audiofocus">Tizim tomonidan audio fokus ruxsati berilmadi</string>
+
+    <string name="error_no_equalizer_found">Ekvalayzer ilovasi topilmadi</string>
+
+    <string name="player_info_status">Holati:&#160;</string>
+    <string name="player_info_status_stopped">toʻxtatilgan</string>
+    <string name="player_info_status_playing">tinglanmoqda</string>
+    <string name="player_info_transferred">Oʻtkazilgan maʻlumot: %1$s</string>
+
+    <string name="tab_player_art">Albom rasmi</string>
+    <string name="tab_player_info">Maʻlumot</string>
+    <string name="tab_player_history">Treklar tarixi</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ISHLAMAYAPTI</string>
+    <string name="station_detail_deleted_on_server">OʻCHIRILGAN</string>
+
+    <string name="station_details_clicks">%1$d marta tinglangan</string>
+    <string name="station_details_votes">%1$d ovoz</string>
+
+    <string name="image_button_disable">Oʻchirish</string>
+    <string name="image_button_delete">Oʻchirish</string>
+    <string name="image_button_more">Koʻproq</string>
+    <string name="image_button_less">Kamroq</string>
+    <string name="image_button_repeat">Takrorlash</string>
+    <string name="image_button_dont_repeat">Takrorlamaslik</string>
+    <string name="icon_click_trend_decreasing">Ommabopligi kamaymoqda</string>
+    <string name="icon_click_trend_increasing">Ommabopligi ortmoqda</string>
+    <string name="icon_click_trend_stable">Ommabopligi barqaror</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Reklamasiz va Maxfiy</string>
+
+    <string name="action_play_in_external">Tashqi pleyerda tinglash</string>
+    <string name="action_choose_external_player">Tashqi pleyerni tanlash</string>
+
+    <string name="settings_disable_battery_optimization">Batareya optimallashtirish</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Batareya optimallashtirish eʼtiborga olinmaydi, AMARadio doimo fokusni qayta olishi kerak.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Batareya optimallashtirish yoqilgan, AMARadio fonda boʻlganda fokusni qayta ololmasligi mumkin.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Boshqa</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">AMARadio haqida</string>
+
+    <string name="description_btn_skip_to_next">Keyingisiga oʻtish</string>
+    <string name="description_btn_skip_to_previous">Oldingisiga oʻtish</string>
+
+    <string-array name="weekdays">
+        <item>Ya</item>
+        <item>Du</item>
+        <item>Se</item>
+        <item>Ch</item>
+        <item>Pa</item>
+        <item>Ju</item>
+        <item>Sha</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Oqim URL manzili muvaffaqiyatli nusxalandi</string>
+    <string name="notify_track_info_copied">Trek maʻlumoti muvaffaqiyatli nusxalandi</string>
+
+    <string-array name="actions_station_link">
+        <item>Veb-saytga oʻtish</item>
+        <item>Oqim URL-ni nusxalash</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Pullik ulanish aniqlandi</string>
+    <string name="alert_metered_connection_message">Pullik ulanish qoʻshimcha xarajatlarga olib kelishi mumkin, davom ettirish uchun \'OK\' tugmasini bosing.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Haqida</string>
+    <string name="refresh">Yangilash</string>
+    <string name="action_filter">Filtr</string>
+    <string name="filter_country">Mamlakat</string>
+    <string name="filter_tag">Teg</string>
+    <string name="filter_language">Til</string>
+    <string name="filter_sort_by">Tartiblash</string>
+    <string name="filter_reverse">Teskari tartib</string>
+    <string name="filter_apply">Filtrni qoʻllash</string>
+    <string name="sort_name">Nomi</string>
+    <string name="sort_votes">Ovozlar</string>
+    <string name="sort_clicks">Kliklar</string>
+    <string name="sort_lastchange">Oxirgi oʻzgarish</string>
+    <string name="filter_select_country">Mamlakatni tanlang</string>
+    <string name="filter_select_language">Tilni tanlang</string>
+    <string name="filter_type_tag">Tegni kiriting…</string>
+    <string name="filter_tap_to_configure">Sozlash uchun bosing</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

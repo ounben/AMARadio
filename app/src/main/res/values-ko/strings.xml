@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">이름</string>
+    <string name="detail_tags">태그</string>
+    <string name="detail_country">국가</string>
+    <string name="detail_create_shortcut">홈 화면에 추가</string>
+    <string name="detail_language">언어</string>
+    <string name="detail_weblink">웹 링크</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">재생</string>
+    <string name="detail_pause">일시정지</string>
+    <string name="detail_stop">중지</string>
+    <string name="detail_share">공유</string>
+    <string name="detail_play_in_AMARadio">AMARadio에서 재생</string>
+
+    <string name="action_links">링크</string>
+    <string name="action_homepage">홈페이지</string>
+    <string name="action_favorite">즐겨찾기</string>
+    <string name="action_starred_add">즐겨찾기에 추가</string>
+    <string name="action_starred_remove">즐겨찾기에서 제거</string>
+
+    <string name="action_station_visit_website">웹사이트 방문</string>
+    <string name="action_station_copy_stream_url">스트림 URL 복사</string>
+    <string name="action_station_share">공유</string>
+
+    <string name="action_local">로컬</string>
+    <string name="action_skip_to_next">다음</string>
+    <string name="action_pause">일시정지</string>
+    <string name="action_skip_to_previous">이전</string>
+    <string name="action_resume">재개</string>
+    <string name="action_stop">중지</string>
+    <string name="action_search">검색</string>
+    <string name="action_delete">삭제</string>
+    <string name="action_delete_history">기록 삭제</string>
+    <string name="action_delete_favorites">즐겨찾기 모두 삭제</string>
+    <string name="action_delete_stream_history">곡 기록 삭제</string>
+    <string name="action_ok">확인</string>
+    <string name="action_cancel">취소</string>
+    <string name="action_top_click">최다 클릭</string>
+    <string name="action_toggle_view">보기 전환</string>
+    <string name="action_top_vote">최다 추천</string>
+    <string name="action_changed_lately">최근 변경</string>
+    <string name="action_currently_playing">현재 재생 중</string>
+    <string name="action_tags">태그</string>
+    <string name="action_countries">국가/지역</string>
+    <string name="action_languages">언어</string>
+    <string name="action_edit">편집</string>
+    <string name="action_copy_info">정보 복사</string>
+    <string name="action_rename_tab">탭 이름 변경</string>
+    <string name="error_filter_name_required">이 필터 탭의 이름을 먼저 입력하세요</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" 필터를 삭제하시겠습니까?</string>
+    <string name="filter_empty_title">나만의 라디오 스테이션 피드 만들기</string>
+    <string name="filter_empty_desc">여러 기준을 조합하여 개인화된 보기를 만드세요. 다음을 사용하여 검색 범위를 좁힐 수 있습니다:</string>
+    <string name="filter_empty_filter_by">필터 기준</string>
+    <string name="filter_empty_filter_desc">국가, 스테이션 이름, 태그 또는 언어</string>
+    <string name="filter_empty_sort_by">정렬 기준</string>
+    <string name="filter_empty_sort_desc">클릭수, 알파벳순, 추천수 또는 최근 변경순</string>
+    <string name="filter_empty_hint">이 보기를 저장하려면 위의 필드에 이름을 입력하세요!</string>
+    <string name="error_station_load">스테이션에 연결할 수 없습니다</string>
+    <string name="error_list_update">라디오 브라우저 서버에 연결할 수 없습니다</string>
+
+    <string name="share_action">스테이션 링크 공유 대상…</string>
+
+    <string name="nav_item_stations">스테이션</string>
+    <string name="nav_item_starred">즐겨찾기</string>
+    <string name="nav_item_history">기록</string>
+    <string name="nav_item_settings">설정</string>
+
+    <string name="about_text">AMARadio는 100% 광고가 없으며 개인 정보 보호를 최우선으로 합니다.\n\n저는 원래 어머니께 광고나 추적 없이 간단하고 정직한 라디오 경험을 제공하기 위해 이 앱을 개발했습니다. 이것이 AMARadio가 항상 광고 없이 유지될 이유이며, 이는 여러분 모두와 공유하는 어머니와의 약속입니다.\n\n이 프로젝트는 훌륭한 https://github.com/segler-alex/RadioDroid 의 포크입니다. 앱이 최신 상태를 유지하고 향후 Android 버전과 호환되도록 모든 소스 코드를 Java에서 Kotlin으로 마이그레이션했습니다.\n\n소스 코드는 다음에서 확인할 수 있습니다: https://github.com/ounben/AMARadio\n\n이 앱은 https://www.radio-browser.info 의 무료 라디오 스테이션 디렉토리를 사용합니다.\n누구나 스테이션을 추가할 수 있습니다. 온라인 라디오 스테이션을 위한 위키처럼 작동합니다.\n\n연락처: ben@ounben.com\n\n버그 제보: https://github.com/ounben/AMARadio/issues\n\n이 소프트웨어가 마음에 들고 돕고 싶으시다면 언제든지 이메일을 보내주세요.\n새로운 기능에 대한 아이디어도 언제나 환영합니다!\n\n이 앱은 GPLv3 라이선스 하에 제공되는 자유 소프트웨어입니다. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">버전: %1$s</string>
+    <string name="detail_star">즐겨찾기에 추가</string>
+    <string name="detail_unstar">즐겨찾기에서 삭제</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">로딩 중…</string>
+
+    <string name="sleep_timer" formatted="true">취침 예약: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">선택한 시간 후에 재생 중지</string>
+    <string name="sleep_timer_apply">적용</string>
+    <string name="sleep_timer_clear">해제</string>
+    <string name="nav_item_add_sleep">취침 예약</string>
+
+    <string name="nav_item_save_playlist">즐겨찾기를 플레이리스트로 내보내기</string>
+    <string name="nav_item_load_playlist">플레이리스트에서 즐겨찾기 가져오기</string>
+    <string name="nav_item_save_history_playlist">기록을 플레이리스트로 내보내기</string>
+    <string name="confirm_overwrite_file">파일을 덮어쓰시겠습니까?</string>
+    <string name="dialog_hint_file_name">파일 이름 입력</string>
+    <string name="error_empty_field">이 필드는 필수입니다</string>
+    <string name="error_invalid_file_name">유효하지 않은 파일 이름</string>
+    <string name="label_button_cancel">취소</string>
+    <string name="label_button_overwrite">덮어쓰기</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s에서 가져올 수 없습니다</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s에서 가져오는 중입니다. 잠시만 기다려 주세요.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s에서 %1$d개의 스테이션을 가져왔습니다</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s로 내보낼 수 없습니다</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s로 내보내는 중입니다. 잠시만 기다려 주세요.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s로 성공적으로 내보냈습니다</string>
+    <string name="notify_sync_list_deleted_entries">목록의 로컬 스테이션 %2$d개 중 %1$d개가 서버에 존재하지 않는 것으로 표시되었습니다</string>
+
+    <string name="searchpreference_clear_history">기록 삭제</string>
+    <string name="searchpreference_no_results">결과 없음</string>
+    <string name="searchpreference_search">검색…</string>
+    <string name="settings_appearance">표시 설정</string>
+    <string name="settings_theme_selection_title">테마</string>
+    <string name="theme_light">밝게</string>
+    <string name="theme_dark">어둡게</string>
+    <string name="theme_system">시스템 설정 따름</string>
+    <string name="settings_compact_style">컴팩트 모드</string>
+    <string name="settings_compact_style_desc_off">스테이션 상세 정보와 함께 큰 아이콘 표시</string>
+    <string name="settings_compact_style_desc_on">상세 정보 없이 작은 아이콘 표시</string>
+    <string name="settings_bottom_navigation">하단 네비게이션</string>
+    <string name="settings_ui_scale">UI 크기 조절</string>
+    <string name="settings_language">언어</string>
+    <string name="ui_scale_compact">컴팩트</string>
+    <string name="ui_scale_standard">시스템 표준</string>
+    <string name="ui_scale_large">크게</string>
+    <string name="ui_scale_extra_large">매우 크게</string>
+
+    <string name="settings_interaction">상호작용</string>
+    <string name="settings_single_use_tags">드문 태그 표시</string>
+    <string name="settings_single_use_tags_desc_off">자주 사용되지 않는 태그는 표시하지 않음</string>
+    <string name="settings_single_use_tags_desc_on">자주 사용되지 않는 태그도 표시</string>
+
+    <string name="settings_show_broken">끊긴 스테이션</string>
+    <string name="settings_show_broken_on">목록에 끊긴 스테이션 표시</string>
+    <string name="settings_show_broken_off">목록에 끊긴 스테이션 표시하지 않음</string>
+
+    <string name="settings_startup_behaviour">시작 동작</string>
+    <string name="action_grid_view">그리드 보기</string>
+    <string name="action_list_view">목록 보기</string>
+
+    <string name="startup_action_title">시작 시 동작</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">모든 스테이션 표시</string>
+    <string name="startup_show_favorites">즐겨찾기 표시</string>
+    <string name="startup_show_history">기록 표시</string>
+    <string name="startup_show_last_view">마지막 보기</string>
+
+    <string name="settings_load_icons">스테이션 아이콘 표시</string>
+    <string name="settings_load_icons_on">아이콘을 다운로드함</string>
+    <string name="settings_load_icons_off">아이콘을 다운로드하지 않음</string>
+
+    <string name="settings_auto_favorite">자동 즐겨찾기</string>
+    <string name="settings_auto_favorite_on">재생 시 스테이션을 자동으로 즐겨찾기에 추가</string>
+    <string name="settings_auto_favorite_off">재생 시 스테이션을 자동으로 즐겨찾기에 추가하지 않음</string>
+
+    <string name="settings_play">플레이어</string>
+    <string name="settings_auto_play_on_startup">자동 재생</string>
+    <string name="settings_auto_play_on_startup_on">시작 시 마지막 스테이션 재생</string>
+    <string name="settings_auto_play_on_startup_off">시작 시 마지막 스테이션 재생하지 않음</string>
+    <string name="settings_auto_off_on_startup">자동 중지</string>
+    <string name="settings_auto_off_on_startup_on">자동 재생과 함께 자동 중지 타이머 사용</string>
+    <string name="settings_auto_off_on_startup_off">자동 재생과 함께 자동 중지 타이머 사용하지 않음</string>
+    <string name="settings_auto_off_sleep_timer">자동 중지 타이머</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s분 후 재생 중지</string>
+    <string name="settings_play_external">외부 플레이어 사용</string>
+    <string name="settings_play_external_desc_on">외부 플레이어로 스테이션 재생</string>
+    <string name="settings_play_external_desc_off">AMARadio로 스테이션 재생</string>
+    <string name="settings_equalizer">이퀄라이저</string>
+
+    <string name="settings_connectivity">연결성</string>
+    <string name="settings_connect_timeout">연결 타임아웃</string>
+    <string name="settings_read_timeout">읽기 타임아웃</string>
+    <string name="settings_resume_timeout">재개 타임아웃</string>
+    <string name="settings_retry_timeout">재시도 타임아웃</string>
+    <string name="settings_retry_delay">재연결 지연</string>
+    <string name="settings_proxy">프록시</string>
+    <string name="settings_proxy_login">사용자 이름</string>
+    <string name="settings_proxy_password">비밀번호</string>
+    <string name="settings_proxy_action_test">테스트</string>
+    <string name="settings_proxy_working">%s에 성공적으로 연결되었습니다</string>
+    <string name="settings_proxy_not_working">%1$s에 연결 실패\n%2$s</string>
+    <string name="settings_proxy_invalid">제공된 프록시 값이 유효하지 않습니다</string>
+    <string name="ignore_proxy_settings_invalid">유효하지 않은 프록시 설정을 무시했습니다</string>
+    <string name="settings_seconds_format">%d초</string>
+    <string name="settings_milliseconds_format">%d밀리초</string>
+
+    <string name="settings_pause_when_noisy">헤드셋 연결 해제 시 일시정지</string>
+
+    <string name="settings_auto_resume_do_not_resume">재개하지 않음</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">유선 연결 시 재개</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">유선 헤드셋 연결 시 재생 재개</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">블루투스 연결 시 재개</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">블루투스 A2DP 장치 연결 시 재생 재개</string>
+
+    <string name="settings_auto_resume_on_any_connected">모든 연결 시 재개</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi 아님 경고</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi 연결 없이 재생할 때 경고</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi 연결 없어도 경고하지 않음</string>
+
+    <string name="notify_pre_play">연결 중</string>
+    <string name="notify_play">재생 중</string>
+    <string name="notify_paused">일시정지됨</string>
+    <string name="notify_metered_connection">종량제 연결</string>
+
+    <string name="notify_starred">스테이션이 즐겨찾기에 추가되었습니다</string>
+    <string name="notify_autostarred">스테이션이 자동으로 즐겨찾기에 추가되었습니다</string>
+    <string name="notify_unstarred">스테이션이 즐겨찾기에서 제거되었습니다</string>
+    <string name="notify_deleted_favorites">즐겨찾기가 삭제되었습니다</string>
+    <string name="notify_deleted_history">기록이 삭제되었습니다</string>
+
+    <string name="notify_open_link_failure">링크를 열 수 있는 앱을 찾을 수 없습니다</string>
+
+    <string name="notify_station_removed_from_list">1개 제거됨</string>
+    <string name="action_station_removed_from_list_undo">실행 취소</string>
+
+    <string name="alert_delete_history">정말로 기록을 삭제하시겠습니까?</string>
+    <string name="alert_delete_favorites">정말로 즐겨찾기를 모두 삭제하시겠습니까?</string>
+    <string name="yes">예</string>
+    <string name="no">아니요</string>
+
+    <string name="alert_select_player">플레이어를 선택하세요</string>
+    <string name="alert_select_player_name">이름</string>
+    <string name="hostname">호스트 이름</string>
+    <string name="port">포트</string>
+
+    <string name="alert_press_back_to_exit">종료하려면 뒤로 버튼을 한 번 더 누르세요</string>
+
+    <string name="error_stream_url">스트림 URL 문제</string>
+    <string name="error_caching_stream">스트림 캐싱 문제</string>
+    <string name="error_play_stream">스트림을 재생할 수 없습니다</string>
+    <string name="error_stream_reconnect_timeout">스트림에 재연결할 수 없음: 타임아웃</string>
+    <string name="warning_no_network_trying_resume">네트워크 연결 없음. 연결 시 재개 시도 중.</string>
+    <string name="giving_up_resume">재생 재개 시도 중단</string>
+
+    <string name="error_grant_audiofocus">시스템에서 오디오 포커스 권한을 부여하지 않았습니다</string>
+
+    <string name="error_no_equalizer_found">이퀄라이저 앱을 찾을 수 없습니다</string>
+
+    <string name="player_info_status">상태:&#160;</string>
+    <string name="player_info_status_stopped">중지됨</string>
+    <string name="player_info_status_playing">재생 중</string>
+    <string name="player_info_transferred">전송된 데이터: %1$s</string>
+
+    <string name="tab_player_art">앨범 아트</string>
+    <string name="tab_player_info">정보</string>
+    <string name="tab_player_history">곡 기록</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">손상됨</string>
+    <string name="station_detail_deleted_on_server">삭제됨</string>
+
+    <string name="station_details_clicks">%1$d 클릭</string>
+    <string name="station_details_votes">%1$d 추천</string>
+
+    <string name="image_button_disable">비활성화</string>
+    <string name="image_button_delete">삭제</string>
+    <string name="image_button_more">더 보기</string>
+    <string name="image_button_less">간략히 보기</string>
+    <string name="image_button_repeat">반복</string>
+    <string name="image_button_dont_repeat">반복 안 함</string>
+    <string name="icon_click_trend_decreasing">인기 하락 중</string>
+    <string name="icon_click_trend_increasing">인기 상승 중</string>
+    <string name="icon_click_trend_stable">인기 유지 중</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% 광고 없음 및 개인 정보 보호</string>
+
+    <string name="action_play_in_external">외부 플레이어에서 재생</string>
+    <string name="action_choose_external_player">외부 플레이어 선택</string>
+
+    <string name="settings_disable_battery_optimization">배터리 최적화</string>
+    <string name="settings_ignore_battery_optimization_summary_on">배터리 최적화 무시 중. AMARadio가 포커스를 항상 다시 얻을 수 있어야 합니다.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">배터리 최적화 활성 중. 백그라운드에서 포커스를 다시 얻지 못할 수 있습니다.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">기타</string>
+    <string name="settings_statistics">통계</string>
+    <string name="settings_about">AMARadio 정보</string>
+
+    <string name="description_btn_skip_to_next">다음으로 건너뛰기</string>
+    <string name="description_btn_skip_to_previous">이전으로 건너뛰기</string>
+
+    <string-array name="weekdays">
+        <item>일</item>
+        <item>월</item>
+        <item>화</item>
+        <item>수</item>
+        <item>목</item>
+        <item>금</item>
+        <item>토</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">스트림 URL이 복사되었습니다</string>
+    <string name="notify_track_info_copied">곡 정보가 복사되었습니다</string>
+
+    <string-array name="actions_station_link">
+        <item>웹사이트 방문</item>
+        <item>스트림 URL 복사</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">데이터 요금제 연결 감지됨</string>
+    <string name="alert_metered_connection_message">데이터 요금이 발생할 수 있습니다. 계속하려면 \'확인\'을 누르세요.</string>
+    <string name="nav_item_statistics">통계</string>
+    <string name="nav_item_about">정보</string>
+    <string name="refresh">새로고침</string>
+    <string name="action_filter">필터</string>
+    <string name="filter_country">국가</string>
+    <string name="filter_tag">태그</string>
+    <string name="filter_language">언어</string>
+    <string name="filter_sort_by">정렬 기준</string>
+    <string name="filter_reverse">순서 반전</string>
+    <string name="filter_apply">필터 적용</string>
+    <string name="sort_name">이름</string>
+    <string name="sort_votes">추천수</string>
+    <string name="sort_clicks">클릭수</string>
+    <string name="sort_lastchange">마지막 변경</string>
+    <string name="filter_select_country">국가 선택</string>
+    <string name="filter_select_language">언어 선택</string>
+    <string name="filter_type_tag">태그 입력…</string>
+    <string name="filter_tap_to_configure">탭하여 설정</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

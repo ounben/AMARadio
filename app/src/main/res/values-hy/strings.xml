@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Անուն</string>
+    <string name="detail_tags">Պիտակներ</string>
+    <string name="detail_country">Երկիր</string>
+    <string name="detail_create_shortcut">Ավելացնել հիմնական էկրանին</string>
+    <string name="detail_language">Լեզու</string>
+    <string name="detail_weblink">Վեբ հղում</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Նվագարկել</string>
+    <string name="detail_pause">Դադար</string>
+    <string name="detail_stop">Կանգնեցնել</string>
+    <string name="detail_share">Կիսվել</string>
+    <string name="detail_play_in_AMARadio">Նվագարկել AMARadio-ում</string>
+
+    <string name="action_links">Հղումներ</string>
+    <string name="action_homepage">Գլխավոր էջ</string>
+    <string name="action_favorite">Ֆավորիտ</string>
+    <string name="action_starred_add">Ավելացնել ֆավորիտների մեջ</string>
+    <string name="action_starred_remove">Հեռացնել ֆավորիտներից</string>
+
+    <string name="action_station_visit_website">Այցելել վեբկայք</string>
+    <string name="action_station_copy_stream_url">Պատճենել հոսքի URL-ը</string>
+    <string name="action_station_share">Կիսվել</string>
+
+    <string name="action_local">Տեղական</string>
+    <string name="action_skip_to_next">Հաջորդը</string>
+    <string name="action_pause">Դադար</string>
+    <string name="action_skip_to_previous">Նախորդը</string>
+    <string name="action_resume">Վերսկսել</string>
+    <string name="action_stop">Կանգնեցնել</string>
+    <string name="action_search">Փնտրել</string>
+    <string name="action_delete">Ջնջել</string>
+    <string name="action_delete_history">Ջնջել պատմությունը</string>
+    <string name="action_delete_favorites">Ջնջել բոլոր ֆավորիտները</string>
+    <string name="action_delete_stream_history">Մաքրել երգերի պատմությունը</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Չեղարկել</string>
+    <string name="action_top_click">Ամենաշատ սեղմված</string>
+    <string name="action_toggle_view">Փոխել տեսքը</string>
+    <string name="action_top_vote">Ամենաշատ քվեարկված</string>
+    <string name="action_changed_lately">Վերջին փոփոխված</string>
+    <string name="action_currently_playing">Այժմ հնչում է</string>
+    <string name="action_tags">Պիտակներ</string>
+    <string name="action_countries">Երկրներ/Տարածաշրջաններ</string>
+    <string name="action_languages">Լեզուներ</string>
+    <string name="action_edit">Խմբագրել</string>
+    <string name="action_copy_info">Պատճենել տեղեկությունը</string>
+    <string name="action_rename_tab">Վերանվանել ներդիրը</string>
+    <string name="error_filter_name_required">Խնդրում ենք նախ մուտքագրել այս ֆիլտրի ներդիրի անունը</string>
+    <string name="confirm_delete_filter_tab">Համոզվա՞ծ եք, որ ցանկանում եք ջնջել \"%1$s\" ֆիլտրը:</string>
+    <string name="filter_empty_title">Ստեղծեք ձեր սեփական ռադիոկայանների ցանկը</string>
+    <string name="filter_empty_desc">Ստեղծեք անհատականացված տեսք՝ համատեղելով մի քանի չափանիշներ։ Դուք կարող եք նեղացնել ձեր որոնումը՝ օգտագործելով.</string>
+    <string name="filter_empty_filter_by">Ֆիլտրել ըստ.</string>
+    <string name="filter_empty_filter_desc">Երկիր, Կայանի անուն, Պիտակներ կամ Լեզու</string>
+    <string name="filter_empty_sort_by">Տեսակավորել ըստ.</string>
+    <string name="filter_empty_sort_desc">Սեղմումներ, Այբբենական, Ձայներ կամ Վերջին փոփոխություն</string>
+    <string name="filter_empty_hint">Մուտքագրեք անուն վերևի դաշտում այս տեսքը պահպանելու համար:</string>
+    <string name="error_station_load">Չհաջողվեց միանալ կայանին</string>
+    <string name="error_list_update">Չհաջողվեց միանալ radio browser սերվերին</string>
+
+    <string name="share_action">Կիսվել կայանի հղումով…</string>
+
+    <string name="nav_item_stations">Կայաններ</string>
+    <string name="nav_item_starred">Ֆավորիտներ</string>
+    <string name="nav_item_history">Պատմություն</string>
+    <string name="nav_item_settings">Կարգավորումներ</string>
+
+    <string name="about_text">AMARadio-ն 100% առանց գովազդի է և կենտրոնացված է գաղտնիության վրա:\n\nԵս ի սկզբանե մշակել եմ այս հավելվածը մայրիկիս համար՝ նրան ապահովելու պարզ, ազնիվ ռադիո փորձառություն առանց նյարդայնացնող գովազդների կամ հետևելու: Ահա թե ինչու AMARadio-ն միշտ կմնա առանց գովազդի. դա նրան տրված խոստում է, որը կիսում եմ բոլորիդ հետ:\n\nԱյս նախագիծը հիանալի https://github.com/segler-alex/RadioDroid-ի ֆորկն (fork) է: Ամբողջ կոդը տեղափոխվել է Java-ից Kotlin՝ ապահովելու համար հավելվածի արդիականությունը և համատեղելիությունը Android-ի ապագա տարբերակների հետ:\n\nԱղբյուրի կոդը հասանելի է այստեղ՝ https://github.com/ounben/AMARadio\n\nԱյս հավելվածն օգտագործում է անվճար ռադիոկայանների գրացուցակը https://www.radio-browser.info կայքում: Յուրաքանչյուրը կարող է կայաններ ավելացնել այնտեղ: Այն աշխատում է որպես վիքի առցանց ռադիոկայանների համար:\n\nԿապ՝ ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nԵթե ձեզ դուր է գալիս ծրագիրը և ցանկանում եք օգնել, մի հապաղեք ինձ էլեկտրոնային նամակ ուղարկել: Նաև նոր հնարավորությունների վերաբերյալ գաղափարները միշտ ողջունելի են:\n\nԱյս հավելվածը անվճար ծրագրակազմ է, լիցենզավորված GPLv3-ի ներքո: https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Տարբերակ՝ %1$s</string>
+    <string name="detail_star">Ավելացնել ֆավորիտների մեջ</string>
+    <string name="detail_unstar">Հեռացնել ֆավորիտներից</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Բեռնում…</string>
+
+    <string name="sleep_timer" formatted="true">Քնի ժամաչափ՝ %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Դադարեցնել նվագարկումը ընտրված րոպեից հետո</string>
+    <string name="sleep_timer_apply">Կիրառել</string>
+    <string name="sleep_timer_clear">Մաքրել</string>
+    <string name="nav_item_add_sleep">Քնի ժամաչափ</string>
+
+    <string name="nav_item_save_playlist">Արտահանել ֆավորիտները որպես երգացանկ</string>
+    <string name="nav_item_load_playlist">Ներմուծել ֆավորիտները երգացանկից</string>
+    <string name="nav_item_save_history_playlist">Արտահանել պատմությունը որպես երգացանկ</string>
+    <string name="confirm_overwrite_file">Վերագրե՞լ ֆայլը:</string>
+    <string name="dialog_hint_file_name">Մուտքագրեք ֆայլի անունը</string>
+    <string name="error_empty_field">Այս դաշտը պարտադիր է</string>
+    <string name="error_invalid_file_name">Ֆայլի անվավեր անուն</string>
+    <string name="label_button_cancel">Չեղարկել</string>
+    <string name="label_button_overwrite">Վերագրել</string>
+    <string name="notify_load_playlist_nok">Չհաջողվեց ներմուծել %1$s&#47;%2$s-ից</string>
+    <string name="notify_load_playlist_now">Ներմուծվում է %1$s&#47;%2$s-ից, խնդրում ենք սպասել:</string>
+    <string name="notify_load_playlist_ok">Ներմուծվել է %1$d կայան %2$s&#47;%3$s-ից</string>
+    <string name="notify_save_playlist_nok">Չհաջողվեց արտահանել %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Արտահանվում է %1$s&#47;%2$s, խնդրում ենք սպասել:</string>
+    <string name="notify_save_playlist_ok">Հաջողությամբ արտահանվել է %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">Ցուցակում առկա %2$d տեղական կայաններից %1$d-ը նշված են որպես սերվերում գոյություն չունեցող</string>
+
+    <string name="searchpreference_clear_history">Մաքրել պատմությունը</string>
+    <string name="searchpreference_no_results">Արդյունքներ չկան</string>
+    <string name="searchpreference_search">Փնտրել…</string>
+    <string name="settings_appearance">Արտաքին տեսք</string>
+    <string name="settings_theme_selection_title">Թեմա</string>
+    <string name="theme_light">Լուսավոր</string>
+    <string name="theme_dark">Մութ</string>
+    <string name="theme_system">Հետևել համակարգին</string>
+    <string name="settings_compact_style">Կոմպակտ ռեժիմ</string>
+    <string name="settings_compact_style_desc_off">Մեծ պատկերակ կայանի մանրամասներով</string>
+    <string name="settings_compact_style_desc_on">Փոքր պատկերակ առանց մանրամասների</string>
+    <string name="settings_bottom_navigation">Ստորին նավիգացիա</string>
+    <string name="settings_ui_scale">UI մասշտաբավորում</string>
+    <string name="settings_language">Լեզու</string>
+    <string name="ui_scale_compact">Կոմպակտ</string>
+    <string name="ui_scale_standard">Համակարգային ստանդարտ</string>
+    <string name="ui_scale_large">Մեծ</string>
+    <string name="ui_scale_extra_large">Շատ մեծ</string>
+
+    <string name="settings_interaction">Փոխազդեցություն</string>
+    <string name="settings_single_use_tags">Ցուցադրել հազվադեպ օգտագործվող պիտակները</string>
+    <string name="settings_single_use_tags_desc_off">Հազվադեպ օգտագործվող պիտակները չեն ցուցադրվի</string>
+    <string name="settings_single_use_tags_desc_on">Հազվադեպ օգտագործվող պիտակները կցուցադրվեն</string>
+
+    <string name="settings_show_broken">Չաշխատող կայաններ</string>
+    <string name="settings_show_broken_on">Ցուցադրել չաշխատող կայանները ցուցակներում</string>
+    <string name="settings_show_broken_off">Չցուցադրել չաշխատող կայանները ցուցակներում</string>
+
+    <string name="settings_startup_behaviour">Մեկնարկի վարքագիծ</string>
+    <string name="action_grid_view">Ցանցի տեսք</string>
+    <string name="action_list_view">Ցուցակի տեսք</string>
+
+    <string name="startup_action_title">Մեկնարկի գործողություն</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Ցույց տալ բոլոր կայանները</string>
+    <string name="startup_show_favorites">Ցույց տալ ֆավորիտները</string>
+    <string name="startup_show_history">Ցույց տալ պատմությունը</string>
+    <string name="startup_show_last_view">Վերջին դիտվածը</string>
+
+    <string name="settings_load_icons">Ցուցադրել կայանների պատկերակները</string>
+    <string name="settings_load_icons_on">Պատկերակները կներբեռնվեն</string>
+    <string name="settings_load_icons_off">Պատկերակները չեն ներբեռնվի</string>
+
+    <string name="settings_auto_favorite">Ավտո-ֆավորիտ</string>
+    <string name="settings_auto_favorite_on">Նվագարկելիս կայանները ավտոմատ ավելացնել ֆավորիտների մեջ</string>
+    <string name="settings_auto_favorite_off">Նվագարկելիս կայանները ավտոմատ չավելացնել ֆավորիտների մեջ</string>
+
+    <string name="settings_play">Նվագարկիչ</string>
+    <string name="settings_auto_play_on_startup">Ավտո-նվագարկում</string>
+    <string name="settings_auto_play_on_startup_on">Մեկնարկելիս նվագարկել վերջին կայանը</string>
+    <string name="settings_auto_play_on_startup_off">Մեկնարկելիս չնվագարկել վերջին կայանը</string>
+    <string name="settings_auto_off_on_startup">Ավտո-կանգառ</string>
+    <string name="settings_auto_off_on_startup_on">Օգտագործել ավտո-կանգառի ժամաչափը ավտո-նվագարկման հետ</string>
+    <string name="settings_auto_off_on_startup_off">Չօգտագործել ավտո-կանգառի ժամաչափը ավտո-նվագարկման հետ</string>
+    <string name="settings_auto_off_sleep_timer">Ավտո-կանգառի ժամաչափ</string>
+    <string name="settings_auto_off_sleep_timer_desc">Դադարեցնել նվագարկումը %1$s րոպե հետո</string>
+    <string name="settings_play_external">Միացնել արտաքին նվագարկիչը</string>
+    <string name="settings_play_external_desc_on">Նվագարկել կայանները արտաքին նվագարկիչով</string>
+    <string name="settings_play_external_desc_off">Նվագարկել կայանները AMARadio-ով</string>
+    <string name="settings_equalizer">Էկվալայզեր</string>
+
+    <string name="settings_connectivity">Կապ</string>
+    <string name="settings_connect_timeout">Միացման ժամանակի սպառում</string>
+    <string name="settings_read_timeout">Ընթերցման ժամանակի սպառում</string>
+    <string name="settings_resume_timeout">Վերսկսման ժամանակի սպառում</string>
+    <string name="settings_retry_timeout">Վերափորձի ժամանակի սպառում</string>
+    <string name="settings_retry_delay">Վերամիացման ուշացում</string>
+    <string name="settings_proxy">Պրոքսի</string>
+    <string name="settings_proxy_login">Օգտանուն</string>
+    <string name="settings_proxy_password">Գաղտնաբառ</string>
+    <string name="settings_proxy_action_test">Թեստ</string>
+    <string name="settings_proxy_working">Հաջողությամբ միացվեց %s-ին</string>
+    <string name="settings_proxy_not_working">Չհաջողվեց միանալ %1$s-ին\n%2$s</string>
+    <string name="settings_proxy_invalid">Պրոքսիի համար ձեր մուտքագրած արժեքները անվավեր են</string>
+    <string name="ignore_proxy_settings_invalid">Անտեսվել են պրոքսիի անվավեր կարգավորումները</string>
+    <string name="settings_seconds_format">%d վայրկյան</string>
+    <string name="settings_milliseconds_format">%d միլիվայրկյան</string>
+
+    <string name="settings_pause_when_noisy">Դադարեցնել ականջակալների անջատման դեպքում</string>
+
+    <string name="settings_auto_resume_do_not_resume">Չվերսկսել</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Վերսկսել լարային միացման դեպքում</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Վերսկսել նվագարկումը լարային ականջակալների միացման դեպքում</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Վերսկսել Bluetooth միացման դեպքում</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Վերսկսել նվագարկումը Bluetooth A2DP սարքի միացման դեպքում</string>
+
+    <string name="settings_auto_resume_on_any_connected">Վերսկսել ցանկացած միացման դեպքում</string>
+
+    <string name="settings_warn_no_wifi">Զգուշացում Wi-Fi-ի բացակայության մասին</string>
+    <string name="settings_warn_no_wifi_on">Զգուշացնել առանց Wi-Fi միացման նվագարկելիս</string>
+    <string name="settings_warn_no_wifi_off">Չզգուշացնել Wi-Fi միացման բացակայության դեպքում</string>
+
+    <string name="notify_pre_play">Միացում</string>
+    <string name="notify_play">Նվագարկվում է</string>
+    <string name="notify_paused">Դադարեցված է</string>
+    <string name="notify_metered_connection">Սահմանափակմամբ միացում</string>
+
+    <string name="notify_starred">Կայանն ավելացվել է ֆավորիտների մեջ</string>
+    <string name="notify_autostarred">Կայանն ավտոմատ ավելացվել է ֆավորիտների մեջ</string>
+    <string name="notify_unstarred">Կայանը հեռացվել է ֆավորիտներից</string>
+    <string name="notify_deleted_favorites">Ֆավորիտները ջնջվել են</string>
+    <string name="notify_deleted_history">Պատմությունը ջնջվել է</string>
+
+    <string name="notify_open_link_failure">Հղումը բացելու համար հավելված չգտնվեց</string>
+
+    <string name="notify_station_removed_from_list">1 հեռացված է</string>
+    <string name="action_station_removed_from_list_undo">ՀԵՏԱՐԿԵԼ</string>
+
+    <string name="alert_delete_history">Իսկապե՞ս ցանկանում եք ջնջել պատմությունը:</string>
+    <string name="alert_delete_favorites">Իսկապե՞ս ցանկանում եք ջնջել բոլոր ֆավորիտները:</string>
+    <string name="yes">Այո</string>
+    <string name="no">Ոչ</string>
+
+    <string name="alert_select_player">Խնդրում ենք ընտրել նվագարկիչ</string>
+    <string name="alert_select_player_name">Անուն</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Ելքի համար ևս մեկ անգամ սեղմեք «Հետ»</string>
+
+    <string name="error_stream_url">Հոսքի URL-ի խնդիր</string>
+    <string name="error_caching_stream">Հոսքի քեշավորման խնդիր</string>
+    <string name="error_play_stream">Հնարավոր չէ նվագարկել հոսքը</string>
+    <string name="error_stream_reconnect_timeout">Հնարավոր չէ վերամիանալ հոսքին. ժամանակի սպառում</string>
+    <string name="warning_no_network_trying_resume">Ցանցային միացում չկա: Փորձ է արվում վերսկսել, երբ կապը վերականգնվի:</string>
+    <string name="giving_up_resume">Նվագարկումը վերսկսելու փորձի դադարեցում</string>
+
+    <string name="error_grant_audiofocus">Աուդիո ֆոկուսի հարցումը չի բավարարվել համակարգի կողմից</string>
+
+    <string name="error_no_equalizer_found">Էկվալայզեր հավելված չգտնվեց</string>
+
+    <string name="player_info_status">Կարգավիճակ՝&#160;</string>
+    <string name="player_info_status_stopped">կանգնեցված</string>
+    <string name="player_info_status_playing">նվագարկվում է</string>
+    <string name="player_info_transferred">Փոխանցված տվյալներ՝ %1$s</string>
+
+    <string name="tab_player_art">Ալբոմի շապիկ</string>
+    <string name="tab_player_info">Ինֆո</string>
+    <string name="tab_player_history">Երգերի պատմություն</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ԽԱՓԱՆՎԱԾ</string>
+    <string name="station_detail_deleted_on_server">ՋՆՋՎԱԾ</string>
+
+    <string name="station_details_clicks">%1$d սեղմում</string>
+    <string name="station_details_votes">%1$d ձայն</string>
+
+    <string name="image_button_disable">Անջատել</string>
+    <string name="image_button_delete">Ջնջել</string>
+    <string name="image_button_more">Ավելին</string>
+    <string name="image_button_less">Պակաս</string>
+    <string name="image_button_repeat">Կրկնել</string>
+    <string name="image_button_dont_repeat">Չկրկնել</string>
+    <string name="icon_click_trend_decreasing">Պոպուլյարությունը նվազում է</string>
+    <string name="icon_click_trend_increasing">Պոպուլյարությունը աճում է</string>
+    <string name="icon_click_trend_stable">Պոպուլյարությունը կայուն է</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% առանց գովազդի և անձնական</string>
+
+    <string name="action_play_in_external">Նվագարկել արտաքին նվագարկիչով</string>
+    <string name="action_choose_external_player">Ընտրել արտաքին նվագարկիչ</string>
+
+    <string name="settings_disable_battery_optimization">Մարտկոցի օպտիմալացում</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Մարտկոցի օպտիմալացումն անտեսված է, AMARadio-ն միշտ պետք է կարողանա նորից ստանալ ֆոկուսը:</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Մարտկոցի օպտիմալացումն ակտիվացված է, AMARadio-ն հնարավոր է չկարողանա նորից ստանալ ֆոկուսը հետնապլանում:</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Այլ</string>
+    <string name="settings_statistics">Վիճակագրություն</string>
+    <string name="settings_about">AMARadio-ի մասին</string>
+
+    <string name="description_btn_skip_to_next">Անցնել հաջորդին</string>
+    <string name="description_btn_skip_to_previous">Անցնել նախորդին</string>
+
+    <string-array name="weekdays">
+        <item>Կիր</item>
+        <item>Երկ</item>
+        <item>Երք</item>
+        <item>Չոր</item>
+        <item>Հնգ</item>
+        <item>Ուրբ</item>
+        <item>Շաբ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Հոսքի URL-ը հաջողությամբ պատճենվեց</string>
+    <string name="notify_track_info_copied">Երգի տեղեկությունը հաջողությամբ պատճենվեց</string>
+
+    <string-array name="actions_station_link">
+        <item>Այցելել վեբկայք</item>
+        <item>Պատճենել հոսքի URL-ը</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Հայտնաբերվել է սահմանափակմամբ միացում</string>
+    <string name="alert_metered_connection_message">Սահմանափակմամբ միացումը կարող է լրացուցիչ ծախսեր առաջացնել, շարունակելու համար սեղմեք «OK»:</string>
+    <string name="nav_item_statistics">Վիճակագրություն</string>
+    <string name="nav_item_about">Մասին</string>
+    <string name="refresh">Թարմացնել</string>
+    <string name="action_filter">Ֆիլտր</string>
+    <string name="filter_country">Երկիր</string>
+    <string name="filter_tag">Պիտակ</string>
+    <string name="filter_language">Լեզու</string>
+    <string name="filter_sort_by">Տեսակավորել ըստ</string>
+    <string name="filter_reverse">Հակառակ կարգ</string>
+    <string name="filter_apply">Կիրառել ֆիլտրը</string>
+    <string name="sort_name">Անուն</string>
+    <string name="sort_votes">Ձայներ</string>
+    <string name="sort_clicks">Սեղմումներ</string>
+    <string name="sort_lastchange">Վերջին փոփոխություն</string>
+    <string name="filter_select_country">Ընտրել երկիրը</string>
+    <string name="filter_select_language">Ընտրել լեզուն</string>
+    <string name="filter_type_tag">Մուտքագրեք պիտակը…</string>
+    <string name="filter_tap_to_configure">Հպվեք կարգավորելու համար</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

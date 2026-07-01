@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Атауы</string>
+    <string name="detail_tags">Тегтер</string>
+    <string name="detail_country">Мемлекет</string>
+    <string name="detail_create_shortcut">Басты экранға қосу</string>
+    <string name="detail_language">Тіл</string>
+    <string name="detail_weblink">Веб-сілтеме</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Ойнату</string>
+    <string name="detail_pause">Кідірту</string>
+    <string name="detail_stop">Тоқтату</string>
+    <string name="detail_share">Бөлісу</string>
+    <string name="detail_play_in_AMARadio">AMARadio арқылы ойнату</string>
+
+    <string name="action_links">Сілтемелер</string>
+    <string name="action_homepage">Басты бет</string>
+    <string name="action_favorite">Таңдаулы</string>
+    <string name="action_starred_add">Таңдаулыларға қосу</string>
+    <string name="action_starred_remove">Таңдаулылардан алып тастау</string>
+
+    <string name="action_station_visit_website">Веб-сайтқа өту</string>
+    <string name="action_station_copy_stream_url">Ағын URL-ін көшіру</string>
+    <string name="action_station_share">Бөлісу</string>
+
+    <string name="action_local">Жергілікті</string>
+    <string name="action_skip_to_next">Келесі</string>
+    <string name="action_pause">Кідірту</string>
+    <string name="action_skip_to_previous">Алдыңғы</string>
+    <string name="action_resume">Жалғастыру</string>
+    <string name="action_stop">Тоқтату</string>
+    <string name="action_search">Іздеу</string>
+    <string name="action_delete">Өшіру</string>
+    <string name="action_delete_history">Тарихты өшіру</string>
+    <string name="action_delete_favorites">Барлық таңдаулыларды өшіру</string>
+    <string name="action_delete_stream_history">Тректер тарихын тазалау</string>
+    <string name="action_ok">ОК</string>
+    <string name="action_cancel">Бас тарту</string>
+    <string name="action_top_click">Ең көп тыңдалғандар</string>
+    <string name="action_toggle_view">Көріністі ауыстыру</string>
+    <string name="action_top_vote">Ең көп дауыс алғандар</string>
+    <string name="action_changed_lately">Соңғы өзгертілгендер</string>
+    <string name="action_currently_playing">Қазір ойнап тұр</string>
+    <string name="action_tags">Тегтер</string>
+    <string name="action_countries">Елдер/Аймақтар</string>
+    <string name="action_languages">Тілдер</string>
+    <string name="action_edit">Өңдеу</string>
+    <string name="action_copy_info">Ақпаратты көшіру</string>
+    <string name="action_rename_tab">Қойынды атауын өзгерту</string>
+    <string name="error_filter_name_required">Алдымен осы сүзгі қойындысының атауын енгізіңіз</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" сүзгісін өшіргіңіз келетініне сенімдісіз бе?</string>
+    <string name="filter_empty_title">Өзіңіздің жеке радиостанциялар тізімін жасаңыз</string>
+    <string name="filter_empty_desc">Бірнеше критерийді біріктіру арқылы жекелендірілген көрініс жасаңыз. Іздеуді келесілер бойынша шектей аласыз:</string>
+    <string name="filter_empty_filter_by">Сүзгілеу:</string>
+    <string name="filter_empty_filter_desc">Ел, Станция атауы, Тегтер немесе Тіл</string>
+    <string name="filter_empty_sort_by">Сұрыптау:</string>
+    <string name="filter_empty_sort_desc">Шертулер, Әліпби, Дауыстар немесе Соңғы өзгеріс</string>
+    <string name="filter_empty_hint">Осы көріністі сақтау үшін жоғарыдағы өріске атау енгізіңіз!</string>
+    <string name="error_station_load">Станцияға қосылу мүмкін болмады</string>
+    <string name="error_list_update">Radio browser серверіне қосылу мүмкін болмады</string>
+
+    <string name="share_action">Станция сілтемесімен бөлісу…</string>
+
+    <string name="nav_item_stations">Станциялар</string>
+    <string name="nav_item_starred">Таңдаулылар</string>
+    <string name="nav_item_history">Тарих</string>
+    <string name="nav_item_settings">Параметрлер</string>
+
+    <string name="about_text">AMARadio 100% жарнамасыз және құпиялылыққа бағытталған.\n\nМен бұл қолданбаны алғаш рет анам үшін, оған жарнамасыз немесе аңдусыз қарапайым радио тәжірибесін ұсыну үшін жасадым. Сондықтан AMARadio әрқашан жарнамасыз болып қалады – бұл оған берілген уәде және оны баршаңызбен бөлісемін.\n\nБұл жоба тамаша https://github.com/segler-alex/RadioDroid жобасының форкы (fork) болып табылады. Қолданба заманауи болып қалуы және болашақ Android нұсқаларымен үйлесімді болуы үшін барлық бастапқы код Java-дан Kotlin-ге көшірілді.\n\nБастапқы код мына мекенжайда қолжетімді: https://github.com/ounben/AMARadio\n\nБұл қолданба https://www.radio-browser.info сайтындағы тегін радиостанциялар каталогын пайдаланады. Кез келген адам оған станциялар қоса алады. Ол онлайн радиостанциялар үшін вики сияқты жұмыс істейді.\n\nБайланыс: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nЕгер сізге бағдарлама ұнаса және көмектескіңіз келсе, маған электрондық хат жіберуден тартынбаңыз. Сондай-ақ жаңа мүмкіндіктер туралы идеялар әрқашан құпталады!\n\nБұл қолданба GPLv3 лицензиясы бойынша тегін бағдарламалық құрал болып табылады. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Нұсқа: %1$s</string>
+    <string name="detail_star">Таңдаулыларға қосу</string>
+    <string name="detail_unstar">Таңдаулылардан алып тастау</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Жүктелуде…</string>
+
+    <string name="sleep_timer" formatted="true">Ұйықтау таймері: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Таңдалған уақыттан кейін ойнатуды тоқтату</string>
+    <string name="sleep_timer_apply">Қолдану</string>
+    <string name="sleep_timer_clear">Тазалау</string>
+    <string name="nav_item_add_sleep">Ұйықтау таймері</string>
+
+    <string name="nav_item_save_playlist">Таңдаулыларды плейлист ретінде экспорттау</string>
+    <string name="nav_item_load_playlist">Плейлисттен таңдаулыларды импорттау</string>
+    <string name="nav_item_save_history_playlist">Тарихты плейлист ретінде экспорттау</string>
+    <string name="confirm_overwrite_file">Файлды қайта жазу керек пе?</string>
+    <string name="dialog_hint_file_name">Файл атауын енгізіңіз</string>
+    <string name="error_empty_field">Бұл өріс міндетті түрде толтырылуы керек</string>
+    <string name="error_invalid_file_name">Файл атауы жарамсыз</string>
+    <string name="label_button_cancel">Бас тарту</string>
+    <string name="label_button_overwrite">Қайта жазу</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s ішінен импорттау мүмкін болмады</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s ішінен импортталуда, күте тұрыңыз.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s ішінен %1$d станция импортталды</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s ішіне экспорттау мүмкін болмады</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s ішіне экспортталуда, күте тұрыңыз.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s ішіне сәтті экспортталды</string>
+    <string name="notify_sync_list_deleted_entries">Тізімдегі %2$d жергілікті станцияның %1$d серверде жоқ деп белгіленген</string>
+
+    <string name="searchpreference_clear_history">Тарихты тазалау</string>
+    <string name="searchpreference_no_results">Нәтижелер жоқ</string>
+    <string name="searchpreference_search">Іздеу…</string>
+    <string name="settings_appearance">Сыртқы түрі</string>
+    <string name="settings_theme_selection_title">Тақырып</string>
+    <string name="theme_light">Ашық</string>
+    <string name="theme_dark">Қараңғы</string>
+    <string name="theme_system">Жүйе бойынша</string>
+    <string name="settings_compact_style">Ықшам режим</string>
+    <string name="settings_compact_style_desc_off">Станция мәліметтері бар үлкен белгіше</string>
+    <string name="settings_compact_style_desc_on">Мәліметтері жоқ кішкентай белгіше</string>
+    <string name="settings_bottom_navigation">Төменгі навигация</string>
+    <string name="settings_ui_scale">UI масштабтау</string>
+    <string name="settings_language">Тіл</string>
+    <string name="ui_scale_compact">Ықшам</string>
+    <string name="ui_scale_standard">Жүйелік стандарт</string>
+    <string name="ui_scale_large">Үлкен</string>
+    <string name="ui_scale_extra_large">Өте үлкен</string>
+
+    <string name="settings_interaction">Өзара әрекеттесу</string>
+    <string name="settings_single_use_tags">Сирек қолданылатын тегтерді көрсету</string>
+    <string name="settings_single_use_tags_desc_off">Сирек қолданылатын тегтер көрсетілмейді</string>
+    <string name="settings_single_use_tags_desc_on">Сирек қолданылатын тегтер көрсетіледі</string>
+
+    <string name="settings_show_broken">Істен шыққан станциялар</string>
+    <string name="settings_show_broken_on">Тізімдерде істен шыққан станцияларды көрсету</string>
+    <string name="settings_show_broken_off">Тізімдерде істен шыққан станцияларды көрсетпеу</string>
+
+    <string name="settings_startup_behaviour">Іске қосу әрекеті</string>
+    <string name="action_grid_view">Тор көрінісі</string>
+    <string name="action_list_view">Тізім көрінісі</string>
+
+    <string name="startup_action_title">Іске қосу әрекеті</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Барлық станцияларды көрсету</string>
+    <string name="startup_show_favorites">Таңдаулыларды көрсету</string>
+    <string name="startup_show_history">Тарихты көрсету</string>
+    <string name="startup_show_last_view">Соңғы көрініс</string>
+
+    <string name="settings_load_icons">Станция белгішелерін көрсету</string>
+    <string name="settings_load_icons_on">Белгішелер жүктеледі</string>
+    <string name="settings_load_icons_off">Белгішелер жүктелмейді</string>
+
+    <string name="settings_auto_favorite">Авто-таңдаулы</string>
+    <string name="settings_auto_favorite_on">Ойнату кезінде станцияларды автоматты түрде таңдаулыларға қосу</string>
+    <string name="settings_auto_favorite_off">Ойнату кезінде станцияларды автоматты түрде таңдаулыларға қоспау</string>
+
+    <string name="settings_play">Ойнатқыш</string>
+    <string name="settings_auto_play_on_startup">Авто-ойнату</string>
+    <string name="settings_auto_play_on_startup_on">Іске қосу кезінде соңғы станцияны ойнату</string>
+    <string name="settings_auto_play_on_startup_off">Іске қосу кезінде соңғы станцияны ойнатпау</string>
+    <string name="settings_auto_off_on_startup">Авто-тоқтату</string>
+    <string name="settings_auto_off_on_startup_on">Авто-ойнатумен бірге авто-тоқтату таймерін пайдалану</string>
+    <string name="settings_auto_off_on_startup_off">Авто-ойнатумен бірге авто-тоқтату таймерін пайдаланбау</string>
+    <string name="settings_auto_off_sleep_timer">Авто-тоқтату таймері</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s минуттан кейін ойнатуды тоқтату</string>
+    <string name="settings_play_external">Сыртқы ойнатқышты қосу</string>
+    <string name="settings_play_external_desc_on">Станцияларды сыртқы ойнатқышпен ойнату</string>
+    <string name="settings_play_external_desc_off">Станцияларды AMARadio арқылы ойнату</string>
+    <string name="settings_equalizer">Эквалайзер</string>
+
+    <string name="settings_connectivity">Қосылым</string>
+    <string name="settings_connect_timeout">Қосылым күту уақыты</string>
+    <string name="settings_read_timeout">Оқу күту уақыты</string>
+    <string name="settings_resume_timeout">Жалғастыру күту уақыты</string>
+    <string name="settings_retry_timeout">Қайталау күту уақыты</string>
+    <string name="settings_retry_delay">Қайта қосылу кешігуі</string>
+    <string name="settings_proxy">Прокси</string>
+    <string name="settings_proxy_login">Пайдаланушы аты</string>
+    <string name="settings_proxy_password">Құпия сөз</string>
+    <string name="settings_proxy_action_test">Тест</string>
+    <string name="settings_proxy_working">%s қосылымы сәтті орнатылды</string>
+    <string name="settings_proxy_not_working">%1$s қосылымы сәтсіз аяқталды\n%2$s</string>
+    <string name="settings_proxy_invalid">Прокси үшін енгізілген мәндер жарамсыз</string>
+    <string name="ignore_proxy_settings_invalid">Жарамсыз прокси параметрлері еленбеді</string>
+    <string name="settings_seconds_format">%d секунд</string>
+    <string name="settings_milliseconds_format">%d миллисекунд</string>
+
+    <string name="settings_pause_when_noisy">Гарнитура ажыратылғанда кідірту</string>
+
+    <string name="settings_auto_resume_do_not_resume">Жалғастырмау</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Сымды қосылымда жалғастыру</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Сымды гарнитура қосылғанда ойнатуды жалғастыру</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth қосылымында жалғастыру</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP құрылғысы қосылғанда ойнатуды жалғастыру</string>
+
+    <string name="settings_auto_resume_on_any_connected">Кез келген қосылымда жалғастыру</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi жоқ кезде ескерту</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi қосылымынсыз ойнатқанда ескерту</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi қосылымы болмаса да ескерту жасамау</string>
+
+    <string name="notify_pre_play">Қосылуда</string>
+    <string name="notify_play">Ойнатуда</string>
+    <string name="notify_paused">Кідіртілді</string>
+    <string name="notify_metered_connection">Лимиттелген қосылым</string>
+
+    <string name="notify_starred">Станция таңдаулыларға қосылды</string>
+    <string name="notify_autostarred">Станция автоматты түрде таңдаулыларға қосылды</string>
+    <string name="notify_unstarred">Станция таңдаулылардан алынып тасталды</string>
+    <string name="notify_deleted_favorites">Таңдаулылар өшірілді</string>
+    <string name="notify_deleted_history">Тарих өшірілді</string>
+
+    <string name="notify_open_link_failure">Сілтемені ашуға арналған қолданба табылмады</string>
+
+    <string name="notify_station_removed_from_list">1 станция жойылды</string>
+    <string name="action_station_removed_from_list_undo">БОЛДЫРМАУ</string>
+
+    <string name="alert_delete_history">Шынымен тарихты өшіргіңіз келе ме?</string>
+    <string name="alert_delete_favorites">Шынымен барлық таңдаулыларды өшіргіңіз келе ме?</string>
+    <string name="yes">Иә</string>
+    <string name="no">Жоқ</string>
+
+    <string name="alert_select_player">Ойнатқышты таңдаңыз</string>
+    <string name="alert_select_player_name">Атауы</string>
+    <string name="hostname">Хост атауы</string>
+    <string name="port">Порт</string>
+
+    <string name="alert_press_back_to_exit">Шығу үшін \"Артқа\" түймесін тағы бір рет басыңыз</string>
+
+    <string name="error_stream_url">Ағын URL мекенжайында ақау бар</string>
+    <string name="error_caching_stream">Ағынды кэштеуде ақау бар</string>
+    <string name="error_play_stream">Ағынды ойнату мүмкін емес</string>
+    <string name="error_stream_reconnect_timeout">Ағынға қайта қосылу мүмкін болмады: уақыт бітті</string>
+    <string name="warning_no_network_trying_resume">Желі қосылымы жоқ. Қосылым қалпына келгенде жалғастыруға тырысады.</string>
+    <string name="giving_up_resume">Ойнатуды жалғастыру әрекетінен бас тарту</string>
+
+    <string name="error_grant_audiofocus">Жүйе аудио фокус сұранысын мақұлдамады</string>
+
+    <string name="error_no_equalizer_found">Эквалайзер қолданбасы табылмады</string>
+
+    <string name="player_info_status">Күйі:&#160;</string>
+    <string name="player_info_status_stopped">тоқтатылды</string>
+    <string name="player_info_status_playing">ойнап тұр</string>
+    <string name="player_info_transferred">Берілген деректер: %1$s</string>
+
+    <string name="tab_player_art">Альбом мұқабасы</string>
+    <string name="tab_player_info">Ақпарат</string>
+    <string name="tab_player_history">Тректер тарихы</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ІСТЕН ШЫҚҚАН</string>
+    <string name="station_detail_deleted_on_server">ЖОЙЫЛҒАН</string>
+
+    <string name="station_details_clicks">%1$d шерту</string>
+    <string name="station_details_votes">%1$d дауыс</string>
+
+    <string name="image_button_disable">Ажырату</string>
+    <string name="image_button_delete">Өшіру</string>
+    <string name="image_button_more">Көбірек</string>
+    <string name="image_button_less">Азырақ</string>
+    <string name="image_button_repeat">Қайталау</string>
+    <string name="image_button_dont_repeat">Қайталамау</string>
+    <string name="icon_click_trend_decreasing">Популярлығы төмендеуде</string>
+    <string name="icon_click_trend_increasing">Популярлығы артуда</string>
+    <string name="icon_click_trend_stable">Популярлығы тұрақты</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% жарнамасыз және жеке</string>
+
+    <string name="action_play_in_external">Сыртқы ойнатқышта ойнату</string>
+    <string name="action_choose_external_player">Сыртқы ойнатқышты таңдау</string>
+
+    <string name="settings_disable_battery_optimization">Батареяны оңтайландыру</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Батареяны оңтайландыру еленбейді, AMARadio әрқашан фокусты қайтара алуы керек.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Батареяны оңтайландыру белсендірілген, AMARadio фондық режимде фокусты қайтара алмауы мүмкін.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Басқалары</string>
+    <string name="settings_statistics">Статистика</string>
+    <string name="settings_about">AMARadio туралы</string>
+
+    <string name="description_btn_skip_to_next">Келесіге өту</string>
+    <string name="description_btn_skip_to_previous">Алдыңғыға өту</string>
+
+    <string-array name="weekdays">
+        <item>Жк</item>
+        <item>Дс</item>
+        <item>Сс</item>
+        <item>Ср</item>
+        <item>Бс</item>
+        <item>Жм</item>
+        <item>Сб</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Ағын URL мекенжайы сәтті көшірілді</string>
+    <string name="notify_track_info_copied">Трек ақпараты сәтті көшірілді</string>
+
+    <string-array name="actions_station_link">
+        <item>Веб-сайтқа өту</item>
+        <item>Ағын URL-ін көшіру</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Лимиттелген қосылым анықталды</string>
+    <string name="alert_metered_connection_message">Лимиттелген қосылым қосымша ақы тудыруы мүмкін, жалғастыру үшін \"ОК\" басыңыз.</string>
+    <string name="nav_item_statistics">Статистика</string>
+    <string name="nav_item_about">Туралы</string>
+    <string name="refresh">Жаңарту</string>
+    <string name="action_filter">Сүзгі</string>
+    <string name="filter_country">Мемлекет</string>
+    <string name="filter_tag">Тег</string>
+    <string name="filter_language">Тіл</string>
+    <string name="filter_sort_by">Сұрыптау:</string>
+    <string name="filter_reverse">Кері ретпен</string>
+    <string name="filter_apply">Сүзгіні қолдану</string>
+    <string name="sort_name">Атауы</string>
+    <string name="sort_votes">Дауыстар</string>
+    <string name="sort_clicks">Шертулер</string>
+    <string name="sort_lastchange">Соңғы өзгеріс</string>
+    <string name="filter_select_country">Мемлекетті таңдаңыз</string>
+    <string name="filter_select_language">Тілді таңдаңыз</string>
+    <string name="filter_type_tag">Тегті енгізіңіз…</string>
+    <string name="filter_tap_to_configure">Баптау үшін басыңыз</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">නම</string>
+    <string name="detail_tags">ටැග්</string>
+    <string name="detail_country">රට</string>
+    <string name="detail_create_shortcut">මුල් තිරයට එක් කරන්න</string>
+    <string name="detail_language">භාෂාව</string>
+    <string name="detail_weblink">වෙබ් සබැඳිය</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">ධාවනය කරන්න</string>
+    <string name="detail_pause">නවතන්න</string>
+    <string name="detail_stop">නවත්වන්න</string>
+    <string name="detail_share">බෙදාගන්න</string>
+    <string name="detail_play_in_AMARadio">AMARadio හි ධාවනය කරන්න</string>
+
+    <string name="action_links">සබැඳි</string>
+    <string name="action_homepage">මුල් පිටුව</string>
+    <string name="action_favorite">ප්‍රියතම</string>
+    <string name="action_starred_add">ප්‍රියතම ලැයිස්තුවට එක් කරන්න</string>
+    <string name="action_starred_remove">ප්‍රියතම ලැයිස්තුවෙන් ඉවත් කරන්න</string>
+
+    <string name="action_station_visit_website">වෙබ් අඩවියට පිවිසෙන්න</string>
+    <string name="action_station_copy_stream_url">Stream URL එක පිටපත් කරන්න</string>
+    <string name="action_station_share">බෙදාගන්න</string>
+
+    <string name="action_local">ස්ථානීය</string>
+    <string name="action_skip_to_next">ඊළඟ</string>
+    <string name="action_pause">නවතන්න</string>
+    <string name="action_skip_to_previous">පෙර</string>
+    <string name="action_resume">නැවත අරඹන්න</string>
+    <string name="action_stop">නවත්වන්න</string>
+    <string name="action_search">සොයන්න</string>
+    <string name="action_delete">මකන්න</string>
+    <string name="action_delete_history">ඉතිහාසය මකන්න</string>
+    <string name="action_delete_favorites">සියලුම ප්‍රියතමයන් මකන්න</string>
+    <string name="action_delete_stream_history">ගීත ඉතිහාසය මකන්න</string>
+    <string name="action_ok">හරි</string>
+    <string name="action_cancel">අවලංගු කරන්න</string>
+    <string name="action_top_click">වැඩිපුරම නැරඹූ</string>
+    <string name="action_toggle_view">දසුන වෙනස් කරන්න</string>
+    <string name="action_top_vote">වැඩිම මනාප</string>
+    <string name="action_changed_lately">මෑතකදී වෙනස් වූ</string>
+    <string name="action_currently_playing">දැනට ධාවනය වේ</string>
+    <string name="action_tags">ටැග්</string>
+    <string name="action_countries">රටවල්/කලාප</string>
+    <string name="action_languages">භාෂා</string>
+    <string name="action_edit">සංස්කරණය කරන්න</string>
+    <string name="action_copy_info">තොරතුරු පිටපත් කරන්න</string>
+    <string name="action_rename_tab">ටැබ් එකේ නම වෙනස් කරන්න</string>
+    <string name="error_filter_name_required">කරුණාකර පළමුව මෙම පෙරහන් ටැබය සඳහා නමක් ඇතුළත් කරන්න</string>
+    <string name="confirm_delete_filter_tab">ඔබට ඇත්තටම \"%1$s\" පෙරහන මැකීමට අවශ්‍යද?</string>
+    <string name="filter_empty_title">ඔබේම ගුවන් විදුලි නාලිකා ලැයිස්තුවක් සාදාගන්න</string>
+    <string name="filter_empty_desc">විවිධ නිර්ණායක ඒකාබද්ධ කිරීමෙන් පුද්ගලීකරණය කළ දසුනක් සාදන්න. ඔබට පහත දෑ භාවිතයෙන් සෙවීම පටු කළ හැකිය:</string>
+    <string name="filter_empty_filter_by">පෙරහන් කරන්න:</string>
+    <string name="filter_empty_filter_desc">රට, නාලිකා නම, ටැග් හෝ භාෂාව</string>
+    <string name="filter_empty_sort_by">පිළිවෙළ කරන්න:</string>
+    <string name="filter_empty_sort_desc">ක්ලික් කිරීම්, අකාරාදී පිළිවෙළ, මනාප හෝ අවසාන වෙනස් කිරීම</string>
+    <string name="filter_empty_hint">මෙම දසුන සුරැකීමට ඉහත කොටුවේ නමක් ටයිප් කරන්න!</string>
+    <string name="error_station_load">නාලිකාවට සම්බන්ධ වීමට නොහැකි විය</string>
+    <string name="error_list_update">Radio Browser සේවාදායකයට සම්බන්ධ වීමට නොහැකි විය</string>
+
+    <string name="share_action">නාලිකා සබැඳිය බෙදාගන්න…</string>
+
+    <string name="nav_item_stations">නාලිකා</string>
+    <string name="nav_item_starred">ප්‍රියතම</string>
+    <string name="nav_item_history">ඉතිහාසය</string>
+    <string name="nav_item_settings">සැකසුම්</string>
+
+    <string name="about_text">AMARadio යනු 100% ක් වෙළඳ දැන්වීම් රහිත සහ පෞද්ගලිකත්වය කෙරෙහි අවධානය යොමු කරන යෙදුමකි.\n\nකරදරකාරී වෙළඳ දැන්වීම් හෝ ලුහුබැඳීම් නොමැතිව මගේ මවට සරල, අවංක ගුවන් විදුලි අත්දැකීමක් ලබා දීම සඳහා මම මුලින්ම මෙම යෙදුම නිපදවූවෙමි. AMARadio සැමවිටම වෙළඳ දැන්වීම් වලින් තොරව පවතින්නේ එබැවිනි – එය ඇයට දුන් පොරොන්දුවක් වන අතර එය ඔබ සැමටද පොදු වේ.\n\nමෙම ව්‍යාපෘතිය විශිෂ්ට https://github.com/segler-alex/RadioDroid හි අනුශාඛාවකි. යෙදුම නවීනව තබා ගැනීමට සහ අනාගත ඇන්ඩ්‍රොයිඩ් සංස්කරණ සමඟ ගැළපෙන පරිදි සම්පූර්ණ කේතය Java සිට Kotlin දක්වා මාරු කර ඇත.\n\nමූල කේතය මෙහි ඇත: https://github.com/ounben/AMARadio\n\nමෙම යෙදුම https://www.radio-browser.info හි නොමිලේ ලබා දෙන ගුවන් විදුලි නාලිකා නාමාවලිය භාවිතා කරයි. ඕනෑම අයෙකුට මෙයට නාලිකා එක් කළ හැකිය. එය ඔන්ලයින් ගුවන් විදුලි නාලිකා සඳහා විකියක් මෙන් ක්‍රියා කරයි.\n\nසම්බන්ධ වීමට: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nඔබ මෙම මෘදුකාංගයට කැමති නම් සහ උදව් කිරීමට අවශ්‍ය නම්, මට විද්‍යුත් තැපෑලක් එවීමට පසුබට නොවන්න. නව විශේෂාංග සඳහා අදහස් ද සැමවිටම අගය කරනු ලැබේ!\n\nමෙම යෙදුම GPLv3 යටතේ බලපත්‍ර ලබා ඇති නිදහස් මෘදුකාංගයකි. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">සංස්කරණය: %1$s</string>
+    <string name="detail_star">ප්‍රියතම ලැයිස්තුවට එක් කරන්න</string>
+    <string name="detail_unstar">ප්‍රියතම ලැයිස්තුවෙන් ඉවත් කරන්න</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">පූරණය වෙමින් පවතී…</string>
+
+    <string name="sleep_timer" formatted="true">නින්ද ටයිමරය: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">තෝරාගත් මිනිත්තු ගණනට පසු ධාවනය නවත්වන්න</string>
+    <string name="sleep_timer_apply">යොදන්න</string>
+    <string name="sleep_timer_clear">ඉවත් කරන්න</string>
+    <string name="nav_item_add_sleep">නින්ද ටයිමරය</string>
+
+    <string name="nav_item_save_playlist">ප්‍රියතමයන් ප්ලේලිස්ට් එකක් ලෙස අපනයනය කරන්න</string>
+    <string name="nav_item_load_playlist">ප්ලේලිස්ට් එකකින් ප්‍රියතමයන් ආනයනය කරන්න</string>
+    <string name="nav_item_save_history_playlist">ඉතිහාසය ප්ලේලිස්ට් එකක් ලෙස අපනයනය කරන්න</string>
+    <string name="confirm_overwrite_file">ගොනුව යටපත් කරන්නද (Overwrite)?</string>
+    <string name="dialog_hint_file_name">ගොනු නාමය ඇතුළත් කරන්න</string>
+    <string name="error_empty_field">මෙම කොටස පිරවීම අත්‍යවශ්‍ය වේ</string>
+    <string name="error_invalid_file_name">වලංගු නොවන ගොනු නාමයක්</string>
+    <string name="label_button_cancel">අවලංගු කරන්න</string>
+    <string name="label_button_overwrite">යටපත් කරන්න</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s වෙතින් ආනයනය කළ නොහැකි විය</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s වෙතින් ආනයනය කරමින් පවතී, කරුණාකර රැඳී සිටින්න.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s වෙතින් නාලිකා %1$d ක් ආනයනය කරන ලදී</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s වෙත අපනයනය කළ නොහැකි විය</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s වෙත අපනයනය කරමින් පවතී, කරුණාකර රැඳී සිටින්න.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s වෙත සාර්ථකව අපනයනය කරන ලදී</string>
+    <string name="notify_sync_list_deleted_entries">ලැයිස්තුවේ ඇති %2$d ක ස්ථානීය නාලිකා වලින් %1$d ක් සේවාදායකයේ නොමැති බව සලකුණු කර ඇත</string>
+
+    <string name="searchpreference_clear_history">ඉතිහාසය මකන්න</string>
+    <string name="searchpreference_no_results">ප්‍රතිඵල නැත</string>
+    <string name="searchpreference_search">සොයන්න…</string>
+    <string name="settings_appearance">පෙනුම</string>
+    <string name="settings_theme_selection_title">තේමාව</string>
+    <string name="theme_light">ආලෝකවත්</string>
+    <string name="theme_dark">අඳුරු</string>
+    <string name="theme_system">පද්ධතිය අනුගමනය කරන්න</string>
+    <string name="settings_compact_style">සංයුක්ත ප්‍රකාරය (Compact mode)</string>
+    <string name="settings_compact_style_desc_off">නාලිකා විස්තර සහිත විශාල අයිකන</string>
+    <string name="settings_compact_style_desc_on">විස්තර රහිත කුඩා අයිකන</string>
+    <string name="settings_bottom_navigation">පහළ සංචලනය</string>
+    <string name="settings_ui_scale">අතුරුමුහුණත් විශාලත්වය</string>
+    <string name="settings_language">භාෂාව</string>
+    <string name="ui_scale_compact">සංයුක්ත</string>
+    <string name="ui_scale_standard">පද්ධති සම්මතය</string>
+    <string name="ui_scale_large">විශාල</string>
+    <string name="ui_scale_extra_large">ඉතා විශාල</string>
+
+    <string name="settings_interaction">අන්තර්ක්‍රියා</string>
+    <string name="settings_single_use_tags">කලාතුරකින් භාවිතා වන ටැග් පෙන්වන්න</string>
+    <string name="settings_single_use_tags_desc_off">කලාතුරකින් භාවිතා වන ටැග් පෙන්වනු නොලැබේ</string>
+    <string name="settings_single_use_tags_desc_on">කලාතුරකින් භාවිතා වන ටැග් පෙන්වනු ලැබේ</string>
+
+    <string name="settings_show_broken">අක්‍රිය නාලිකා</string>
+    <string name="settings_show_broken_on">ලැයිස්තුවල අක්‍රිය නාලිකා පෙන්වන්න</string>
+    <string name="settings_show_broken_off">ලැයිස්තුවල අක්‍රිය නාලිකා පෙන්වන්න එපා</string>
+
+    <string name="settings_startup_behaviour">ආරම්භක හැසිරීම</string>
+    <string name="action_grid_view">Grid දසුන</string>
+    <string name="action_list_view">ලැයිස්තු දසුන</string>
+
+    <string name="startup_action_title">ආරම්භක ක්‍රියාව</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">සියලුම නාලිකා පෙන්වන්න</string>
+    <string name="startup_show_favorites">ප්‍රියතමයන් පෙන්වන්න</string>
+    <string name="startup_show_history">ඉතිහාසය පෙන්වන්න</string>
+    <string name="startup_show_last_view">අවසාන දසුන</string>
+
+    <string name="settings_load_icons">නාලිකා අයිකන පෙන්වන්න</string>
+    <string name="settings_load_icons_on">අයිකන බාගත කරනු ඇත</string>
+    <string name="settings_load_icons_off">අයිකන බාගත නොකරනු ඇත</string>
+
+    <string name="settings_auto_favorite">ස්වයංක්‍රීය ප්‍රියතම</string>
+    <string name="settings_auto_favorite_on">ධාවනය වන විට නාලිකා ස්වයංක්‍රීයව ප්‍රියතම ලැයිස්තුවට එක් කරන්න</string>
+    <string name="settings_auto_favorite_off">ධාවනය වන විට නාලිකා ස්වයංක්‍රීයව ප්‍රියතම ලැයිස්තුවට එක් කරන්න එපා</string>
+
+    <string name="settings_play">ධාවකය (Player)</string>
+    <string name="settings_auto_play_on_startup">ස්වයංක්‍රීය ධාවනය</string>
+    <string name="settings_auto_play_on_startup_on">යෙදුම අරඹන විට අවසන් වරට ධාවනය වූ නාලිකාව ධාවනය කරන්න</string>
+    <string name="settings_auto_play_on_startup_off">යෙදුම අරඹන විට අවසන් වරට ධාවනය වූ නාලිකාව ධාවනය කරන්න එපා</string>
+    <string name="settings_auto_off_on_startup">ස්වයංක්‍රීයව නැවතීම</string>
+    <string name="settings_auto_off_on_startup_on">ස්වයංක්‍රීය ධාවනය සමඟ ස්වයංක්‍රීයව නැවතීමේ ටයිමරය භාවිතා කරන්න</string>
+    <string name="settings_auto_off_on_startup_off">ස්වයංක්‍රීය ධාවනය සමඟ ස්වයංක්‍රීයව නැවතීමේ ටයිමරය භාවිතා කරන්න එපා</string>
+    <string name="settings_auto_off_sleep_timer">ස්වයංක්‍රීයව නැවතීමේ ටයිමරය</string>
+    <string name="settings_auto_off_sleep_timer_desc">මිනිත්තු %1$s කට පසු ධාවනය නවත්වන්න</string>
+    <string name="settings_play_external">බාහිර ධාවකය සබල කරන්න</string>
+    <string name="settings_play_external_desc_on">බාහිර ධාවකයකින් නාලිකා ධාවනය කරන්න</string>
+    <string name="settings_play_external_desc_off">AMARadio වෙතින් නාලිකා ධාවනය කරන්න</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">සම්බන්ධතාවය</string>
+    <string name="settings_connect_timeout">සම්බන්ධතා කාලය ඉකුත් වීම</string>
+    <string name="settings_read_timeout">කියවීමේ කාලය ඉකුත් වීම</string>
+    <string name="settings_resume_timeout">නැවත ඇරඹීමේ කාලය ඉකුත් වීම</string>
+    <string name="settings_retry_timeout">නැවත උත්සාහ කිරීමේ කාලය ඉකුත් වීම</string>
+    <string name="settings_retry_delay">නැවත සම්බන්ධ වීමේ ප්‍රමාදය</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">පරිශීලක නාමය</string>
+    <string name="settings_proxy_password">මුරපදය</string>
+    <string name="settings_proxy_action_test">පරීක්ෂා කරන්න</string>
+    <string name="settings_proxy_working">%s වෙත සාර්ථකව සම්බන්ධ විය</string>
+    <string name="settings_proxy_not_working">%1$s වෙත සම්බන්ධ වීමට නොහැකි විය\n%2$s</string>
+    <string name="settings_proxy_invalid">ඔබ ලබා දුන් proxy අගයන් වලංගු නැත</string>
+    <string name="ignore_proxy_settings_invalid">වලංගු නොවන proxy සැකසුම් නොසලකා හරින ලදී</string>
+    <string name="settings_seconds_format">තත්පර %d</string>
+    <string name="settings_milliseconds_format">මිලි තත්පර %d</string>
+
+    <string name="settings_pause_when_noisy">හෙඩ්සෙට් එක ඉවත් කළ විට නවත්වන්න</string>
+
+    <string name="settings_auto_resume_do_not_resume">නැවත අරඹන්න එපා</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">හෙඩ්සෙට් එක සම්බන්ධ කළ විට නැවත අරඹන්න</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">හෙඩ්සෙට් එක සම්බන්ධ කළ විට ධාවනය නැවත අරඹන්න</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">බ්ලූටූත් සම්බන්ධ කළ විට නැවත අරඹන්න</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP උපාංගයක් සම්බන්ධ කළ විට ධාවනය නැවත අරඹන්න</string>
+
+    <string name="settings_auto_resume_on_any_connected">ඕනෑම සම්බන්ධතාවයකදී නැවත අරඹන්න</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi නොමැති විට අනතුරු ඇඟවීම</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi නොමැතිව ධාවනය වන විට අනතුරු අඟවන්න</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi නොමැති විට අනතුරු අඟවන්න එපා</string>
+
+    <string name="notify_pre_play">සම්බන්ධ වෙමින්</string>
+    <string name="notify_play">ධාවනය වේ</string>
+    <string name="notify_paused">නවත්වා ඇත</string>
+    <string name="notify_metered_connection">මනින ලද සම්බන්ධතාවය (Metered connection)</string>
+
+    <string name="notify_starred">නාලිකාව ප්‍රියතම ලැයිස්තුවට එක් කරන ලදී</string>
+    <string name="notify_autostarred">නාලිකාව ස්වයංක්‍රීයව ප්‍රියතම ලැයිස්තුවට එක් කරන ලදී</string>
+    <string name="notify_unstarred">නාලිකාව ප්‍රියතම ලැයිස්තුවෙන් ඉවත් කරන ලදී</string>
+    <string name="notify_deleted_favorites">ප්‍රියතමයන් මකා දමන ලදී</string>
+    <string name="notify_deleted_history">ඉතිහාසය මකා දමන ලදී</string>
+
+    <string name="notify_open_link_failure">සබැඳිය විවෘත කිරීමට යෙදුමක් හමු නොවීය</string>
+
+    <string name="notify_station_removed_from_list">1 ක් ඉවත් කරන ලදී</string>
+    <string name="action_station_removed_from_list_undo">අස්කරන්න (Undo)</string>
+
+    <string name="alert_delete_history">ඔබට ඇත්තටම ඉතිහාසය මැකීමට අවශ්‍යද?</string>
+    <string name="alert_delete_favorites">ඔබට ඇත්තටම සියලුම ප්‍රියතමයන් මැකීමට අවශ්‍යද?</string>
+    <string name="yes">ඔව්</string>
+    <string name="no">නැත</string>
+
+    <string name="alert_select_player">කරුණාකර ධාවකයක් තෝරන්න</string>
+    <string name="alert_select_player_name">නම</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">පෝට් එක</string>
+
+    <string name="alert_press_back_to_exit">පිටවීමට නැවත වරක් \'Back\' ඔබන්න</string>
+
+    <string name="error_stream_url">Stream URL දෝෂයකි</string>
+    <string name="error_caching_stream">Stream caching දෝෂයකි</string>
+    <string name="error_play_stream">නාලිකාව ධාවනය කළ නොහැක</string>
+    <string name="error_stream_reconnect_timeout">නැවත සම්බන්ධ වීමට නොහැකි විය: කාලය ඉකුත් විය</string>
+    <string name="warning_no_network_trying_resume">ජාල සම්බන්ධතාවයක් නැත. සම්බන්ධතාවය ලැබුණු පසු නැවත අරඹන්න උත්සාහ කරයි.</string>
+    <string name="giving_up_resume">නැවත ධාවනය කිරීමට උත්සාහ කිරීම අත්හරින ලදී</string>
+
+    <string name="error_grant_audiofocus">පද්ධතිය විසින් ශබ්දය සඳහා අවසර ලබා නොදුනි</string>
+
+    <string name="error_no_equalizer_found">Equalizer යෙදුමක් හමු නොවීය</string>
+
+    <string name="player_info_status">තත්ත්වය:&#160;</string>
+    <string name="player_info_status_stopped">නවත්වා ඇත</string>
+    <string name="player_info_status_playing">ධාවනය වේ</string>
+    <string name="player_info_transferred">මාරු කළ දත්ත ප්‍රමාණය: %1$s</string>
+
+    <string name="tab_player_art">ඇල්බම් කවරය</string>
+    <string name="tab_player_info">තොරතුරු</string>
+    <string name="tab_player_history">ගීත ඉතිහාසය</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">අක්‍රියයි</string>
+    <string name="station_detail_deleted_on_server">මකා දමා ඇත</string>
+
+    <string name="station_details_clicks">ක්ලික් කිරීම් %1$d</string>
+    <string name="station_details_votes">මනාප %1$d</string>
+
+    <string name="image_button_disable">අබල කරන්න</string>
+    <string name="image_button_delete">මකන්න</string>
+    <string name="image_button_more">තව</string>
+    <string name="image_button_less">අඩු</string>
+    <string name="image_button_repeat">නැවත ධාවනය</string>
+    <string name="image_button_dont_repeat">නැවත ධාවනය එපා</string>
+    <string name="icon_click_trend_decreasing">ජනප්‍රියත්වය අඩුවේ</string>
+    <string name="icon_click_trend_increasing">ජනප්‍රියත්වය වැඩුවේ</string>
+    <string name="icon_click_trend_stable">ජනප්‍රියත්වය ස්ථාවරයි</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% වෙළඳ දැන්වීම් රහිත සහ පෞද්ගලික</string>
+
+    <string name="action_play_in_external">බාහිර ධාවකයකින් ධාවනය කරන්න</string>
+    <string name="action_choose_external_player">බාහිර ධාවකයක් තෝරන්න</string>
+
+    <string name="settings_disable_battery_optimization">බැටරි ප්‍රශස්තකරණය</string>
+    <string name="settings_ignore_battery_optimization_summary_on">බැටරි ප්‍රශස්තකරණය නොසලකා හැර ඇත, AMARadio හට සැමවිටම අවධානය ලබාගත හැක.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">බැටරි ප්‍රශස්තකරණය සක්‍රියයි, පසුබිමේ ඇති විට AMARadio හට අවධානය ලබාගැනීමට නොහැකි වනු ඇත.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">වෙනත්</string>
+    <string name="settings_statistics">සංඛ්‍යාලේඛන</string>
+    <string name="settings_about">AMARadio ගැන</string>
+
+    <string name="description_btn_skip_to_next">ඊළඟට යන්න</string>
+    <string name="description_btn_skip_to_previous">පෙර එකට යන්න</string>
+
+    <string-array name="weekdays">
+        <item>ඉ</item>
+        <item>සඳු</item>
+        <item>අ</item>
+        <item>බු</item>
+        <item>බ්‍ර</item>
+        <item>සි</item>
+        <item>සෙ</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Stream URL එක සාර්ථකව පිටපත් කරන ලදී</string>
+    <string name="notify_track_info_copied">ගීතයේ තොරතුරු සාර්ථකව පිටපත් කරන ලදී</string>
+
+    <string-array name="actions_station_link">
+        <item>වෙබ් අඩවියට පිවිසෙන්න</item>
+        <item>Stream URL එක පිටපත් කරන්න</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">සීමිත සම්බන්ධතාවයක් (Metered connection) හඳුනා ගන්නා ලදී</string>
+    <string name="alert_metered_connection_message">මෙම සම්බන්ධතාවය සඳහා අමතර ගාස්තු අය විය හැක, දිගටම කරගෙන යාමට \'හරි\' ඔබන්න.</string>
+    <string name="nav_item_statistics">සංඛ්‍යාලේඛන</string>
+    <string name="nav_item_about">ගැන</string>
+    <string name="refresh">නැවුම් කරන්න</string>
+    <string name="action_filter">පෙරහන</string>
+    <string name="filter_country">රට</string>
+    <string name="filter_tag">ටැග් එක</string>
+    <string name="filter_language">භාෂාව</string>
+    <string name="filter_sort_by">පිළිවෙළ කරන්න</string>
+    <string name="filter_reverse">ප්‍රතිලෝම පිළිවෙළ</string>
+    <string name="filter_apply">පෙරහන යොදන්න</string>
+    <string name="sort_name">නම</string>
+    <string name="sort_votes">මනාප</string>
+    <string name="sort_clicks">ක්ලික් කිරීම්</string>
+    <string name="sort_lastchange">අවසාන වෙනස් කිරීම</string>
+    <string name="filter_select_country">රටක් තෝරන්න</string>
+    <string name="filter_select_language">භාෂාවක් තෝරන්න</string>
+    <string name="filter_type_tag">ටැග් එකක් ටයිප් කරන්න…</string>
+    <string name="filter_tap_to_configure">සැකසීමට ස්පර්ශ කරන්න</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

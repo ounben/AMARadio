@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">ឈ្មោះ</string>
+    <string name="detail_tags">ស្លាក</string>
+    <string name="detail_country">ប្រទេស</string>
+    <string name="detail_create_shortcut">បន្ថែមទៅអេក្រង់ដើម</string>
+    <string name="detail_language">ភាសា</string>
+    <string name="detail_weblink">តំណភ្ជាប់បណ្ដាញ</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">ចាក់</string>
+    <string name="detail_pause">ផ្អាក</string>
+    <string name="detail_stop">បញ្ឈប់</string>
+    <string name="detail_share">ចែករំលែក</string>
+    <string name="detail_play_in_AMARadio">ចាក់ក្នុង AMARadio</string>
+
+    <string name="action_links">តំណភ្ជាប់</string>
+    <string name="action_homepage">ទំព័រដើម</string>
+    <string name="action_favorite">សំណព្វ</string>
+    <string name="action_starred_add">បន្ថែមទៅសំណព្វ</string>
+    <string name="action_starred_remove">លុបចេញពីសំណព្វ</string>
+
+    <string name="action_station_visit_website">ចូលមើលគេហទំព័រ</string>
+    <string name="action_station_copy_stream_url">ចម្លង URL ស្ទ្រីម</string>
+    <string name="action_station_share">ចែករំលែក</string>
+
+    <string name="action_local">ក្នុងម៉ាស៊ីន</string>
+    <string name="action_skip_to_next">បន្ទាប់</string>
+    <string name="action_pause">ផ្អាក</string>
+    <string name="action_skip_to_previous">មុន</string>
+    <string name="action_resume">បន្ត</string>
+    <string name="action_stop">បញ្ឈប់</string>
+    <string name="action_search">ស្វែងរក</string>
+    <string name="action_delete">លុប</string>
+    <string name="action_delete_history">លុបប្រវត្តិ</string>
+    <string name="action_delete_favorites">លុបសំណព្វទាំងអស់</string>
+    <string name="action_delete_stream_history">សម្អាតប្រវត្តិបទចម្រៀង</string>
+    <string name="action_ok">យល់ព្រម</string>
+    <string name="action_cancel">បោះបង់</string>
+    <string name="action_top_click">ចុចច្រើនបំផុត</string>
+    <string name="action_toggle_view">ប្តូរទិដ្ឋភាព</string>
+    <string name="action_top_vote">បោះឆ្នោតច្រើនបំផុត</string>
+    <string name="action_changed_lately">ផ្លាស់ប្តូរថ្មីៗ</string>
+    <string name="action_currently_playing">កំពុងចាក់</string>
+    <string name="action_tags">ស្លាក</string>
+    <string name="action_countries">ប្រទេស/តំបន់</string>
+    <string name="action_languages">ភាសា</string>
+    <string name="action_edit">កែសម្រួល</string>
+    <string name="action_copy_info">ចម្លងព័ត៌មាន</string>
+    <string name="action_rename_tab">ប្តូរឈ្មោះផ្ទាំង</string>
+    <string name="error_filter_name_required">សូមបញ្ចូលឈ្មោះសម្រាប់ផ្ទាំងចម្រោះនេះជាមុនសិន</string>
+    <string name="confirm_delete_filter_tab">តើអ្នកប្រាកដថាចង់លុបការចម្រោះ \"%1$s\" មែនទេ?</string>
+    <string name="filter_empty_title">បង្កើតបញ្ជីស្ថានីយ៍វិទ្យុផ្ទាល់ខ្លួនរបស់អ្នក</string>
+    <string name="filter_empty_desc">បង្កើតទិដ្ឋភាពផ្ទាល់ខ្លួនដោយបញ្ចូលលក្ខខណ្ឌច្រើន។ អ្នកអាចបង្រួមការស្វែងរកដោយប្រើ៖</string>
+    <string name="filter_empty_filter_by">ចម្រោះតាម</string>
+    <string name="filter_empty_filter_desc">ប្រទេស, ឈ្មោះស្ថានីយ៍, ស្លាក ឬភាសា</string>
+    <string name="filter_empty_sort_by">តម្រៀបតាម</string>
+    <string name="filter_empty_sort_desc">ការចុច, អក្ខរក្រម, ការបោះឆ្នោត ឬការផ្លាស់ប្តូរចុងក្រោយ</string>
+    <string name="filter_empty_hint">វាយឈ្មោះក្នុងប្រអប់ខាងលើដើម្បីរក្សាទុកទិដ្ឋភាពនេះ!</string>
+    <string name="error_station_load">មិនអាចភ្ជាប់ទៅស្ថានីយ៍បានទេ</string>
+    <string name="error_list_update">មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេ radio browser បានទេ</string>
+
+    <string name="share_action">ចែករំលែកតំណស្ថានីយ៍ទៅកាន់…</string>
+
+    <string name="nav_item_stations">ស្ថានីយ៍</string>
+    <string name="nav_item_starred">សំណព្វ</string>
+    <string name="nav_item_history">ប្រវត្តិ</string>
+    <string name="nav_item_settings">ការកំណត់</string>
+
+    <string name="about_text">AMARadio គឺគ្មានការផ្សាយពាណិជ្ជកម្ម ១០០% និងផ្តោតលើឯកជនភាព។\n\nដំបូងឡើយ ខ្ញុំបានបង្កើតកម្មវិធីនេះសម្រាប់ម្តាយរបស់ខ្ញុំ ដើម្បីផ្តល់ឱ្យគាត់នូវបទពិសោធន៍វិទ្យុដ៏សាមញ្ញ និងស្មោះត្រង់ ដោយគ្មានការផ្សាយពាណិជ្ជកម្មដែលរំខាន ឬការតាមដាន។ នេះជាមូលហេតុដែល AMARadio នឹងតែងតែមិនមានការផ្សាយពាណិជ្ជកម្មជារៀងរហូត – វាគឺជាការសន្យាចំពោះគាត់ ដែលបានចែករំលែកជាមួយអ្នកទាំងអស់គ្នា។\n\nគម្រោងនេះគឺជា fork នៃកម្មវិធីដ៏អស្ចារ្យ https://github.com/segler-alex/RadioDroid ។ កូដទាំងអស់ត្រូវបានប្តូរពី Java ទៅ Kotlin ដើម្បីធានាថាកម្មវិធីនៅតែទំនើប និងឆបគ្នាជាមួយកំណែ Android នាពេលអនាគត។\n\nកូដប្រភពមាននៅ៖ https://github.com/ounben/AMARadio\n\nកម្មវិធីនេះប្រើប្រាស់បញ្ជីស្ថានីយ៍វិទ្យុឥតគិតថ្លៃនៅ https://www.radio-browser.info ។ នរណាក៏អាចបន្ថែមស្ថានីយ៍ទៅក្នុងនោះបានដែរ។ វាដំណើរការដូចជា wiki សម្រាប់ស្ថានីយ៍វិទ្យុអនឡាញ។\n\nទំនាក់ទំនង៖ ben@ounben.com\n\nរាយការណ៍បញ្ហា៖ https://github.com/ounben/AMARadio/issues\n\nប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ ហើយចង់ជួយ សូមផ្ញើអ៊ីមែលមកខ្ញុំ។ គំនិតសម្រាប់មុខងារថ្មីៗតែងតែត្រូវបានស្វាគមន៍!\n\nកម្មវិធីនេះជាកម្មវិធីសេរី ដែលមានអាជ្ញាប័ណ្ណក្រោម GPLv3។ https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">កំណែ៖ %1$s</string>
+    <string name="detail_star">បន្ថែមទៅសំណព្វ</string>
+    <string name="detail_unstar">លុបចេញពីសំណព្វ</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">កំពុងផ្ទុក…</string>
+
+    <string name="sleep_timer" formatted="true">កម្មវិធីកំណត់ម៉ោងគេង៖ %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">បញ្ឈប់ការចាក់បន្ទាប់ពីនាទីដែលបានជ្រើសរើស</string>
+    <string name="sleep_timer_apply">អនុវត្ត</string>
+    <string name="sleep_timer_clear">សម្អាត</string>
+    <string name="nav_item_add_sleep">កម្មវិធីកំណត់ម៉ោងគេង</string>
+
+    <string name="nav_item_save_playlist">នាំចេញសំណព្វជាបញ្ជីចាក់</string>
+    <string name="nav_item_load_playlist">នាំចូលសំណព្វពីបញ្ជីចាក់</string>
+    <string name="nav_item_save_history_playlist">នាំចេញប្រវត្តិជាបញ្ជីចាក់</string>
+    <string name="confirm_overwrite_file">សរសេរជាន់លើឯកសារ?</string>
+    <string name="dialog_hint_file_name">បញ្ចូលឈ្មោះឯកសារ</string>
+    <string name="error_empty_field">វាលនេះតម្រូវឱ្យបំពេញ</string>
+    <string name="error_invalid_file_name">ឈ្មោះឯកសារមិនត្រឹមត្រូវ</string>
+    <string name="label_button_cancel">បោះបង់</string>
+    <string name="label_button_overwrite">សរសេរជាន់លើ</string>
+    <string name="notify_load_playlist_nok">មិនអាចនាំចូលពី %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">កំពុងនាំចូលពី %1$s&#47;%2$s សូមរង់ចាំ។</string>
+    <string name="notify_load_playlist_ok">បាននាំចូល %1$d ស្ថានីយ៍ពី %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">មិនអាចនាំចេញទៅ %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">កំពុងនាំចេញទៅ %1$s&#47;%2$s សូមរង់ចាំ។</string>
+    <string name="notify_save_playlist_ok">បាននាំចេញទៅ %1$s&#47;%2$s ដោយជោគជ័យ</string>
+    <string name="notify_sync_list_deleted_entries">%1$d ក្នុងចំណោម %2$d ស្ថានីយ៍ក្នុងម៉ាស៊ីនត្រូវបានសម្គាល់ថាមិនមាននៅលើម៉ាស៊ីនមេ</string>
+
+    <string name="searchpreference_clear_history">សម្អាតប្រវត្តិ</string>
+    <string name="searchpreference_no_results">គ្មានលទ្ធផល</string>
+    <string name="searchpreference_search">ស្វែងរក…</string>
+    <string name="settings_appearance">រូបរាង</string>
+    <string name="settings_theme_selection_title">ស្បែក (Theme)</string>
+    <string name="theme_light">ភ្លឺ</string>
+    <string name="theme_dark">ងងឹត</string>
+    <string name="theme_system">តាមប្រព័ន្ធ</string>
+    <string name="settings_compact_style">របៀបបង្រួម</string>
+    <string name="settings_compact_style_desc_off">រូបតំណាងធំជាមួយព័ត៌មានលម្អិត</string>
+    <string name="settings_compact_style_desc_on">រូបតំណាងតូចគ្មានព័ត៌មានលម្អិត</string>
+    <string name="settings_bottom_navigation">ការរុករកខាងក្រោម</string>
+    <string name="settings_ui_scale">មាត្រដ្ឋាន UI</string>
+    <string name="settings_language">ភាសា</string>
+    <string name="ui_scale_compact">តូច</string>
+    <string name="ui_scale_standard">ស្តង់ដារប្រព័ន្ធ</string>
+    <string name="ui_scale_large">ធំ</string>
+    <string name="ui_scale_extra_large">ធំបំផុត</string>
+
+    <string name="settings_interaction">អន្តរកម្ម</string>
+    <string name="settings_single_use_tags">បង្ហាញស្លាកដែលកម្រប្រើ</string>
+    <string name="settings_single_use_tags_desc_off">ស្លាកដែលកម្រប្រើនឹងមិនត្រូវបានបង្ហាញទេ</string>
+    <string name="settings_single_use_tags_desc_on">ស្លាកដែលកម្រប្រើនឹងត្រូវបានបង្ហាញ</string>
+
+    <string name="settings_show_broken">ស្ថានីយ៍ដែលខូច</string>
+    <string name="settings_show_broken_on">បង្ហាញស្ថានីយ៍ដែលខូចក្នុងបញ្ជី</string>
+    <string name="settings_show_broken_off">មិនបង្ហាញស្ថានីយ៍ដែលខូចក្នុងបញ្ជី</string>
+
+    <string name="settings_startup_behaviour">សកម្មភាពពេលចាប់ផ្តើម</string>
+    <string name="action_grid_view">ទិដ្ឋភាពក្រឡា</string>
+    <string name="action_list_view">ទិដ្ឋភាពបញ្ជី</string>
+
+    <string name="startup_action_title">សកម្មភាពចាប់ផ្តើម</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">បង្ហាញស្ថានីយ៍ទាំងអស់</string>
+    <string name="startup_show_favorites">បង្ហាញសំណព្វ</string>
+    <string name="startup_show_history">បង្ហាញប្រវត្តិ</string>
+    <string name="startup_show_last_view">ទិដ្ឋភាពចុងក្រោយ</string>
+
+    <string name="settings_load_icons">បង្ហាញរូបតំណាងស្ថានីយ៍</string>
+    <string name="settings_load_icons_on">រូបតំណាងនឹងត្រូវបានទាញយក</string>
+    <string name="settings_load_icons_off">រូបតំណាងនឹងមិនត្រូវបានទាញយកទេ</string>
+
+    <string name="settings_auto_favorite">សំណព្វស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_favorite_on">បន្ថែមស្ថានីយ៍ទៅសំណព្វដោយស្វ័យប្រវត្តិពេលចាក់</string>
+    <string name="settings_auto_favorite_off">មិនបន្ថែមស្ថានីយ៍ទៅសំណព្វដោយស្វ័យប្រវត្តិពេលចាក់</string>
+
+    <string name="settings_play">កម្មវិធីចាក់</string>
+    <string name="settings_auto_play_on_startup">ចាក់ស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_play_on_startup_on">ចាក់ស្ថានីយ៍ចុងក្រោយពេលបើកកម្មវិធី</string>
+    <string name="settings_auto_play_on_startup_off">មិនចាក់ស្ថានីយ៍ចុងក្រោយពេលបើកកម្មវិធី</string>
+    <string name="settings_auto_off_on_startup">បញ្ឈប់ស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_off_on_startup_on">ប្រើម៉ោងបញ្ឈប់ស្វ័យប្រវត្តិជាមួយការចាក់ស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_off_on_startup_off">មិនប្រើម៉ោងបញ្ឈប់ស្វ័យប្រវត្តិជាមួយការចាក់ស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_off_sleep_timer">ម៉ោងបញ្ឈប់ស្វ័យប្រវត្តិ</string>
+    <string name="settings_auto_off_sleep_timer_desc">បញ្ឈប់ការចាក់បន្ទាប់ពី %1$s នាទី</string>
+    <string name="settings_play_external">បើកកម្មវិធីចាក់ខាងក្រៅ</string>
+    <string name="settings_play_external_desc_on">ចាក់ស្ថានីយ៍ជាមួយកម្មវិធីចាក់ខាងក្រៅ</string>
+    <string name="settings_play_external_desc_off">ចាក់ស្ថានីយ៍ជាមួយ AMARadio</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">ការភ្ជាប់</string>
+    <string name="settings_connect_timeout">អស់ពេលតភ្ជាប់</string>
+    <string name="settings_read_timeout">អស់ពេលអាន</string>
+    <string name="settings_resume_timeout">អស់ពេលបន្ត</string>
+    <string name="settings_retry_timeout">អស់ពេលព្យាយាមម្តងទៀត</string>
+    <string name="settings_retry_delay">ពន្យារពេលតភ្ជាប់ឡើងវិញ</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">ឈ្មោះអ្នកប្រើ</string>
+    <string name="settings_proxy_password">លេខសម្ងាត់</string>
+    <string name="settings_proxy_action_test">សាកល្បង</string>
+    <string name="settings_proxy_working">ភ្ជាប់ទៅ %s បានជោគជ័យ</string>
+    <string name="settings_proxy_not_working">បរាជ័យក្នុងការភ្ជាប់ទៅ %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">តម្លៃដែលអ្នកបានផ្តល់សម្រាប់ proxy គឺមិនត្រឹមត្រូវ</string>
+    <string name="ignore_proxy_settings_invalid">មិនអើពើការកំណត់ proxy ដែលមិនត្រឹមត្រូវ</string>
+    <string name="settings_seconds_format">%d វិនាទី</string>
+    <string name="settings_milliseconds_format">%d មិល្លីវិនាទី</string>
+
+    <string name="settings_pause_when_noisy">ផ្អាកពេលដកកាស</string>
+
+    <string name="settings_auto_resume_do_not_resume">មិនបន្ត</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">បន្តពេលដោតខ្សែ</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">បន្តការចាក់ឡើងវិញពេលដោតកាសខ្សែ</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">បន្តពេលភ្ជាប់ Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">បន្តការចាក់ឡើងវិញពេលភ្ជាប់ឧបករណ៍ Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">បន្តពេលមានការភ្ជាប់ណាមួយ</string>
+
+    <string name="settings_warn_no_wifi">ការព្រមានពេលគ្មាន Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">ព្រមានពេលចាក់ដោយគ្មានការភ្ជាប់ Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">មិនព្រមានពេលគ្មានការភ្ជាប់ Wi-Fi</string>
+
+    <string name="notify_pre_play">កំពុងតភ្ជាប់</string>
+    <string name="notify_play">កំពុងចាក់</string>
+    <string name="notify_paused">បានផ្អាក</string>
+    <string name="notify_metered_connection">ការភ្ជាប់ដែលមានការគិតថ្លៃ</string>
+
+    <string name="notify_starred">ស្ថានីយ៍ត្រូវបានបន្ថែមទៅសំណព្វ</string>
+    <string name="notify_autostarred">ស្ថានីយ៍ត្រូវបានបន្ថែមទៅសំណព្វដោយស្វ័យប្រវត្តិ</string>
+    <string name="notify_unstarred">ស្ថានីយ៍ត្រូវបានលុបចេញពីសំណព្វ</string>
+    <string name="notify_deleted_favorites">សំណព្វត្រូវបានលុប</string>
+    <string name="notify_deleted_history">ប្រវត្តិត្រូវបានលុប</string>
+
+    <string name="notify_open_link_failure">រកមិនឃើញកម្មវិធីដើម្បីបើកតំណទេ</string>
+
+    <string name="notify_station_removed_from_list">បានលុប ១</string>
+    <string name="action_station_removed_from_list_undo">មិនធ្វើវិញ</string>
+
+    <string name="alert_delete_history">តើអ្នកពិតជាចង់លុបប្រវត្តិមែនទេ?</string>
+    <string name="alert_delete_favorites">តើអ្នកពិតជាចង់លុបសំណព្វទាំងអស់មែនទេ?</string>
+    <string name="yes">បាទ/ចាស</string>
+    <string name="no">ទេ</string>
+
+    <string name="alert_select_player">សូមជ្រើសរើសកម្មវិធីចាក់</string>
+    <string name="alert_select_player_name">ឈ្មោះ</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">ច្រក (Port)</string>
+
+    <string name="alert_press_back_to_exit">ចុចថយក្រោយម្តងទៀតដើម្បីចាកចេញ</string>
+
+    <string name="error_stream_url">បញ្ហា URL ស្ទ្រីម</string>
+    <string name="error_caching_stream">បញ្ហាការផ្ទុកបណ្តោះអាសន្នស្ទ្រីម</string>
+    <string name="error_play_stream">មិនអាចចាក់ស្ទ្រីមបានទេ</string>
+    <string name="error_stream_reconnect_timeout">មិនអាចតភ្ជាប់ទៅស្ទ្រីមឡើងវិញបានទេ៖ អស់ពេល</string>
+    <string name="warning_no_network_trying_resume">គ្មានការភ្ជាប់បណ្តាញ។ កំពុងព្យាយាមបន្តពេលមានបណ្តាញវិញ។</string>
+    <string name="giving_up_resume">បោះបង់ការព្យាយามបន្តការចាក់ឡើងវិញ</string>
+
+    <string name="error_grant_audiofocus">ប្រព័ន្ធមិនបានផ្តល់សិទ្ធិ Audio Focus ទេ</string>
+
+    <string name="error_no_equalizer_found">រកមិនឃើញកម្មវិធី equalizer ទេ</string>
+
+    <string name="player_info_status">ស្ថានភាព៖&#160;</string>
+    <string name="player_info_status_stopped">បញ្ឈប់</string>
+    <string name="player_info_status_playing">កំពុងចាក់</string>
+    <string name="player_info_transferred">ទិន្នន័យដែលបានផ្ទេរ៖ %1$s</string>
+
+    <string name="tab_player_art">រូបភាពអាល់ប៊ុម</string>
+    <string name="tab_player_info">ព័ត៌មាន</string>
+    <string name="tab_player_history">ប្រវត្តិបទចម្រៀង</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ខូច</string>
+    <string name="station_detail_deleted_on_server">បានលុប</string>
+
+    <string name="station_details_clicks">ចុច %1$d ដង</string>
+    <string name="station_details_votes">បោះឆ្នោត %1$d</string>
+
+    <string name="image_button_disable">បិទ</string>
+    <string name="image_button_delete">លុប</string>
+    <string name="image_button_more">ច្រើនទៀត</string>
+    <string name="image_button_less">តិចជាង</string>
+    <string name="image_button_repeat">សារឡើងវិញ</string>
+    <string name="image_button_dont_repeat">មិនសារឡើងវិញ</string>
+    <string name="icon_click_trend_decreasing">ប្រជាប្រិយភាពថយចុះ</string>
+    <string name="icon_click_trend_increasing">ប្រជាប្រិយភាពកើនឡើង</string>
+    <string name="icon_click_trend_stable">ប្រជាប្រិយភាពថេរ</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">គ្មានការផ្សាយពាណិជ្ជកម្ម ១០០% និងឯកជនភាព</string>
+
+    <string name="action_play_in_external">ចាក់ក្នុងកម្មវិធីចាក់ខាងក្រៅ</string>
+    <string name="action_choose_external_player">ជ្រើសរើសកម្មវិធីចាក់ខាងក្រៅ</string>
+
+    <string name="settings_disable_battery_optimization">ការបង្កើនប្រសិទ្ធភាពថ្ម</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ការបង្កើនប្រសិទ្ធភាពថ្មត្រូវបានមិនអើពើ AMARadio គួរតែអាចទទួលបាន Focus ឡើងវិញជានិច្ច។</string>
+    <string name="settings_ignore_battery_optimization_summary_off">ការបង្កើនប្រសិទ្ធភាពថ្មត្រូវបានបើក AMARadio ប្រហែលជាមិនអាចទទួលបាន Focus ឡើងវិញទេបើស្ថិតក្នុង background។</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">ផ្សេងៗ</string>
+    <string name="settings_statistics">ស្ថិតិ</string>
+    <string name="settings_about">អំពី AMARadio</string>
+
+    <string name="description_btn_skip_to_next">រំលងទៅមុខ</string>
+    <string name="description_btn_skip_to_previous">រំលងទៅក្រោយ</string>
+
+    <string-array name="weekdays">
+        <item>អា</item>
+        <item>ច</item>
+        <item>អ</item>
+        <item>ព</item>
+        <item>ព្រ</item>
+        <item>សុ</item>
+        <item>ស</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">ចម្លង URL ស្ទ្រីមបានជោគជ័យ</string>
+    <string name="notify_track_info_copied">ចម្លងព័ត៌មានបទចម្រៀងបានជោគជ័យ</string>
+
+    <string-array name="actions_station_link">
+        <item>ចូលមើលគេហទំព័រ</item>
+        <item>ចម្លង URL ស្ទ្រីម</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">រកឃើញការភ្ជាប់ដែលមានការគិតថ្លៃ</string>
+    <string name="alert_metered_connection_message">ការភ្ជាប់ដែលមានការគិតថ្លៃអាចមានតម្លៃបន្ថែម សូមចុច \'យល់ព្រម\' ដើម្បីបន្ត។</string>
+    <string name="nav_item_statistics">ស្ថិតិ</string>
+    <string name="nav_item_about">អំពី</string>
+    <string name="refresh">ផ្ទុកឡើងវិញ</string>
+    <string name="action_filter">ចម្រោះ</string>
+    <string name="filter_country">ប្រទេស</string>
+    <string name="filter_tag">ស្លាក</string>
+    <string name="filter_language">ភាសា</string>
+    <string name="filter_sort_by">តម្រៀបតាម</string>
+    <string name="filter_reverse">លំដាប់បញ្ច្រាស</string>
+    <string name="filter_apply">អនុវត្តការចម្រោះ</string>
+    <string name="sort_name">ឈ្មោះ</string>
+    <string name="sort_votes">ការបោះឆ្នោត</string>
+    <string name="sort_clicks">ការចុច</string>
+    <string name="sort_lastchange">ការផ្លាស់ប្តូរចុងក្រោយ</string>
+    <string name="filter_select_country">ជ្រើសរើសប្រទេស</string>
+    <string name="filter_select_language">ជ្រើសរើសភាសា</string>
+    <string name="filter_type_tag">វាយស្លាក…</string>
+    <string name="filter_tap_to_configure">ប៉ះដើម្បីកំណត់រចនាសម្ព័ន្ធ</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

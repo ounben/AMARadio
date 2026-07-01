@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">பெயர்</string>
+    <string name="detail_tags">குறிச்சொற்கள்</string>
+    <string name="detail_country">நாடு</string>
+    <string name="detail_create_shortcut">முகப்புத் திரையில் சேர்க்கவும்</string>
+    <string name="detail_language">மொழி</string>
+    <string name="detail_weblink">இணைய இணைப்பு</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">இயக்கு</string>
+    <string name="detail_pause">இடைநிறுத்தம்</string>
+    <string name="detail_stop">நிறுத்து</string>
+    <string name="detail_share">பகிர்</string>
+    <string name="detail_play_in_AMARadio">AMARadio-வில் இயக்கு</string>
+
+    <string name="action_links">இணைப்புகள்</string>
+    <string name="action_homepage">முகப்புப்பக்கம்</string>
+    <string name="action_favorite">விருப்பமானவை</string>
+    <string name="action_starred_add">விருப்பமானவற்றில் சேர்க்கவும்</string>
+    <string name="action_starred_remove">விருப்பமானவற்றிலிருந்து நீக்கவும்</string>
+
+    <string name="action_station_visit_website">இணையதளத்தைப் பார்வையிடவும்</string>
+    <string name="action_station_copy_stream_url">ஸ்ட்ரீம் URL-ஐ நகலெடுக்கவும்</string>
+    <string name="action_station_share">பகிர்</string>
+
+    <string name="action_local">உள்ளூர்</string>
+    <string name="action_skip_to_next">அடுத்தது</string>
+    <string name="action_pause">இடைநிறுத்தம்</string>
+    <string name="action_skip_to_previous">முந்தையது</string>
+    <string name="action_resume">தொடரவும்</string>
+    <string name="action_stop">நிறுத்து</string>
+    <string name="action_search">தேடு</string>
+    <string name="action_delete">நீக்கு</string>
+    <string name="action_delete_history">வரலாற்றை நீக்கு</string>
+    <string name="action_delete_favorites">அனைத்து விருப்பங்களையும் நீக்கு</string>
+    <string name="action_delete_stream_history">பாடல் வரலாற்றை அழி</string>
+    <string name="action_ok">சரி</string>
+    <string name="action_cancel">ரத்துசெய்</string>
+    <string name="action_top_click">அதிக கிளிக்குகள்</string>
+    <string name="action_toggle_view">காட்சியை மாற்றவும்</string>
+    <string name="action_top_vote">அதிக வாக்குகள்</string>
+    <string name="action_changed_lately">சமீபத்தில் மாறியவை</string>
+    <string name="action_currently_playing">இப்போது ஒலிக்கிறது</string>
+    <string name="action_tags">குறிச்சொற்கள்</string>
+    <string name="action_countries">நாடுகள்/பிராந்தியங்கள்</string>
+    <string name="action_languages">மொழிகள்</string>
+    <string name="action_edit">தொகு</string>
+    <string name="action_copy_info">தகவலை நகலெடு</string>
+    <string name="action_rename_tab">தாவல் பெயரை மாற்றவும்</string>
+    <string name="error_filter_name_required">தயவுசெய்து முதலில் இந்த வடிப்பான் தாவலுக்கு ஒரு பெயரை உள்ளிடவும்</string>
+    <string name="confirm_delete_filter_tab">\"%1$s\" வடிப்பானை நீக்க விரும்புகிறீர்களா?</string>
+    <string name="filter_empty_title">உங்கள் தனிப்பயன் வானொலி நிலைய ஊட்டத்தை உருவாக்கவும்</string>
+    <string name="filter_empty_desc">பல அளவுகோல்களை இணைப்பதன் மூலம் தனிப்பயனாக்கப்பட்ட காட்சியை உருவாக்கவும். இதைப் பயன்படுத்தி உங்கள் தேடலைச் சுருக்கலாம்:</string>
+    <string name="filter_empty_filter_by">இதன் மூலம் வடிகட்டவும்:</string>
+    <string name="filter_empty_filter_desc">நாடு, நிலையத்தின் பெயர், குறிச்சொற்கள் அல்லது மொழி</string>
+    <string name="filter_empty_sort_by">இதன் படி வரிசைப்படுத்தவும்:</string>
+    <string name="filter_empty_sort_desc">கிளிக்குகள், அகரவரிசை, வாக்குகள் அல்லது கடைசியாக மாறியது</string>
+    <string name="filter_empty_hint">இந்தக் காட்சியைச் சேமிக்க மேலே உள்ள புலத்தில் ஒரு பெயரைத் தட்டச்சு செய்யவும்!</string>
+    <string name="error_station_load">நிலையத்துடன் இணைக்க முடியவில்லை</string>
+    <string name="error_list_update">வானொலி உலாவி சேவையகத்துடன் இணைக்க முடியவில்லை</string>
+
+    <string name="share_action">நிலைய இணைப்பை இதனுடன் பகிரவும்…</string>
+
+    <string name="nav_item_stations">நிலையங்கள்</string>
+    <string name="nav_item_starred">விருப்பமானவை</string>
+    <string name="nav_item_history">வரலாறு</string>
+    <string name="nav_item_settings">அமைப்புகள்</string>
+
+    <string name="about_text">AMARadio 100% விளம்பரங்கள் இல்லாதது மற்றும் தனியுரிமையில் கவனம் செலுத்துகிறது.\n\nதொந்தரவான விளம்பரங்கள் அல்லது கண்காணிப்பு இல்லாத எளிய, நேர்மையான வானொலி அனுபவத்தை வழங்க எனது தாயாருக்காக முதலில் இந்தப் பயன்பாட்டை உருவாக்கினேன். இதனால்தான் AMARadio எப்போதும் விளம்பரங்கள் இல்லாமல் இருக்கும் - இது அவருக்கு நான் அளித்த வாக்குறுதி, உங்கள் அனைவருடனும் பகிர்ந்து கொள்ளப்படுகிறது.\n\nஇந்தத் திட்டம் சிறந்த https://github.com/segler-alex/RadioDroid இன் ஃபோர்க் (fork) ஆகும். பயன்பாடு நவீனமாகவும் எதிர்கால ஆண்ட்ராய்டு பதிப்புகளுடன் இணக்கமாகவும் இருப்பதை உறுதிசெய்ய முழு மூலக் குறியீடும் ஜாவாவிலிருந்து கோட்லினுக்கு மாற்றப்பட்டுள்ளது.\n\nமூலக் குறியீடு இங்கே கிடைக்கிறது: https://github.com/ounben/AMARadio\n\nஇந்தப் பயன்பாடு https://www.radio-browser.info-இல் உள்ள இலவச வானொலி நிலைய கோப்பகத்தைப் பயன்படுத்துகிறது. எவரும் இதில் நிலையங்களைச் சேர்க்கலாம். இது ஆன்லைன் வானொலி நிலையங்களுக்கான விக்கி போன்றது.\n\nதொடர்பு: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nஉங்களுக்கு மென்பொருள் பிடித்திருந்தால் உதவ விரும்பினால், எனக்கு மின்னஞ்சல் அனுப்பவும். புதிய அம்சங்களுக்கான யோசனைகளும் எப்போதும் வரவேற்கப்படுகின்றன!\n\nஇந்தப் பயன்பாடு GPLv3 உரிமத்தின் கீழ் உள்ள இலவச மென்பொருளாகும். https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">பதிப்பு: %1$s</string>
+    <string name="detail_star">விருப்பமானவற்றில் சேர்க்கவும்</string>
+    <string name="detail_unstar">விருப்பமானவற்றிலிருந்து நீக்கவும்</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">ஏற்றப்படுகிறது…</string>
+
+    <string name="sleep_timer" formatted="true">உறக்க டைமர்: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">தேர்ந்தெடுக்கப்பட்ட நிமிடத்திற்குப் பிறகு இயக்கத்தை நிறுத்தவும்</string>
+    <string name="sleep_timer_apply">செயல்படுத்து</string>
+    <string name="sleep_timer_clear">அழி</string>
+    <string name="nav_item_add_sleep">உறக்க டைமர்</string>
+
+    <string name="nav_item_save_playlist">விருப்பங்களை பிளேலிஸ்ட்டாக ஏற்றுமதி செய்யவும்</string>
+    <string name="nav_item_load_playlist">பிளேலிஸ்ட்டிலிருந்து விருப்பங்களை இறக்குமதி செய்யவும்</string>
+    <string name="nav_item_save_history_playlist">வரலாற்றை பிளேலிஸ்ட்டாக ஏற்றுமதி செய்யவும்</string>
+    <string name="confirm_overwrite_file">கோப்பை மேலெழுதவா?</string>
+    <string name="dialog_hint_file_name">கோப்பின் பெயரை உள்ளிடவும்</string>
+    <string name="error_empty_field">இந்தப் புலம் அவசியம்</string>
+    <string name="error_invalid_file_name">தவறான கோப்பு பெயர்</string>
+    <string name="label_button_cancel">ரத்துசெய்</string>
+    <string name="label_button_overwrite">மேலெழுது</string>
+    <string name="notify_load_playlist_nok">%1$s&#47;%2$s-இலிருந்து இறக்குமதி செய்ய முடியவில்லை</string>
+    <string name="notify_load_playlist_now">%1$s&#47;%2$s-இலிருந்து இறக்குமதி செய்யப்படுகிறது, தயவுசெய்து காத்திருக்கவும்.</string>
+    <string name="notify_load_playlist_ok">%2$s&#47;%3$s-இலிருந்து %1$d நிலையங்கள் இறக்குமதி செய்யப்பட்டன</string>
+    <string name="notify_save_playlist_nok">%1$s&#47;%2$s-இல் ஏற்றுமதி செய்ய முடியவில்லை</string>
+    <string name="notify_save_playlist_now">%1$s&#47;%2$s-இல் ஏற்றுமதி செய்யப்படுகிறது, தயவுசெய்து காத்திருக்கவும்.</string>
+    <string name="notify_save_playlist_ok">%1$s&#47;%2$s-இல் வெற்றிகரமாக ஏற்றுமதி செய்யப்பட்டது</string>
+    <string name="notify_sync_list_deleted_entries">பட்டியலில் உள்ள %2$d உள்ளூர் நிலையங்களில் %1$d நிலையங்கள் சேவையகத்தில் இல்லை எனக் குறிக்கப்பட்டுள்ளன</string>
+
+    <string name="searchpreference_clear_history">வரலாற்றை அழி</string>
+    <string name="searchpreference_no_results">முடிவுகள் இல்லை</string>
+    <string name="searchpreference_search">தேடு…</string>
+    <string name="settings_appearance">தோற்றம்</string>
+    <string name="settings_theme_selection_title">தீம்</string>
+    <string name="theme_light">வெளிச்சம்</string>
+    <string name="theme_dark">இருள்</string>
+    <string name="theme_system">சிஸ்டத்தைப் பின்தொடரவும்</string>
+    <string name="settings_compact_style">சிறிய பயன்முறை</string>
+    <string name="settings_compact_style_desc_off">நிலைய விவரங்களுடன் பெரிய ஐகான்</string>
+    <string name="settings_compact_style_desc_on">நிலைய விவரங்கள் இல்லாமல் சிறிய ஐகான்</string>
+    <string name="settings_bottom_navigation">கீழ் வழிசெலுத்தல்</string>
+    <string name="settings_ui_scale">UI அளவு</string>
+    <string name="settings_language">மொழி</string>
+    <string name="ui_scale_compact">சிறிய</string>
+    <string name="ui_scale_standard">சிஸ்டம் தரநிலை</string>
+    <string name="ui_scale_large">பெரிய</string>
+    <string name="ui_scale_extra_large">மிகப் பெரிய</string>
+
+    <string name="settings_interaction">தொடர்பு</string>
+    <string name="settings_single_use_tags">அரிதாகப் பயன்படுத்தப்படும் குறிச்சொற்களைக் காட்டு</string>
+    <string name="settings_single_use_tags_desc_off">அரிதாகப் பயன்படுத்தப்படும் குறிச்சொற்கள் காட்டப்படாது</string>
+    <string name="settings_single_use_tags_desc_on">அரிதாகப் பயன்படுத்தப்படும் குறிச்சொற்கள் காட்டப்படும்</string>
+
+    <string name="settings_show_broken">இயங்காத நிலையங்கள்</string>
+    <string name="settings_show_broken_on">பட்டியலில் இயங்காத நிலையங்களைக் காட்டு</string>
+    <string name="settings_show_broken_off">பட்டியலில் இயங்காத நிலையங்களைக் காட்டாதே</string>
+
+    <string name="settings_startup_behaviour">தொடக்க நடத்தை</string>
+    <string name="action_grid_view">கட்டம் காட்சி</string>
+    <string name="action_list_view">பட்டியல் காட்சி</string>
+
+    <string name="startup_action_title">தொடக்க செயல்</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">அனைத்து நிலையங்களையும் காட்டு</string>
+    <string name="startup_show_favorites">விருப்பங்களைக் காட்டு</string>
+    <string name="startup_show_history">வரலாற்றைக் காட்டு</string>
+    <string name="startup_show_last_view">கடைசி காட்சி</string>
+
+    <string name="settings_load_icons">நிலைய ஐகான்களைக் காட்டு</string>
+    <string name="settings_load_icons_on">ஐகான்கள் தரவிறக்கம் செய்யப்படும்</string>
+    <string name="settings_load_icons_off">ஐகான்கள் தரவிறக்கம் செய்யப்படாது</string>
+
+    <string name="settings_auto_favorite">தானியங்கி விருப்பங்கள்</string>
+    <string name="settings_auto_favorite_on">இயக்கும்போது நிலையங்களைத் தானாகவே விருப்பங்களில் சேர்க்கவும்</string>
+    <string name="settings_auto_favorite_off">இயக்கும்போது நிலையங்களைத் தானாகவே விருப்பங்களில் சேர்க்காதே</string>
+
+    <string name="settings_play">பிளேயர்</string>
+    <string name="settings_auto_play_on_startup">தானியங்கி இயக்கம்</string>
+    <string name="settings_auto_play_on_startup_on">தொடங்கும் போது கடைசி நிலையத்தை இயக்கு</string>
+    <string name="settings_auto_play_on_startup_off">தொடங்கும் போது கடைசி நிலையத்தை இயக்காதே</string>
+    <string name="settings_auto_off_on_startup">தானியங்கி நிறுத்தம்</string>
+    <string name="settings_auto_off_on_startup_on">தானியங்கி இயக்கத்துடன் தானியங்கி நிறுத்த டைமரைப் பயன்படுத்து</string>
+    <string name="settings_auto_off_on_startup_off">தானியங்கி இயக்கத்துடன் தானியங்கி நிறுத்த டைமரைப் பயன்படுத்தாதே</string>
+    <string name="settings_auto_off_sleep_timer">தானியங்கி நிறுத்த டைமர்</string>
+    <string name="settings_auto_off_sleep_timer_desc">%1$s நிமிடங்களுக்குப் பிறகு இயக்கத்தை நிறுத்தவும்</string>
+    <string name="settings_play_external">வெளிப்புற பிளேயரை அனுமதி</string>
+    <string name="settings_play_external_desc_on">வெளிப்புற பிளேயர் மூலம் நிலையங்களை இயக்கு</string>
+    <string name="settings_play_external_desc_off">AMARadio மூலம் நிலையங்களை இயக்கு</string>
+    <string name="settings_equalizer">ஈக்வலைசர்</string>
+
+    <string name="settings_connectivity">இணைப்பு</string>
+    <string name="settings_connect_timeout">இணைப்பு காலாவதி</string>
+    <string name="settings_read_timeout">வாசிப்பு காலாவதி</string>
+    <string name="settings_resume_timeout">மீண்டும் தொடங்குதல் காலாவதி</string>
+    <string name="settings_retry_timeout">மீண்டும் முயற்சித்தல் காலாவதி</string>
+    <string name="settings_retry_delay">மீண்டும் இணைப்பதில் தாமதம்</string>
+    <string name="settings_proxy">புராக்ஸி</string>
+    <string name="settings_proxy_login">பயனர் பெயர்</string>
+    <string name="settings_proxy_password">கடவுச்சொல்</string>
+    <string name="settings_proxy_action_test">சோதி</string>
+    <string name="settings_proxy_working">%s-உடன் வெற்றிகரமாக இணைக்கப்பட்டது</string>
+    <string name="settings_proxy_not_working">%1$s-உடன் இணைக்க முடியவில்லை\n%2$s</string>
+    <string name="settings_proxy_invalid">புராக்ஸிக்கு நீங்கள் வழங்கிய மதிப்புகள் தவறானவை</string>
+    <string name="ignore_proxy_settings_invalid">தவறான புராக்ஸி அமைப்புகள் புறக்கணிக்கப்பட்டன</string>
+    <string name="settings_seconds_format">%d வினாடிகள்</string>
+    <string name="settings_milliseconds_format">%d மில்லி வினாடிகள்</string>
+
+    <string name="settings_pause_when_noisy">ஹெட்செட் அகற்றப்படும்போது இடைநிறுத்து</string>
+
+    <string name="settings_auto_resume_do_not_resume">தொடர வேண்டாம்</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">கம்பி இணைப்பில் தொடரவும்</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">கம்பி ஹெட்செட் இணைக்கப்படும்போது இயக்கத்தைத் தொடரவும்</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">புளூடூத் இணைப்பில் தொடரவும்</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">புளூடூத் A2DP சாதனம் இணைக்கப்படும்போது இயக்கத்தைத் தொடரவும்</string>
+
+    <string name="settings_auto_resume_on_any_connected">எந்த இணைப்பிலும் தொடரவும்</string>
+
+    <string name="settings_warn_no_wifi">Wi-Fi இல்லாத எச்சரிக்கை</string>
+    <string name="settings_warn_no_wifi_on">Wi-Fi இணைப்பு இல்லாமல் இயக்கும்போது எச்சரிக்கவும்</string>
+    <string name="settings_warn_no_wifi_off">Wi-Fi இணைப்பு இல்லாதபோது எச்சரிக்க வேண்டாம்</string>
+
+    <string name="notify_pre_play">இணைகிறது</string>
+    <string name="notify_play">ஒலிக்கிறது</string>
+    <string name="notify_paused">இடைநிறுத்தப்பட்டது</string>
+    <string name="notify_metered_connection">கட்டண இணைப்பு</string>
+
+    <string name="notify_starred">நிலையம் விருப்பங்களில் சேர்க்கப்பட்டது</string>
+    <string name="notify_autostarred">நிலையம் தானாகவே விருப்பங்களில் சேர்க்கப்பட்டது</string>
+    <string name="notify_unstarred">நிலையம் விருப்பங்களிலிருந்து நீக்கப்பட்டது</string>
+    <string name="notify_deleted_favorites">விருப்பங்கள் நீக்கப்பட்டன</string>
+    <string name="notify_deleted_history">வரலாறு நீக்கப்பட்டது</string>
+
+    <string name="notify_open_link_failure">இணைப்பைத் திறக்க எந்தப் பயன்பாடும் கிடைக்கவில்லை</string>
+
+    <string name="notify_station_removed_from_list">1 நீக்கப்பட்டது</string>
+    <string name="action_station_removed_from_list_undo">மீட்கவும்</string>
+
+    <string name="alert_delete_history">வரலாற்றை நிச்சயமாக நீக்க வேண்டுமா?</string>
+    <string name="alert_delete_favorites">அனைத்து விருப்பங்களையும் நிச்சயமாக நீக்க வேண்டுமா?</string>
+    <string name="yes">ஆம்</string>
+    <string name="no">இல்லை</string>
+
+    <string name="alert_select_player">தயவுசெய்து ஒரு பிளேயரைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="alert_select_player_name">பெயர்</string>
+    <string name="hostname">புரவலன் பெயர்</string>
+    <string name="port">போர்ட்</string>
+
+    <string name="alert_press_back_to_exit">வெளியேற மீண்டும் ஒருமுறை \'Back\' அழுத்தவும்</string>
+
+    <string name="error_stream_url">ஸ்ட்ரீம் URL சிக்கல்</string>
+    <string name="error_caching_stream">ஸ்ட்ரீம் கேச்சிங் சிக்கல்</string>
+    <string name="error_play_stream">ஸ்ட்ரீமை இயக்க முடியவில்லை</string>
+    <string name="error_stream_reconnect_timeout">ஸ்ட்ரீமுடன் மீண்டும் இணைக்க முடியவில்லை: நேரம் முடிந்தது</string>
+    <string name="warning_no_network_trying_resume">பிணைய இணைப்பு இல்லை. இணைப்பு வந்ததும் மீண்டும் தொடங்க முயற்சிக்கிறது.</string>
+    <string name="giving_up_resume">இயக்கத்தை மீண்டும் தொடங்கும் முயற்சி கைவிடப்படுகிறது</string>
+
+    <string name="error_grant_audiofocus">ஆடியோ ஃபோகஸ் கோரிக்கையை சிஸ்டம் அனுமதிக்கவில்லை</string>
+
+    <string name="error_no_equalizer_found">ஈக்வலைசர் பயன்பாடு எதுவும் கிடைக்கவில்லை</string>
+
+    <string name="player_info_status">நிலை:&#160;</string>
+    <string name="player_info_status_stopped">நிறுத்தப்பட்டது</string>
+    <string name="player_info_status_playing">ஒலிக்கிறது</string>
+    <string name="player_info_transferred">பரிமாற்றப்பட்ட தரவு: %1$s</string>
+
+    <string name="tab_player_art">ஆல்பம் ஆர்ட்</string>
+    <string name="tab_player_info">தகவல்</string>
+    <string name="tab_player_history">பாடல் வரலாறு</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">பழுதானது</string>
+    <string name="station_detail_deleted_on_server">நீக்கப்பட்டது</string>
+
+    <string name="station_details_clicks">%1$d கிளிக்குகள்</string>
+    <string name="station_details_votes">%1$d வாக்குகள்</string>
+
+    <string name="image_button_disable">முடக்கு</string>
+    <string name="image_button_delete">நீக்கு</string>
+    <string name="image_button_more">மேலும்</string>
+    <string name="image_button_less">குறைவாக</string>
+    <string name="image_button_repeat">மீண்டும் இயக்கு</string>
+    <string name="image_button_dont_repeat">மீண்டும் இயக்க வேண்டாம்</string>
+    <string name="icon_click_trend_decreasing">பிரபலம் குறைகிறது</string>
+    <string name="icon_click_trend_increasing">பிரபலம் அதிகரிக்கிறது</string>
+    <string name="icon_click_trend_stable">பிரபலம் நிலையானது</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% விளம்பரம் இல்லாதது &amp; தனிப்பட்டது</string>
+
+    <string name="action_play_in_external">வெளிப்புற பிளேயரில் இயக்கு</string>
+    <string name="action_choose_external_player">வெளிப்புற பிளேயரைத் தேர்வு செய்யவும்</string>
+
+    <string name="settings_disable_battery_optimization">பேட்டரி மேம்படுத்தல்</string>
+    <string name="settings_ignore_battery_optimization_summary_on">பேட்டரி மேம்படுத்தல் புறக்கணிக்கப்படுகிறது, AMARadio எப்போதும் ஃபோகஸைப் பெற முடியும்.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">பேட்டரி மேம்படுத்தல் செயல்படுத்தப்பட்டது, பின்னணியில் இருந்தால் AMARadio-வால் ஃபோகஸைப் பெற முடியாமல் போகலாம்.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">மற்றவை</string>
+    <string name="settings_statistics">புள்ளிவிவரங்கள்</string>
+    <string name="settings_about">AMARadio பற்றி</string>
+
+    <string name="description_btn_skip_to_next">அடுத்ததற்குச் செல்</string>
+    <string name="description_btn_skip_to_previous">முந்தையதற்குச் செல்</string>
+
+    <string-array name="weekdays">
+        <item>ஞா</item>
+        <item>தி</item>
+        <item>செ</item>
+        <item>பு</item>
+        <item>வி</item>
+        <item>வெ</item>
+        <item>ச</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">ஸ்ட்ரீம் URL வெற்றிகரமாக நகலெடுக்கப்பட்டது</string>
+    <string name="notify_track_info_copied">பாடல் தகவல் வெற்றிகரமாக நகலெடுக்கப்பட்டது</string>
+
+    <string-array name="actions_station_link">
+        <item>இணையதளத்தைப் பார்வையிடவும்</item>
+        <item>ஸ்ட்ரீம் URL-ஐ நகலெடுக்கவும்</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">கட்டண இணைப்பு கண்டறியப்பட்டது</string>
+    <string name="alert_metered_connection_message">கட்டண இணைப்பு கூடுதல் கட்டணங்களை ஏற்படுத்தக்கூடும், தொடர \'சரி\' அழுத்தவும்.</string>
+    <string name="nav_item_statistics">புள்ளிவிவரங்கள்</string>
+    <string name="nav_item_about">பற்றி</string>
+    <string name="refresh">புதுப்பி</string>
+    <string name="action_filter">வடிகட்டி</string>
+    <string name="filter_country">நாடு</string>
+    <string name="filter_tag">குறிச்சொல்</string>
+    <string name="filter_language">மொழி</string>
+    <string name="filter_sort_by">இதன் படி வரிசைப்படுத்து</string>
+    <string name="filter_reverse">தலைகீழ் வரிசை</string>
+    <string name="filter_apply">வடிப்பானைச் செயல்படுத்து</string>
+    <string name="sort_name">பெயர்</string>
+    <string name="sort_votes">வாக்குகள்</string>
+    <string name="sort_clicks">கிளிக்குகள்</string>
+    <string name="sort_lastchange">கடைசி மாற்றம்</string>
+    <string name="filter_select_country">நாட்டைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="filter_select_language">மொழியைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="filter_type_tag">குறிச்சொல்லைத் தட்டச்சு செய்யவும்…</string>
+    <string name="filter_tap_to_configure">அமைக்க தட்டவும்</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>
