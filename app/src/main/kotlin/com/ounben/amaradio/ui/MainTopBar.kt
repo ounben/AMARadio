@@ -13,13 +13,18 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
+import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
 import com.ounben.amaradio.R
 
@@ -42,6 +47,13 @@ fun MainTopBar(
     deleteTitleRes: Int
 ) {
     val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(isSearching) {
+        if (isSearching) {
+            focusRequester.requestFocus()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxWidth().background(MaterialTheme.colorScheme.surface)) {
         TopAppBar(
@@ -50,7 +62,7 @@ fun MainTopBar(
                     TextField(
                         value = searchQuery,
                         onValueChange = onSearchQueryChange,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp),
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp).focusRequester(focusRequester),
                         placeholder = { Text(stringResource(R.string.searchpreference_search), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true,
                         colors = TextFieldDefaults.colors(
@@ -60,7 +72,10 @@ fun MainTopBar(
                             unfocusedIndicatorColor = Color.Transparent,
                             cursorColor = AmaradioAmber
                         ),
-                        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
+                        keyboardOptions = KeyboardOptions(
+                            imeAction = ImeAction.Search,
+                            hintLocales = LocaleUtils.getLatinHintLocales()
+                        ),
                         keyboardActions = KeyboardActions(onSearch = { focusManager.clearFocus() })
                     )
                 } else {

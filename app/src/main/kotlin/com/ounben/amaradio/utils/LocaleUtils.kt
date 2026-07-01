@@ -36,4 +36,19 @@ object LocaleUtils {
         
         return context.createConfigurationContext(config)
     }
+
+    fun getLatinHintLocales(): androidx.compose.ui.text.intl.LocaleList? {
+        val currentLocale = Locale.getDefault()
+        val latinLangs = setOf(
+            "en", "de", "fr", "es", "it", "pt", "nl", "sv", "nb", "da", "fi", "pl", 
+            "cs", "sk", "hu", "ro", "tr", "id", "ms", "vi", "sq", "hr", "sr", "sl", "et", "lv", "lt"
+        )
+        
+        return if (latinLangs.contains(currentLocale.language)) {
+            null // Keep current (Western/Latin)
+        } else {
+            // Suggest English for non-Latin scripts (Arabic, Chinese, Russian, etc.)
+            androidx.compose.ui.text.intl.LocaleList(androidx.compose.ui.text.intl.Locale("en"))
+        }
+    }
 }
