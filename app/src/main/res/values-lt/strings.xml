@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Pavadinimas</string>
+    <string name="detail_tags">Žymos</string>
+    <string name="detail_country">Šalis</string>
+    <string name="detail_create_shortcut">Pridėti į pagrindinį ekraną</string>
+    <string name="detail_language">Kalba</string>
+    <string name="detail_weblink">Interneto nuoroda</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Groti</string>
+    <string name="detail_pause">Pauzė</string>
+    <string name="detail_stop">Stabdyti</string>
+    <string name="detail_share">Dalintis</string>
+    <string name="detail_play_in_AMARadio">Groti per AMARadio</string>
+
+    <string name="action_links">Nuorodos</string>
+    <string name="action_homepage">Pradinis puslapis</string>
+    <string name="action_favorite">Mėgstama</string>
+    <string name="action_starred_add">Pridėti prie mėgstamų</string>
+    <string name="action_starred_remove">Pašalinti iš mėgstamų</string>
+
+    <string name="action_station_visit_website">Apsilankyti svetainėje</string>
+    <string name="action_station_copy_stream_url">Kopijuoti srauto URL</string>
+    <string name="action_station_share">Dalintis</string>
+
+    <string name="action_local">Vietinė</string>
+    <string name="action_skip_to_next">Kitas</string>
+    <string name="action_pause">Pauzė</string>
+    <string name="action_skip_to_previous">Ankstesnis</string>
+    <string name="action_resume">Tęsti</string>
+    <string name="action_stop">Stabdyti</string>
+    <string name="action_search">Paieška</string>
+    <string name="action_delete">Ištrinti</string>
+    <string name="action_delete_history">Išvalyti istoriją</string>
+    <string name="action_delete_favorites">Ištrinti visas mėgstamas</string>
+    <string name="action_delete_stream_history">Išvalyti dainų istoriją</string>
+    <string name="action_ok">Gerai</string>
+    <string name="action_cancel">Atšaukti</string>
+    <string name="action_top_click">Populiariausi paspaudimai</string>
+    <string name="action_toggle_view">Perjungti rodinį</string>
+    <string name="action_top_vote">Daugiausiai balsų</string>
+    <string name="action_changed_lately">Paskutiniai pakeitimai</string>
+    <string name="action_currently_playing">Dabar groja</string>
+    <string name="action_tags">Žymos</string>
+    <string name="action_countries">Šalys/Regionai</string>
+    <string name="action_languages">Kalbos</string>
+    <string name="action_edit">Redaguoti</string>
+    <string name="action_copy_info">Kopijuoti informaciją</string>
+    <string name="action_rename_tab">Pervadinti skirtuką</string>
+    <string name="error_filter_name_required">Pirmiausia įveskite šio filtro skirtuko pavadinimą</string>
+    <string name="confirm_delete_filter_tab">Ar tikrai norite ištrinti filtrą „%1$s“?</string>
+    <string name="filter_empty_title">Susikurkite savo radijo stočių srautą</string>
+    <string name="filter_empty_desc">Sukurkite asmeninį rodinį derindami kelis kriterijus. Paiešką galite susiaurinti pagal:</string>
+    <string name="filter_empty_filter_by">Filtruoti pagal</string>
+    <string name="filter_empty_filter_desc">Šalį, stoties pavadinimą, žymas arba kalbą</string>
+    <string name="filter_empty_sort_by">Rūšiuoti pagal</string>
+    <string name="filter_empty_sort_desc">Paspaudimus, abėcėlę, balsus arba paskutinius pakeitimus</string>
+    <string name="filter_empty_hint">Įveskite pavadinimą laukelyje aukščiau, kad išsaugotumėte šį rodinį!</string>
+    <string name="error_station_load">Nepavyko prisijungti prie stoties</string>
+    <string name="error_list_update">Nepavyko prisijungti prie radijo naršyklės serverio</string>
+
+    <string name="share_action">Dalintis stoties nuoroda per…</string>
+
+    <string name="nav_item_stations">Stotys</string>
+    <string name="nav_item_starred">Mėgstamos</string>
+    <string name="nav_item_history">Istorija</string>
+    <string name="nav_item_settings">Nustatymai</string>
+
+    <string name="about_text">AMARadio yra 100 % be reklamų ir orientuota į privatumą.\n\nIš pradžių šią programėlę sukūriau savo mamai, kad ji galėtų paprastai ir sąžiningai klausytis radijo be erzinančių reklamų ar sekimo. Štai kodėl AMARadio visada išliks nemokama – tai pažadas jai, kuriuo dalinuosi su jumis visais.\n\nŠis projektas yra puikios https://github.com/segler-alex/RadioDroid programėlės atšaka. Visas kodas buvo perkeltas iš Java į Kotlin, kad programėlė išliktų šiuolaikiška ir suderinama su būsimomis Android versijomis.\n\nIšeities kodą galite rasti: https://github.com/ounben/AMARadio\n\nŠi programėlė naudoja nemokamą radijo stočių katalogą adresu https://www.radio-browser.info .\nKiekvienas gali ten pridėti stočių. Tai veikia kaip interneto radijo stočių viki.\n\nKontaktai: ben@ounben.com\n\nKlaidų registravimas: https://github.com/ounben/AMARadio/issues\n\nJei jums patinka ši programinė įranga ir norite padėti, nedvejodami rašykite man el. paštu.\nTaip pat idėjos naujoms funkcijoms visada laukiamos!\n\nŠi programėlė yra laisvoji programinė įranga, licencijuota pagal GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versija: %1$s</string>
+    <string name="detail_star">Pridėti prie mėgstamų</string>
+    <string name="detail_unstar">Pašalinti iš mėgstamų</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Įkeliama…</string>
+
+    <string name="sleep_timer" formatted="true">Išjungimo laikmatis: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Sustabdyti grojimą po nurodyto laiko</string>
+    <string name="sleep_timer_apply">Taikyti</string>
+    <string name="sleep_timer_clear">Išvalyti</string>
+    <string name="nav_item_add_sleep">Išjungimo laikmatis</string>
+
+    <string name="nav_item_save_playlist">Eksportuoti mėgstamas kaip grojaraštį</string>
+    <string name="nav_item_load_playlist">Importuoti mėgstamas iš grojaraščio</string>
+    <string name="nav_item_save_history_playlist">Eksportuoti istoriją kaip grojaraštį</string>
+    <string name="confirm_overwrite_file">Perrašyti failą?</string>
+    <string name="dialog_hint_file_name">Įveskite failo pavadinimą</string>
+    <string name="error_empty_field">Šis laukas privalomas</string>
+    <string name="error_invalid_file_name">Neteisingas failo pavadinimas</string>
+    <string name="label_button_cancel">Atšaukti</string>
+    <string name="label_button_overwrite">Perrašyti</string>
+    <string name="notify_load_playlist_nok">Nepavyko importuoti iš %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Importuojama iš %1$s&#47;%2$s, palaukite.</string>
+    <string name="notify_load_playlist_ok">Importuota %1$d stočių iš %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Nepavyko eksportuoti į %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Eksportuojama į %1$s&#47;%2$s, palaukite.</string>
+    <string name="notify_save_playlist_ok">Sėkmingai eksportuota į %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d iš %2$d vietinių stočių sąraše serveryje nebeegzistuoja</string>
+
+    <string name="searchpreference_clear_history">Išvalyti istoriją</string>
+    <string name="searchpreference_no_results">Rezultatų nėra</string>
+    <string name="searchpreference_search">Paieška…</string>
+    <string name="settings_appearance">Išvaizda</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Šviesi</string>
+    <string name="theme_dark">Tamsi</string>
+    <string name="theme_system">Sisteminė</string>
+    <string name="settings_compact_style">Kompaktiškas režimas</string>
+    <string name="settings_compact_style_desc_off">Didelė ikona su stoties informacija</string>
+    <string name="settings_compact_style_desc_on">Maža ikona be stoties informacijos</string>
+    <string name="settings_bottom_navigation">Apatinė navigacija</string>
+    <string name="settings_ui_scale">Sąsajos mastelis</string>
+    <string name="settings_language">Kalba</string>
+    <string name="ui_scale_compact">Kompaktiškas</string>
+    <string name="ui_scale_standard">Sistemos standartas</string>
+    <string name="ui_scale_large">Didelis</string>
+    <string name="ui_scale_extra_large">Labai didelis</string>
+
+    <string name="settings_interaction">Sąveika</string>
+    <string name="settings_single_use_tags">Rodyti retai naudojamas žymas</string>
+    <string name="settings_single_use_tags_desc_off">Retai naudojamos žymos nebus rodomos</string>
+    <string name="settings_single_use_tags_desc_on">Retai naudojamos žymos bus rodomos</string>
+
+    <string name="settings_show_broken">Neveikiančios stotys</string>
+    <string name="settings_show_broken_on">Rodyti neveikiančias stotis sąrašuose</string>
+    <string name="settings_show_broken_off">Nerodyti neveikiančių stočių sąrašuose</string>
+
+    <string name="settings_startup_behaviour">Pradžios elgsena</string>
+    <string name="action_grid_view">Tinklelio rodinis</string>
+    <string name="action_list_view">Sąrašo rodinis</string>
+
+    <string name="startup_action_title">Pradžios veiksmas</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Rodyti visas stotis</string>
+    <string name="startup_show_favorites">Rodyti mėgstamas</string>
+    <string name="startup_show_history">Rodyti istoriją</string>
+    <string name="startup_show_last_view">Paskutinis rodinis</string>
+
+    <string name="settings_load_icons">Rodyti stočių ikonas</string>
+    <string name="settings_load_icons_on">Ikonos bus atsisiunčiamos</string>
+    <string name="settings_load_icons_off">Ikonos nebus atsisiunčiamos</string>
+
+    <string name="settings_auto_favorite">Automatinis pridėjimas</string>
+    <string name="settings_auto_favorite_on">Automatiškai pridėti stotis prie mėgstamų klausantis</string>
+    <string name="settings_auto_favorite_off">Nepridėti stočių automatiškai prie mėgstamų klausantis</string>
+
+    <string name="settings_play">Grotuvas</string>
+    <string name="settings_auto_play_on_startup">Automatinis grojimas</string>
+    <string name="settings_auto_play_on_startup_on">Paleisti paskutinę stotį įjungus programėlę</string>
+    <string name="settings_auto_play_on_startup_off">Nepaleisti paskutinės stoties įjungus programėlę</string>
+    <string name="settings_auto_off_on_startup">Automatinis sustabdymas</string>
+    <string name="settings_auto_off_on_startup_on">Naudoti automatinio sustabdymo laikmatį su automatiniu grojimu</string>
+    <string name="settings_auto_off_on_startup_off">Nenaudoti automatinio sustabdymo laikmačio su automatiniu grojimu</string>
+    <string name="settings_auto_off_sleep_timer">Automatinio sustabdymo laikmatis</string>
+    <string name="settings_auto_off_sleep_timer_desc">Sustabdyti grojimą po %1$s minučių</string>
+    <string name="settings_play_external">Leisti išorinį grotuvą</string>
+    <string name="settings_play_external_desc_on">Groti stotis per išorinį grotuvą</string>
+    <string name="settings_play_external_desc_off">Groti stotis per AMARadio</string>
+    <string name="settings_equalizer">Glodintuvas (Equalizer)</string>
+
+    <string name="settings_connectivity">Ryšys</string>
+    <string name="settings_connect_timeout">Prisijungimo laukimo laikas</string>
+    <string name="settings_read_timeout">Skaitymo laukimo laikas</string>
+    <string name="settings_resume_timeout">Tęsimo laukimo laikas</string>
+    <string name="settings_retry_timeout">Pakartotinio bandymo laikas</string>
+    <string name="settings_retry_delay">Pakartotinio prisijungimo delsa</string>
+    <string name="settings_proxy">Tarpinis serveris (Proxy)</string>
+    <string name="settings_proxy_login">Vartotojo vardas</string>
+    <string name="settings_proxy_password">Slaptažodis</string>
+    <string name="settings_proxy_action_test">Testuoti</string>
+    <string name="settings_proxy_working">Sėkmingai prisijungta prie %s</string>
+    <string name="settings_proxy_not_working">Nepavyko prisijungti prie %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Nurodytos tarpinio serverio reikšmės yra neteisingos</string>
+    <string name="ignore_proxy_settings_invalid">Nepaisoma neteisingų tarpinio serverio nustatymų</string>
+    <string name="settings_seconds_format">%d sek.</string>
+    <string name="settings_milliseconds_format">%d milisek.</string>
+
+    <string name="settings_pause_when_noisy">Sustabdyti atjungus ausines</string>
+
+    <string name="settings_auto_resume_do_not_resume">Netęsti</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Tęsti prijungus laidines ausines</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Tęsti grojimą prijungus laidines ausines</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Tęsti prijungus Bluetooth įrenginį</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Tęsti grojimą prijungus Bluetooth A2DP įrenginį</string>
+
+    <string name="settings_auto_resume_on_any_connected">Tęsti esant bet kokiam ryšiui</string>
+
+    <string name="settings_warn_no_wifi">Įspėjimas dėl Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Įspėti, jei klausomasi be Wi-Fi ryšio</string>
+    <string name="settings_warn_no_wifi_off">Neįspėti, jei klausomasi be Wi-Fi ryšio</string>
+
+    <string name="notify_pre_play">Jungiamasi</string>
+    <string name="notify_play">Grojama</string>
+    <string name="notify_paused">Sustabdyta</string>
+    <string name="notify_metered_connection">Mokamas ryšys</string>
+
+    <string name="notify_starred">Stotis pridėta prie mėgstamų</string>
+    <string name="notify_autostarred">Stotis automatiškai pridėta prie mėgstamų</string>
+    <string name="notify_unstarred">Stotis pašalinta iš mėgstamų</string>
+    <string name="notify_deleted_favorites">Mėgstamos ištrintos</string>
+    <string name="notify_deleted_history">Istorija išvalyta</string>
+
+    <string name="notify_open_link_failure">Nerasta programa nuorodai atidaryti</string>
+
+    <string name="notify_station_removed_from_list">1 pašalinta</string>
+    <string name="action_station_removed_from_list_undo">ATŠAUKTI</string>
+
+    <string name="alert_delete_history">Ar tikrai norite išvalyti istoriją?</string>
+    <string name="alert_delete_favorites">Ar tikrai norite ištrinti visas mėgstamas?</string>
+    <string name="yes">Taip</string>
+    <string name="no">Ne</string>
+
+    <string name="alert_select_player">Pasirinkite grotuvą</string>
+    <string name="alert_select_player_name">Pavadinimas</string>
+    <string name="hostname">Serverio vardas</string>
+    <string name="port">Prievadas (Port)</string>
+
+    <string name="alert_press_back_to_exit">Dar kartą paspauskite „Atgal“, kad išeitumėte</string>
+
+    <string name="error_stream_url">Klaida su srauto URL</string>
+    <string name="error_caching_stream">Klaida talpinant srautą</string>
+    <string name="error_play_stream">Nepavyko paleisti srauto</string>
+    <string name="error_stream_reconnect_timeout">Nepavyko vėl prisijungti prie srauto: baigėsi laikas</string>
+    <string name="warning_no_network_trying_resume">Nėra ryšio. Bus bandoma tęsti, kai ryšys atsiras.</string>
+    <string name="giving_up_resume">Nutraukiamas bandymas tęsti grojimą</string>
+
+    <string name="error_grant_audiofocus">Sistema nesuteikė garso prioriteto</string>
+
+    <string name="error_no_equalizer_found">Nerasta glodintuvo programa</string>
+
+    <string name="player_info_status">Būsena:&#160;</string>
+    <string name="player_info_status_stopped">sustabdyta</string>
+    <string name="player_info_status_playing">grojama</string>
+    <string name="player_info_transferred">Perduota duomenų: %1$s</string>
+
+    <string name="tab_player_art">Viršelis</string>
+    <string name="tab_player_info">Informacija</string>
+    <string name="tab_player_history">Dainų istorija</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">SUTRIKUSI</string>
+    <string name="station_detail_deleted_on_server">IŠTRINTA</string>
+
+    <string name="station_details_clicks">%1$d paspaudimų</string>
+    <string name="station_details_votes">%1$d balsų</string>
+
+    <string name="image_button_disable">Išjungti</string>
+    <string name="image_button_delete">Ištrinti</string>
+    <string name="image_button_more">Daugiau</string>
+    <string name="image_button_less">Mažiau</string>
+    <string name="image_button_repeat">Kartoti</string>
+    <string name="image_button_dont_repeat">Nekartoti</string>
+    <string name="icon_click_trend_decreasing">Populiarumas mažėja</string>
+    <string name="icon_click_trend_increasing">Populiarumas didėja</string>
+    <string name="icon_click_trend_stable">Populiarumas stabilus</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100 % be reklamų ir privatumas</string>
+
+    <string name="action_play_in_external">Groti išoriniame grotuve</string>
+    <string name="action_choose_external_player">Pasirinkti išorinį grotuvą</string>
+
+    <string name="settings_disable_battery_optimization">Baterijos optimizavimas</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Baterijos optimizavimo nepaisoma, AMARadio visada turėtų atgauti prioritetą.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Baterijos optimizavimas aktyvuotas, fone AMARadio gali nepavykti atgauti prioriteto.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Kita</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">Apie AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Pereiti prie kito</string>
+    <string name="description_btn_skip_to_previous">Pereiti prie ankstesnio</string>
+
+    <string-array name="weekdays">
+        <item>S</item>
+        <item>P</item>
+        <item>A</item>
+        <item>T</item>
+        <item>K</item>
+        <item>P</item>
+        <item>Š</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Srauto URL sėkmingai nukopijuotas</string>
+    <string name="notify_track_info_copied">Dainos informacija sėkmingai nukopijuota</string>
+
+    <string-array name="actions_station_link">
+        <item>Apsilankyti svetainėje</item>
+        <item>Kopijuoti srauto URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Aptiktas mokamas ryšys</string>
+    <string name="alert_metered_connection_message">Mokamas ryšys gali kainuoti papildomai, spauskite „Gerai“, kad tęstumėte.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Apie</string>
+    <string name="refresh">Atnaujinti</string>
+    <string name="action_filter">Filtras</string>
+    <string name="filter_country">Šalis</string>
+    <string name="filter_tag">Žyma</string>
+    <string name="filter_language">Kalba</string>
+    <string name="filter_sort_by">Rūšiuoti pagal</string>
+    <string name="filter_reverse">Atvirkštinė tvarka</string>
+    <string name="filter_apply">Taikyti filtrą</string>
+    <string name="sort_name">Pavadinimas</string>
+    <string name="sort_votes">Balsai</string>
+    <string name="sort_clicks">Paspaudimai</string>
+    <string name="sort_lastchange">Paskutinis pakeitimas</string>
+    <string name="filter_select_country">Pasirinkite šalį</string>
+    <string name="filter_select_language">Pasirinkite kalbą</string>
+    <string name="filter_type_tag">Įveskite žymą…</string>
+    <string name="filter_tap_to_configure">Bakstelėkite konfigūruoti</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

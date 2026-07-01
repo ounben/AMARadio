@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Emri</string>
+    <string name="detail_tags">Etiketat</string>
+    <string name="detail_country">Shteti</string>
+    <string name="detail_create_shortcut">Shto në ekranin kryesor</string>
+    <string name="detail_language">Gjuha</string>
+    <string name="detail_weblink">Linku i uebit</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Luaj</string>
+    <string name="detail_pause">Pauzë</string>
+    <string name="detail_stop">Ndalo</string>
+    <string name="detail_share">Shpërndaj</string>
+    <string name="detail_play_in_AMARadio">Luaj në AMARadio</string>
+
+    <string name="action_links">Linqe</string>
+    <string name="action_homepage">Faqja kryesore</string>
+    <string name="action_favorite">I preferuar</string>
+    <string name="action_starred_add">Shto te të preferuarat</string>
+    <string name="action_starred_remove">Hiq nga të preferuarat</string>
+
+    <string name="action_station_visit_website">Vizito faqen e internetit</string>
+    <string name="action_station_copy_stream_url">Kopjo URL-në e transmetimit</string>
+    <string name="action_station_share">Shpërndaj</string>
+
+    <string name="action_local">Lokal</string>
+    <string name="action_skip_to_next">Tjetri</string>
+    <string name="action_pause">Pauzë</string>
+    <string name="action_skip_to_previous">Paraprak</string>
+    <string name="action_resume">Vazhdo</string>
+    <string name="action_stop">Ndalo</string>
+    <string name="action_search">Kërko</string>
+    <string name="action_delete">Fshij</string>
+    <string name="action_delete_history">Fshij historinë</string>
+    <string name="action_delete_favorites">Fshij të gjitha të preferuarat</string>
+    <string name="action_delete_stream_history">Pastro historinë e këngëve</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Anulo</string>
+    <string name="action_top_click">Më të klikuarat</string>
+    <string name="action_toggle_view">Ndrysho pamjen</string>
+    <string name="action_top_vote">Më të votuarat</string>
+    <string name="action_changed_lately">Ndryshuar së fundmi</string>
+    <string name="action_currently_playing">Duke luajtur</string>
+    <string name="action_tags">Etiketat</string>
+    <string name="action_countries">Shtetet/Rajonet</string>
+    <string name="action_languages">Gjuhët</string>
+    <string name="action_edit">Ndrysho</string>
+    <string name="action_copy_info">Kopjo informacionin</string>
+    <string name="action_rename_tab">Riemëro skedën</string>
+    <string name="error_filter_name_required">Ju lutemi shkruani një emër për këtë skedë filtri së pari</string>
+    <string name="confirm_delete_filter_tab">A jeni të sigurt që dëshironi të fshini filtrin \"%1$s\"?</string>
+    <string name="filter_empty_title">Ndërtoni furnizimin tuaj të personalizuar të stacioneve radiofonike</string>
+    <string name="filter_empty_desc">Krijoni një pamje të personalizuar duke kombinuar disa kritere. Ju mund të ngushtoni kërkimin tuaj duke përdorur:</string>
+    <string name="filter_empty_filter_by">Filtro sipas</string>
+    <string name="filter_empty_filter_desc">Shtetit, Emrit të Stacionit, Etiketave ose Gjuhës</string>
+    <string name="filter_empty_sort_by">Rendit sipas</string>
+    <string name="filter_empty_sort_desc">Klikimeve, Alfabetit, Votave ose Ndryshimit të Fundit</string>
+    <string name="filter_empty_hint">Shkruani një emër në fushën më sipër për të ruajtur këtë pamje!</string>
+    <string name="error_station_load">Nuk mund të lidhej me stacionin</string>
+    <string name="error_list_update">Nuk mund të lidhej me serverin e radio browser</string>
+
+    <string name="share_action">Shpërndaj linkun e stacionit me…</string>
+
+    <string name="nav_item_stations">Stacionet</string>
+    <string name="nav_item_starred">Të preferuarat</string>
+    <string name="nav_item_history">Historia</string>
+    <string name="nav_item_settings">Cilësimet</string>
+
+    <string name="about_text">AMARadio është 100% pa reklama dhe i fokusuar te privatësia.\n\nFillimisht e zhvillova këtë aplikacion për nënën time për t\'i ofruar asaj një përvojë radioje të thjeshtë dhe të ndershme pa reklama apo gjurmim të bezdisshëm. Kjo është arsyeja pse AMARadio do të mbetet gjithmonë pa reklama – është një premtim ndaj saj, i ndarë me të gjithë ju.\n\nKy projekt është një fork i shkëlqyer të https://github.com/segler-alex/RadioDroid . I gjithë kodi është migruar nga Java në Kotlin për të siguruar që aplikacioni të mbetet modern dhe i pajtueshëm me versionet e ardhshme të Android.\n\nKodi burim është i disponueshëm në: https://github.com/ounben/AMARadio\n\nKy aplikacion përdor direktorinë falas të stacioneve radio në https://www.radio-browser.info .\nÇdokush mund të shtojë stacione në të. Funksionon si një wiki për stacionet radio online.\n\nKontakt: ben@ounben.com\n\nGjurmuesi i gabimeve: https://github.com/ounben/AMARadio/issues\n\nNëse ju pëlqen softueri dhe dëshironi të ndihmoni, mos ngurroni të më dërgoni një email.\nGjithashtu idetë për funksione të reja janë gjithmonë të mirëseardhura!\n\nKy aplikacion është softuer i lirë, i licencuar sipas GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versioni: %1$s</string>
+    <string name="detail_star">Shto te të preferuarat</string>
+    <string name="detail_unstar">Hiq nga të preferuarat</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Duke u ngarkuar…</string>
+
+    <string name="sleep_timer" formatted="true">Kohëmatësi i gjumit: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Ndalo luajtjen pas minutës së zgjedhur</string>
+    <string name="sleep_timer_apply">Apliko</string>
+    <string name="sleep_timer_clear">Pastro</string>
+    <string name="nav_item_add_sleep">Kohëmatësi i gjumit</string>
+
+    <string name="nav_item_save_playlist">Eksporto të preferuarat si listë dëgjimi</string>
+    <string name="nav_item_load_playlist">Importo të preferuarat nga lista e dëgjimit</string>
+    <string name="nav_item_save_history_playlist">Eksporto historinë si listë dëgjimi</string>
+    <string name="confirm_overwrite_file">Të mbishkruhet skedari?</string>
+    <string name="dialog_hint_file_name">Shkruani emrin e skedarit</string>
+    <string name="error_empty_field">Kjo fushë kërkohet</string>
+    <string name="error_invalid_file_name">Emër skedari i pavlefshëm</string>
+    <string name="label_button_cancel">Anulo</string>
+    <string name="label_button_overwrite">Mbishkruaj</string>
+    <string name="notify_load_playlist_nok">Nuk mund të importohej nga %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Duke importuar nga %1$s&#47;%2$s, ju lutem prisni.</string>
+    <string name="notify_load_playlist_ok">U importuan %1$d stacione nga %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Nuk mund të eksportohej në %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Duke eksportuar në %1$s&#47;%2$s, ju lutem prisni.</string>
+    <string name="notify_save_playlist_ok">Eksportimi në %1$s&#47;%2$s u krye me sukses</string>
+    <string name="notify_sync_list_deleted_entries">%1$d nga %2$d stacione lokale në listë u shënuan si jo-ekzistente në server</string>
+
+    <string name="searchpreference_clear_history">Pastro historinë</string>
+    <string name="searchpreference_no_results">Nuk u gjet asnjë rezultat</string>
+    <string name="searchpreference_search">Kërko…</string>
+    <string name="settings_appearance">Pamja</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">E hapur</string>
+    <string name="theme_dark">E errët</string>
+    <string name="theme_system">Sipas sistemit</string>
+    <string name="settings_compact_style">Mënyra kompakte</string>
+    <string name="settings_compact_style_desc_off">Ikonë e madhe me detajet e stacionit</string>
+    <string name="settings_compact_style_desc_on">Ikonë e vogël pa detajet e stacionit</string>
+    <string name="settings_bottom_navigation">Navigimi në fund</string>
+    <string name="settings_ui_scale">Shkallëzimi i UI</string>
+    <string name="settings_language">Gjuha</string>
+    <string name="ui_scale_compact">Kompakt</string>
+    <string name="ui_scale_standard">Standardi i Sistemit</string>
+    <string name="ui_scale_large">I madh</string>
+    <string name="ui_scale_extra_large">Shumë i madh</string>
+
+    <string name="settings_interaction">Bashkëveprimi</string>
+    <string name="settings_single_use_tags">Shfaq etiketat e përdorura rrallë</string>
+    <string name="settings_single_use_tags_desc_off">Etiketat e përdorura rrallë nuk do të shfaqen</string>
+    <string name="settings_single_use_tags_desc_on">Etiketat e përdorura rrallë do të shfaqen</string>
+
+    <string name="settings_show_broken">Stacionet e prishura</string>
+    <string name="settings_show_broken_on">Shfaq stacionet e prishura në lista</string>
+    <string name="settings_show_broken_off">Mos shfaq stacionet e prishura në lista</string>
+
+    <string name="settings_startup_behaviour">Sjellja në Fillim</string>
+    <string name="action_grid_view">Pamja me rrjetë</string>
+    <string name="action_list_view">Pamja me listë</string>
+
+    <string name="startup_action_title">Veprimi në fillim</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Shfaq të gjitha stacionet</string>
+    <string name="startup_show_favorites">Shfaq të preferuarat</string>
+    <string name="startup_show_history">Shfaq historinë</string>
+    <string name="startup_show_last_view">Pamja e fundit</string>
+
+    <string name="settings_load_icons">Shfaq ikonat e stacioneve</string>
+    <string name="settings_load_icons_on">Ikonat do të shkarkohen</string>
+    <string name="settings_load_icons_off">Ikonat nuk do të shkarkohen</string>
+
+    <string name="settings_auto_favorite">Auto-preferuarat</string>
+    <string name="settings_auto_favorite_on">Shto stacionet automatikisht te të preferuarat kur luhen</string>
+    <string name="settings_auto_favorite_off">Mos shto stacionet automatikisht te të preferuarat kur luhen</string>
+
+    <string name="settings_play">Luajtësi</string>
+    <string name="settings_auto_play_on_startup">Auto-luaj</string>
+    <string name="settings_auto_play_on_startup_on">Luaj stacionin e fundit në fillim</string>
+    <string name="settings_auto_play_on_startup_off">Mos luaj stacionin e fundit në fillim</string>
+    <string name="settings_auto_off_on_startup">Auto-ndalo</string>
+    <string name="settings_auto_off_on_startup_on">Përdor kohëmatësin e auto-ndalimit me auto-luajtjen</string>
+    <string name="settings_auto_off_on_startup_off">Mos përdor kohëmatësin e auto-ndalimit me auto-luajtjen</string>
+    <string name="settings_auto_off_sleep_timer">Kohëmatësi i auto-ndalimit</string>
+    <string name="settings_auto_off_sleep_timer_desc">Ndalo luajtjen pas %1$s minutash</string>
+    <string name="settings_play_external">Aktivizo luajtësin e jashtëm</string>
+    <string name="settings_play_external_desc_on">Luaj stacionet me luajtës të jashtëm</string>
+    <string name="settings_play_external_desc_off">Luaj stacionet me AMARadio</string>
+    <string name="settings_equalizer">Ekualizuesi</string>
+
+    <string name="settings_connectivity">Lidhshmëria</string>
+    <string name="settings_connect_timeout">Koha e pritjes së lidhjes</string>
+    <string name="settings_read_timeout">Koha e pritjes së leximit</string>
+    <string name="settings_resume_timeout">Koha e pritjes së rinisjes</string>
+    <string name="settings_retry_timeout">Koha e pritjes së riprovës</string>
+    <string name="settings_retry_delay">Vonesa e rilidhjes</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Emri i përdoruesit</string>
+    <string name="settings_proxy_password">Fjalëkalimi</string>
+    <string name="settings_proxy_action_test">Test</string>
+    <string name="settings_proxy_working">U lidh me sukses në %s</string>
+    <string name="settings_proxy_not_working">Dështoi lidhja me %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Vlerat që keni dhënë për proxy-n janë të pavlefshme</string>
+    <string name="ignore_proxy_settings_invalid">U shpërfillën cilësimet e pavlefshme të proxy-t</string>
+    <string name="settings_seconds_format">%d sekonda</string>
+    <string name="settings_milliseconds_format">%d milisekonda</string>
+
+    <string name="settings_pause_when_noisy">Ndalo kur hiqen kufjet</string>
+
+    <string name="settings_auto_resume_do_not_resume">Mos vazhdo</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Vazhdo në lidhje me tel</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Vazhdo riprodhimin kur futen kufjet me tel</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Vazhdo në lidhje Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Vazhdo riprodhimin kur lidhet pajisja Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">Vazhdo në çdo lidhje</string>
+
+    <string name="settings_warn_no_wifi">Paralajmërim pa Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Paralajmëro kur luhet pa lidhje Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Pa paralajmërim kur nuk ka lidhje Wi-Fi</string>
+
+    <string name="notify_pre_play">Duke u lidhur</string>
+    <string name="notify_play">Duke luajtur</string>
+    <string name="notify_paused">Në pauzë</string>
+    <string name="notify_metered_connection">Lidhje me matje</string>
+
+    <string name="notify_starred">Stacioni u shtua te të preferuarat</string>
+    <string name="notify_autostarred">Stacioni u shtua automatikisht te të preferuarat</string>
+    <string name="notify_unstarred">Stacioni u hoq nga të preferuarat</string>
+    <string name="notify_deleted_favorites">Të preferuarat u fshinë</string>
+    <string name="notify_deleted_history">Historia u fshi</string>
+
+    <string name="notify_open_link_failure">Nuk u gjet asnjë aplikacion për të hapur linkun</string>
+
+    <string name="notify_station_removed_from_list">1 i hequr</string>
+    <string name="action_station_removed_from_list_undo">ZMBRAPS</string>
+
+    <string name="alert_delete_history">A dëshironi vërtet të fshini historinë?</string>
+    <string name="alert_delete_favorites">A dëshironi vërtet të fshini të gjitha të preferuarat?</string>
+    <string name="yes">Po</string>
+    <string name="no">Jo</string>
+
+    <string name="alert_select_player">Ju lutemi zgjidhni një luajtës</string>
+    <string name="alert_select_player_name">Emri</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Porta</string>
+
+    <string name="alert_press_back_to_exit">Shtypni mbrapa edhe një herë për të dalë</string>
+
+    <string name="error_stream_url">Problem me URL-në e transmetimit</string>
+    <string name="error_caching_stream">Problem me caching e transmetimit</string>
+    <string name="error_play_stream">Nuk mund të luhej transmetimi</string>
+    <string name="error_stream_reconnect_timeout">Nuk mund të rilidhej me transmetimin: mbaroi koha</string>
+    <string name="warning_no_network_trying_resume">Nuk ka lidhje rrjeti. Duke u përpjekur të rifillojë kur të kthehet lidhja.</string>
+    <string name="giving_up_resume">Duke hequr dorë nga përpjekja për të rifilluar riprodhimin</string>
+
+    <string name="error_grant_audiofocus">Kërkesa për audio focus nuk u miratua nga sistemi</string>
+
+    <string name="error_no_equalizer_found">Nuk u gjet asnjë aplikacion ekualizues</string>
+
+    <string name="player_info_status">Statusi:&#160;</string>
+    <string name="player_info_status_stopped">ndaluar</string>
+    <string name="player_info_status_playing">duke luajtur</string>
+    <string name="player_info_transferred">Të dhënat e transferuara: %1$s</string>
+
+    <string name="tab_player_art">Kopertina</string>
+    <string name="tab_player_info">Informacione</string>
+    <string name="tab_player_history">Historia e këngëve</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">I PRISHUR</string>
+    <string name="station_detail_deleted_on_server">I FSHIRË</string>
+
+    <string name="station_details_clicks">%1$d klikime</string>
+    <string name="station_details_votes">%1$d vota</string>
+
+    <string name="image_button_disable">Çaktivizo</string>
+    <string name="image_button_delete">Fshij</string>
+    <string name="image_button_more">Më shumë</string>
+    <string name="image_button_less">Më pak</string>
+    <string name="image_button_repeat">Përsërit</string>
+    <string name="image_button_dont_repeat">Mos përsërit</string>
+    <string name="icon_click_trend_decreasing">Popullariteti në rënie</string>
+    <string name="icon_click_trend_increasing">Popullariteti në rritje</string>
+    <string name="icon_click_trend_stable">Popullaritet stabil</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% pa reklama &amp; privat</string>
+
+    <string name="action_play_in_external">Luaj në luajtës të jashtëm</string>
+    <string name="action_choose_external_player">Zgjidh luajtësin e jashtëm</string>
+
+    <string name="settings_disable_battery_optimization">Optimizimi i baterisë</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Optimizimi i baterisë shpërfillet, AMARadio duhet të jetë gjithmonë në gjendje të rifitojë fokusin.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Optimizimi i baterisë është aktivizuar, AMARadio nuk do të jetë në gjendje të rifitojë fokusin nëse është në sfond.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Të tjera</string>
+    <string name="settings_statistics">Statistikat</string>
+    <string name="settings_about">Rreth AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Kalo te tjetri</string>
+    <string name="description_btn_skip_to_previous">Kalo te parapraku</string>
+
+    <string-array name="weekdays">
+        <item>D</item>
+        <item>H</item>
+        <item>M</item>
+        <item>M</item>
+        <item>E</item>
+        <item>P</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL-ja e transmetimit u kopjua me sukses</string>
+    <string name="notify_track_info_copied">Informacioni i këngës u kopjua me sukses</string>
+
+    <string-array name="actions_station_link">
+        <item>Vizito faqen e internetit</item>
+        <item>Kopjo URL-në e transmetimit</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">U detektua lidhje me matje</string>
+    <string name="alert_metered_connection_message">Lidhja me matje mund të shkaktojë kosto shtesë, shtypni \'OK\' për të vazhduar.</string>
+    <string name="nav_item_statistics">Statistikat</string>
+    <string name="nav_item_about">Rreth nesh</string>
+    <string name="refresh">Rifresko</string>
+    <string name="action_filter">Filtro</string>
+    <string name="filter_country">Shteti</string>
+    <string name="filter_tag">Etiketa</string>
+    <string name="filter_language">Gjuha</string>
+    <string name="filter_sort_by">Rendit sipas</string>
+    <string name="filter_reverse">Renditja e kundërt</string>
+    <string name="filter_apply">Apliko filtrin</string>
+    <string name="sort_name">Emri</string>
+    <string name="sort_votes">Votat</string>
+    <string name="sort_clicks">Klikimet</string>
+    <string name="sort_lastchange">Ndryshimi i fundit</string>
+    <string name="filter_select_country">Zgjidh shtetin</string>
+    <string name="filter_select_language">Zgjidh gjuhën</string>
+    <string name="filter_type_tag">Shkruani etiketën…</string>
+    <string name="filter_tap_to_configure">Prekni për të konfiguruar</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

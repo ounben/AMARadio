@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Nosaukums</string>
+    <string name="detail_tags">Birkas</string>
+    <string name="detail_country">Valsts</string>
+    <string name="detail_create_shortcut">Pievienot sākuma ekrānam</string>
+    <string name="detail_language">Valoda</string>
+    <string name="detail_weblink">Tīmekļa saite</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Atskaņot</string>
+    <string name="detail_pause">Pauze</string>
+    <string name="detail_stop">Apturēt</string>
+    <string name="detail_share">Kopīgot</string>
+    <string name="detail_play_in_AMARadio">Atskaņot AMARadio</string>
+
+    <string name="action_links">Saites</string>
+    <string name="action_homepage">Mājaslapa</string>
+    <string name="action_favorite">Izlase</string>
+    <string name="action_starred_add">Pievienot izlasei</string>
+    <string name="action_starred_remove">Noņemt no izlases</string>
+
+    <string name="action_station_visit_website">Apmeklēt tīmekļa vietni</string>
+    <string name="action_station_copy_stream_url">Kopēt straumes URL</string>
+    <string name="action_station_share">Kopīgot</string>
+
+    <string name="action_local">Vietējais</string>
+    <string name="action_skip_to_next">Nākamais</string>
+    <string name="action_pause">Pauze</string>
+    <string name="action_skip_to_previous">Iepriekšējais</string>
+    <string name="action_resume">Atsākt</string>
+    <string name="action_stop">Apturēt</string>
+    <string name="action_search">Meklēt</string>
+    <string name="action_delete">Dzēst</string>
+    <string name="action_delete_history">Dzēst vēsturi</string>
+    <string name="action_delete_favorites">Dzēst visu izlasi</string>
+    <string name="action_delete_stream_history">Notīrīt dziesmu vēsturi</string>
+    <string name="action_ok">Labi</string>
+    <string name="action_cancel">Atcelt</string>
+    <string name="action_top_click">Populārākie klikšķi</string>
+    <string name="action_toggle_view">Pārslēgt skatu</string>
+    <string name="action_top_vote">Populārākie balsojumi</string>
+    <string name="action_changed_lately">Nesen mainītie</string>
+    <string name="action_currently_playing">Pašlaik skan</string>
+    <string name="action_tags">Birkas</string>
+    <string name="action_countries">Valstis/Reģioni</string>
+    <string name="action_languages">Valodas</string>
+    <string name="action_edit">Rediģēt</string>
+    <string name="action_copy_info">Kopēt informāciju</string>
+    <string name="action_rename_tab">Pārdēvēt cilni</string>
+    <string name="error_filter_name_required">Lūdzu, vispirms ievadiet šīs filtra cilnes nosaukumu</string>
+    <string name="confirm_delete_filter_tab">Vai tiešām vēlaties dzēst filtru \"%1$s\"?</string>
+    <string name="filter_empty_title">Izveidojiet savu pielāgoto radio staciju plūsmu</string>
+    <string name="filter_empty_desc">Izveidojiet personalizētu skatu, apvienojot vairākus kritērijus. Jūs varat sašaurināt meklēšanu pēc:</string>
+    <string name="filter_empty_filter_by">Filtrēt pēc</string>
+    <string name="filter_empty_filter_desc">Valsts, stacijas nosaukuma, birkām vai valodas</string>
+    <string name="filter_empty_sort_by">Kārtot pēc</string>
+    <string name="filter_empty_sort_desc">Klikšķiem, alfabēta, balsīm vai pēdējām izmaiņām</string>
+    <string name="filter_empty_hint">Ievadiet nosaukumu laukā augstāk, lai saglabātu šo skatu!</string>
+    <string name="error_station_load">Neizdevās izveidot savienojumu ar staciju</string>
+    <string name="error_list_update">Neizdevās izveidot savienojumu ar radio pārlūka serveri</string>
+
+    <string name="share_action">Kopīgot stacijas saiti ar…</string>
+
+    <string name="nav_item_stations">Stacijas</string>
+    <string name="nav_item_starred">Izlase</string>
+    <string name="nav_item_history">Vēsture</string>
+    <string name="nav_item_settings">Iestatījumi</string>
+
+    <string name="about_text">AMARadio ir 100% bez reklāmām un vērsts uz privātumu.\n\nSākotnēji es izstrādāju šo lietotni savai mātei, lai sniegtu viņai vienkāršu, godīgu radio klausīšanās pieredzi bez kaitinošām reklāmām vai izsekošanas. Tāpēc AMARadio vienmēr paliks bez reklāmām – tas ir solījums viņai, ar ko dalos ar jums visiem.\n\nŠis projekts ir lieliskā https://github.com/segler-alex/RadioDroid atzarojums. Viss pirmkods tika migrēts no Java uz Kotlin, lai nodrošinātu lietotnes mūsdienīgumu un saderību ar nākamajām Android versijām.\n\nPirmkods ir pieejams: https://github.com/ounben/AMARadio\n\nŠī lietotne izmanto bezmaksas radio staciju direktoriju https://www.radio-browser.info .\nIkviens var tajā pievienot stacijas. Tas darbojas kā vikipēdija tiešsaistes radio stacijām.\n\nKontakti: ben@ounben.com\n\nKļūdu ziņošana: https://github.com/ounben/AMARadio/issues\n\nJa jums patīk šī programmatūra un vēlaties palīdzēt, droši sūtiet man e-pastu.\nArī idejas par jaunām funkcijām vienmēr tiek novērtētas!\n\nŠī lietotne ir brīvā programmatūra, licencēta saskaņā ar GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versija: %1$s</string>
+    <string name="detail_star">Pievienot izlasei</string>
+    <string name="detail_unstar">Noņemt no izlases</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Ielādē…</string>
+
+    <string name="sleep_timer" formatted="true">Miega taimeris: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Apturēt atskaņošanu pēc izvēlētā laika</string>
+    <string name="sleep_timer_apply">Lietot</string>
+    <string name="sleep_timer_clear">Notīrīt</string>
+    <string name="nav_item_add_sleep">Miega taimeris</string>
+
+    <string name="nav_item_save_playlist">Eksportēt izlasi kā atskaņošanas sarakstu</string>
+    <string name="nav_item_load_playlist">Importēt izlasi no atskaņošanas saraksta</string>
+    <string name="nav_item_save_history_playlist">Eksportēt vēsturi kā atskaņošanas sarakstu</string>
+    <string name="confirm_overwrite_file">Pārrakstīt failu?</string>
+    <string name="dialog_hint_file_name">Ievadiet faila nosaukumu</string>
+    <string name="error_empty_field">Šis lauks ir obligāts</string>
+    <string name="error_invalid_file_name">Nederīgs faila nosaukums</string>
+    <string name="label_button_cancel">Atcelt</string>
+    <string name="label_button_overwrite">Pārrakstīt</string>
+    <string name="notify_load_playlist_nok">Neizdevās importēt no %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Importē no %1$s&#47;%2$s, lūdzu, uzgaidiet.</string>
+    <string name="notify_load_playlist_ok">Importētas %1$d stacijas no %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Neizdevās eksportēt uz %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Eksportē uz %1$s&#47;%2$s, lūdzu, uzgaidiet.</string>
+    <string name="notify_save_playlist_ok">Eksportēšana uz %1$s&#47;%2$s noritēja veiksmīgi</string>
+    <string name="notify_sync_list_deleted_entries">%1$d no %2$d vietējām stacijām sarakstā ir atzīmētas kā serverī neeksistējošas</string>
+
+    <string name="searchpreference_clear_history">Notīrīt vēsturi</string>
+    <string name="searchpreference_no_results">Nav rezultātu</string>
+    <string name="searchpreference_search">Meklēt…</string>
+    <string name="settings_appearance">Izskats</string>
+    <string name="settings_theme_selection_title">Motīvs</string>
+    <string name="theme_light">Gaišais</string>
+    <string name="theme_dark">Tumšais</string>
+    <string name="theme_system">Sistēmas iestatījums</string>
+    <string name="settings_compact_style">Kompaktais režīms</string>
+    <string name="settings_compact_style_desc_off">Liela ikona ar stacijas informāciju</string>
+    <string name="settings_compact_style_desc_on">Maza ikona bez stacijas informācijas</string>
+    <string name="settings_bottom_navigation">Apakšējā navigācija</string>
+    <string name="settings_ui_scale">Saskarnes mērogošana</string>
+    <string name="settings_language">Valoda</string>
+    <string name="ui_scale_compact">Kompakts</string>
+    <string name="ui_scale_standard">Sistēmas standarts</string>
+    <string name="ui_scale_large">Liels</string>
+    <string name="ui_scale_extra_large">Ļoti liels</string>
+
+    <string name="settings_interaction">Mijiedarbība</string>
+    <string name="settings_single_use_tags">Rādīt reti lietotas birkas</string>
+    <string name="settings_single_use_tags_desc_off">Reti lietotas birkas netiks rādītas</string>
+    <string name="settings_single_use_tags_desc_on">Reti lietotas birkas tiks rādītas</string>
+
+    <string name="settings_show_broken">Nedarbojošās stacijas</string>
+    <string name="settings_show_broken_on">Rādīt nedarbojošās stacijas sarakstos</string>
+    <string name="settings_show_broken_off">Nerādīt nedarbojošās stacijas sarakstos</string>
+
+    <string name="settings_startup_behaviour">Startēšanas uzvedība</string>
+    <string name="action_grid_view">Režģa skats</string>
+    <string name="action_list_view">Saraksta skats</string>
+
+    <string name="startup_action_title">Startēšanas darbība</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Rādīt visas stacijas</string>
+    <string name="startup_show_favorites">Rādīt izlasi</string>
+    <string name="startup_show_history">Rādīt vēsturi</string>
+    <string name="startup_show_last_view">Pēdējais skats</string>
+
+    <string name="settings_load_icons">Rādīt staciju ikonas</string>
+    <string name="settings_load_icons_on">Ikonas tiks lejupielādētas</string>
+    <string name="settings_load_icons_off">Ikonas netiks lejupielādētas</string>
+
+    <string name="settings_auto_favorite">Automātiskā izlase</string>
+    <string name="settings_auto_favorite_on">Automātiski pievienot stacijas izlasei atskaņošanas laikā</string>
+    <string name="settings_auto_favorite_off">Nepievienot stacijas automātiski izlasei atskaņošanas laikā</string>
+
+    <string name="settings_play">Atskaņotājs</string>
+    <string name="settings_auto_play_on_startup">Automātiskā atskaņošana</string>
+    <string name="settings_auto_play_on_startup_on">Atskaņot pēdējo staciju startēšanas laikā</string>
+    <string name="settings_auto_play_on_startup_off">Neatskaņot pēdējo staciju startēšanas laikā</string>
+    <string name="settings_auto_off_on_startup">Automātiskā apturēšana</string>
+    <string name="settings_auto_off_on_startup_on">Izmantot automātiskās apturēšanas taimeri ar automātisko atskaņošanu</string>
+    <string name="settings_auto_off_on_startup_off">Neizmantot automātiskās apturēšanas taimeri ar automātisko atskaņošanu</string>
+    <string name="settings_auto_off_sleep_timer">Automātiskās apturēšanas taimeris</string>
+    <string name="settings_auto_off_sleep_timer_desc">Apturēt atskaņošanu pēc %1$s minūtēm</string>
+    <string name="settings_play_external">Iespējot ārējo atskaņotāju</string>
+    <string name="settings_play_external_desc_on">Atskaņot stacijas ar ārējo atskaņotāju</string>
+    <string name="settings_play_external_desc_off">Atskaņot stacijas ar AMARadio</string>
+    <string name="settings_equalizer">Ekvalaizers</string>
+
+    <string name="settings_connectivity">Savienojamība</string>
+    <string name="settings_connect_timeout">Savienojuma noildze</string>
+    <string name="settings_read_timeout">Lasīšanas noildze</string>
+    <string name="settings_resume_timeout">Atsākšanas noildze</string>
+    <string name="settings_retry_timeout">Atkārtota mēģinājuma noildze</string>
+    <string name="settings_retry_delay">Atkārtota savienojuma aizkave</string>
+    <string name="settings_proxy">Starpniekserveris</string>
+    <string name="settings_proxy_login">Lietotājvārds</string>
+    <string name="settings_proxy_password">Parole</string>
+    <string name="settings_proxy_action_test">Pārbaudīt</string>
+    <string name="settings_proxy_working">Veiksmīgi pievienots %s</string>
+    <string name="settings_proxy_not_working">Neizdevās pievienoties %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Sniegtās starpniekservera vērtības ir nederīgas</string>
+    <string name="ignore_proxy_settings_invalid">Nederīgie starpniekservera iestatījumi ignorēti</string>
+    <string name="settings_seconds_format">%d sekundes</string>
+    <string name="settings_milliseconds_format">%d milisekundes</string>
+
+    <string name="settings_pause_when_noisy">Pauze, atvienojot austiņas</string>
+
+    <string name="settings_auto_resume_do_not_resume">Neatsākt</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Atsākt ar vadu savienojumu</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Atsākt atskaņošanu, pievienojot vadu austiņas</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Atsākt ar Bluetooth savienojumu</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Atsākt atskaņošanu, pievienojot Bluetooth A2DP ierīci</string>
+
+    <string name="settings_auto_resume_on_any_connected">Atsākt ar jebkuru savienojumu</string>
+
+    <string name="settings_warn_no_wifi">Brīdinājums bez Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Brīdināt, ja atskaņo bez Wi-Fi savienojuma</string>
+    <string name="settings_warn_no_wifi_off">Bez brīdinājuma, ja nav Wi-Fi savienojuma</string>
+
+    <string name="notify_pre_play">Savieno</string>
+    <string name="notify_play">Atskaņo</string>
+    <string name="notify_paused">Pauzēts</string>
+    <string name="notify_metered_connection">Savienojums ar datu uzskaiti</string>
+
+    <string name="notify_starred">Stacija pievienota izlasei</string>
+    <string name="notify_autostarred">Stacija automātiski pievienota izlasei</string>
+    <string name="notify_unstarred">Stacija noņemta no izlases</string>
+    <string name="notify_deleted_favorites">Izlase ir izdzēsta</string>
+    <string name="notify_deleted_history">Vēsture ir izdzēsta</string>
+
+    <string name="notify_open_link_failure">Netika atrasta lietotne saites atvēršanai</string>
+
+    <string name="notify_station_removed_from_list">1 noņemta</string>
+    <string name="action_station_removed_from_list_undo">ATSAUKT</string>
+
+    <string name="alert_delete_history">Vai tiešām vēlaties dzēst vēsturi?</string>
+    <string name="alert_delete_favorites">Vai tiešām vēlaties dzēst visu izlasi?</string>
+    <string name="yes">Jā</string>
+    <string name="no">Nē</string>
+
+    <string name="alert_select_player">Lūdzu, izvēlieties atskaņotāju</string>
+    <string name="alert_select_player_name">Nosaukums</string>
+    <string name="hostname">Saimniekdatora nosaukums</string>
+    <string name="port">Ports</string>
+
+    <string name="alert_press_back_to_exit">Nospiediet atpakaļ vēlreiz, lai izietu</string>
+
+    <string name="error_stream_url">Straumes URL problēma</string>
+    <string name="error_caching_stream">Straumes kešatmiņas problēma</string>
+    <string name="error_play_stream">Nevar atskaņot straumi</string>
+    <string name="error_stream_reconnect_timeout">Neizdevās atkārtoti izveidot savienojumu ar straumi: noildze</string>
+    <string name="warning_no_network_trying_resume">Nav tīkla savienojuma. Mēģina atsākt, kad savienojums atjaunosies.</string>
+    <string name="giving_up_resume">Pārtrauc mēģinājumus atsākt atskaņošanu</string>
+
+    <string name="error_grant_audiofocus">Sistēma nepiešķīra audio fokusu</string>
+
+    <string name="error_no_equalizer_found">Netika atrasta ekvalaizera lietotne</string>
+
+    <string name="player_info_status">Statuss:&#160;</string>
+    <string name="player_info_status_stopped">apturēts</string>
+    <string name="player_info_status_playing">atskaņo</string>
+    <string name="player_info_transferred">Pārsūtītie dati: %1$s</string>
+
+    <string name="tab_player_art">Albuma noformējums</string>
+    <string name="tab_player_info">Informācija</string>
+    <string name="tab_player_history">Dziesmu vēsture</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">BOJĀTS</string>
+    <string name="station_detail_deleted_on_server">DZĒSTS</string>
+
+    <string name="station_details_clicks">%1$d klikšķi</string>
+    <string name="station_details_votes">%1$d balsis</string>
+
+    <string name="image_button_disable">Atspējot</string>
+    <string name="image_button_delete">Dzēst</string>
+    <string name="image_button_more">Vairāk</string>
+    <string name="image_button_less">Mazāk</string>
+    <string name="image_button_repeat">Atkārtot</string>
+    <string name="image_button_dont_repeat">Neatkārtot</string>
+    <string name="icon_click_trend_decreasing">Popularitāte samazinās</string>
+    <string name="icon_click_trend_increasing">Popularitāte palielinās</string>
+    <string name="icon_click_trend_stable">Popularitāte ir stabila</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% bez reklāmām un privāti</string>
+
+    <string name="action_play_in_external">Atskaņot ārējā atskaņotājā</string>
+    <string name="action_choose_external_player">Izvēlēties ārējo atskaņotāju</string>
+
+    <string name="settings_disable_battery_optimization">Akumulatora optimizācija</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Akumulatora optimizācija tiek ignorēta, AMARadio vienmēr jāspēj atgūt fokusu.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Akumulatora optimizācija ir aktivizēta, AMARadio nevarēs atgūt fokusu fonā.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Cits</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">Par AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Pāriet uz nākamo</string>
+    <string name="description_btn_skip_to_previous">Pāriet uz iepriekšējo</string>
+
+    <string-array name="weekdays">
+        <item>S</item>
+        <item>P</item>
+        <item>O</item>
+        <item>T</item>
+        <item>C</item>
+        <item>P</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Straumes URL veiksmīgi nokopēts</string>
+    <string name="notify_track_info_copied">Dziesmas informācija veiksmīgi nokopēta</string>
+
+    <string-array name="actions_station_link">
+        <item>Apmeklēt tīmekļa vietni</item>
+        <item>Kopēt straumes URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Konstatēts savienojums ar uzskaiti</string>
+    <string name="alert_metered_connection_message">Savienojums ar datu uzskaiti var radīt papildu izmaksas, nospiediet \'Labi\', lai turpinātu.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Par</string>
+    <string name="refresh">Atsvaidzināt</string>
+    <string name="action_filter">Filtrs</string>
+    <string name="filter_country">Valsts</string>
+    <string name="filter_tag">Birka</string>
+    <string name="filter_language">Valoda</string>
+    <string name="filter_sort_by">Kārtot pēc</string>
+    <string name="filter_reverse">Apgriezta secība</string>
+    <string name="filter_apply">Lietot filtru</string>
+    <string name="sort_name">Nosaukums</string>
+    <string name="sort_votes">Balsis</string>
+    <string name="sort_clicks">Klikšķi</string>
+    <string name="sort_lastchange">Pēdējās izmaiņas</string>
+    <string name="filter_select_country">Izvēlieties valsti</string>
+    <string name="filter_select_language">Izvēlieties valodu</string>
+    <string name="filter_type_tag">Ievadiet birku…</string>
+    <string name="filter_tap_to_configure">Pieskarieties, lai konfigurētu</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

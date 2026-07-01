@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Nume</string>
+    <string name="detail_tags">Etichete</string>
+    <string name="detail_country">Țară</string>
+    <string name="detail_create_shortcut">Adaugă pe ecranul principal</string>
+    <string name="detail_language">Limbă</string>
+    <string name="detail_weblink">Weblink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Redare</string>
+    <string name="detail_pause">Pauză</string>
+    <string name="detail_stop">Stop</string>
+    <string name="detail_share">Partajare</string>
+    <string name="detail_play_in_AMARadio">Redare în AMARadio</string>
+
+    <string name="action_links">Link-uri</string>
+    <string name="action_homepage">Pagina de pornire</string>
+    <string name="action_favorite">Favorit</string>
+    <string name="action_starred_add">Adaugă la favorite</string>
+    <string name="action_starred_remove">Elimină din favorite</string>
+
+    <string name="action_station_visit_website">Vizitează site-ul web</string>
+    <string name="action_station_copy_stream_url">Copiază URL-ul fluxului</string>
+    <string name="action_station_share">Partajează</string>
+
+    <string name="action_local">Local</string>
+    <string name="action_skip_to_next">Următorul</string>
+    <string name="action_pause">Pauză</string>
+    <string name="action_skip_to_previous">Anteriorul</string>
+    <string name="action_resume">Reluare</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_search">Căutare</string>
+    <string name="action_delete">Șterge</string>
+    <string name="action_delete_history">Șterge istoricul</string>
+    <string name="action_delete_favorites">Șterge toate favoritele</string>
+    <string name="action_delete_stream_history">Șterge istoricul pieselor</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Anulează</string>
+    <string name="action_top_click">Cele mai accesate</string>
+    <string name="action_toggle_view">Schimbă vizualizarea</string>
+    <string name="action_top_vote">Cele mai votate</string>
+    <string name="action_changed_lately">Modificate recent</string>
+    <string name="action_currently_playing">Redare acum</string>
+    <string name="action_tags">Etichete</string>
+    <string name="action_countries">Țări/Regiuni</string>
+    <string name="action_languages">Limbi</string>
+    <string name="action_edit">Editează</string>
+    <string name="action_copy_info">Copiază informațiile</string>
+    <string name="action_rename_tab">Redenumește fila</string>
+    <string name="error_filter_name_required">Vă rugăm să introduceți mai întâi un nume pentru această filă de filtru</string>
+    <string name="confirm_delete_filter_tab">Sigur doriți să ștergeți filtrul \"%1$s\"?</string>
+    <string name="filter_empty_title">Construiește-ți propriul flux de posturi radio</string>
+    <string name="filter_empty_desc">Creează o vizualizare personalizată combinând mai multe criterii. Poți restrânge căutarea folosind:</string>
+    <string name="filter_empty_filter_by">Filtrează după</string>
+    <string name="filter_empty_filter_desc">Țară, Nume post, Etichete sau Limbă</string>
+    <string name="filter_empty_sort_by">Sortează după</string>
+    <string name="filter_empty_sort_desc">Accesări, Alfabet, Voturi sau Ultima modificare</string>
+    <string name="filter_empty_hint">Introdu un nume în câmpul de mai sus pentru a salva această vizualizare!</string>
+    <string name="error_station_load">Nu s-a putut conecta la post</string>
+    <string name="error_list_update">Nu s-a putut conecta la serverul radio browser</string>
+
+    <string name="share_action">Partajează link-ul postului cu…</string>
+
+    <string name="nav_item_stations">Posturi</string>
+    <string name="nav_item_starred">Favorite</string>
+    <string name="nav_item_history">Istoric</string>
+    <string name="nav_item_settings">Setări</string>
+
+    <string name="about_text">AMARadio este 100% fără reclame și concentrat pe confidențialitate.\n\nInițial am dezvoltat această aplicație pentru mama mea, pentru a-i oferi o experiență radio simplă și onestă, fără reclame enervante sau urmărire. De aceea AMARadio va rămâne mereu fără publicitate – este o promisiune făcută ei, partajată cu voi toți.\n\nAcest proiect este un fork al excelentului https://github.com/segler-alex/RadioDroid . Întregul cod sursă a fost migrat din Java în Kotlin pentru a asigura că aplicația rămâne modernă și compatibilă cu viitoarele versiuni de Android.\n\nCodul sursă este disponibil la: https://github.com/ounben/AMARadio\n\nAceastă aplicație folosește directorul gratuit de posturi radio de la https://www.radio-browser.info .\nOricine poate adăuga posturi în el. Funcționează ca un wiki pentru posturile de radio online.\n\nContact: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nDacă vă place software-ul și doriți să ajutați, nu ezitați să-mi trimiteți un e-mail.\nDe asemenea, ideile pentru funcții noi sunt întotdeauna apreciate!\n\nAceastă aplicație este software liber, licențiat sub GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versiune: %1$s</string>
+    <string name="detail_star">Adaugă la favorite</string>
+    <string name="detail_unstar">Elimină din favorite</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Se încarcă…</string>
+
+    <string name="sleep_timer" formatted="true">Temporizator somn: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Oprește redarea după minutul selectat</string>
+    <string name="sleep_timer_apply">Aplică</string>
+    <string name="sleep_timer_clear">Șterge</string>
+    <string name="nav_item_add_sleep">Temporizator somn</string>
+
+    <string name="nav_item_save_playlist">Exportă favoritele ca listă de redare</string>
+    <string name="nav_item_load_playlist">Importă favoritele din lista de redare</string>
+    <string name="nav_item_save_history_playlist">Exportă istoricul ca listă de redare</string>
+    <string name="confirm_overwrite_file">Suprascrieți fișierul?</string>
+    <string name="dialog_hint_file_name">Introduceți numele fișierului</string>
+    <string name="error_empty_field">Acest câmp este obligatoriu</string>
+    <string name="error_invalid_file_name">Nume de fișier nevalid</string>
+    <string name="label_button_cancel">Anulează</string>
+    <string name="label_button_overwrite">Suprascrie</string>
+    <string name="notify_load_playlist_nok">Nu s-a putut importa din %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Se importă din %1$s&#47;%2$s, vă rugăm așteptați.</string>
+    <string name="notify_load_playlist_ok">S-au importat %1$d posturi din %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Nu s-a putut exporta în %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Se exportă în %1$s&#47;%2$s, vă rugăm așteptați.</string>
+    <string name="notify_save_playlist_ok">Exportat în %1$s&#47;%2$s cu succes</string>
+    <string name="notify_sync_list_deleted_entries">%1$d din %2$d posturi locale din listă sunt marcate ca inexistente pe server</string>
+
+    <string name="searchpreference_clear_history">Șterge istoricul</string>
+    <string name="searchpreference_no_results">Niciun rezultat</string>
+    <string name="searchpreference_search">Căutare…</string>
+    <string name="settings_appearance">Aspect</string>
+    <string name="settings_theme_selection_title">Temă</string>
+    <string name="theme_light">Luminoasă</string>
+    <string name="theme_dark">Întunecată</string>
+    <string name="theme_system">Urmează sistemul</string>
+    <string name="settings_compact_style">Mod compact</string>
+    <string name="settings_compact_style_desc_off">Pictogramă mare cu detaliile postului</string>
+    <string name="settings_compact_style_desc_on">Pictogramă mică fără detaliile postului</string>
+    <string name="settings_bottom_navigation">Navigare jos</string>
+    <string name="settings_ui_scale">Scalare interfață</string>
+    <string name="settings_language">Limbă</string>
+    <string name="ui_scale_compact">Compact</string>
+    <string name="ui_scale_standard">Standard sistem</string>
+    <string name="ui_scale_large">Mare</string>
+    <string name="ui_scale_extra_large">Foarte mare</string>
+
+    <string name="settings_interaction">Interacțiune</string>
+    <string name="settings_single_use_tags">Afișează etichetele rar utilizate</string>
+    <string name="settings_single_use_tags_desc_off">Etichetele rar utilizate nu vor fi afișate</string>
+    <string name="settings_single_use_tags_desc_on">Etichetele rar utilizate vor fi afișate</string>
+
+    <string name="settings_show_broken">Posturi nefuncționale</string>
+    <string name="settings_show_broken_on">Afișează posturile nefuncționale în liste</string>
+    <string name="settings_show_broken_off">Nu afișa posturile nefuncționale în liste</string>
+
+    <string name="settings_startup_behaviour">Comportament pornire</string>
+    <string name="action_grid_view">Vizualizare grilă</string>
+    <string name="action_list_view">Vizualizare listă</string>
+
+    <string name="startup_action_title">Acțiune pornire</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Afișează toate posturile</string>
+    <string name="startup_show_favorites">Afișează favoritele</string>
+    <string name="startup_show_history">Afișează istoricul</string>
+    <string name="startup_show_last_view">Ultima vizualizare</string>
+
+    <string name="settings_load_icons">Afișează pictogramele posturilor</string>
+    <string name="settings_load_icons_on">Pictogramele vor fi descărcate</string>
+    <string name="settings_load_icons_off">Pictogramele nu vor fi descărcate</string>
+
+    <string name="settings_auto_favorite">Auto-favorite</string>
+    <string name="settings_auto_favorite_on">Adaugă posturile automat la favorite în timpul redării</string>
+    <string name="settings_auto_favorite_off">Nu adăuga posturile automat la favorite în timpul redării</string>
+
+    <string name="settings_play">Player</string>
+    <string name="settings_auto_play_on_startup">Redare automată</string>
+    <string name="settings_auto_play_on_startup_on">Redă ultimul post la pornire</string>
+    <string name="settings_auto_play_on_startup_off">Nu reda ultimul post la pornire</string>
+    <string name="settings_auto_off_on_startup">Oprire automată</string>
+    <string name="settings_auto_off_on_startup_on">Folosește temporizatorul de oprire automată cu redarea automată</string>
+    <string name="settings_auto_off_on_startup_off">Nu folosi temporizatorul de oprire automată cu redarea automată</string>
+    <string name="settings_auto_off_sleep_timer">Temporizator oprire automată</string>
+    <string name="settings_auto_off_sleep_timer_desc">Oprește redarea după %1$s minute</string>
+    <string name="settings_play_external">Activează player extern</string>
+    <string name="settings_play_external_desc_on">Redă posturile cu player extern</string>
+    <string name="settings_play_external_desc_off">Redă posturile cu AMARadio</string>
+    <string name="settings_equalizer">Egalizator</string>
+
+    <string name="settings_connectivity">Conectivitate</string>
+    <string name="settings_connect_timeout">Timp expirare conectare</string>
+    <string name="settings_read_timeout">Timp expirare citire</string>
+    <string name="settings_resume_timeout">Timp expirare reluare</string>
+    <string name="settings_retry_timeout">Timp expirare reîncercare</string>
+    <string name="settings_retry_delay">Întârziere reconectare</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Nume utilizator</string>
+    <string name="settings_proxy_password">Parolă</string>
+    <string name="settings_proxy_action_test">Test</string>
+    <string name="settings_proxy_working">Conectat cu succes la %s</string>
+    <string name="settings_proxy_not_working">Nu s-a putut conecta la %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Valorile furnizate pentru proxy sunt nevalide</string>
+    <string name="ignore_proxy_settings_invalid">S-au ignorat setările proxy nevalide</string>
+    <string name="settings_seconds_format">%d secunde</string>
+    <string name="settings_milliseconds_format">%d milisecunde</string>
+
+    <string name="settings_pause_when_noisy">Pauză la deconectarea căștilor</string>
+
+    <string name="settings_auto_resume_do_not_resume">Nu relua</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Reluare la conexiunea prin cablu</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Reluare redare la conectarea căștilor prin cablu</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Reluare la conexiunea Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Reluare redare la conectarea unui dispozitiv Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">Reluare la orice conexiune</string>
+
+    <string name="settings_warn_no_wifi">Avertizare lipsă Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Avertizează când redarea se face fără conexiune Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Fără avertizare când nu există conexiune Wi-Fi</string>
+
+    <string name="notify_pre_play">Se conectează</string>
+    <string name="notify_play">Redare</string>
+    <string name="notify_paused">Pauză</string>
+    <string name="notify_metered_connection">Conexiune contorizată</string>
+
+    <string name="notify_starred">Postul a fost adăugat la favorite</string>
+    <string name="notify_autostarred">Postul a fost adăugat automat la favorite</string>
+    <string name="notify_unstarred">Postul a fost eliminat din favorite</string>
+    <string name="notify_deleted_favorites">Favoritele au fost șterse</string>
+    <string name="notify_deleted_history">Istoricul a fost șters</string>
+
+    <string name="notify_open_link_failure">Nu s-a găsit nicio aplicație pentru a deschide link-ul</string>
+
+    <string name="notify_station_removed_from_list">1 Eliminat</string>
+    <string name="action_station_removed_from_list_undo">ANULEAZĂ</string>
+
+    <string name="alert_delete_history">Doriți cu adevărat să ștergeți istoricul?</string>
+    <string name="alert_delete_favorites">Doriți cu adevărat să ștergeți toate favoritele?</string>
+    <string name="yes">Da</string>
+    <string name="no">Nu</string>
+
+    <string name="alert_select_player">Vă rugăm să selectați un player</string>
+    <string name="alert_select_player_name">Nume</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Apăsați înapoi încă o dată pentru a ieși</string>
+
+    <string name="error_stream_url">Problemă URL flux</string>
+    <string name="error_caching_stream">Problemă cache flux</string>
+    <string name="error_play_stream">Nu s-a putut reda fluxul</string>
+    <string name="error_stream_reconnect_timeout">Nu s-a putut reconecta la flux: timp expirat</string>
+    <string name="warning_no_network_trying_resume">Nicio conexiune la rețea. Se încearcă reluarea când conexiunea revine.</string>
+    <string name="giving_up_resume">Se renunță la încercarea de a relua redarea</string>
+
+    <string name="error_grant_audiofocus">Cererea de focalizare audio nu a fost acordată de sistem</string>
+
+    <string name="error_no_equalizer_found">Nu s-a găsit nicio aplicație de egalizator</string>
+
+    <string name="player_info_status">Stare:&#160;</string>
+    <string name="player_info_status_stopped">oprit</string>
+    <string name="player_info_status_playing">redare</string>
+    <string name="player_info_transferred">Date transferate: %1$s</string>
+
+    <string name="tab_player_art">Copertă album</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Istoric piese</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">DEFECT</string>
+    <string name="station_detail_deleted_on_server">ȘTERS</string>
+
+    <string name="station_details_clicks">%1$d accesări</string>
+    <string name="station_details_votes">%1$d voturi</string>
+
+    <string name="image_button_disable">Dezactivează</string>
+    <string name="image_button_delete">Șterge</string>
+    <string name="image_button_more">Mai mult</string>
+    <string name="image_button_less">Mai puțin</string>
+    <string name="image_button_repeat">Repetă</string>
+    <string name="image_button_dont_repeat">Nu repeta</string>
+    <string name="icon_click_trend_decreasing">Popularitate în scădere</string>
+    <string name="icon_click_trend_increasing">Popularitate în creștere</string>
+    <string name="icon_click_trend_stable">Popularitate stabilă</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% fără reclame și privat</string>
+
+    <string name="action_play_in_external">Redare în player extern</string>
+    <string name="action_choose_external_player">Alege player extern</string>
+
+    <string name="settings_disable_battery_optimization">Optimizare baterie</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Optimizarea bateriei este ignorată, AMARadio ar trebui să poată recăpăta focalizarea oricând.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Optimizarea bateriei este activată, AMARadio nu va putea recăpăta focalizarea în fundal.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Altele</string>
+    <string name="settings_statistics">Statistici</string>
+    <string name="settings_about">Despre AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Sari la următorul</string>
+    <string name="description_btn_skip_to_previous">Sari la anteriorul</string>
+
+    <string-array name="weekdays">
+        <item>D</item>
+        <item>L</item>
+        <item>M</item>
+        <item>M</item>
+        <item>J</item>
+        <item>V</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL flux copiat cu succes</string>
+    <string name="notify_track_info_copied">Info piesă copiată cu succes</string>
+
+    <string-array name="actions_station_link">
+        <item>Vizitează site-ul web</item>
+        <item>Copiază URL-ul fluxului</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Conexiune contorizată detectată</string>
+    <string name="alert_metered_connection_message">Conexiunea contorizată poate genera costuri suplimentare, apăsați \'OK\' pentru a continua.</string>
+    <string name="nav_item_statistics">Statistici</string>
+    <string name="nav_item_about">Despre</string>
+    <string name="refresh">Reîmprospătare</string>
+    <string name="action_filter">Filtru</string>
+    <string name="filter_country">Țară</string>
+    <string name="filter_tag">Etichetă</string>
+    <string name="filter_language">Limbă</string>
+    <string name="filter_sort_by">Sortează după</string>
+    <string name="filter_reverse">Ordine inversă</string>
+    <string name="filter_apply">Aplică filtrul</string>
+    <string name="sort_name">Nume</string>
+    <string name="sort_votes">Voturi</string>
+    <string name="sort_clicks">Accesări</string>
+    <string name="sort_lastchange">Ultima modificare</string>
+    <string name="filter_select_country">Selectați țara</string>
+    <string name="filter_select_language">Selectați limba</string>
+    <string name="filter_type_tag">Introduceți eticheta…</string>
+    <string name="filter_tap_to_configure">Atingeți pentru a configura</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

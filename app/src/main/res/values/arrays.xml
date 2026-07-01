@@ -89,6 +89,24 @@
         <item>Türkçe</item>
         <item>中文 (简体)</item>
         <item>हिन्दी</item>
+        <item>Українська</item>
+        <item>Shqip</item>
+        <item>Română</item>
+        <item>Български</item>
+        <item>Hrvatski</item>
+        <item>Српски</item>
+        <item>Slovenščina</item>
+        <item>Македонски</item>
+        <item>Беларуская</item>
+        <item>Bosanski</item>
+        <item>Svenska</item>
+        <item>Eesti</item>
+        <item>Latviešu</item>
+        <item>Lietuvių</item>
+        <item>Íslenska</item>
+        <item>Malti</item>
+        <item>Gaeilge</item>
+        <item>Português (Portugal)</item>
     </string-array>
 
     <string-array name="language_values" translatable="false">
@@ -119,6 +137,24 @@
         <item>tr</item>
         <item>zh-rCN</item>
         <item>hi</item>
+        <item>uk</item>
+        <item>sq</item>
+        <item>ro</item>
+        <item>bg</item>
+        <item>hr</item>
+        <item>sr</item>
+        <item>sl</item>
+        <item>mk</item>
+        <item>be</item>
+        <item>bs</item>
+        <item>sv</item>
+        <item>et</item>
+        <item>lv</item>
+        <item>lt</item>
+        <item>is</item>
+        <item>mt</item>
+        <item>ga</item>
+        <item>pt</item>
     </string-array>
 
 </resources>

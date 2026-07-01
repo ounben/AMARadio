@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Nimi</string>
+    <string name="detail_tags">Sildid</string>
+    <string name="detail_country">Riik</string>
+    <string name="detail_create_shortcut">Lisa avakuvale</string>
+    <string name="detail_language">Keel</string>
+    <string name="detail_weblink">Veebilink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Esita</string>
+    <string name="detail_pause">Paus</string>
+    <string name="detail_stop">Peata</string>
+    <string name="detail_share">Jaga</string>
+    <string name="detail_play_in_AMARadio">Esita AMARadios</string>
+
+    <string name="action_links">Lingid</string>
+    <string name="action_homepage">Koduleht</string>
+    <string name="action_favorite">Lemmik</string>
+    <string name="action_starred_add">Lisa lemmikutesse</string>
+    <string name="action_starred_remove">Eemalda lemmikutest</string>
+
+    <string name="action_station_visit_website">Külasta veebisaiti</string>
+    <string name="action_station_copy_stream_url">Kopeeri voo URL</string>
+    <string name="action_station_share">Jaga</string>
+
+    <string name="action_local">Kohalik</string>
+    <string name="action_skip_to_next">Järgmine</string>
+    <string name="action_pause">Paus</string>
+    <string name="action_skip_to_previous">Eelmine</string>
+    <string name="action_resume">Jätka</string>
+    <string name="action_stop">Peata</string>
+    <string name="action_search">Otsi</string>
+    <string name="action_delete">Kustuta</string>
+    <string name="action_delete_history">Kustuta ajalugu</string>
+    <string name="action_delete_favorites">Kustuta kõik lemmikud</string>
+    <string name="action_delete_stream_history">Tühjenda lugude ajalugu</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Tühista</string>
+    <string name="action_top_click">Populaarsed klikid</string>
+    <string name="action_toggle_view">Muuda vaadet</string>
+    <string name="action_top_vote">Enim hääli saanud</string>
+    <string name="action_changed_lately">Viimati muudetud</string>
+    <string name="action_currently_playing">Hetkel mängib</string>
+    <string name="action_tags">Sildid</string>
+    <string name="action_countries">Riigid/Regioonid</string>
+    <string name="action_languages">Keeled</string>
+    <string name="action_edit">Muuda</string>
+    <string name="action_copy_info">Kopeeri info</string>
+    <string name="action_rename_tab">Muuda vahelehe nime</string>
+    <string name="error_filter_name_required">Palun sisestage esmalt selle filtri vahelehe nimi</string>
+    <string name="confirm_delete_filter_tab">Kas olete kindel, et soovite filtri \"%1$s\" kustutada?</string>
+    <string name="filter_empty_title">Loo oma kohandatud raadiojaamade voog</string>
+    <string name="filter_empty_desc">Loo personaliseeritud vaade, kombineerides mitmeid kriteeriume. Saate otsingut kitsendada järgmiselt:</string>
+    <string name="filter_empty_filter_by">Filtreeri</string>
+    <string name="filter_empty_filter_desc">Riik, jaama nimi, sildid või keel</string>
+    <string name="filter_empty_sort_by">Sorteeri</string>
+    <string name="filter_empty_sort_desc">Klikid, tähestik, hääled või viimane muudatus</string>
+    <string name="filter_empty_hint">Selle vaate salvestamiseks sisestage nimi ülalolevasse välja!</string>
+    <string name="error_station_load">Jaamaga ei õnnestunud ühendust saada</string>
+    <string name="error_list_update">Radio browseri serveriga ei õnnestunud ühendust saada</string>
+
+    <string name="share_action">Jaga jaama linki…</string>
+
+    <string name="nav_item_stations">Jaamad</string>
+    <string name="nav_item_starred">Lemmikud</string>
+    <string name="nav_item_history">Ajalugu</string>
+    <string name="nav_item_settings">Seaded</string>
+
+    <string name="about_text">AMARadio on 100% reklaamivaba ja privaatsusele suunatud.\n\nArendasin selle rakenduse algselt oma emale, et pakkuda talle lihtsat ja ausat raadiokogemust ilma tüütute reklaamide või jälgimiseta. Seetõttu jääb AMARadio alati reklaamivabaks – see on lubadus temale, mida jagan teie kõigiga.\n\nSee projekt on fork suurepärasest https://github.com/segler-alex/RadioDroid projektist. Kogu koodibaas on porditud Javast Kotlini, et tagada rakenduse kaasaegsus ja ühilduvus tulevaste Androidi versioonidega.\n\nLähtekood on saadaval aadressil: https://github.com/ounben/AMARadio\n\nSee rakendus kasutab tasuta raadiojaamade kataloogi aadressil https://www.radio-browser.info .\nIgaüks saab sinna jaamu lisada. See toimib nagu veebiraadiojaamade viki.\n\nKontakt: ben@ounben.com\n\nVigadest teatamine: https://github.com/ounben/AMARadio/issues\n\nKui teile tarkvara meeldib ja soovite aidata, saatke mulle e-kiri.\nSamuti on uued funktsioonide ideed alati oodatud!\n\nSee rakendus on vaba tarkvara, litsentsitud GPLv3 alusel. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Versioon: %1$s</string>
+    <string name="detail_star">Lisa lemmikutesse</string>
+    <string name="detail_unstar">Eemalda lemmikutest</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Laadimine…</string>
+
+    <string name="sleep_timer" formatted="true">Unetaimer: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Peata esitus valitud minuti pärast</string>
+    <string name="sleep_timer_apply">Rakenda</string>
+    <string name="sleep_timer_clear">Tühjenda</string>
+    <string name="nav_item_add_sleep">Unetaimer</string>
+
+    <string name="nav_item_save_playlist">Ekspordi lemmikud esitusloendina</string>
+    <string name="nav_item_load_playlist">Impordi lemmikud esitusloendist</string>
+    <string name="nav_item_save_history_playlist">Ekspordi ajalugu esitusloendina</string>
+    <string name="confirm_overwrite_file">Kas kirjutada fail üle?</string>
+    <string name="dialog_hint_file_name">Sisesta faili nimi</string>
+    <string name="error_empty_field">See väli on kohustuslik</string>
+    <string name="error_invalid_file_name">Vigane faili nimi</string>
+    <string name="label_button_cancel">Tühista</string>
+    <string name="label_button_overwrite">Kirjuta üle</string>
+    <string name="notify_load_playlist_nok">Ei saanud importida kohast %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Imporditakse kohast %1$s&#47;%2$s, palun oodake.</string>
+    <string name="notify_load_playlist_ok">Imporditi %1$d jaama kohast %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Ei saanud eksportida kohta %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Eksporditakse kohta %1$s&#47;%2$s, palun oodake.</string>
+    <string name="notify_save_playlist_ok">Eksportimine kohta %1$s&#47;%2$s õnnestus</string>
+    <string name="notify_sync_list_deleted_entries">%1$d %2$d-st kohalikust jaamast nimekirjas on serveris märgitud olematuks</string>
+
+    <string name="searchpreference_clear_history">Tühjenda ajalugu</string>
+    <string name="searchpreference_no_results">Tulemusi ei leitud</string>
+    <string name="searchpreference_search">Otsi…</string>
+    <string name="settings_appearance">Välimus</string>
+    <string name="settings_theme_selection_title">Teema</string>
+    <string name="theme_light">Hele</string>
+    <string name="theme_dark">Tume</string>
+    <string name="theme_system">Süsteemi järgi</string>
+    <string name="settings_compact_style">Kompaktne režiim</string>
+    <string name="settings_compact_style_desc_off">Suur ikoon jaama üksikasjadega</string>
+    <string name="settings_compact_style_desc_on">Väike ikoon ilma üksikasjadeta</string>
+    <string name="settings_bottom_navigation">Alumine navigatsioon</string>
+    <string name="settings_ui_scale">UI skaleerimine</string>
+    <string name="settings_language">Keel</string>
+    <string name="ui_scale_compact">Kompaktne</string>
+    <string name="ui_scale_standard">Süsteemi standard</string>
+    <string name="ui_scale_large">Suur</string>
+    <string name="ui_scale_extra_large">Väga suur</string>
+
+    <string name="settings_interaction">Interaktsioon</string>
+    <string name="settings_single_use_tags">Näita harva kasutatavaid silte</string>
+    <string name="settings_single_use_tags_desc_off">Harva kasutatavaid silte ei näidata</string>
+    <string name="settings_single_use_tags_desc_on">Harva kasutatavaid silte näidatakse</string>
+
+    <string name="settings_show_broken">Katkised jaamad</string>
+    <string name="settings_show_broken_on">Näita katkiseid jaamu loendites</string>
+    <string name="settings_show_broken_off">Ära näita katkiseid jaamu loendites</string>
+
+    <string name="settings_startup_behaviour">Käivitumine</string>
+    <string name="action_grid_view">Ruudustikvaade</string>
+    <string name="action_list_view">Loendivaade</string>
+
+    <string name="startup_action_title">Käivitamise tegevus</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Näita kõiki jaamu</string>
+    <string name="startup_show_favorites">Näita lemmikuid</string>
+    <string name="startup_show_history">Näita ajalugu</string>
+    <string name="startup_show_last_view">Viimane vaade</string>
+
+    <string name="settings_load_icons">Näita jaamade ikoone</string>
+    <string name="settings_load_icons_on">Ikoonid laetakse alla</string>
+    <string name="settings_load_icons_off">Ikoone ei laeta alla</string>
+
+    <string name="settings_auto_favorite">Automaatne lemmikuks lisamine</string>
+    <string name="settings_auto_favorite_on">Lisa jaamad mängimisel automaatselt lemmikutesse</string>
+    <string name="settings_auto_favorite_off">Ära lisa jaamu mängimisel automaatselt lemmikutesse</string>
+
+    <string name="settings_play">Mängija</string>
+    <string name="settings_auto_play_on_startup">Automaatne esitus</string>
+    <string name="settings_auto_play_on_startup_on">Esita käivitamisel viimast jaama</string>
+    <string name="settings_auto_play_on_startup_off">Ära esita käivitamisel viimast jaama</string>
+    <string name="settings_auto_off_on_startup">Automaatne peatamine</string>
+    <string name="settings_auto_off_on_startup_on">Kasuta automaatse peatamise taimerit koos automaatse esitusega</string>
+    <string name="settings_auto_off_on_startup_off">Ära kasuta automaatse peatamise taimerit koos automaatse esitusega</string>
+    <string name="settings_auto_off_sleep_timer">Automaatse peatamise taimer</string>
+    <string name="settings_auto_off_sleep_timer_desc">Peata esitus %1$s minuti pärast</string>
+    <string name="settings_play_external">Luba väline mängija</string>
+    <string name="settings_play_external_desc_on">Esita jaamu välise mängijaga</string>
+    <string name="settings_play_external_desc_off">Esita jaamu AMARadioga</string>
+    <string name="settings_equalizer">Ekvalaiser</string>
+
+    <string name="settings_connectivity">Ühenduvus</string>
+    <string name="settings_connect_timeout">Ühenduse aegumine</string>
+    <string name="settings_read_timeout">Lugemise aegumine</string>
+    <string name="settings_resume_timeout">Jätkamise aegumine</string>
+    <string name="settings_retry_timeout">Uuesti proovimise aegumine</string>
+    <string name="settings_retry_delay">Uuesti ühendamise viivitus</string>
+    <string name="settings_proxy">Proksi</string>
+    <string name="settings_proxy_login">Kasutajanimi</string>
+    <string name="settings_proxy_password">Parool</string>
+    <string name="settings_proxy_action_test">Testi</string>
+    <string name="settings_proxy_working">Ühendus %s-ga õnnestus</string>
+    <string name="settings_proxy_not_working">Ühendus %1$s-ga ebaõnnestus\n%2$s</string>
+    <string name="settings_proxy_invalid">Proksi andmed on vigased</string>
+    <string name="ignore_proxy_settings_invalid">Vigaseid proksi seadeid ignoreeriti</string>
+    <string name="settings_seconds_format">%d sekundit</string>
+    <string name="settings_milliseconds_format">%d millisekundit</string>
+
+    <string name="settings_pause_when_noisy">Paus kõrvaklappide eemaldamisel</string>
+
+    <string name="settings_auto_resume_do_not_resume">Ära jätka</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Jätka juhtme ühendamisel</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Jätka esitust juhtmeühendusega kõrvaklappide ühendamisel</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Jätka Bluetoothi ühendamisel</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Jätka esitust Bluetooth A2DP seadme ühendamisel</string>
+
+    <string name="settings_auto_resume_on_any_connected">Jätka mis tahes ühenduse puhul</string>
+
+    <string name="settings_warn_no_wifi">Hoiatus ilma Wi-Fita</string>
+    <string name="settings_warn_no_wifi_on">Hoiata, kui esitatakse ilma Wi-Fi ühenduseta</string>
+    <string name="settings_warn_no_wifi_off">Ära hoiata, kui Wi-Fi ühendust pole</string>
+
+    <string name="notify_pre_play">Ühendamine</string>
+    <string name="notify_play">Esitamine</string>
+    <string name="notify_paused">Pausil</string>
+    <string name="notify_metered_connection">Mõõdetud ühendus</string>
+
+    <string name="notify_starred">Jaam lisati lemmikutesse</string>
+    <string name="notify_autostarred">Jaam lisati automaatselt lemmikutesse</string>
+    <string name="notify_unstarred">Jaam eemaldati lemmikutest</string>
+    <string name="notify_deleted_favorites">Lemmikud on kustutatud</string>
+    <string name="notify_deleted_history">Ajalugu on kustutatud</string>
+
+    <string name="notify_open_link_failure">Lingi avamiseks ei leitud sobivat rakendust</string>
+
+    <string name="notify_station_removed_from_list">1 eemaldatud</string>
+    <string name="action_station_removed_from_list_undo">VÕTA TAGASI</string>
+
+    <string name="alert_delete_history">Kas soovite tõesti ajaloo kustutada?</string>
+    <string name="alert_delete_favorites">Kas soovite tõesti kõik lemmikud kustutada?</string>
+    <string name="yes">Jah</string>
+    <string name="no">Ei</string>
+
+    <string name="alert_select_player">Palun vali mängija</string>
+    <string name="alert_select_player_name">Nimi</string>
+    <string name="hostname">Hostinimi</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Väljumiseks vajutage veel kord tagasi</string>
+
+    <string name="error_stream_url">Voo URL-i probleem</string>
+    <string name="error_caching_stream">Voo puhverdamise probleem</string>
+    <string name="error_play_stream">Vood ei õnnestu mängida</string>
+    <string name="error_stream_reconnect_timeout">Voo uuesti ühendamine ebaõnnestus: aegumine</string>
+    <string name="warning_no_network_trying_resume">Võrguühendus puudub. Proovitakse jätkata, kui ühendus taastub.</string>
+    <string name="giving_up_resume">Loobutakse esituse jätkamise katsest</string>
+
+    <string name="error_grant_audiofocus">Süsteem ei andnud helifookust</string>
+
+    <string name="error_no_equalizer_found">Ekvalaiseri rakendust ei leitud</string>
+
+    <string name="player_info_status">Olek:&#160;</string>
+    <string name="player_info_status_stopped">peatatud</string>
+    <string name="player_info_status_playing">mängib</string>
+    <string name="player_info_transferred">Ülekantud andmed: %1$s</string>
+
+    <string name="tab_player_art">Albumi kaas</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Lugude ajalugu</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">KATKINE</string>
+    <string name="station_detail_deleted_on_server">KUSTUTATUD</string>
+
+    <string name="station_details_clicks">%1$d klikki</string>
+    <string name="station_details_votes">%1$d häält</string>
+
+    <string name="image_button_disable">Lülita välja</string>
+    <string name="image_button_delete">Kustuta</string>
+    <string name="image_button_more">Rohkem</string>
+    <string name="image_button_less">Vähem</string>
+    <string name="image_button_repeat">Korda</string>
+    <string name="image_button_dont_repeat">Ära korda</string>
+    <string name="icon_click_trend_decreasing">Populaarsus langeb</string>
+    <string name="icon_click_trend_increasing">Populaarsus kasvab</string>
+    <string name="icon_click_trend_stable">Populaarsus on stabiilne</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% reklaamivaba ja privaatne</string>
+
+    <string name="action_play_in_external">Mängi välises mängijas</string>
+    <string name="action_choose_external_player">Vali väline mängija</string>
+
+    <string name="settings_disable_battery_optimization">Aku optimeerimine</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Aku optimeerimist ignoreeritakse, AMARadio peaks saama alati fookuse tagasi.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Aku optimeerimine on aktiveeritud, AMARadio ei pruugi taustal olles fookust tagasi saada.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Muu</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">AMARadio teave</string>
+
+    <string name="description_btn_skip_to_next">Järgmisele hüppamine</string>
+    <string name="description_btn_skip_to_previous">Eelmisele hüppamine</string>
+
+    <string-array name="weekdays">
+        <item>P</item>
+        <item>E</item>
+        <item>T</item>
+        <item>K</item>
+        <item>N</item>
+        <item>R</item>
+        <item>L</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Voo URL kopeeritud</string>
+    <string name="notify_track_info_copied">Loo info kopeeritud</string>
+
+    <string-array name="actions_station_link">
+        <item>Külasta veebisaiti</item>
+        <item>Kopeeri voo URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Tuvastati mõõdetud ühendus</string>
+    <string name="alert_metered_connection_message">Mõõdetud ühendus võib kaasa tuua lisakulusid, jätkamiseks vajutage \'OK\'.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Teave</string>
+    <string name="refresh">Värskenda</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Riik</string>
+    <string name="filter_tag">Silt</string>
+    <string name="filter_language">Keel</string>
+    <string name="filter_sort_by">Sorteeri</string>
+    <string name="filter_reverse">Vastupidine järjekord</string>
+    <string name="filter_apply">Rakenda filter</string>
+    <string name="sort_name">Nimi</string>
+    <string name="sort_votes">Hääled</string>
+    <string name="sort_clicks">Klikid</string>
+    <string name="sort_lastchange">Viimane muudatus</string>
+    <string name="filter_select_country">Vali riik</string>
+    <string name="filter_select_language">Vali keel</string>
+    <string name="filter_type_tag">Trüki silt…</string>
+    <string name="filter_tap_to_configure">Puuduta seadistamiseks</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

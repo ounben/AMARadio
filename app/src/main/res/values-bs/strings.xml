@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Naziv</string>
+    <string name="detail_tags">Oznake</string>
+    <string name="detail_country">Država</string>
+    <string name="detail_create_shortcut">Dodaj na početni ekran</string>
+    <string name="detail_language">Jezik</string>
+    <string name="detail_weblink">Web link</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Pusti</string>
+    <string name="detail_pause">Pauza</string>
+    <string name="detail_stop">Zaustavi</string>
+    <string name="detail_share">Podijeli</string>
+    <string name="detail_play_in_AMARadio">Pusti u AMARadio</string>
+
+    <string name="action_links">Linkovi</string>
+    <string name="action_homepage">Početna stranica</string>
+    <string name="action_favorite">Omiljeno</string>
+    <string name="action_starred_add">Dodaj u omiljene</string>
+    <string name="action_starred_remove">Ukloni iz omiljenih</string>
+
+    <string name="action_station_visit_website">Posjeti web stranicu</string>
+    <string name="action_station_copy_stream_url">Kopiraj URL strima</string>
+    <string name="action_station_share">Podijeli</string>
+
+    <string name="action_local">Lokalno</string>
+    <string name="action_skip_to_next">Sljedeće</string>
+    <string name="action_pause">Pauza</string>
+    <string name="action_skip_to_previous">Prethodno</string>
+    <string name="action_resume">Nastavi</string>
+    <string name="action_stop">Zaustavi</string>
+    <string name="action_search">Traži</string>
+    <string name="action_delete">Obriši</string>
+    <string name="action_delete_history">Obriši historiju</string>
+    <string name="action_delete_favorites">Obriši sve omiljene</string>
+    <string name="action_delete_stream_history">Očisti historiju pjesama</string>
+    <string name="action_ok">U redu</string>
+    <string name="action_cancel">Odustani</string>
+    <string name="action_top_click">Najviše klikova</string>
+    <string name="action_toggle_view">Promijeni prikaz</string>
+    <string name="action_top_vote">Najviše glasova</string>
+    <string name="action_changed_lately">Nedavno promijenjeno</string>
+    <string name="action_currently_playing">Trenutno svira</string>
+    <string name="action_tags">Oznake</string>
+    <string name="action_countries">Države/Regije</string>
+    <string name="action_languages">Jezici</string>
+    <string name="action_edit">Uredi</string>
+    <string name="action_copy_info">Kopiraj info</string>
+    <string name="action_rename_tab">Preimenuj karticu</string>
+    <string name="error_filter_name_required">Prvo unesite naziv za ovu karticu filtera</string>
+    <string name="confirm_delete_filter_tab">Jeste li sigurni da želite obrisati filter \"%1$s\"?</string>
+    <string name="filter_empty_title">Napravite svoj prilagođeni radio izvor</string>
+    <string name="filter_empty_desc">Kreirajte personalizirani prikaz kombiniranjem više kriterija. Možete suziti pretragu koristeći:</string>
+    <string name="filter_empty_filter_by">Filtriraj po</string>
+    <string name="filter_empty_filter_desc">Država, Naziv stanice, Oznake ili Jezik</string>
+    <string name="filter_empty_sort_by">Sortiraj po</string>
+    <string name="filter_empty_sort_desc">Klikovi, Abeceda, Glasovi ili Zadnja izmjena</string>
+    <string name="filter_empty_hint">Upišite naziv u polje iznad da biste spasili ovaj prikaz!</string>
+    <string name="error_station_load">Nije moguće povezivanje sa stanicom</string>
+    <string name="error_list_update">Nije moguće povezivanje sa radio browser serverom</string>
+
+    <string name="share_action">Podijeli link stanice putem…</string>
+
+    <string name="nav_item_stations">Stanice</string>
+    <string name="nav_item_starred">Omiljene</string>
+    <string name="nav_item_history">Historija</string>
+    <string name="nav_item_settings">Postavke</string>
+
+    <string name="about_text">AMARadio je 100% bez reklama i fokusiran na privatnost.\n\nPrvobitno sam razvio ovu aplikaciju za svoju majku kako bih joj pružio jednostavno, iskreno iskustvo slušanja radija bez dosadnih reklama ili praćenja. Zato će AMARadio uvijek ostati bez reklama – to je obećanje njoj, koje dijelim sa svima vama.\n\nOvaj projekat je fork odličnog https://github.com/segler-alex/RadioDroid . Cijeli izvorni kod je prebačen sa Jave na Kotlin kako bi se osiguralo da aplikacija ostane moderna i kompatibilna sa budućim verzijama Androida.\n\nIzvorni kod je dostupan na: https://github.com/ounben/AMARadio\n\nAplikacija koristi besplatni direktorij radio stanica na https://www.radio-browser.info .\nSvako može dodati stanice. Radi kao wiki za internet radio stanice.\n\nKontakt: ben@ounben.com\n\nBug tracker: https://github.com/ounben/AMARadio/issues\n\nAko vam se sviđa softver i želite pomoći, slobodno mi pošaljite e-mail.\nTakođer su ideje za nove funkcije uvijek dobrodošle!\n\nOva aplikacija je slobodan softver, licenciran pod GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Verzija: %1$s</string>
+    <string name="detail_star">Dodaj u omiljene</string>
+    <string name="detail_unstar">Ukloni iz omiljenih</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Učitavanje…</string>
+
+    <string name="sleep_timer" formatted="true">Tajmer spavanja: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Zaustavi reprodukciju nakon odabranog minuta</string>
+    <string name="sleep_timer_apply">Primijeni</string>
+    <string name="sleep_timer_clear">Očisti</string>
+    <string name="nav_item_add_sleep">Tajmer spavanja</string>
+
+    <string name="nav_item_save_playlist">Izvezi omiljene kao listu za reprodukciju</string>
+    <string name="nav_item_load_playlist">Uvezi omiljene iz liste za reprodukciju</string>
+    <string name="nav_item_save_history_playlist">Izvezi historiju kao listu za reprodukciju</string>
+    <string name="confirm_overwrite_file">Prepiši datoteku?</string>
+    <string name="dialog_hint_file_name">Unesite naziv datoteke</string>
+    <string name="error_empty_field">Ovo polje je obavezno</string>
+    <string name="error_invalid_file_name">Nevažeći naziv datoteke</string>
+    <string name="label_button_cancel">Odustani</string>
+    <string name="label_button_overwrite">Prepiši</string>
+    <string name="notify_load_playlist_nok">Nije moguće uvesti iz %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Uvozi se iz %1$s&#47;%2$s, molimo sačekajte.</string>
+    <string name="notify_load_playlist_ok">Uvezeno %1$d stanica iz %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Nije moguće izvesti u %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Izvozi se u %1$s&#47;%2$s, molimo sačekajte.</string>
+    <string name="notify_save_playlist_ok">Uspješno izvezeno u %1$s&#47;%2$s</string>
+    <string name="notify_sync_list_deleted_entries">%1$d od %2$d lokalnih stanica na listi su označene kao nepostojeće na serveru</string>
+
+    <string name="searchpreference_clear_history">Očisti historiju</string>
+    <string name="searchpreference_no_results">Nema rezultata</string>
+    <string name="searchpreference_search">Traži…</string>
+    <string name="settings_appearance">Izgled</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Svijetla</string>
+    <string name="theme_dark">Tamna</string>
+    <string name="theme_system">Prati sistem</string>
+    <string name="settings_compact_style">Kompaktni režim</string>
+    <string name="settings_compact_style_desc_off">Velika ikona sa detaljima stanice</string>
+    <string name="settings_compact_style_desc_on">Mala ikona bez detalja stanice</string>
+    <string name="settings_bottom_navigation">Donja navigacija</string>
+    <string name="settings_ui_scale">Skaliranje interfejsa</string>
+    <string name="settings_language">Jezik</string>
+    <string name="ui_scale_compact">Kompaktno</string>
+    <string name="ui_scale_standard">Standard sistema</string>
+    <string name="ui_scale_large">Veliko</string>
+    <string name="ui_scale_extra_large">Vrlo veliko</string>
+
+    <string name="settings_interaction">Interakcija</string>
+    <string name="settings_single_use_tags">Prikaži rijetko korištene oznake</string>
+    <string name="settings_single_use_tags_desc_off">Rijetko korištene oznake neće biti prikazane</string>
+    <string name="settings_single_use_tags_desc_on">Rijetko korištene oznake će biti prikazane</string>
+
+    <string name="settings_show_broken">Pokvarene stanice</string>
+    <string name="settings_show_broken_on">Prikaži pokvarene stanice na listama</string>
+    <string name="settings_show_broken_off">Ne prikazuj pokvarene stanice na listama</string>
+
+    <string name="settings_startup_behaviour">Ponašanje pri pokretanju</string>
+    <string name="action_grid_view">Mrežni prikaz</string>
+    <string name="action_list_view">Prikaz liste</string>
+
+    <string name="startup_action_title">Radnja pri pokretanju</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Prikaži sve stanice</string>
+    <string name="startup_show_favorites">Prikaži omiljene</string>
+    <string name="startup_show_history">Prikaži historiju</string>
+    <string name="startup_show_last_view">Zadnji prikaz</string>
+
+    <string name="settings_load_icons">Prikaži ikone stanica</string>
+    <string name="settings_load_icons_on">Ikone će biti preuzete</string>
+    <string name="settings_load_icons_off">Ikone neće biti preuzete</string>
+
+    <string name="settings_auto_favorite">Auto-omiljeno</string>
+    <string name="settings_auto_favorite_on">Automatski dodaj stanice u omiljene tokom slušanja</string>
+    <string name="settings_auto_favorite_off">Nemoj automatski dodavati stanice u omiljene tokom slušanja</string>
+
+    <string name="settings_play">Plejer</string>
+    <string name="settings_auto_play_on_startup">Auto-reprodukcija</string>
+    <string name="settings_auto_play_on_startup_on">Pusti zadnju stanicu pri pokretanju</string>
+    <string name="settings_auto_play_on_startup_off">Nemoj pustiti zadnju stanicu pri pokretanju</string>
+    <string name="settings_auto_off_on_startup">Auto-zaustavljanje</string>
+    <string name="settings_auto_off_on_startup_on">Koristi tajmer za auto-zaustavljanje sa auto-reprodukcijom</string>
+    <string name="settings_auto_off_on_startup_off">Nemoj koristiti tajmer za auto-zaustavljanje sa auto-reprodukcijom</string>
+    <string name="settings_auto_off_sleep_timer">Tajmer za auto-zaustavljanje</string>
+    <string name="settings_auto_off_sleep_timer_desc">Zaustavi reprodukciju nakon %1$s minuta</string>
+    <string name="settings_play_external">Omogući vanjski plejer</string>
+    <string name="settings_play_external_desc_on">Pusti stanice preko vanjskog plejera</string>
+    <string name="settings_play_external_desc_off">Pusti stanice preko AMARadio</string>
+    <string name="settings_equalizer">Ekvilajzer</string>
+
+    <string name="settings_connectivity">Povezivanje</string>
+    <string name="settings_connect_timeout">Vrijeme isteka veze</string>
+    <string name="settings_read_timeout">Vrijeme isteka čitanja</string>
+    <string name="settings_resume_timeout">Vrijeme isteka nastavka</string>
+    <string name="settings_retry_timeout">Vrijeme isteka ponovnog pokušaja</string>
+    <string name="settings_retry_delay">Odgoda ponovnog povezivanja</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Korisničko ime</string>
+    <string name="settings_proxy_password">Lozinka</string>
+    <string name="settings_proxy_action_test">Test</string>
+    <string name="settings_proxy_working">Uspješno povezano na %s</string>
+    <string name="settings_proxy_not_working">Neuspješno povezivanje na %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Vrijednosti koje ste naveli za proxy su nevažeće</string>
+    <string name="ignore_proxy_settings_invalid">Zanemarene nevažeće postavke proxyja</string>
+    <string name="settings_seconds_format">%d sekundi</string>
+    <string name="settings_milliseconds_format">%d milisekundi</string>
+
+    <string name="settings_pause_when_noisy">Pauziraj pri isključivanju slušalica</string>
+
+    <string name="settings_auto_resume_do_not_resume">Nemoj nastaviti</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Nastavi na žičanoj vezi</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Nastavi reprodukciju pri priključivanju žičanih slušalica</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Nastavi na Bluetooth vezi</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Nastavi reprodukciju pri povezivanju Bluetooth A2DP uređaja</string>
+
+    <string name="settings_auto_resume_on_any_connected">Nastavi na bilo kojoj vezi</string>
+
+    <string name="settings_warn_no_wifi">Upozorenje bez Wi-Fi veze</string>
+    <string name="settings_warn_no_wifi_on">Upozori pri slušanju bez Wi-Fi veze</string>
+    <string name="settings_warn_no_wifi_off">Bez upozorenja bez Wi-Fi veze</string>
+
+    <string name="notify_pre_play">Povezivanje</string>
+    <string name="notify_play">Reprodukcija</string>
+    <string name="notify_paused">Pauzirano</string>
+    <string name="notify_metered_connection">Veza sa ograničenim prometom</string>
+
+    <string name="notify_starred">Stanica je dodana u omiljene</string>
+    <string name="notify_autostarred">Stanica je automatski dodana u omiljene</string>
+    <string name="notify_unstarred">Stanica je uklonjena iz omiljenih</string>
+    <string name="notify_deleted_favorites">Omiljene su obrisane</string>
+    <string name="notify_deleted_history">Historija je obrisana</string>
+
+    <string name="notify_open_link_failure">Nije pronađena aplikacija za otvaranje linka</string>
+
+    <string name="notify_station_removed_from_list">1 uklonjena</string>
+    <string name="action_station_removed_from_list_undo">VRATI</string>
+
+    <string name="alert_delete_history">Da li zaista želite obrisati historiju?</string>
+    <string name="alert_delete_favorites">Da li zaista želite obrisati sve omiljene?</string>
+    <string name="yes">Da</string>
+    <string name="no">Ne</string>
+
+    <string name="alert_select_player">Izaberite plejer</string>
+    <string name="alert_select_player_name">Naziv</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Pritisnite nazad još jednom za izlaz</string>
+
+    <string name="error_stream_url">Problem sa URL-om strima</string>
+    <string name="error_caching_stream">Problem sa keširanjem strima</string>
+    <string name="error_play_stream">Nije moguće pustiti strim</string>
+    <string name="error_stream_reconnect_timeout">Nije moguće ponovno povezivanje sa strimom: vrijeme isteklo</string>
+    <string name="warning_no_network_trying_resume">Nema mrežne veze. Pokušaj nastavka kada se veza vrati.</string>
+    <string name="giving_up_resume">Odustajanje od pokušaja nastavka reprodukcije</string>
+
+    <string name="error_grant_audiofocus">Sistem nije odobrio zahtjev za audio fokus</string>
+
+    <string name="error_no_equalizer_found">Aplikacija za ekvilajzer nije pronađena</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">zaustavljeno</string>
+    <string name="player_info_status_playing">svira</string>
+    <string name="player_info_transferred">Preneseni podaci: %1$s</string>
+
+    <string name="tab_player_art">Omot albuma</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Historija pjesama</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">POKVARENO</string>
+    <string name="station_detail_deleted_on_server">OBRISANO</string>
+
+    <string name="station_details_clicks">%1$d klikova</string>
+    <string name="station_details_votes">%1$d glasova</string>
+
+    <string name="image_button_disable">Onemogući</string>
+    <string name="image_button_delete">Obriši</string>
+    <string name="image_button_more">Više</string>
+    <string name="image_button_less">Manje</string>
+    <string name="image_button_repeat">Ponovi</string>
+    <string name="image_button_dont_repeat">Nemoj ponoviti</string>
+    <string name="icon_click_trend_decreasing">Popularnost opada</string>
+    <string name="icon_click_trend_increasing">Popularnost raste</string>
+    <string name="icon_click_trend_stable">Popularnost je stabilna</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% bez reklama i privatno</string>
+
+    <string name="action_play_in_external">Pusti u vanjskom plejeru</string>
+    <string name="action_choose_external_player">Izaberi vanjski plejer</string>
+
+    <string name="settings_disable_battery_optimization">Optimizacija baterije</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Optimizacija baterije je zanemarena, AMARadio bi uvijek trebao moći ponovo dobiti fokus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Optimizacija baterije je aktivirana, AMARadio neće moći dobiti fokus ako je u pozadini.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Ostalo</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">O AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Skoči na sljedeće</string>
+    <string name="description_btn_skip_to_previous">Skoči na prethodno</string>
+
+    <string-array name="weekdays">
+        <item>N</item>
+        <item>P</item>
+        <item>U</item>
+        <item>S</item>
+        <item>Č</item>
+        <item>P</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL strima uspješno kopiran</string>
+    <string name="notify_track_info_copied">Informacije o pjesmi uspješno kopirane</string>
+
+    <string-array name="actions_station_link">
+        <item>Posjeti web stranicu</item>
+        <item>Kopiraj URL strima</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Otkrivena je mjerena veza</string>
+    <string name="alert_metered_connection_message">Mjerena veza može uzrokovati dodatne troškove, pritisnite \'U redu\' za nastavak.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">O aplikaciji</string>
+    <string name="refresh">Osvježi</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Država</string>
+    <string name="filter_tag">Oznaka</string>
+    <string name="filter_language">Jezik</string>
+    <string name="filter_sort_by">Sortiraj po</string>
+    <string name="filter_reverse">Obrnuti redoslijed</string>
+    <string name="filter_apply">Primijeni filter</string>
+    <string name="sort_name">Ime</string>
+    <string name="sort_votes">Glasovi</string>
+    <string name="sort_clicks">Klikovi</string>
+    <string name="sort_lastchange">Zadnja izmjena</string>
+    <string name="filter_select_country">Odaberi državu</string>
+    <string name="filter_select_language">Odaberi jezik</string>
+    <string name="filter_type_tag">Upišite oznaku…</string>
+    <string name="filter_tap_to_configure">Dodirnite za konfiguraciju</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

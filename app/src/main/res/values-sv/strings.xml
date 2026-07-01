@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Namn</string>
+    <string name="detail_tags">Taggar</string>
+    <string name="detail_country">Land</string>
+    <string name="detail_create_shortcut">Lägg till på startskärmen</string>
+    <string name="detail_language">Språk</string>
+    <string name="detail_weblink">Webblänk</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Spela</string>
+    <string name="detail_pause">Pausa</string>
+    <string name="detail_stop">Stoppa</string>
+    <string name="detail_share">Dela</string>
+    <string name="detail_play_in_AMARadio">Spela i AMARadio</string>
+
+    <string name="action_links">Länkar</string>
+    <string name="action_homepage">Hemsida</string>
+    <string name="action_favorite">Favorit</string>
+    <string name="action_starred_add">Lägg till i favoriter</string>
+    <string name="action_starred_remove">Ta bort från favoriter</string>
+
+    <string name="action_station_visit_website">Besök webbplats</string>
+    <string name="action_station_copy_stream_url">Kopiera strömnings-URL</string>
+    <string name="action_station_share">Dela</string>
+
+    <string name="action_local">Lokal</string>
+    <string name="action_skip_to_next">Nästa</string>
+    <string name="action_pause">Pausa</string>
+    <string name="action_skip_to_previous">Föregående</string>
+    <string name="action_resume">Återuppta</string>
+    <string name="action_stop">Stoppa</string>
+    <string name="action_search">Sök</string>
+    <string name="action_delete">Radera</string>
+    <string name="action_delete_history">Radera historik</string>
+    <string name="action_delete_favorites">Radera alla favoriter</string>
+    <string name="action_delete_stream_history">Rensa låthistorik</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Avbryt</string>
+    <string name="action_top_click">Mest klickade</string>
+    <string name="action_toggle_view">Växla vy</string>
+    <string name="action_top_vote">Mest röstade</string>
+    <string name="action_changed_lately">Nyligen ändrade</string>
+    <string name="action_currently_playing">Spelas nu</string>
+    <string name="action_tags">Taggar</string>
+    <string name="action_countries">Länder/Regioner</string>
+    <string name="action_languages">Språk</string>
+    <string name="action_edit">Redigera</string>
+    <string name="action_copy_info">Kopiera info</string>
+    <string name="action_rename_tab">Byt namn på flik</string>
+    <string name="error_filter_name_required">Vänligen ange ett namn för denna filterflik först</string>
+    <string name="confirm_delete_filter_tab">Är du säker på att du vill ta bort filtret \"%1$s\"?</string>
+    <string name="filter_empty_title">Bygg ditt eget radioflöde</string>
+    <string name="filter_empty_desc">Skapa en personlig vy genom att kombinera flera kriterier. Du kan begränsa din sökning med:</string>
+    <string name="filter_empty_filter_by">Filtrera efter</string>
+    <string name="filter_empty_filter_desc">Land, stationsnamn, taggar eller språk</string>
+    <string name="filter_empty_sort_by">Sortera efter</string>
+    <string name="filter_empty_sort_desc">Klick, alfabet, röster eller senaste ändring</string>
+    <string name="filter_empty_hint">Skriv ett namn i fältet ovan för att spara denna vy!</string>
+    <string name="error_station_load">Kunde inte ansluta till stationen</string>
+    <string name="error_list_update">Kunde inte ansluta till radio browser-servern</string>
+
+    <string name="share_action">Dela stationslänk med…</string>
+
+    <string name="nav_item_stations">Stationer</string>
+    <string name="nav_item_starred">Favoriter</string>
+    <string name="nav_item_history">Historik</string>
+    <string name="nav_item_settings">Inställningar</string>
+
+    <string name="about_text">AMARadio är 100% reklamfritt och integritetsfokuserat.\n\nJag utvecklade ursprungligen denna app för min mamma för att ge henne en enkel, ärlig radioupplevelse utan irriterande reklam eller spårning. Det är därför AMARadio alltid kommer att förbli reklamfritt – det är ett löfte till henne, som jag delar med er alla.\n\nDetta projekt är en fork av det utmärkta https://github.com/segler-alex/RadioDroid . Hela källkoden har migrerats från Java till Kotlin för att säkerställa att appen förblir modern och kompatibel med framtida Android-versioner.\n\nKällkoden finns tillgänglig på: https://github.com/ounben/AMARadio\n\nDenna app använder den kostnadsfria radiostationskatalogen på https://www.radio-browser.info .\nVem som helst kan lägga till stationer där. Det fungerar som ett wiki för onlineradiostationer.\n\nKontakt: ben@ounben.com\n\nFelrapportering: https://github.com/ounben/AMARadio/issues\n\nOm du gillar programvaran och vill hjälpa till, skicka gärna ett e-postmeddelande.\nIdéer om nya funktioner uppskattas också alltid!\n\nDenna app är fri programvara, licensierad under GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Version: %1$s</string>
+    <string name="detail_star">Lägg till i favoriter</string>
+    <string name="detail_unstar">Ta bort från favoriter</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Laddar…</string>
+
+    <string name="sleep_timer" formatted="true">Sömntimer: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Stoppa uppspelningen efter vald minut</string>
+    <string name="sleep_timer_apply">Använd</string>
+    <string name="sleep_timer_clear">Rensa</string>
+    <string name="nav_item_add_sleep">Sömntimer</string>
+
+    <string name="nav_item_save_playlist">Exportera favoriter som spellista</string>
+    <string name="nav_item_load_playlist">Importera favoriter från spellista</string>
+    <string name="nav_item_save_history_playlist">Exportera historik som spellista</string>
+    <string name="confirm_overwrite_file">Skriva över filen?</string>
+    <string name="dialog_hint_file_name">Ange filnamn</string>
+    <string name="error_empty_field">Detta fält är obligatoriskt</string>
+    <string name="error_invalid_file_name">Ogiltigt filnamn</string>
+    <string name="label_button_cancel">Avbryt</string>
+    <string name="label_button_overwrite">Skriv över</string>
+    <string name="notify_load_playlist_nok">Kunde inte importera från %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Importerar från %1$s&#47;%2$s, vänligen vänta.</string>
+    <string name="notify_load_playlist_ok">Importerade %1$d stationer från %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Kunde inte exportera till %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Exporterar till %1$s&#47;%2$s, vänligen vänta.</string>
+    <string name="notify_save_playlist_ok">Exporterades till %1$s&#47;%2$s framgångsrikt</string>
+    <string name="notify_sync_list_deleted_entries">%1$d av %2$d lokala stationer i listan markerades som icke-existerande på servern</string>
+
+    <string name="searchpreference_clear_history">Rensa historik</string>
+    <string name="searchpreference_no_results">Inga resultat</string>
+    <string name="searchpreference_search">Sök…</string>
+    <string name="settings_appearance">Utseende</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Ljust</string>
+    <string name="theme_dark">Mörkt</string>
+    <string name="theme_system">Följ systemet</string>
+    <string name="settings_compact_style">Kompakt läge</string>
+    <string name="settings_compact_style_desc_off">Stor ikon med stationsdetaljer</string>
+    <string name="settings_compact_style_desc_on">Liten ikon utan stationsdetaljer</string>
+    <string name="settings_bottom_navigation">Bottennavigering</string>
+    <string name="settings_ui_scale">UI-skalning</string>
+    <string name="settings_language">Språk</string>
+    <string name="ui_scale_compact">Kompakt</string>
+    <string name="ui_scale_standard">Systemstandard</string>
+    <string name="ui_scale_large">Stor</string>
+    <string name="ui_scale_extra_large">Mycket stor</string>
+
+    <string name="settings_interaction">Interaktion</string>
+    <string name="settings_single_use_tags">Visa sällan använda taggar</string>
+    <string name="settings_single_use_tags_desc_off">Sällan använda taggar kommer inte att visas</string>
+    <string name="settings_single_use_tags_desc_on">Sällan använda taggar kommer att visas</string>
+
+    <string name="settings_show_broken">Trasiga stationer</string>
+    <string name="settings_show_broken_on">Visa trasiga stationer i listor</string>
+    <string name="settings_show_broken_off">Visa inte trasiga stationer i listor</string>
+
+    <string name="settings_startup_behaviour">Startbeteende</string>
+    <string name="action_grid_view">Rutnätsvy</string>
+    <string name="action_list_view">Listvy</string>
+
+    <string name="startup_action_title">Startåtgärd</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Visa alla stationer</string>
+    <string name="startup_show_favorites">Visa favoriter</string>
+    <string name="startup_show_history">Visa historik</string>
+    <string name="startup_show_last_view">Senaste vy</string>
+
+    <string name="settings_load_icons">Visa stationsikoner</string>
+    <string name="settings_load_icons_on">Ikoner kommer att laddas ner</string>
+    <string name="settings_load_icons_off">Ikoner kommer inte att laddas ner</string>
+
+    <string name="settings_auto_favorite">Auto-favoriter</string>
+    <string name="settings_auto_favorite_on">Lägg automatiskt till stationer i favoriter vid uppspelning</string>
+    <string name="settings_auto_favorite_off">Lägg inte automatiskt till stationer i favoriter vid uppspelning</string>
+
+    <string name="settings_play">Spelare</string>
+    <string name="settings_auto_play_on_startup">Auto-spela</string>
+    <string name="settings_auto_play_on_startup_on">Spela senaste station vid start</string>
+    <string name="settings_auto_play_on_startup_off">Spela inte senaste station vid start</string>
+    <string name="settings_auto_off_on_startup">Auto-stopp</string>
+    <string name="settings_auto_off_on_startup_on">Använd auto-stopp-timer med auto-spelning</string>
+    <string name="settings_auto_off_on_startup_off">Använd inte auto-stopp-timer med auto-spelning</string>
+    <string name="settings_auto_off_sleep_timer">Auto-stopp-timer</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stoppa uppspelningen efter %1$s minuter</string>
+    <string name="settings_play_external">Aktivera extern spelare</string>
+    <string name="settings_play_external_desc_on">Spela stationer med extern spelare</string>
+    <string name="settings_play_external_desc_off">Spela stationer med AMARadio</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">Anslutning</string>
+    <string name="settings_connect_timeout">Tidsgräns för anslutning</string>
+    <string name="settings_read_timeout">Tidsgräns för läsning</string>
+    <string name="settings_resume_timeout">Tidsgräns för återupptagning</string>
+    <string name="settings_retry_timeout">Tidsgräns för nytt försök</string>
+    <string name="settings_retry_delay">Fördröjning för återanslutning</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Användarnamn</string>
+    <string name="settings_proxy_password">Lösenord</string>
+    <string name="settings_proxy_action_test">Testa</string>
+    <string name="settings_proxy_working">Ansluten till %s</string>
+    <string name="settings_proxy_not_working">Kunde inte ansluta till %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Värdena du angav för proxyn är ogiltiga</string>
+    <string name="ignore_proxy_settings_invalid">Ignorerade ogiltiga proxyinställningar</string>
+    <string name="settings_seconds_format">%d sekunder</string>
+    <string name="settings_milliseconds_format">%d millisekunder</string>
+
+    <string name="settings_pause_when_noisy">Pausa när hörlurar kopplas ur</string>
+
+    <string name="settings_auto_resume_do_not_resume">Återuppta inte</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Återuppta vid trådbunden anslutning</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Återuppta uppspelning vid anslutning av trådbundna hörlurar</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Återuppta vid Bluetooth-anslutning</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Återuppta uppspelning vid anslutning av Bluetooth A2DP-enhet</string>
+
+    <string name="settings_auto_resume_on_any_connected">Återuppta vid valfri anslutning</string>
+
+    <string name="settings_warn_no_wifi">Varning utan Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Varna vid uppspelning utan Wi-Fi-anslutning</string>
+    <string name="settings_warn_no_wifi_off">Ingen varning utan Wi-Fi-anslutning</string>
+
+    <string name="notify_pre_play">Ansluter</string>
+    <string name="notify_play">Spelar</string>
+    <string name="notify_paused">Pausad</string>
+    <string name="notify_metered_connection">Anslutning med datataxa</string>
+
+    <string name="notify_starred">Stationen har lagts till i favoriter</string>
+    <string name="notify_autostarred">Stationen har lagts till automatiskt i favoriter</string>
+    <string name="notify_unstarred">Stationen har tagits bort från favoriter</string>
+    <string name="notify_deleted_favorites">Favoriterna har raderats</string>
+    <string name="notify_deleted_history">Historiken har raderats</string>
+
+    <string name="notify_open_link_failure">Ingen applikation hittades för att öppna länken</string>
+
+    <string name="notify_station_removed_from_list">1 borttagen</string>
+    <string name="action_station_removed_from_list_undo">ÅNGRA</string>
+
+    <string name="alert_delete_history">Vill du verkligen radera historiken?</string>
+    <string name="alert_delete_favorites">Vill du verkligen radera alla favoriter?</string>
+    <string name="yes">Ja</string>
+    <string name="no">Nej</string>
+
+    <string name="alert_select_player">Vänligen välj en spelare</string>
+    <string name="alert_select_player_name">Namn</string>
+    <string name="hostname">Värdnamn</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Tryck på bakåt en gång till för att avsluta</string>
+
+    <string name="error_stream_url">Problem med strömnings-URL</string>
+    <string name="error_caching_stream">Problem med strömningsbuffring</string>
+    <string name="error_play_stream">Kan inte spela strömmen</string>
+    <string name="error_stream_reconnect_timeout">Kunde inte återansluta till strömmen: tidsgräns överskriden</string>
+    <string name="warning_no_network_trying_resume">Ingen nätverksanslutning. Försöker återuppta när anslutningen är tillbaka.</string>
+    <string name="giving_up_resume">Ger upp försöket att återuppta uppspelningen</string>
+
+    <string name="error_grant_audiofocus">Begäran om ljudfokus beviljades inte av systemet</string>
+
+    <string name="error_no_equalizer_found">Ingen equalizer-app hittades</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">stoppad</string>
+    <string name="player_info_status_playing">spelar</string>
+    <string name="player_info_transferred">Överförd data: %1$s</string>
+
+    <string name="tab_player_art">Albumomslag</string>
+    <string name="tab_player_info">Info</string>
+    <string name="tab_player_history">Låthistorik</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">TRASIG</string>
+    <string name="station_detail_deleted_on_server">RADERAD</string>
+
+    <string name="station_details_clicks">%1$d klick</string>
+    <string name="station_details_votes">%1$d röster</string>
+
+    <string name="image_button_disable">Inaktivera</string>
+    <string name="image_button_delete">Radera</string>
+    <string name="image_button_more">Mer</string>
+    <string name="image_button_less">Mindre</string>
+    <string name="image_button_repeat">Upprepa</string>
+    <string name="image_button_dont_repeat">Upprepa inte</string>
+    <string name="icon_click_trend_decreasing">Popularitet minskar</string>
+    <string name="icon_click_trend_increasing">Popularitet ökar</string>
+    <string name="icon_click_trend_stable">Popularitet stabil</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% reklamfritt &amp; privat</string>
+
+    <string name="action_play_in_external">Spela i extern spelare</string>
+    <string name="action_choose_external_player">Välj extern spelare</string>
+
+    <string name="settings_disable_battery_optimization">Batterioptimering</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Batterioptimering ignoreras, AMARadio bör alltid kunna återfå fokus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Batterioptimering är aktiverad, AMARadio kommer inte att kunna återfå fokus om den är i bakgrunden.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Övrigt</string>
+    <string name="settings_statistics">Statistik</string>
+    <string name="settings_about">Om AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Hoppa till nästa</string>
+    <string name="description_btn_skip_to_previous">Hoppa till föregående</string>
+
+    <string-array name="weekdays">
+        <item>S</item>
+        <item>M</item>
+        <item>T</item>
+        <item>O</item>
+        <item>T</item>
+        <item>F</item>
+        <item>L</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Strömnings-URL kopierad</string>
+    <string name="notify_track_info_copied">Låtinfo kopierad</string>
+
+    <string-array name="actions_station_link">
+        <item>Besök webbplats</item>
+        <item>Kopiera strömnings-URL</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Anslutning med datataxa upptäckt</string>
+    <string name="alert_metered_connection_message">Anslutning med datataxa kan medföra extra kostnader, tryck på \'OK\' för att fortsätta.</string>
+    <string name="nav_item_statistics">Statistik</string>
+    <string name="nav_item_about">Om</string>
+    <string name="refresh">Uppdatera</string>
+    <string name="action_filter">Filter</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_tag">Tagg</string>
+    <string name="filter_language">Språk</string>
+    <string name="filter_sort_by">Sortera efter</string>
+    <string name="filter_reverse">Omvänd ordning</string>
+    <string name="filter_apply">Använd filter</string>
+    <string name="sort_name">Namn</string>
+    <string name="sort_votes">Röster</string>
+    <string name="sort_clicks">Klick</string>
+    <string name="sort_lastchange">Senaste ändring</string>
+    <string name="filter_select_country">Välj land</string>
+    <string name="filter_select_language">Välj språk</string>
+    <string name="filter_type_tag">Skriv tagg…</string>
+    <string name="filter_tap_to_configure">Tryck för att konfigurera</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

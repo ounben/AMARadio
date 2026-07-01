@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Ainm</string>
+    <string name="detail_tags">Clibeanna</string>
+    <string name="detail_country">Tír</string>
+    <string name="detail_create_shortcut">Cuir le scáileán baile</string>
+    <string name="detail_language">Teanga</string>
+    <string name="detail_weblink">Nasc gréasáin</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Seinn</string>
+    <string name="detail_pause">Sos</string>
+    <string name="detail_stop">Stop</string>
+    <string name="detail_share">Comhroinn</string>
+    <string name="detail_play_in_AMARadio">Seinn in AMARadio</string>
+
+    <string name="action_links">Naisc</string>
+    <string name="action_homepage">Baile</string>
+    <string name="action_favorite">Is fearr liom</string>
+    <string name="action_starred_add">Cuir leis na ceanáin</string>
+    <string name="action_starred_remove">Bain de na ceanáin</string>
+
+    <string name="action_station_visit_website">Tabhair cuairt ar an suíomh Gréasáin</string>
+    <string name="action_station_copy_stream_url">Cóipeáil URL an tsrutha</string>
+    <string name="action_station_share">Comhroinn</string>
+
+    <string name="action_local">Áitiúil</string>
+    <string name="action_skip_to_next">Ar aghaidh</string>
+    <string name="action_pause">Sos</string>
+    <string name="action_skip_to_previous">Siar</string>
+    <string name="action_resume">Atosaigh</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_search">Cuardaigh</string>
+    <string name="action_delete">Scrios</string>
+    <string name="action_delete_history">Scrios stair</string>
+    <string name="action_delete_favorites">Scrios gach ceanán</string>
+    <string name="action_delete_stream_history">Glan stair na n-amhrán</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Cealaigh</string>
+    <string name="action_top_click">Is mó cliceanna</string>
+    <string name="action_toggle_view">Athraigh amharc</string>
+    <string name="action_top_vote">Is mó vótaí</string>
+    <string name="action_changed_lately">Athraithe le déanaí</string>
+    <string name="action_currently_playing">Á sheinm anois</string>
+    <string name="action_tags">Clibeanna</string>
+    <string name="action_countries">Tíortha/Réigiúin</string>
+    <string name="action_languages">Teangacha</string>
+    <string name="action_edit">Cuir in eagar</string>
+    <string name="action_copy_info">Cóipeáil eolas</string>
+    <string name="action_rename_tab">Athainmnigh cluaisín</string>
+    <string name="error_filter_name_required">Cuir isteach ainm don chluaisín scagaire seo ar dtús</string>
+    <string name="confirm_delete_filter_tab">An bhfuil tú cinnte gur mhaith leat an scagaire \"%1$s\" a scriosadh?</string>
+    <string name="filter_empty_title">Tóg do shruth stáisiúin raidió féin</string>
+    <string name="filter_empty_desc">Cruthaigh amharc pearsantaithe trí roinnt critéar a chomhcheangal. Is féidir leat do chuardach a chúngú ag baint úsáide as:</string>
+    <string name="filter_empty_filter_by">Scag de réir</string>
+    <string name="filter_empty_filter_desc">Tír, Ainm Stáisiúin, Clibeanna, nó Teanga</string>
+    <string name="filter_empty_sort_by">Sórtáil de réir</string>
+    <string name="filter_empty_sort_desc">Cliceanna, Aibítir, Vótaí, nó Athrú deiridh</string>
+    <string name="filter_empty_hint">Clóscríobh ainm sa réimse thuas chun an t-amharc seo a shábháil!</string>
+    <string name="error_station_load">Níorbh fhéidir nascadh leis an stáisiún</string>
+    <string name="error_list_update">Níorbh fhéidir nascadh le freastalaí radio browser</string>
+
+    <string name="share_action">Comhroinn nasc an stáisiúin le…</string>
+
+    <string name="nav_item_stations">Stáisiúin</string>
+    <string name="nav_item_starred">Ceanáin</string>
+    <string name="nav_item_history">Stair</string>
+    <string name="nav_item_settings">Socruithe</string>
+
+    <string name="about_text">Tá AMARadio 100% saor ó fhógraí agus dírithe ar phríobháideacht.\n\nD\'fhorbair mé an aip seo ar dtús do mo mháthair chun eispéireas raidió simplí, macánta a thabhairt di gan fógraí corraitheacha nó rianú. Sin an fáth go mbeidh AMARadio saor ó fhógraí i gcónaí – is geallúint di é, roinnte libh go léir.\n\nIs forc é an tionscadal seo den sár-aip https://github.com/segler-alex/RadioDroid . Tá an códbhunús iomlán aistrithe ó Java go Kotlin chun a chinntiú go bhfanann an aip nua-aimseartha agus comhoiriúnach le leaganacha amach anseo de Android.\n\nTá an cód foinse ar fáil ag: https://github.com/ounben/AMARadio\n\nÚsáideann an aip seo an t-eolaire stáisiún raidió saor in aisce ag https://www.radio-browser.info .\nIs féidir le duine ar bith stáisiúin a chur leis. Oibríonn sé cosúil le vicipéid do stáisiúin raidió ar líne.\n\nTeagmháil: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nMás maith leat an bogearraí agus más mian leat cabhrú, ná bíodh drogall ort ríomhphost a sheoladh chugam.\nTáimid buíoch i gcónaí as smaointe maidir le gnéithe nua!\n\nIs bogearraí saor in aisce an aip seo, ceadúnaithe faoi GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Leagan: %1$s</string>
+    <string name="detail_star">Cuir leis na ceanáin</string>
+    <string name="detail_unstar">Bain de na ceanáin</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Ag lódáil…</string>
+
+    <string name="sleep_timer" formatted="true">Timer codlata: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Stop an seinm tar éis an nóiméid roghnaithe</string>
+    <string name="sleep_timer_apply">Cuir i bhfeidhm</string>
+    <string name="sleep_timer_clear">Glan</string>
+    <string name="nav_item_add_sleep">Timer codlata</string>
+
+    <string name="nav_item_save_playlist">Easpórtáil ceanáin mar sheinnliosta</string>
+    <string name="nav_item_load_playlist">Iompórtáil ceanáin ó sheinnliosta</string>
+    <string name="nav_item_save_history_playlist">Easpórtáil stair mar sheinnliosta</string>
+    <string name="confirm_overwrite_file">An scríobhfar thar an gcomhad?</string>
+    <string name="dialog_hint_file_name">Iontráil ainm comhaid</string>
+    <string name="error_empty_field">Tá an réimse seo riachtanach</string>
+    <string name="error_invalid_file_name">Ainm comhaid neamhbhailí</string>
+    <string name="label_button_cancel">Cealaigh</string>
+    <string name="label_button_overwrite">Scríobh thairis</string>
+    <string name="notify_load_playlist_nok">Níorbh fhéidir iompórtáil ó %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Ag iompórtáil ó %1$s&#47;%2$s, fan le do thoil.</string>
+    <string name="notify_load_playlist_ok">Iompórtáladh %1$d stáisiún ó %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Níorbh fhéidir easpórtáil go %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Ag easpórtáil go %1$s&#47;%2$s, fan le do thoil.</string>
+    <string name="notify_save_playlist_ok">Easpórtáladh go %1$s&#47;%2$s go rathúil</string>
+    <string name="notify_sync_list_deleted_entries">Marcáladh %1$d as %2$d stáisiún áitiúil sa liosta mar stáisiúin nach bhfuil ann ar an bhfreastalaí</string>
+
+    <string name="searchpreference_clear_history">Glan stair</string>
+    <string name="searchpreference_no_results">Níl aon torthaí ann</string>
+    <string name="searchpreference_search">Cuardaigh…</string>
+    <string name="settings_appearance">Cuma</string>
+    <string name="settings_theme_selection_title">Téama</string>
+    <string name="theme_light">Solas</string>
+    <string name="theme_dark">Dorcha</string>
+    <string name="theme_system">Lean an córas</string>
+    <string name="settings_compact_style">Mód dlúth</string>
+    <string name="settings_compact_style_desc_off">Deilbhín mór le sonraí stáisiúin</string>
+    <string name="settings_compact_style_desc_on">Deilbhín beag gan sonraí stáisiúin</string>
+    <string name="settings_bottom_navigation">Nascleanúint ag an mbun</string>
+    <string name="settings_ui_scale">Scálú UI</string>
+    <string name="settings_language">Teanga</string>
+    <string name="ui_scale_compact">Dlúth</string>
+    <string name="ui_scale_standard">Caighdeán an Chórais</string>
+    <string name="ui_scale_large">Mór</string>
+    <string name="ui_scale_extra_large">An-Mhór</string>
+
+    <string name="settings_interaction">Idirghníomhú</string>
+    <string name="settings_single_use_tags">Taispeáin clibeanna nach n-úsáidtear go minic</string>
+    <string name="settings_single_use_tags_desc_off">Ní thaispeánfar clibeanna nach n-úsáidtear go minic</string>
+    <string name="settings_single_use_tags_desc_on">Taispeánfar clibeanna nach n-úsáidtear go minic</string>
+
+    <string name="settings_show_broken">Stáisiúin bhriste</string>
+    <string name="settings_show_broken_on">Taispeáin stáisiúin bhriste i liostaí</string>
+    <string name="settings_show_broken_off">Ná taispeáin stáisiúin bhriste i liostaí</string>
+
+    <string name="settings_startup_behaviour">Iompar Tosaigh</string>
+    <string name="action_grid_view">Amharc Eangaí</string>
+    <string name="action_list_view">Amharc Liosta</string>
+
+    <string name="startup_action_title">Gníomh tosaigh</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Taispeáin gach stáisiún</string>
+    <string name="startup_show_favorites">Taispeáin ceanáin</string>
+    <string name="startup_show_history">Taispeáin stair</string>
+    <string name="startup_show_last_view">Amharc deiridh</string>
+
+    <string name="settings_load_icons">Taispeáin deilbhíní stáisiúin</string>
+    <string name="settings_load_icons_on">Íoslódálfar deilbhíní</string>
+    <string name="settings_load_icons_off">Ní íoslódálfar deilbhíní</string>
+
+    <string name="settings_auto_favorite">Auto-ceanáin</string>
+    <string name="settings_auto_favorite_on">Cuir stáisiúin go huathoibríoch leis na ceanáin agus iad á seinm</string>
+    <string name="settings_auto_favorite_off">Ná cuir stáisiúin go huathoibríoch leis na ceanáin agus iad á seinm</string>
+
+    <string name="settings_play">Seinnteoir</string>
+    <string name="settings_auto_play_on_startup">Auto-sheinm</string>
+    <string name="settings_auto_play_on_startup_on">Seinn an stáisiún deiridh ag an tosú</string>
+    <string name="settings_auto_play_on_startup_off">Ná seinn an stáisiún deiridh ag an tosú</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Úsáid timer auto-stop le huath-sheinm</string>
+    <string name="settings_auto_off_on_startup_off">Ná húsáid timer auto-stop le huath-sheinm</string>
+    <string name="settings_auto_off_sleep_timer">Timer auto-stop</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stop an seinm tar éis %1$s nóiméad</string>
+    <string name="settings_play_external">Cumasaigh seinnteoir seachtrach</string>
+    <string name="settings_play_external_desc_on">Seinn stáisiúin le seinnteoir seachtrach</string>
+    <string name="settings_play_external_desc_off">Seinn stáisiúin le AMARadio</string>
+    <string name="settings_equalizer">Cothromóir</string>
+
+    <string name="settings_connectivity">Nascacht</string>
+    <string name="settings_connect_timeout">Am caite naisc</string>
+    <string name="settings_read_timeout">Am caite léimh</string>
+    <string name="settings_resume_timeout">Am caite atosaithe</string>
+    <string name="settings_retry_timeout">Am caite athiarrachta</string>
+    <string name="settings_retry_delay">Moill athnasctha</string>
+    <string name="settings_proxy">Seachfhreastalaí</string>
+    <string name="settings_proxy_login">Ainm úsáideora</string>
+    <string name="settings_proxy_password">Pasfhocal</string>
+    <string name="settings_proxy_action_test">Tástáil</string>
+    <string name="settings_proxy_working">Nasctha go rathúil le %s</string>
+    <string name="settings_proxy_not_working">Theip ar nascadh le %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Tá na luachanna a chuir tú ar fáil don seachfhreastalaí neamhbhailí</string>
+    <string name="ignore_proxy_settings_invalid">Tugadh neamhaird ar na socruithe seachfhreastalaí neamhbhailí</string>
+    <string name="settings_seconds_format">%d soicind</string>
+    <string name="settings_milliseconds_format">%d milleasoicind</string>
+
+    <string name="settings_pause_when_noisy">Cuir ar sos nuair a bhaintear cluasáin amach</string>
+
+    <string name="settings_auto_resume_do_not_resume">Ná atosaigh</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Atosaigh ar nasc sreangaithe</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Atosaigh seinm nuair a chuirtear cluasáin sreangaithe isteach</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Atosaigh ar nasc Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Atosaigh seinm nuair a nasctar gléas Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">Atosaigh ar aon nasc</string>
+
+    <string name="settings_warn_no_wifi">Rabhadh gan Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Tabhair rabhadh agus tú ag seinm gan nasc Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">Gan rabhadh nuair nach bhfuil ar nasc Wi-Fi</string>
+
+    <string name="notify_pre_play">Ag nascadh</string>
+    <string name="notify_play">Ag seinm</string>
+    <string name="notify_paused">Ar sos</string>
+    <string name="notify_metered_connection">Nasc tomhaiste</string>
+
+    <string name="notify_starred">Cuireadh an stáisiún leis na ceanáin</string>
+    <string name="notify_autostarred">Cuireadh an stáisiún leis na ceanáin go huathoibríoch</string>
+    <string name="notify_unstarred">Baineadh an stáisiún de na ceanáin</string>
+    <string name="notify_deleted_favorites">Scriosadh na ceanáin</string>
+    <string name="notify_deleted_history">Scriosadh an stair</string>
+
+    <string name="notify_open_link_failure">Ní bhfuarthas aon fheidhmchlár chun an nasc a oscailt</string>
+
+    <string name="notify_station_removed_from_list">1 Bainte</string>
+    <string name="action_station_removed_from_list_undo">CEALAIGH</string>
+
+    <string name="alert_delete_history">An dteastaíonn uait an stair a scriosadh i ndáiríre?</string>
+    <string name="alert_delete_favorites">An dteastaíonn uait gach ceanán a scriosadh i ndáiríre?</string>
+    <string name="yes">Sea</string>
+    <string name="no">Ní hea</string>
+
+    <string name="alert_select_player">Roghnaigh seinnteoir le do thoil</string>
+    <string name="alert_select_player_name">Ainm</string>
+    <string name="hostname">Ósta-ainm</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Brúigh siar uair amháin eile chun scoir</string>
+
+    <string name="error_stream_url">Fadhb le URL an tsrutha</string>
+    <string name="error_caching_stream">Fadhb le taisceadh an tsrutha</string>
+    <string name="error_play_stream">Ní féidir an sruth a sheinm</string>
+    <string name="error_stream_reconnect_timeout">Níorbh fhéidir athnasctha leis an sruth: am caite</string>
+    <string name="warning_no_network_trying_resume">Níl aon nasc líonra ann. Ag iarradh tosú arís nuair a bheidh an nasc ar ais.</string>
+    <string name="giving_up_resume">Éirí as iarracht an seinm a atosú</string>
+
+    <string name="error_grant_audiofocus">Níor dheonaigh an córas iarratas ar fhócas fuaime</string>
+
+    <string name="error_no_equalizer_found">Ní bhfuarthas aon aip cothromóra</string>
+
+    <string name="player_info_status">Stádas:&#160;</string>
+    <string name="player_info_status_stopped">stopptha</string>
+    <string name="player_info_status_playing">ag seinm</string>
+    <string name="player_info_transferred">Sonraí aistrithe: %1$s</string>
+
+    <string name="tab_player_art">Ealaín albaim</string>
+    <string name="tab_player_info">Eolas</string>
+    <string name="tab_player_history">Stair na n-amhrán</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">BRISTE</string>
+    <string name="station_detail_deleted_on_server">SCRIOSATHE</string>
+
+    <string name="station_details_clicks">%1$d cliceanna</string>
+    <string name="station_details_votes">%1$d vótaí</string>
+
+    <string name="image_button_disable">Díchumasaigh</string>
+    <string name="image_button_delete">Scrios</string>
+    <string name="image_button_more">Tuilleadh</string>
+    <string name="image_button_less">Níos lú</string>
+    <string name="image_button_repeat">Atéigh</string>
+    <string name="image_button_dont_repeat">Ná hatéigh</string>
+    <string name="icon_click_trend_decreasing">Clú ag laghdú</string>
+    <string name="icon_click_trend_increasing">Clú ag méadú</string>
+    <string name="icon_click_trend_stable">Clú seasmhach</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Saor ó Fhógraí &amp; Príobháideach</string>
+
+    <string name="action_play_in_external">Seinn i seinnteoir seachtrach</string>
+    <string name="action_choose_external_player">Roghnaigh seinnteoir seachtrach</string>
+
+    <string name="settings_disable_battery_optimization">Optamú ceallraí</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Tugtar neamhaird ar optamú ceallraí, ba cheart go mbeadh AMARadio in ann fócas a fháil ar ais i gcónaí.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Tá optamú ceallraí gníomhachtaithe, ní bheidh AMARadio in ann fócas a fháil ar ais má tá sé sa chúlra.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Eile</string>
+    <string name="settings_statistics">Staitisticí</string>
+    <string name="settings_about">Faoi AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Léim ar aghaidh</string>
+    <string name="description_btn_skip_to_previous">Léim siar</string>
+
+    <string-array name="weekdays">
+        <item>D</item>
+        <item>L</item>
+        <item>M</item>
+        <item>C</item>
+        <item>D</item>
+        <item>A</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Cóipeáladh URL an tsrutha go rathúil</string>
+    <string name="notify_track_info_copied">Cóipeáladh eolas an amhráin go rathúil</string>
+
+    <string-array name="actions_station_link">
+        <item>Tabhair cuairt ar an suíomh Gréasáin</item>
+        <item>Cóipeáil URL an tsrutha</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Braitheadh nasc tomhaiste</string>
+    <string name="alert_metered_connection_message">D\'fhéadfadh costais bhreise a bheith ag baint le nasc tomhaiste, brúigh \'OK\' chun leanúint ar aghaidh.</string>
+    <string name="nav_item_statistics">Staitisticí</string>
+    <string name="nav_item_about">Eolas</string>
+    <string name="refresh">Athnuaigh</string>
+    <string name="action_filter">Scagaire</string>
+    <string name="filter_country">Tír</string>
+    <string name="filter_tag">Clibe</string>
+    <string name="filter_language">Teanga</string>
+    <string name="filter_sort_by">Sórtáil de réir</string>
+    <string name="filter_reverse">Ord droim ar ais</string>
+    <string name="filter_apply">Cuir Scagaire i bhfeidhm</string>
+    <string name="sort_name">Ainm</string>
+    <string name="sort_votes">Vótaí</string>
+    <string name="sort_clicks">Cliceanna</string>
+    <string name="sort_lastchange">Athrú Deiridh</string>
+    <string name="filter_select_country">Roghnaigh Tír</string>
+    <string name="filter_select_language">Roghnaigh Teanga</string>
+    <string name="filter_type_tag">Clóscríobh Clibe…</string>
+    <string name="filter_tap_to_configure">Tapáil chun cumrú</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

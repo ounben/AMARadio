@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Heiti</string>
+    <string name="detail_tags">Merki</string>
+    <string name="detail_country">Land</string>
+    <string name="detail_create_shortcut">Bæta á heimaskjá</string>
+    <string name="detail_language">Tungumál</string>
+    <string name="detail_weblink">Veftengi</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Spila</string>
+    <string name="detail_pause">Hlé</string>
+    <string name="detail_stop">Stöðva</string>
+    <string name="detail_share">Deila</string>
+    <string name="detail_play_in_AMARadio">Spila í AMARadio</string>
+
+    <string name="action_links">Tenglar</string>
+    <string name="action_homepage">Heimasíða</string>
+    <string name="action_favorite">Í uppáhaldi</string>
+    <string name="action_starred_add">Bæta í uppáhald</string>
+    <string name="action_starred_remove">Fjarlægja úr uppáhaldi</string>
+
+    <string name="action_station_visit_website">Heimsækja vefsíðu</string>
+    <string name="action_station_copy_stream_url">Afrita straumslóð</string>
+    <string name="action_station_share">Deila</string>
+
+    <string name="action_local">Staðbundið</string>
+    <string name="action_skip_to_next">Næsta</string>
+    <string name="action_pause">Hlé</string>
+    <string name="action_skip_to_previous">Fyrra</string>
+    <string name="action_resume">Halda áfram</string>
+    <string name="action_stop">Stöðva</string>
+    <string name="action_search">Leita</string>
+    <string name="action_delete">Eyða</string>
+    <string name="action_delete_history">Eyða ferli</string>
+    <string name="action_delete_favorites">Eyða öllum í uppáhaldi</string>
+    <string name="action_delete_stream_history">Hreinsa lagaferil</string>
+    <string name="action_ok">Í lagi</string>
+    <string name="action_cancel">Hætta við</string>
+    <string name="action_top_click">Mest smellt</string>
+    <string name="action_toggle_view">Skipta um útlit</string>
+    <string name="action_top_vote">Mest kosning</string>
+    <string name="action_changed_lately">Nýlega breytt</string>
+    <string name="action_currently_playing">Í spilun</string>
+    <string name="action_tags">Merki</string>
+    <string name="action_countries">Lönd/Svæði</string>
+    <string name="action_languages">Tungumál</string>
+    <string name="action_edit">Breyta</string>
+    <string name="action_copy_info">Afrita upplýsingar</string>
+    <string name="action_rename_tab">Endurnefna flipa</string>
+    <string name="error_filter_name_required">Vinsamlegast sláðu fyrst inn heiti á þennan síuflipa</string>
+    <string name="confirm_delete_filter_tab">Ertu viss um að þú viljir eyða síunni \"%1$s\"?</string>
+    <string name="filter_empty_title">Búðu til þitt eigið útvarpsstreymi</string>
+    <string name="filter_empty_desc">Búðu til sérsniðið yfirlit með því að sameina mörg skilyrði. Þú getur þrengt leitina með:</string>
+    <string name="filter_empty_filter_by">Sía eftir</string>
+    <string name="filter_empty_filter_desc">Landi, heiti stöðvar, merkjum eða tungumáli</string>
+    <string name="filter_empty_sort_by">Raða eftir</string>
+    <string name="filter_empty_sort_desc">Smellum, stafrófsröð, atkvæðum eða síðustu breytingu</string>
+    <string name="filter_empty_hint">Sláðu inn heiti í reitinn hér að ofan til að vista þetta yfirlit!</string>
+    <string name="error_station_load">Gat ekki tengst stöðinni</string>
+    <string name="error_list_update">Gat ekki tengst radio browser þjóni</string>
+
+    <string name="share_action">Deila stöðvartengli með…</string>
+
+    <string name="nav_item_stations">Stöðvar</string>
+    <string name="nav_item_starred">Í uppáhaldi</string>
+    <string name="nav_item_history">Ferill</string>
+    <string name="nav_item_settings">Stillingar</string>
+
+    <string name="about_text">AMARadio er 100% án auglýsinga og leggur áherslu á friðhelgi.\n\nÉg hannaði þetta forrit upphaflega fyrir móður mína til að gefa henni einfalda og heiðarlega útvarpsupplifun án pirrandi auglýsinga eða rakningar. Þess vegna verður AMARadio alltaf laust við auglýsingar – það er loforð til hennar, sem ég deili með ykkur öllum.\n\nÞetta verkefni er afleiða (fork) af hinu frábæra https://github.com/segler-alex/RadioDroid . Allur kóðinn hefur verið færður úr Java yfir í Kotlin til að tryggja að forritið haldist nútímalegt og samhæft við framtíðarútgáfur af Android.\n\nUpprunakóðinn er aðgengilegur á: https://github.com/ounben/AMARadio\n\nÞetta forrit notar ókeypis útvarpsstöðvaskrána á https://www.radio-browser.info .\nAllir geta bætt stöðvum þar inn. Þetta virkar eins og wiki fyrir útvarpsstöðvar á netinu.\n\nSamskipti: ben@ounben.com\n\nVilluskráning: https://github.com/ounben/AMARadio/issues\n\nEf þér líkar hugbúnaðurinn og vilt hjálpa til, ekki hika við að senda mér tölvupóst.\nEinnig eru hugmyndir að nýjum eiginleikum alltaf vel þegnar!\n\nÞetta forrit er frjáls hugbúnaður, gefið út undir GPLv3 leyfi. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Útgáfa: %1$s</string>
+    <string name="detail_star">Bæta í uppáhald</string>
+    <string name="detail_unstar">Fjarlægja úr uppáhaldi</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Hleður…</string>
+
+    <string name="sleep_timer" formatted="true">Svefntími: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Stöðva spilun eftir valinn tíma</string>
+    <string name="sleep_timer_apply">Virkja</string>
+    <string name="sleep_timer_clear">Hreinsa</string>
+    <string name="nav_item_add_sleep">Svefntími</string>
+
+    <string name="nav_item_save_playlist">Flytja út í uppáhaldi sem spilunarlista</string>
+    <string name="nav_item_load_playlist">Flytja inn í uppáhaldi úr spilunarlista</string>
+    <string name="nav_item_save_history_playlist">Flytja út feril sem spilunarlista</string>
+    <string name="confirm_overwrite_file">Skrifa yfir skrána?</string>
+    <string name="dialog_hint_file_name">Sláðu inn skráarheiti</string>
+    <string name="error_empty_field">Þessi reitur er áskilinn</string>
+    <string name="error_invalid_file_name">Ógilt skráarheiti</string>
+    <string name="label_button_cancel">Hætta við</string>
+    <string name="label_button_overwrite">Skrifa yfir</string>
+    <string name="notify_load_playlist_nok">Gat ekki flutt inn frá %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Flyt inn frá %1$s&#47;%2$s, vinsamlegast bíðið.</string>
+    <string name="notify_load_playlist_ok">Flutti inn %1$d stöðvar frá %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Gat ekki flutt út í %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Flyt út í %1$s&#47;%2$s, vinsamlegast bíðið.</string>
+    <string name="notify_save_playlist_ok">Útflutningur í %1$s&#47;%2$s tókst</string>
+    <string name="notify_sync_list_deleted_entries">%1$d af %2$d staðbundnum stöðvum á listanum eru merktar sem ekki til á þjóni</string>
+
+    <string name="searchpreference_clear_history">Hreinsa feril</string>
+    <string name="searchpreference_no_results">Engar niðurstöður</string>
+    <string name="searchpreference_search">Leita…</string>
+    <string name="settings_appearance">Útlit</string>
+    <string name="settings_theme_selection_title">Þema</string>
+    <string name="theme_light">Ljóst</string>
+    <string name="theme_dark">Dökkt</string>
+    <string name="theme_system">Fylgja kerfi</string>
+    <string name="settings_compact_style">Þjappað útlit</string>
+    <string name="settings_compact_style_desc_off">Stórt tákn með upplýsingum um stöð</string>
+    <string name="settings_compact_style_desc_on">Lítið tákn án upplýsinga um stöð</string>
+    <string name="settings_bottom_navigation">Neðri leiðsögn</string>
+    <string name="settings_ui_scale">Skölun viðmóts</string>
+    <string name="settings_language">Tungumál</string>
+    <string name="ui_scale_compact">Þjappað</string>
+    <string name="ui_scale_standard">Sjálfgefið kerfi</string>
+    <string name="ui_scale_large">Stórt</string>
+    <string name="ui_scale_extra_large">Mjög stórt</string>
+
+    <string name="settings_interaction">Samskipti</string>
+    <string name="settings_single_use_tags">Sýna sjaldgæf merki</string>
+    <string name="settings_single_use_tags_desc_off">Sjaldgæf merki verða ekki sýnd</string>
+    <string name="settings_single_use_tags_desc_on">Sjaldgæf merki verða sýnd</string>
+
+    <string name="settings_show_broken">Óvirkar stöðvar</string>
+    <string name="settings_show_broken_on">Sýna óvirkar stöðvar á listum</string>
+    <string name="settings_show_broken_off">Ekki sýna óvirkar stöðvar á listum</string>
+
+    <string name="settings_startup_behaviour">Ræsing</string>
+    <string name="action_grid_view">Reitayfirlit</string>
+    <string name="action_list_view">Listayfirlit</string>
+
+    <string name="startup_action_title">Aðgerð við ræsingu</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Sýna allar stöðvar</string>
+    <string name="startup_show_favorites">Sýna í uppáhaldi</string>
+    <string name="startup_show_history">Sýna feril</string>
+    <string name="startup_show_last_view">Síðasta yfirlit</string>
+
+    <string name="settings_load_icons">Sýna tákn stöðva</string>
+    <string name="settings_load_icons_on">Tákn verða sótt</string>
+    <string name="settings_load_icons_off">Tákn verða ekki sótt</string>
+
+    <string name="settings_auto_favorite">Sjálfvirkt í uppáhald</string>
+    <string name="settings_auto_favorite_on">Bæta stöðvum sjálfkrafa í uppáhald við spilun</string>
+    <string name="settings_auto_favorite_off">Ekki bæta stöðvum sjálfkrafa í uppáhald við spilun</string>
+
+    <string name="settings_play">Spilari</string>
+    <string name="settings_auto_play_on_startup">Sjálfvirk spilun</string>
+    <string name="settings_auto_play_on_startup_on">Spila síðustu stöð við ræsingu</string>
+    <string name="settings_auto_play_on_startup_off">Ekki spila síðustu stöð við ræsingu</string>
+    <string name="settings_auto_off_on_startup">Sjálfvirk stöðvun</string>
+    <string name="settings_auto_off_on_startup_on">Nota stöðvunartíma með sjálfvirkri spilun</string>
+    <string name="settings_auto_off_on_startup_off">Ekki nota stöðvunartíma með sjálfvirkri spilun</string>
+    <string name="settings_auto_off_sleep_timer">Sjálfvirkur stöðvunartími</string>
+    <string name="settings_auto_off_sleep_timer_desc">Stöðva spilun eftir %1$s mínútur</string>
+    <string name="settings_play_external">Nota ytri spilara</string>
+    <string name="settings_play_external_desc_on">Spila stöðvar með ytri spilara</string>
+    <string name="settings_play_external_desc_off">Spila stöðvar með AMARadio</string>
+    <string name="settings_equalizer">Tónjafnari</string>
+
+    <string name="settings_connectivity">Tenging</string>
+    <string name="settings_connect_timeout">Tímavörður tengingar</string>
+    <string name="settings_read_timeout">Tímavörður lesturs</string>
+    <string name="settings_resume_timeout">Tímavörður framhalds</string>
+    <string name="settings_retry_timeout">Tímavörður endurtilraunar</string>
+    <string name="settings_retry_delay">Bið eftir endurtengingu</string>
+    <string name="settings_proxy">Milliþjónn (Proxy)</string>
+    <string name="settings_proxy_login">Notandanafn</string>
+    <string name="settings_proxy_password">Lykilorð</string>
+    <string name="settings_proxy_action_test">Prófa</string>
+    <string name="settings_proxy_working">Tenging við %s tókst</string>
+    <string name="settings_proxy_not_working">Tenging við %1$s mistókst\n%2$s</string>
+    <string name="settings_proxy_invalid">Uppgefin gildi fyrir milliþjón eru ógild</string>
+    <string name="ignore_proxy_settings_invalid">Hunsaði ógildar stillingar milliþjóns</string>
+    <string name="settings_seconds_format">%d sekúndur</string>
+    <string name="settings_milliseconds_format">%d millisekúndur</string>
+
+    <string name="settings_pause_when_noisy">Setja á hlé þegar heyrnartól eru tekin úr sambandi</string>
+
+    <string name="settings_auto_resume_do_not_resume">Ekki halda áfram</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Halda áfram við tengingu með snúru</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Hefja spilun þegar heyrnartól með snúru eru sett í samband</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Halda áfram við Bluetooth tengingu</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Hefja spilun þegar Bluetooth A2DP tæki er tengt</string>
+
+    <string name="settings_auto_resume_on_any_connected">Halda áfram við hvaða tengingu sem er</string>
+
+    <string name="settings_warn_no_wifi">Viðvörun án Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Vara við þegar spilað er án Wi-Fi tengingar</string>
+    <string name="settings_warn_no_wifi_off">Engin viðvörun þegar Wi-Fi tenging vantar</string>
+
+    <string name="notify_pre_play">Tengist</string>
+    <string name="notify_play">Spilar</string>
+    <string name="notify_paused">Á hléi</string>
+    <string name="notify_metered_connection">Tenging með gagnamælingu</string>
+
+    <string name="notify_starred">Stöð hefur verið bætt í uppáhald</string>
+    <string name="notify_autostarred">Stöð hefur verið bætt sjálfkrafa í uppáhald</string>
+    <string name="notify_unstarred">Stöð hefur verið fjarlægð úr uppáhaldi</string>
+    <string name="notify_deleted_favorites">Uppáhaldi hefur verið eytt</string>
+    <string name="notify_deleted_history">Ferli hefur verið eytt</string>
+
+    <string name="notify_open_link_failure">Ekkert forrit fannst til að opna tengilinn</string>
+
+    <string name="notify_station_removed_from_list">1 fjarlægð</string>
+    <string name="action_station_removed_from_list_undo">AFTURKALLA</string>
+
+    <string name="alert_delete_history">Viltu örugglega eyða ferlinum?</string>
+    <string name="alert_delete_favorites">Viltu örugglega eyða öllu í uppáhaldi?</string>
+    <string name="yes">Já</string>
+    <string name="no">Nei</string>
+
+    <string name="alert_select_player">Vinsamlegast veldu spilara</string>
+    <string name="alert_select_player_name">Heiti</string>
+    <string name="hostname">Vélarheiti</string>
+    <string name="port">Gátt</string>
+
+    <string name="alert_press_back_to_exit">Ýttu aftur á til baka til að loka</string>
+
+    <string name="error_stream_url">Vandamál með straumslóð</string>
+    <string name="error_caching_stream">Vandamál við biðminni straums</string>
+    <string name="error_play_stream">Gat ekki spilað straum</string>
+    <string name="error_stream_reconnect_timeout">Gat ekki endurtengst við straum: rann út á tíma</string>
+    <string name="warning_no_network_trying_resume">Engin nettenging. Reyni að halda áfram þegar tenging næst.</string>
+    <string name="giving_up_resume">Hætti við tilraun til að halda spilun áfram</string>
+
+    <string name="error_grant_audiofocus">Kerfið veitti ekki leyfi fyrir hljóðfókus</string>
+
+    <string name="error_no_equalizer_found">Ekkert tónjafnaraforrit fannst</string>
+
+    <string name="player_info_status">Staða:&#160;</string>
+    <string name="player_info_status_stopped">stöðvað</string>
+    <string name="player_info_status_playing">spilar</string>
+    <string name="player_info_transferred">Flutt gögn: %1$s</string>
+
+    <string name="tab_player_art">Plötuumslag</string>
+    <string name="tab_player_info">Upplýsingar</string>
+    <string name="tab_player_history">Lagaferill</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">ÓVIRKT</string>
+    <string name="station_detail_deleted_on_server">EYTT</string>
+
+    <string name="station_details_clicks">%1$d smellir</string>
+    <string name="station_details_votes">%1$d atkvæði</string>
+
+    <string name="image_button_disable">Gera óvirkt</string>
+    <string name="image_button_delete">Eyða</string>
+    <string name="image_button_more">Meira</string>
+    <string name="image_button_less">Minna</string>
+    <string name="image_button_repeat">Endurtaka</string>
+    <string name="image_button_dont_repeat">Ekki endurtaka</string>
+    <string name="icon_click_trend_decreasing">Vinsældir minnka</string>
+    <string name="icon_click_trend_increasing">Vinsældir aukast</string>
+    <string name="icon_click_trend_stable">Vinsældir stöðugar</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% án auglýsinga &amp; einkalíf</string>
+
+    <string name="action_play_in_external">Spila í ytri spilara</string>
+    <string name="action_choose_external_player">Velja ytri spilara</string>
+
+    <string name="settings_disable_battery_optimization">Rafhlöðuhámörkun</string>
+    <string name="settings_ignore_battery_optimization_summary_on">Rauhlöðuhámörkun er hunsuð, AMARadio ætti alltaf að geta náð fókus aftur.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">Rafhlöðuhámörkun er virk, AMARadio gæti átt erfitt með að ná fókus í bakgrunni.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Annað</string>
+    <string name="settings_statistics">Tölfræði</string>
+    <string name="settings_about">Um AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Stökkva á næsta</string>
+    <string name="description_btn_skip_to_previous">Stökkva á fyrra</string>
+
+    <string-array name="weekdays">
+        <item>S</item>
+        <item>M</item>
+        <item>Þ</item>
+        <item>M</item>
+        <item>F</item>
+        <item>F</item>
+        <item>L</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">Straumslóð var afrituð</string>
+    <string name="notify_track_info_copied">Lagaupplýsingar voru afritaðar</string>
+
+    <string-array name="actions_station_link">
+        <item>Heimsækja vefsíðu</item>
+        <item>Afrita straumslóð</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Gagnamæld tenging fannst</string>
+    <string name="alert_metered_connection_message">Gagnamæld tenging getur kostað aukalega, ýttu á \'Í lagi\' til að halda áfram.</string>
+    <string name="nav_item_statistics">Tölfræði</string>
+    <string name="nav_item_about">Um forritið</string>
+    <string name="refresh">Uppfæra</string>
+    <string name="action_filter">Sía</string>
+    <string name="filter_country">Land</string>
+    <string name="filter_tag">Merki</string>
+    <string name="filter_language">Tungumál</string>
+    <string name="filter_sort_by">Raða eftir</string>
+    <string name="filter_reverse">Öfug röð</string>
+    <string name="filter_apply">Virkja síu</string>
+    <string name="sort_name">Heiti</string>
+    <string name="sort_votes">Atkvæði</string>
+    <string name="sort_clicks">Smellir</string>
+    <string name="sort_lastchange">Síðasta breyting</string>
+    <string name="filter_select_country">Veldu land</string>
+    <string name="filter_select_language">Veldu tungumál</string>
+    <string name="filter_type_tag">Sláðu inn merki…</string>
+    <string name="filter_tap_to_configure">Snertu til að stilla</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>

@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">Isem</string>
+    <string name="detail_tags">Tags</string>
+    <string name="detail_country">Pajjiż</string>
+    <string name="detail_create_shortcut">Żid mal-iskrin prinċipali</string>
+    <string name="detail_language">Lingwa</string>
+    <string name="detail_weblink">Weblink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">Iddoqq</string>
+    <string name="detail_pause">Pawża</string>
+    <string name="detail_stop">Waqqaf</string>
+    <string name="detail_share">Aqsam</string>
+    <string name="detail_play_in_AMARadio">Iddoqq fl-AMARadio</string>
+
+    <string name="action_links">Links</string>
+    <string name="action_homepage">Homepage</string>
+    <string name="action_favorite">Favorit</string>
+    <string name="action_starred_add">Żid mal-favoriti</string>
+    <string name="action_starred_remove">Neħħi mill-favoriti</string>
+
+    <string name="action_station_visit_website">Żur il-websajt</string>
+    <string name="action_station_copy_stream_url">Ikkopja l-URL tal-istream</string>
+    <string name="action_station_share">Aqsam</string>
+
+    <string name="action_local">Lokali</string>
+    <string name="action_skip_to_next">Li jmiss</string>
+    <string name="action_pause">Pawża</string>
+    <string name="action_skip_to_previous">Preċedenti</string>
+    <string name="action_resume">Kompli</string>
+    <string name="action_stop">Waqqaf</string>
+    <string name="action_search">Fittex</string>
+    <string name="action_delete">Ħassar</string>
+    <string name="action_delete_history">Ħassar l-istorja</string>
+    <string name="action_delete_favorites">Ħassar il-favoriti kollha</string>
+    <string name="action_delete_stream_history">Ikklerja l-istorja tad-diski</string>
+    <string name="action_ok">OK</string>
+    <string name="action_cancel">Ikkanċella</string>
+    <string name="action_top_click">L-aktar ikklikkjati</string>
+    <string name="action_toggle_view">Aqleb il-veduta</string>
+    <string name="action_top_vote">L-aktar ivvutati</string>
+    <string name="action_changed_lately">Mibdula reċentement</string>
+    <string name="action_currently_playing">Qed idoqq bħalissa</string>
+    <string name="action_tags">Tags</string>
+    <string name="action_countries">Pajjiżi/Reġjuni</string>
+    <string name="action_languages">Lingwi</string>
+    <string name="action_edit">Editja</string>
+    <string name="action_copy_info">Ikkopja l-informazzjoni</string>
+    <string name="action_rename_tab">Semmi mill-ġdid it-tab</string>
+    <string name="error_filter_name_required">Jekk jogħġbok daħħal isem għal din it-tab tal-filtru l-ewwel</string>
+    <string name="confirm_delete_filter_tab">Żgur li trid tħassar il-filtru \"%1$s\"?</string>
+    <string name="filter_empty_title">Ibni l-lista tal-istazzjonijiet tiegħek</string>
+    <string name="filter_empty_desc">Oħloq veduta personalizzata billi tgħaqqad diversi kriterji. Tista\' tnaqqas it-tfittxija tiegħek billi tuża:</string>
+    <string name="filter_empty_filter_by">Filtra skont</string>
+    <string name="filter_empty_filter_desc">Pajjiż, Isem tal-istazzjon, Tags, jew Lingwa</string>
+    <string name="filter_empty_sort_by">Irranġa skont</string>
+    <string name="filter_empty_sort_desc">Klicks, Alfabet, Voti, jew l-Aħħar bidla</string>
+    <string name="filter_empty_hint">Ikteb isem fil-field t\'hawn fuq biex issalva din il-veduta!</string>
+    <string name="error_station_load">Ma setax isir kuntatt mal-istazzjon</string>
+    <string name="error_list_update">Ma setax isir kuntatt mas-server tar-radio browser</string>
+
+    <string name="share_action">Aqsam il-link tal-istazzjon ma\'…</string>
+
+    <string name="nav_item_stations">Stazzjonijiet</string>
+    <string name="nav_item_starred">Favoriti</string>
+    <string name="nav_item_history">Storja</string>
+    <string name="nav_item_settings">Settings</string>
+
+    <string name="about_text">AMARadio huwa 100% ħieles mir-reklami u ffukat fuq il-privatezza.\n\nOriġinarjament żviluppajt din l-app għal ommi biex nipprovdilha esperjenza tar-radju sempliċi u onesta mingħajr reklami tedjanti jew traċċar. Huwa għalhekk li AMARadio dejjem se jibqa\' ħieles mir-reklami – hija wegħda lilha, kondiviża magħkom ilkoll.\n\nDan il-proġett huwa fork tal-eċċellenti https://github.com/segler-alex/RadioDroid . Il-codebase kollu ġie migrat minn Java għal Kotlin biex niżguraw li l-app tibqa\' moderna u kompatibbli mal-verżjonijiet futuri ta\' Android.\n\nIs-sors huwa disponibbli fuq: https://github.com/ounben/AMARadio\n\nDin l-app tuża d-direttorju b\'xejn tal-istazzjonijiet tar-radju f\'https://www.radio-browser.info .\nKulħadd jista\' jżid stazzjonijiet fih. Jaħdem bħal wiki għall-istazzjonijiet tar-radju online.\n\nKuntatt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nJekk jogħġobkom is-software u tridu tgħinu, toqogħdux lura milli tibagħtuli email.\nUkoll ideat għal karatteristiċi ġodda huma dejjem apprezzati!\n\nDin l-app hija software ħieles, liċenzjata taħt GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">Verżjoni: %1$s</string>
+    <string name="detail_star">Żid mal-favoriti</string>
+    <string name="detail_unstar">Neħħi mill-favoriti</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">Qed jgħabbi…</string>
+
+    <string name="sleep_timer" formatted="true">Timer tal-irqad: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Waqqaf id-daqq wara l-minuta magħżula</string>
+    <string name="sleep_timer_apply">Applika</string>
+    <string name="sleep_timer_clear">Ikklerja</string>
+    <string name="nav_item_add_sleep">Timer tal-irqad</string>
+
+    <string name="nav_item_save_playlist">Esporta l-favoriti bħala playlist</string>
+    <string name="nav_item_load_playlist">Importa l-favoriti minn playlist</string>
+    <string name="nav_item_save_history_playlist">Esporta l-istorja bħala playlist</string>
+    <string name="confirm_overwrite_file">Tikteb fuq il-fajl?</string>
+    <string name="dialog_hint_file_name">Daħħal l-isem tal-fajl</string>
+    <string name="error_empty_field">Dan il-field huwa meħtieġ</string>
+    <string name="error_invalid_file_name">Isem tal-fajl invalidu</string>
+    <string name="label_button_cancel">Ikkanċella</string>
+    <string name="label_button_overwrite">Ikteb fuqu</string>
+    <string name="notify_load_playlist_nok">Ma setax jiġi importat minn %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">Qed jiġi importat minn %1$s&#47;%2$s, jekk jogħġbok stenna.</string>
+    <string name="notify_load_playlist_ok">Ġew importati %1$d stazzjon minn %2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">Ma setax jiġi esportat lejn %1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">Qed jiġi esportat lejn %1$s&#47;%2$s, jekk jogħġbok stenna.</string>
+    <string name="notify_save_playlist_ok">Esportat lejn %1$s&#47;%2$s b\'suċċess</string>
+    <string name="notify_sync_list_deleted_entries">%1$d minn %2$d stazzjon lokali fil-lista huma mmarkati bħala mhux eżistenti fuq is-server</string>
+
+    <string name="searchpreference_clear_history">Ikklerja l-istorja</string>
+    <string name="searchpreference_no_results">L-ebda riżultat</string>
+    <string name="searchpreference_search">Fittex…</string>
+    <string name="settings_appearance">Apparenza</string>
+    <string name="settings_theme_selection_title">Tema</string>
+    <string name="theme_light">Dawl</string>
+    <string name="theme_dark">Dlam</string>
+    <string name="theme_system">Segwi s-sistema</string>
+    <string name="settings_compact_style">Mod kompatt</string>
+    <string name="settings_compact_style_desc_off">Ikona kbira b\'dettalji tal-istazzjon</string>
+    <string name="settings_compact_style_desc_on">Ikona żgħira mingħajr dettalji tal-istazzjon</string>
+    <string name="settings_bottom_navigation">Navigazzjoni t\'isfel</string>
+    <string name="settings_ui_scale">Skalar tal-UI</string>
+    <string name="settings_language">Lingwa</string>
+    <string name="ui_scale_compact">Kompatt</string>
+    <string name="ui_scale_standard">Standard tas-sistema</string>
+    <string name="ui_scale_large">Kbir</string>
+    <string name="ui_scale_extra_large">Kbir ħafna</string>
+
+    <string name="settings_interaction">Interazzjoni</string>
+    <string name="settings_single_use_tags">Uri tags li rari jintużaw</string>
+    <string name="settings_single_use_tags_desc_off">Tags li rari jintużaw mhux se jintwerew</string>
+    <string name="settings_single_use_tags_desc_on">Tags li rari jintużaw se jintwerew</string>
+
+    <string name="settings_show_broken">Stazzjonijiet li ma jaħdmux</string>
+    <string name="settings_show_broken_on">Uri stazzjonijiet li ma jaħdmux fil-listi</string>
+    <string name="settings_show_broken_off">Turix stazzjonijiet li ma jaħdmux fil-listi</string>
+
+    <string name="settings_startup_behaviour">Imġiba fil-bidu</string>
+    <string name="action_grid_view">Grid View</string>
+    <string name="action_list_view">List View</string>
+
+    <string name="startup_action_title">Azzjoni fil-bidu</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">Uri l-istazzjonijiet kollha</string>
+    <string name="startup_show_favorites">Uri l-favoriti</string>
+    <string name="startup_show_history">Uri l-istorja</string>
+    <string name="startup_show_last_view">L-aħħar veduta</string>
+
+    <string name="settings_load_icons">Uri l-ikoni tal-istazzjonijiet</string>
+    <string name="settings_load_icons_on">L-ikoni se jitniżżlu</string>
+    <string name="settings_load_icons_off">L-ikoni mhux se jitniżżlu</string>
+
+    <string name="settings_auto_favorite">Auto-favoriti</string>
+    <string name="settings_auto_favorite_on">Żid stazzjonijiet awtomatikament mal-favoriti meta ddoqqhom</string>
+    <string name="settings_auto_favorite_off">Tżidx stazzjonijiet awtomatikament mal-favoriti meta ddoqqhom</string>
+
+    <string name="settings_play">Player</string>
+    <string name="settings_auto_play_on_startup">Auto-play</string>
+    <string name="settings_auto_play_on_startup_on">Iddoqq l-aħħar stazzjon fil-bidu</string>
+    <string name="settings_auto_play_on_startup_off">Iddoqqx l-aħħar stazzjon fil-bidu</string>
+    <string name="settings_auto_off_on_startup">Auto-stop</string>
+    <string name="settings_auto_off_on_startup_on">Uża timer tal-auto-stop mal-auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Tużax timer tal-auto-stop mal-auto-play</string>
+    <string name="settings_auto_off_sleep_timer">Timer tal-auto-stop</string>
+    <string name="settings_auto_off_sleep_timer_desc">Waqqaf id-daqq wara %1$s minuta</string>
+    <string name="settings_play_external">Ippermetti player estern</string>
+    <string name="settings_play_external_desc_on">Iddoqq stazzjonijiet b\'player estern</string>
+    <string name="settings_play_external_desc_off">Iddoqq stazzjonijiet bl-AMARadio</string>
+    <string name="settings_equalizer">Equalizer</string>
+
+    <string name="settings_connectivity">Konnettività</string>
+    <string name="settings_connect_timeout">Connection timeout</string>
+    <string name="settings_read_timeout">Read timeout</string>
+    <string name="settings_resume_timeout">Resume timeout</string>
+    <string name="settings_retry_timeout">Retry timeout</string>
+    <string name="settings_retry_delay">Dewmien fir-rikonnessjoni</string>
+    <string name="settings_proxy">Proxy</string>
+    <string name="settings_proxy_login">Username</string>
+    <string name="settings_proxy_password">Password</string>
+    <string name="settings_proxy_action_test">Test</string>
+    <string name="settings_proxy_working">Konness b\'suċċess ma\' %s</string>
+    <string name="settings_proxy_not_working">Falla milli jikkonnettja ma\' %1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">Il-valuri li pprovdejt għall-proxy mhumiex validi</string>
+    <string name="ignore_proxy_settings_invalid">L-invalid proxy settings ġew injorati</string>
+    <string name="settings_seconds_format">%d sekondi</string>
+    <string name="settings_milliseconds_format">%d millisekondi</string>
+
+    <string name="settings_pause_when_noisy">Pawża meta jinqalgħu l-headphones</string>
+
+    <string name="settings_auto_resume_do_not_resume">Tkomplix</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">Kompli fuq konnessjoni bil-wajer</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Kompli d-daqq meta jiddaħħlu headphones bil-wajer</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Kompli fuq konnessjoni Bluetooth</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Kompli d-daqq meta jiddaħħal apparat Bluetooth A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">Kompli fuq kwalunkwe konnessjoni</string>
+
+    <string name="settings_warn_no_wifi">Twissija ta\' nuqqas ta\' Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Twissi meta ddoqq mingħajr konnessjoni Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">L-ebda twissija meta m\'hemmx konnessjoni Wi-Fi</string>
+
+    <string name="notify_pre_play">Qed jikkonnettja</string>
+    <string name="notify_play">Qed iddoqq</string>
+    <string name="notify_paused">Fil-pawża</string>
+    <string name="notify_metered_connection">Konnessjoni mkejla</string>
+
+    <string name="notify_starred">L-istazzjon ġie miżjud mal-favoriti</string>
+    <string name="notify_autostarred">L-istazzjon ġie miżjud awtomatikament mal-favoriti</string>
+    <string name="notify_unstarred">L-istazzjon tneħħa mill-favoriti</string>
+    <string name="notify_deleted_favorites">Il-favoriti tħassru</string>
+    <string name="notify_deleted_history">L-istorja tħassret</string>
+
+    <string name="notify_open_link_failure">Ma nstabet l-ebda applikazzjoni biex tiftaħ il-link</string>
+
+    <string name="notify_station_removed_from_list">1 Imneħħi</string>
+    <string name="action_station_removed_from_list_undo">REĠA\' LURA</string>
+
+    <string name="alert_delete_history">Trid tassew tħassar l-istorja?</string>
+    <string name="alert_delete_favorites">Trid tassew tħassar il-favoriti kollha?</string>
+    <string name="yes">Iva</string>
+    <string name="no">Le</string>
+
+    <string name="alert_select_player">Jekk jogħġbok agħżel player</string>
+    <string name="alert_select_player_name">Isem</string>
+    <string name="hostname">Hostname</string>
+    <string name="port">Port</string>
+
+    <string name="alert_press_back_to_exit">Agħfas lura darba oħra biex toħroġ</string>
+
+    <string name="error_stream_url">Problema bil-URL tal-istream</string>
+    <string name="error_caching_stream">Problema bil-caching tal-istream</string>
+    <string name="error_play_stream">Mhux possibbli li jindaqq l-istream</string>
+    <string name="error_stream_reconnect_timeout">Mhux possibbli li ssir rikonnessjoni mal-istream: timeout</string>
+    <string name="warning_no_network_trying_resume">M\'hemmx konnessjoni tan-network. Qed nippruvaw inkomplu meta tiġi l-konnessjoni.</string>
+    <string name="giving_up_resume">Qed nieqfu nippruvaw inkomplu d-daqq</string>
+
+    <string name="error_grant_audiofocus">It-talba għall-audio focus ma ġietx milqugħa mis-sistema</string>
+
+    <string name="error_no_equalizer_found">Ma nstabet l-ebda app tal-equalizer</string>
+
+    <string name="player_info_status">Status:&#160;</string>
+    <string name="player_info_status_stopped">waqaf</string>
+    <string name="player_info_status_playing">qed iddoqq</string>
+    <string name="player_info_transferred">Data trasferita: %1$s</string>
+
+    <string name="tab_player_art">Album art</string>
+    <string name="tab_player_info">Informazzjoni</string>
+    <string name="tab_player_history">Storja tad-diski</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">BROKEN</string>
+    <string name="station_detail_deleted_on_server">IMĦASSAR</string>
+
+    <string name="station_details_clicks">%1$d klicks</string>
+    <string name="station_details_votes">%1$d voti</string>
+
+    <string name="image_button_disable">Iddiżattiva</string>
+    <string name="image_button_delete">Ħassar</string>
+    <string name="image_button_more">Aktar</string>
+    <string name="image_button_less">Inqas</string>
+    <string name="image_button_repeat">Irrepeti</string>
+    <string name="image_button_dont_repeat">Tirrepetix</string>
+    <string name="icon_click_trend_decreasing">Popolarità qed tonqos</string>
+    <string name="icon_click_trend_increasing">Popolarità qed tiżdied</string>
+    <string name="icon_click_trend_stable">Popolarità stabbli</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% Ħieles mir-reklami u Privat</string>
+
+    <string name="action_play_in_external">Iddoqq f\'player estern</string>
+    <string name="action_choose_external_player">Agħżel player estern</string>
+
+    <string name="settings_disable_battery_optimization">Ottimizzazzjoni tal-batterija</string>
+    <string name="settings_ignore_battery_optimization_summary_on">L-ottimizzazzjoni tal-batterija hija injorata, AMARadio għandu dejjem ikun jista\' jerġa\' jieħu l-focus.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">L-ottimizzazzjoni tal-batterija hija attivata, AMARadio mhux se jkun jista\' jerġa\' jieħu l-focus jekk ikun fil-background.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">Oħrajn</string>
+    <string name="settings_statistics">Statistika</string>
+    <string name="settings_about">Dwar l-AMARadio</string>
+
+    <string name="description_btn_skip_to_next">Aqbeż għal li jmiss</string>
+    <string name="description_btn_skip_to_previous">Aqbeż għal ta\' qabel</string>
+
+    <string-array name="weekdays">
+        <item>Ħ</item>
+        <item>T</item>
+        <item>T</item>
+        <item>E</item>
+        <item>Ħ</item>
+        <item>Ġ</item>
+        <item>S</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">URL tal-istream ġie kkupjat b\'suċċess</string>
+    <string name="notify_track_info_copied">L-informazzjoni tad-diska ġiet ikkupjata b\'suċċess</string>
+
+    <string-array name="actions_station_link">
+        <item>Żur il-websajt</item>
+        <item>Ikkopja l-URL tal-istream</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">Instabet konnessjoni mkejla</string>
+    <string name="alert_metered_connection_message">Konnessjoni mkejla tista\' ġġib spejjeż addizzjonali, agħfas \'OK\' biex tkompli.</string>
+    <string name="nav_item_statistics">Statistika</string>
+    <string name="nav_item_about">Dwar</string>
+    <string name="refresh">Aġġorna</string>
+    <string name="action_filter">Filtru</string>
+    <string name="filter_country">Pajjiż</string>
+    <string name="filter_tag">Tag</string>
+    <string name="filter_language">Lingwa</string>
+    <string name="filter_sort_by">Irranġa skont</string>
+    <string name="filter_reverse">Ordni bil-maqlub</string>
+    <string name="filter_apply">Applika l-filtru</string>
+    <string name="sort_name">Isem</string>
+    <string name="sort_votes">Voti</string>
+    <string name="sort_clicks">Klicks</string>
+    <string name="sort_lastchange">L-aħħar bidla</string>
+    <string name="filter_select_country">Agħżel il-pajjiż</string>
+    <string name="filter_select_language">Agħżel il-lingwa</string>
+    <string name="filter_type_tag">Ikteb tag…</string>
+    <string name="filter_tap_to_configure">Tektek biex tikkonfigura</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+</resources>
