@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo stanice</string>
+    <string name="accessibility_favorite_selected">Oblíbené, vybráno</string>
+    <string name="accessibility_favorite_not_selected">Oblíbené, nevybráno</string>
+    <string name="accessibility_category_icon">Ikona kategorie</string>
+    <string name="accessibility_playing">Právě hraje</string>
+    <string name="accessibility_menu">Otevřít nabídku</string>
+    <string name="accessibility_search_back">Zavřít hledání</string>
+    <string name="accessibility_filter_reverse">Obrátit pořadí řazení</string>
+    <string name="accessibility_clear_text">Vymazat text</string>
+    <string name="accessibility_station_options">Možnosti stanice</string>
+    <string name="accessibility_station_description">Stanice: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logotip de l\'emissora</string>
+    <string name="accessibility_favorite_selected">Preferit, seleccionat</string>
+    <string name="accessibility_favorite_not_selected">Preferit, no seleccionat</string>
+    <string name="accessibility_category_icon">Icona de categoria</string>
+    <string name="accessibility_playing">S\'està reproduint actualment</string>
+    <string name="accessibility_menu">Obre el menú</string>
+    <string name="accessibility_search_back">Tanca la cerca</string>
+    <string name="accessibility_filter_reverse">Inverteix l\'ordre de classificació</string>
+    <string name="accessibility_clear_text">Esborra el text</string>
+    <string name="accessibility_station_options">Opcions de l\'emissora</string>
+    <string name="accessibility_station_description">Emissora: %1$s, Idioma: %2$s, Etiquetes: %3$s</string>
 </resources>

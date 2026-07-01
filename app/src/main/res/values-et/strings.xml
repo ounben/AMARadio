@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Jaama logo</string>
+    <string name="accessibility_favorite_selected">Lemmik, valitud</string>
+    <string name="accessibility_favorite_not_selected">Lemmik, valimata</string>
+    <string name="accessibility_category_icon">Kategooria ikoon</string>
+    <string name="accessibility_playing">Praegu mängib</string>
+    <string name="accessibility_menu">Ava menüü</string>
+    <string name="accessibility_search_back">Sulge otsing</string>
+    <string name="accessibility_filter_reverse">Pööra sorteerimisjärjekord</string>
+    <string name="accessibility_clear_text">Tühjenda tekst</string>
+    <string name="accessibility_station_options">Jaama valikud</string>
+    <string name="accessibility_station_description">Jaam: %1$s, Keel: %2$s, Sildid: %3$s</string>
 </resources>

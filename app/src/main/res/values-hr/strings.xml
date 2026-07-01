@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logotip postaje</string>
+    <string name="accessibility_favorite_selected">Omiljeno, odabrano</string>
+    <string name="accessibility_favorite_not_selected">Omiljeno, nije odabrano</string>
+    <string name="accessibility_category_icon">Ikona kategorije</string>
+    <string name="accessibility_playing">Trenutno svira</string>
+    <string name="accessibility_menu">Otvori izbornik</string>
+    <string name="accessibility_search_back">Zatvori pretragu</string>
+    <string name="accessibility_filter_reverse">Obrni redoslijed sortiranja</string>
+    <string name="accessibility_clear_text">Očisti tekst</string>
+    <string name="accessibility_station_options">Opcije postaje</string>
+    <string name="accessibility_station_description">Postaja: %1$s, Jezik: %2$s, Oznake: %3$s</string>
 </resources>

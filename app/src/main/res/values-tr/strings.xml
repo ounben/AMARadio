@@ -310,4 +310,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">İstasyon logosu</string>
+    <string name="accessibility_favorite_selected">Favori, seçildi</string>
+    <string name="accessibility_favorite_not_selected">Favori, seçilmedi</string>
+    <string name="accessibility_category_icon">Kategori simgesi</string>
+    <string name="accessibility_playing">Şu an çalıyor</string>
+    <string name="accessibility_menu">Menüyü aç</string>
+    <string name="accessibility_search_back">Aramayı kapat</string>
+    <string name="accessibility_filter_reverse">Sıralama düzenini tersine çevir</string>
+    <string name="accessibility_clear_text">Metni temizle</string>
+    <string name="accessibility_station_options">İstasyon seçenekleri</string>
+    <string name="accessibility_station_description">İstasyon: %1$s, Dil: %2$s, Etiketler: %3$s</string>
 </resources>

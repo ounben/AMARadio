@@ -313,4 +313,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">电台图标</string>
+    <string name="accessibility_favorite_selected">收藏，已选择</string>
+    <string name="accessibility_favorite_not_selected">收藏，未选择</string>
+    <string name="accessibility_category_icon">类别图标</string>
+    <string name="accessibility_playing">正在播放</string>
+    <string name="accessibility_menu">打开菜单</string>
+    <string name="accessibility_search_back">关闭搜索</string>
+    <string name="accessibility_filter_reverse">反向排序</string>
+    <string name="accessibility_clear_text">清除文本</string>
+    <string name="accessibility_station_options">电台选项</string>
+    <string name="accessibility_station_description">电台：%1$s，语言：%2$s，标签：%3$s</string>
 </resources>

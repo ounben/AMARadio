@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">ನಿಲ್ದಾಣದ ಲೋಗೋ</string>
+    <string name="accessibility_favorite_selected">ಮೆಚ್ಚಿನವು, ಆಯ್ಕೆ ಮಾಡಲಾಗಿದೆ</string>
+    <string name="accessibility_favorite_not_selected">ಮೆಚ್ಚಿನವು, ಆಯ್ಕೆ ಮಾಡಲಾಗಿಲ್ಲ</string>
+    <string name="accessibility_category_icon">ವರ್ಗ ಐಕಾನ್</string>
+    <string name="accessibility_playing">ಈಗ ಪ್ಲೇ ಆಗುತ್ತಿದೆ</string>
+    <string name="accessibility_menu">ಮೆನು ತೆರೆಯಿರಿ</string>
+    <string name="accessibility_search_back">ಹುಡುಕಾಟವನ್ನು ಮುಚ್ಚಿ</string>
+    <string name="accessibility_filter_reverse">ಕ್ರಮವನ್ನು ಹಿಂತಿರುಗಿಸಿ</string>
+    <string name="accessibility_clear_text">ಪಠ್ಯವನ್ನು ಅಳಿಸಿ</string>
+    <string name="accessibility_station_options">ನಿಲ್ದಾಣದ ಆಯ್ಕೆಗಳು</string>
+    <string name="accessibility_station_description">ನಿಲ್ದಾಣ: %1$s, ಭಾಷೆ: %2$s, ಟ್ಯಾಗ್‌ಗಳು: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Лого на станцията</string>
+    <string name="accessibility_favorite_selected">Любими, избрано</string>
+    <string name="accessibility_favorite_not_selected">Любими, неизбрано</string>
+    <string name="accessibility_category_icon">Икона на категорията</string>
+    <string name="accessibility_playing">В момента звучи</string>
+    <string name="accessibility_menu">Отвори менюто</string>
+    <string name="accessibility_search_back">Затвори търсенето</string>
+    <string name="accessibility_filter_reverse">Обърни реда на сортиране</string>
+    <string name="accessibility_clear_text">Изчисти текста</string>
+    <string name="accessibility_station_options">Опции на станцията</string>
+    <string name="accessibility_station_description">Станция: %1$s, Език: %2$s, Тагове: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo tal-istazzjon</string>
+    <string name="accessibility_favorite_selected">Favorit, magħżul</string>
+    <string name="accessibility_favorite_not_selected">Favorit, mhux magħżul</string>
+    <string name="accessibility_category_icon">Ikona tal-kategorija</string>
+    <string name="accessibility_playing">Qed jindaqq bħalissa</string>
+    <string name="accessibility_menu">Iftaħ il-menu</string>
+    <string name="accessibility_search_back">Agħlaq it-tfittxija</string>
+    <string name="accessibility_filter_reverse">Aqleb l-ordni tal-għażla</string>
+    <string name="accessibility_clear_text">Ikklerja t-test</string>
+    <string name="accessibility_station_options">Għażliet tal-istazzjon</string>
+    <string name="accessibility_station_description">Istazzjon: %1$s, Lingwa: %2$s, Tags: %3$s</string>
 </resources>

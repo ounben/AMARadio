@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">የጣቢያ አርማ</string>
+    <string name="accessibility_favorite_selected">ተወዳጅ፣ ተመርጧል</string>
+    <string name="accessibility_favorite_not_selected">ተወዳጅ፣ አልተመረጠም</string>
+    <string name="accessibility_category_icon">የምድብ አዶ</string>
+    <string name="accessibility_playing">አሁን በመጫወት ላይ</string>
+    <string name="accessibility_menu">ምናሌ ክፈት</string>
+    <string name="accessibility_search_back">ፍለጋ ዝጋ</string>
+    <string name="accessibility_filter_reverse">የአደራደር ቅደም ተከተል ይቀይሩ</string>
+    <string name="accessibility_clear_text">ጽሑፍ አጽዳ</string>
+    <string name="accessibility_station_options">የጣቢያ አማራጮች</string>
+    <string name="accessibility_station_description">ጣቢያ፡ %1$s፣ ቋንቋ፡ %2$s፣ መለያዎች፡ %3$s</string>
 </resources>

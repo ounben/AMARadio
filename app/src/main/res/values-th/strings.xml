@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">โลโก้สถานี</string>
+    <string name="accessibility_favorite_selected">รายการโปรด, เลือกแล้ว</string>
+    <string name="accessibility_favorite_not_selected">รายการโปรด, ยังไม่ได้เลือก</string>
+    <string name="accessibility_category_icon">ไอคอนหมวดหมู่</string>
+    <string name="accessibility_playing">กำลังเล่น</string>
+    <string name="accessibility_menu">เปิดเมนู</string>
+    <string name="accessibility_search_back">ปิดการค้นหา</string>
+    <string name="accessibility_filter_reverse">สลับลำดับการจัดเรียง</string>
+    <string name="accessibility_clear_text">ล้างข้อความ</string>
+    <string name="accessibility_station_options">ตัวเลือกสถานี</string>
+    <string name="accessibility_station_description">สถานี: %1$s, ภาษา: %2$s, แท็ก: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">स्टेशन लोगो</string>
+    <string name="accessibility_favorite_selected">पसंदीदा, चयनित</string>
+    <string name="accessibility_favorite_not_selected">पसंदीदा, चयनित नहीं</string>
+    <string name="accessibility_category_icon">श्रेणी आइकन</string>
+    <string name="accessibility_playing">अभी चल रहा है</string>
+    <string name="accessibility_menu">मेनू खोलें</string>
+    <string name="accessibility_search_back">खोज बंद करें</string>
+    <string name="accessibility_filter_reverse">क्रम उल्टा करें</string>
+    <string name="accessibility_clear_text">टेक्स्ट साफ़ करें</string>
+    <string name="accessibility_station_options">स्टेशन विकल्प</string>
+    <string name="accessibility_station_description">स्टेशन: %1$s, भाषा: %2$s, टैग: %3$s</string>
 </resources>

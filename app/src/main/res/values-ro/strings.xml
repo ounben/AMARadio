@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logoul postului</string>
+    <string name="accessibility_favorite_selected">Favorit, selectat</string>
+    <string name="accessibility_favorite_not_selected">Favorit, neselectat</string>
+    <string name="accessibility_category_icon">Pictogramă categorie</string>
+    <string name="accessibility_playing">În curs de redare</string>
+    <string name="accessibility_menu">Deschide meniul</string>
+    <string name="accessibility_search_back">Închide căutarea</string>
+    <string name="accessibility_filter_reverse">Inversează ordinea de sortare</string>
+    <string name="accessibility_clear_text">Șterge textul</string>
+    <string name="accessibility_station_options">Opțiuni post</string>
+    <string name="accessibility_station_description">Post: %1$s, Limbă: %2$s, Etichete: %3$s</string>
 </resources>

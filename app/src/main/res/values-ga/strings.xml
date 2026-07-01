@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Lógó an stáisiúin</string>
+    <string name="accessibility_favorite_selected">Is fearr leat, roghnaithe</string>
+    <string name="accessibility_favorite_not_selected">Is fearr leat, gan roghnú</string>
+    <string name="accessibility_category_icon">Deilbhín catagóire</string>
+    <string name="accessibility_playing">Á sheinnt faoi láthair</string>
+    <string name="accessibility_menu">Oscail an roghchlár</string>
+    <string name="accessibility_search_back">Dún an cuardach</string>
+    <string name="accessibility_filter_reverse">Inbhartaigh an t-ord sórtála</string>
+    <string name="accessibility_clear_text">Glan an téacs</string>
+    <string name="accessibility_station_options">Roghanna stáisiúin</string>
+    <string name="accessibility_station_description">Stáisiún: %1$s, Teanga: %2$s, Clibeanna: %3$s</string>
 </resources>

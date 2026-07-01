@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stansiya loqosu</string>
+    <string name="accessibility_favorite_selected">Sevimli, seçilib</string>
+    <string name="accessibility_favorite_not_selected">Sevimli, seçilməyib</string>
+    <string name="accessibility_category_icon">Kateqoriya ikonu</string>
+    <string name="accessibility_playing">İndi oxunur</string>
+    <string name="accessibility_menu">Menyunu aç</string>
+    <string name="accessibility_search_back">Axtarışı bağla</string>
+    <string name="accessibility_filter_reverse">Sıralama qaydasını dəyiş</string>
+    <string name="accessibility_clear_text">Mətni təmizlə</string>
+    <string name="accessibility_station_options">Stansiya seçimləri</string>
+    <string name="accessibility_station_description">Stansiya: %1$s, Dil: %2$s, Teqlər: %3$s</string>
 </resources>

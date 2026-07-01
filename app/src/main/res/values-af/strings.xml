@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stasie-logo</string>
+    <string name="accessibility_favorite_selected">Gunsteling, gekies</string>
+    <string name="accessibility_favorite_not_selected">Gunsteling, nie gekies nie</string>
+    <string name="accessibility_category_icon">Kategorie-ikoon</string>
+    <string name="accessibility_playing">Speel tans</string>
+    <string name="accessibility_menu">Maak spyskaart oop</string>
+    <string name="accessibility_search_back">Sluit soektog</string>
+    <string name="accessibility_filter_reverse">Omgekeerde sorteervolgorde</string>
+    <string name="accessibility_clear_text">Vee teks uit</string>
+    <string name="accessibility_station_options">Stasie-opsies</string>
+    <string name="accessibility_station_description">Stasie: %1$s, Taal: %2$s, Etikette: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">لوگوی ایستگاه</string>
+    <string name="accessibility_favorite_selected">برگزیده، انتخاب شده</string>
+    <string name="accessibility_favorite_not_selected">برگزیده، انتخاب نشده</string>
+    <string name="accessibility_category_icon">آیکون دسته</string>
+    <string name="accessibility_playing">در حال پخش</string>
+    <string name="accessibility_menu">باز کردن منو</string>
+    <string name="accessibility_search_back">بستن جستجو</string>
+    <string name="accessibility_filter_reverse">معکوس کردن ترتیب مرتب‌سازی</string>
+    <string name="accessibility_clear_text">پاک کردن متن</string>
+    <string name="accessibility_station_options">گزینه‌های ایستگاه</string>
+    <string name="accessibility_station_description">ایستگاه: %1$s، زبان: %2$s، برچسب‌ها: %3$s</string>
 </resources>

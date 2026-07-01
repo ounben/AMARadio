@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Állomás logója</string>
+    <string name="accessibility_favorite_selected">Kedvenc, kiválasztva</string>
+    <string name="accessibility_favorite_not_selected">Kedvenc, nincs kiválasztva</string>
+    <string name="accessibility_category_icon">Kategória ikon</string>
+    <string name="accessibility_playing">Jelenleg játszott</string>
+    <string name="accessibility_menu">Menü megnyitása</string>
+    <string name="accessibility_search_back">Keresés bezárása</string>
+    <string name="accessibility_filter_reverse">Rendezési sorrend megfordítása</string>
+    <string name="accessibility_clear_text">Szöveg törlése</string>
+    <string name="accessibility_station_options">Állomás beállításai</string>
+    <string name="accessibility_station_description">Állomás: %1$s, Nyelv: %2$s, Címkék: %3$s</string>
 </resources>

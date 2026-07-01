@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Станция логотипі</string>
+    <string name="accessibility_favorite_selected">Таңдаулы, таңдалды</string>
+    <string name="accessibility_favorite_not_selected">Таңдаулы, таңдалмады</string>
+    <string name="accessibility_category_icon">Санат белгішесі</string>
+    <string name="accessibility_playing">Қазір ойнатылуда</string>
+    <string name="accessibility_menu">Мәзірді ашу</string>
+    <string name="accessibility_search_back">Іздеуді жабу</string>
+    <string name="accessibility_filter_reverse">Сұрыптау ретін өзгерту</string>
+    <string name="accessibility_clear_text">Мәтінді тазалау</string>
+    <string name="accessibility_station_options">Станция параметрлері</string>
+    <string name="accessibility_station_description">Станция: %1$s, Тіл: %2$s, Тегтер: %3$s</string>
 </resources>

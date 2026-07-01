@@ -239,7 +239,7 @@ fun FilterScreen(
                     ) {
                         Icon(
                             imageVector = if (currentTab.reverse) Icons.Default.ArrowDownward else Icons.Default.ArrowUpward,
-                            contentDescription = "Reverse",
+                            contentDescription = stringResource(R.string.accessibility_filter_reverse),
                             tint = AmaradioAmber
                         )
                     }

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">സ്റ്റേഷൻ ലോഗോ</string>
+    <string name="accessibility_favorite_selected">പ്രിയപ്പെട്ടവ, തിരഞ്ഞെടുത്തു</string>
+    <string name="accessibility_favorite_not_selected">പ്രിയപ്പെട്ടവ, തിരഞ്ഞെടുത്തില്ല</string>
+    <string name="accessibility_category_icon">വിഭാഗം ഐക്കൺ</string>
+    <string name="accessibility_playing">ഇപ്പോൾ പ്ലേ ചെയ്യുന്നു</string>
+    <string name="accessibility_menu">മെനു തുറക്കുക</string>
+    <string name="accessibility_search_back">തിരയൽ അടയ്ക്കുക</string>
+    <string name="accessibility_filter_reverse">ക്രമം മാറ്റുക</string>
+    <string name="accessibility_clear_text">ടെക്സ്റ്റ് മായ്ക്കുക</string>
+    <string name="accessibility_station_options">സ്റ്റേഷൻ ഓപ്ഷനുകൾ</string>
+    <string name="accessibility_station_description">സ്റ്റേഷൻ: %1$s, ഭാഷ: %2$s, ടാഗുകൾ: %3$s</string>
 </resources>

@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">အသံလွှင့်ဌာန လိုဂို</string>
+    <string name="accessibility_favorite_selected">အနှစ်သက်ဆုံး၊ ရွေးချယ်ထားသည်</string>
+    <string name="accessibility_favorite_not_selected">အနှစ်သက်ဆုံး၊ ရွေးချယ်မထားပါ</string>
+    <string name="accessibility_category_icon">ကဏ္ဍ အိုင်ကွန်</string>
+    <string name="accessibility_playing">လက်ရှိဖွင့်နေသည်</string>
+    <string name="accessibility_menu">မီနူးဖွင့်ရန်</string>
+    <string name="accessibility_search_back">ရှာဖွေမှုပိတ်ရန်</string>
+    <string name="accessibility_filter_reverse">စီရန်အစီအစဉ်ကို ပြောင်းပြန်လှန်ရန်</string>
+    <string name="accessibility_clear_text">စာသားဖျက်ရန်</string>
+    <string name="accessibility_station_options">အသံလွှင့်ဌာန ရွေးချယ်စရာများ</string>
+    <string name="accessibility_station_description">အသံလွှင့်ဌာန- %1$s၊ ဘာသာစကား- %2$s၊ တဂ်များ- %3$s</string>
 </resources>

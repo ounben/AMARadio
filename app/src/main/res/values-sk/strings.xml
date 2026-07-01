@@ -321,4 +321,17 @@
     <string name="alarm_backup">Záložný budík</string>
     <string name="alarm_fallback_info">Použil sa systémový budík, pretože vybranú rozhlasovú stanicu sa nepodarilo načítať</string>
     <string name="alarm_back_desc">Alternatívny systémový budík, keď sa rozhlasová stanica nenačíta</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo stanice</string>
+    <string name="accessibility_favorite_selected">Obľúbené, vybraté</string>
+    <string name="accessibility_favorite_not_selected">Obľúbené, nevybraté</string>
+    <string name="accessibility_category_icon">Ikona kategórie</string>
+    <string name="accessibility_playing">Práve hrá</string>
+    <string name="accessibility_menu">Otvoriť ponuku</string>
+    <string name="accessibility_search_back">Zavrieť hľadanie</string>
+    <string name="accessibility_filter_reverse">Obrátiť poradie radenia</string>
+    <string name="accessibility_clear_text">Vymazať text</string>
+    <string name="accessibility_station_options">Možnosti stanice</string>
+    <string name="accessibility_station_description">Stanica: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
 </resources>

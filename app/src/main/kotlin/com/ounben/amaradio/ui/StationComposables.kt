@@ -27,6 +27,9 @@ import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -249,6 +252,13 @@ fun StationListItem(
     val details = remember(station.ClickCount, station.Votes, station.Language, station.Bitrate, station.Codec) { 
         station.getShortDetails(context) 
     }
+
+    val accessibilityDesc = stringResource(
+        R.string.accessibility_station_description,
+        station.Name,
+        station.Language.ifEmpty { "N/A" },
+        station.TagsAll.ifEmpty { "N/A" }
+    )
     
     Row(
         modifier = Modifier
@@ -257,13 +267,16 @@ fun StationListItem(
                 onClick = onClick,
                 onLongClick = onLongClick
             )
+            .semantics(mergeDescendants = true) {
+                contentDescription = accessibilityDesc
+            }
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(modifier = Modifier.size(44.dp), contentAlignment = Alignment.Center) {
             AsyncImage(
                 model = station.IconUrl,
-                contentDescription = null,
+                contentDescription = stringResource(R.string.accessibility_station_logo),
                 modifier = Modifier.fillMaxSize(),
                 error = painterResource(R.drawable.ic_radio_24dp),
                 placeholder = painterResource(R.drawable.ic_radio_24dp)
@@ -310,7 +323,10 @@ fun StationListItem(
         ) {
             Icon(
                 imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                contentDescription = null,
+                contentDescription = stringResource(
+                    if (isFavorite) R.string.accessibility_favorite_selected 
+                    else R.string.accessibility_favorite_not_selected
+                ),
                 tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
@@ -326,13 +342,23 @@ fun StationGridItem(
     onFavoriteClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
+    val accessibilityDesc = stringResource(
+        R.string.accessibility_station_description,
+        station.Name,
+        station.Language.ifEmpty { "N/A" },
+        station.TagsAll.ifEmpty { "N/A" }
+    )
+
     Card(
         modifier = Modifier
             .padding(4.dp)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
-            ),
+            )
+            .semantics(mergeDescendants = true) {
+                contentDescription = accessibilityDesc
+            },
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(12.dp)
@@ -346,7 +372,7 @@ fun StationGridItem(
             ) {
                 AsyncImage(
                     model = station.IconUrl,
-                    contentDescription = null,
+                    contentDescription = stringResource(R.string.accessibility_station_logo),
                     modifier = Modifier
                         .size(80.dp)
                         .padding(4.dp),
@@ -383,7 +409,10 @@ fun StationGridItem(
             ) {
                 Icon(
                     imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                    contentDescription = null,
+                    contentDescription = stringResource(
+                        if (isFavorite) R.string.accessibility_favorite_selected 
+                        else R.string.accessibility_favorite_not_selected
+                    ),
                     tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }

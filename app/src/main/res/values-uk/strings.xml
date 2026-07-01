@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Логотип станції</string>
+    <string name="accessibility_favorite_selected">Обране, вибрано</string>
+    <string name="accessibility_favorite_not_selected">Обране, не вибрано</string>
+    <string name="accessibility_category_icon">Іконка категорії</string>
+    <string name="accessibility_playing">Зараз грає</string>
+    <string name="accessibility_menu">Відкрити меню</string>
+    <string name="accessibility_search_back">Закрити пошук</string>
+    <string name="accessibility_filter_reverse">Зворотний порядок сортування</string>
+    <string name="accessibility_clear_text">Очистити текст</string>
+    <string name="accessibility_station_options">Опції станції</string>
+    <string name="accessibility_station_description">Станція: %1$s, Мова: %2$s, Теги: %3$s</string>
 </resources>

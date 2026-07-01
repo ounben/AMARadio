@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">放送局のロゴ</string>
+    <string name="accessibility_favorite_selected">お気に入り、選択済み</string>
+    <string name="accessibility_favorite_not_selected">お気に入り、未選択</string>
+    <string name="accessibility_category_icon">カテゴリーアイコン</string>
+    <string name="accessibility_playing">再生中</string>
+    <string name="accessibility_menu">メニューを開く</string>
+    <string name="accessibility_search_back">検索を閉じる</string>
+    <string name="accessibility_filter_reverse">並べ替え順序を反転</string>
+    <string name="accessibility_clear_text">テキストを消去</string>
+    <string name="accessibility_station_options">放送局のオプション</string>
+    <string name="accessibility_station_description">放送局：%1$s、言語：%2$s、タグ：%3$s</string>
 </resources>

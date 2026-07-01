@@ -319,4 +319,17 @@
     <string name="alarm_backup">Reservevarsling</string>
     <string name="alarm_fallback_info">Systemvarsling vald sidan den valde radiostasjonen ikkje kunne lastast inn</string>
     <string name="alarm_back_desc">Alternativ systemvarsling vald når radiostasjonen ikkje vert lasta inn</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stasjonslogo</string>
+    <string name="accessibility_favorite_selected">Favoritt, vald</string>
+    <string name="accessibility_favorite_not_selected">Favoritt, ikkje vald</string>
+    <string name="accessibility_category_icon">Kategoriikon</string>
+    <string name="accessibility_playing">Spelar no</string>
+    <string name="accessibility_menu">Opna meny</string>
+    <string name="accessibility_search_back">Lukk søk</string>
+    <string name="accessibility_filter_reverse">Omvendt sorteringsrekkjefølgje</string>
+    <string name="accessibility_clear_text">Slett tekst</string>
+    <string name="accessibility_station_options">Stasjonsval</string>
+    <string name="accessibility_station_description">Stasjon: %1$s, Språk: %2$s, Tagger: %3$s</string>
 </resources>

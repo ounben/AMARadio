@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Nembo ya kituo</string>
+    <string name="accessibility_favorite_selected">Kipendwa, kimechaguliwa</string>
+    <string name="accessibility_favorite_not_selected">Kipendwa, hakijachaguliwa</string>
+    <string name="accessibility_category_icon">Aikoni ya kategoria</string>
+    <string name="accessibility_playing">Inacheza sasa</string>
+    <string name="accessibility_menu">Fungua menyu</string>
+    <string name="accessibility_search_back">Funga utafutaji</string>
+    <string name="accessibility_filter_reverse">Badilisha mpangilio wa kupanga</string>
+    <string name="accessibility_clear_text">Futa maandishi</string>
+    <string name="accessibility_station_options">Chaguo za kituo</string>
+    <string name="accessibility_station_description">Kituo: %1$s, Lugha: %2$s, Lebo: %3$s</string>
 </resources>

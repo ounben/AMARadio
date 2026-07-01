@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stoties logotipas</string>
+    <string name="accessibility_favorite_selected">Mėgstama, pasirinkta</string>
+    <string name="accessibility_favorite_not_selected">Mėgstama, nepasirinkta</string>
+    <string name="accessibility_category_icon">Kategorijos piktograma</string>
+    <string name="accessibility_playing">Dabar grojama</string>
+    <string name="accessibility_menu">Atidaryti meniu</string>
+    <string name="accessibility_search_back">Uždaryti paiešką</string>
+    <string name="accessibility_filter_reverse">Apversti rūšiavimo tvarką</string>
+    <string name="accessibility_clear_text">Išvalyti tekstą</string>
+    <string name="accessibility_station_options">Stoties parinktys</string>
+    <string name="accessibility_station_description">Stotis: %1$s, Kalba: %2$s, Žymos: %3$s</string>
 </resources>

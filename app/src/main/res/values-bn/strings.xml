@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">স্টেশন লোগো</string>
+    <string name="accessibility_favorite_selected">প্রিয়, নির্বাচিত</string>
+    <string name="accessibility_favorite_not_selected">প্রিয়, নির্বাচিত নয়</string>
+    <string name="accessibility_category_icon">বিভাগ আইকন</string>
+    <string name="accessibility_playing">এখন বাজছে</string>
+    <string name="accessibility_menu">মেনু খুলুন</string>
+    <string name="accessibility_search_back">অনুসন্ধান বন্ধ করুন</string>
+    <string name="accessibility_filter_reverse">সাজানোর ক্রম উল্টান</string>
+    <string name="accessibility_clear_text">লেখা মুছুন</string>
+    <string name="accessibility_station_options">স্টেশন বিকল্প</string>
+    <string name="accessibility_station_description">স্টেশন: %1$s, ভাষা: %2$s, ট্যাগ: %3$s</string>
 </resources>

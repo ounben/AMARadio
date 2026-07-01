@@ -109,7 +109,7 @@ fun MainTopBar(
             navigationIcon = {
                 if (isSearching) {
                     IconButton(onClick = { onSearchToggle(false) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.accessibility_search_back))
                     }
                 }
             },
@@ -117,20 +117,20 @@ fun MainTopBar(
                 if (isSearching) {
                     if (searchQuery.isNotEmpty()) {
                         IconButton(onClick = { onSearchQueryChange("") }) {
-                            Icon(Icons.Default.Clear, contentDescription = "Clear")
+                            Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text))
                         }
                     }
                 } else {
                     IconButton(onClick = { onSearchToggle(true) }) {
-                        Icon(Icons.Default.Search, contentDescription = "Search")
+                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search))
                     }
                     IconButton(onClick = onFilterClick) {
-                        Icon(Icons.Default.FilterList, contentDescription = "Filter")
+                        Icon(Icons.Default.FilterList, contentDescription = stringResource(R.string.action_filter))
                     }
                     
                     var showMenu by remember { mutableStateOf(false) }
                     IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = "Menu")
+                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.accessibility_menu))
                     }
 
                     DropdownMenu(

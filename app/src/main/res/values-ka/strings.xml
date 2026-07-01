@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">სადგურის ლოგო</string>
+    <string name="accessibility_favorite_selected">ფავორიტი, არჩეულია</string>
+    <string name="accessibility_favorite_not_selected">ფავორიტი, არ არის არჩეული</string>
+    <string name="accessibility_category_icon">კატეგორიის ხატულა</string>
+    <string name="accessibility_playing">ახლა უკრავს</string>
+    <string name="accessibility_menu">მენიუს გახსნა</string>
+    <string name="accessibility_search_back">ძიების დახურვა</string>
+    <string name="accessibility_filter_reverse">სორტირების რიგის შეცვლა</string>
+    <string name="accessibility_clear_text">ტექსტის გასუფთავება</string>
+    <string name="accessibility_station_options">სადგურის პარამეტრები</string>
+    <string name="accessibility_station_description">სადგური: %1$s, ენა: %2$s, ტეგები: %3$s</string>
 </resources>

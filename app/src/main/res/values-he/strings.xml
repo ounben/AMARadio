@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">לוגו התחנה</string>
+    <string name="accessibility_favorite_selected">מועדף, נבחר</string>
+    <string name="accessibility_favorite_not_selected">מועדף, לא נבחר</string>
+    <string name="accessibility_category_icon">סמל קטגוריה</string>
+    <string name="accessibility_playing">מנגן כעת</string>
+    <string name="accessibility_menu">פתח תפריט</string>
+    <string name="accessibility_search_back">סגור חיפוש</string>
+    <string name="accessibility_filter_reverse">הפוך סדר מיון</string>
+    <string name="accessibility_clear_text">נקה טקסט</string>
+    <string name="accessibility_station_options">אפשרויות תחנה</string>
+    <string name="accessibility_station_description">תחנה: %1$s, שפה: %2$s, תגיות: %3$s</string>
 </resources>

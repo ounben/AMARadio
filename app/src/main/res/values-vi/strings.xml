@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo đài</string>
+    <string name="accessibility_favorite_selected">Yêu thích, đã chọn</string>
+    <string name="accessibility_favorite_not_selected">Yêu thích, chưa chọn</string>
+    <string name="accessibility_category_icon">Biểu tượng danh mục</string>
+    <string name="accessibility_playing">Đang phát</string>
+    <string name="accessibility_menu">Mở menu</string>
+    <string name="accessibility_search_back">Đóng tìm kiếm</string>
+    <string name="accessibility_filter_reverse">Đảo ngược thứ tự sắp xếp</string>
+    <string name="accessibility_clear_text">Xóa văn bản</string>
+    <string name="accessibility_station_options">Tùy chọn đài</string>
+    <string name="accessibility_station_description">Đài: %1$s, Ngôn ngữ: %2$s, Thẻ: %3$s</string>
 </resources>

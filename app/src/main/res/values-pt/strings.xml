@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logótipo da estação</string>
+    <string name="accessibility_favorite_selected">Favorito, selecionado</string>
+    <string name="accessibility_favorite_not_selected">Favorito, não selecionado</string>
+    <string name="accessibility_category_icon">Ícone de categoria</string>
+    <string name="accessibility_playing">A reproduzir</string>
+    <string name="accessibility_menu">Abrir menu</string>
+    <string name="accessibility_search_back">Fechar pesquisa</string>
+    <string name="accessibility_filter_reverse">Inverter ordem de ordenação</string>
+    <string name="accessibility_clear_text">Limpar texto</string>
+    <string name="accessibility_station_options">Opções da estação</string>
+    <string name="accessibility_station_description">Estação: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
 </resources>

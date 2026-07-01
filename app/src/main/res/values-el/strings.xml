@@ -321,4 +321,17 @@
     <string name="alarm_backup">Εναλλακτική ειδοποίηση</string>
     <string name="alarm_fallback_info">Χρησιμοποιήθηκε η ειδοποίηση συστήματος καθώς ο επιλεγμένος ραδιοφωνικός σταθμός απέτυχε να φορτώσει</string>
     <string name="alarm_back_desc">Εναλλακτική ειδοποίηση συστήματος όταν ο ραδιοφωνικός σταθμός αποτυγχάνει να φορτώσει</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Λογότυπο σταθμού</string>
+    <string name="accessibility_favorite_selected">Αγαπημένο, επιλεγμένο</string>
+    <string name="accessibility_favorite_not_selected">Αγαπημένο, μη επιλεγμένο</string>
+    <string name="accessibility_category_icon">Εικονίδιο κατηγορίας</string>
+    <string name="accessibility_playing">Αναπαράγεται τώρα</string>
+    <string name="accessibility_menu">Άνοιγμα μενού</string>
+    <string name="accessibility_search_back">Κλείσιμο αναζήτησης</string>
+    <string name="accessibility_filter_reverse">Αντιστροφή σειράς ταξινόμησης</string>
+    <string name="accessibility_clear_text">Καθαρισμός κειμένου</string>
+    <string name="accessibility_station_options">Επιλογές σταθμού</string>
+    <string name="accessibility_station_description">Σταθμός: %1$s, Γλώσσα: %2$s, Ετικέτες: %3$s</string>
 </resources>

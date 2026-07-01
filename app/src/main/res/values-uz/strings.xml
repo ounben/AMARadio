@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stansiya logotipi</string>
+    <string name="accessibility_favorite_selected">Saralangan, tanlangan</string>
+    <string name="accessibility_favorite_not_selected">Saralangan, tanlanmagan</string>
+    <string name="accessibility_category_icon">Turkum belgisi</string>
+    <string name="accessibility_playing">Hozir ijro etilmoqda</string>
+    <string name="accessibility_menu">Menyuni ochish</string>
+    <string name="accessibility_search_back">Qidiruvni yopish</string>
+    <string name="accessibility_filter_reverse">Saralash tartibini o\'zgartirish</string>
+    <string name="accessibility_clear_text">Matnni tozalash</string>
+    <string name="accessibility_station_options">Stansiya variantlari</string>
+    <string name="accessibility_station_description">Stansiya: %1$s, Til: %2$s, Teglar: %3$s</string>
 </resources>

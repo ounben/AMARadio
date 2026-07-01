@@ -321,4 +321,17 @@
     <string name="alarm_backup">Alarm Cadangan</string>
     <string name="alarm_fallback_info">Alarm sistem digunakan karena stasiun radio yang dipilih gagal dimuat</string>
     <string name="alarm_back_desc">Alarm sistem alternatif digunakan ketika stasiun radio tidak dapat dimuat</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo stasiun</string>
+    <string name="accessibility_favorite_selected">Favorit, dipilih</string>
+    <string name="accessibility_favorite_not_selected">Favorit, tidak dipilih</string>
+    <string name="accessibility_category_icon">Ikon kategori</string>
+    <string name="accessibility_playing">Sedang diputar</string>
+    <string name="accessibility_menu">Buka menu</string>
+    <string name="accessibility_search_back">Tutup pencarian</string>
+    <string name="accessibility_filter_reverse">Balikkan urutan pengurutan</string>
+    <string name="accessibility_clear_text">Hapus teks</string>
+    <string name="accessibility_station_options">Opsi stasiun</string>
+    <string name="accessibility_station_description">Stasiun: %1$s, Bahasa: %2$s, Tag: %3$s</string>
 </resources>

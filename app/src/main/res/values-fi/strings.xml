@@ -321,4 +321,17 @@
     <string name="alarm_backup">Varahälytys</string>
     <string name="alarm_fallback_info">Käytetään järjestelmän hälytystä, koska valittua radioasemaa ei voitu ladata</string>
     <string name="alarm_back_desc">Järjestelmän varahälytys, kun radioasema ei lataudu</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Aseman logo</string>
+    <string name="accessibility_favorite_selected">Suosikki, valittu</string>
+    <string name="accessibility_favorite_not_selected">Suosikki, ei valittu</string>
+    <string name="accessibility_category_icon">Luokan kuvake</string>
+    <string name="accessibility_playing">Toistetaan parhaillaan</string>
+    <string name="accessibility_menu">Avaa valikko</string>
+    <string name="accessibility_search_back">Sulje haku</string>
+    <string name="accessibility_filter_reverse">Käänteinen lajittelujärjestys</string>
+    <string name="accessibility_clear_text">Tyhjennä teksti</string>
+    <string name="accessibility_station_options">Aseman asetukset</string>
+    <string name="accessibility_station_description">Asema: %1$s, Kieli: %2$s, Tunnisteet: %3$s</string>
 </resources>

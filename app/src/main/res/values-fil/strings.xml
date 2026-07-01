@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo ng istasyon</string>
+    <string name="accessibility_favorite_selected">Paborito, napili</string>
+    <string name="accessibility_favorite_not_selected">Paborito, hindi napili</string>
+    <string name="accessibility_category_icon">Icon ng kategorya</string>
+    <string name="accessibility_playing">Kasalukuyang nagpapatugtog</string>
+    <string name="accessibility_menu">Buksan ang menu</string>
+    <string name="accessibility_search_back">Isara ang paghahanap</string>
+    <string name="accessibility_filter_reverse">Baligtarin ang pagkakasunod-sunod</string>
+    <string name="accessibility_clear_text">I-clear ang text</string>
+    <string name="accessibility_station_options">Mga opsyon sa istasyon</string>
+    <string name="accessibility_station_description">Istasyon: %1$s, Wika: %2$s, Mga Tag: %3$s</string>
 </resources>

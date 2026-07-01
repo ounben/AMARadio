@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">நிலைய சின்னம்</string>
+    <string name="accessibility_favorite_selected">விருப்பமானது, தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="accessibility_favorite_not_selected">விருப்பமானது, தேர்ந்தெடுக்கப்படவில்லை</string>
+    <string name="accessibility_category_icon">வகை ஐகான்</string>
+    <string name="accessibility_playing">இப்போது ஒலிக்கிறது</string>
+    <string name="accessibility_menu">மெனுவைத் திற</string>
+    <string name="accessibility_search_back">தேடலை மூடு</string>
+    <string name="accessibility_filter_reverse">வரிசையை மாற்று</string>
+    <string name="accessibility_clear_text">உரையை அழி</string>
+    <string name="accessibility_station_options">நிலைய விருப்பங்கள்</string>
+    <string name="accessibility_station_description">நிலையம்: %1$s, மொழி: %2$s, குறிச்சொற்கள்: %3$s</string>
 </resources>

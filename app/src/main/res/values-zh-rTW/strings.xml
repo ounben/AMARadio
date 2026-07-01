@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">電台圖示</string>
+    <string name="accessibility_favorite_selected">收藏，已選擇</string>
+    <string name="accessibility_favorite_not_selected">收藏，未選擇</string>
+    <string name="accessibility_category_icon">類別圖示</string>
+    <string name="accessibility_playing">正在播放</string>
+    <string name="accessibility_menu">打開選單</string>
+    <string name="accessibility_search_back">關閉搜尋</string>
+    <string name="accessibility_filter_reverse">反向排序</string>
+    <string name="accessibility_clear_text">清除文本</string>
+    <string name="accessibility_station_options">電台選項</string>
+    <string name="accessibility_station_description">電台：%1$s，語言：%2$s，標籤：%3$s</string>
 </resources>

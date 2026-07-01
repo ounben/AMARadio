@@ -321,4 +321,17 @@
     <string name="alarm_backup">Reservealarm</string>
     <string name="alarm_fallback_info">Systemalarm valgt siden den valgte radiostasjonen ikke kunne lastes inn</string>
     <string name="alarm_back_desc">Alternativ systemalarm valgt når radiostasjonen ikke lastes inn</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stasjonslogo</string>
+    <string name="accessibility_favorite_selected">Favoritt, valgt</string>
+    <string name="accessibility_favorite_not_selected">Favoritt, ikke valgt</string>
+    <string name="accessibility_category_icon">Kategoriikon</string>
+    <string name="accessibility_playing">Spiller nå</string>
+    <string name="accessibility_menu">Åpne meny</string>
+    <string name="accessibility_search_back">Lukk søk</string>
+    <string name="accessibility_filter_reverse">Omvendt sorteringsrekkefølge</string>
+    <string name="accessibility_clear_text">Slett tekst</string>
+    <string name="accessibility_station_options">Stasjonsvalg</string>
+    <string name="accessibility_station_description">Stasjon: %1$s, Språk: %2$s, Tagger: %3$s</string>
 </resources>

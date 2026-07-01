@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">방송국 로고</string>
+    <string name="accessibility_favorite_selected">즐겨찾기, 선택됨</string>
+    <string name="accessibility_favorite_not_selected">즐겨찾기, 선택 안 됨</string>
+    <string name="accessibility_category_icon">카테고리 아이콘</string>
+    <string name="accessibility_playing">현재 재생 중</string>
+    <string name="accessibility_menu">메뉴 열기</string>
+    <string name="accessibility_search_back">검색 닫기</string>
+    <string name="accessibility_filter_reverse">정렬 순서 반전</string>
+    <string name="accessibility_clear_text">텍스트 지우기</string>
+    <string name="accessibility_station_options">방송국 옵션</string>
+    <string name="accessibility_station_description">방송국: %1$s, 언어: %2$s, 태그: %3$s</string>
 </resources>

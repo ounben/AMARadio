@@ -312,4 +312,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Логотип станции</string>
+    <string name="accessibility_favorite_selected">Избранное, выбрано</string>
+    <string name="accessibility_favorite_not_selected">Избранное, не выбрано</string>
+    <string name="accessibility_category_icon">Иконка категории</string>
+    <string name="accessibility_playing">Сейчас играет</string>
+    <string name="accessibility_menu">Открыть меню</string>
+    <string name="accessibility_search_back">Закрыть поиск</string>
+    <string name="accessibility_filter_reverse">Обратный порядок сортировки</string>
+    <string name="accessibility_clear_text">Очистить текст</string>
+    <string name="accessibility_station_options">Опции станции</string>
+    <string name="accessibility_station_description">Станция: %1$s, Язык: %2$s, Теги: %3$s</string>
 </resources>

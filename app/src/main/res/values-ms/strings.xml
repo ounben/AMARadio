@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logo stesen</string>
+    <string name="accessibility_favorite_selected">Kegemaran, dipilih</string>
+    <string name="accessibility_favorite_not_selected">Kegemaran, tidak dipilih</string>
+    <string name="accessibility_category_icon">Ikon kategori</string>
+    <string name="accessibility_playing">Sedang dimainkan</string>
+    <string name="accessibility_menu">Buka menu</string>
+    <string name="accessibility_search_back">Tutup carian</string>
+    <string name="accessibility_filter_reverse">Balikkan susunan isihan</string>
+    <string name="accessibility_clear_text">Kosongkan teks</string>
+    <string name="accessibility_station_options">Pilihan stesen</string>
+    <string name="accessibility_station_description">Stesen: %1$s, Bahasa: %2$s, Tag: %3$s</string>
 </resources>

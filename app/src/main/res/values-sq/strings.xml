@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logotipa e stacionit</string>
+    <string name="accessibility_favorite_selected">E preferuar, e zgjedhur</string>
+    <string name="accessibility_favorite_not_selected">E preferuar, e pazgjedhur</string>
+    <string name="accessibility_category_icon">Ikona e kategorisë</string>
+    <string name="accessibility_playing">Duke u luajtur aktualisht</string>
+    <string name="accessibility_menu">Hap menunë</string>
+    <string name="accessibility_search_back">Mbyll kërkimin</string>
+    <string name="accessibility_filter_reverse">Përmbys renditjen</string>
+    <string name="accessibility_clear_text">Pastro tekstin</string>
+    <string name="accessibility_station_options">Opsionet e stacionit</string>
+    <string name="accessibility_station_description">Stacioni: %1$s, Gjuha: %2$s, Etiketat: %3$s</string>
 </resources>

@@ -321,4 +321,17 @@
     <string name="alarm_backup">Alarma alternativa</string>
     <string name="alarm_fallback_info">Usouse a alarma do sistema porque a emisora seleccionada non se puido cargar</string>
     <string name="alarm_back_desc">Alarma de sistema alternativa cando a emisora de radio non carga</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Logotipo da emisora</string>
+    <string name="accessibility_favorite_selected">Favorito, seleccionado</string>
+    <string name="accessibility_favorite_not_selected">Favorito, non seleccionado</string>
+    <string name="accessibility_category_icon">Icona de categoría</string>
+    <string name="accessibility_playing">Reproducendo actualmente</string>
+    <string name="accessibility_menu">Abrir menú</string>
+    <string name="accessibility_search_back">Pechar busca</string>
+    <string name="accessibility_filter_reverse">Inverter orde de clasificación</string>
+    <string name="accessibility_clear_text">Borrar texto</string>
+    <string name="accessibility_station_options">Opcións da emisora</string>
+    <string name="accessibility_station_description">Emisora: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
 </resources>

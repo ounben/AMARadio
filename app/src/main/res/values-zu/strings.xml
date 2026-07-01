@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Ilogo yesiteshi</string>
+    <string name="accessibility_favorite_selected">Okuthandayo, kukhethiwe</string>
+    <string name="accessibility_favorite_not_selected">Okuthandayo, akukhethiwe</string>
+    <string name="accessibility_category_icon">Isithonjana sesigaba</string>
+    <string name="accessibility_playing">Iyadlala njengamanje</string>
+    <string name="accessibility_menu">Vula imenyu</string>
+    <string name="accessibility_search_back">Vala ukusesha</string>
+    <string name="accessibility_filter_reverse">Hlehlisa ukuhleleka</string>
+    <string name="accessibility_clear_text">Sula umbhalo</string>
+    <string name="accessibility_station_options">Izinketho zesiteshi</string>
+    <string name="accessibility_station_description">Isiteshi: %1$s, Ulimi: %2$s, Omaka: %3$s</string>
 </resources>

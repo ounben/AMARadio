@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Stacijas logotips</string>
+    <string name="accessibility_favorite_selected">Izlase, atlasīta</string>
+    <string name="accessibility_favorite_not_selected">Izlase, nav atlasīta</string>
+    <string name="accessibility_category_icon">Kategorijas ikona</string>
+    <string name="accessibility_playing">Pašlaik atskaņo</string>
+    <string name="accessibility_menu">Atvērt izvēlni</string>
+    <string name="accessibility_search_back">Aizvērt meklēšanu</string>
+    <string name="accessibility_filter_reverse">Apgriezt kārtošanas secību</string>
+    <string name="accessibility_clear_text">Notīrīt tekstu</string>
+    <string name="accessibility_station_options">Stacijas opcijas</string>
+    <string name="accessibility_station_description">Stacija: %1$s, Valoda: %2$s, Birkas: %3$s</string>
 </resources>

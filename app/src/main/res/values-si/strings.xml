@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">ගුවන්විදුලි ලාංඡනය</string>
+    <string name="accessibility_favorite_selected">ප්‍රියතම, තෝරාගෙන ඇත</string>
+    <string name="accessibility_favorite_not_selected">ප්‍රියතම, තෝරාගෙන නැත</string>
+    <string name="accessibility_category_icon">ප්‍රවර්ග නිරූපකය</string>
+    <string name="accessibility_playing">දැන් වාදනය වේ</string>
+    <string name="accessibility_menu">මෙනුව විවෘත කරන්න</string>
+    <string name="accessibility_search_back">සෙවීම වසන්න</string>
+    <string name="accessibility_filter_reverse">පිළිවෙල මාරු කරන්න</string>
+    <string name="accessibility_clear_text">පෙළ මකන්න</string>
+    <string name="accessibility_station_options">ගුවන්විදුලි විකල්ප</string>
+    <string name="accessibility_station_description">ගුවන්විදුලිය: %1$s, භාෂාව: %2$s, ටැග්: %3$s</string>
 </resources>

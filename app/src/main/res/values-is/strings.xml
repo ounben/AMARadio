@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">Kennimerki stöðvar</string>
+    <string name="accessibility_favorite_selected">Í uppáhaldi, valið</string>
+    <string name="accessibility_favorite_not_selected">Í uppáhaldi, ekki valið</string>
+    <string name="accessibility_category_icon">Flokkstákn</string>
+    <string name="accessibility_playing">Í spilun</string>
+    <string name="accessibility_menu">Opna valmynd</string>
+    <string name="accessibility_search_back">Loka leit</string>
+    <string name="accessibility_filter_reverse">Snúa við röðun</string>
+    <string name="accessibility_clear_text">Hreinsa texta</string>
+    <string name="accessibility_station_options">Valkostir stöðvar</string>
+    <string name="accessibility_station_description">Stöð: %1$s, Tungumál: %2$s, Merki: %3$s</string>
 </resources>

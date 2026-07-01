@@ -317,4 +317,17 @@
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">ឡូហ្គោស្ថានីយ</string>
+    <string name="accessibility_favorite_selected">សំណព្វ, បានជ្រើសរើស</string>
+    <string name="accessibility_favorite_not_selected">សំណព្វ, មិនបានជ្រើសរើស</string>
+    <string name="accessibility_category_icon">រូបតំណាងប្រភេទ</string>
+    <string name="accessibility_playing">កំពុងចាក់</string>
+    <string name="accessibility_menu">បើក مینو</string>
+    <string name="accessibility_search_back">បិទការស្វែងរក</string>
+    <string name="accessibility_filter_reverse">ត្រឡប់លំដับតម្រៀប</string>
+    <string name="accessibility_clear_text">សម្អាតអត្ថបទ</string>
+    <string name="accessibility_station_options">ជម្រើសស្ថានីយ</string>
+    <string name="accessibility_station_description">ស្ថានីយ៖ %1$s, ភាសា៖ %2$s, ស្លាក៖ %3$s</string>
 </resources>
