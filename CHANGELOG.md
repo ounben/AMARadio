@@ -6,9 +6,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ## [Unreleased]
 
 ## [0.99.6] - 2026-06-30
+### Added
+- **Global Accessibility (TalkBack)**:
+    - Optimized the entire UI for blind and visually impaired users.
+    - Implemented semantic grouping for radio stations, providing clear, narrated summaries instead of fragmented clicks.
+    - Added "speaking" status icons for favorites and search states.
+    - Localized accessibility descriptions across all 74 supported languages.
+- **New Languages (African Region)**:
+    - Added full support for **Afrikaans (af)**, **Amharic (am)**, **Swahili (sw)**, and **isiZulu (zu)**.
+
 ### Changed
 - **Stability**: Finalized language management and improved locale switching reliability on older Android devices.
 - **Resource Optimization**: Minor cleanup of string resources and localized assets.
+- **Automated Build Naming**: Configured Gradle to automatically name App Bundles and APKs using the "AMARadio_Version" format for better release management.
 
 ## [0.99.5] - 2026-06-30
 ### Added

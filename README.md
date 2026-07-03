@@ -15,8 +15,10 @@ Originally created as a personal project for the developer's mother to provide a
 ## Key Features
 
 - **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
+- **Full Global Accessibility**: Extensively optimized for **TalkBack** and screen readers. Features semantic grouping of station information for fluid navigation, localized accessibility strings in all 74+ supported languages, and "speaking" status icons.
 - **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. Metadata for 11,000+ tags is cached locally for instant, offline suggestions.
 - **Dynamic UI Scaling**: Built-in accessibility settings allow for dynamic adjustment of the user interface, including font and component sizes, ranging from Compact to Extra Large.
+- **Multi-Language Support**: Support for over **74 locales**, including newly added African languages (Afrikaans, Amharic, Swahili, Zulu) and a dedicated in-app language selector.
 - **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
 - **Global Station Database**: Instant access to a massive, community-maintained directory of international radio stations.
 - **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, strict audio focus handling, and MD5-hashed local caching for API responses.

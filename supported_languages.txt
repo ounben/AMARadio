@@ -1,0 +1,76 @@
+AMARadio - Unterstützte Sprachen / Supported Languages:
+
+English
+Deutsch
+العربية
+Català
+Čeština
+Dansk
+Ελληνικά
+Español
+Euskara
+Suomi
+Français
+Galego
+Magyar
+Indonesia
+Italiano
+日本語
+Norsk bokmål
+Nederlands
+Norsk nynorsk
+Polski
+Português (Brasil)
+Русский
+Slovenčina
+Türkçe
+中文 (简体)
+हिन्दी
+Українська
+Shqip
+Română
+Български
+Hrvatski
+Српски
+Slovenščina
+Македонски
+Беларуская
+Bosanski
+Svenska
+Eesti
+Latviešu
+Lietuvių
+Íslenska
+Malti
+Gaeilge
+Português (Portugal)
+한국어
+中文 (繁體 - 台灣)
+中文 (繁體 - 香港)
+Tiếng Việt
+ไทย
+Filipino
+Bahasa Melayu
+မြန်မာဘာသာ
+ភាសាខ្មែរ
+বাংলা
+اردو
+தமிழ்
+తెలుగు
+मराठी
+ગુજરાતી
+ಕನ್ನಡ
+മലയാളം
+සිංහල
+नेपाली
+עברית
+فارسی
+ქართული
+Հայერեն
+Azərbaycan dili
+Қазақ тілі
+Oʻzbek tili
+Afrikaans
+አማርኛ
+Kiswahili
+isiZulu
