@@ -31,15 +31,28 @@ Originally created as a personal project for the developer's mother to provide a
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/Screenshot_20260609_021827.png" width="24%" />
-  <img src="screenshots/Screenshot_20260609_022031.png" width="24%" />
-  <img src="screenshots/Screenshot_20260609_022052.png" width="24%" />
-  <img src="screenshots/Screenshot_20260609_022112.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_034847.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_034915.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_034956.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_035145.png" width="24%" />
 </p>
 <p align="center">
-  <img src="screenshots/Screenshot_20260609_022219.png" width="24%" />
-  <img src="screenshots/Screenshot_20260609_022236.png" width="24%" />
-  <img src="screenshots/Screenshot_20260609_022322.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044232.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044540.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044616.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044651.png" width="24%" />
+</p>
+<p align="center">
+  <img src="screenshots/Screenshot_20260704_044735.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044859.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044919.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_044932.png" width="24%" />
+</p>
+<p align="center">
+  <img src="screenshots/Screenshot_20260704_061009.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_061028.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_062257.png" width="24%" />
+  <img src="screenshots/Screenshot_20260704_080531.png" width="24%" />
 </p>
 
 ## Getting Started
