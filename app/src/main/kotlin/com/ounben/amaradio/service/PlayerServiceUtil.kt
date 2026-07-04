@@ -143,6 +143,7 @@ object PlayerServiceUtil {
         try {
             val app = applicationContext as? AMARadioApp
             app?.historyManager?.add(station)
+            app?.reviewManager?.incrementActionCount()
 
             itsPlayerService?.let {
                 // Pre-strip heavy metadata to prevent TransactionTooLargeException

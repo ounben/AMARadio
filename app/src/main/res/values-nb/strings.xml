@@ -266,6 +266,8 @@
   <string name="settings_ignore_battery_optimization_summary_off">Batterioptimalisering er aktivert, AMARadio kan kanskje ikke gjenvinne fokus i bakgrunnen.</string>
   <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
   <string name="settings_other">Annet</string>
+  <string name="settings_rate_app">Vurder AMARadio</string>
+  <string name="settings_rate_app_summary">Hvis du liker appen, vennligst legg igjen en anmeldelse i Play Store!</string>
   <string name="settings_statistics">Statistikk</string>
   <string name="settings_about">Om AMARadio</string>
   

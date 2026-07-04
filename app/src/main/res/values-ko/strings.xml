@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">배터리 최적화 활성 중. 백그라운드에서 포커스를 다시 얻지 못할 수 있습니다.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">기타</string>
+    <string name="settings_rate_app">AMARadio 평가하기</string>
+    <string name="settings_rate_app_summary">앱이 마음에 드신다면 Play 스토어에 리뷰를 남겨주세요!</string>
     <string name="settings_statistics">통계</string>
     <string name="settings_about">AMARadio 정보</string>
 

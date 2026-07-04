@@ -29,6 +29,7 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
     override fun add(station: DataRadioStation) {
         if (!has(station.StationUuid)) {
             super.add(station)
+            (context.applicationContext as? AMARadioApp)?.reviewManager?.incrementActionCount()
         }
     }
 

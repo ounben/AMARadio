@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Batterioptimering er aktiveret, AMARadio kan muligvis ikke genvinde fokus efter tab af fokus, hvis den er i baggrunden.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Andet</string>
+    <string name="settings_rate_app">Bedøm AMARadio</string>
+    <string name="settings_rate_app_summary">Hvis du kan lide appen, bedes du efterlade en anmeldelse i Play Store!</string>
     <string name="settings_statistics">Statistikker</string>
     <string name="settings_about">Om AMARadio</string>
 

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">بهینه‌سازی باتری فعال است، ممکن است برنامه در پس‌زمینه متوقف شود.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">سایر</string>
+    <string name="settings_rate_app">امتیاز به AMARadio</string>
+    <string name="settings_rate_app_summary">اگر برنامه را دوست دارید، لطفاً در فروشگاه Play نظر بدهید!</string>
     <string name="settings_statistics">آمار</string>
     <string name="settings_about">درباره AMARadio</string>
 

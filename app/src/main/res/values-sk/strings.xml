@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Optimalizácia batérie je aktivovaná, AMARadio nemusí byť schopné znova získať fokus, ak je na pozadí.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Ostatné</string>
+    <string name="settings_rate_app">Ohodnotiť AMARadio</string>
+    <string name="settings_rate_app_summary">Ak sa vám aplikácia páči, zanechajte prosím recenziu v Obchode Play!</string>
     <string name="settings_statistics">Štatistiky</string>
     <string name="settings_about">O AMARadio</string>
 

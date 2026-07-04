@@ -261,6 +261,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">电池优化被激活，AMARadio 将可能无法在后台重获焦点。</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">其他</string>
+    <string name="settings_rate_app">评价 AMARadio</string>
+    <string name="settings_rate_app_summary">如果您喜欢这个应用，请在 Play 商店留下评价！</string>
     <string name="settings_statistics">统计</string>
     <string name="settings_about">关于 AMARadio</string>
 

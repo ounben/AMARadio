@@ -12,6 +12,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Implemented semantic grouping for radio stations, providing clear, narrated summaries instead of fragmented clicks.
     - Added "speaking" status icons for favorites and search states.
     - Localized accessibility descriptions across all 74 supported languages.
+- **In-App Review Integration**:
+    - Integrated Google Play In-App Review API for seamless user feedback.
+    - Added a non-intrusive "Rate AMARadio" option at the top of the settings menu.
+    - Implemented intelligent review logic: Automated prompts appear only after 100 significant actions (playing stations or adding favorites) with a 7-day cooldown.
+    - Comprehensive localization for review prompts in over 30 languages.
+    - Integrated a robust fallback mechanism that redirects to the Play Store if the API is unavailable.
 - **New Languages (African Region)**:
     - Added full support for **Afrikaans (af)**, **Amharic (am)**, **Swahili (sw)**, and **isiZulu (zu)**.
 

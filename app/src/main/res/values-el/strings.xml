@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Η βελτιστοποίηση μπαταρίας είναι ενεργοποιημένη, το AMARadio ενδέχεται να μην μπορεί να ανακτήσει την εστίαση εάν βρίσκεται στο παρασκήνιο.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Άλλα</string>
+    <string name="settings_rate_app">Αξιολογήστε το AMARadio</string>
+    <string name="settings_rate_app_summary">Αν σας αρέσει η εφαρμογή, αφήστε μια κριτική στο Play Store!</string>
     <string name="settings_statistics">Στατιστικά</string>
     <string name="settings_about">Σχετικά με το AMARadio</string>
 

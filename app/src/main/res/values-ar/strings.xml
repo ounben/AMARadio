@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">تم تفعيل تحسين البطارية، لن يتمكن AMARadio من استعادة التركيز بعد فقدانه إذا كان في الخلفية.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">أخرى</string>
+    <string name="settings_rate_app">قيم AMARadio</string>
+    <string name="settings_rate_app_summary">إذا أعجبك التطبيق، يرجى ترك مراجعة على متجر Play!</string>
     <string name="settings_statistics">الإحصائيات</string>
     <string name="settings_about">حول AMARadio</string>
 

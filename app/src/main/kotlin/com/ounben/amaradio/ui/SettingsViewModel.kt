@@ -28,7 +28,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val readTimeout: Int = 10,
         val retryTimeout: Int = 10,
         val retryDelay: Int = 100,
-        val resumeWithin: Int = 60
+        val resumeWithin: Int = 60,
+        val isReviewCompleted: Boolean = false
     )
 
     private val _uiState = MutableStateFlow(SettingsUiState())
@@ -65,7 +66,8 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 readTimeout = sharedPref.getInt("stream_read_timeout", 10),
                 retryTimeout = sharedPref.getInt("settings_retry_timeout", 10),
                 retryDelay = sharedPref.getInt("settings_retry_delay", 100),
-                resumeWithin = sharedPref.getInt("settings_resume_within", 60)
+                resumeWithin = sharedPref.getInt("settings_resume_within", 60),
+                isReviewCompleted = sharedPref.getBoolean("review_completed", false)
             )
         }
     }

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">バッテリーの最適化が有効です。AMARadioがバックグラウンドにある場合、復帰できない可能性があります。</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">その他</string>
+    <string name="settings_rate_app">AMARadioを評価</string>
+    <string name="settings_rate_app_summary">アプリが気に入ったら、Play ストアでレビューをお願いします！</string>
     <string name="settings_statistics">統計</string>
     <string name="settings_about">AMARadioについて</string>
 

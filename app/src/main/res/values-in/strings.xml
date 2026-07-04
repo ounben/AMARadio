@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Optimasi baterai diaktifkan, AMARadio mungkin tidak dapat memperoleh fokus kembali di latar belakang.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Lainnya</string>
+    <string name="settings_rate_app">Beri Nilai AMARadio</string>
+    <string name="settings_rate_app_summary">Jika Anda menyukai aplikasi ini, silakan berikan ulasan di Play Store!</string>
     <string name="settings_statistics">Statistik</string>
     <string name="settings_about">Tentang AMARadio</string>
 

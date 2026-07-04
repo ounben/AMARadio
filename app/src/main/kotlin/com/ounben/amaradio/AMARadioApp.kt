@@ -31,6 +31,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
     lateinit var fallbackStationsManager: FallbackStationsManager
         private set
+    lateinit var reviewManager: com.ounben.amaradio.utils.ReviewManager
+        private set
     var tvChannelManager: TvChannelManager? = null
         private set
 
@@ -88,6 +90,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             historyManager = HistoryManager(this)
             favouriteManager = FavouriteManager(this)
             fallbackStationsManager = FallbackStationsManager(this)
+            reviewManager = com.ounben.amaradio.utils.ReviewManager(this)
 
             val uiModeManager = getSystemService(UI_MODE_SERVICE) as? UiModeManager
             if (uiModeManager?.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {

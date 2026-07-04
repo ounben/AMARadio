@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Đã bật tối ưu hóa pin, AMARadio có thể không lấy lại được quyền ưu tiên khi chạy nền.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Khác</string>
+    <string name="settings_rate_app">Đánh giá AMARadio</string>
+    <string name="settings_rate_app_summary">Nếu bạn thích ứng dụng này, vui lòng để lại đánh giá trên Play Store!</string>
     <string name="settings_statistics">Thống kê</string>
     <string name="settings_about">Về AMARadio</string>
 

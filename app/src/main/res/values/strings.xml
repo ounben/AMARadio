@@ -267,6 +267,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Battery optimization is activated, AMARadio will not be able to re-gain focus after focus loss if in background.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Other</string>
+    <string name="settings_rate_app">Rate AMARadio</string>
+    <string name="settings_rate_app_summary">If you like the app, please leave a review on the Play Store!</string>
     <string name="settings_statistics">Statistics</string>
     <string name="settings_about">About AMARadio</string>
 

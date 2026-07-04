@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">電池最佳化已啟動，若在背景執行，AMARadio 可能無法重新獲取焦點。</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">其他</string>
+    <string name="settings_rate_app">評價 AMARadio</string>
+    <string name="settings_rate_app_summary">如果您喜歡這個應用，請在 Play 商店留下評價！</string>
     <string name="settings_statistics">統計資料</string>
     <string name="settings_about">關於 AMARadio</string>
 

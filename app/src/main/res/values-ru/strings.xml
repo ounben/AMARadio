@@ -261,6 +261,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Оптимизация батареи включена, AMARadio может не вернуть фокус в фоне.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Другое</string>
+    <string name="settings_rate_app">Оценить AMARadio</string>
+    <string name="settings_rate_app_summary">Если вам нравится приложение, пожалуйста, оставьте отзыв в Play Store!</string>
     <string name="settings_statistics">Статистика</string>
     <string name="settings_about">О AMARadio</string>
 

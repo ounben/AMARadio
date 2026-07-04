@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Optimizarea bateriei este activată, AMARadio nu va putea recăpăta focalizarea în fundal.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Altele</string>
+    <string name="settings_rate_app">Evaluează AMARadio</string>
+    <string name="settings_rate_app_summary">Dacă vă place aplicația, vă rugăm să lăsați o recenzie în Play Store!</string>
     <string name="settings_statistics">Statistici</string>
     <string name="settings_about">Despre AMARadio</string>
 

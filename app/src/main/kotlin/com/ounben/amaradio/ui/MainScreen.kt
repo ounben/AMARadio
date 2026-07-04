@@ -270,6 +270,11 @@ fun MainScreen(
                                     val intent = Intent("android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS")
                                     try { context.startActivity(intent) } catch (_: Exception) {}
                                 },
+                                onRateApp = {
+                                    (context as? android.app.Activity)?.let {
+                                        app.reviewManager.launchReviewFlow(it)
+                                    }
+                                },
                                 batterySummary = ""
                             )
                         }

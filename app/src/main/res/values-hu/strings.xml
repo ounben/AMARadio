@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Akku-optimalizáció engedélyezve, az AMARadio nem biztos, hogy vissza tudja szerezni a fókuszt a háttérben.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Egyéb</string>
+    <string name="settings_rate_app">AMARadio értékelése</string>
+    <string name="settings_rate_app_summary">Ha tetszik az alkalmazás, kérjük, írjon véleményt a Play Áruházban!</string>
     <string name="settings_statistics">Statisztika</string>
     <string name="settings_about">Az AMARadio-ról</string>
 

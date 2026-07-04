@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">A otimização de bateria está ativada, o AMARadio pode não ser capaz de recuperar o foco em segundo plano.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Outros</string>
+    <string name="settings_rate_app">Avaliar AMARadio</string>
+    <string name="settings_rate_app_summary">Se você gosta do app, por favor deixe uma avaliação na Play Store!</string>
     <string name="settings_statistics">Estatísticas</string>
     <string name="settings_about">Sobre o AMARadio</string>
 

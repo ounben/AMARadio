@@ -259,6 +259,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Pil optimizasyonu etkin, AMARadio arka planda odağı geri alamayabilir.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Diğer</string>
+    <string name="settings_rate_app">AMARadio\'yu Puanla</string>
+    <string name="settings_rate_app_summary">Uygulamayı beğendiyseniz, lütfen Play Store\'da bir yorum bırakın!</string>
     <string name="settings_statistics">İstatistikler</string>
     <string name="settings_about">AMARadio Hakkında</string>
 

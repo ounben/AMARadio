@@ -29,6 +29,7 @@ fun SettingsScreen(
     onOpenStatistics: () -> Unit,
     onOpenEqualizer: () -> Unit,
     onBatteryOptimize: () -> Unit,
+    onRateApp: () -> Unit,
     batterySummary: String
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -42,6 +43,16 @@ fun SettingsScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            if (!uiState.isReviewCompleted) {
+                SettingsClickable(
+                    title = stringResource(R.string.settings_rate_app),
+                    summary = stringResource(R.string.settings_rate_app_summary),
+                    icon = Icons.Default.Star,
+                    onClick = onRateApp
+                )
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+            }
+
             // Appearance
             SettingsCategory(title = stringResource(R.string.settings_appearance)) {
                 SettingsListPreference(

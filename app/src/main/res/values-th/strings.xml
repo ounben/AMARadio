@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">เปิดใช้งานการปรับปรุงแบตเตอรี่ AMARadio อาจไม่สามารถดึงโฟกัสกลับมาได้หากทำงานในเบื้องหลัง</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">อื่นๆ</string>
+    <string name="settings_rate_app">ให้คะแนน AMARadio</string>
+    <string name="settings_rate_app_summary">หากคุณชอบแอปนี้ โปรดให้คะแนนใน Play Store!</string>
     <string name="settings_statistics">สถิติ</string>
     <string name="settings_about">เกี่ยวกับ AMARadio</string>
 

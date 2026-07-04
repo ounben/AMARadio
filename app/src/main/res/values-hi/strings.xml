@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">बैटरी अनुकूलन सक्रिय है, AMARadio बैकग्राउंड में होने पर फोकस खोने के बाद फिर से फोकस प्राप्त करने में सक्षम नहीं हो सकता है।</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">अन्य</string>
+    <string name="settings_rate_app">AMARadio को रेट करें</string>
+    <string name="settings_rate_app_summary">यदि आपको ऐप पसंद है, तो कृपया Play Store पर एक समीक्षा छोड़ें!</string>
     <string name="settings_statistics">आँकड़े</string>
     <string name="settings_about">AMARadio के बारे में</string>
 

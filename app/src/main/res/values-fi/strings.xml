@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Akun optimointi on käytössä, AMARadio ei ehkä pysty saamaan kohdennusta takaisin taustalla.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Muuta</string>
+    <string name="settings_rate_app">Arvostele AMARadio</string>
+    <string name="settings_rate_app_summary">Jos pidät sovelluksesta, jätä arvostelu Play Kauppaan!</string>
     <string name="settings_statistics">Tilastot</string>
     <string name="settings_about">Tietoa AMARadiosta</string>
 

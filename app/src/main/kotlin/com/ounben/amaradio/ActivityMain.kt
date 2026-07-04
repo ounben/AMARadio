@@ -95,6 +95,9 @@ class ActivityMain : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
             
             PlayerServiceUtil.startService(applicationContext)
 
+            val app = application as AMARadioApp
+            app.reviewManager.maybeRequestReview(this)
+
             setContent {
                 AMARadioTheme {
                     MainScreen(
