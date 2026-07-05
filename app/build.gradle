@@ -9,7 +9,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "0.99.6"
+def appVersion = "0.99.8"
 
 base {
     archivesName = "AMARadio_${appVersion}"
@@ -50,12 +50,18 @@ android {
         compose true
     }
 
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
+
     defaultConfig {
         applicationId "com.ounben.amaradio"
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 112
+        versionCode 114
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true

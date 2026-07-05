@@ -73,9 +73,11 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun updateString(key: String, value: String) {
-        sharedPref.edit().putString(key, value).apply()
         if (key == "settings_language") {
+            sharedPref.edit().putString(key, value).commit()
             LocaleUtils.applyLocale(value)
+        } else {
+            sharedPref.edit().putString(key, value).apply()
         }
     }
 

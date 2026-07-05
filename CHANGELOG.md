@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.8] - 2026-07-04
+### Fixed
+- **App Bundle Language Support**: Configured the build system to include all language resources in the App Bundle (AAB). This fixes the issue where in-app language switching wouldn't work when installed via the Google Play Store due to language-based APK splitting.
+- **Language Selection Stability**: Fixed a sync issue between the settings menu and the internal locale manager by using a consistent SharedPreferences context.
+- **Activity Compatibility**: Modernized `ActivityMain` by migrating to `AppCompatActivity` for better support of per-app language preferences.
+
+## [0.99.7] - 2026-07-04
+### Added
+- **In-App Review Integration**:
+    - Integrated Google Play In-App Review API for seamless user feedback.
+    - Added a non-intrusive "Rate AMARadio" option at the top of the settings menu.
+    - Implemented intelligent review logic: Automated prompts appear only after 100 significant actions (playing stations or adding favorites) with a 7-day cooldown.
+    - Comprehensive localization for review prompts in over 30 languages.
+    - Integrated a robust fallback mechanism that redirects to the Play Store if the API is unavailable.
+
 ## [0.99.6] - 2026-06-30
 ### Added
 - **Global Accessibility (TalkBack)**:
@@ -12,12 +27,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
     - Implemented semantic grouping for radio stations, providing clear, narrated summaries instead of fragmented clicks.
     - Added "speaking" status icons for favorites and search states.
     - Localized accessibility descriptions across all 74 supported languages.
-- **In-App Review Integration**:
-    - Integrated Google Play In-App Review API for seamless user feedback.
-    - Added a non-intrusive "Rate AMARadio" option at the top of the settings menu.
-    - Implemented intelligent review logic: Automated prompts appear only after 100 significant actions (playing stations or adding favorites) with a 7-day cooldown.
-    - Comprehensive localization for review prompts in over 30 languages.
-    - Integrated a robust fallback mechanism that redirects to the Play Store if the API is unavailable.
 - **New Languages (African Region)**:
     - Added full support for **Afrikaans (af)**, **Amharic (am)**, **Swahili (sw)**, and **isiZulu (zu)**.
 

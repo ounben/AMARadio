@@ -5,7 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,7 +23,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ActivityMain : ComponentActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
+class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
 
     private lateinit var mainViewModel: MainViewModel
     private var sharedPref: SharedPreferences? = null
@@ -88,7 +88,7 @@ class ActivityMain : ComponentActivity(), SharedPreferences.OnSharedPreferenceCh
         Log.d("MAIN", "onCreate started")
 
         try {
-            sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+            sharedPref = PreferenceManager.getDefaultSharedPreferences(applicationContext)
             sharedPref?.registerOnSharedPreferenceChangeListener(this)
             
             mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)

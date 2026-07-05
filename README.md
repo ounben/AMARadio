@@ -60,7 +60,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.99.6) introduces significant performance optimizations, advanced caching, and a new multi-language selector. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v0.99.8) introduces significant performance optimizations, advanced caching, and a new multi-language selector. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
