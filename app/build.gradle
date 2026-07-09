@@ -9,7 +9,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "0.99.8"
+def appVersion = "0.99.9"
 
 base {
     archivesName = "AMARadio_${appVersion}"
@@ -61,7 +61,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 114
+        versionCode 115
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true
@@ -149,6 +149,7 @@ dependencies {
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.kotlinx.coroutines.android
+    implementation libs.kotlinx.coroutines.guava
     implementation libs.kotlinx.serialization.json
 
     implementation libs.androidx.paging.runtime

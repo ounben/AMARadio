@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [0.99.9] - 2026-07-04
+### Added
+- **Android Auto Integration**:
+    - Full support for Android Auto and Automotive OS.
+    - Specialized Media Browser: Favorited stations and history are now directly accessible from the vehicle's head unit.
+    - Filter Tabs as Folders: Your personal genre and country filters from the app now appear as browsable folders in the car.
+    - Optimized "Now Playing" UI: Large, readable titles and controls designed for safe operation while driving.
+    - Intelligent Metadata Splitting: Automatically detects and splits ICY metadata into separate Title and Artist fields for a professional look in the car display.
+- **GitHub CI Workflow**:
+    - Added an optimized automation pipeline for GitHub Actions.
+    - Features rapid builds using Java 21 and Gradle caching, and automated APK artifact generation.
+
+### Fixed
+- **Automotive Player Stability**: Resolved issues where playback controls (Play/Pause) and track information were occasionally missing in certain vehicle systems by implementing proactive player preparation and extended Media3 command sets.
+- **Metadata Synchronization**: Improved the reliability of artwork and title updates across the MediaSession and system notifications.
+
 ## [0.99.8] - 2026-07-04
 ### Fixed
 - **App Bundle Language Support**: Configured the build system to include all language resources in the App Bundle (AAB). This fixes the issue where in-app language switching wouldn't work when installed via the Google Play Store due to language-based APK splitting.

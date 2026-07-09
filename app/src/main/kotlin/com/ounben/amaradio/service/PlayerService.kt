@@ -36,6 +36,7 @@ import androidx.core.content.IntentCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media3.common.ForwardingPlayer
+import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaLibraryService
@@ -231,7 +232,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         powerManager = contextForMedia.getSystemService(POWER_SERVICE) as? PowerManager
         audioManager = contextForMedia.getSystemService(AUDIO_SERVICE) as? AudioManager
         
-        // 1. Initialize RadioPlayer and set the listener first.
+        // 1. Initialize RadioPlayer
         radioPlayer = RadioPlayer(contextForMedia).apply { setPlayerListener(this@PlayerService) }
 
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
@@ -240,12 +241,17 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val startActivityIntent = Intent(this, ActivityMain::class.java)
         val sessionActivityPendingIntent = PendingIntent.getActivity(this, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
 
-        // 3. Create MediaSession with the robust ForwardingPlayer
-        val basePlayer = currentForwardingPlayer ?: radioPlayer?.player!!
-        
-        mediaSession = MediaLibrarySession.Builder(contextForMedia, basePlayer, MediaSessionCallback(this, amaradioBrowser))
+        // 3. Create MediaSession IMMEDIATELY on the main thread but using the player's looper
+        // We use the player's current internal player as the initial target.
+        // It will be updated via session.setPlayer() in onPlayerCreated once the ForwardingPlayer is ready.
+        mediaSession = MediaLibrarySession.Builder(contextForMedia, radioPlayer?.player!!, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(sessionActivityPendingIntent)
             .build()
+        
+        // 4. Load initial station to ensure non-empty state
+        val app = application as AMARadioApp
+        val initialStation = app.historyManager.first ?: app.favouriteManager.first
+        initialStation?.let { setStation(it) }
 
         trackHistoryRepository = (application as AMARadioApp).trackHistoryRepository
         val headsetConnectionFilter = IntentFilter().apply {
@@ -255,6 +261,21 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         registerReceiver(headsetConnectionReceiver, headsetConnectionFilter)
         registerReceiver(becomingNoisyReceiver, IntentFilter(AudioManager.ACTION_AUDIO_BECOMING_NOISY))
+
+        serviceScope.launch {
+            AppEventManager.events.collect { intent ->
+                if (intent.action == MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID) {
+                    val stationId = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_ID)
+                    if (stationId != null) {
+                        val station = amaradioBrowser.getStationById(stationId)
+                                    ?: (application as AMARadioApp).favouriteManager.getById(stationId)
+                                    ?: (application as AMARadioApp).historyManager.getById(stationId)
+                        
+                        station?.let { playWithoutWarnings(it) }
+                    }
+                }
+            }
+        }
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "AMARadio Player", NotificationManager.IMPORTANCE_LOW)
@@ -337,11 +358,28 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     fun setStation(station: DataRadioStation) {
         val app = application as AMARadioApp
-        // Try to find the full station in local managers to restore metadata and queue
         val fullStation = app.favouriteManager.getById(station.StationUuid) 
                         ?: app.historyManager.getById(station.StationUuid)
         
-        this.itsCurrentStation = fullStation ?: station
+        val targetStation = fullStation ?: station
+        this.itsCurrentStation = targetStation
+
+        // Inform the player and session about the new "current" item immediately
+        radioPlayer?.runInPlayerThread {
+            val bitmap = createFallbackBitmap()
+            val metadata = buildMetadataWithBitmap(targetStation, targetStation.Name, bitmap)
+            val mediaItem = MediaItem.Builder()
+                .setMediaId(targetStation.StationUuid)
+                .setUri(targetStation.StreamUrl)
+                .setMediaMetadata(metadata)
+                .build()
+            
+            radioPlayer?.player?.let { player ->
+                player.setMediaItem(mediaItem)
+                player.prepare() // Crucial for Android Auto to show controls even when paused
+            }
+            updateNotification(PlayState.Paused)
+        }
     }
 
     fun playCurrentStation() {
@@ -573,16 +611,26 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 currentStationBitmap = bitmap
                 val metadata = buildMetadataWithBitmap(station, liveTitle, bitmap)
                 
-                // Force Push an die Session UND den Player
-                mediaSession?.player?.playlistMetadata = metadata
-                radioPlayer?.player?.playlistMetadata = metadata
+                // 1. Update Player Playlist Metadata
+                radioPlayer?.player?.let { player ->
+                    player.playlistMetadata = metadata
+                    
+                    // 2. Update the current MediaItem's metadata (Critical for Android Auto / Automotive)
+                    val currentItem = player.currentMediaItem
+                    if (currentItem != null) {
+                        val updatedItem = currentItem.buildUpon()
+                            .setMediaMetadata(metadata)
+                            .build()
+                        player.replaceMediaItem(player.currentMediaItemIndex, updatedItem)
+                    }
+                }
                 
-                // Erzwinge Synchronisation des System-Layouts
+                // 3. Ensure MediaSession is aware of the changes
                 mediaSession?.setCustomLayout(listOf())
                 
-                Log.d("METADATA_DEBUG", "Force Push an Session abgeschlossen. Artwork: ${metadata.artworkData?.size} bytes")
+                Log.d("METADATA_DEBUG", "Metadata pushed to Player and Session. Artwork size: ${metadata.artworkData?.size} bytes")
 
-                // Notification-UI aktualisieren
+                // 4. Update System Notification
                 updateNotification(radioPlayer?.playState ?: PlayState.Paused)
             }
         }
@@ -664,18 +712,29 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 85, byteStream)
         val data = byteStream.toByteArray()
 
+        // Split "Artist - Title" for better display in Android Auto
+        val parts = liveTitle.split(" - ", limit = 2)
+        val (displayTitle, displayArtist) = if (parts.size == 2) {
+            Pair(parts[1].trim(), parts[0].trim())
+        } else {
+            Pair(liveTitle, station.Name)
+        }
+
         return MediaMetadata.Builder()
-            .setTitle(liveTitle)
-            .setArtist(station.Name)
+            .setTitle(displayTitle)
+            .setArtist(displayArtist)
             .setAlbumTitle(station.Name)
             .setAlbumArtist(station.Name)
-            .setDisplayTitle(liveTitle)
+            .setDisplayTitle(displayTitle)
             .setSubtitle(station.Name)
             .setArtworkData(data, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
             .setExtras(Bundle().apply {
                 putString("com.ounben.amaradio.STATION_ID", station.StationUuid)
                 putParcelable("android.media.metadata.ALBUM_ART", bitmap)
                 putParcelable("android.media.metadata.DISPLAY_ICON", bitmap)
+                putString(MediaMetadataCompat.METADATA_KEY_TITLE, displayTitle)
+                putString(MediaMetadataCompat.METADATA_KEY_ARTIST, displayArtist)
+                putString(MediaMetadataCompat.METADATA_KEY_ALBUM, station.Name)
             })
             .setIsBrowsable(false)
             .setIsPlayable(true)
@@ -816,6 +875,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     .add(Player.COMMAND_SEEK_TO_PREVIOUS)
                     .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
                     .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
+                    .add(Player.COMMAND_GET_CURRENT_MEDIA_ITEM)
+                    .add(Player.COMMAND_GET_TIMELINE)
                     .add(Player.COMMAND_PREPARE)
                     .build()
             }
