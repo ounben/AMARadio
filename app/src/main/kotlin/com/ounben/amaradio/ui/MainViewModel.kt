@@ -2,11 +2,13 @@ package com.ounben.amaradio.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
@@ -16,14 +18,24 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         val searchQuery: String = "",
         val isLoading: Boolean = false,
         val isGridView: Boolean = false,
-        val stationsInitialTab: Int = 0
+        val stationsInitialTab: Int = 0,
+        val favoriteIds: Set<String> = emptySet()
     )
 
     private val _uiState = MutableStateFlow(MainUiState())
     val uiState: StateFlow<MainUiState> = _uiState.asStateFlow()
 
+    private val app = application as com.ounben.amaradio.AMARadioApp
+
     init {
         _uiState.update { it.copy(isGridView = sharedPref.getBoolean("icons_only_favorites_style", false)) }
+        
+        viewModelScope.launch {
+            app.favouriteManager.stationsFlow.collect { favorites ->
+                val ids = favorites.map { it.StationUuid }.toSet()
+                _uiState.update { it.copy(favoriteIds = ids) }
+            }
+        }
     }
 
     fun setSearchActive(active: Boolean) {

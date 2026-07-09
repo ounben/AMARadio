@@ -244,7 +244,7 @@ fun MainScreen(
                                     else app.favouriteManager.add(station)
                                 },
                                 onTrackClick = { },
-                                isFavorite = { uuid -> app.favouriteManager.has(uuid) }
+                                isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
                             )
                         }
                         composable(Screen.Settings.route) {

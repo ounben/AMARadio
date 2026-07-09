@@ -34,6 +34,10 @@ import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
@@ -61,7 +65,10 @@ fun FilterScreen(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(8.dp)
-                .clickable { showFilterSheet = true },
+                .clickable { showFilterSheet = true }
+                .semantics(mergeDescendants = true) {
+                    role = Role.Button
+                },
             shape = RoundedCornerShape(12.dp),
             color = MaterialTheme.colorScheme.surfaceVariant,
             tonalElevation = 0.dp
@@ -416,7 +423,8 @@ fun CustomFilterField(
     dialogContent: @Composable ((onDismiss: () -> Unit) -> Unit)? = null
 ) {
     var showDialog by remember { mutableStateOf(false) }
-    
+    val clearDescription = stringResource(R.string.accessibility_clear_text) + " " + label
+
     Column(modifier = modifier) {
         Text(
             text = label,
@@ -431,6 +439,11 @@ fun CustomFilterField(
                 .height(44.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                 .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                .semantics(mergeDescendants = true) {
+                    if (isReadOnly) {
+                        role = Role.Button
+                    }
+                }
         ) {
             Row(
                 modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
@@ -441,7 +454,7 @@ fun CustomFilterField(
                 Box(modifier = Modifier.weight(1f).padding(horizontal = 8.dp).fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
                     if (isReadOnly) {
                         Text(
-                            text = value,
+                            text = if (value.isEmpty()) label else value,
                             style = MaterialTheme.typography.bodyMedium,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
@@ -457,7 +470,9 @@ fun CustomFilterField(
                         BasicTextField(
                             value = value,
                             onValueChange = onValueChange,
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().semantics {
+                                contentDescription = label
+                            },
                             textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
                             singleLine = true,
                             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
@@ -469,7 +484,7 @@ fun CustomFilterField(
                 if (value.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = "Clear",
+                        contentDescription = clearDescription,
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onClear() },
@@ -592,10 +607,11 @@ fun SortField(
     )
     var expanded by remember { mutableStateOf(false) }
     val currentLabel = options.find { it.first == selectedSort }?.second ?: ""
+    val label = stringResource(R.string.filter_sort_by)
 
     Column(modifier = modifier) {
         Text(
-            text = stringResource(R.string.filter_sort_by),
+            text = label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
@@ -608,7 +624,11 @@ fun SortField(
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                 .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                 .clickable { expanded = true }
-                .padding(horizontal = 8.dp),
+                .padding(horizontal = 8.dp)
+                .semantics(mergeDescendants = true) {
+                    role = Role.Button
+                    contentDescription = "$label: $currentLabel"
+                },
             contentAlignment = Alignment.CenterStart
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
