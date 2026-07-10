@@ -59,15 +59,20 @@ class IcyDataSource(
         
         val builder = Request.Builder().url(url)
         
-        // Add default ICY headers only for non-HLS
-        if (!isHls) {
+        // Use a consistent AMARadio-like User-Agent as it's known to work
+        builder.header("User-Agent", "AMARadio")
+
+        // Apply headers from DataSpec (ResolvingDataSource can inject these)
+        for ((key, value) in dataSpec.httpRequestHeaders) {
+            builder.header(key, value)
+        }
+        
+        // Add default ICY headers only for non-HLS if not already set by DataSpec
+        if (!isHls && !dataSpec.httpRequestHeaders.containsKey("Icy-MetaData")) {
             builder.addHeader("Icy-MetaData", "1")
         }
         
-        // Use a consistent AMARadio-like User-Agent as it's known to work
-        builder.header("User-Agent", "AMARadio")
-        
-        // Apply properties set by ExoPlayer (e.g. cookies, custom headers)
+        // Apply properties set by ExoPlayer manually (e.g. cookies)
         synchronized(requestProperties) {
             for ((key, value) in requestProperties) {
                 builder.header(key, value)

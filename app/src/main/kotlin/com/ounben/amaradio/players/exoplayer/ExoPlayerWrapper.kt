@@ -12,16 +12,20 @@ import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.MediaItem
+import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.HttpDataSource
+import androidx.media3.datasource.DefaultHttpDataSource
+import androidx.media3.datasource.ResolvingDataSource
 import androidx.media3.datasource.TransferListener
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.DefaultLoadControl
 import androidx.media3.exoplayer.hls.HlsMediaSource
+import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.MediaSource
 import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
@@ -30,6 +34,7 @@ import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
 import androidx.media3.extractor.metadata.icy.IcyHeaders
 import androidx.media3.extractor.metadata.icy.IcyInfo
 import androidx.preference.PreferenceManager
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
@@ -97,11 +102,17 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
 
+        // Gearhead/AA Fix: Use IcyDataSource as the standard for ALL MediaItems
+        val app = context.applicationContext as AMARadioApp
+        val icyFactory = RadioDataSourceFactory(app.httpClient, this, this, false)
+        val resolvingFactory = ResolvingDataSource.Factory(icyFactory, IcyMetadataResolver())
+
         internalPlayer = ExoPlayer.Builder(context)
             .setLooper(looper)
             .setAudioAttributes(audioAttributes, false) // Handle focus manually in PlayerService
             .setWakeMode(C.WAKE_MODE_NETWORK)
             .setLoadControl(loadControl)
+            .setMediaSourceFactory(DefaultMediaSourceFactory(context).setDataSourceFactory(resolvingFactory))
             .build()
         
         internalPlayer.addListener(PlayerEventListener())
@@ -135,7 +146,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .readTimeout(readTimeout, TimeUnit.SECONDS)
             .build()
 
-        val dataSourceFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
+        // Combine existing RadioDataSourceFactory with the IcyMetadataResolver
+        val baseDataSourceFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
+        val resolvingFactory = ResolvingDataSource.Factory(baseDataSourceFactory, IcyMetadataResolver())
 
         val mediaItem = MediaItem.Builder()
             .setUri(streamUrl.toUri())
@@ -144,11 +157,11 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
         audioSource = if (isHls) {
-            HlsMediaSource.Factory(dataSourceFactory)
+            HlsMediaSource.Factory(resolvingFactory)
                 .setLoadErrorHandlingPolicy(errorHandlingPolicy)
                 .createMediaSource(mediaItem)
         } else {
-            ProgressiveMediaSource.Factory(dataSourceFactory)
+            ProgressiveMediaSource.Factory(resolvingFactory)
                 .setLoadErrorHandlingPolicy(errorHandlingPolicy)
                 .createMediaSource(mediaItem)
         }
@@ -236,11 +249,31 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo?) {
-        shoutcastInfo?.let { stateListener?.onDataSourceShoutcastInfo(it, isHls) }
+        shoutcastInfo?.let { info ->
+            playerThreadHandler.post {
+                val metadata = internalPlayer.playlistMetadata.buildUpon()
+                    .setStation(info.audioName)
+                    .build()
+                internalPlayer.playlistMetadata = metadata
+            }
+            stateListener?.onDataSourceShoutcastInfo(info, isHls)
+        }
     }
 
     override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
         Log.d("ExoPlayerWrapper", "New Live Info: ${streamLiveInfo.title}")
+        
+        playerThreadHandler.post {
+            val metadata = MediaMetadata.Builder()
+                .setTitle(streamLiveInfo.title)
+                .setArtist(streamLiveInfo.artist.ifEmpty { internalPlayer.playlistMetadata.station?.toString() })
+                .setStation(internalPlayer.playlistMetadata.station)
+                .build()
+            
+            // Sync with MediaSession and Android Auto Notification
+            internalPlayer.playlistMetadata = metadata
+        }
+        
         stateListener?.onDataSourceStreamLiveInfo(streamLiveInfo)
     }
 
@@ -368,5 +401,18 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 }
             }
         }
+    }
+}
+
+@UnstableApi
+private class IcyMetadataResolver : ResolvingDataSource.Resolver {
+    override fun resolveDataSpec(dataSpec: DataSpec): DataSpec {
+        val newHeaders = dataSpec.httpRequestHeaders.toMutableMap()
+        // Force server to send ICY metadata chunks (1)
+        // Our IcyDataSource will filter them out before they hit the extractor (prevents 3003)
+        newHeaders["Icy-MetaData"] = "1"
+        return dataSpec.buildUpon()
+            .setHttpRequestHeaders(newHeaders)
+            .build()
     }
 }
