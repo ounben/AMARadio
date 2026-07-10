@@ -1,6 +1,8 @@
 package com.ounben.amaradio.service
 
 import android.net.Uri
+import android.os.Bundle
+import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.session.LibraryResult
@@ -40,50 +42,83 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     fun onGetChildren(browser: MediaSession.ControllerInfo, parentId: String, page: Int, pageSize: Int, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
-        if (MEDIA_ID_ROOT == parentId) {
-            val rootChildren = createBrowsableMediaItemsForRoot()
-            return Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
-        }
-
-        if (parentId == MEDIA_ID_MUSICS_FAVORITE) {
-            val stations = app.favouriteManager.getList()
-            return Futures.immediateFuture(LibraryResult.ofItemList(createMediaItemsFromStations(stations), params))
-        }
-
-        if (parentId == MEDIA_ID_MUSICS_HISTORY) {
-            val stations = app.historyManager.getList()
-            return Futures.immediateFuture(LibraryResult.ofItemList(createMediaItemsFromStations(stations), params))
-        }
-
-        if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
-            val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
-            return scope.future {
-                val stations = fetchStationsForFilter(filterId)
-                LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+        Log.d("BROWSER", "onGetChildren for: $parentId")
+        
+        return when (parentId) {
+            MEDIA_ID_ROOT -> {
+                val rootChildren = createBrowsableMediaItemsForRoot()
+                Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
+            }
+            MEDIA_ID_MUSICS_FAVORITE -> {
+                scope.future {
+                    val stations = app.favouriteManager.getList()
+                    LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                }
+            }
+            MEDIA_ID_MUSICS_HISTORY -> {
+                scope.future {
+                    val stations = app.historyManager.getList()
+                    LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                }
+            }
+            else -> {
+                if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
+                    val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
+                    scope.future {
+                        val stations = fetchStationsForFilter(filterId)
+                        LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                    }
+                } else {
+                    Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.of(), params))
+                }
             }
         }
-
-        return Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.of<MediaItem>(), params))
     }
 
     private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
+        val fallbackUri = Uri.parse("android.resource://${app.packageName}/drawable/ic_radio_24dp")
+        val iconDir = java.io.File(app.cacheDir, "station_icons")
+        
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
-            val metadata = MediaMetadata.Builder()
+            val isFavorite = app.favouriteManager.has(station.StationUuid)
+            
+            val metadataBuilder = MediaMetadata.Builder()
                 .setTitle(station.Name)
                 .setSubtitle("${station.Country} ${station.TagsAll}")
                 .setIsBrowsable(false)
                 .setIsPlayable(true)
+                .setExtras(Bundle().apply {
+                    putString("com.ounben.amaradio.STATION_ID", station.StationUuid)
+                    putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
+                })
             
-            val iconUrl = station.IconUrl
-            if (!iconUrl.isNullOrEmpty()) {
-                metadata.setArtworkUri(Uri.parse(iconUrl))
+            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
+            if (iconFile.exists()) {
+                try {
+                    val data = iconFile.readBytes()
+                    metadataBuilder.setArtworkData(data, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
+                } catch (e: Exception) {
+                    val iconUrl = station.IconUrl
+                    if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
+                        metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
+                    } else {
+                        metadataBuilder.setArtworkUri(fallbackUri)
+                    }
+                }
+            } else {
+                val iconUrl = station.IconUrl
+                if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
+                    metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
+                } else {
+                    metadataBuilder.setArtworkUri(fallbackUri)
+                }
             }
             
             mediaItems.add(MediaItem.Builder()
                 .setMediaId(LEAF_PREFIX + station.StationUuid)
-                .setMediaMetadata(metadata.build())
+                .setMediaMetadata(metadataBuilder.build())
                 .build())
         }
         return ImmutableList.copyOf(mediaItems)
@@ -113,7 +148,8 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     fun onGetItem(browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
         val stationId = stationIdFromMediaId(mediaId)
-        val station = stationIdToStation[stationId]
+        val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
+        
         if (station != null) {
             val item = MediaItem.Builder()
                 .setMediaId(mediaId)
@@ -129,7 +165,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         return Futures.immediateFuture(LibraryResult.ofError<MediaItem>(SessionError.ERROR_BAD_VALUE))
     }
 
-    fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId]
+    fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
 
     private fun createBrowsableMediaItemsForRoot(): List<MediaItem> {
         val resources = app.resources
@@ -181,17 +217,19 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     companion object {
-        private const val MEDIA_ID_ROOT = "__ROOT__"
-        private const val MEDIA_ID_MUSICS_FAVORITE = "__FAVORITE__"
-        private const val MEDIA_ID_MUSICS_HISTORY = "__HISTORY__"
-        private const val MEDIA_ID_FILTER_PREFIX = "__FILTER__"
-        private const val LEAF_PREFIX = "STATION|"
+        private const val MEDIA_ID_ROOT = "root_id"
+        private const val MEDIA_ID_MUSICS_FAVORITE = "favorites_id"
+        private const val MEDIA_ID_MUSICS_HISTORY = "history_id"
+        private const val MEDIA_ID_FILTER_PREFIX = "filter_"
+        private const val LEAF_PREFIX = "station_"
 
         @JvmStatic
         fun stationIdFromMediaId(mediaId: String?): String {
             if (mediaId == null) return ""
             return if (mediaId.startsWith(LEAF_PREFIX)) {
                 mediaId.substring(LEAF_PREFIX.length)
+            } else if (mediaId.contains("_")) {
+                mediaId.substring(mediaId.lastIndexOf("_") + 1)
             } else {
                 mediaId
             }

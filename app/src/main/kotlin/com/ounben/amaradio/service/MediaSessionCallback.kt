@@ -7,6 +7,7 @@ import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.media3.session.MediaSession
+import androidx.media3.session.SessionCommand
 import com.ounben.amaradio.AppEventManager
 import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.ListenableFuture
@@ -17,8 +18,15 @@ class MediaSessionCallback(
 ) : MediaLibrarySession.Callback {
 
     override fun onConnect(session: MediaSession, controller: MediaSession.ControllerInfo): MediaSession.ConnectionResult {
+        val sessionCommands = MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS.buildUpon()
+            .add(SessionCommand.COMMAND_CODE_LIBRARY_GET_CHILDREN)
+            .add(SessionCommand.COMMAND_CODE_LIBRARY_GET_ITEM)
+            .add(SessionCommand.COMMAND_CODE_LIBRARY_GET_LIBRARY_ROOT)
+            .add(SessionCommand.COMMAND_CODE_LIBRARY_SUBSCRIBE)
+            .build()
+
         return MediaSession.ConnectionResult.accept(
-            MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS,
+            sessionCommands,
             MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS
         )
     }
