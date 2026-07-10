@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Optimizimi i baterisë është aktivizuar, AMARadio nuk do të jetë në gjendje të rifitojë fokusin nëse është në sfond.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Të tjera</string>
+    <string name="settings_rate_app">Vlerëso AMARadio</string>
+    <string name="settings_rate_app_summary">Nëse ju pëlqen aplikacioni, ju lutemi lini një rishikim në Play Store!</string>
     <string name="settings_statistics">Statistikat</string>
     <string name="settings_about">Rreth AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Mbyll kërkimin</string>
     <string name="accessibility_filter_reverse">Përmbys renditjen</string>
     <string name="accessibility_clear_text">Pastro tekstin</string>
+    <string name="accessibility_back">Mbrapa</string>
+    <string name="accessibility_configure">Konfiguro</string>
+    <string name="accessibility_close">Mbyll</string>
+    <string name="accessibility_add_filter">Shto filtër</string>
     <string name="accessibility_station_options">Opsionet e stacionit</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stacioni: %1$s, Gjuha: %2$s, Etiketat: %3$s</string>
 </resources>

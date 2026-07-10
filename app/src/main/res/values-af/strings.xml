@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Battery-optimering is geaktiveer, AMARadio sal dalk nie fokus kan herwin as dit in die agtergrond is nie.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Ander</string>
+    <string name="settings_rate_app">Gradeer AMARadio</string>
+    <string name="settings_rate_app_summary">As jy van die toepassing hou, laat asseblief \'n resensie op die Play Store!</string>
     <string name="settings_statistics">Statistiek</string>
     <string name="settings_about">Oor AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Sluit soektog</string>
     <string name="accessibility_filter_reverse">Omgekeerde sorteervolgorde</string>
     <string name="accessibility_clear_text">Vee teks uit</string>
+    <string name="accessibility_back">Terug</string>
+    <string name="accessibility_configure">Stel op</string>
+    <string name="accessibility_close">Sluit</string>
+    <string name="accessibility_add_filter">Voeg filter by</string>
     <string name="accessibility_station_options">Stasie-opsies</string>
+    <string name="not_applicable">n.v.t.</string>
     <string name="accessibility_station_description">Stasie: %1$s, Taal: %2$s, Etikette: %3$s</string>
 </resources>

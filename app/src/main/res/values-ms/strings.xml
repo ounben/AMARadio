@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Pengoptimuman bateri diaktifkan, AMARadio mungkin tidak dapat memperoleh semula fokus jika berada di latar belakang.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Lain-lain</string>
+    <string name="settings_rate_app">Nilai AMARadio</string>
+    <string name="settings_rate_app_summary">Jika anda suka aplikasi ini, sila tinggalkan ulasan di Play Store!</string>
     <string name="settings_statistics">Statistik</string>
     <string name="settings_about">Mengenai AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Tutup carian</string>
     <string name="accessibility_filter_reverse">Balikkan susunan isihan</string>
     <string name="accessibility_clear_text">Kosongkan teks</string>
+    <string name="accessibility_back">Kembali</string>
+    <string name="accessibility_configure">Konfigur</string>
+    <string name="accessibility_close">Tutup</string>
+    <string name="accessibility_add_filter">Tambah penapis</string>
     <string name="accessibility_station_options">Pilihan stesen</string>
+    <string name="not_applicable">t/a</string>
     <string name="accessibility_station_description">Stesen: %1$s, Bahasa: %2$s, Tag: %3$s</string>
 </resources>

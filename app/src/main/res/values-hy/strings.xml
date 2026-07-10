@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Մարտկոցի օպտիմալացումն ակտիվացված է, AMARadio-ն հնարավոր է չկարողանա նորից ստանալ ֆոկուսը հետնապլանում:</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Այլ</string>
+    <string name="settings_rate_app">Գնահատել AMARadio-ն</string>
+    <string name="settings_rate_app_summary">Եթե ձեզ դուր է գալիս հավելվածը, խնդրում ենք թողնել կարծիք Play Store-ում:</string>
     <string name="settings_statistics">Վիճակագրություն</string>
     <string name="settings_about">AMARadio-ի մասին</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Փակել որոնումը</string>
     <string name="accessibility_filter_reverse">Շրջել տեսակավորման կարգը</string>
     <string name="accessibility_clear_text">Մաքրել տեքստը</string>
+    <string name="accessibility_back">Հետ</string>
+    <string name="accessibility_configure">Կարգավորել</string>
+    <string name="accessibility_close">Փակել</string>
+    <string name="accessibility_add_filter">Ավելացնել զտիչ</string>
     <string name="accessibility_station_options">Կայանի ընտրանքներ</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Կայան՝ %1$s, Լեզու՝ %2$s, Պիտակներ՝ %3$s</string>
 </resources>

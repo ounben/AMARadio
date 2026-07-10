@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Zavrieť hľadanie</string>
     <string name="accessibility_filter_reverse">Obrátiť poradie radenia</string>
     <string name="accessibility_clear_text">Vymazať text</string>
+    <string name="accessibility_back">Späť</string>
+    <string name="accessibility_configure">Konfigurovať</string>
+    <string name="accessibility_close">Zatvoriť</string>
+    <string name="accessibility_add_filter">Pridať filter</string>
     <string name="accessibility_station_options">Možnosti stanice</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stanica: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
 </resources>

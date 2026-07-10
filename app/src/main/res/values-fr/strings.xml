@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Fermer la recherche</string>
     <string name="accessibility_filter_reverse">Inverser l\'ordre de tri</string>
     <string name="accessibility_clear_text">Effacer le texte</string>
+    <string name="accessibility_back">Retour</string>
+    <string name="accessibility_configure">Configurer</string>
+    <string name="accessibility_close">Fermer</string>
+    <string name="accessibility_add_filter">Ajouter un filtre</string>
     <string name="accessibility_station_options">Options de la station</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Station : %1$s, Langue : %2$s, Tags : %3$s</string>
 </resources>

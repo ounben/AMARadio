@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">검색 닫기</string>
     <string name="accessibility_filter_reverse">정렬 순서 반전</string>
     <string name="accessibility_clear_text">텍스트 지우기</string>
+    <string name="accessibility_back">뒤로</string>
+    <string name="accessibility_configure">구성</string>
+    <string name="accessibility_close">닫기</string>
+    <string name="accessibility_add_filter">필터 추가</string>
     <string name="accessibility_station_options">방송국 옵션</string>
+    <string name="not_applicable">해당 없음</string>
     <string name="accessibility_station_description">방송국: %1$s, 언어: %2$s, 태그: %3$s</string>
 </resources>

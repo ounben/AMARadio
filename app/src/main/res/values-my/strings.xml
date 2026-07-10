@@ -147,7 +147,7 @@
     <string name="settings_auto_play_on_startup">အလိုအလျောက် ဖွင့်ရန်</string>
     <string name="settings_auto_play_on_startup_on">စတင်ချိန်တွင် နောက်ဆုံးဖွင့်ခဲ့သောလိုင်းကို ဖွင့်မည်</string>
     <string name="settings_auto_play_on_startup_off">စတင်ချိန်တွင် နောက်ဆုံးဖွင့်ခဲ့သောလိုင်းကို ဖွင့်မည်မဟုတ်</string>
-    <string name="settings_auto_off_on_startup">အလိုအလျောက် ရပ်ရန်</string>
+    <string name="settings_auto_off_on_startup">အလိုအလျောက် รပ်ရန်</string>
     <string name="settings_auto_off_on_startup_on">အလိုအလျောက် ဖွင့်ခြင်းနှင့်အတူ အလိုအလျောက် ရပ်ချိန်စက်ကို သုံးမည်</string>
     <string name="settings_auto_off_on_startup_off">အလိုအလျောက် ဖွင့်ခြင်းနှင့်အတူ အလိုအလျောက် ရပ်ချိန်စက်ကို သုံးမည်မဟုတ်</string>
     <string name="settings_auto_off_sleep_timer">အလိုအလျောက် ရပ်ချိန်စက်</string>
@@ -262,10 +262,12 @@
     <string name="action_choose_external_player">အပြင်ပလေယာ ရွေးရန်</string>
 
     <string name="settings_disable_battery_optimization">ဘက်ထရီ အကောင်းဆုံးဖြစ်အောင်လုပ်ခြင်း</string>
-    <string name="settings_ignore_battery_optimization_summary_on">ဘက်ထရီ ချွေတာမှုကို လျစ်လျူရှုထားသည်၊ AMARadio သည် အမြဲတမ်း ပုံမှန်အလုပ်လုပ်နိုင်ပါလိမ့်မည်။</string>
+    <string name="settings_ignore_battery_optimization_summary_on">ဘက်ထရီ ချွေတာမှုကို လျစ်လျူရှုထားသည်၊ AMARadio သည် အမြဲတမ်း ပုံမှန်အလုပ်လုပ်နိုင်ပါလိမ့်မည်।</string>
     <string name="settings_ignore_battery_optimization_summary_off">ဘက်ထရီ ချွေတာမှုကို ဖွင့်ထားသည်၊ AMARadio သည် နောက်ကွယ်မှ အလုပ်လုပ်ရန် အခက်အခဲ ရှိနိုင်ပါသည်။</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">အခြား</string>
+    <string name="settings_rate_app">AMARadio ကို အဆင့်သတ်မှတ်ပါ</string>
+    <string name="settings_rate_app_summary">သင် ဤအက်ပ်ကို ကြိုက်နှစ်သက်ပါက Play Store တွင် သုံးသပ်ချက်တစ်ခု ရေးပေးပါဦး။</string>
     <string name="settings_statistics">စာရင်းဇယားများ</string>
     <string name="settings_about">AMARadio အကြောင်း</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">ရှာဖွေမှုပိတ်ရန်</string>
     <string name="accessibility_filter_reverse">စီရန်အစီအစဉ်ကို ပြောင်းပြန်လှန်ရန်</string>
     <string name="accessibility_clear_text">စာသားဖျက်ရန်</string>
+    <string name="accessibility_back">နောက်သို့</string>
+    <string name="accessibility_configure">ပြင်ဆင်သတ်မှတ်ရန်</string>
+    <string name="accessibility_close">ပိတ်ရန်</string>
+    <string name="accessibility_add_filter">စစ်ထုတ်ကိရိယာ ထည့်ရန်</string>
     <string name="accessibility_station_options">အသံလွှင့်ဌာန ရွေးချယ်စရာများ</string>
+    <string name="not_applicable">မသက်ဆိုင်ပါ</string>
     <string name="accessibility_station_description">အသံလွှင့်ဌာန- %1$s၊ ဘာသာစကား- %2$s၊ တဂ်များ- %3$s</string>
 </resources>

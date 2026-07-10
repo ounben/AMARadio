@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">検索を閉じる</string>
     <string name="accessibility_filter_reverse">並べ替え順序を反転</string>
     <string name="accessibility_clear_text">テキストを消去</string>
+    <string name="accessibility_back">戻る</string>
+    <string name="accessibility_configure">設定</string>
+    <string name="accessibility_close">閉じる</string>
+    <string name="accessibility_add_filter">フィルターを追加</string>
     <string name="accessibility_station_options">放送局のオプション</string>
+    <string name="not_applicable">該当なし</string>
     <string name="accessibility_station_description">放送局：%1$s、言語：%2$s、タグ：%3$s</string>
 </resources>

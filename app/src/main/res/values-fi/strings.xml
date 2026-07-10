@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Sulje haku</string>
     <string name="accessibility_filter_reverse">Käänteinen lajittelujärjestys</string>
     <string name="accessibility_clear_text">Tyhjennä teksti</string>
+    <string name="accessibility_back">Takaisin</string>
+    <string name="accessibility_configure">Määritä</string>
+    <string name="accessibility_close">Sulje</string>
+    <string name="accessibility_add_filter">Lisää suodatin</string>
     <string name="accessibility_station_options">Aseman asetukset</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Asema: %1$s, Kieli: %2$s, Tunnisteet: %3$s</string>
 </resources>

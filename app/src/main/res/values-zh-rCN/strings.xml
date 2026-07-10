@@ -326,6 +326,11 @@
     <string name="accessibility_search_back">关闭搜索</string>
     <string name="accessibility_filter_reverse">反向排序</string>
     <string name="accessibility_clear_text">清除文本</string>
+    <string name="accessibility_back">返回</string>
+    <string name="accessibility_configure">配置</string>
+    <string name="accessibility_close">关闭</string>
+    <string name="accessibility_add_filter">添加过滤器</string>
     <string name="accessibility_station_options">电台选项</string>
+    <string name="not_applicable">无</string>
     <string name="accessibility_station_description">电台：%1$s，语言：%2$s，标签：%3$s</string>
 </resources>

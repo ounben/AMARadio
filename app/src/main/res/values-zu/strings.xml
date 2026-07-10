@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Ukuthuthukiswa kwebhethri kuseshisiwe, i-AMARadio kungenzeka ingakwazi ukuthola ukugxila komsindo kabusha uma isemuva.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Okunye</string>
+    <string name="settings_rate_app">Linganisa i-AMARadio</string>
+    <string name="settings_rate_app_summary">Uma uthanda uhlelo lokusebenza, sicela ushiye isibuyekezo ku-Play Store!</string>
     <string name="settings_statistics">Izibalo</string>
     <string name="settings_about">Mayelana ne-AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Vala ukusesha</string>
     <string name="accessibility_filter_reverse">Hlehlisa ukuhleleka</string>
     <string name="accessibility_clear_text">Sula umbhalo</string>
+    <string name="accessibility_back">Emuva</string>
+    <string name="accessibility_configure">Lungiselela</string>
+    <string name="accessibility_close">Vala</string>
+    <string name="accessibility_add_filter">Engeza isihlungi</string>
     <string name="accessibility_station_options">Izinketho zesiteshi</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Isiteshi: %1$s, Ulimi: %2$s, Omaka: %3$s</string>
 </resources>

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">S\'activa l\'optimització de la bateria, és possible que AMARadio no pugui recuperar el focus després de la pèrdua de focus si es troba en segon pla.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Altres</string>
+    <string name="settings_rate_app">Valora AMARadio</string>
+    <string name="settings_rate_app_summary">Si t\'agrada l\'aplicació, deixa una ressenya a la Play Store!</string>
     <string name="settings_statistics">Estadístiques</string>
     <string name="settings_about">Sobre AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Tanca la cerca</string>
     <string name="accessibility_filter_reverse">Inverteix l\'ordre de classificació</string>
     <string name="accessibility_clear_text">Esborra el text</string>
+    <string name="accessibility_back">Enrere</string>
+    <string name="accessibility_configure">Configura</string>
+    <string name="accessibility_close">Tanca</string>
+    <string name="accessibility_add_filter">Afegeix filtre</string>
     <string name="accessibility_station_options">Opcions de l\'emissora</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Emissora: %1$s, Idioma: %2$s, Etiquetes: %3$s</string>
 </resources>

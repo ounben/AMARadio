@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">電池最佳化已啟動，若在背景執行，AMARadio 可能無法重新獲取焦點。</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">其他</string>
+    <string name="settings_rate_app">評價 AMARadio</string>
+    <string name="settings_rate_app_summary">如果您喜歡這個應用，請在 Play 商店留下評價！</string>
     <string name="settings_statistics">統計資料</string>
     <string name="settings_about">關於 AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">關閉搜尋</string>
     <string name="accessibility_filter_reverse">反向排序</string>
     <string name="accessibility_clear_text">清除文本</string>
+    <string name="accessibility_back">返回</string>
+    <string name="accessibility_configure">配置</string>
+    <string name="accessibility_close">關閉</string>
+    <string name="accessibility_add_filter">添加過濾器</string>
     <string name="accessibility_station_options">電台選項</string>
+    <string name="not_applicable">無</string>
     <string name="accessibility_station_description">電台：%1$s，語言：%2$s，標籤：%3$s</string>
 </resources>

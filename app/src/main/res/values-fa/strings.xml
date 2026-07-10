@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">بستن جستجو</string>
     <string name="accessibility_filter_reverse">معکوس کردن ترتیب مرتب‌سازی</string>
     <string name="accessibility_clear_text">پاک کردن متن</string>
+    <string name="accessibility_back">بازگشت</string>
+    <string name="accessibility_configure">پیکربندی</string>
+    <string name="accessibility_close">بستن</string>
+    <string name="accessibility_add_filter">افزودن فیلتر</string>
     <string name="accessibility_station_options">گزینه‌های ایستگاه</string>
+    <string name="not_applicable">نامربوط</string>
     <string name="accessibility_station_description">ایستگاه: %1$s، زبان: %2$s، برچسب‌ها: %3$s</string>
 </resources>

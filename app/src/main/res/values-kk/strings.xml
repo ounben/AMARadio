@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Батареяны оңтайландыру белсендірілген, AMARadio фондық режимде фокусты қайтара алмауы мүмкін.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Басқалары</string>
+    <string name="settings_rate_app">AMARadio-ны бағалау</string>
+    <string name="settings_rate_app_summary">Егер сізге қолданба ұнаса, Play Store-да пікір қалдырыңыз!</string>
     <string name="settings_statistics">Статистика</string>
     <string name="settings_about">AMARadio туралы</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Іздеуді жабу</string>
     <string name="accessibility_filter_reverse">Сұрыптау ретін өзгерту</string>
     <string name="accessibility_clear_text">Мәтінді тазалау</string>
+    <string name="accessibility_back">Артқа</string>
+    <string name="accessibility_configure">Конфигурациялау</string>
+    <string name="accessibility_close">Жабу</string>
+    <string name="accessibility_add_filter">Сүзгіні қосу</string>
     <string name="accessibility_station_options">Станция параметрлері</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Станция: %1$s, Тіл: %2$s, Тегтер: %3$s</string>
 </resources>

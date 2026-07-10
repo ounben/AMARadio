@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">ব্যাটারি অপ্টিমাইজেশন সক্রিয় করা হয়েছে, ব্যাকগ্রাউন্ডে থাকলে AMARadio ফোকাস ফিরে পেতে সক্ষম নাও হতে পারে।</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">অন্যান্য</string>
+    <string name="settings_rate_app">AMARadio রেট করুন</string>
+    <string name="settings_rate_app_summary">আপনি যদি অ্যাপটি পছন্দ করেন তবে দয়া করে প্লে স্টোরে একটি পর্যালোচনা দিন!</string>
     <string name="settings_statistics">পরিসংখ্যান</string>
     <string name="settings_about">AMARadio সম্পর্কে</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">অনুসন্ধান বন্ধ করুন</string>
     <string name="accessibility_filter_reverse">সাজানোর ক্রম উল্টান</string>
     <string name="accessibility_clear_text">লেখা মুছুন</string>
+    <string name="accessibility_back">ফিরে যান</string>
+    <string name="accessibility_configure">কনফিগার করুন</string>
+    <string name="accessibility_close">বন্ধ করুন</string>
+    <string name="accessibility_add_filter">ফিল্টার যোগ করুন</string>
     <string name="accessibility_station_options">স্টেশন বিকল্প</string>
+    <string name="not_applicable">প্রযোজ্য নয়</string>
     <string name="accessibility_station_description">স্টেশন: %1$s, ভাষা: %2$s, ট্যাগ: %3$s</string>
 </resources>

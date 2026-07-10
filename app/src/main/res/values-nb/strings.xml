@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Lukk søk</string>
     <string name="accessibility_filter_reverse">Omvendt sorteringsrekkefølge</string>
     <string name="accessibility_clear_text">Slett tekst</string>
+    <string name="accessibility_back">Tilbake</string>
+    <string name="accessibility_configure">Konfigurer</string>
+    <string name="accessibility_close">Lukk</string>
+    <string name="accessibility_add_filter">Legg til filter</string>
     <string name="accessibility_station_options">Stasjonsvalg</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stasjon: %1$s, Språk: %2$s, Tagger: %3$s</string>
 </resources>

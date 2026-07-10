@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Κλείσιμο αναζήτησης</string>
     <string name="accessibility_filter_reverse">Αντιστροφή σειράς ταξινόμησης</string>
     <string name="accessibility_clear_text">Καθαρισμός κειμένου</string>
+    <string name="accessibility_back">Πίσω</string>
+    <string name="accessibility_configure">Διαμόρφωση</string>
+    <string name="accessibility_close">Κλείσιμο</string>
+    <string name="accessibility_add_filter">Προσθήκη φίλτρου</string>
     <string name="accessibility_station_options">Επιλογές σταθμού</string>
+    <string name="not_applicable">Δ/Υ</string>
     <string name="accessibility_station_description">Σταθμός: %1$s, Γλώσσα: %2$s, Ετικέτες: %3$s</string>
 </resources>

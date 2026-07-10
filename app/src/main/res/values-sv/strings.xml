@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Stäng sökning</string>
     <string name="accessibility_filter_reverse">Omvänd sorteringsordning</string>
     <string name="accessibility_clear_text">Rensa text</string>
+    <string name="accessibility_back">Bakåt</string>
+    <string name="accessibility_configure">Konfigurera</string>
+    <string name="accessibility_close">Stäng</string>
+    <string name="accessibility_add_filter">Lägg till filter</string>
     <string name="accessibility_station_options">Stationsalternativ</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Station: %1$s, Språk: %2$s, Taggar: %3$s</string>
 </resources>

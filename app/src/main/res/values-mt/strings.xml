@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">L-ottimizzazzjoni tal-batterija hija attivata, AMARadio mhux se jkun jista\' jerġa\' jieħu l-focus jekk ikun fil-background.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Oħrajn</string>
+    <string name="settings_rate_app">Ikklassifika AMARadio</string>
+    <string name="settings_rate_app_summary">Jekk tħobb l-app, jekk jogħġbok ħalli reviżjoni fuq il-Play Store!</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">Dwar l-AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Agħlaq it-tfittxija</string>
     <string name="accessibility_filter_reverse">Aqleb l-ordni tal-għażla</string>
     <string name="accessibility_clear_text">Ikklerja t-test</string>
+    <string name="accessibility_back">Lura</string>
+    <string name="accessibility_configure">Ikkonfigura</string>
+    <string name="accessibility_close">Agħlaq</string>
+    <string name="accessibility_add_filter">Żid filtru</string>
     <string name="accessibility_station_options">Għażliet tal-istazzjon</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Istazzjon: %1$s, Lingwa: %2$s, Tags: %3$s</string>
 </resources>

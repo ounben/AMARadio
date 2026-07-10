@@ -28,7 +28,7 @@ fun ServerInfoScreen(viewModel: ServerInfoViewModel, onBack: () -> Unit) {
             verticalAlignment = Alignment.CenterVertically
         ) {
             IconButton(onClick = onBack) {
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.accessibility_back))
             }
             Text(
                 text = stringResource(R.string.settings_statistics),

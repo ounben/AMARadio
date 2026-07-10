@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">ការបង្កើនប្រសិទ្ធភាពថ្មត្រូវបានបើក AMARadio ប្រហែលជាមិនអាចទទួលបាន Focus ឡើងវិញទេបើស្ថិតក្នុង background។</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">ផ្សេងៗ</string>
+    <string name="settings_rate_app">វាយតម្លៃ AMARadio</string>
+    <string name="settings_rate_app_summary">ប្រសិនបើអ្នកចូលចិត្តកម្មវិធីនេះ សូមផ្តល់មតិយោបល់នៅលើ Play Store!</string>
     <string name="settings_statistics">ស្ថិតិ</string>
     <string name="settings_about">អំពី AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">បិទការស្វែងរក</string>
     <string name="accessibility_filter_reverse">ត្រឡប់លំដับតម្រៀប</string>
     <string name="accessibility_clear_text">សម្អាតអត្ថបទ</string>
+    <string name="accessibility_back">ថយក្រោយ</string>
+    <string name="accessibility_configure">កំណត់រចនាសម្ព័ន្ធ</string>
+    <string name="accessibility_close">បិទ</string>
+    <string name="accessibility_add_filter">បន្ថែមតម្រង</string>
     <string name="accessibility_station_options">ជម្រើសស្ថានីយ</string>
+    <string name="not_applicable">មិនមាន</string>
     <string name="accessibility_station_description">ស្ថានីយ៖ %1$s, ភាសា៖ %2$s, ស្លាក៖ %3$s</string>
 </resources>

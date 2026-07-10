@@ -332,6 +332,11 @@
     <string name="accessibility_search_back">Zoekopdracht sluiten</string>
     <string name="accessibility_filter_reverse">Sorteervolgorde omkeren</string>
     <string name="accessibility_clear_text">Tekst wissen</string>
+    <string name="accessibility_back">Terug</string>
+    <string name="accessibility_configure">Configureren</string>
+    <string name="accessibility_close">Sluiten</string>
+    <string name="accessibility_add_filter">Filter toevoegen</string>
     <string name="accessibility_station_options">Stationopties</string>
+    <string name="not_applicable">N.v.t.</string>
     <string name="accessibility_station_description">Station: %1$s, Taal: %2$s, Tags: %3$s</string>
 </resources>

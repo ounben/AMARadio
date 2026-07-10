@@ -253,11 +253,12 @@ fun StationListItem(
         station.getShortDetails(context) 
     }
 
+    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { "N/A" },
-        station.TagsAll.ifEmpty { "N/A" }
+        station.Language.ifEmpty { notApplicable },
+        station.TagsAll.ifEmpty { notApplicable }
     )
     
     Row(
@@ -342,11 +343,12 @@ fun StationGridItem(
     onFavoriteClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
+    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { "N/A" },
-        station.TagsAll.ifEmpty { "N/A" }
+        station.Language.ifEmpty { notApplicable },
+        station.TagsAll.ifEmpty { notApplicable }
     )
 
     Card(

@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Keresés bezárása</string>
     <string name="accessibility_filter_reverse">Rendezési sorrend megfordítása</string>
     <string name="accessibility_clear_text">Szöveg törlése</string>
+    <string name="accessibility_back">Vissza</string>
+    <string name="accessibility_configure">Konfigurálás</string>
+    <string name="accessibility_close">Bezárás</string>
+    <string name="accessibility_add_filter">Szűrő hozzáadása</string>
     <string name="accessibility_station_options">Állomás beállításai</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Állomás: %1$s, Nyelv: %2$s, Címkék: %3$s</string>
 </resources>

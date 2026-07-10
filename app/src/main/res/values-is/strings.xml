@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Rafhlöðuhámörkun er virk, AMARadio gæti átt erfitt með að ná fókus í bakgrunni.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Annað</string>
+    <string name="settings_rate_app">Gefa AMARadio einkunn</string>
+    <string name="settings_rate_app_summary">Ef þér líkar vel við appið, vinsamlegast gefðu því umsögn í Play Store!</string>
     <string name="settings_statistics">Tölfræði</string>
     <string name="settings_about">Um AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Loka leit</string>
     <string name="accessibility_filter_reverse">Snúa við röðun</string>
     <string name="accessibility_clear_text">Hreinsa texta</string>
+    <string name="accessibility_back">Til baka</string>
+    <string name="accessibility_configure">Stilla</string>
+    <string name="accessibility_close">Loka</string>
+    <string name="accessibility_add_filter">Bæta við síu</string>
     <string name="accessibility_station_options">Valkostir stöðvar</string>
+    <string name="not_applicable">á ekki við</string>
     <string name="accessibility_station_description">Stöð: %1$s, Tungumál: %2$s, Merki: %3$s</string>
 </resources>

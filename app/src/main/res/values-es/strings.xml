@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Cerrar búsqueda</string>
     <string name="accessibility_filter_reverse">Invertir orden de clasificación</string>
     <string name="accessibility_clear_text">Borrar texto</string>
+    <string name="accessibility_back">Volver</string>
+    <string name="accessibility_configure">Configurar</string>
+    <string name="accessibility_close">Cerrar</string>
+    <string name="accessibility_add_filter">Añadir filtro</string>
     <string name="accessibility_station_options">Opciones de la emisora</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Emisora: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
 </resources>

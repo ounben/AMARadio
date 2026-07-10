@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Naka-activate ang battery optimization, maaaring hindi makuha muli ng AMARadio ang focus kung nasa background.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Iba pa</string>
+    <string name="settings_rate_app">I-rate ang AMARadio</string>
+    <string name="settings_rate_app_summary">Kung gusto mo ang app, mangyaring mag-iwan ng review sa Play Store!</string>
     <string name="settings_statistics">Mga Istatistika</string>
     <string name="settings_about">Tungkol sa AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Isara ang paghahanap</string>
     <string name="accessibility_filter_reverse">Baligtarin ang pagkakasunod-sunod</string>
     <string name="accessibility_clear_text">I-clear ang text</string>
+    <string name="accessibility_back">Bumalik</string>
+    <string name="accessibility_configure">I-configure</string>
+    <string name="accessibility_close">Isara</string>
+    <string name="accessibility_add_filter">Magdagdag ng filter</string>
     <string name="accessibility_station_options">Mga opsyon sa istasyon</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Istasyon: %1$s, Wika: %2$s, Mga Tag: %3$s</string>
 </resources>

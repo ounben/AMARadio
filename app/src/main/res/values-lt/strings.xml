@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Baterijos optimizavimas aktyvuotas, fone AMARadio gali nepavykti atgauti prioriteto.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Kita</string>
+    <string name="settings_rate_app">Įvertinti AMARadio</string>
+    <string name="settings_rate_app_summary">Jei jums patinka programėlė, palikite atsiliepimą Play Store!</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">Apie AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Uždaryti paiešką</string>
     <string name="accessibility_filter_reverse">Apversti rūšiavimo tvarką</string>
     <string name="accessibility_clear_text">Išvalyti tekstą</string>
+    <string name="accessibility_back">Atgal</string>
+    <string name="accessibility_configure">Konfigūruoti</string>
+    <string name="accessibility_close">Uždaryti</string>
+    <string name="accessibility_add_filter">Pridėti filtrą</string>
     <string name="accessibility_station_options">Stoties parinktys</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stotis: %1$s, Kalba: %2$s, Žymos: %3$s</string>
 </resources>

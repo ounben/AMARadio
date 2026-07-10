@@ -95,7 +95,7 @@ fun FilterScreen(
                 }
                 Icon(
                     imageVector = Icons.Default.Tune,
-                    contentDescription = "Configure",
+                    contentDescription = stringResource(R.string.accessibility_configure),
                     tint = AmaradioAmber
                 )
             }
@@ -146,7 +146,7 @@ fun FilterScreen(
                         fontWeight = FontWeight.Bold
                     )
                     IconButton(onClick = { showFilterSheet = false }) {
-                        Icon(Icons.Default.Close, contentDescription = "Close", tint = AmaradioAmber)
+                        Icon(Icons.Default.Close, contentDescription = stringResource(R.string.accessibility_close), tint = AmaradioAmber)
                     }
                 }
 

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">ब्याट्री अनुकूलन सक्रिय गरिएको छ, पृष्ठभूमिमा हुँदा AMARadio ले फोकस पुन: प्राप्त गर्न सक्षम नहुन सक्छ।</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">अन्य</string>
+    <string name="settings_rate_app">AMARadio लाई रेट गर्नुहोस्</string>
+    <string name="settings_rate_app_summary">यदि तपाईंलाई एप मनपर्छ भने, कृपया प्ले स्टोरमा समीक्षा छोड्नुहोस्!</string>
     <string name="settings_statistics">तथ्याङ्क</string>
     <string name="settings_about">AMARadio को बारेमा</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">खोज बन्द गर्नुहोस्</string>
     <string name="accessibility_filter_reverse">क्रम उल्टो गर्नुहोस्</string>
     <string name="accessibility_clear_text">टेक्स्ट मेटाउनुहोस्</string>
+    <string name="accessibility_back">पछाडि</string>
+    <string name="accessibility_configure">कन्फिगर गर्नुहोस्</string>
+    <string name="accessibility_close">बन्द गर्नुहोस्</string>
+    <string name="accessibility_add_filter">फिल्टर थप्नुहोस्</string>
     <string name="accessibility_station_options">स्टेशन विकल्पहरू</string>
+    <string name="not_applicable">लागू हुँदैन</string>
     <string name="accessibility_station_description">स्टेशन: %1$s, भाषा: %2$s, ट्यागहरू: %3$s</string>
 </resources>

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Akumulatora optimizācija ir aktivizēta, AMARadio nevarēs atgūt fokusu fonā.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Cits</string>
+    <string name="settings_rate_app">Novērtēt AMARadio</string>
+    <string name="settings_rate_app_summary">Ja jums patīk lietotne, lūdzu, atstājiet atsauksmi Play veikalā!</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">Par AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Aizvērt meklēšanu</string>
     <string name="accessibility_filter_reverse">Apgriezt kārtošanas secību</string>
     <string name="accessibility_clear_text">Notīrīt tekstu</string>
+    <string name="accessibility_back">Atpakaļ</string>
+    <string name="accessibility_configure">Konfigurēt</string>
+    <string name="accessibility_close">Aizvērt</string>
+    <string name="accessibility_add_filter">Pievienot filtru</string>
     <string name="accessibility_station_options">Stacijas opcijas</string>
+    <string name="not_applicable">nav piemērojams</string>
     <string name="accessibility_station_description">Stacija: %1$s, Valoda: %2$s, Birkas: %3$s</string>
 </resources>

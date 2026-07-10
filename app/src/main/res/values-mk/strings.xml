@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Оптимизацијата на батеријата е активирана, AMARadio нема да може да добие фокус ако е во позадина.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Друго</string>
+    <string name="settings_rate_app">Оценете го AMARadio</string>
+    <string name="settings_rate_app_summary">Ако ви се допаѓа апликацијата, ве молиме оставете преглед во Play Store!</string>
     <string name="settings_statistics">Статистика</string>
     <string name="settings_about">За AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Затвори пребарување</string>
     <string name="accessibility_filter_reverse">Преврти го редоследот на сортирање</string>
     <string name="accessibility_clear_text">Исчисти текст</string>
+    <string name="accessibility_back">Назад</string>
+    <string name="accessibility_configure">Конфигурирај</string>
+    <string name="accessibility_close">Затвори</string>
+    <string name="accessibility_add_filter">Додај филтер</string>
     <string name="accessibility_station_options">Опции на станицата</string>
+    <string name="not_applicable">н/п</string>
     <string name="accessibility_station_description">Станица: %1$s, Јазик: %2$s, Тагови: %3$s</string>
 </resources>

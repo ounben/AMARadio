@@ -323,6 +323,11 @@
     <string name="accessibility_search_back">Aramayı kapat</string>
     <string name="accessibility_filter_reverse">Sıralama düzenini tersine çevir</string>
     <string name="accessibility_clear_text">Metni temizle</string>
+    <string name="accessibility_back">Geri</string>
+    <string name="accessibility_configure">Yapılandır</string>
+    <string name="accessibility_close">Kapat</string>
+    <string name="accessibility_add_filter">Filtre ekle</string>
     <string name="accessibility_station_options">İstasyon seçenekleri</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">İstasyon: %1$s, Dil: %2$s, Etiketler: %3$s</string>
 </resources>

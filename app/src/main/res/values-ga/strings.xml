@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Tá optamú ceallraí gníomhachtaithe, ní bheidh AMARadio in ann fócas a fháil ar ais má tá sé sa chúlra.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Eile</string>
+    <string name="settings_rate_app">Rátáil AMARadio</string>
+    <string name="settings_rate_app_summary">Más maith leat an aip, fág léirmheas ar an Play Store le do thoil!</string>
     <string name="settings_statistics">Staitisticí</string>
     <string name="settings_about">Faoi AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Dún an cuardach</string>
     <string name="accessibility_filter_reverse">Inbhartaigh an t-ord sórtála</string>
     <string name="accessibility_clear_text">Glan an téacs</string>
+    <string name="accessibility_back">Ar ais</string>
+    <string name="accessibility_configure">Cumraigh</string>
+    <string name="accessibility_close">Dún</string>
+    <string name="accessibility_add_filter">Cuir scagaire leis</string>
     <string name="accessibility_station_options">Roghanna stáisiúin</string>
+    <string name="not_applicable">n/b</string>
     <string name="accessibility_station_description">Stáisiún: %1$s, Teanga: %2$s, Clibeanna: %3$s</string>
 </resources>

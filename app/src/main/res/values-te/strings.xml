@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">బ్యాటరీ ఆప్టిమైజేషన్ యాక్టివేట్ చేయబడింది, బ్యాక్‌గ్రౌండ్‌లో ఉన్నప్పుడు AMARadio ఫోకస్‌ని మళ్ళీ పొందలేకపోవచ్చు.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">ఇతరాలు</string>
+    <string name="settings_rate_app">AMARadioని రేట్ చేయండి</string>
+    <string name="settings_rate_app_summary">మీకు యాప్ నచ్చితే, దయచేసి ప్లే స్టోర్‌లో రివ్యూ ఇవ్వండి!</string>
     <string name="settings_statistics">గణాంకాలు</string>
     <string name="settings_about">AMARadio గురించి</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">సెర్చ్ మూసివేయి</string>
     <string name="accessibility_filter_reverse">వరుస క్రమాన్ని మార్చు</string>
     <string name="accessibility_clear_text">టెక్స్ట్ క్లియర్ చేయి</string>
+    <string name="accessibility_back">వెనుకకు</string>
+    <string name="accessibility_configure">కాన్ఫిగర్ చేయండి</string>
+    <string name="accessibility_close">మూసివేయి</string>
+    <string name="accessibility_add_filter">ఫిల్టర్‌ని జోడించండి</string>
     <string name="accessibility_station_options">స్టేషన్ ఎంపికలు</string>
+    <string name="not_applicable">వర్తించదు</string>
     <string name="accessibility_station_description">స్టేషన్: %1$s, భాష: %2$s, ట్యాగ్‌లు: %3$s</string>
 </resources>

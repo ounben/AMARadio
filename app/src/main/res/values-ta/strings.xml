@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">பேட்டரி மேம்படுத்தல் செயல்படுத்தப்பட்டது, பின்னணியில் இருந்தால் AMARadio-வால் ஃபோகஸைப் பெற முடியாமல் போகலாம்.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">மற்றவை</string>
+    <string name="settings_rate_app">AMARadio-வை மதிப்பிடவும்</string>
+    <string name="settings_rate_app_summary">உங்களுக்கு ஆப் பிடித்திருந்தால், ப்ளே ஸ்டோரில் மதிப்பாய்வை வழங்கவும்!</string>
     <string name="settings_statistics">புள்ளிவிவரங்கள்</string>
     <string name="settings_about">AMARadio பற்றி</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">தேடலை மூடு</string>
     <string name="accessibility_filter_reverse">வரிசையை மாற்று</string>
     <string name="accessibility_clear_text">உரையை அழி</string>
+    <string name="accessibility_back">பின்னால்</string>
+    <string name="accessibility_configure">கட்டமைக்க</string>
+    <string name="accessibility_close">மூடவும்</string>
+    <string name="accessibility_add_filter">வடிகட்டியைச் சேர்க்கவும்</string>
     <string name="accessibility_station_options">நிலைய விருப்பங்கள்</string>
+    <string name="not_applicable">பொருந்தாது</string>
     <string name="accessibility_station_description">நிலையம்: %1$s, மொழி: %2$s, குறிச்சொற்கள்: %3$s</string>
 </resources>

@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Đóng tìm kiếm</string>
     <string name="accessibility_filter_reverse">Đảo ngược thứ tự sắp xếp</string>
     <string name="accessibility_clear_text">Xóa văn bản</string>
+    <string name="accessibility_back">Quay lại</string>
+    <string name="accessibility_configure">Cấu hình</string>
+    <string name="accessibility_close">Đóng</string>
+    <string name="accessibility_add_filter">Thêm bộ lọc</string>
     <string name="accessibility_station_options">Tùy chọn đài</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Đài: %1$s, Ngôn ngữ: %2$s, Thẻ: %3$s</string>
 </resources>

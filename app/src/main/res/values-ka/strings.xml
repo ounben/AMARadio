@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">ბატარეის ოპტიმიზაცია ჩართულია, AMARadio-მ შესაძლოა ვერ დაიბრუნოს ფოკუსი ფონურ რეჟიმში.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">სხვა</string>
+    <string name="settings_rate_app">შეაფასეთ AMARadio</string>
+    <string name="settings_rate_app_summary">თუ მოგწონთ აპი, გთხოვთ დატოვოთ მიმოხილვა Play Store-ში!</string>
     <string name="settings_statistics">სტატისტიკა</string>
     <string name="settings_about">AMARadio-ს შესახებ</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">ძიების დახურვა</string>
     <string name="accessibility_filter_reverse">სორტირების რიგის შეცვლა</string>
     <string name="accessibility_clear_text">ტექსტის გასუფთავება</string>
+    <string name="accessibility_back">უკან</string>
+    <string name="accessibility_configure">კონფიგურაცია</string>
+    <string name="accessibility_close">დახურვა</string>
+    <string name="accessibility_add_filter">ფილტრის დამატება</string>
     <string name="accessibility_station_options">სადგურის პარამეტრები</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">სადგური: %1$s, ენა: %2$s, ტეგები: %3$s</string>
 </resources>

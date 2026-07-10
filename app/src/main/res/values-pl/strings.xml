@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Zamknij wyszukiwanie</string>
     <string name="accessibility_filter_reverse">Odwróć kolejność sortowania</string>
     <string name="accessibility_clear_text">Wyczyść tekst</string>
+    <string name="accessibility_back">Wstecz</string>
+    <string name="accessibility_configure">Konfiguruj</string>
+    <string name="accessibility_close">Zamknij</string>
+    <string name="accessibility_add_filter">Dodaj filtr</string>
     <string name="accessibility_station_options">Opcje stacji</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Stacja: %1$s, Język: %2$s, Tagi: %3$s</string>
 </resources>

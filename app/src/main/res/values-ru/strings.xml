@@ -325,6 +325,11 @@
     <string name="accessibility_search_back">Закрыть поиск</string>
     <string name="accessibility_filter_reverse">Обратный порядок сортировки</string>
     <string name="accessibility_clear_text">Очистить текст</string>
+    <string name="accessibility_back">Назад</string>
+    <string name="accessibility_configure">Настроить</string>
+    <string name="accessibility_close">Закрыть</string>
+    <string name="accessibility_add_filter">Добавить фильтр</string>
     <string name="accessibility_station_options">Опции станции</string>
+    <string name="not_applicable">Н/Д</string>
     <string name="accessibility_station_description">Станция: %1$s, Язык: %2$s, Теги: %3$s</string>
 </resources>

@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Zavřít hledání</string>
     <string name="accessibility_filter_reverse">Obrátit pořadí řazení</string>
     <string name="accessibility_clear_text">Vymazat text</string>
+    <string name="accessibility_back">Zpět</string>
+    <string name="accessibility_configure">Konfigurovat</string>
+    <string name="accessibility_close">Zavřít</string>
+    <string name="accessibility_add_filter">Přidat filtr</string>
     <string name="accessibility_station_options">Možnosti stanice</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stanice: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
 </resources>

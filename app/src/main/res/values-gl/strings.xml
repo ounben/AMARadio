@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">A optimización da batería está activada, AMARadio pode non recuperar o foco en segundo plano.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Outras</string>
+    <string name="settings_rate_app">Valorar AMARadio</string>
+    <string name="settings_rate_app_summary">Se che gusta a aplicación, deixa unha recensión na Play Store!</string>
     <string name="settings_statistics">Estatistikas</string>
     <string name="settings_about">Acerca de AMARadio</string>
 
@@ -332,6 +334,11 @@
     <string name="accessibility_search_back">Pechar busca</string>
     <string name="accessibility_filter_reverse">Inverter orde de clasificación</string>
     <string name="accessibility_clear_text">Borrar texto</string>
+    <string name="accessibility_back">Volver</string>
+    <string name="accessibility_configure">Configurar</string>
+    <string name="accessibility_close">Pechar</string>
+    <string name="accessibility_add_filter">Engadir filtro</string>
     <string name="accessibility_station_options">Opcións da emisora</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Emisora: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
 </resources>

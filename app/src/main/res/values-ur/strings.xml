@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">بیٹری آپٹیمائزیشن فعال ہے، اگر AMARadio بیک گراؤنڈ میں ہو تو وہ فوکس دوبارہ حاصل کرنے کے قابل نہیں ہو سکتا۔</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">دیگر</string>
+    <string name="settings_rate_app">AMARadio کی درجہ بندی کریں</string>
+    <string name="settings_rate_app_summary">اگر آپ کو ایپ پسند ہے تو براہ کرم پلے اسٹور پر ریویو دیں!</string>
     <string name="settings_statistics">اعداد و شمار</string>
     <string name="settings_about">AMARadio کے بارے میں</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">تلاش بند کریں</string>
     <string name="accessibility_filter_reverse">ترتیب الٹ دیں</string>
     <string name="accessibility_clear_text">تحریر صاف کریں</string>
+    <string name="accessibility_back">پیچھے</string>
+    <string name="accessibility_configure">کنفیگر کریں</string>
+    <string name="accessibility_close">بند کریں</string>
+    <string name="accessibility_add_filter">فلٹر شامل کریں</string>
     <string name="accessibility_station_options">سٹیشن کے اختیارات</string>
+    <string name="not_applicable">لاگو نہیں ہوتا</string>
     <string name="accessibility_station_description">سٹیشن: %1$s، زبان: %2$s، ٹیگز: %3$s</string>
 </resources>

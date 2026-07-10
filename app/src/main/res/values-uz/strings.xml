@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Batareya optimallashtirish yoqilgan, AMARadio fonda boʻlganda fokusni qayta ololmasligi mumkin.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Boshqa</string>
+    <string name="settings_rate_app">AMARadio-ni baholang</string>
+    <string name="settings_rate_app_summary">Agar dastur sizga yoqsa, iltimos Play Store-da fikr qoldiring!</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">AMARadio haqida</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Qidiruvni yopish</string>
     <string name="accessibility_filter_reverse">Saralash tartibini o\'zgartirish</string>
     <string name="accessibility_clear_text">Matnni tozalash</string>
+    <string name="accessibility_back">Orqaga</string>
+    <string name="accessibility_configure">Sozlash</string>
+    <string name="accessibility_close">Yopish</string>
+    <string name="accessibility_add_filter">Filtr qo\'shish</string>
     <string name="accessibility_station_options">Stansiya variantlari</string>
+    <string name="not_applicable">mavjud emas</string>
     <string name="accessibility_station_description">Stansiya: %1$s, Til: %2$s, Teglar: %3$s</string>
 </resources>

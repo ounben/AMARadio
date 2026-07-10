@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">खोज बंद करें</string>
     <string name="accessibility_filter_reverse">क्रम उल्टा करें</string>
     <string name="accessibility_clear_text">टेक्स्ट साफ़ करें</string>
+    <string name="accessibility_back">पीछे</string>
+    <string name="accessibility_configure">कॉन्फ़िगर करें</string>
+    <string name="accessibility_close">बंद करें</string>
+    <string name="accessibility_add_filter">फ़िल्टर जोड़ें</string>
     <string name="accessibility_station_options">स्टेशन विकल्प</string>
+    <string name="not_applicable">लागू नहीं</string>
     <string name="accessibility_station_description">स्टेशन: %1$s, भाषा: %2$s, टैग: %3$s</string>
 </resources>

@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">බැටරි ප්‍රශස්තකරණය සක්‍රියයි, පසුබිමේ ඇති විට AMARadio හට අවධානය ලබාගැනීමට නොහැකි වනු ඇත.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">වෙනත්</string>
+    <string name="settings_rate_app">AMARadio ශ්‍රේණිගත කරන්න</string>
+    <string name="settings_rate_app_summary">ඔබ යෙදුමට කැමති නම්, කරුණාකර Play Store හි සමාලෝචනයක් තබන්න!</string>
     <string name="settings_statistics">සංඛ්‍යාලේඛන</string>
     <string name="settings_about">AMARadio ගැන</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">සෙවීම වසන්න</string>
     <string name="accessibility_filter_reverse">පිළිවෙල මාරු කරන්න</string>
     <string name="accessibility_clear_text">පෙළ මකන්න</string>
+    <string name="accessibility_back">ආපසු</string>
+    <string name="accessibility_configure">වින්‍යාස කරන්න</string>
+    <string name="accessibility_close">වසා දමන්න</string>
+    <string name="accessibility_add_filter">පෙරහන එක් කරන්න</string>
     <string name="accessibility_station_options">ගුවන්විදුලි විකල්ප</string>
+    <string name="not_applicable">අදාළ නොවේ</string>
     <string name="accessibility_station_description">ගුවන්විදුලිය: %1$s, භාෂාව: %2$s, ටැග්: %3$s</string>
 </resources>

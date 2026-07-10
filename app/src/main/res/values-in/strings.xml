@@ -334,6 +334,11 @@
     <string name="accessibility_search_back">Tutup pencarian</string>
     <string name="accessibility_filter_reverse">Balikkan urutan pengurutan</string>
     <string name="accessibility_clear_text">Hapus teks</string>
+    <string name="accessibility_back">Kembali</string>
+    <string name="accessibility_configure">Konfigurasi</string>
+    <string name="accessibility_close">Tutup</string>
+    <string name="accessibility_add_filter">Tambah filter</string>
     <string name="accessibility_station_options">Opsi stasiun</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Stasiun: %1$s, Bahasa: %2$s, Tag: %3$s</string>
 </resources>

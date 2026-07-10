@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">ปิดการค้นหา</string>
     <string name="accessibility_filter_reverse">สลับลำดับการจัดเรียง</string>
     <string name="accessibility_clear_text">ล้างข้อความ</string>
+    <string name="accessibility_back">กลับ</string>
+    <string name="accessibility_configure">กำหนดค่า</string>
+    <string name="accessibility_close">ปิด</string>
+    <string name="accessibility_add_filter">เพิ่มตัวกรอง</string>
     <string name="accessibility_station_options">ตัวเลือกสถานี</string>
+    <string name="not_applicable">ไม่มี</string>
     <string name="accessibility_station_description">สถานี: %1$s, ภาษา: %2$s, แท็ก: %3$s</string>
 </resources>

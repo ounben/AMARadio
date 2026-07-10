@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">إغلاق البحث</string>
     <string name="accessibility_filter_reverse">عكس ترتيب الفرز</string>
     <string name="accessibility_clear_text">مسح النص</string>
+    <string name="accessibility_back">رجوع</string>
+    <string name="accessibility_configure">تهيئة</string>
+    <string name="accessibility_close">إغلاق</string>
+    <string name="accessibility_add_filter">إضافة مرشح</string>
     <string name="accessibility_station_options">خيارات المحطة</string>
+    <string name="not_applicable">غير متاح</string>
     <string name="accessibility_station_description">المحطة: %1$s، اللغة: %2$s، الوسوم: %3$s</string>
 </resources>

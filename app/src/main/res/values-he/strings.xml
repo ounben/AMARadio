@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">אופטימיזציית סוללה מופעלת, AMARadio עלולה לא להצליח לקבל חזרה את המיקוד ברקע.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">אחר</string>
+    <string name="settings_rate_app">דרג את AMARadio</string>
+    <string name="settings_rate_app_summary">אם אהבת את האפליקציה, אנא השאר ביקורת בחנות Play!</string>
     <string name="settings_statistics">סטטיסטיקה</string>
     <string name="settings_about">אודות AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">סגור חיפוש</string>
     <string name="accessibility_filter_reverse">הפוך סדר מיון</string>
     <string name="accessibility_clear_text">נקה טקסט</string>
+    <string name="accessibility_back">חזרה</string>
+    <string name="accessibility_configure">הגדר</string>
+    <string name="accessibility_close">סגור</string>
+    <string name="accessibility_add_filter">הוסף מסנן</string>
     <string name="accessibility_station_options">אפשרויות תחנה</string>
+    <string name="not_applicable">לא רלוונטי</string>
     <string name="accessibility_station_description">תחנה: %1$s, שפה: %2$s, תגיות: %3$s</string>
 </resources>

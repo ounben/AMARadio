@@ -127,7 +127,7 @@ fun TabsScreen(
             if (filterState.tabs.size < 5) {
                 Icon(
                     imageVector = Icons.Default.Add,
-                    contentDescription = "Add Filter",
+                    contentDescription = stringResource(R.string.accessibility_add_filter),
                     tint = AmaradioAmber,
                     modifier = Modifier
                         .clickable { filterViewModel.addTab() }

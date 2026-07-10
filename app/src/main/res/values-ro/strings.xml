@@ -330,6 +330,11 @@
     <string name="accessibility_search_back">Închide căutarea</string>
     <string name="accessibility_filter_reverse">Inversează ordinea de sortare</string>
     <string name="accessibility_clear_text">Șterge textul</string>
+    <string name="accessibility_back">Înapoi</string>
+    <string name="accessibility_configure">Configurare</string>
+    <string name="accessibility_close">Închide</string>
+    <string name="accessibility_add_filter">Adaugă filtru</string>
     <string name="accessibility_station_options">Opțiuni post</string>
+    <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Post: %1$s, Limbă: %2$s, Etichete: %3$s</string>
 </resources>

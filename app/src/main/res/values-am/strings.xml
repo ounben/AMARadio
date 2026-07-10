@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">የባትሪ ማመቻቸት ነቅቷል፣ AMARadio ከበስተጀርባ ከሆነ ፎከስን መልሶ ማግኘት ላይችል ይችላል።</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">ሌላ</string>
+    <string name="settings_rate_app">AMARadio ደረጃ ይስጡ</string>
+    <string name="settings_rate_app_summary">መተግበሪያውን ከወደዱ እባክዎን በPlay መደብር ላይ ግምገማ ይተው!</string>
     <string name="settings_statistics">ስታቲስቲክስ</string>
     <string name="settings_about">ስለ AMARadio</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">ፍለጋ ዝጋ</string>
     <string name="accessibility_filter_reverse">የአደራደር ቅደም ተከተል ይቀይሩ</string>
     <string name="accessibility_clear_text">ጽሑፍ አጽዳ</string>
+    <string name="accessibility_back">ተመለስ</string>
+    <string name="accessibility_configure">አዋቅር</string>
+    <string name="accessibility_close">ዝጋ</string>
+    <string name="accessibility_add_filter">ማጣሪያ ያክሉ</string>
     <string name="accessibility_station_options">የጣቢያ አማራጮች</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">ጣቢያ፡ %1$s፣ ቋንቋ፡ %2$s፣ መለያዎች፡ %3$s</string>
 </resources>

@@ -331,6 +331,11 @@
     <string name="accessibility_search_back">Close search</string>
     <string name="accessibility_filter_reverse">Reverse sort order</string>
     <string name="accessibility_clear_text">Clear text</string>
+    <string name="accessibility_back">Back</string>
+    <string name="accessibility_configure">Configure</string>
+    <string name="accessibility_close">Close</string>
+    <string name="accessibility_add_filter">Add filter</string>
     <string name="accessibility_station_options">Station options</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Station: %1$s, Language: %2$s, Tags: %3$s</string>
 </resources>

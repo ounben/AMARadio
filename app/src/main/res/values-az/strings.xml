@@ -266,6 +266,8 @@
     <string name="settings_ignore_battery_optimization_summary_off">Batareya optimallaşdırılması aktivdir, AMARadio arxa fonda olduqda fokusu geri ala bilməyə bilər.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
     <string name="settings_other">Digər</string>
+    <string name="settings_rate_app">AMARadio-nu qiymətləndirin</string>
+    <string name="settings_rate_app_summary">Tətbiqi bəyənirsinizsə, lütfən Play Store-da rəy bildirin!</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">AMARadio haqqında</string>
 
@@ -328,6 +330,11 @@
     <string name="accessibility_search_back">Axtarışı bağla</string>
     <string name="accessibility_filter_reverse">Sıralama qaydasını dəyiş</string>
     <string name="accessibility_clear_text">Mətni təmizlə</string>
+    <string name="accessibility_back">Geri</string>
+    <string name="accessibility_configure">Qurmaq</string>
+    <string name="accessibility_close">Bağla</string>
+    <string name="accessibility_add_filter">Filtr əlavə et</string>
     <string name="accessibility_station_options">Stansiya seçimləri</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Stansiya: %1$s, Dil: %2$s, Teqlər: %3$s</string>
 </resources>

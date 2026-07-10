@@ -333,6 +333,11 @@
     <string name="accessibility_search_back">Suche schließen</string>
     <string name="accessibility_filter_reverse">Sortierreihenfolge umkehren</string>
     <string name="accessibility_clear_text">Text löschen</string>
+    <string name="accessibility_back">Zurück</string>
+    <string name="accessibility_configure">Konfigurieren</string>
+    <string name="accessibility_close">Schließen</string>
+    <string name="accessibility_add_filter">Filter hinzufügen</string>
     <string name="accessibility_station_options">Sender-Optionen</string>
+    <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Sender: %1$s, Sprache: %2$s, Tags: %3$s</string>
 </resources>
