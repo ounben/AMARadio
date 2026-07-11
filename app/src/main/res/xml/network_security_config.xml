@@ -1,5 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
-    <!-- Allow all clear text traffic -->
-    <base-config cleartextTrafficPermitted="true"/>
+    <!--
+      Global configuration to allow HTTP (Cleartext) traffic.
+      Essential for Radio Streams that do not use SSL (HTTPS).
+    -->
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+
+    <!--
+      Optional: Specific domain overrides if global config is suppressed by
+      certain OS versions in Release builds.
+    -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">srg-ssr.ch</domain>
+        <domain includeSubdomains="true">stream.srg-ssr.ch</domain>
+    </domain-config>
 </network-security-config>
