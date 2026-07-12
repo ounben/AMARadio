@@ -13,7 +13,6 @@ import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.ToneGenerator
@@ -36,7 +35,6 @@ import androidx.core.content.IntentCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.media3.common.ForwardingPlayer
-import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Player
 import androidx.media3.session.MediaLibraryService
@@ -59,9 +57,7 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import kotlinx.coroutines.*
 import java.util.Calendar
 import java.util.Date
-import android.content.ComponentName
 import android.os.Bundle
-import android.net.Uri
 import android.support.v4.media.MediaMetadataCompat
 import coil.imageLoader
 import coil.request.ImageRequest
@@ -125,7 +121,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private val itsBinder: IPlayerService.Stub = object : IPlayerService.Stub() {
         override fun SetStation(station: DataRadioStation) {
-            this@PlayerService.setStation(station)
+            // One-Click Fix: Sofortige Wiedergabe inklusive Warnung bei mobilen Daten
+            this@PlayerService.playAndWarnIfMetered(station)
         }
         override fun SkipToNext() { this@PlayerService.next() }
         override fun SkipToPrevious() { this@PlayerService.previous() }
@@ -364,21 +361,17 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val targetStation = fullStation ?: station
         this.itsCurrentStation = targetStation
 
-        // Inform the player and session about the new "current" item immediately
-        radioPlayer?.runInPlayerThread {
-            val bitmap = createFallbackBitmap()
-            val metadata = buildMetadataWithBitmap(targetStation, targetStation.Name, bitmap)
-            val mediaItem = MediaItem.Builder()
-                .setMediaId(targetStation.StationUuid)
-                .setUri(targetStation.StreamUrl)
-                .setMediaMetadata(metadata)
-                .build()
-            
-            radioPlayer?.player?.let { player ->
-                player.setMediaItem(mediaItem)
-                player.prepare() // Crucial for Android Auto to show controls even when paused
+        // Bereite nur Metadaten für die UI/Android Auto vor.
+        // Die eigentliche Wiedergabe wird durch playCurrentStation() oder play() angestoßen.
+        serviceScope.launch {
+            val bitmap = fetchStationBitmap(targetStation)
+            radioPlayer?.runInPlayerThread {
+                val metadata = buildMetadataWithBitmap(targetStation, targetStation.Name, bitmap)
+                radioPlayer?.player?.let { player ->
+                    player.playlistMetadata = metadata
+                }
+                updateNotification(PlayState.Paused)
             }
-            updateNotification(PlayState.Paused)
         }
     }
 
@@ -839,7 +832,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 }
                 sendBroadcast(i)
             }
-            if (status == PlayState.Idle) stop()
         }
         if ((status != PlayState.Paused) && (status != PlayState.Idle)) startMeteredConnectionListener() else stopMeteredConnectionListener()
         updateNotification(status)

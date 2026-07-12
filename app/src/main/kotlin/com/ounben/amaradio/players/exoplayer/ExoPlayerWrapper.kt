@@ -13,7 +13,6 @@ import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
 import androidx.media3.common.ForwardingPlayer
-import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackException
@@ -98,7 +97,12 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .build()
 
         val loadControl = DefaultLoadControl.Builder()
-            .setBufferDurationsMs(5000, 15000, 1000, 2000)
+            .setBufferDurationsMs(
+                5000,  // Min buffer: 5s
+                15000, // Max buffer: 15s
+                1000,  // Buffer for playback: 1s (Fix for AA USB latency)
+                2000   // Buffer for playback after rebuffer: 2s
+            )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
 
@@ -110,7 +114,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         val resolvingFactory = ResolvingDataSource.Factory(icyFactory, IcyMetadataResolver())
 
         // 3. Strikte Factory-Verdrahtung: Kein Fallback auf Standard-HTTP erlaubt
-        val strictMediaSourceFactory = DefaultMediaSourceFactory(context)
+        val strictMediaSourceFactory = DefaultMediaSourceFactory(context, Media3Utils.getRadioExtractorsFactory())
             .setDataSourceFactory(resolvingFactory)
 
         internalPlayer = ExoPlayer.Builder(context)
@@ -135,7 +139,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         internalPlayer.addListener(PlayerEventListener())
     }
 
-    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: androidx.media3.common.MediaMetadata?) {
+    override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: MediaMetadata?) {
         this.streamUrl = streamUrl
         this.stationName = metadata?.station?.toString() ?: metadata?.title?.toString()
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
@@ -167,10 +171,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
         val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
 
-        val mediaItem = MediaItem.Builder()
-            .setUri(streamUrl.toUri())
-            .apply { if (metadata != null) setMediaMetadata(metadata) }
-            .build()
+        val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
 
         val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
         audioSource = if (isHls) {
@@ -178,18 +179,22 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 .setLoadErrorHandlingPolicy(errorHandlingPolicy)
                 .createMediaSource(mediaItem)
         } else {
-            ProgressiveMediaSource.Factory(resolvingFactory)
+            ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
                 .setLoadErrorHandlingPolicy(errorHandlingPolicy)
                 .createMediaSource(mediaItem)
         }
 
         playerThreadHandler.post {
             playbackStartTime = SystemClock.elapsedRealtime()
+            // Strikter Abbruch vor Neu-Vorbereitung
             internalPlayer.stop()
+            internalPlayer.clearMediaItems()
+            
             internalPlayer.volume = currentVolume
             internalPlayer.setMediaSource(audioSource!!, true)
-            internalPlayer.prepare()
+            // Priority 3: Set playWhenReady BEFORE prepare for live streams
             internalPlayer.playWhenReady = true
+            internalPlayer.prepare()
         }
         
         @Suppress("DEPRECATION")
@@ -211,7 +216,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         isPlayingFlag = false
         playerThreadHandler.post {
             try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
+            // Strikter Abbruch und Playlist-Löschung
             internalPlayer.stop()
+            internalPlayer.clearMediaItems()
             playbackStartTime = 0
         }
     }

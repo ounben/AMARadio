@@ -238,8 +238,9 @@ class IcyDataSource(
     }
 
     override fun getResponseHeaders(): Map<String, List<String>> {
-        // Hide icy-metaint from ExoPlayer extractors so they don't try to parse it again
-        return responseHeaders.filterKeys { !it.equals("icy-metaint", ignoreCase = true) }
+        // Hide all icy- headers from ExoPlayer extractors to avoid buffer miscalculations
+        // or double-parsing of metadata.
+        return responseHeaders.filterKeys { !it.startsWith("icy-", ignoreCase = true) }
     }
 
     override fun getResponseCode(): Int = responseCode
