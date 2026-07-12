@@ -49,6 +49,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 val rootChildren = createBrowsableMediaItemsForRoot()
                 Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
             }
+            MEDIA_ID_STATIONS_GROUP -> {
+                val stationTabs = createStationTabMediaItems()
+                Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(stationTabs), params))
+            }
             MEDIA_ID_MUSICS_FAVORITE -> {
                 scope.future {
                     val stations = app.favouriteManager.getList()
@@ -65,7 +69,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
                     val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
                     scope.future {
-                        val stations = fetchStationsForFilter(filterId)
+                        val stations = if (filterId == "local") fetchLocalStations() else fetchStationsForFilter(filterId)
                         LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
                     }
                 } else {
@@ -138,9 +142,20 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         params["order"] = tab.sortBy
         params["reverse"] = tab.reverse.toString()
         params["hidebroken"] = "true"
-        params["limit"] = "50"
+        params["limit"] = "100"
 
-        val resultString = Utils.downloadFeedRelative(app.httpClient, app, "json/stations/search", true, params)
+        val resultString = Utils.downloadFeedRelative(app.httpClient, app, "json/stations/search", false, params)
+        return if (resultString != null) {
+            DataRadioStation.DecodeJson(resultString)?.toList() ?: emptyList()
+        } else emptyList()
+    }
+
+    private suspend fun fetchLocalStations(): List<DataRadioStation> {
+        val countryCode = app.resources.configuration.locales[0].country.lowercase()
+        if (countryCode.isEmpty()) return emptyList()
+        val url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
+        val params = mapOf("hidebroken" to "true")
+        val resultString = Utils.downloadFeedRelative(app.httpClient, app, url, false, params)
         return if (resultString != null) {
             DataRadioStation.DecodeJson(resultString)?.toList() ?: emptyList()
         } else emptyList()
@@ -171,7 +186,17 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val resources = app.resources
         val mediaItems = ArrayList<MediaItem>()
         
-        // 1. Favorites
+        // 1. Stationen (Alle Tabs)
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_STATIONS_GROUP)
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(resources.getString(R.string.nav_item_stations))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .build())
+            .build())
+
+        // 2. Favorites
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
             .setMediaMetadata(MediaMetadata.Builder()
@@ -181,7 +206,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .build())
             .build())
             
-        // 2. History
+        // 3. History
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_HISTORY)
             .setMediaMetadata(MediaMetadata.Builder()
@@ -190,8 +215,24 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setIsPlayable(false)
                 .build())
             .build())
+        
+        return mediaItems
+    }
 
-        // 3. Saved Filter Tabs
+    private fun createStationTabMediaItems(): List<MediaItem> {
+        val mediaItems = ArrayList<MediaItem>()
+        
+        // 1. Lokal (Tab Name)
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_FILTER_PREFIX + "local")
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(app.getString(R.string.action_local))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .build())
+            .build())
+
+        // 2. Saved Filter Tabs
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         val jsonStr = sharedPref.getString("filter_tabs_json", null)
         if (jsonStr != null) {
@@ -203,7 +244,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                             .setMediaId(MEDIA_ID_FILTER_PREFIX + tab.id)
                             .setMediaMetadata(MediaMetadata.Builder()
                                 .setTitle(tab.label)
-                                .setSubtitle(app.getString(R.string.action_filter))
                                 .setIsBrowsable(true)
                                 .setIsPlayable(false)
                                 .build())
@@ -212,12 +252,12 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 }
             } catch (e: Exception) { /* ignore */ }
         }
-        
         return mediaItems
     }
 
     companion object {
         private const val MEDIA_ID_ROOT = "root_id"
+        private const val MEDIA_ID_STATIONS_GROUP = "stations_group_id"
         private const val MEDIA_ID_MUSICS_FAVORITE = "favorites_id"
         private const val MEDIA_ID_MUSICS_HISTORY = "history_id"
         private const val MEDIA_ID_FILTER_PREFIX = "filter_"
