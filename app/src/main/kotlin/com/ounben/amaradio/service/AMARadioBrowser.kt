@@ -185,6 +185,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     private fun createBrowsableMediaItemsForRoot(): List<MediaItem> {
         val resources = app.resources
         val mediaItems = ArrayList<MediaItem>()
+        val packageName = app.packageName
         
         // 1. Stationen (Alle Tabs)
         mediaItems.add(MediaItem.Builder()
@@ -193,6 +194,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setTitle(resources.getString(R.string.nav_item_stations))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_radio_24dp"))
                 .build())
             .build())
 
@@ -203,6 +205,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setTitle(resources.getString(R.string.nav_item_starred))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_star_black_24dp"))
                 .build())
             .build())
             
@@ -213,6 +216,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setTitle(resources.getString(R.string.nav_item_history))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_restore_black_24dp"))
                 .build())
             .build())
         
