@@ -1,10 +1,14 @@
 package com.ounben.amaradio.ui
 
 import android.app.Application
+import android.content.Context
+import android.media.AudioManager
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.AppEventManager
+import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.service.PauseReason
 import com.ounben.amaradio.service.PlayerService
@@ -33,6 +37,9 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
 
     private val _bandwidth = MutableStateFlow("")
     val bandwidth: StateFlow<String> = _bandwidth.asStateFlow()
+
+    private val _warningMessage = MutableStateFlow<Int?>(null)
+    val warningMessage: StateFlow<Int?> = _warningMessage.asStateFlow()
 
     private var bandwidthJob: Job? = null
     private var lastBytes: Long = 0
@@ -133,11 +140,34 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         if (PlayerServiceUtil.isPlaying()) {
             PlayerServiceUtil.pause(PauseReason.USER)
         } else {
-            val station = _uiState.value.currentStation ?: (getApplication<AMARadioApp>()).historyManager.first
+            val station = _uiState.value.currentStation ?: getApplication<AMARadioApp>().historyManager.first
             if (station != null) {
-                PlayerServiceUtil.play(station)
+                play(station)
             }
         }
+    }
+
+    fun play(station: DataRadioStation) {
+        val app = getApplication<AMARadioApp>()
+        
+        // 1. Check Internet Connection
+        if (!Utils.hasAnyConnection(app)) {
+            _warningMessage.value = R.string.error_no_connection
+            return
+        }
+
+        // 2. Check Volume
+        val audioManager = app.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
+        if (volume == 0) {
+            _warningMessage.value = R.string.warning_volume_zero
+        }
+
+        PlayerServiceUtil.play(station)
+    }
+
+    fun clearWarning() {
+        _warningMessage.value = null
     }
 
     fun skipToNext() = PlayerServiceUtil.skipToNext()
@@ -153,3 +183,4 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 }
+

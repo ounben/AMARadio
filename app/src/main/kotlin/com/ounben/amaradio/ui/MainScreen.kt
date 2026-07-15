@@ -60,7 +60,16 @@ fun MainScreen(
     val mainUiState by mainViewModel.uiState.collectAsState()
     val playerUiState by playerViewModel.uiState.collectAsState()
     val searchUiState by searchViewModel.uiState.collectAsState()
+    val playerWarning by playerViewModel.warningMessage.collectAsState()
     
+    // Observe player warnings
+    LaunchedEffect(playerWarning) {
+        playerWarning?.let { msgRes ->
+            android.widget.Toast.makeText(context, msgRes, android.widget.Toast.LENGTH_LONG).show()
+            playerViewModel.clearWarning()
+        }
+    }
+
     var showSleepTimerDialog by remember { mutableStateOf(false) }
     var showProxyDialog by remember { mutableStateOf(false) }
     var showPlayerSelectorDialog by remember { mutableStateOf<DataRadioStation?>(null) }
@@ -190,7 +199,7 @@ fun MainScreen(
                                 emptyMessage = stringResource(R.string.searchpreference_no_results),
                                 onStationClick = { station ->
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else PlayerServiceUtil.play(station)
+                                    else playerViewModel.play(station)
                                     mainViewModel.setSearchActive(false)
                                     searchViewModel.clearResults()
                                 },
@@ -213,7 +222,7 @@ fun MainScreen(
                                 initialTab = mainUiState.stationsInitialTab,
                                 onStationClick = { station -> 
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else PlayerServiceUtil.play(station)
+                                    else playerViewModel.play(station)
                                 },
                                 onCategoryClick = { }
                             )
@@ -224,7 +233,7 @@ fun MainScreen(
                                 viewModel = viewModel,
                                 onStationClick = { station -> 
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else PlayerServiceUtil.play(station)
+                                    else playerViewModel.play(station)
                                 },
                                 onFavoriteClick = { station -> app.favouriteManager.remove(station.StationUuid) },
                                 isFavorite = { true }
@@ -237,7 +246,7 @@ fun MainScreen(
                                 trackHistoryViewModel = trackHistoryViewModel,
                                 onStationClick = { station -> 
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else PlayerServiceUtil.play(station)
+                                    else playerViewModel.play(station)
                                 },
                                 onFavoriteClick = { station -> 
                                     if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
@@ -335,7 +344,13 @@ fun MainScreen(
 
     if (showSleepTimerDialog) SleepTimerDialog(onDismiss = { showSleepTimerDialog = false })
     if (showProxyDialog) ProxySettingsDialogCompose(onDismiss = { showProxyDialog = false })
-    showPlayerSelectorDialog?.let { station -> PlayerSelectorDialogCompose(station = station, onDismiss = { showPlayerSelectorDialog = null }) }
+    showPlayerSelectorDialog?.let { station -> 
+        PlayerSelectorDialogCompose(
+            station = station, 
+            playerViewModel = playerViewModel,
+            onDismiss = { showPlayerSelectorDialog = null }
+        ) 
+    }
     showDeleteConfirmDialog?.let { msgRes ->
         AlertDialog(
             onDismissRequest = { showDeleteConfirmDialog = null },

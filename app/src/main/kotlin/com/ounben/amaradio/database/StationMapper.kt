@@ -21,7 +21,7 @@ fun DataRadioStation.toEntity(): StationEntity {
         bitrate = this.Bitrate,
         codec = this.Codec,
         urlCache = this.playableUrl ?: this.StreamUrl,
-        creation = null, // Falls in API-Suche nicht vorhanden
+        creation = if (this.Creation.isEmpty()) "2024-01-01 00:00:00" else this.Creation,
         lastCheckOk = 1,
         hls = if (this.StreamUrl.contains("m3u8")) 1 else 0,
         clickTimestamp = null,
@@ -56,5 +56,6 @@ fun StationEntity.toDataStation(): com.ounben.amaradio.station.DataRadioStation 
     station.Votes = this.votes ?: 0
     station.Bitrate = this.bitrate
     station.Codec = this.codec ?: ""
+    station.Creation = this.creation
     return station
 }

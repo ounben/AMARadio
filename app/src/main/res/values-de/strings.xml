@@ -57,6 +57,9 @@
     <string name="error_station_load">Verbindung zum Sender fehlgeschlagen</string>
     <string name="error_list_update">Verbindung zum Radio-Browser-Server fehlgeschlagen</string>
 
+    <string name="error_no_connection">Keine Internetverbindung verfügbar</string>
+    <string name="warning_volume_zero">Die Lautstärke ist auf Null gestellt.</string>
+
     <string name="share_action">Sender-Link teilen mit…</string>
 
     <string name="nav_item_stations">Sender</string>

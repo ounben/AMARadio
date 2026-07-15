@@ -60,6 +60,9 @@
     <string name="error_station_load">Could not connect to station</string>
     <string name="error_list_update">Could not connect to radio browser server</string>
 
+    <string name="error_no_connection">No internet connection available</string>
+    <string name="warning_volume_zero">Volume is at zero. You might not hear anything.</string>
+
     <string name="share_action">Share station link with…</string>
 
     <string name="nav_item_stations">Stations</string>

@@ -103,6 +103,7 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
 @Composable
 fun PlayerSelectorDialogCompose(
     station: DataRadioStation,
+    playerViewModel: PlayerViewModel,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -125,7 +126,7 @@ fun PlayerSelectorDialogCompose(
                     },
                     modifier = Modifier.clickable {
                         Utils.playAndWarnIfMetered(context, station, PlayerType.AMARadio) {
-                            Utils.play(station)
+                            playerViewModel.play(station)
                         }
                         onDismiss()
                     },

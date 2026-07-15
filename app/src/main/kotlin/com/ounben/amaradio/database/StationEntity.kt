@@ -37,7 +37,7 @@ data class StationEntity(
     val favicon: String?,
 
     @ColumnInfo(name = "Creation")
-    val creation: String?, // Jetzt optional
+    val creation: String, // NOT NULL in DB
 
     @ColumnInfo(name = "Country")
     val country: String?,
@@ -48,16 +48,16 @@ data class StationEntity(
     @ColumnInfo(name = "Tags")
     val tags: String?,
 
-    @ColumnInfo(name = "Votes")
+    @ColumnInfo(name = "Votes", defaultValue = "0")
     val votes: Int? = 0,
 
     @ColumnInfo(name = "Subcountry")
     val subcountry: String?,
 
-    @ColumnInfo(name = "clickcount")
+    @ColumnInfo(name = "clickcount", defaultValue = "0")
     val clickCount: Int = 0,
 
-    @ColumnInfo(name = "ClickTrend")
+    @ColumnInfo(name = "ClickTrend", defaultValue = "0")
     val clickTrend: Int? = 0,
 
     @ColumnInfo(name = "ClickTimestamp")
@@ -66,22 +66,22 @@ data class StationEntity(
     @ColumnInfo(name = "Codec")
     val codec: String?,
 
-    @ColumnInfo(name = "LastCheckOK")
+    @ColumnInfo(name = "LastCheckOK", defaultValue = "1")
     val lastCheckOk: Int = 1,
 
     @ColumnInfo(name = "LastCheckTime")
     val lastCheckTime: String?,
 
-    @ColumnInfo(name = "Bitrate")
+    @ColumnInfo(name = "Bitrate", defaultValue = "0")
     val bitrate: Int = 0,
 
     @ColumnInfo(name = "UrlCache")
-    val urlCache: String?, // Jetzt optional
+    val urlCache: String, // NOT NULL in DB
 
     @ColumnInfo(name = "LastCheckOkTime")
     val lastCheckOkTime: String?,
 
-    @ColumnInfo(name = "Hls")
+    @ColumnInfo(name = "Hls", defaultValue = "0")
     val hls: Int = 0,
 
     @ColumnInfo(name = "ChangeUuid")
@@ -105,13 +105,13 @@ data class StationEntity(
     @ColumnInfo(name = "GeoLong")
     val geoLong: Double?,
 
-    @ColumnInfo(name = "SslError")
+    @ColumnInfo(name = "SslError", defaultValue = "0")
     val sslError: Int = 0,
 
     @ColumnInfo(name = "LanguageCodes")
     val languageCodes: String?,
 
-    @ColumnInfo(name = "ExtendedInfo")
+    @ColumnInfo(name = "ExtendedInfo", defaultValue = "0")
     val extendedInfo: Int = 0,
 
     @ColumnInfo(name = "ServerUuid")

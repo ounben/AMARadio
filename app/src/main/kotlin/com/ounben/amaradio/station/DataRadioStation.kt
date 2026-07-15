@@ -46,6 +46,8 @@ class DataRadioStation : Parcelable {
     @SerialName("votes") var Votes: Int = 0
     @SerialName("bitrate") var Bitrate: Int = 0
     @SerialName("codec") var Codec: String = ""
+    @SerialName("lastchangetime") var LastChangeTime: String = ""
+    @SerialName("creation") var Creation: String = ""
 
     @IgnoredOnParcel @Transient var RefreshRetryCount: Int = 0
     @IgnoredOnParcel @Transient var Working: Boolean = true
