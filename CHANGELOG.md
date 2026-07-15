@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.12] - 2026-07-15
+### Changed
+- **Automotive OS Compatibility**: Removed explicit Android Automotive OS (Standalone) compatibility descriptors from the manifest and resource files. This ensures the app is primarily targeted as a high-performance Android Auto (Smartphone-connected) media application, avoiding redundant Standalone-Automotive review processes while maintaining full vehicle head-unit support via Android Auto.
+
 ## [1.11] - 2026-07-15
 ### Added
 - **Dynamic Station Placeholders**:
