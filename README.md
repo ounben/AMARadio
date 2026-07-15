@@ -15,15 +15,17 @@ Originally created as a personal project for the developer's mother to provide a
 
 ## Key Features
 
+- **Local-First Architecture**: Features a high-performance **Room Database** containing a pre-populated snapshot of thousands of global radio stations. This ensures near-instant searches and full offline browsing capability immediately after installation.
+- **Automated Background Sync**: An intelligent `SyncWorker` keeps the local database fresh by periodically fetching the latest station changes and popularity metrics from the global API.
+- **Advanced Android Auto Integration**: Fully optimized for vehicle head units. Personal filter tabs, "Local" station lists, and playback history are directly browsable via a specialized, driver-safe interface with high-contrast Material icons.
 - **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
 - **Full Global Accessibility**: Extensively optimized for **TalkBack** and screen readers. Features semantic grouping of station information for fluid navigation, localized accessibility strings in all 74+ supported languages, and "speaking" status icons.
-- **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. Metadata for 11,000+ tags is cached locally for instant, offline suggestions.
+- **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. 
 - **Dynamic UI Scaling**: Built-in accessibility settings allow for dynamic adjustment of the user interface, including font and component sizes, ranging from Compact to Extra Large.
 - **Multi-Language Support**: Support for over **74 locales**, including newly added African languages (Afrikaans, Amharic, Swahili, Zulu) and a dedicated in-app language selector.
 - **In-App Review Integration**: Features a non-intrusive feedback system using the Google Play Review API, allowing satisfied users to rate the app easily without interrupting their listening experience.
 - **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
-- **Global Station Database**: Instant access to a massive, community-maintained directory of international radio stations.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, strict audio focus handling, and MD5-hashed local caching for API responses.
+- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and strict audio focus handling.
 - **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
 - **Privacy & Compliance**: Fully compliant with modern Android privacy standards, including proper attribution tagging and secure background execution.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
@@ -60,7 +62,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v0.99.9) introduces significant performance optimizations, advanced caching, and a new multi-language selector. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v1.10) introduces a full Local-First database architecture and enhanced Android Auto support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -80,10 +82,10 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Language**: 100% Kotlin
 - **UI Framework**: Jetpack Compose & Material 3
 - **Architecture**: MVVM with Activity-scoped ViewModels for state persistence
-- **Persistence**: Room Database for history, SharedPreferences for configuration
+- **Persistence**: Room Database (Pre-populated) for stations and history
 - **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
-- **Target SDK**: 37 (Android 17)
+- **Target SDK**: 37 (Android 15+)
 - **Minimum SDK**: 26 (Android 8.0)
 
 ## Contributing

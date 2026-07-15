@@ -5,6 +5,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.10] - 2026-07-15
+### Added
+- **Local-First Database Architecture**:
+    - Integrated a high-performance **Room Database** for all station management.
+    - **Instant Search**: All searches (Manual, Filter, Local) now query the local database first, providing near-instant results even offline.
+    - **Pre-populated Database**: The app now ships with a 70MB high-quality snapshot of the radio-browser database, ensuring thousands of stations are available immediately after installation.
+    - **Automated Background Sync**: A new `SyncWorker` periodically updates the local database with the latest 1000 changes from the global API using an intelligent server cascade.
+- **Enhanced Android Auto Experience**:
+    - Simplified and stabilized folder structure mirroring the smartphone app.
+    - **Station Tabs**: "Local" and custom filter tabs are now directly accessible as folders.
+    - **Icon Integration**: Added high-contrast Material icons for Stations, Favorites, and History in the car display.
+    - **Offline Browsing**: Android Auto menus now load instantly from the local Room database, eliminating loading delays while driving.
+- **Resilient Background Sync**:
+    - Implemented an intelligent server cascade (Official -> Rotation -> Mirror) for background updates.
+    - Optimized sync triggers: Runs daily on any connection (WLAN/Mobile) with a 30-minute startup delay to ensure app stability.
+
+### Changed
+- **Performance Optimization**: Completely removed the need for real-time JSON parsing of large station lists during navigation.
+- **Play Stability**: Hardened the playback logic in Android Auto by decoupling browser navigation from the internal PlayStationTask.
+
 ## [0.99.9] - 2026-07-04
 ### Added
 - **Android Auto Integration**:
