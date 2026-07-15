@@ -5,6 +5,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.11] - 2026-07-15
+### Added
+- **Dynamic Station Placeholders**:
+    - Implemented a sophisticated fallback system for stations missing official logos.
+    - **Intelligent Text Extraction**: Automatically detects and displays relevant identifiers (e.g., "2" from "WDR 2", "RA" from "Rock Antenne").
+    - **Deterministic Coloring**: Each station is assigned one of seven high-contrast Material Design colors based on its unique UUID, ensuring a consistent and professional look.
+    - **Universal Integration**: These dynamic placeholders are now visible in the Smartphone UI, System Notifications, and Android Auto head units.
+- **Proactive Playback Warnings**:
+    - **Connection Guard**: Added an instant alert if a user tries to start playback without an active internet connection.
+    - **Volume Monitor**: Warns the user if playback is started while the media volume is set to zero, preventing "silent play" confusion.
+
+### Changed
+- **Enhanced Visual Consistency**: Replaced generic radio icons with the new dynamic placeholders throughout the app's history and station lists.
+- **UI Performance**: Optimized the bitmap generation logic for placeholders to ensure perfectly smooth scrolling in large lists.
+
 ## [1.10] - 2026-07-15
 ### Added
 - **Local-First Database Architecture**:

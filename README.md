@@ -16,7 +16,9 @@ Originally created as a personal project for the developer's mother to provide a
 ## Key Features
 
 - **Local-First Architecture**: Features a high-performance **Room Database** containing a pre-populated snapshot of thousands of global radio stations. This ensures near-instant searches and full offline browsing capability immediately after installation.
+- **Dynamic Station Placeholders**: Implements a sophisticated fallback system for stations missing logos. It automatically generates high-contrast, color-coded identifiers based on the station name and UUID for a consistent and professional look across the app and Android Auto.
 - **Automated Background Sync**: An intelligent `SyncWorker` keeps the local database fresh by periodically fetching the latest station changes and popularity metrics from the global API.
+- **Smart Playback Guards**: Proactively monitors system status to alert users if they attempt to play a station without an internet connection or while the system volume is muted.
 - **Advanced Android Auto Integration**: Fully optimized for vehicle head units. Personal filter tabs, "Local" station lists, and playback history are directly browsable via a specialized, driver-safe interface with high-contrast Material icons.
 - **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
 - **Full Global Accessibility**: Extensively optimized for **TalkBack** and screen readers. Features semantic grouping of station information for fluid navigation, localized accessibility strings in all 74+ supported languages, and "speaking" status icons.
@@ -62,7 +64,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v1.10) introduces a full Local-First database architecture and enhanced Android Auto support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v1.11) introduces a full Local-First database architecture, enhanced Android Auto support, and dynamic station placeholders. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
