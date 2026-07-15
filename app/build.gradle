@@ -159,6 +159,7 @@ dependencies {
     // Google Cast & Integrity
     implementation libs.play.services.integrity
     implementation libs.play.review
+    implementation libs.androidx.work.runtime.ktx
 
     testImplementation libs.junit
     testImplementation libs.junit.jupiter

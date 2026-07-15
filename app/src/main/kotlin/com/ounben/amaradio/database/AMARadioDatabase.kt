@@ -11,10 +11,11 @@ import com.ounben.amaradio.history.TrackHistoryEntry
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [TrackHistoryEntry::class], version = 1)
+@Database(entities = [TrackHistoryEntry::class, StationEntity::class], version = 2)
 @TypeConverters(Converters::class)
 abstract class AMARadioDatabase : RoomDatabase() {
     abstract fun songHistoryDao(): TrackHistoryDao
+    abstract fun stationDao(): StationDao
 
     val databaseExecutor: Executor = Executors.newSingleThreadExecutor { runnable -> Thread(runnable, "AMARadioDatabase Executor") }
 
@@ -28,8 +29,9 @@ abstract class AMARadioDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AMARadioDatabase::class.java,
-                    "radio_droid_database"
+                    "radio_browser_database"
                 )
+                    .createFromAsset("databases/radio_browser_database.db")
                     .addCallback(CALLBACK)
                     .fallbackToDestructiveMigration()
                     .build()

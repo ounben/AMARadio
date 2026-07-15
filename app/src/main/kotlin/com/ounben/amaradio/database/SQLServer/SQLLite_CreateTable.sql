@@ -1,20 +1,40 @@
 -- 1. Tabelle anlegen
 CREATE TABLE `Station` (
     `StationID` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
-    `Name` TEXT, `Url` TEXT, `Homepage` TEXT, `Favicon` TEXT,
-    `Creation` INTEGER, `Country` TEXT, `Language` TEXT, `Tags` TEXT,
-    `Votes` INTEGER, `Subcountry` TEXT, `clickcount` INTEGER NOT NULL,
-    `ClickTrend` INTEGER, `ClickTimestamp` INTEGER, `Codec` TEXT,
-    `LastCheckOK` INTEGER NOT NULL, `LastCheckTime` INTEGER,
-    `Bitrate` INTEGER NOT NULL, `UrlCache` TEXT NOT NULL,
-    `LastCheckOkTime` INTEGER, `Hls` INTEGER NOT NULL,
-    `ChangeUuid` TEXT, `StationUuid` TEXT, `CountryCode` TEXT,
-    `LastLocalCheckTime` INTEGER, `CountrySubdivisionCode` TEXT,
-    `GeoLat` REAL, `GeoLong` REAL, `SslError` INTEGER NOT NULL,
-    `LanguageCodes` TEXT, `ExtendedInfo` INTEGER NOT NULL, `ServerUuid` TEXT
+    `Name` TEXT,
+    `Url` TEXT,
+    `Homepage` TEXT,
+    `Favicon` TEXT,
+    `Creation` TEXT NOT NULL,
+    `Country` TEXT,
+    `Language` TEXT,
+    `Tags` TEXT,
+    `Votes` INTEGER DEFAULT 0,
+    `Subcountry` TEXT,
+    `clickcount` INTEGER NOT NULL DEFAULT 0,
+    `ClickTrend` INTEGER DEFAULT 0,
+    `ClickTimestamp` TEXT,
+    `Codec` TEXT,
+    `LastCheckOK` INTEGER NOT NULL DEFAULT 1,
+    `LastCheckTime` TEXT,
+    `Bitrate` INTEGER NOT NULL DEFAULT 0,
+    `UrlCache` TEXT NOT NULL,
+    `LastCheckOkTime` TEXT,
+    `Hls` INTEGER NOT NULL DEFAULT 0,
+    `ChangeUuid` TEXT,
+    `StationUuid` TEXT,
+    `CountryCode` TEXT,
+    `LastLocalCheckTime` TEXT,
+    `CountrySubdivisionCode` TEXT,
+    `GeoLat` REAL,
+    `GeoLong` REAL,
+    `SslError` INTEGER NOT NULL DEFAULT 0,
+    `LanguageCodes` TEXT,
+    `ExtendedInfo` INTEGER NOT NULL DEFAULT 0,
+    `ServerUuid` TEXT
 );
 
--- 2. Indizes mit Room-spezifischen Namen (WICHTIG)
+-- 2. Indizes mit Room-spezifischen Namen
 CREATE UNIQUE INDEX `index_Station_StationUuid` ON `Station` (`StationUuid`);
 CREATE UNIQUE INDEX `index_Station_ChangeUuid` ON `Station` (`ChangeUuid`);
 CREATE INDEX `index_Station_CountryCode` ON `Station` (`CountryCode`);

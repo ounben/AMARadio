@@ -99,6 +99,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
             trackHistoryRepository = TrackHistoryRepository(this)
 
+            com.ounben.amaradio.service.SyncWorker.enqueue(this)
+
             val audioThread = HandlerThread("AudioThread", android.os.Process.THREAD_PRIORITY_URGENT_AUDIO)
             audioThread.start()
             val looper = audioThread.looper
