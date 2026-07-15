@@ -21,6 +21,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
@@ -41,6 +42,39 @@ import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
+import com.ounben.amaradio.utils.StationPlaceholderUtils
+
+@Composable
+fun StationIcon(
+    stationName: String,
+    stationUuid: String,
+    iconUrl: String?,
+    modifier: Modifier = Modifier
+) {
+    val placeholderText = remember(stationName) { StationPlaceholderUtils.extractPlaceholderText(stationName) }
+    val placeholderColor = remember(stationUuid) { Color(StationPlaceholderUtils.getPlaceholderColor(stationUuid)) }
+
+    Box(
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(placeholderColor),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = placeholderText,
+            color = Color.White,
+            style = MaterialTheme.typography.titleMedium,
+            fontWeight = FontWeight.Bold
+        )
+        
+        AsyncImage(
+            model = iconUrl,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+    }
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -198,12 +232,11 @@ fun TrackListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
-            AsyncImage(
-                model = track.stationIconUrl,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                error = painterResource(R.drawable.ic_radio_24dp),
-                placeholder = painterResource(R.drawable.ic_radio_24dp)
+            StationIcon(
+                stationName = track.stationUuid, // Since we don't have the station name here easily, but uuid is unique
+                stationUuid = track.stationUuid,
+                iconUrl = track.stationIconUrl,
+                modifier = Modifier.fillMaxSize()
             )
         }
         Spacer(modifier = Modifier.width(12.dp))
@@ -275,12 +308,11 @@ fun StationListItem(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Box(modifier = Modifier.size(44.dp), contentAlignment = Alignment.Center) {
-            AsyncImage(
-                model = station.IconUrl,
-                contentDescription = stringResource(R.string.accessibility_station_logo),
-                modifier = Modifier.fillMaxSize(),
-                error = painterResource(R.drawable.ic_radio_24dp),
-                placeholder = painterResource(R.drawable.ic_radio_24dp)
+            StationIcon(
+                stationName = station.Name,
+                stationUuid = station.StationUuid,
+                iconUrl = station.IconUrl,
+                modifier = Modifier.fillMaxSize()
             )
         }
         Spacer(modifier = Modifier.width(12.dp))
@@ -372,15 +404,11 @@ fun StationGridItem(
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                AsyncImage(
-                    model = station.IconUrl,
-                    contentDescription = stringResource(R.string.accessibility_station_logo),
-                    modifier = Modifier
-                        .size(80.dp)
-                        .padding(4.dp),
-                    contentScale = ContentScale.Fit,
-                    error = painterResource(R.drawable.ic_radio_24dp),
-                    placeholder = painterResource(R.drawable.ic_radio_24dp)
+                StationIcon(
+                    stationName = station.Name,
+                    stationUuid = station.StationUuid,
+                    iconUrl = station.IconUrl,
+                    modifier = Modifier.size(80.dp)
                 )
                 Text(
                     text = station.Name,

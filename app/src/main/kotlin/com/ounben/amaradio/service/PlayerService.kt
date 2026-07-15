@@ -54,6 +54,7 @@ import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import com.ounben.amaradio.utils.StationPlaceholderUtils
 import kotlinx.coroutines.*
 import java.util.Calendar
 import java.util.Date
@@ -686,8 +687,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             } catch (e: Exception) { /* ignore */ }
         }
 
-        Log.w("METADATA_DEBUG", "Kein spezifisches Bild gefunden für ID: ${station.StationUuid}. Nutze Standard-Logo.")
-        return createFallbackBitmap()
+        Log.w("METADATA_DEBUG", "Kein spezifisches Bild gefunden für ID: ${station.StationUuid}. Generiere dynamischen Platzhalter.")
+        val placeholder = StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
+        saveBitmapToFile(placeholder, iconFile)
+        return placeholder
     }
 
     private fun saveBitmapToFile(bitmap: Bitmap, file: File) {
@@ -738,12 +741,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val station = itsCurrentStation ?: return
         val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
         updateMetadata(station, displayTitle)
-    }
-
-    private fun createFallbackBitmap(): Bitmap {
-        // Erstellt ein transparentes 1x1 Pixel Bitmap als sicheren Fallback
-        return ResourcesCompat.getDrawable(resources, R.drawable.ic_radio_24dp, null)!!
-            .toBitmap(256, 256, Bitmap.Config.RGB_565)
     }
 
     private fun updateNotification(playState: PlayState) {

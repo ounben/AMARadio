@@ -91,12 +91,11 @@ fun MiniPlayer(
             ) {
                 // Left: Station Icon
                 Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
-                    AsyncImage(
-                        model = station?.IconUrl,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize().clip(MaterialTheme.shapes.small),
-                        error = painterResource(R.drawable.ic_radio_24dp),
-                        placeholder = painterResource(R.drawable.ic_radio_24dp)
+                    StationIcon(
+                        stationName = stationName,
+                        stationUuid = station?.StationUuid ?: "",
+                        iconUrl = station?.IconUrl,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
 
@@ -201,19 +200,12 @@ fun FullPlayer(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Large Station Icon
-                Surface(
-                    modifier = Modifier.size(100.dp),
-                    shape = MaterialTheme.shapes.medium,
-                    color = MaterialTheme.colorScheme.surface,
-                    tonalElevation = 0.dp
-                ) {
-                    AsyncImage(
-                        model = station?.IconUrl,
-                        contentDescription = null,
-                        modifier = Modifier.fillMaxSize().padding(8.dp),
-                        contentScale = ContentScale.Fit,
-                        error = painterResource(R.drawable.ic_radio_24dp),
-                        placeholder = painterResource(R.drawable.ic_radio_24dp)
+                Box(modifier = Modifier.size(100.dp), contentAlignment = Alignment.Center) {
+                    StationIcon(
+                        stationName = station?.Name ?: "",
+                        stationUuid = station?.StationUuid ?: "",
+                        iconUrl = station?.IconUrl,
+                        modifier = Modifier.fillMaxSize()
                     )
                 }
 

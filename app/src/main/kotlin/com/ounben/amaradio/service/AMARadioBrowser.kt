@@ -81,7 +81,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
-        val fallbackUri = Uri.parse("android.resource://${app.packageName}/drawable/ic_radio_24dp")
         val iconDir = java.io.File(app.cacheDir, "station_icons")
         
         for (station in stations) {
@@ -108,7 +107,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
                         metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
                     } else {
-                        metadataBuilder.setArtworkUri(fallbackUri)
+                        val placeholder = com.ounben.amaradio.utils.StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
+                        val stream = java.io.ByteArrayOutputStream()
+                        placeholder.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, stream)
+                        metadataBuilder.setArtworkData(stream.toByteArray(), MediaMetadata.PICTURE_TYPE_FRONT_COVER)
                     }
                 }
             } else {
@@ -116,7 +118,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
                     metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
                 } else {
-                    metadataBuilder.setArtworkUri(fallbackUri)
+                    val placeholder = com.ounben.amaradio.utils.StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
+                    val stream = java.io.ByteArrayOutputStream()
+                    placeholder.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, stream)
+                    metadataBuilder.setArtworkData(stream.toByteArray(), MediaMetadata.PICTURE_TYPE_FRONT_COVER)
                 }
             }
             
