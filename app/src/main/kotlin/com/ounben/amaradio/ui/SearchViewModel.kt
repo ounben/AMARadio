@@ -5,6 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -53,7 +55,18 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             delay(300) 
             _uiState.update { it.copy(isSearching = true, error = null) }
 
-            // Fetch the most POPULAR 200 matches (ensures "RTL" and "Tlemcen" are both present)
+            // 1. OFFLINE FIRST: Search in Room
+            val localResults = AMARadioDatabase.getDatabase(app).stationDao().searchStations(cleanedQuery)
+            if (localResults.isNotEmpty()) {
+                val decoded = localResults.map { it.toDataStation() }
+                val prioritized = decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
+                    SearchUtils.calculateScore(station.Name, cleanedQuery)
+                }.thenByDescending { it.ClickCount })
+                
+                _uiState.update { it.copy(results = prioritized, isSearching = false) }
+            }
+
+            // 2. NETWORK SYNC (Background)
             val params = mutableMapOf<String, String>()
             params["name"] = cleanedQuery
             params["order"] = "clickcount" 
@@ -70,14 +83,15 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
                     DataRadioStation.DecodeJson(result) ?: emptyList()
                 }
                 
-                // Rank locally using the aggressive structural scoring
                 val prioritized = decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
                     SearchUtils.calculateScore(station.Name, cleanedQuery)
                 }.thenByDescending { it.ClickCount })
 
                 _uiState.update { it.copy(results = prioritized, isSearching = false) }
-            } else {
+            } else if (localResults.isEmpty()) {
                 _uiState.update { it.copy(isSearching = false, error = "Search failed") }
+            } else {
+                _uiState.update { it.copy(isSearching = false) }
             }
         }
     }

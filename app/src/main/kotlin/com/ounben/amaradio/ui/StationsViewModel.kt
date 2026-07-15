@@ -17,6 +17,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import android.content.SharedPreferences
+import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.toDataStation
 import java.net.URLEncoder
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -71,9 +73,21 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
         currentUrl = url
 
         viewModelScope.launch {
-            if (!forceUpdate) delay(50.milliseconds) // Small delay to let animations settle
+            if (!forceUpdate) delay(50.milliseconds)
             _uiState.update { it.copy(isLoading = true, error = null) }
-            
+
+            // 1. OFFLINE FIRST: Versuche Daten aus Room zu laden
+            if (url.startsWith("json/stations/bycountrycodeexact/")) {
+                val countryCode = url.substringAfter("bycountrycodeexact/").substringBefore("?").uppercase()
+                val localStations = AMARadioDatabase.getDatabase(app).stationDao().getStationsByCountryCode(countryCode)
+                if (localStations.isNotEmpty()) {
+                    val decoded = localStations.map { it.toDataStation() }
+                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
+                    // Wenn wir Daten aus Room haben, laden wir im Hintergrund trotzdem leise von der API nach
+                }
+            }
+
+            // 2. Netzwerk-Abfrage (wie bisher)
             val params = HashMap<String, String>()
             params["hidebroken"] = "true"
 
@@ -86,8 +100,10 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
                     val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
                     _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
                 }
-            } else {
+            } else if (_uiState.value.stations.isEmpty()) {
                 _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
+            } else {
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
     }

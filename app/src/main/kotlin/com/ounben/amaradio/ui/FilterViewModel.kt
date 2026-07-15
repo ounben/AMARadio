@@ -22,6 +22,8 @@ import kotlinx.coroutines.withContext
 import androidx.preference.PreferenceManager
 import androidx.core.content.edit
 import android.content.SharedPreferences
+import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.toDataStation
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -257,6 +259,27 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             
             val state = _uiState.value
             val tab = state.tabs.getOrNull(index) ?: return@launch
+
+            // 1. OFFLINE FIRST: Suche in Room
+            val localResults = AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(
+                name = tab.name.ifEmpty { null },
+                countryCode = tab.countryCode.ifEmpty { null },
+                language = tab.languageCode.ifEmpty { null },
+                tag = tab.tag.ifEmpty { null }
+            )
+
+            if (localResults.isNotEmpty()) {
+                val decoded = localResults.map { it.toDataStation() }
+                _uiState.update { s ->
+                    val newTabs = s.tabs.toMutableList()
+                    if (index in newTabs.indices) {
+                        newTabs[index] = newTabs[index].copy(stations = decoded)
+                    }
+                    s.copy(tabs = newTabs, isSearching = false)
+                }
+            }
+
+            // 2. Netzwerk-Sync (wie bisher)
             val params = mutableMapOf<String, String>()
             
             if (tab.name.isNotEmpty()) params["name"] = tab.name
@@ -284,8 +307,10 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                     }
                     s.copy(tabs = newTabs, isSearching = false)
                 }
-            } else {
+            } else if (localResults.isEmpty()) {
                 _uiState.update { it.copy(isSearching = false, error = "Failed to fetch stations") }
+            } else {
+                _uiState.update { it.copy(isSearching = false) }
             }
         }
     }

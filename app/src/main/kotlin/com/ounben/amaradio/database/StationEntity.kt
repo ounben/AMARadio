@@ -37,7 +37,7 @@ data class StationEntity(
     val favicon: String?,
 
     @ColumnInfo(name = "Creation")
-    val creation: String,
+    val creation: String?, // Jetzt optional
 
     @ColumnInfo(name = "Country")
     val country: String?,
@@ -49,16 +49,16 @@ data class StationEntity(
     val tags: String?,
 
     @ColumnInfo(name = "Votes")
-    val votes: Int?,
+    val votes: Int? = 0,
 
     @ColumnInfo(name = "Subcountry")
     val subcountry: String?,
 
     @ColumnInfo(name = "clickcount")
-    val clickCount: Int,
+    val clickCount: Int = 0,
 
     @ColumnInfo(name = "ClickTrend")
-    val clickTrend: Int?,
+    val clickTrend: Int? = 0,
 
     @ColumnInfo(name = "ClickTimestamp")
     val clickTimestamp: String?,
@@ -67,22 +67,22 @@ data class StationEntity(
     val codec: String?,
 
     @ColumnInfo(name = "LastCheckOK")
-    val lastCheckOk: Int,
+    val lastCheckOk: Int = 1,
 
     @ColumnInfo(name = "LastCheckTime")
     val lastCheckTime: String?,
 
     @ColumnInfo(name = "Bitrate")
-    val bitrate: Int,
+    val bitrate: Int = 0,
 
     @ColumnInfo(name = "UrlCache")
-    val urlCache: String,
+    val urlCache: String?, // Jetzt optional
 
     @ColumnInfo(name = "LastCheckOkTime")
     val lastCheckOkTime: String?,
 
     @ColumnInfo(name = "Hls")
-    val hls: Int,
+    val hls: Int = 0,
 
     @ColumnInfo(name = "ChangeUuid")
     val changeUuid: String?,
@@ -106,13 +106,13 @@ data class StationEntity(
     val geoLong: Double?,
 
     @ColumnInfo(name = "SslError")
-    val sslError: Int,
+    val sslError: Int = 0,
 
     @ColumnInfo(name = "LanguageCodes")
     val languageCodes: String?,
 
     @ColumnInfo(name = "ExtendedInfo")
-    val extendedInfo: Int,
+    val extendedInfo: Int = 0,
 
     @ColumnInfo(name = "ServerUuid")
     val serverUuid: String?

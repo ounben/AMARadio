@@ -31,7 +31,7 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
         Log.d("SYNC", "Starting background sync since: $lastSyncTime")
 
         // 2. Cascade server logic
-        val params = mapOf("limit" to "100")
+        val params = mapOf("limit" to "1000")
         val result = tryFetchFromServers(app, "json/stations/changed", params)
         
         if (result != null) {
