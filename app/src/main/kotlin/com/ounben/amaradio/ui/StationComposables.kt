@@ -233,7 +233,7 @@ fun TrackListItem(
     ) {
         Box(modifier = Modifier.size(40.dp), contentAlignment = Alignment.Center) {
             StationIcon(
-                stationName = track.stationUuid, // Since we don't have the station name here easily, but uuid is unique
+                stationName = track.stationName.ifEmpty { track.stationUuid },
                 stationUuid = track.stationUuid,
                 iconUrl = track.stationIconUrl,
                 modifier = Modifier.fillMaxSize()

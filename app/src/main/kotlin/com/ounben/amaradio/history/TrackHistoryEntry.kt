@@ -14,6 +14,9 @@ class TrackHistoryEntry {
     @ColumnInfo(name = "station_uuid")
     var stationUuid: String = ""
 
+    @ColumnInfo(name = "station_name")
+    var stationName: String = ""
+
     @ColumnInfo(name = "station_icon_url")
     var stationIconUrl: String = ""
 
@@ -41,6 +44,7 @@ class TrackHistoryEntry {
         val that = other as TrackHistoryEntry
         if (uid != that.uid) return false
         if (stationUuid != that.stationUuid) return false
+        if (stationName != that.stationName) return false
         if (track != that.track) return false
         if (artist != that.artist) return false
         if (title != that.title) return false
@@ -52,6 +56,7 @@ class TrackHistoryEntry {
     override fun hashCode(): Int {
         var result = uid
         result = 31 * result + stationUuid.hashCode()
+        result = 31 * result + stationName.hashCode()
         result = 31 * result + track.hashCode()
         result = 31 * result + artist.hashCode()
         result = 31 * result + title.hashCode()

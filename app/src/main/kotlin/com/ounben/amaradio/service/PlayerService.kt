@@ -897,6 +897,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     dao.setCurrentPlayingTrackEndTime(currentTime)
                     val newEntry = TrackHistoryEntry().apply {
                         stationUuid = itsCurrentStation?.StationUuid ?: ""
+                        stationName = itsCurrentStation?.Name ?: ""
                         artist = this@PlayerService.liveInfo.artist
                         title = this@PlayerService.liveInfo.title
                         track = this@PlayerService.liveInfo.track
