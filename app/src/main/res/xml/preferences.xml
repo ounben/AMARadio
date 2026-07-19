@@ -94,6 +94,7 @@
         <CheckBoxPreference
             android:defaultValue="false"
             android:key="show_broken"
+            android:visible="false"
             android:summaryOff="@string/settings_show_broken_off"
             android:summaryOn="@string/settings_show_broken_on"
             android:title="@string/settings_show_broken"
@@ -199,6 +200,7 @@
             android:icon="@drawable/ic_restore_black_24dp" />
         <Preference
             android:key="settings_proxy"
+            android:visible="false"
             android:title="@string/settings_proxy"
             android:icon="@drawable/ic_lock_24dp" />
     </PreferenceCategory>

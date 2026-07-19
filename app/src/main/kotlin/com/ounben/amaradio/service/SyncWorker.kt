@@ -6,7 +6,9 @@ import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
 import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
@@ -18,12 +20,23 @@ import com.ounben.amaradio.database.toEntity
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import java.util.concurrent.TimeUnit
+import androidx.preference.PreferenceManager
 
 class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWorker(context, workerParams) {
 
     override suspend fun doWork(): androidx.work.ListenableWorker.Result = withContext(Dispatchers.IO) {
         val app = applicationContext as AMARadioApp
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
+        
+        // Respect user setting (defaults to true)
+        if (!sharedPref.getBoolean("settings_auto_db_update", true)) {
+            return@withContext androidx.work.ListenableWorker.Result.success()
+        }
+
         val database = AMARadioDatabase.getDatabase(app)
         val stationDao = database.stationDao()
 
@@ -35,18 +48,15 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
         if (result != null) {
             val stations = DataRadioStation.DecodeJson(result)
             if (!stations.isNullOrEmpty()) {
-                Log.d("SYNC_DEBUG", "Received ${stations.size} stations from API")
-                
                 val entities = stations.map { it.toEntity() }
                 stationDao.insertAll(entities)
                 
-                val now = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", java.util.Locale.getDefault()).format(java.util.Date())
-                androidx.preference.PreferenceManager.getDefaultSharedPreferences(app).edit().putString("last_db_sync_time", now).apply()
+                val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
+                sharedPref.edit().putString("last_db_sync_time", now).apply()
                 
-                Log.d("SYNC_DEBUG", "Successfully inserted ${entities.size} entities. First: ${entities[0].name}, Date: ${entities[0].lastChangeTime}")
+                Log.d("SYNC_DEBUG", "Successfully synced ${entities.size} stations")
                 androidx.work.ListenableWorker.Result.success()
             } else {
-                Log.w("SYNC_DEBUG", "API returned empty station list")
                 androidx.work.ListenableWorker.Result.success()
             }
         } else {
@@ -56,39 +66,56 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
     }
 
     private suspend fun tryFetchFromServers(app: AMARadioApp, path: String, params: Map<String, String>): String? {
-        val currentServer = RadioBrowserServerManager.getCurrentServer()
-        Log.d("SYNC_DEBUG", "Trying server: $currentServer")
+        // Log current server for transparency in Logcat
+        RadioBrowserServerManager.getCurrentServer()?.let { Log.d("SYNC_DEBUG", "Server: $it") }
+        
         val res = Utils.downloadFeedRelative(app.httpClient, app, path, true, params)
         if (res != null) return res
 
         RadioBrowserServerManager.rotateServer()
-        val rotatedServer = RadioBrowserServerManager.getCurrentServer()
-        Log.d("SYNC_DEBUG", "Rotating to server: $rotatedServer")
         return Utils.downloadFeedRelative(app.httpClient, app, path, true, params)
     }
 
     companion object {
         fun enqueue(context: Context) {
-            val constraints = Constraints.Builder()
+            val workManager = WorkManager.getInstance(context)
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+            
+            if (!sharedPref.getBoolean("settings_auto_db_update", true)) {
+                workManager.cancelUniqueWork("ImmediateStartupSync")
+                workManager.cancelUniqueWork("StationSync")
+                return
+            }
+
+            val baseConstraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-            val syncRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
-                .setConstraints(constraints)
-                .setInitialDelay(15, TimeUnit.MINUTES)
-                .setBackoffCriteria(
-                    BackoffPolicy.EXPONENTIAL,
-                    30,
-                    TimeUnit.SECONDS
-                )
+            // 1. Check for immediate startup sync (if older than 24h)
+            val lastSyncStr = sharedPref.getString("last_db_sync_time", null)
+            val needsSyncNow = if (lastSyncStr == null) true else {
+                try {
+                    val lastSyncDate = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).parse(lastSyncStr)
+                    System.currentTimeMillis() - (lastSyncDate?.time ?: 0L) > 24 * 60 * 60 * 1000
+                } catch (e: Exception) { true }
+            }
+
+            if (needsSyncNow) {
+                val oneTimeRequest = OneTimeWorkRequestBuilder<SyncWorker>()
+                    .setConstraints(baseConstraints)
+                    .setInitialDelay(5, TimeUnit.MINUTES)
+                    .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
+                    .build()
+                workManager.enqueueUniqueWork("ImmediateStartupSync", ExistingWorkPolicy.KEEP, oneTimeRequest)
+            }
+
+            // 2. Regular background sync (24h interval)
+            val periodicRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
+                .setConstraints(baseConstraints)
+                .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
                 .build()
 
-            // Changed to UPDATE to ensure new logic (lastchange) is applied even if a job was already enqueued
-            WorkManager.getInstance(context).enqueueUniquePeriodicWork(
-                "StationSync",
-                ExistingPeriodicWorkPolicy.UPDATE,
-                syncRequest
-            )
+            workManager.enqueueUniquePeriodicWork("StationSync", ExistingPeriodicWorkPolicy.KEEP, periodicRequest)
         }
     }
 }

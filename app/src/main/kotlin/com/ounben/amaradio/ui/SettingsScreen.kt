@@ -121,13 +121,13 @@ fun SettingsScreen(
             }
 
             // Connectivity
-            SettingsCategory(title = stringResource(R.string.settings_connectivity)) {
-                SettingsClickable(
-                    title = stringResource(R.string.settings_proxy),
-                    icon = Icons.Default.Lock,
-                    onClick = onOpenProxy
-                )
-            }
+            // SettingsCategory(title = stringResource(R.string.settings_connectivity)) {
+            //    SettingsClickable(
+            //        title = stringResource(R.string.settings_proxy),
+            //        icon = Icons.Default.Lock,
+            //        onClick = onOpenProxy
+            //    )
+            // }
 
             // Other
             SettingsCategory(title = stringResource(R.string.settings_other)) {
@@ -206,7 +206,7 @@ fun SettingsClickable(
         Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            if (summary != null) {
+            if (!summary.isNullOrBlank()) {
                 Text(text = summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
@@ -237,7 +237,9 @@ fun SettingsListPreference(
         Spacer(modifier = Modifier.width(16.dp))
         Column {
             Text(text = title, style = MaterialTheme.typography.bodyLarge)
-            Text(text = currentLabel, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            if (!currentLabel.isNullOrBlank()) {
+                Text(text = currentLabel, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
         }
     }
 

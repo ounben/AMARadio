@@ -5,10 +5,10 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface StationDao {
-    @Query("SELECT * FROM Station ORDER BY clickcount DESC")
+    @Query("SELECT * FROM Station WHERE LastCheckOK = 1 ORDER BY clickcount DESC")
     fun getAllStations(): Flow<List<StationEntity>>
 
-    @Query("SELECT * FROM Station WHERE CountryCode = :code ORDER BY clickcount DESC")
+    @Query("SELECT * FROM Station WHERE CountryCode = :code AND LastCheckOK = 1 ORDER BY clickcount DESC")
     fun getStationsByCountry(code: String): Flow<List<StationEntity>>
 
     @Query("SELECT * FROM Station WHERE StationUuid = :uuid LIMIT 1")
@@ -17,21 +17,23 @@ interface StationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(stations: List<StationEntity>)
 
-    @Query("SELECT MAX(LastChangeTime) FROM Station")
+    @Query("SELECT MAX(LastChangeTime) FROM Station WHERE LastChangeTime NOT LIKE '1970%' AND LastCheckOK = 1")
     suspend fun getLastSyncTime(): String?
 
-    @Query("SELECT * FROM Station ORDER BY LastChangeTime DESC LIMIT 5")
+    @Query("SELECT * FROM Station WHERE LastCheckOK = 1 ORDER BY LastChangeTime DESC LIMIT 5")
     suspend fun getRecentlyChangedStations(): List<StationEntity>
 
-    @Query("SELECT COUNT(*) FROM Station")
+    @Query("SELECT COUNT(*) FROM Station WHERE LastCheckOK = 1")
     suspend fun getStationCount(): Int
 
-    @Query("SELECT * FROM Station WHERE CountryCode = :countryCode ORDER BY clickcount DESC LIMIT 100")
+    @Query("SELECT * FROM Station WHERE CountryCode = :countryCode AND LastCheckOK = 1 ORDER BY clickcount DESC LIMIT 100")
     suspend fun getStationsByCountryCode(countryCode: String): List<StationEntity>
 
+    // Advanced search with various sort options - only functional stations
     @Query("""
         SELECT * FROM Station 
-        WHERE (:name IS NULL OR Name LIKE '%' || :name || '%')
+        WHERE LastCheckOK = 1
+        AND (:name IS NULL OR Name LIKE '%' || :name || '%')
         AND (:countryCode IS NULL OR CountryCode = :countryCode)
         AND (:language IS NULL OR Language LIKE '%' || :language || '%')
         AND (:tag IS NULL OR Tags LIKE '%' || :tag || '%')
@@ -46,8 +48,8 @@ interface StationDao {
 
     @Query("""
         SELECT * FROM Station 
-        WHERE Name LIKE '%' || :query || '%' 
-        OR Tags LIKE '%' || :query || '%'
+        WHERE LastCheckOK = 1 
+        AND (Name LIKE '%' || :query || '%' OR Tags LIKE '%' || :query || '%')
         ORDER BY clickcount DESC LIMIT 100
     """)
     suspend fun searchStations(query: String): List<StationEntity>
