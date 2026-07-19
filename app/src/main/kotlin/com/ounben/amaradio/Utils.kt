@@ -168,14 +168,22 @@ object Utils {
             if (cached != null) return cached
         }
 
-        Log.i("DOWN", "Url=$theRelativeUri (not cached or forced)")
+        // Add Cache-Buster to params if forceUpdate is true
+        val finalParams = if (forceUpdate) {
+            val p = dictParams?.toMutableMap() ?: mutableMapOf()
+            p["cb"] = System.currentTimeMillis().toString()
+            p
+        } else dictParams
+
+        Log.i("DOWN", "Url=$theRelativeUri (forceUpdate=$forceUpdate)")
 
         // Try official servers
         val currentServer = RadioBrowserServerManager.getCurrentServer()
         if (currentServer != null) {
             val endpoint = RadioBrowserServerManager.constructEndpoint(currentServer, theRelativeUri)
-            val result = downloadFeed(httpClient, ctx, endpoint, dictParams, 2000L)
+            val result = downloadFeed(httpClient, ctx, endpoint, finalParams, 10000L) // Increase to 10s
             if (result != null) {
+                Log.d("SYNC_DEBUG", "Success from Official: $endpoint")
                 writeFileCache(ctx, cacheKey, result)
                 return result
             }
@@ -185,8 +193,9 @@ object Utils {
             for (newServer in serverList) {
                 if (newServer == currentServer) continue
                 val rotEndpoint = RadioBrowserServerManager.constructEndpoint(newServer, theRelativeUri)
-                val rotResult = downloadFeed(httpClient, ctx, rotEndpoint, dictParams, 2000L)
+                val rotResult = downloadFeed(httpClient, ctx, rotEndpoint, finalParams, 5000L)
                 if (rotResult != null) {
+                    Log.d("SYNC_DEBUG", "Success from Rotated: $rotEndpoint")
                     RadioBrowserServerManager.setCurrentServer(newServer)
                     writeFileCache(ctx, cacheKey, rotResult)
                     return rotResult
@@ -196,8 +205,9 @@ object Utils {
 
         // Mirror fallback
         val mirrorEndpoint = RadioBrowserServerManager.constructEndpoint(RadioBrowserServerManager.getMirrorServer(), theRelativeUri)
-        val mirrorResult = downloadFeed(httpClient, ctx, mirrorEndpoint, dictParams)
+        val mirrorResult = downloadFeed(httpClient, ctx, mirrorEndpoint, finalParams)
         if (mirrorResult != null) {
+            Log.d("SYNC_DEBUG", "Success from MIRROR: $mirrorEndpoint")
             writeFileCache(ctx, cacheKey, mirrorResult)
         }
         return mirrorResult

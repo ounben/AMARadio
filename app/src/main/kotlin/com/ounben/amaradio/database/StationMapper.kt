@@ -4,29 +4,30 @@ import com.ounben.amaradio.station.DataRadioStation
 
 fun DataRadioStation.toEntity(): StationEntity {
     return StationEntity(
+        stationId = null,
         name = this.Name,
-        stationUuid = this.StationUuid,
-        changeUuid = this.ChangeUuid,
         url = this.StreamUrl,
         homepage = this.HomePageUrl,
         favicon = this.IconUrl,
+        creation = if (this.Creation.isNullOrEmpty()) "1970-01-01 00:00:00" else this.Creation,
         country = this.Country,
-        countryCode = this.CountryCode,
-        subcountry = this.State,
-        tags = this.TagsAll,
         language = this.Language,
+        tags = this.TagsAll,
+        votes = this.Votes,
+        subcountry = this.State,
         clickCount = this.ClickCount,
         clickTrend = this.ClickTrend,
-        votes = this.Votes,
-        bitrate = this.Bitrate,
-        codec = this.Codec,
-        urlCache = this.playableUrl ?: this.StreamUrl,
-        creation = if (this.Creation.isEmpty()) "2024-01-01 00:00:00" else this.Creation,
-        lastCheckOk = 1,
-        hls = if (this.StreamUrl.contains("m3u8")) 1 else 0,
         clickTimestamp = null,
+        codec = this.Codec,
+        lastCheckOk = 1,
         lastCheckTime = null,
-        lastCheckOkTime = null,
+        bitrate = this.Bitrate,
+        urlCache = this.playableUrl ?: this.StreamUrl,
+        lastCheckOkTime = this.LastCheckOkTime,
+        hls = if (this.StreamUrl.contains("m3u8")) 1 else 0,
+        changeUuid = this.ChangeUuid,
+        stationUuid = this.StationUuid,
+        countryCode = this.CountryCode,
         lastLocalCheckTime = null,
         countrySubdivisionCode = null,
         geoLat = null,
@@ -34,28 +35,31 @@ fun DataRadioStation.toEntity(): StationEntity {
         sslError = 0,
         languageCodes = null,
         extendedInfo = 0,
-        serverUuid = null
+        serverUuid = null,
+        lastChangeTime = if (this.LastChangeTime.isNullOrEmpty()) "1970-01-01 00:00:00" else this.LastChangeTime
     )
 }
 
-fun StationEntity.toDataStation(): com.ounben.amaradio.station.DataRadioStation {
-    val station = com.ounben.amaradio.station.DataRadioStation()
+fun StationEntity.toDataStation(): DataRadioStation {
+    val station = DataRadioStation()
     station.Name = this.name ?: ""
-    station.StationUuid = this.stationUuid ?: ""
-    station.ChangeUuid = this.changeUuid ?: ""
     station.StreamUrl = this.url ?: ""
     station.HomePageUrl = this.homepage ?: ""
     station.IconUrl = this.favicon ?: ""
+    station.Creation = this.creation
     station.Country = this.country ?: ""
-    station.CountryCode = this.countryCode ?: ""
-    station.State = this.subcountry ?: ""
-    station.TagsAll = this.tags ?: ""
     station.Language = this.language ?: ""
+    station.TagsAll = this.tags ?: ""
+    station.Votes = this.votes ?: 0
+    station.State = this.subcountry ?: ""
     station.ClickCount = this.clickCount
     station.ClickTrend = this.clickTrend ?: 0
-    station.Votes = this.votes ?: 0
-    station.Bitrate = this.bitrate
     station.Codec = this.codec ?: ""
-    station.Creation = this.creation
+    station.Bitrate = this.bitrate
+    station.LastCheckOkTime = this.lastCheckOkTime ?: ""
+    station.ChangeUuid = this.changeUuid ?: ""
+    station.StationUuid = this.stationUuid
+    station.CountryCode = this.countryCode ?: ""
+    station.LastChangeTime = this.lastChangeTime ?: ""
     return station
 }

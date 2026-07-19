@@ -11,7 +11,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [TrackHistoryEntry::class, StationEntity::class], version = 2)
+@Database(entities = [TrackHistoryEntry::class, StationEntity::class], version = 3)
 @TypeConverters(Converters::class)
 abstract class AMARadioDatabase : RoomDatabase() {
     abstract fun songHistoryDao(): TrackHistoryDao

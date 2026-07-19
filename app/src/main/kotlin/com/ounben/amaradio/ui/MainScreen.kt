@@ -290,7 +290,18 @@ fun MainScreen(
                         composable(Screen.About.route) { AboutScreen { navController.popBackStack() } }
                         composable(Screen.Statistics.route) { 
                             val viewModel: ServerInfoViewModel = viewModel()
-                            ServerInfoScreen(viewModel = viewModel) { navController.popBackStack() }
+                            ServerInfoScreen(
+                                viewModel = viewModel,
+                                onStationClick = { station ->
+                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                    else playerViewModel.play(station)
+                                },
+                                onFavoriteClick = { station ->
+                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                    else app.favouriteManager.add(station)
+                                },
+                                onBack = { navController.popBackStack() }
+                            )
                         }
                     }
                 }

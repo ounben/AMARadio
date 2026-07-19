@@ -48,6 +48,7 @@ class DataRadioStation : Parcelable {
     @SerialName("codec") var Codec: String = ""
     @SerialName("lastchangetime") var LastChangeTime: String = ""
     @SerialName("creation") var Creation: String = ""
+    @SerialName("lastcheckoktime") var LastCheckOkTime: String = ""
 
     @IgnoredOnParcel @Transient var RefreshRetryCount: Int = 0
     @IgnoredOnParcel @Transient var Working: Boolean = true

@@ -265,7 +265,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 name = tab.name.ifEmpty { null },
                 countryCode = tab.countryCode.ifEmpty { null },
                 language = tab.languageCode.ifEmpty { null },
-                tag = tab.tag.ifEmpty { null }
+                tag = tab.tag.ifEmpty { null },
+                orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
             )
 
             if (localResults.isNotEmpty()) {

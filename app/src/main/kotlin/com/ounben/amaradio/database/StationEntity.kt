@@ -8,21 +8,19 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "Station",
     indices = [
-        Index(value = ["StationUuid"], unique = true),
         Index(value = ["ChangeUuid"], unique = true),
         Index(value = ["CountryCode"]),
         Index(value = ["Language"]),
         Index(value = ["Votes"]),
         Index(value = ["clickcount"]),
-        Index(value = ["LastCheckOkTime"]),
+        Index(value = ["LastChangeTime"]),
         Index(value = ["Bitrate"]),
         Index(value = ["Hls"])
     ]
 )
 data class StationEntity(
-    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "StationID")
-    val stationId: Long = 0,
+    val stationId: Long? = 0,
 
     @ColumnInfo(name = "Name")
     val name: String?,
@@ -37,7 +35,7 @@ data class StationEntity(
     val favicon: String?,
 
     @ColumnInfo(name = "Creation")
-    val creation: String, // NOT NULL in DB
+    val creation: String,
 
     @ColumnInfo(name = "Country")
     val country: String?,
@@ -48,16 +46,16 @@ data class StationEntity(
     @ColumnInfo(name = "Tags")
     val tags: String?,
 
-    @ColumnInfo(name = "Votes", defaultValue = "0")
+    @ColumnInfo(name = "Votes")
     val votes: Int? = 0,
 
     @ColumnInfo(name = "Subcountry")
     val subcountry: String?,
 
-    @ColumnInfo(name = "clickcount", defaultValue = "0")
+    @ColumnInfo(name = "clickcount")
     val clickCount: Int = 0,
 
-    @ColumnInfo(name = "ClickTrend", defaultValue = "0")
+    @ColumnInfo(name = "ClickTrend")
     val clickTrend: Int? = 0,
 
     @ColumnInfo(name = "ClickTimestamp")
@@ -66,29 +64,30 @@ data class StationEntity(
     @ColumnInfo(name = "Codec")
     val codec: String?,
 
-    @ColumnInfo(name = "LastCheckOK", defaultValue = "1")
+    @ColumnInfo(name = "LastCheckOK")
     val lastCheckOk: Int = 1,
 
     @ColumnInfo(name = "LastCheckTime")
     val lastCheckTime: String?,
 
-    @ColumnInfo(name = "Bitrate", defaultValue = "0")
+    @ColumnInfo(name = "Bitrate")
     val bitrate: Int = 0,
 
     @ColumnInfo(name = "UrlCache")
-    val urlCache: String, // NOT NULL in DB
+    val urlCache: String,
 
     @ColumnInfo(name = "LastCheckOkTime")
     val lastCheckOkTime: String?,
 
-    @ColumnInfo(name = "Hls", defaultValue = "0")
+    @ColumnInfo(name = "Hls")
     val hls: Int = 0,
 
     @ColumnInfo(name = "ChangeUuid")
     val changeUuid: String?,
 
+    @PrimaryKey
     @ColumnInfo(name = "StationUuid")
-    val stationUuid: String?,
+    val stationUuid: String,
 
     @ColumnInfo(name = "CountryCode")
     val countryCode: String?,
@@ -105,15 +104,18 @@ data class StationEntity(
     @ColumnInfo(name = "GeoLong")
     val geoLong: Double?,
 
-    @ColumnInfo(name = "SslError", defaultValue = "0")
+    @ColumnInfo(name = "SslError")
     val sslError: Int = 0,
 
     @ColumnInfo(name = "LanguageCodes")
     val languageCodes: String?,
 
-    @ColumnInfo(name = "ExtendedInfo", defaultValue = "0")
+    @ColumnInfo(name = "ExtendedInfo")
     val extendedInfo: Int = 0,
 
     @ColumnInfo(name = "ServerUuid")
-    val serverUuid: String?
+    val serverUuid: String?,
+
+    @ColumnInfo(name = "LastChangeTime")
+    val lastChangeTime: String?
 )
