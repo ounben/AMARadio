@@ -15,10 +15,11 @@ Originally created as a personal project for the developer's mother to provide a
 
 ## Key Features
 
-- **Local-First Architecture**: Features a high-performance **Room Database** containing a pre-populated snapshot of thousands of global radio stations. This ensures near-instant searches and full offline browsing capability immediately after installation.
+- **Local-First Architecture**: Features a high-performance **Room Database** containing a pre-populated snapshot of thousands of global radio stations. It uses the `StationUuid` as a primary key, ensuring that updates from the API seamlessly overwrite existing records without duplication. This ensures near-instant searches and full offline browsing capability immediately after installation.
+- **Automated Background Sync**: An intelligent `SyncWorker` keeps the local database fresh by periodically fetching the latest station changes and popularity metrics from the global API via the optimized `json/stations/lastchange` endpoint.
+- **Smart Update Triggers**: The app automatically checks the database integrity 5 minutes after every startup. If the data is older than 24 hours, a silent background synchronization is triggered to ensure you always see the latest stations.
 - **Dynamic Station Placeholders**: Implements a sophisticated fallback system for stations missing logos. It automatically generates high-contrast, color-coded identifiers based on the station name and UUID for a consistent and professional look across the app and Android Auto.
-- **Automated Background Sync**: An intelligent `SyncWorker` keeps the local database fresh by periodically fetching the latest station changes and popularity metrics from the global API.
-- **Smart Playback Guards**: Proactively monitors system status to alert users if they attempt to play a station without an internet connection or while the system volume is muted.
+- **Functional-Only Filtering**: To ensure a frustration-free experience, all local station lists, category browses, and searches automatically filter for functional stations (`LastCheckOK = 1`), hiding broken links while allowing them to reappear automatically once they are fixed on the server.
 - **Advanced Android Auto Integration**: Fully optimized for vehicle head units. Personal filter tabs, "Local" station lists, and playback history are directly browsable via a specialized, driver-safe interface with high-contrast Material icons.
 - **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
 - **Full Global Accessibility**: Extensively optimized for **TalkBack** and screen readers. Features semantic grouping of station information for fluid navigation, localized accessibility strings in all 74+ supported languages, and "speaking" status icons.
@@ -27,10 +28,11 @@ Originally created as a personal project for the developer's mother to provide a
 - **Multi-Language Support**: Support for over **74 locales**, including newly added African languages (Afrikaans, Amharic, Swahili, Zulu) and a dedicated in-app language selector.
 - **In-App Review Integration**: Features a non-intrusive feedback system using the Google Play Review API, allowing satisfied users to rate the app easily without interrupting their listening experience.
 - **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with intelligent connection management, real-time audio thread prioritization, and strict audio focus handling.
+- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with prioritized audio threads, intelligent connection management, and strict audio focus handling.
 - **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
 - **Privacy & Compliance**: Fully compliant with modern Android privacy standards, including proper attribution tagging and secure background execution.
 - **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
+- **Smart Playback Guards**: Proactively monitors system status to alert users if they attempt to play a station without an internet connection or while the system volume is muted.
 - **Sleep Timer**: Integrated sleep timer functionality to automatically stop playback after a set duration.
 - **Android TV Support**: Specialized user interface optimized for television and large-screen devices.
 
@@ -64,7 +66,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v1.12) introduces significant performance optimizations, advanced caching, and enhanced Android Auto support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v1.13) introduces significant database performance optimizations, enhanced synchronization logic, and dynamic station placeholders. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.

@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.13] - 2026-07-19
+### Added
+- **Room Database Optimization**: `StationUuid` is now the primary key for reliable updates (`REPLACE` strategy). Redundant `StationID` removed.
+- **Enhanced Synchronization Logic**: Switched to the API endpoint `json/stations/lastchange`.
+- **Intelligent Update Triggers**: Automatic database sync 5 minutes after app start if the last sync is older than 24 hours.
+- **Statistics Expansion**: New "Local Database" tab showing the count of functional stations, last sync timestamp, and a list of the 5 most recent changes (interactive).
+- **Strict Data Filtering**: All local lists (search, filter, countries) now only display stations with a positive availability status (`LastCheckOK = 1`).
+
+### Changed
+- **UI Cleanup**: Removed Proxy settings and "Show broken stations" option from the user interface.
+- **Layout Corrections**: Fixed vertical centering of elements in the settings menu.
+- **Sync Parameters**: Background synchronization increased to 1000 stations per run.
+
 ## [1.12] - 2026-07-15
 ### Changed
 - **Automotive OS Compatibility**: Removed explicit Android Automotive OS (Standalone) compatibility descriptors from the manifest and resource files. This ensures the app is primarily targeted as a high-performance Android Auto (Smartphone-connected) media application, avoiding redundant Standalone-Automotive review processes while maintaining full vehicle head-unit support via Android Auto.
