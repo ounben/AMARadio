@@ -15,7 +15,12 @@ interface StationDao {
     suspend fun getStationByUuid(uuid: String): StationEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAll(stations: List<StationEntity>)
+    suspend fun insertAllInternal(stations: List<StationEntity>)
+
+    @Transaction
+    suspend fun syncBatch(stations: List<StationEntity>) {
+        insertAllInternal(stations)
+    }
 
     @Query("SELECT MAX(LastChangeTime) FROM Station WHERE LastChangeTime NOT LIKE '1970%' AND LastCheckOK = 1")
     suspend fun getLastSyncTime(): String?

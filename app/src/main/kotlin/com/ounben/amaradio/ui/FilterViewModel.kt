@@ -261,16 +261,20 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             val tab = state.tabs.getOrNull(index) ?: return@launch
 
             // 1. OFFLINE FIRST: Suche in Room
-            val localResults = AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(
-                name = tab.name.ifEmpty { null },
-                countryCode = tab.countryCode.ifEmpty { null },
-                language = tab.languageCode.ifEmpty { null },
-                tag = tab.tag.ifEmpty { null },
-                orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
-            )
+            val localResults = withContext(Dispatchers.IO) {
+                AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(
+                    name = tab.name.ifEmpty { null },
+                    countryCode = tab.countryCode.ifEmpty { null },
+                    language = tab.languageCode.ifEmpty { null },
+                    tag = tab.tag.ifEmpty { null },
+                    orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
+                )
+            }
 
             if (localResults.isNotEmpty()) {
-                val decoded = localResults.map { it.toDataStation() }
+                val decoded = withContext(Dispatchers.Default) {
+                    localResults.map { it.toDataStation() }
+                }
                 _uiState.update { s ->
                     val newTabs = s.tabs.toMutableList()
                     if (index in newTabs.indices) {

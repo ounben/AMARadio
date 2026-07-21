@@ -56,12 +56,16 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             _uiState.update { it.copy(isSearching = true, error = null) }
 
             // 1. OFFLINE FIRST: Search in Room
-            val localResults = AMARadioDatabase.getDatabase(app).stationDao().searchStations(cleanedQuery)
+            val localResults = withContext(Dispatchers.IO) {
+                AMARadioDatabase.getDatabase(app).stationDao().searchStations(cleanedQuery)
+            }
             if (localResults.isNotEmpty()) {
-                val decoded = localResults.map { it.toDataStation() }
-                val prioritized = decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
-                    SearchUtils.calculateScore(station.Name, cleanedQuery)
-                }.thenByDescending { it.ClickCount })
+                val prioritized = withContext(Dispatchers.Default) {
+                    val decoded = localResults.map { it.toDataStation() }
+                    decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
+                        SearchUtils.calculateScore(station.Name, cleanedQuery)
+                    }.thenByDescending { it.ClickCount })
+                }
                 
                 _uiState.update { it.copy(results = prioritized, isSearching = false) }
             }

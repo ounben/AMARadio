@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
 class MainViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
 
@@ -32,7 +35,9 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         
         viewModelScope.launch {
             app.favouriteManager.stationsFlow.collect { favorites ->
-                val ids = favorites.map { it.StationUuid }.toSet()
+                val ids = withContext(Dispatchers.Default) {
+                    favorites.map { it.StationUuid }.toSet()
+                }
                 _uiState.update { it.copy(favoriteIds = ids) }
             }
         }

@@ -79,9 +79,13 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             // 1. OFFLINE FIRST: Versuche Daten aus Room zu laden
             if (url.startsWith("json/stations/bycountrycodeexact/")) {
                 val countryCode = url.substringAfter("bycountrycodeexact/").substringBefore("?").uppercase()
-                val localStations = AMARadioDatabase.getDatabase(app).stationDao().getStationsByCountryCode(countryCode)
+                val localStations = withContext(Dispatchers.IO) {
+                    AMARadioDatabase.getDatabase(app).stationDao().getStationsByCountryCode(countryCode)
+                }
                 if (localStations.isNotEmpty()) {
-                    val decoded = localStations.map { it.toDataStation() }
+                    val decoded = withContext(Dispatchers.Default) {
+                        localStations.map { it.toDataStation() }
+                    }
                     _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
                     // Wenn wir Daten aus Room haben, laden wir im Hintergrund trotzdem leise von der API nach
                 }

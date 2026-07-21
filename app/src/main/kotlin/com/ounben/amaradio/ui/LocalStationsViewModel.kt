@@ -15,6 +15,11 @@ import kotlinx.coroutines.launch
 import androidx.preference.PreferenceManager
 import android.content.SharedPreferences
 
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.Dispatchers
+
 class LocalStationsViewModel(application: Application, isHistory: Boolean) : AndroidViewModel(application) {
 
     data class LocalStationsUiState(
@@ -42,10 +47,13 @@ class LocalStationsViewModel(application: Application, isHistory: Boolean) : And
         sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
         
         viewModelScope.launch {
-            manager.stationsFlow.collect { stations ->
+            manager.stationsFlow.collectLatest { stations ->
+                val query = _uiState.value.query
+                val filtered = withContext(Dispatchers.Default) {
+                    if (query.isEmpty()) stations 
+                    else stations.filter { it.Name.contains(query, ignoreCase = true) || it.TagsAll.contains(query, ignoreCase = true) }
+                }
                 _uiState.update { state ->
-                    val filtered = if (state.query.isEmpty()) stations 
-                    else stations.filter { it.Name.contains(state.query, ignoreCase = true) || it.TagsAll.contains(state.query, ignoreCase = true) }
                     state.copy(stations = stations, filteredStations = filtered)
                 }
             }
@@ -62,10 +70,15 @@ class LocalStationsViewModel(application: Application, isHistory: Boolean) : And
     }
 
     fun search(query: String) {
-        _uiState.update { state ->
-            val filtered = if (query.isEmpty()) state.stations 
-            else state.stations.filter { it.Name.contains(query, ignoreCase = true) || it.TagsAll.contains(query, ignoreCase = true) }
-            state.copy(query = query, filteredStations = filtered)
+        viewModelScope.launch {
+            val stations = _uiState.value.stations
+            val filtered = withContext(Dispatchers.Default) {
+                if (query.isEmpty()) stations 
+                else stations.filter { it.Name.contains(query, ignoreCase = true) || it.TagsAll.contains(query, ignoreCase = true) }
+            }
+            _uiState.update { state ->
+                state.copy(query = query, filteredStations = filtered)
+            }
         }
     }
 }

@@ -49,7 +49,7 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
             val stations = DataRadioStation.DecodeJson(result)
             if (!stations.isNullOrEmpty()) {
                 val entities = stations.map { it.toEntity() }
-                stationDao.insertAll(entities)
+                stationDao.syncBatch(entities)
                 
                 val now = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
                 sharedPref.edit().putString("last_db_sync_time", now).apply()
@@ -112,10 +112,11 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
             // 2. Regular background sync (24h interval)
             val periodicRequest = PeriodicWorkRequestBuilder<SyncWorker>(1, TimeUnit.DAYS)
                 .setConstraints(baseConstraints)
+                .setInitialDelay(5, TimeUnit.MINUTES)
                 .setBackoffCriteria(BackoffPolicy.EXPONENTIAL, 30, TimeUnit.SECONDS)
                 .build()
 
-            workManager.enqueueUniquePeriodicWork("StationSync", ExistingPeriodicWorkPolicy.KEEP, periodicRequest)
+            workManager.enqueueUniquePeriodicWork("StationSync", ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE, periodicRequest)
         }
     }
 }
