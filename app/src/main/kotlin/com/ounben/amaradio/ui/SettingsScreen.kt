@@ -113,11 +113,13 @@ fun SettingsScreen(
                     icon = Icons.Default.VolumeDown,
                     onCheckedChange = { viewModel.updateBoolean("pause_when_noisy", it) }
                 )
+                /*
                 SettingsClickable(
                     title = stringResource(R.string.settings_equalizer),
                     icon = Icons.Default.Tune,
                     onClick = onOpenEqualizer
                 )
+                */
             }
 
             // Connectivity
