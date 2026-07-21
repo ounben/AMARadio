@@ -258,8 +258,10 @@ fun MainScreen(
                         }
                         composable(Screen.Settings.route) {
                             val viewModel: SettingsViewModel = viewModel()
+                            val serverInfoViewModel: ServerInfoViewModel = viewModel()
                             SettingsScreen(
                                 viewModel = viewModel,
+                                serverInfoViewModel = serverInfoViewModel,
                                 onOpenProxy = { showProxyDialog = true },
                                 onOpenAbout = { 
                                     isPlayerExpanded = false

@@ -249,6 +249,12 @@
     <string name="tab_player_info">Info</string>
     <string name="tab_player_history">Titelverlauf</string>
 
+    <string name="database_summary_title">Lokale Datenbank</string>
+    <string name="database_total_stations">Sender gesamt</string>
+    <string name="database_last_sync">Letzte Synchronisierung</string>
+    <string name="database_update_now">Datenbank jetzt aktualisieren</string>
+    <string name="database_syncing">Synchronisierung läuft…</string>
+
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">DEFEKT</string>
     <string name="station_detail_deleted_on_server">GELÖSCHT</string>

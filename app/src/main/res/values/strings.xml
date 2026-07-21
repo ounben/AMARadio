@@ -242,6 +242,12 @@
     <string name="tab_player_info">Info</string>
     <string name="tab_player_history">Track history</string>
 
+    <string name="database_summary_title">Local Database</string>
+    <string name="database_total_stations">Total Stations</string>
+    <string name="database_last_sync">Last Sync</string>
+    <string name="database_update_now">Update Database Now</string>
+    <string name="database_syncing">Syncing…</string>
+
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">BROKEN</string>
     <string name="station_detail_deleted_on_server">DELETED</string>

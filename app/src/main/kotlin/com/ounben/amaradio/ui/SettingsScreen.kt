@@ -24,6 +24,7 @@ import com.ounben.amaradio.R
 @Composable
 fun SettingsScreen(
     viewModel: SettingsViewModel,
+    serverInfoViewModel: ServerInfoViewModel,
     onOpenProxy: () -> Unit,
     onOpenAbout: () -> Unit,
     onOpenStatistics: () -> Unit,
@@ -33,6 +34,7 @@ fun SettingsScreen(
     batterySummary: String
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val serverInfoUiState by serverInfoViewModel.uiState.collectAsState()
     val scrollState = rememberScrollState()
 
     SingleTabContainer(titleRes = R.string.nav_item_settings) {
@@ -51,6 +53,40 @@ fun SettingsScreen(
                     onClick = onRateApp
                 )
                 HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f))
+            }
+
+            // Database info
+            SettingsCategory(title = stringResource(R.string.database_summary_title)) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                ) {
+                    InfoRow(stringResource(R.string.database_total_stations), serverInfoUiState.localStationCount.toString())
+                    InfoRow(stringResource(R.string.database_last_sync), serverInfoUiState.lastSyncTime)
+                    
+                    Spacer(modifier = Modifier.height(8.dp))
+                    
+                    Button(
+                        onClick = { serverInfoViewModel.triggerManualSync() },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !serverInfoUiState.isSyncing,
+                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                    ) {
+                        if (serverInfoUiState.isSyncing) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(18.dp),
+                                color = Color.White,
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Icon(Icons.Default.Refresh, contentDescription = null)
+                        }
+                        Spacer(Modifier.width(8.dp))
+                        Text(if (serverInfoUiState.isSyncing) stringResource(R.string.database_syncing) else stringResource(R.string.database_update_now))
+                    }
+                }
             }
 
             // Appearance

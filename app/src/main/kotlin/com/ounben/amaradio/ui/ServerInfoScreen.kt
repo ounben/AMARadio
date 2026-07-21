@@ -65,7 +65,7 @@ fun ServerInfoScreen(
             Tab(
                 selected = selectedTabIndex == 1,
                 onClick = { selectedTabIndex = 1 },
-                text = { Text("Local Database") }
+                text = { Text(stringResource(R.string.database_summary_title)) }
             )
         }
 
@@ -148,10 +148,10 @@ fun LocalDbTab(
                 colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
-                    Text("Database Summary", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
+                    Text(stringResource(R.string.database_summary_title), style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold)
                     Spacer(Modifier.height(8.dp))
-                    InfoRow("Total Stations", uiState.localStationCount.toString())
-                    InfoRow("Last Sync", uiState.lastSyncTime)
+                    InfoRow(stringResource(R.string.database_total_stations), uiState.localStationCount.toString())
+                    InfoRow(stringResource(R.string.database_last_sync), uiState.lastSyncTime)
                 }
             }
         }
@@ -173,7 +173,7 @@ fun LocalDbTab(
                     Icon(Icons.Default.Refresh, contentDescription = null)
                 }
                 Spacer(Modifier.width(8.dp))
-                Text(if (uiState.isSyncing) "Syncing..." else "Update Database Now")
+                Text(if (uiState.isSyncing) stringResource(R.string.database_syncing) else stringResource(R.string.database_update_now))
             }
         }
 
