@@ -341,4 +341,16 @@
     <string name="accessibility_station_options">Station options</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Station: %1$s, Language: %2$s, Tags: %3$s</string>
+    <string name="alarm_back_desc" translatable="false">alarm back desc</string>
+    <string name="alert_select_mpd_server" translatable="false">mpd server</string>
+    <string name="alert_select_mpd_server_name" translatable="false">mpd server name</string>
+    <string name="alert_select_mpd_server_password" translatable="false">mdp password</string>
+    <string name="alert_select_mpd_server_add" translatable="false">alert_select_mpd_server_add</string>
+    <string name="alert_select_mpd_server_save" translatable="false">alert_select_mpd_server_save</string>
+    <string name="alert_select_mpd_server_remove" translatable="false">alert_select_mpd_server_remove</string>
+    <string name="alert_add_or_edit_mpd_server" translatable="false">alert_add_or_edit_mpd_server</string>
+    <string name="media_route_menu_title" translatable="false">media_route_menu_title</string>
+    <string name="app_id" translatable="false">app_id</string>
+    <string name="alarm_backup" translatable="false">alarm_backup</string>
+    <string name="alarm_fallback_info" translatable="false">alarm_fallback_info</string>
 </resources>

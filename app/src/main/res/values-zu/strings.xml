@@ -59,6 +59,9 @@
     <string name="error_station_load">Ayikwazanga ukuxhuma esiteshini</string>
     <string name="error_list_update">Ayikwazanga ukuxhuma kuseva yesiphequluli somsakazo</string>
 
+    <string name="error_no_connection">Alukho uxhumano lwe-inthanethi.</string>
+    <string name="warning_volume_zero">Ivolumu ikuziro. Ungase ungezwa lutho.</string>
+
     <string name="share_action">Yabelana ngesixhumanisi sesiteshi no…</string>
 
     <string name="nav_item_stations">Iziteshi</string>

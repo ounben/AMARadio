@@ -59,6 +59,9 @@
     <string name="error_station_load">اسٹیشن سے رابطہ نہیں ہو سکا</string>
     <string name="error_list_update">ریڈیو براؤزر سرور سے رابطہ نہیں ہو سکا</string>
 
+    <string name="error_no_connection">انٹرنیٹ کنکشن دستیاب نہیں ہے</string>
+    <string name="warning_volume_zero">والیم صفر پر ہے۔ شاید آپ کو کچھ سنائی نہ دے۔</string>
+
     <string name="share_action">اسٹیشن لنک شیئر کریں بذریعہ…</string>
 
     <string name="nav_item_stations">اسٹیشنز</string>

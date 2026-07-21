@@ -59,6 +59,9 @@
     <string name="error_station_load">Ei voitu yhdistää asemaan</string>
     <string name="error_list_update">Ei voitu yhdistää radio browser -palvelimeen</string>
 
+    <string name="error_no_connection">Internet-yhteyttä ei ole käytettävissä</string>
+    <string name="warning_volume_zero">Äänenvoimakkuus on nollassa. Et ehkä kuule mitään.</string>
+
     <string name="share_action">Jaa aseman osoite sovelluksella&#8230;</string>
 
     <string name="nav_item_stations">Asemat</string>

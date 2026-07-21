@@ -58,6 +58,10 @@
   <string name="filter_empty_hint">Skriv eit namn i feltet over for å lagra denne tilpassa visinga!</string>
   <string name="error_station_load">Klarte ikkje kopla til kanalen</string>
   <string name="error_list_update">Klarte ikkje kopla til radio browser-tenaren</string>
+
+  <string name="error_no_connection">Inga internettilkopling tilgjengeleg.</string>
+  <string name="warning_volume_zero">Volumet er på null. Det kan henda du ikkje høyrer noko.</string>
+
   <string name="share_action">Del kanallenkje med&#8230;</string>
   <string name="nav_item_stations">Kanalar</string>
   <string name="nav_item_starred">Favorittar</string>

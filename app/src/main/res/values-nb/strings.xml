@@ -57,8 +57,11 @@
   <string name="filter_empty_sort_desc">Klikk, Alfabet, Stemmer oder Siste endring</string>
   <string name="filter_empty_hint">Skriv et navn i feltet over for å lagre denne tilpassede visningen!</string>
   <string name="error_station_load">Klarte ikke koble til kanalen</string>
-  <string name="error_list_update">Klarte ikke koble til radio-browser-serveren</string>
-  
+  <string name="error_list_update">Klarte nicht koble til radio-browser-serveren</string>
+
+  <string name="error_no_connection">Ingen internettilkobling tilgjengelig.</string>
+  <string name="warning_volume_zero">Volumet er på null. Det kan hende du ikke hører noe.</string>
+
   <string name="share_action">Del kanallenke med&#8230;</string>
 
   <string name="nav_item_stations">Kanaler</string>

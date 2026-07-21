@@ -59,6 +59,9 @@
     <string name="error_station_load">Không thể kết nối đến đài</string>
     <string name="error_list_update">Không thể kết nối đến máy chủ radio browser</string>
 
+    <string name="error_no_connection">Không có kết nối internet.</string>
+    <string name="warning_volume_zero">Âm lượng đang ở mức 0. Bạn có thể không nghe thấy gì.</string>
+
     <string name="share_action">Chia sẻ liên kết đài với…</string>
 
     <string name="nav_item_stations">Đài</string>

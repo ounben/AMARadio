@@ -59,6 +59,9 @@
     <string name="error_station_load">Stansiyaga ulanib boʻlmadi</string>
     <string name="error_list_update">Radio brauzer serveriga ulanib boʻlmadi</string>
 
+    <string name="error_no_connection">Internet ulanishi mavjud emas</string>
+    <string name="warning_volume_zero">Ovoz darajasi nolga teng. Hech narsa eshitilmasligi mumkin.</string>
+
     <string name="share_action">Stansiya havolasini ulashish…</string>
 
     <string name="nav_item_stations">Stansiyalar</string>

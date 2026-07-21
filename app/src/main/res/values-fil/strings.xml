@@ -59,6 +59,9 @@
     <string name="error_station_load">Hindi makakonekta sa station</string>
     <string name="error_list_update">Hindi makakonekta sa radio browser server</string>
 
+    <string name="error_no_connection">Walang available na koneksyon sa internet</string>
+    <string name="warning_volume_zero">Zero ang volume. Maaaring wala kang marinig.</string>
+
     <string name="share_action">Ibahagi ang link ng station sa…</string>
 
     <string name="nav_item_stations">Mga Station</string>

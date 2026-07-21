@@ -59,6 +59,9 @@
     <string name="error_station_load">Не може да се поврзе со станицата</string>
     <string name="error_list_update">Не може да се поврзе со радио прелистувачот</string>
 
+    <string name="error_no_connection">Нема достапна интернет-врска.</string>
+    <string name="warning_volume_zero">Јачината на звукот е нула. Можеби нема да слушнете ништо.</string>
+
     <string name="share_action">Сподели врска до станицата преку…</string>
 
     <string name="nav_item_stations">Станици</string>

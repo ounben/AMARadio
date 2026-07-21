@@ -59,6 +59,9 @@
     <string name="error_station_load">Nem lehet kapcsolódni az állomáshoz</string>
     <string name="error_list_update">Nem lehet kapcsolódni a radio browser szerverhez</string>
 
+    <string name="error_no_connection">Nincs elérhető internetkapcsolat.</string>
+    <string name="warning_volume_zero">A hangerő nullán van. Előfordulhat, hogy semmit sem hall.</string>
+
     <string name="share_action">Állomáshivatkozás megosztása&#8230;</string>
 
     <string name="nav_item_stations">Állomások</string>

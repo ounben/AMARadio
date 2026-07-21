@@ -59,6 +59,9 @@
     <string name="error_station_load">اتصال به ایستگاه برقرار نشد</string>
     <string name="error_list_update">اتصال به سرور radio browser برقرار نشد</string>
 
+    <string name="error_no_connection">اتصال به اینترنت در دسترس نیست</string>
+    <string name="warning_volume_zero">صدا روی صفر است. ممکن است چیزی نشنوید.</string>
+
     <string name="share_action">اشتراک‌گذاری لینک ایستگاه با…</string>
 
     <string name="nav_item_stations">ایستگاه‌ها</string>

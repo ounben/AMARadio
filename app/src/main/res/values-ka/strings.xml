@@ -59,6 +59,9 @@
     <string name="error_station_load">სადგურთან დაკავშირება ვერ მოხერხდა</string>
     <string name="error_list_update">Radio Browser სერვერთან დაკავშირება ვერ მოხერხდა</string>
 
+    <string name="error_no_connection">ინტერნეტ კავშირი მიუწვდომელია.</string>
+    <string name="warning_volume_zero">ხმა ნულზეა. შესაძლოა ვერაფერი გაიგონოთ.</string>
+
     <string name="share_action">სადგურის ბმულის გაზიარება…</string>
 
     <string name="nav_item_stations">სადგურები</string>

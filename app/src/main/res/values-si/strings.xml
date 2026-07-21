@@ -59,6 +59,9 @@
     <string name="error_station_load">නාලිකාවට සම්බන්ධ වීමට නොහැකි විය</string>
     <string name="error_list_update">Radio Browser සේවාදායකයට සම්බන්ධ වීමට නොහැකි විය</string>
 
+    <string name="error_no_connection">අන්තර්ජාල සම්බන්ධතාවක් නොමැත</string>
+    <string name="warning_volume_zero">ශබ්දය ශුන්‍ය මට්ටමේ පවතී. ඔබට කිසිවක් ඇසෙන්නේ නැති විය හැක.</string>
+
     <string name="share_action">නාලිකා සබැඳිය බෙදාගන්න…</string>
 
     <string name="nav_item_stations">නාලිකා</string>

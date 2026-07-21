@@ -59,6 +59,9 @@
     <string name="error_station_load">Nuk mund të lidhej me stacionin</string>
     <string name="error_list_update">Nuk mund të lidhej me serverin e radio browser</string>
 
+    <string name="error_no_connection">Nuk ka lidhje interneti të disponueshme.</string>
+    <string name="warning_volume_zero">Vëllimi është në zero. Mund të mos dëgjoni asgjë.</string>
+
     <string name="share_action">Shpërndaj linkun e stacionit me…</string>
 
     <string name="nav_item_stations">Stacionet</string>

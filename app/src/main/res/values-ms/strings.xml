@@ -59,6 +59,9 @@
     <string name="error_station_load">Tidak dapat menyambung ke stesen</string>
     <string name="error_list_update">Tidak dapat menyambung ke pelayan radio browser</string>
 
+    <string name="error_no_connection">Tiada sambungan internet tersedia.</string>
+    <string name="warning_volume_zero">Kelantangan berada pada tahap sifar. Anda mungkin tidak mendengar apa-apa.</string>
+
     <string name="share_action">Kongsi pautan stesen dengan…</string>
 
     <string name="nav_item_stations">Stesen</string>

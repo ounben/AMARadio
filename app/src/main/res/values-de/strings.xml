@@ -3,8 +3,10 @@
     <string name="detail_name">Name</string>
     <string name="detail_tags">Tags</string>
     <string name="detail_country">Land</string>
+    <string name="detail_create_shortcut">Zum Startbildschirm hinzufügen</string>
     <string name="detail_language">Sprache</string>
     <string name="detail_weblink">Weblink</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Abspielen</string>
     <string name="detail_pause">Pause</string>
     <string name="detail_stop">Stoppen</string>
@@ -185,6 +187,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Fortsetzen bei Bluetooth-Verbindung</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Wiedergabe bei Bluetooth A2DP Verbindung fortsetzen</string>
 
+    <string name="settings_auto_resume_on_any_connected">Bei jeder Verbindung fortsetzen</string>
+
     <string name="settings_warn_no_wifi">WLAN-Warnung</string>
     <string name="settings_warn_no_wifi_on">Warnen bei Wiedergabe ohne WLAN</string>
     <string name="settings_warn_no_wifi_off">Keine Warnung bei fehlendem WLAN</string>
@@ -209,6 +213,9 @@
     <string name="alert_delete_favorites">Möchtest du alle Favoriten wirklich löschen?</string>
     <string name="yes">Ja</string>
     <string name="no">Nein</string>
+
+    <string name="alert_select_player">Bitte wähle einen Player aus</string>
+    <string name="alert_select_player_name">Name</string>
 
     <string name="alert_select_mpd_server">Bitte wähle einen Server aus</string>
     <string name="alert_select_mpd_server_name">Servername</string>

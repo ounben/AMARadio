@@ -59,6 +59,9 @@
     <string name="error_station_load">স্টেশনের সাথে সংযোগ করা যায়নি</string>
     <string name="error_list_update">রেডিও ব্রাউজার সার্ভারের সাথে সংযোগ করা যায়নি</string>
 
+    <string name="error_no_connection">কোনো ইন্টারনেট সংযোগ উপলব্ধ নেই</string>
+    <string name="warning_volume_zero">ভলিউম শূন্যে আছে। আপনি কিছু শুনতে না-ও পারেন।</string>
+
     <string name="share_action">স্টেশন লিঙ্ক শেয়ার করুন…</string>
 
     <string name="nav_item_stations">স্টেশনসমূহ</string>

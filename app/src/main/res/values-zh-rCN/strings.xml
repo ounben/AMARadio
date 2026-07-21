@@ -59,6 +59,9 @@
     <string name="error_station_load">无法连接电台</string>
     <string name="error_list_update">无法连接 radio browser 服务器</string>
 
+    <string name="error_no_connection">无可用的互联网连接</string>
+    <string name="warning_volume_zero">音量已调至零。您可能听不到任何声音。</string>
+
     <string name="share_action">分享电台链接到&#8230;</string>
 
     <string name="nav_item_stations">电台</string>
@@ -210,6 +213,11 @@
     <string name="alert_delete_favorites">您真要删除全部收藏吗？</string>
     <string name="yes">确认</string>
     <string name="no">取消</string>
+
+    <string name="alert_select_player">请选择一个播放器</string>
+    <string name="alert_select_player_name">名称</string>
+    <string name="hostname">主机名</string>
+    <string name="port">端口</string>
 
     <string name="alert_press_back_to_exit">再按一次返回退出</string>
 

@@ -59,6 +59,9 @@
     <string name="error_station_load">സ്റ്റേഷനുമായി ബന്ധപ്പെടാൻ കഴിഞ്ഞില്ല</string>
     <string name="error_list_update">റേഡിയോ ബ്രൗസർ സെർവറുമായി ബന്ധപ്പെടാൻ കഴിഞ്ഞില്ല</string>
 
+    <string name="error_no_connection">ഇന്റർനെറ്റ് കണക്ഷൻ ലഭ്യമല്ല.</string>
+    <string name="warning_volume_zero">വോളിയം പൂജ്യത്തിലാണ്. നിങ്ങൾക്ക് ഒന്നും കേൾക്കാൻ കഴിഞ്ഞേക്കില്ല.</string>
+
     <string name="share_action">സ്റ്റേഷൻ ലിങ്ക് പങ്കുവെക്കുക…</string>
 
     <string name="nav_item_stations">സ്റ്റേഷനുകൾ</string>

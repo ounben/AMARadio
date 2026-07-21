@@ -59,6 +59,9 @@
     <string name="error_station_load">Kan geen verbinding maken met station</string>
     <string name="error_list_update">Kan geen verbinding maken met radio browser server</string>
 
+    <string name="error_no_connection">Geen internetverbinding beschikbaar</string>
+    <string name="warning_volume_zero">Volume staat op nul. Je hoort mogelijk niets.</string>
+
     <string name="share_action">Stationslink delen met&#8230;</string>
 
     <string name="nav_item_stations">Stations</string>
@@ -183,6 +186,8 @@
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Hervatten bij Bluetooth-verbinding</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Afspelen hervatten bij verbinden Bluetooth A2DP-apparaat</string>
+
+    <string name="settings_auto_resume_on_any_connected">Hervatten op elke verbinding</string>
 
     <string name="settings_warn_no_wifi">Wi-Fi waarschuwing</string>
     <string name="settings_warn_no_wifi_on">Waarschuwen bij afspelen zonder Wi-Fi</string>

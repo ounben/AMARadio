@@ -59,6 +59,9 @@
     <string name="error_station_load">Није могуће повезивање са станицом</string>
     <string name="error_list_update">Није могуће повезивање са radio browser сервером</string>
 
+    <string name="error_no_connection">Интернет веза није доступна.</string>
+    <string name="warning_volume_zero">Гласноћа је на нули. Можда нећете ништа чути.</string>
+
     <string name="share_action">Подели везу станице путем…</string>
 
     <string name="nav_item_stations">Станице</string>

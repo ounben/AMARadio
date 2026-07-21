@@ -59,6 +59,9 @@
     <string name="error_station_load">Jaamaga ei õnnestunud ühendust saada</string>
     <string name="error_list_update">Radio browseri serveriga ei õnnestunud ühendust saada</string>
 
+    <string name="error_no_connection">Interneti-ühendus puudub</string>
+    <string name="warning_volume_zero">Helitugevus on nullis. Te ei pruugi midagi kuulda.</string>
+
     <string name="share_action">Jaga jaama linki…</string>
 
     <string name="nav_item_stations">Jaamad</string>

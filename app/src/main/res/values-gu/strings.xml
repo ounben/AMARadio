@@ -59,6 +59,9 @@
     <string name="error_station_load">સ્ટેશન સાથે જોડાઈ શક્યું નથી</string>
     <string name="error_list_update">રેડિયો બ્રાઉઝર સર્વર સાથે જોડાઈ શક્યું નથી</string>
 
+    <string name="error_no_connection">કોઈ ઇન્ટરનેટ કનેક્શન ઉપલબ્ધ નથી</string>
+    <string name="warning_volume_zero">વોલ્યુમ શૂન્ય પર છે. કદાચ તમને કંઈ સંભળાશે નહીં.</string>
+
     <string name="share_action">સ્ટેશન લિંક શેર કરો…</string>
 
     <string name="nav_item_stations">સ્ટેશનો</string>

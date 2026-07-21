@@ -59,6 +59,9 @@
     <string name="error_station_load">Չհաջողվեց միանալ կայանին</string>
     <string name="error_list_update">Չհաջողվեց միանալ radio browser սերվերին</string>
 
+    <string name="error_no_connection">Ինտերնետ կապը հասանելի չէ:</string>
+    <string name="warning_volume_zero">Ձայնի մակարդակը զրո է: Հնարավոր է՝ ոչինչ չլսեք։</string>
+
     <string name="share_action">Կիսվել կայանի հղումով…</string>
 
     <string name="nav_item_stations">Կայաններ</string>

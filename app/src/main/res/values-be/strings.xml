@@ -59,6 +59,9 @@
     <string name="error_station_load">Не ўдалося падключыцца да станцыі</string>
     <string name="error_list_update">Не ўдалося падключыцца да сервера radio browser</string>
 
+    <string name="error_no_connection">Няма падключэння да інтэрнэту</string>
+    <string name="warning_volume_zero">Гук на нулі. Вы можаце нічога не пачуць.</string>
+
     <string name="share_action">Падзяліцца спасылкай на станцыю праз…</string>
 
     <string name="nav_item_stations">Станцыі</string>

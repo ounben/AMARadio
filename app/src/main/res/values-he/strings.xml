@@ -59,6 +59,9 @@
     <string name="error_station_load">לא ניתן להתחבר לתחנה</string>
     <string name="error_list_update">לא ניתן להתחבר לשרת דפדפן הרדיו</string>
 
+    <string name="error_no_connection">אין חיבור לאינטרנט זמין</string>
+    <string name="warning_volume_zero">עוצמת הקול היא אפס. יתכן שלא תשמע דבר.</string>
+
     <string name="share_action">שתף קישור לתחנה עם…</string>
 
     <string name="nav_item_stations">תחנות</string>

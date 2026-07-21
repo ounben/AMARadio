@@ -59,6 +59,9 @@
     <string name="error_station_load">局に接続できませんでした</string>
     <string name="error_list_update">ラジオブラウザサーバーに接続できませんでした</string>
 
+    <string name="error_no_connection">インターネット接続がありません。</string>
+    <string name="warning_volume_zero">音量がゼロです。何も聞こえない可能性があります。</string>
+
     <string name="share_action">局のリンクを共有&#8230;</string>
 
     <string name="nav_item_stations">放送局</string>

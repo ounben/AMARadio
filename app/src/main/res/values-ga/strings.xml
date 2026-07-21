@@ -59,6 +59,9 @@
     <string name="error_station_load">Níorbh fhéidir nascadh leis an stáisiún</string>
     <string name="error_list_update">Níorbh fhéidir nascadh le freastalaí radio browser</string>
 
+    <string name="error_no_connection">Níl aon nasc idirlín ar fáil</string>
+    <string name="warning_volume_zero">Tá an t-airde fuaime ag nialas. Seans nach gcloisfidh tú aon rud.</string>
+
     <string name="share_action">Comhroinn nasc an stáisiúin le…</string>
 
     <string name="nav_item_stations">Stáisiúin</string>

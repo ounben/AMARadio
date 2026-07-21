@@ -59,6 +59,9 @@
     <string name="error_station_load">Неуспешно свързване със станцията</string>
     <string name="error_list_update">Неуспешно свързване със сървъра на radio browser</string>
 
+    <string name="error_no_connection">Няма налична интернет връзка</string>
+    <string name="warning_volume_zero">Силата на звука е на нула. Може да не чуете нищо.</string>
+
     <string name="share_action">Сподели връзката към станцията чрез…</string>
 
     <string name="nav_item_stations">Станции</string>

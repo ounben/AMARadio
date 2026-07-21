@@ -59,6 +59,9 @@
     <string name="error_station_load">Kunne ikke forbinde til station</string>
     <string name="error_list_update">Kunne ikke forbinde til radio browser server</string>
 
+    <string name="error_no_connection">Ingen internetforbindelse tilgængelig</string>
+    <string name="warning_volume_zero">Lydstyrken er på nul. Du hører muligvis ikke noget.</string>
+
     <string name="share_action">Del station henvisning med&#8230;</string>
 
     <string name="nav_item_stations">Stationer</string>

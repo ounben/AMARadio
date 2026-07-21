@@ -59,6 +59,9 @@
     <string name="error_station_load">ಸ್ಟೇಷನ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
     <string name="error_list_update">ರೇಡಿಯೋ ಬ್ರೌಸರ್ ಸರ್ವರ್‌ಗೆ ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ</string>
 
+    <string name="error_no_connection">ಇಂಟರ್ನೆಟ್ ಸಂಪರ್ಕ ಲಭ್ಯವಿಲ್ಲ.</string>
+    <string name="warning_volume_zero">ವಾಲ್ಯೂಮ್ ಶೂನ್ಯದಲ್ಲಿದೆ. ನಿಮಗೆ ಏನೂ ಕೇಳಿಸದಿರಬಹುದು.</string>
+
     <string name="share_action">ಸ್ಟೇಷನ್ ಲಿಂಕ್ ಅನ್ನು ಇವರೊಂದಿಗೆ ಹಂಚಿಕೊಳ್ಳಿ…</string>
 
     <string name="nav_item_stations">ಸ್ಟೇಷನ್‌ಗಳು</string>

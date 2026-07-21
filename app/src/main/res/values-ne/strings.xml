@@ -59,6 +59,9 @@
     <string name="error_station_load">स्टेशनसँग जडान हुन सकेन</string>
     <string name="error_list_update">रेडियो ब्राउजर सर्भरसँग जडान हुन सकेन</string>
 
+    <string name="error_no_connection">इन्टरनेट जडान उपलब्ध छैन</string>
+    <string name="warning_volume_zero">भोल्युम शून्यमा छ। तपाईंले केही सुन्न सक्नुहुन्न।</string>
+
     <string name="share_action">स्टेशन लिङ्क साझा गर्नुहोस्…</string>
 
     <string name="nav_item_stations">स्टेशनहरू</string>

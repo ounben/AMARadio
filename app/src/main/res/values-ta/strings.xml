@@ -59,6 +59,9 @@
     <string name="error_station_load">நிலையத்துடன் இணைக்க முடியவில்லை</string>
     <string name="error_list_update">வானொலி உலாவி சேவையகத்துடன் இணைக்க முடியவில்லை</string>
 
+    <string name="error_no_connection">இணைய இணைப்பு இல்லை.</string>
+    <string name="warning_volume_zero">ஒலி அளவு பூஜ்ஜியத்தில் உள்ளது. உங்களால் எதையும் கேட்க முடியாது.</string>
+
     <string name="share_action">நிலைய இணைப்பை இதனுடன் பகிரவும்…</string>
 
     <string name="nav_item_stations">நிலையங்கள்</string>

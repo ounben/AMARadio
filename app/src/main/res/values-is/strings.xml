@@ -59,6 +59,9 @@
     <string name="error_station_load">Gat ekki tengst stöðinni</string>
     <string name="error_list_update">Gat ekki tengst radio browser þjóni</string>
 
+    <string name="error_no_connection">Engin nettenging í boði.</string>
+    <string name="warning_volume_zero">Hljóðstyrkur er á núlli. Þú heyrir kannski ekki neitt.</string>
+
     <string name="share_action">Deila stöðvartengli með…</string>
 
     <string name="nav_item_stations">Stöðvar</string>

@@ -59,6 +59,9 @@
     <string name="error_station_load">Nie można połączyć się ze stacją</string>
     <string name="error_list_update">Nie można połączyć się z serwerem radio browser</string>
 
+    <string name="error_no_connection">Brak połączenia z Internetem</string>
+    <string name="warning_volume_zero">Głośność jest ustawiona na zero. Możesz nic nie słyszeć.</string>
+
     <string name="share_action">Udostępnij link do stacji za pomocą&#8230;</string>
 
     <string name="nav_item_stations">Stacje</string>

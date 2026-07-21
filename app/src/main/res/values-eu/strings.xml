@@ -60,6 +60,9 @@
     <string name="error_station_load">Ezin da irrati-etxearekin konektatu</string>
     <string name="error_list_update">Ezin izan da irrati browser zerbitzariarekin konektatu</string>
 
+    <string name="error_no_connection">Ez dago Interneteko konexiorik erabilgarri</string>
+    <string name="warning_volume_zero">Bolumena zeroan dago. Baliteke ezer ez entzutea.</string>
+
     <string name="share_action">Partekatu irrati-etxearen esteka honekin&#8230;</string>
 
     <string name="nav_item_stations">Irratiak</string>

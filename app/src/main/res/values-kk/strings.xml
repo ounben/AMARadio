@@ -59,6 +59,9 @@
     <string name="error_station_load">Станцияға қосылу мүмкін болмады</string>
     <string name="error_list_update">Radio browser серверіне қосылу мүмкін болмады</string>
 
+    <string name="error_no_connection">Интернет қосылымы жоқ.</string>
+    <string name="warning_volume_zero">Дыбыс деңгейі нөлге тең. Ештеңе естілмеуі мүмкін.</string>
+
     <string name="share_action">Станция сілтемесімен бөлісу…</string>
 
     <string name="nav_item_stations">Станциялар</string>

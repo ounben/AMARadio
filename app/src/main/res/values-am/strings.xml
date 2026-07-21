@@ -59,6 +59,9 @@
     <string name="error_station_load">ከጣቢያው ጋር መገናኘት አልተቻለም</string>
     <string name="error_list_update">ከሬዲዮ ብሮውዘር አገልጋይ ጋር መገናኘት አልተቻለም</string>
 
+    <string name="error_no_connection">የኢንተርኔት ግንኙነት የለም</string>
+    <string name="warning_volume_zero">ድምጹ ዜሮ ላይ ነው። ምንም ላይሰማዎት ይችላል።</string>
+
     <string name="share_action">የጣቢያ አገናኝ አጋራ ከ...</string>
 
     <string name="nav_item_stations">ጣቢያዎች</string>

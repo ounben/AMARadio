@@ -59,6 +59,9 @@
     <string name="error_station_load">Neizdevās izveidot savienojumu ar staciju</string>
     <string name="error_list_update">Neizdevās izveidot savienojumu ar radio pārlūka serveri</string>
 
+    <string name="error_no_connection">Nav pieejams interneta savienojums.</string>
+    <string name="warning_volume_zero">Skaļums ir iestatīts uz nulli. Jūs varētu neko nedzirdēt.</string>
+
     <string name="share_action">Kopīgot stacijas saiti ar…</string>
 
     <string name="nav_item_stations">Stacijas</string>

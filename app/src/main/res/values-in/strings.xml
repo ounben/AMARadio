@@ -59,6 +59,9 @@
     <string name="error_station_load">Tidak bisa menyambung ke stasiun</string>
     <string name="error_list_update">Tidak bisa menyambung ke server radio browser</string>
 
+    <string name="error_no_connection">Tidak ada koneksi internet.</string>
+    <string name="warning_volume_zero">Volume berada di angka nol. Anda mungkin tidak mendengar apa pun.</string>
+
     <string name="share_action">Bagikan tautan stasiun dengan&#8230;</string>
 
     <string name="nav_item_stations">Stasiun</string>

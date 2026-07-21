@@ -59,6 +59,9 @@
     <string name="error_station_load">Αδυναμία σύνδεσης στο σταθμό</string>
     <string name="error_list_update">Αδυναμία σύνδεσης στον διακομιστή radio browser</string>
 
+    <string name="error_no_connection">Δεν υπάρχει διαθέσιμη σύνδεση στο διαδίκτυο</string>
+    <string name="warning_volume_zero">Η ένταση είναι στο μηδέν. Μπορεί να μην ακούσετε τίποτα.</string>
+
     <string name="share_action">Μοίρασμα συνδέσμου σταθμού με&#8230;</string>
 
     <string name="nav_item_stations">Σταθμοί</string>

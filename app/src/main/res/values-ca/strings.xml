@@ -59,6 +59,9 @@
     <string name="error_station_load">No s\'ha pogut connectar a l\'emissora</string>
     <string name="error_list_update">No s\'ha pogut connectar al servidor</string>
 
+    <string name="error_no_connection">No hi ha connexió a Internet disponible</string>
+    <string name="warning_volume_zero">El volum està a zero. Pot ser que no sentis res.</string>
+
     <string name="share_action">Compartir emissora amb&#8230;</string>
 
     <string name="nav_item_stations">Emissores</string>

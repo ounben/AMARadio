@@ -59,6 +59,9 @@
     <string name="error_station_load">Nepavyko prisijungti prie stoties</string>
     <string name="error_list_update">Nepavyko prisijungti prie radijo naršyklės serverio</string>
 
+    <string name="error_no_connection">Nėra interneto ryšio.</string>
+    <string name="warning_volume_zero">Garsumas nustatytas į nulį. Galite nieko negirdėti.</string>
+
     <string name="share_action">Dalintis stoties nuoroda per…</string>
 
     <string name="nav_item_stations">Stotys</string>

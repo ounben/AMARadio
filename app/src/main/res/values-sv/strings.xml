@@ -59,6 +59,9 @@
     <string name="error_station_load">Kunde inte ansluta till stationen</string>
     <string name="error_list_update">Kunde inte ansluta till radio browser-servern</string>
 
+    <string name="error_no_connection">Ingen internetanslutning tillgänglig.</string>
+    <string name="warning_volume_zero">Volymen är noll. Du kanske inte hör något.</string>
+
     <string name="share_action">Dela stationslänk med…</string>
 
     <string name="nav_item_stations">Stationer</string>

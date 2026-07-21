@@ -59,6 +59,9 @@
     <string name="error_station_load">Impossibile connettersi alla stazione</string>
     <string name="error_list_update">Impossibile connettersi al server radio browser</string>
 
+    <string name="error_no_connection">Nessuna connessione Internet disponibile</string>
+    <string name="warning_volume_zero">Il volume è a zero. Potresti non sentire nulla.</string>
+
     <string name="share_action">Condividi collegamento alla stazione con&#8230;</string>
 
     <string name="nav_item_stations">Stazioni</string>

@@ -59,6 +59,9 @@
     <string name="error_station_load">Nu s-a putut conecta la post</string>
     <string name="error_list_update">Nu s-a putut conecta la serverul radio browser</string>
 
+    <string name="error_no_connection">Nu există nicio conexiune la internet disponibilă</string>
+    <string name="warning_volume_zero">Volumul este la zero. S-ar putea să nu auzi nimic.</string>
+
     <string name="share_action">Partajează link-ul postului cu…</string>
 
     <string name="nav_item_stations">Posturi</string>

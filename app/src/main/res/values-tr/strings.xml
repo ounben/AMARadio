@@ -59,6 +59,9 @@
     <string name="error_station_load">İstasyona bağlanılamadı</string>
     <string name="error_list_update">Radio browser sunucusuna bağlanılamadı</string>
 
+    <string name="error_no_connection">İnternet bağlantısı yok</string>
+    <string name="warning_volume_zero">Ses sıfırda. Hiçbir şey duyamayabilirsiniz.</string>
+
     <string name="share_action">İstasyon bağlantısını paylaş&#8230;</string>
 
     <string name="nav_item_stations">İstasyonlar</string>
@@ -184,6 +187,8 @@
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth bağlantısında devam et</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP cihazı bağlandığında oynatmaya devam et</string>
 
+    <string name="settings_auto_resume_on_any_connected">Herhangi bir bağlantıda devam et</string>
+
     <string name="settings_warn_no_wifi">Wi-Fi uyarısı</string>
     <string name="settings_warn_no_wifi_on">Wi-Fi bağlantısı olmadan oynatırken uyar</string>
     <string name="settings_warn_no_wifi_off">Wi-Fi bağlantısı olmadığında uyarma</string>
@@ -208,6 +213,11 @@
     <string name="alert_delete_favorites">Tüm favorileri gerçekten silmek istiyor musunuz?</string>
     <string name="yes">Evet</string>
     <string name="no">Hayır</string>
+
+    <string name="alert_select_player">Lütfen bir oynatıcı seçin</string>
+    <string name="alert_select_player_name">Ad</string>
+    <string name="hostname">Ana makine adı</string>
+    <string name="port">Bağlantı noktası</string>
 
     <string name="alert_press_back_to_exit">Çıkmak için geri tuşuna bir kez daha basın</string>
 

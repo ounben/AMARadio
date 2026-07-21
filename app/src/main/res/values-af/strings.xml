@@ -59,6 +59,9 @@
     <string name="error_station_load">Kon nie aan stasie koppel nie</string>
     <string name="error_list_update">Kon nie aan radiobrowser-bediener koppel nie</string>
 
+    <string name="error_no_connection">Geen internetverbinding beskikbaar nie</string>
+    <string name="warning_volume_zero">Volume is op nul. Jy sal dalk niks hoor nie.</string>
+
     <string name="share_action">Deel stasieskakel met…</string>
 
     <string name="nav_item_stations">Stasies</string>

@@ -59,6 +59,9 @@
     <string name="error_station_load">స్టేషన్‌కి కనెక్ట్ కాలేదు</string>
     <string name="error_list_update">రేడియో బ్రౌజర్ సర్వర్‌కు కనెక్ట్ కాలేదు</string>
 
+    <string name="error_no_connection">ఇంటర్నెట్ కనెక్షన్ లేదు.</string>
+    <string name="warning_volume_zero">వాల్యూమ్ సున్నా వద్ద ఉంది. మీకు ఏమీ వినిపించకపోవచ్చు.</string>
+
     <string name="share_action">స్టేషన్ లింక్‌ను వీటితో షేర్ చేయండి…</string>
 
     <string name="nav_item_stations">స్టేషన్లు</string>

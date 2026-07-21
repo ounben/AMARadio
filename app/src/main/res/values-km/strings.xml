@@ -59,6 +59,9 @@
     <string name="error_station_load">មិនអាចភ្ជាប់ទៅស្ថានីយ៍បានទេ</string>
     <string name="error_list_update">មិនអាចភ្ជាប់ទៅម៉ាស៊ីនមេ radio browser បានទេ</string>
 
+    <string name="error_no_connection">មិនមានការភ្ជាប់អ៊ីនធឺណិតទេ។</string>
+    <string name="warning_volume_zero">កម្រិតសំឡេងគឺសូន្យ។ អ្នកប្រហែលជាមិនឮអ្វីទាំងអស់។</string>
+
     <string name="share_action">ចែករំលែកតំណស្ថានីយ៍ទៅកាន់…</string>
 
     <string name="nav_item_stations">ស្ថានីយ៍</string>

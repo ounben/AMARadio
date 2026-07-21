@@ -59,6 +59,9 @@
     <string name="error_station_load">Не удалось подключиться к станции</string>
     <string name="error_list_update">Не удалось подключиться к серверу radio browser</string>
 
+    <string name="error_no_connection">Нет подключения к интернету</string>
+    <string name="warning_volume_zero">Уровень громкости — ноль. Вы можете ничего не услышать.</string>
+
     <string name="share_action">Поделиться ссылкой на станцию с&#8230;</string>
 
     <string name="nav_item_stations">Станции</string>
@@ -210,6 +213,11 @@
     <string name="alert_delete_favorites">Вы действительно хотите удалить всё избранное?</string>
     <string name="yes">Да</string>
     <string name="no">Нет</string>
+
+    <string name="alert_select_player">Выберите проигрыватель</string>
+    <string name="alert_select_player_name">Имя</string>
+    <string name="hostname">Имя хоста</string>
+    <string name="port">Порт</string>
 
     <string name="alert_press_back_to_exit">Нажмите «Назад» ещё раз для выхода</string>
 

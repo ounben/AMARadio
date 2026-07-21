@@ -59,6 +59,9 @@
     <string name="error_station_load">تعذر الاتصال بالمحطة</string>
     <string name="error_list_update">تعذر الاتصال بخادم دليل الراديو</string>
 
+    <string name="error_no_connection">لا يتوفر اتصال بالإنترنت</string>
+    <string name="warning_volume_zero">مستوى الصوت صفر. قد لا تتمكن من سماع أي شيء.</string>
+
     <string name="share_action">مشاركة رابط المحطة مع..</string>
 
     <string name="nav_item_stations">المحطات</string>

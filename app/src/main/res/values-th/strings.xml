@@ -59,6 +59,9 @@
     <string name="error_station_load">ไม่สามารถเชื่อมต่อกับสถานีได้</string>
     <string name="error_list_update">ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ radio browser ได้</string>
 
+    <string name="error_no_connection">ไม่มีการเชื่อมต่ออินเทอร์เน็ต</string>
+    <string name="warning_volume_zero">ระดับเสียงเป็นศูนย์ คุณอาจไม่ได้ยินเสียงใดๆ</string>
+
     <string name="share_action">แชร์ลิงก์สถานีไปยัง…</string>
 
     <string name="nav_item_stations">สถานี</string>

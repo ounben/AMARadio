@@ -59,6 +59,9 @@
     <string name="error_station_load">स्टेशनशी कनेक्ट होऊ शकले नाही</string>
     <string name="error_list_update">रेडिओ ब्राउझर सर्व्हरशी कनेक्ट होऊ शकले नाही</string>
 
+    <string name="error_no_connection">इंटरनेट कनेक्शन उपलब्ध नाही.</string>
+    <string name="warning_volume_zero">आवाज शून्य आहे. तुम्हाला कदाचित काहीही ऐकू येणार नाही.</string>
+
     <string name="share_action">स्टेशन लिंक शेअर करा…</string>
 
     <string name="nav_item_stations">स्टेशन्स</string>

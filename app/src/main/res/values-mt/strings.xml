@@ -59,6 +59,9 @@
     <string name="error_station_load">Ma setax isir kuntatt mal-istazzjon</string>
     <string name="error_list_update">Ma setax isir kuntatt mas-server tar-radio browser</string>
 
+    <string name="error_no_connection">M\'hemm l-ebda konnessjoni tal-internet disponibbli.</string>
+    <string name="warning_volume_zero">Il-volum qiegħed fuq żero. Jista\' jkun li ma tisma\' xejn.</string>
+
     <string name="share_action">Aqsam il-link tal-istazzjon ma\'…</string>
 
     <string name="nav_item_stations">Stazzjonijiet</string>

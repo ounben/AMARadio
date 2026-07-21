@@ -59,6 +59,9 @@
     <string name="error_station_load">無法連線至電台</string>
     <string name="error_list_update">無法連線至 radio browser 伺服器</string>
 
+    <string name="error_no_connection">無可用網際網路連線</string>
+    <string name="warning_volume_zero">音量為零。您可能聽不到任何聲音。</string>
+
     <string name="share_action">分享電台連結至…</string>
 
     <string name="nav_item_stations">電台</string>

@@ -59,6 +59,9 @@
     <string name="error_station_load">ရေဒီယိုလိုင်းသို့ ချိတ်ဆက်၍မရပါ</string>
     <string name="error_list_update">ရေဒီယို ဆာဗာသို့ ချိတ်ဆက်၍မရပါ</string>
 
+    <string name="error_no_connection">အင်တာနက် ချိတ်ဆက်မှု မရှိပါ</string>
+    <string name="warning_volume_zero">အသံပမာဏမှာ သုညဖြစ်နေသည်။ မည်သည့်အသံမှ ကြားရမည်မဟုတ်ပါ။</string>
+
     <string name="share_action">ရေဒီယိုလင့်ခ်ကို မျှဝေရန်…</string>
 
     <string name="nav_item_stations">ရေဒီယိုလိုင်းများ</string>

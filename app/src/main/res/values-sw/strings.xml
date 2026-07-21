@@ -59,6 +59,9 @@
     <string name="error_station_load">Haikuweza kuunganishwa na kituo</string>
     <string name="error_list_update">Haikuweza kuunganishwa na seva ya redio browser</string>
 
+    <string name="error_no_connection">Hakuna muunganisho wa intaneti unaopatikana.</string>
+    <string name="warning_volume_zero">Ivolumu ikuziro. Ungase ungezwa lutho.</string>
+
     <string name="share_action">Shiriki kiungo cha kituo na…</string>
 
     <string name="nav_item_stations">Vituo</string>
