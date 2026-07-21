@@ -37,6 +37,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
 import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.history.TrackHistoryEntry
@@ -53,26 +54,37 @@ fun StationIcon(
 ) {
     val placeholderText = remember(stationName) { StationPlaceholderUtils.extractPlaceholderText(stationName) }
     val placeholderColor = remember(stationUuid) { Color(StationPlaceholderUtils.getPlaceholderColor(stationUuid)) }
+    
+    var isError by remember { mutableStateOf(false) }
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(placeholderColor),
+            .background(if (isError || iconUrl.isNullOrBlank()) placeholderColor else Color.White),
         contentAlignment = Alignment.Center
     ) {
-        Text(
-            text = placeholderText,
-            color = Color.White,
-            style = MaterialTheme.typography.titleMedium,
-            fontWeight = FontWeight.Bold
-        )
+        // Only show placeholder text if icon is missing or failed to load
+        // This prevents overlapping text when a transparent logo is present
+        if (isError || iconUrl.isNullOrBlank()) {
+            Text(
+                text = placeholderText,
+                color = Color.White,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+        }
         
-        AsyncImage(
-            model = iconUrl,
-            contentDescription = null,
-            modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Crop
-        )
+        if (!iconUrl.isNullOrBlank()) {
+            AsyncImage(
+                model = iconUrl,
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize().padding(4.dp), // Add small padding for logos
+                contentScale = ContentScale.Fit, // Use Fit to ensure logos are fully visible
+                onState = { state ->
+                    isError = state is AsyncImagePainter.State.Error
+                }
+            )
+        }
     }
 }
 
