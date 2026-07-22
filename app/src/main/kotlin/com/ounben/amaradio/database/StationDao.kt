@@ -25,7 +25,7 @@ interface StationDao {
     @Query("SELECT MAX(LastChangeTime) FROM Station WHERE LastChangeTime NOT LIKE '1970%' AND LastCheckOK = 1")
     suspend fun getLastSyncTime(): String?
 
-    @Query("SELECT * FROM Station WHERE LastCheckOK = 1 ORDER BY LastChangeTime DESC LIMIT 5")
+    @Query("SELECT * FROM Station WHERE LastCheckOK = 1 ORDER BY LastChangeTime DESC LIMIT 200")
     suspend fun getRecentlyChangedStations(): List<StationEntity>
 
     @Query("SELECT COUNT(*) FROM Station WHERE LastCheckOK = 1")

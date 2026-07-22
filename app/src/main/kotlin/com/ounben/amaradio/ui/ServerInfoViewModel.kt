@@ -1,6 +1,7 @@
 package com.ounben.amaradio.ui
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequestBuilder
@@ -38,10 +39,22 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
 
     private val app = application as AMARadioApp
     private val database = AMARadioDatabase.getDatabase(app)
+    private val sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(app)
+
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { prefs, key ->
+        if (key == "last_db_sync_time") {
+            val lastSync = prefs.getString("last_db_sync_time", "Never") ?: "Never"
+            _uiState.update { it.copy(lastSyncTime = lastSync) }
+            // Also refresh local station count and recent changes as they likely changed too
+            loadLocalDbInfo()
+        }
+    }
 
     init {
         loadStatistics()
         loadLocalDbInfo()
+        
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
         
         viewModelScope.launch {
             app.favouriteManager.stationsFlow.collect { favorites ->
@@ -49,6 +62,11 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
                 _uiState.update { it.copy(favoriteIds = ids) }
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
     }
 
     fun loadStatistics(forceUpdate: Boolean = false) {
@@ -74,7 +92,6 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch(Dispatchers.IO) {
             try {
                 val count = database.stationDao().getStationCount()
-                val sharedPref = androidx.preference.PreferenceManager.getDefaultSharedPreferences(app)
                 val lastSync = sharedPref.getString("last_db_sync_time", "Never") ?: "Never"
                 val entities = database.stationDao().getRecentlyChangedStations()
                 val stations = entities.map { it.toDataStation() }
@@ -97,8 +114,10 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
             val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>().build()
             WorkManager.getInstance(app).enqueue(syncRequest)
             
-            kotlinx.coroutines.delay(3000)
-            loadLocalDbInfo()
+            // The prefListener will pick up the completion of the worker 
+            // when it writes to SharedPreferences. We just need to stop the indicator eventually.
+            // We'll keep the delay for UI feedback but the data update is now reactive.
+            kotlinx.coroutines.delay(2000)
             _uiState.update { it.copy(isSyncing = false) }
         }
     }

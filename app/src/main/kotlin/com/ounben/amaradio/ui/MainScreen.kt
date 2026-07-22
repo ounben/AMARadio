@@ -56,6 +56,7 @@ fun MainScreen(
     val playerViewModel: PlayerViewModel = viewModel()
     val trackHistoryViewModel: TrackHistoryViewModel = viewModel()
     val searchViewModel: SearchViewModel = viewModel()
+    val serverInfoViewModel: ServerInfoViewModel = viewModel()
     
     val mainUiState by mainViewModel.uiState.collectAsState()
     val playerUiState by playerViewModel.uiState.collectAsState()
@@ -258,7 +259,6 @@ fun MainScreen(
                         }
                         composable(Screen.Settings.route) {
                             val viewModel: SettingsViewModel = viewModel()
-                            val serverInfoViewModel: ServerInfoViewModel = viewModel()
                             SettingsScreen(
                                 viewModel = viewModel,
                                 serverInfoViewModel = serverInfoViewModel,
@@ -291,9 +291,8 @@ fun MainScreen(
                         }
                         composable(Screen.About.route) { AboutScreen { navController.popBackStack() } }
                         composable(Screen.Statistics.route) { 
-                            val viewModel: ServerInfoViewModel = viewModel()
                             ServerInfoScreen(
-                                viewModel = viewModel,
+                                viewModel = serverInfoViewModel,
                                 onStationClick = { station ->
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
                                     else playerViewModel.play(station)
