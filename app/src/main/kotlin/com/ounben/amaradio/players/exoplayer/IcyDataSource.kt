@@ -10,6 +10,7 @@ import androidx.media3.datasource.HttpDataSource.HttpDataSourceException
 import androidx.media3.datasource.TransferListener
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import okhttp3.Call
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -39,7 +40,11 @@ class IcyDataSource(
     private var responseBody: ResponseBody? = null
     private var byteStream: java.io.InputStream? = null
     private var responseHeaders: Map<String, List<String>> = HashMap()
+    
+    @Volatile
     private var opened = false
+    
+    private var activeCall: Call? = null
     private var shoutcastInfo: ShoutcastInfo? = null
 
     private var lastMetadataString: String? = null
@@ -58,21 +63,16 @@ class IcyDataSource(
             ?: throw HttpDataSourceException("Invalid URL", dataSpec, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
         
         val builder = Request.Builder().url(url)
-        
-        // Use a consistent AMARadio-like User-Agent as it's known to work
         builder.header("User-Agent", "AMARadio")
 
-        // Apply headers from DataSpec (ResolvingDataSource can inject these)
         for ((key, value) in dataSpec.httpRequestHeaders) {
             builder.header(key, value)
         }
         
-        // Add default ICY headers only for non-HLS if not already set by DataSpec
         if (!isHls && !dataSpec.httpRequestHeaders.containsKey("Icy-MetaData")) {
             builder.addHeader("Icy-MetaData", "1")
         }
         
-        // Apply properties set by ExoPlayer manually (e.g. cookies)
         synchronized(requestProperties) {
             for ((key, value) in requestProperties) {
                 builder.header(key, value)
@@ -84,9 +84,17 @@ class IcyDataSource(
     }
 
     private fun connect(request: Request): Long {
+        val call = httpClient.newCall(request)
+        activeCall = call
+        
         val response = try {
-            httpClient.newCall(request).execute()
+            call.execute()
         } catch (e: IOException) {
+            activeCall = null
+            if (!opened) {
+                // If we cancelled it ourselves, return a generic cancelled exception
+                throw HttpDataSourceException("Connection cancelled", dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
+            }
             throw HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
         }
 
@@ -95,6 +103,7 @@ class IcyDataSource(
             val code = response.code
             val headers = response.headers.toMultimap()
             response.close()
+            activeCall = null
             throw HttpDataSource.InvalidResponseCodeException(code, null, null, headers, dataSpec!!, ByteArray(0))
         }
 
@@ -122,15 +131,27 @@ class IcyDataSource(
     }
 
     override fun close() {
-        if (opened) {
-            opened = false
-            dataSpec?.let { transferListener.onTransferEnd(this, it, true) }
+        opened = false
+        
+        // CRITICAL FIX: Cancel the running OkHttp call to immediately drop the socket.
+        activeCall?.cancel()
+        activeCall = null
+
+        if (opened) { // Logic check: only if it was actually opened
+             dataSpec?.let { transferListener.onTransferEnd(this, it, true) }
         }
+        
+        // Re-read dataSpec to ensure listener is notified even if we manually cleared opened
+        dataSpec?.let { 
+             try { transferListener.onTransferEnd(this, it, true) } catch(_: Exception) {}
+        }
+
         byteStream?.closeQuietly()
         byteStream = null
         responseBody?.closeQuietly()
         responseBody = null
         lastMetadataString = null
+        dataSpec = null
     }
 
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
@@ -140,24 +161,31 @@ class IcyDataSource(
         try {
             val stream = byteStream ?: return -1
             
-            while (true) {
+            // CRITICAL FIX: Check 'opened' flag in every loop iteration to break immediately on pause
+            while (opened) {
                 if (metadataBytesToRead > 0) {
                     val toRead = metadataBytesToRead - metadataBufferPos
                     val read = stream.read(metadataBuffer, metadataBufferPos, toRead)
+                    
+                    if (!opened) return -1 // Check after blocking read
                     if (read == -1) return -1
+                    
                     metadataBufferPos += read
                     if (metadataBufferPos == metadataBytesToRead) {
                         parseMetadata(metadataBuffer, metadataBytesToRead)
                         metadataBytesToRead = 0
                         bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
                     }
-                    if (read == 0) return 0 // Don't loop infinitely on 0-byte reads
+                    if (read == 0) return 0 
                     continue
                 }
 
                 if (bytesUntilMetadata == 0) {
                     val lengthByte = stream.read()
+                    
+                    if (!opened) return -1 // Check after blocking read
                     if (lengthByte == -1) return -1
+                    
                     val length = lengthByte * 16
                     if (length > 0) {
                         metadataBytesToRead = length
@@ -173,6 +201,8 @@ class IcyDataSource(
 
                 val toRead = Math.min(readLength, bytesUntilMetadata)
                 val bytesRead = stream.read(buffer, offset, toRead)
+                
+                if (!opened) return -1 // Check after blocking read
                 if (bytesRead == -1) return -1
                 
                 if (bytesUntilMetadata != Int.MAX_VALUE) {
@@ -185,11 +215,14 @@ class IcyDataSource(
                     return bytesRead
                 }
                 
-                if (bytesRead == 0) return 0 // Handle non-blocking 0-byte reads
+                if (bytesRead == 0) return 0
             }
+            return -1
         } catch (e: IOException) {
+            if (!opened) return -1
             throw HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_READ)
         } catch (e: Exception) {
+            if (!opened) return -1
             throw HttpDataSourceException(e.message ?: "Read error", dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_READ)
         }
     }
@@ -238,14 +271,10 @@ class IcyDataSource(
     }
 
     override fun getResponseHeaders(): Map<String, List<String>> {
-        // Hide all icy- headers from ExoPlayer extractors to avoid buffer miscalculations
-        // or double-parsing of metadata.
         return responseHeaders.filterKeys { !it.startsWith("icy-", ignoreCase = true) }
     }
 
     override fun getResponseCode(): Int = responseCode
 
-    override fun addTransferListener(transferListener: TransferListener) {
-        // Already handling primary transfer listener
-    }
+    override fun addTransferListener(transferListener: TransferListener) {}
 }

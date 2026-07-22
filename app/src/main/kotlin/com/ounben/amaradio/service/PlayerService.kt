@@ -855,7 +855,44 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             override fun seekToPreviousMediaItem() { this@PlayerService.previous() }
             override fun hasNextMediaItem(): Boolean = true
             override fun hasPreviousMediaItem(): Boolean = true
-            override fun prepare() { this@PlayerService.resume() }
+            override fun prepare() { 
+                // Block automated prepare from system if logically paused by user
+                if (pauseReason != PauseReason.USER) {
+                    this@PlayerService.resume() 
+                }
+            }
+
+            override fun setPlayWhenReady(playWhenReady: Boolean) {
+                if (playWhenReady) {
+                    this@PlayerService.resume()
+                } else {
+                    this@PlayerService.pause(PauseReason.USER)
+                }
+            }
+
+            override fun getPlaybackState(): Int {
+                val realState = super.getPlaybackState()
+                // FAKE STATE: Return READY if we are logically paused, even if engine is IDLE
+                return if (pauseReason == PauseReason.USER) Player.STATE_READY else realState
+            }
+
+            override fun getPlayWhenReady(): Boolean {
+                return if (pauseReason == PauseReason.USER) false else super.getPlayWhenReady()
+            }
+
+            override fun getCurrentMediaItem(): androidx.media3.common.MediaItem? {
+                val realItem = super.getCurrentMediaItem()
+                // If engine is stopped for pause, return a fake item to keep notification info
+                if (realItem == null && pauseReason == PauseReason.USER && itsCurrentStation != null) {
+                    return com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                        android.net.Uri.EMPTY, 
+                        null, 
+                        itsCurrentStation!!.StationUuid
+                    )
+                }
+                return realItem
+            }
+
             override fun getAvailableCommands(): Player.Commands {
                 return super.getAvailableCommands().buildUpon()
                     .add(Player.COMMAND_PLAY_PAUSE)
@@ -873,7 +910,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val session = mediaSession
         if (session != null) {
             radioPlayer?.runInPlayerThread {
-                session.setPlayer(currentForwardingPlayer!!)
+                session.player = currentForwardingPlayer!!
             }
         }
     }

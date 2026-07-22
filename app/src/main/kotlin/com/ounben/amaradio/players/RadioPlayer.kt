@@ -17,7 +17,6 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlin.time.Duration.Companion.milliseconds
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener {
@@ -52,15 +51,20 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     var playState = PlayState.Idle
         private set
     
+    @Volatile
+    private var userWantPlaying = false
+
+    @Volatile
+    private var isPausing = false
+
+    private var lastPlayingStateTime: Long = 0
+    private val MIN_PLAYING_DURATION_BEFORE_REBUFFER_MS = 1500L
+
     private var lastStationURL: String? = null
     private var lastStreamName: String? = null
     private var reconnectAttempts = 0
     private val maxReconnectAttempts = 3
 
-    /**
-     * Priority 2: Prepare new stream WITHOUT releasing the player instance.
-     * Keeps MediaSession and Android Auto connection stable.
-     */
     private fun prepareNewStream() {
         if (Utils.isDebug) Log.d(tag, "Preparing fresh stream state (instance remains)")
         currentPlayer.stop()
@@ -73,6 +77,9 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
     private val bufferCheckRunnable = object : Runnable {
         override fun run() {
+            // Pulse logic: Only run while actually playing.
+            if (playState != PlayState.Playing) return
+            
             val bufferTimeMs = currentPlayer.bufferedMs
             playerListener?.onBufferedTimeUpdate(bufferTimeMs)
             if (Utils.isDebug) Log.d(tag, "buffered $bufferTimeMs ms.")
@@ -87,10 +94,10 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         currentPlayer.setStateListener(this)
     }
 
-    // Manual URL play (direct calls)
     fun play(stationURL: String?, streamName: String?, metadata: androidx.media3.common.MediaMetadata? = null) {
+        userWantPlaying = true
+        isPausing = false
         playerThreadHandler.post {
-            // Use URL as temporary fallback UUID for manual plays
             playInternal(stationURL, streamName, false, metadata, stationURL)
         }
     }
@@ -98,29 +105,25 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private fun playInternal(stationURL: String?, streamName: String?, isReconnect: Boolean, metadata: androidx.media3.common.MediaMetadata? = null, stationUuid: String? = null) {
         if (stationURL == null) return
         
-        // This is always running on the AudioThread handler
+        // Guard: Check if the user paused while we were resolving or about to play.
+        if (!userWantPlaying || isPausing) {
+            if (Utils.isDebug) Log.d(tag, "Guard: playInternal suppressed (userWantPlaying=$userWantPlaying, isPausing=$isPausing)")
+            return
+        }
+
         if (!isReconnect) {
             reconnectAttempts = 0
             lastStationURL = stationURL
             lastStreamName = streamName
-            
-            // Track target MediaItem for stable reconnects
             currentTargetMediaItem = Media3Utils.buildLiveMediaItem(stationURL.toUri(), metadata, stationUuid)
-
-            // 1. Storniere alte hängende Play-Tasks
+            
             pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
-
-            // 2. Harter Abbruch & Reset
             prepareNewStream()
             
-            // 3. Künstliche Atempause (180ms) via Handler (FIFO) für die Hardware
             val playTask = Runnable {
-                // Secondary Guard: Verify that we are still supposed to play this station/URL
                 val activeTarget = currentTargetMediaItem?.localConfiguration?.uri.toString()
                 if (activeTarget == stationURL && (stationUuid == null || stationUuid == currentStationUuid)) {
                     executeActualPlayRemote(stationURL, streamName, metadata)
-                } else {
-                    if (Utils.isDebug) Log.d(tag, "Guard: Station changed during delay, canceling playInternal for $stationURL")
                 }
             }
             pendingPlayRunnable = playTask
@@ -131,6 +134,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     private fun executeActualPlayRemote(stationURL: String, streamName: String?, metadata: androidx.media3.common.MediaMetadata?) {
+        if (!userWantPlaying || isPausing) return
         setState(PlayState.PrePlaying, -1)
         this.streamName = streamName
         val app = mainContext.applicationContext as AMARadioApp
@@ -138,25 +142,16 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, metadata)
     }
 
-    // Primary entry point for station objects (UI/Browser)
     fun play(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
         val uuid = station.StationUuid
+        userWantPlaying = true
+        isPausing = false
         
-        // Revised Guard: Only block if it's the SAME station AND it's already playing.
-        // This allows re-triggering (restarting) if it's stuck in Buffering (PrePlaying) or Error.
-        if (uuid == currentStationUuid && playState == PlayState.Playing) {
-            if (Utils.isDebug) Log.d(tag, "Guard: Station $uuid is already playing, ignoring play call.")
-            return
-        }
+        if (uuid == currentStationUuid && playState == PlayState.Playing) return
 
-        // Set UUID immediately on the calling thread (Main/UI) to block redundant events.
         currentStationUuid = uuid
-
         playerThreadHandler.post {
-            // Interner Stop des Wrappers (ExoPlayer) zur Bereinigung der Pipeline.
-            // Die logische UUID bleibt erhalten, damit PlayStationTask die URL zuweisen kann.
             currentPlayer.stop()
-            
             reconnectAttempts = 0
             stationLoadAttempts = 0
             currentStation = station
@@ -165,26 +160,21 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     private fun executePlayStationTask(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
-        // Run retrieval on IO/Main
         CoroutineScope(Dispatchers.Main).launch {
+            if (!userWantPlaying || isPausing) return@launch
             setState(PlayState.PrePlaying, -1)
             val task = PlayStationTask(station, mainContext,
                 { url -> 
-                    // Post back to AudioThread
                     playerThreadHandler.post {
-                        // Guard: Check if the user changed the station while resolving the link
-                        if (currentStationUuid == station.StationUuid) {
+                        if (userWantPlaying && !isPausing && currentStationUuid == station.StationUuid) {
                             this@RadioPlayer.playInternal(url, station.Name, false, metadata, station.StationUuid) 
-                        } else {
-                            if (Utils.isDebug) Log.d(tag, "Guard: Target station changed during link resolution.")
                         }
                     }
                 },
                 { executionResult ->
                     if (executionResult == PlayStationTask.ExecutionResult.FAILURE) {
                         stationLoadAttempts++
-                        if (stationLoadAttempts < 3) {
-                            Log.w(tag, "Station load failed, retrying (attempt $stationLoadAttempts)")
+                        if (stationLoadAttempts < 3 && userWantPlaying) {
                             CoroutineScope(Dispatchers.Main).launch {
                                 RadioBrowserServerManager.rotateServer()
                                 executePlayStationTask(station, metadata)
@@ -212,47 +202,51 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     fun pause() {
+        userWantPlaying = false
+        isPausing = true
+        
+        // Immediate clean up on all relevant threads
+        playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+        pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
+        
         playerThreadHandler.post {
-            // For Radio, Pause is a full Stop to disconnect from network.
-            currentStationUuid = null 
-            pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
             cancelStationLinkRetrieval()
-            if (playState == PlayState.Idle || playState == PlayState.Paused) return@post
             val audioSessionId = audioSessionId
             currentPlayer.stop()
-            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            // We report Paused state, but the engine is IDLE (stopped).
             setState(PlayState.Paused, audioSessionId)
         }
     }
 
     fun stop() {
+        userWantPlaying = false
+        isPausing = false
+        playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+        pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
+        
         playerThreadHandler.post {
             currentStationUuid = null
-            pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
             cancelStationLinkRetrieval()
             currentStation = null
             currentTargetMediaItem = null
-
-            if (playState == PlayState.Idle) return@post
 
             val audioSessionId = audioSessionId
             setState(PlayState.Idle, audioSessionId)
             currentPlayer.stop()
-            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
         }
     }
 
     fun destroy() {
+        userWantPlaying = false
+        isPausing = false
+        playerThreadHandler.removeCallbacks(bufferCheckRunnable)
         playerThreadHandler.post {
             currentStationUuid = null
             pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
             cancelStationLinkRetrieval()
             currentStation = null
             currentTargetMediaItem = null
-            
-            val audioSessionId = audioSessionId
             setState(PlayState.Idle, audioSessionId)
-            
             currentPlayer.setStateListener(null)
             currentPlayer.stop()
             currentPlayer.release()
@@ -287,23 +281,26 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
     private fun setState(state: PlayState, audioSessionId: Int) {
         if (Utils.isDebug) Log.d(tag, "set state '${state.name}'")
-        if (playState == state) return
         
+        val oldState = playState
+        playState = state
+
         if (state == PlayState.Playing) {
+            isPausing = false
             reconnectAttempts = 0
             cachedAudioSessionId = currentPlayer.audioSessionId
+            lastPlayingStateTime = System.currentTimeMillis()
+            
+            playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            playerThreadHandler.post(bufferCheckRunnable)
+        } else {
+            playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            if (state == PlayState.Idle) isPausing = false
         }
 
-        if (Utils.isDebug) {
-            if (state == PlayState.Playing) {
-                playerThreadHandler.removeCallbacks(bufferCheckRunnable)
-                playerThreadHandler.post(bufferCheckRunnable)
-            } else {
-                playerThreadHandler.removeCallbacks(bufferCheckRunnable)
-            }
+        if (oldState != state) {
+            playerListener?.onStateChanged(state, audioSessionId)
         }
-        playState = state
-        playerListener?.onStateChanged(state, audioSessionId)
     }
 
     val currentPlaybackTransferredBytes: Long
@@ -316,6 +313,24 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         get() = currentPlayer.isLocal
 
     override fun onStateChanged(state: PlayState) {
+        // Aggressive Guard: Block any automated state update that contradicts user intent
+        if (!userWantPlaying && (state == PlayState.Playing || state == PlayState.PrePlaying)) {
+            if (Utils.isDebug) Log.d(tag, "Blocking unexpected engine state $state while in user-paused mode.")
+            return
+        }
+
+        // Hysteresis
+        if (state == PlayState.PrePlaying && playState == PlayState.Playing) {
+            val now = System.currentTimeMillis()
+            val timeInPlaying = now - lastPlayingStateTime
+            if (timeInPlaying < MIN_PLAYING_DURATION_BEFORE_REBUFFER_MS || currentPlayer.bufferedMs > 800) {
+                return
+            }
+        }
+
+        // Fake Pause Guard: Ignore engine IDLE if we are logically pausing
+        if (isPausing && state == PlayState.Idle) return
+
         setState(state, audioSessionId)
     }
 
@@ -326,43 +341,22 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     override fun onPlayerError(messageId: Int) {
         playerThreadHandler.post { 
             currentPlayer.stop()
-            if (Utils.isDebug) playerThreadHandler.removeCallbacks(bufferCheckRunnable)
+            playerThreadHandler.removeCallbacks(bufferCheckRunnable)
             
-            if (reconnectAttempts < maxReconnectAttempts) {
+            if (reconnectAttempts < maxReconnectAttempts && userWantPlaying) {
                 reconnectAttempts++
-                Log.w(tag, "Player error. Reconnecting ($reconnectAttempts/$maxReconnectAttempts) in 2s...")
-                
                 val recoveryUuid = currentStationUuid
                 playerThreadHandler.postDelayed({
-                    // Only reconnect if the user hasn't switched to another station in the meantime
-                    if (currentStationUuid == recoveryUuid && recoveryUuid != null) {
+                    if (currentStationUuid == recoveryUuid && userWantPlaying) {
                         prepareNewStream()
-                        
-                        val targetItem = currentTargetMediaItem
-                        if (targetItem != null) {
-                            Log.i(tag, "Reconnecting using target MediaItem: ${targetItem.mediaMetadata.title}")
+                        currentTargetMediaItem?.let { targetItem ->
                             val app = mainContext.applicationContext as AMARadioApp
-                            val customizedHttpClient = app.newHttpClient().build()
-                            currentPlayer.playRemote(
-                                customizedHttpClient, 
-                                targetItem.localConfiguration?.uri.toString(), 
-                                mainContext, 
-                                targetItem.mediaMetadata
-                            )
-                        } else if (currentStation != null) {
-                            CoroutineScope(Dispatchers.Main).launch {
-                                RadioBrowserServerManager.rotateServer()
-                                executePlayStationTask(currentStation!!)
-                            }
-                        } else if (lastStationURL != null) {
-                            playInternal(lastStationURL, lastStreamName, true)
+                            currentPlayer.playRemote(app.newHttpClient().build(), targetItem.localConfiguration?.uri.toString(), mainContext, targetItem.mediaMetadata)
                         }
                     }
                 }, 2000)
-                
                 setState(PlayState.PrePlaying, audioSessionId)
             } else {
-                Log.e(tag, "Max reconnect attempts reached.")
                 reconnectAttempts = 0
                 playState = PlayState.Error
                 playerListener?.onStateChanged(PlayState.Error, audioSessionId)

@@ -206,7 +206,11 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
         playerThreadHandler.post {
             try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
+            // Radio-Pause: Hard stop the engine and clear the media items 
+            // to release network resources and flush the buffer completely.
             internalPlayer.playWhenReady = false
+            internalPlayer.stop()
+            internalPlayer.clearMediaItems()
             isPlayingFlag = false
         }
     }
@@ -369,6 +373,11 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 Player.STATE_IDLE -> stateListener?.onStateChanged(PlayState.Idle)
                 Player.STATE_ENDED -> stop()
             }
+        }
+
+        override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+            // CRITICAL: Notify state change immediately when play/pause is toggled
+            stateListener?.onStateChanged(if (playWhenReady) PlayState.Playing else PlayState.Paused)
         }
 
         override fun onPlayerError(error: PlaybackException) {
