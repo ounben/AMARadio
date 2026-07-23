@@ -45,6 +45,9 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:attributionTags="player_service">
 
+        <meta-data android:name="com.google.android.gms.car.application"
+            android:resource="@xml/automotive_app_desc"/>
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"
@@ -85,6 +88,7 @@
                 <action android:name="androidx.media3.session.MediaSessionService" />
                 <action android:name="androidx.media3.session.MediaLibraryService" />
                 <action android:name="android.media.browse.MediaBrowserService" />
+                <action android:name="android.media.action.MEDIA_PLAY_FROM_SEARCH" />
             </intent-filter>
         </service>
 

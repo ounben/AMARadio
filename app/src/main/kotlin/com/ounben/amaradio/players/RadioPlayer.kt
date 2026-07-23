@@ -212,7 +212,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         playerThreadHandler.post {
             cancelStationLinkRetrieval()
             val audioSessionId = audioSessionId
-            currentPlayer.stop()
+            currentPlayer.pause() // Use wrapper pause which stops the engine but manages state
             // We report Paused state, but the engine is IDLE (stopped).
             setState(PlayState.Paused, audioSessionId)
         }
@@ -295,7 +295,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             playerThreadHandler.post(bufferCheckRunnable)
         } else {
             playerThreadHandler.removeCallbacks(bufferCheckRunnable)
-            if (state == PlayState.Idle) isPausing = false
+            // Critical: Only reset isPausing if we are logically stopping, not during a user-requested pause
+            if (state == PlayState.Idle && userWantPlaying) isPausing = false
         }
 
         if (oldState != state) {
@@ -329,8 +330,11 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         }
 
         // Fake Pause Guard: Ignore engine IDLE if we are logically pausing.
-        // We want to stay in PlayState.Paused for the UI/Notification.
-        if ((isPausing || userWantPlaying == false) && state == PlayState.Idle) return
+        // We want to stay in PlayState.Paused for the UI/Notification/MediaSession.
+        if (state == PlayState.Idle && (isPausing || userWantPlaying == false)) {
+            if (Utils.isDebug) Log.d(tag, "Suppressing engine IDLE while logically paused.")
+            return
+        }
 
         setState(state, audioSessionId)
     }

@@ -47,7 +47,6 @@ import java.util.concurrent.TimeUnit
 @UnstableApi
 class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWrapper, TransferListener, IcyDataSource.IcyDataSourceListener {
     private var internalPlayer: ExoPlayer
-    private var forwardingPlayer: Player
     private var stateListener: PlayerWrapper.PlayListener? = null
     private var streamUrl: String? = null
     private var bandwidthMeter: DefaultBandwidthMeter? = null
@@ -125,17 +124,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .setMediaSourceFactory(strictMediaSourceFactory)
             .build()
         
-        // 4. Position-Fix: Fortlaufende Zeit für Live-Streams (verhindert Bluetooth/AA Timeouts)
-        forwardingPlayer = object : ForwardingPlayer(internalPlayer) {
-            override fun getCurrentPosition(): Long {
-                return if (playbackStartTime > 0 && isPlaying) {
-                    SystemClock.elapsedRealtime() - playbackStartTime
-                } else {
-                    super.getCurrentPosition()
-                }
-            }
-        }
-        
         internalPlayer.addListener(PlayerEventListener())
     }
 
@@ -187,13 +175,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         playerThreadHandler.post {
             playbackStartTime = SystemClock.elapsedRealtime()
-            // Strikter Abbruch vor Neu-Vorbereitung
-            internalPlayer.stop()
-            internalPlayer.clearMediaItems()
-            
+            // Android Auto Fix: Use setMediaSource with resetPosition=true instead of clearMediaItems()
+            // to prevent the session from becoming "empty" during station transitions.
             internalPlayer.volume = currentVolume
             internalPlayer.setMediaSource(audioSource!!, true)
-            // Priority 3: Set playWhenReady BEFORE prepare for live streams
             internalPlayer.playWhenReady = true
             internalPlayer.prepare()
         }
@@ -208,7 +193,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         playerThreadHandler.post {
             try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
             // Radio-Pause: Hard stop the engine to release network resources.
-            // We KEEP the media items so the session/notification stays populated.
+            // We KEEP the media items but we call stop() to drop the connection.
             internalPlayer.playWhenReady = false
             internalPlayer.stop()
             isPlayingFlag = false
@@ -236,7 +221,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     override fun isPlaying(): Boolean = isPlayingFlag && internalPlayer.playWhenReady
 
     override val player: Player
-        get() = forwardingPlayer
+        get() = internalPlayer
 
     override val bufferedMs: Long
         get() {

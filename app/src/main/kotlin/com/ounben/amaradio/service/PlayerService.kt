@@ -251,10 +251,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val startActivityIntent = Intent(this, ActivityMain::class.java)
         val sessionActivityPendingIntent = PendingIntent.getActivity(this, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
 
-        // 3. Create MediaSession IMMEDIATELY on the main thread but using the player's looper
+        // 3. Create MediaSession
         // We use the player's current internal player as the initial target.
         // It will be updated via session.setPlayer() in onPlayerCreated once the ForwardingPlayer is ready.
-        mediaSession = MediaLibrarySession.Builder(this, radioPlayer?.player!!, MediaSessionCallback(this, amaradioBrowser))
+        val initialPlayer = currentForwardingPlayer ?: radioPlayer?.player!!
+        mediaSession = MediaLibrarySession.Builder(this, initialPlayer, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(sessionActivityPendingIntent)
             .setSessionExtras(Bundle().apply { putString("android.media.metadata.ATTRIBUTION_TAG", "player_service") })
             .build()
@@ -375,16 +376,45 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val targetStation = fullStation ?: station
         this.itsCurrentStation = targetStation
 
-        // Bereite nur Metadaten für die UI/Android Auto vor.
-        // Die eigentliche Wiedergabe wird durch playCurrentStation() oder play() angestoßen.
+        // Android Auto Fix: Update the player's current item IMMEDIATELY on the player thread
+        // to prevent the "Empty Playlist" state during station transitions.
+        radioPlayer?.runInPlayerThread {
+            val player = radioPlayer?.player ?: return@runInPlayerThread
+            val streamUrl = (if (!targetStation.playableUrl.isNullOrEmpty()) targetStation.playableUrl else targetStation.StreamUrl) ?: ""
+            val immediateItem = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                android.net.Uri.parse(streamUrl),
+                MediaMetadata.Builder().setTitle(targetStation.Name).setIsPlayable(true).build(),
+                targetStation.StationUuid
+            )
+            player.setMediaItem(immediateItem)
+            updateNotification(PlayState.PrePlaying)
+        }
+
+        // Prepare full metadata (with bitmap) in background
         serviceScope.launch {
             val bitmap = fetchStationBitmap(targetStation)
             radioPlayer?.runInPlayerThread {
+                currentStationBitmap = bitmap
                 val metadata = buildMetadataWithBitmap(targetStation, targetStation.Name, bitmap)
+                
+                // 1. Update Player Playlist Metadata
                 radioPlayer?.player?.let { player ->
                     player.playlistMetadata = metadata
+                    
+                    // 2. Update the MediaItem's metadata (Critical for Android Auto)
+                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                    if (player.mediaItemCount > itemIndex) {
+                        val currentItem = player.getMediaItemAt(itemIndex)
+                        val updatedItem = currentItem.buildUpon()
+                            .setMediaMetadata(metadata)
+                            .build()
+                        player.replaceMediaItem(itemIndex, updatedItem)
+                    }
                 }
-                updateNotification(PlayState.Paused)
+                
+                // 3. Ensure MediaSession is aware of the changes
+                mediaSession?.setCustomLayout(listOf())
+                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
             }
         }
     }
@@ -622,13 +652,15 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 radioPlayer?.player?.let { player ->
                     player.playlistMetadata = metadata
                     
-                    // 2. Update the current MediaItem's metadata (Critical for Android Auto / Automotive)
-                    val currentItem = player.currentMediaItem
-                    if (currentItem != null) {
+                    // 2. Update the MediaItem's metadata (Critical for Android Auto)
+                    // Use item index directly as currentMediaItem can be null in STATE_IDLE
+                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                    if (player.mediaItemCount > itemIndex) {
+                        val currentItem = player.getMediaItemAt(itemIndex)
                         val updatedItem = currentItem.buildUpon()
                             .setMediaMetadata(metadata)
                             .build()
-                        player.replaceMediaItem(player.currentMediaItemIndex, updatedItem)
+                        player.replaceMediaItem(itemIndex, updatedItem)
                     }
                 }
                 
@@ -898,9 +930,21 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
 
             override fun getPlaybackState(): Int {
-                // Keep MediaSession alive and showing controls during user pause
+                // Persistent State for Android Auto: Never report IDLE during user pause.
                 if (pauseReason == PauseReason.USER) return Player.STATE_READY
                 return super.getPlaybackState()
+            }
+
+            override fun getPlaylistMetadata(): MediaMetadata {
+                val realMetadata = super.getPlaylistMetadata()
+                // If engine is stopped, fallback to our internal station metadata
+                if (realMetadata.title == null && itsCurrentStation != null) {
+                    return MediaMetadata.Builder()
+                        .setTitle(itsCurrentStation?.Name)
+                        .setIsPlayable(true)
+                        .build()
+                }
+                return realMetadata
             }
 
             override fun getPlayWhenReady(): Boolean {
@@ -910,15 +954,27 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
             override fun getCurrentMediaItem(): androidx.media3.common.MediaItem? {
                 val realItem = super.getCurrentMediaItem()
-                // If engine is stopped for pause, return a fake item to keep notification info
-                if (realItem == null && pauseReason == PauseReason.USER && itsCurrentStation != null) {
+                // ExoPlayer returns null in STATE_IDLE. If engine is stopped for radio-pause, 
+                // return a valid item to keep notification and Android Auto populated.
+                if (realItem == null && itsCurrentStation != null) {
+                    val station = itsCurrentStation!!
+                    val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
                     return com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
-                        android.net.Uri.EMPTY, 
-                        null, 
-                        itsCurrentStation!!.StationUuid
+                        android.net.Uri.parse(streamUrl), 
+                        this.getPlaylistMetadata(),
+                        station.StationUuid
                     )
                 }
                 return realItem
+            }
+
+            override fun getCurrentPosition(): Long {
+                // Return elapsed time for live streams to keep Bluetooth/AA happy
+                return if (radioPlayer?.isPlaying() == true) {
+                    android.os.SystemClock.elapsedRealtime() - lastPlayStartTime
+                } else {
+                    super.getCurrentPosition()
+                }
             }
 
             override fun getAvailableCommands(): Player.Commands {

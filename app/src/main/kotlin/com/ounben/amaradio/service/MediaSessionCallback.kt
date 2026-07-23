@@ -71,7 +71,10 @@ class MediaSessionCallback(
                 val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
                 val item = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
                     android.net.Uri.parse(streamUrl),
-                    null, 
+                    androidx.media3.common.MediaMetadata.Builder()
+                        .setTitle(station.Name)
+                        .setIsPlayable(true)
+                        .build(),
                     station.StationUuid
                 )
                 Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(listOf(item), 0, 0))
