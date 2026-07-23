@@ -77,36 +77,62 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             _uiState.update { it.copy(isLoading = true, error = null) }
 
             // 1. OFFLINE FIRST: Versuche Daten aus Room zu laden
+            var localDataFound = false
+            
             if (url.startsWith("json/stations/bycountrycodeexact/")) {
                 val countryCode = url.substringAfter("bycountrycodeexact/").substringBefore("?").uppercase()
                 val localStations = withContext(Dispatchers.IO) {
                     AMARadioDatabase.getDatabase(app).stationDao().getStationsByCountryCode(countryCode)
                 }
                 if (localStations.isNotEmpty()) {
-                    val decoded = withContext(Dispatchers.Default) {
-                        localStations.map { it.toDataStation() }
+                    val decoded = localStations.map { it.toDataStation() }
+                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
+                    localDataFound = true
+                }
+            } else if (url.startsWith("json/stations/byname/")) {
+                val nameQuery = java.net.URLDecoder.decode(url.substringAfter("byname/"), "UTF-8")
+                val localStations = withContext(Dispatchers.IO) {
+                    AMARadioDatabase.getDatabase(app).stationDao().searchStations(nameQuery)
+                }
+                if (localStations.isNotEmpty()) {
+                    val decoded = localStations.map { it.toDataStation() }
+                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
+                    localDataFound = true
+                }
+            } else if (url.startsWith("json/stations/bytagexact/")) {
+                val tagQuery = java.net.URLDecoder.decode(url.substringAfter("bytagexact/"), "UTF-8")
+                val localStations = withContext(Dispatchers.IO) {
+                    AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(null, null, null, tagQuery, "clickcount")
+                }
+                if (localStations.isNotEmpty()) {
+                    val decoded = localStations.map { it.toDataStation() }
+                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
+                    localDataFound = true
+                }
+            }
+
+            // 2. Netzwerk-Abfrage: NUR wenn lokal absolut nichts gefunden wurde und die Liste leer ist.
+            // Wir entfernen den automatischen Netzwerk-Refresh bei 'forceUpdate' (Swipe Down),
+            // da die lokale SQL-Datenbank als einzige Quelle dienen soll.
+            if (!localDataFound && _uiState.value.stations.isEmpty()) {
+                val params = HashMap<String, String>()
+                params["hidebroken"] = "true"
+
+                val result = withContext(Dispatchers.IO) {
+                    Utils.downloadFeedRelative(app.httpClient, app, url, forceUpdate, params)
+                }
+
+                if (result != null) {
+                    withContext(Dispatchers.Default) {
+                        val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
+                        _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
                     }
-                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
-                    // Wenn wir Daten aus Room haben, laden wir im Hintergrund trotzdem leise von der API nach
+                } else {
+                    _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
                 }
-            }
-
-            // 2. Netzwerk-Abfrage (wie bisher)
-            val params = HashMap<String, String>()
-            params["hidebroken"] = "true"
-
-            val result = withContext(Dispatchers.IO) {
-                Utils.downloadFeedRelative(app.httpClient, app, url, forceUpdate, params)
-            }
-
-            if (result != null) {
-                withContext(Dispatchers.Default) {
-                    val decoded = DataRadioStation.DecodeJson(result) ?: emptyList()
-                    _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
-                }
-            } else if (_uiState.value.stations.isEmpty()) {
-                _uiState.update { it.copy(isLoading = false, error = "Failed to load stations") }
             } else {
+                // Wenn lokale Daten da sind, beenden wir das Laden einfach hier.
+                // Ein Swipe-Down aktualisiert somit nur den Stand aus der SQL-DB.
                 _uiState.update { it.copy(isLoading = false) }
             }
         }

@@ -260,7 +260,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             val state = _uiState.value
             val tab = state.tabs.getOrNull(index) ?: return@launch
 
-            // 1. OFFLINE FIRST: Suche in Room
+            // STRICT OFFLINE SEARCH: Only use local SQL database
             val localResults = withContext(Dispatchers.IO) {
                 AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(
                     name = tab.name.ifEmpty { null },
@@ -271,51 +271,15 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 )
             }
 
-            if (localResults.isNotEmpty()) {
-                val decoded = withContext(Dispatchers.Default) {
-                    localResults.map { it.toDataStation() }
-                }
-                _uiState.update { s ->
-                    val newTabs = s.tabs.toMutableList()
-                    if (index in newTabs.indices) {
-                        newTabs[index] = newTabs[index].copy(stations = decoded)
-                    }
-                    s.copy(tabs = newTabs, isSearching = false)
-                }
+            val decoded = withContext(Dispatchers.Default) {
+                localResults.map { it.toDataStation() }
             }
-
-            // 2. Netzwerk-Sync (wie bisher)
-            val params = mutableMapOf<String, String>()
-            
-            if (tab.name.isNotEmpty()) params["name"] = tab.name
-            if (tab.countryCode.isNotEmpty()) params["countrycode"] = tab.countryCode
-            if (tab.languageCode.isNotEmpty()) params["language"] = tab.languageCode
-            if (tab.tag.isNotEmpty()) params["tag"] = tab.tag
-            
-            params["order"] = tab.sortBy
-            params["reverse"] = tab.reverse.toString()
-            params["hidebroken"] = "true"
-            params["limit"] = "100"
-
-            val resultString = withContext(Dispatchers.IO) {
-                Utils.downloadFeedRelative(app.httpClient, app, "json/stations/search", true, params)
-            }
-            
-            if (resultString != null) {
-                val filtered = withContext(Dispatchers.Default) {
-                    DataRadioStation.DecodeJson(resultString) ?: emptyList()
+            _uiState.update { s ->
+                val newTabs = s.tabs.toMutableList()
+                if (index in newTabs.indices) {
+                    newTabs[index] = newTabs[index].copy(stations = decoded)
                 }
-                _uiState.update { s ->
-                    val newTabs = s.tabs.toMutableList()
-                    if (index in newTabs.indices) {
-                        newTabs[index] = newTabs[index].copy(stations = filtered)
-                    }
-                    s.copy(tabs = newTabs, isSearching = false)
-                }
-            } else if (localResults.isEmpty()) {
-                _uiState.update { it.copy(isSearching = false, error = "Failed to fetch stations") }
-            } else {
-                _uiState.update { it.copy(isSearching = false) }
+                s.copy(tabs = newTabs, isSearching = false)
             }
         }
     }

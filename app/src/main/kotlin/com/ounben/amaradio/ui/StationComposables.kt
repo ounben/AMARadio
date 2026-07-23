@@ -38,12 +38,16 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter
+import coil.request.CachePolicy
+import coil.request.ImageRequest
 import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
+import com.ounben.amaradio.utils.StationIconProvider
 import com.ounben.amaradio.utils.StationPlaceholderUtils
+import java.io.File
 
 @Composable
 fun StationIcon(
@@ -52,20 +56,45 @@ fun StationIcon(
     iconUrl: String?,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     val placeholderText = remember(stationName) { StationPlaceholderUtils.extractPlaceholderText(stationName) }
     val placeholderColor = remember(stationUuid) { Color(StationPlaceholderUtils.getPlaceholderColor(stationUuid)) }
     
+    val finalIconUri = remember(stationUuid, iconUrl) {
+        val iconDir = File(context.cacheDir, "station_icons")
+        val iconFile = File(iconDir, "$stationUuid.jpg")
+        
+        if (iconFile.exists()) {
+            StationIconProvider.getIconUri(stationUuid, stationName)
+        } else if (!iconUrl.isNullOrBlank() && iconUrl != "null" && iconUrl.startsWith("http")) {
+            android.net.Uri.parse(iconUrl)
+        } else {
+            StationIconProvider.getIconUri(stationUuid, stationName)
+        }
+    }
+    
+    var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
+
+    val imageRequest = remember(finalIconUri) {
+        ImageRequest.Builder(context)
+            .data(finalIconUri)
+            .size(256, 256) // Downscale huge images (like Wikimedia) to save memory
+            .allowHardware(false) // Better compatibility for various UI components
+            .crossfade(true)
+            .diskCachePolicy(CachePolicy.ENABLED)
+            .memoryCachePolicy(CachePolicy.ENABLED)
+            .build()
+    }
 
     Box(
         modifier = modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(if (isError || iconUrl.isNullOrBlank()) placeholderColor else Color.White),
+            .background(if (isError || isLoading) placeholderColor else Color.White),
         contentAlignment = Alignment.Center
     ) {
-        // Only show placeholder text if icon is missing or failed to load
-        // This prevents overlapping text when a transparent logo is present
-        if (isError || iconUrl.isNullOrBlank()) {
+        // Show placeholder text if loading or failed
+        if (isLoading || isError) {
             Text(
                 text = placeholderText,
                 color = Color.White,
@@ -74,17 +103,16 @@ fun StationIcon(
             )
         }
         
-        if (!iconUrl.isNullOrBlank()) {
-            AsyncImage(
-                model = iconUrl,
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize().padding(4.dp), // Add small padding for logos
-                contentScale = ContentScale.Fit, // Use Fit to ensure logos are fully visible
-                onState = { state ->
-                    isError = state is AsyncImagePainter.State.Error
-                }
-            )
-        }
+        AsyncImage(
+            model = imageRequest,
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize().padding(4.dp),
+            contentScale = ContentScale.Fit,
+            onState = { state ->
+                isLoading = state is AsyncImagePainter.State.Loading
+                isError = state is AsyncImagePainter.State.Error
+            }
+        )
     }
 }
 

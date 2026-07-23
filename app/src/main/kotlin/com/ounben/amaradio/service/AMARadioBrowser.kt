@@ -85,7 +85,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
-        val iconDir = java.io.File(app.cacheDir, "station_icons")
         
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
@@ -101,18 +100,16 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
                 })
             
-            // UNIFIED ICON LOGIC:
-            // 1. Check if we already have a high-quality cached icon (from PlayerService)
-            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
-            val artworkUri = if (iconFile.exists()) {
-                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
-            } else if (!station.IconUrl.isNullOrEmpty() && station.IconUrl != "null" && station.IconUrl.startsWith("http")) {
-                // 2. If not in cache, let Android Auto try the remote URL
-                Uri.parse(station.IconUrl)
-            } else {
-                // 3. Last resort: Generate our beautiful calculated placeholder
-                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
-            }
+            // ANDROID AUTO ICON LOGIC:
+            // We funnel through StationIconProvider which handles:
+            // 1. Serving cached icons
+            // 2. Proactively downloading missing web icons
+            // 3. Generating placeholders as a final fallback
+            val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
+                station.StationUuid, 
+                station.Name,
+                station.IconUrl
+            )
             
             metadataBuilder.setArtworkUri(artworkUri)
             
@@ -156,16 +153,11 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
         
         if (station != null) {
-            val iconDir = java.io.File(app.cacheDir, "station_icons")
-            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
-            
-            val artworkUri = if (iconFile.exists()) {
-                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
-            } else if (!station.IconUrl.isNullOrEmpty() && station.IconUrl != "null" && station.IconUrl.startsWith("http")) {
-                Uri.parse(station.IconUrl)
-            } else {
-                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
-            }
+            val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
+                station.StationUuid, 
+                station.Name,
+                station.IconUrl
+            )
 
             val item = MediaItem.Builder()
                 .setMediaId(mediaId)

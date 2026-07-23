@@ -118,7 +118,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             .connectTimeout(10.seconds)
             .writeTimeout(10.seconds)
             .readTimeout(10.seconds)
-            .addInterceptor(UserAgentInterceptor("AMARadio/0.99.3"))
+            // Enhanced User-Agent for better compatibility with WikiMedia and other CDNs
+            .addInterceptor(UserAgentInterceptor("AMARadio (https://github.com/ounben/AMARadio) AndroidPlayer"))
 
         val client = builder.build()
         _httpClient = client

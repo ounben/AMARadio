@@ -55,48 +55,19 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             delay(300) 
             _uiState.update { it.copy(isSearching = true, error = null) }
 
-            // 1. OFFLINE FIRST: Search in Room
+            // STRICT OFFLINE SEARCH: Only use local SQL database
             val localResults = withContext(Dispatchers.IO) {
                 AMARadioDatabase.getDatabase(app).stationDao().searchStations(cleanedQuery)
             }
-            if (localResults.isNotEmpty()) {
-                val prioritized = withContext(Dispatchers.Default) {
-                    val decoded = localResults.map { it.toDataStation() }
-                    decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
-                        SearchUtils.calculateScore(station.Name, cleanedQuery)
-                    }.thenByDescending { it.ClickCount })
-                }
-                
-                _uiState.update { it.copy(results = prioritized, isSearching = false) }
-            }
-
-            // 2. NETWORK SYNC (Background)
-            val params = mutableMapOf<String, String>()
-            params["name"] = cleanedQuery
-            params["order"] = "clickcount" 
-            params["reverse"] = "true"
-            params["limit"] = "200"
-            params["hidebroken"] = "true"
-
-            val result = withContext(Dispatchers.IO) {
-                Utils.downloadFeedRelative(app.httpClient, app, "json/stations/search", false, params)
-            }
-
-            if (result != null) {
-                val decoded = withContext(Dispatchers.Default) {
-                    DataRadioStation.DecodeJson(result) ?: emptyList()
-                }
-                
-                val prioritized = decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
+            
+            val prioritized = withContext(Dispatchers.Default) {
+                val decoded = localResults.map { it.toDataStation() }
+                decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
                     SearchUtils.calculateScore(station.Name, cleanedQuery)
                 }.thenByDescending { it.ClickCount })
-
-                _uiState.update { it.copy(results = prioritized, isSearching = false) }
-            } else if (localResults.isEmpty()) {
-                _uiState.update { it.copy(isSearching = false, error = "Search failed") }
-            } else {
-                _uiState.update { it.copy(isSearching = false) }
             }
+            
+            _uiState.update { it.copy(results = prioritized, isSearching = false) }
         }
     }
 
