@@ -207,11 +207,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
         playerThreadHandler.post {
             try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
-            // Radio-Pause: Hard stop the engine and clear the media items 
-            // to release network resources and flush the buffer completely.
+            // Radio-Pause: Hard stop the engine to release network resources.
+            // We KEEP the media items so the session/notification stays populated.
             internalPlayer.playWhenReady = false
             internalPlayer.stop()
-            internalPlayer.clearMediaItems()
             isPlayingFlag = false
         }
     }
@@ -234,7 +233,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
     }
 
-    override fun isPlaying(): Boolean = isPlayingFlag
+    override fun isPlaying(): Boolean = isPlayingFlag && internalPlayer.playWhenReady
 
     override val player: Player
         get() = forwardingPlayer
@@ -361,7 +360,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
     private inner class PlayerEventListener : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
-            isPlayingFlag = playbackState == Player.STATE_READY || playbackState == Player.STATE_BUFFERING
+            isPlayingFlag = (playbackState == Player.STATE_READY || playbackState == Player.STATE_BUFFERING)
             if (playbackState == Player.STATE_READY && internalPlayer.playWhenReady && playbackStartTime == 0L) {
                 playbackStartTime = SystemClock.elapsedRealtime()
             }
@@ -377,6 +376,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
+            if (!playWhenReady) {
+                // Radio specific: Stop engine immediately on pause to drop connection
+                internalPlayer.stop()
+            }
             // CRITICAL: Notify state change immediately when play/pause is toggled
             stateListener?.onStateChanged(if (playWhenReady) PlayState.Playing else PlayState.Paused)
         }

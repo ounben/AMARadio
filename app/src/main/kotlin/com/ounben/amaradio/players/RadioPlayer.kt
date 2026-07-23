@@ -328,8 +328,9 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             }
         }
 
-        // Fake Pause Guard: Ignore engine IDLE if we are logically pausing
-        if (isPausing && state == PlayState.Idle) return
+        // Fake Pause Guard: Ignore engine IDLE if we are logically pausing.
+        // We want to stay in PlayState.Paused for the UI/Notification.
+        if ((isPausing || userWantPlaying == false) && state == PlayState.Idle) return
 
         setState(state, audioSessionId)
     }

@@ -83,7 +83,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var trackHistoryRepository: TrackHistoryRepository? = null
     private var itsContext: Context? = null
     private var handler: Handler? = null
-    private var itsCurrentStation: DataRadioStation? = null
+    internal var itsCurrentStation: DataRadioStation? = null
     @Volatile
     private var currentStationBitmap: Bitmap? = null
     private var radioPlayer: RadioPlayer? = null
@@ -164,7 +164,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
      * This allows us to maintain our custom notification logic while still being a MediaLibraryService.
      */
     override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
-        updateNotification(radioPlayer?.playState ?: PlayState.Paused)
+        val logicalState = if (pauseReason == PauseReason.USER) PlayState.Paused else (radioPlayer?.playState ?: PlayState.Idle)
+        updateNotification(logicalState)
     }
 
     private val afChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
@@ -758,24 +759,31 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun updateNotification(playState: PlayState) {
         val station = itsCurrentStation
+        val logicalState = if (pauseReason == PauseReason.USER) PlayState.Paused else playState
+        
         handler?.post {
-            when (playState) {
+            when (logicalState) {
                 PlayState.Idle -> {
-                    sendMessage(station?.Name ?: "", "", "", playState)
+                    if (pauseReason != PauseReason.USER) {
+                        NotificationManagerCompat.from(this).cancel(NOTIFY_ID)
+                        notificationIsActive = false
+                    }
                 }
                 PlayState.PrePlaying -> {
-                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play), playState)
+                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play), logicalState)
                 }
                 PlayState.Playing -> {
                     val title = liveInfo.title
-                    if (title.isNotEmpty()) sendMessage(station?.Name ?: "", title, title, playState)
-                    else sendMessage(station?.Name ?: "", resources.getString(R.string.notify_play), station?.Name ?: "", playState)
+                    if (title.isNotEmpty()) sendMessage(station?.Name ?: "", title, title, logicalState)
+                    else sendMessage(station?.Name ?: "", resources.getString(R.string.notify_play), station?.Name ?: "", logicalState)
                 }
                 PlayState.Paused -> {
-                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_paused), station?.Name ?: "", playState)
+                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_paused), station?.Name ?: "", logicalState)
                 }
                 PlayState.Error -> {
-                    sendMessage(station?.Name ?: "", resources.getString(R.string.error_station_load), station?.Name ?: "", playState)
+                    if (pauseReason != PauseReason.USER) {
+                        sendMessage(station?.Name ?: "", resources.getString(R.string.error_station_load), station?.Name ?: "", logicalState)
+                    }
                 }
             }
         }
@@ -817,6 +825,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun stopMeteredConnectionListener() { connectivityChecker.stopListening(this) }
 
     override fun onStateChanged(status: PlayState, audioSessionId: Int) {
+        if (status == PlayState.Idle && pauseReason == PauseReason.USER) {
+            // Keep the notification in Paused state even if engine stops
+            updateNotification(PlayState.Paused)
+            return
+        }
         Log.d(tag, "onStateChanged: state=$status, audioSessionId=$audioSessionId")
         lastErrorFromPlayer = -1
         if (status == PlayState.Playing) {
@@ -877,6 +890,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
             override fun setPlayWhenReady(playWhenReady: Boolean) {
                 if (playWhenReady) {
+                    // Force a full restart for Live Radio instead of simple resume
                     this@PlayerService.resume()
                 } else {
                     this@PlayerService.pause(PauseReason.USER)
@@ -884,12 +898,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
 
             override fun getPlaybackState(): Int {
-                val realState = super.getPlaybackState()
-                // FAKE STATE: Return READY if we are logically paused, even if engine is IDLE
-                return if (pauseReason == PauseReason.USER) Player.STATE_READY else realState
+                // Keep MediaSession alive and showing controls during user pause
+                if (pauseReason == PauseReason.USER) return Player.STATE_READY
+                return super.getPlaybackState()
             }
 
             override fun getPlayWhenReady(): Boolean {
+                // Force play button to show (playWhenReady = false) during user pause
                 return if (pauseReason == PauseReason.USER) false else super.getPlayWhenReady()
             }
 

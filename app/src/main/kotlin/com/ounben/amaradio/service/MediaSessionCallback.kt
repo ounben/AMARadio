@@ -10,6 +10,7 @@ import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
 import com.ounben.amaradio.AppEventManager
 import com.google.common.collect.ImmutableList
+import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 
 class MediaSessionCallback(
@@ -54,6 +55,30 @@ class MediaSessionCallback(
             }
         }
         return super.onSetMediaItems(session, controller, mediaItems, startIndex, startPositionMs)
+    }
+
+    override fun onPlaybackResumption(session: MediaSession, controller: MediaSession.ControllerInfo): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
+        val player = session.player
+        val currentItem = player.currentMediaItem
+        
+        return if (currentItem != null) {
+            Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(listOf(currentItem), 0, 0))
+        } else {
+            // Fallback: If no item is set, try to get the last played station from the service
+            val service = context as? PlayerService
+            val station = service?.itsCurrentStation
+            if (station != null) {
+                val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
+                val item = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                    android.net.Uri.parse(streamUrl),
+                    null, 
+                    station.StationUuid
+                )
+                Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(listOf(item), 0, 0))
+            } else {
+                Futures.immediateFailedFuture(UnsupportedOperationException("No media item to resume"))
+            }
+        }
     }
 
     companion object {
