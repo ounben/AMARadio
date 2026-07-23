@@ -135,50 +135,51 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         bytesTransferred = 0
         cancelStopTask()
 
-        if (bandwidthMeter == null) {
-            bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
-        }
-
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
-        val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
-        val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
-
-        val dedicatedClient = httpClient.newBuilder()
-            .addInterceptor { chain ->
-                val request = chain.request()
-                if (request.method == "HEAD") {
-                    chain.proceed(request.newBuilder().method("GET", null).build())
-                } else {
-                    chain.proceed(request)
-                }
-            }
-            .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-            .readTimeout(readTimeout, TimeUnit.SECONDS)
-            .build()
-
-        // Auch hier: Strikte Kette für manuelle Aufrufe
-        val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
-        val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
-
-        val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
-
-        val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
-        audioSource = if (isHls) {
-            HlsMediaSource.Factory(resolvingFactory)
-                .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                .createMediaSource(mediaItem)
-        } else {
-            ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
-                .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                .createMediaSource(mediaItem)
-        }
-
+        // Robustness Fix: Let Media3 handle the transition. No aggressive stop() here.
         playerThreadHandler.post {
+            if (bandwidthMeter == null) {
+                bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
+            }
+            
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
+            val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
+            val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
+
+            val dedicatedClient = httpClient.newBuilder()
+                .addInterceptor { chain ->
+                    val request = chain.request()
+                    if (request.method == "HEAD") {
+                        chain.proceed(request.newBuilder().method("GET", null).build())
+                    } else {
+                        chain.proceed(request)
+                    }
+                }
+                .connectTimeout(connectTimeout, TimeUnit.SECONDS)
+                .readTimeout(readTimeout, TimeUnit.SECONDS)
+                .build()
+
+            val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
+
+            val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
+            val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
+
+            val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
+            val audioSource = if (isHls) {
+                HlsMediaSource.Factory(resolvingFactory)
+                    .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                    .createMediaSource(mediaItem)
+            } else {
+                ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
+                    .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                    .createMediaSource(mediaItem)
+            }
+
             playbackStartTime = SystemClock.elapsedRealtime()
-            // Android Auto Fix: Use setMediaSource with resetPosition=true instead of clearMediaItems()
-            // to prevent the session from becoming "empty" during station transitions.
             internalPlayer.volume = currentVolume
-            internalPlayer.setMediaSource(audioSource!!, true)
+            
+            // Media3-Native Way: Use setMediaSource with the pre-built source.
+            // This is more reliable for custom IcyDataSource handling.
+            internalPlayer.setMediaSource(audioSource, true)
             internalPlayer.playWhenReady = true
             internalPlayer.prepare()
         }

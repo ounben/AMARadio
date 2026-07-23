@@ -70,14 +70,6 @@ import java.io.FileOutputStream
 @Suppress("DEPRECATION")
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
-    override fun attachBaseContext(newBase: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            super.attachBaseContext(newBase.createAttributionContext("player_service"))
-        } else {
-            super.attachBaseContext(newBase)
-        }
-    }
-
     private val tag = "PLAY"
     private var sharedPref: SharedPreferences? = null
     private var trackHistoryRepository: TrackHistoryRepository? = null
@@ -375,20 +367,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         
         val targetStation = fullStation ?: station
         this.itsCurrentStation = targetStation
-
-        // Android Auto Fix: Update the player's current item IMMEDIATELY on the player thread
-        // to prevent the "Empty Playlist" state during station transitions.
-        radioPlayer?.runInPlayerThread {
-            val player = radioPlayer?.player ?: return@runInPlayerThread
-            val streamUrl = (if (!targetStation.playableUrl.isNullOrEmpty()) targetStation.playableUrl else targetStation.StreamUrl) ?: ""
-            val immediateItem = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
-                android.net.Uri.parse(streamUrl),
-                MediaMetadata.Builder().setTitle(targetStation.Name).setIsPlayable(true).build(),
-                targetStation.StationUuid
-            )
-            player.setMediaItem(immediateItem)
-            updateNotification(PlayState.PrePlaying)
-        }
+        this.lastPlayStartTime = 0 // Reset time basis for new station to prevent AA sync issues
 
         // Prepare full metadata (with bitmap) in background
         serviceScope.launch {
@@ -427,6 +406,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         
         lastErrorFromPlayer = -1
+        lastPlayStartTime = 0 // Reset timer for new playback
         this.pauseReason = PauseReason.NONE
         
         if (acquireAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
@@ -865,7 +845,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         Log.d(tag, "onStateChanged: state=$status, audioSessionId=$audioSessionId")
         lastErrorFromPlayer = -1
         if (status == PlayState.Playing) {
-            lastPlayStartTime = android.os.SystemClock.elapsedRealtime()
+            if (lastPlayStartTime <= 0) {
+                lastPlayStartTime = android.os.SystemClock.elapsedRealtime()
+            }
             if (audioSessionId > 0) {
                 val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
                     putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
@@ -970,11 +952,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
             override fun getCurrentPosition(): Long {
                 // Return elapsed time for live streams to keep Bluetooth/AA happy
-                return if (radioPlayer?.isPlaying() == true) {
-                    android.os.SystemClock.elapsedRealtime() - lastPlayStartTime
-                } else {
-                    super.getCurrentPosition()
+                val now = android.os.SystemClock.elapsedRealtime()
+                if (radioPlayer?.isPlaying() == true && lastPlayStartTime > 0 && now > lastPlayStartTime) {
+                    return now - lastPlayStartTime
                 }
+                return 0 // For Live streams, 0 is safer than returning a random super.position
             }
 
             override fun getAvailableCommands(): Player.Commands {

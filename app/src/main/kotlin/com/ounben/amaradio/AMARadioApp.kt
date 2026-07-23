@@ -25,13 +25,6 @@ import java.io.IOException
 import kotlin.time.Duration.Companion.seconds
 
 class AMARadioApp : Application(), ImageLoaderFactory {
-    override fun attachBaseContext(base: Context) {
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            super.attachBaseContext(base.createAttributionContext("player_service"))
-        } else {
-            super.attachBaseContext(base)
-        }
-    }
 
     lateinit var historyManager: HistoryManager
         private set

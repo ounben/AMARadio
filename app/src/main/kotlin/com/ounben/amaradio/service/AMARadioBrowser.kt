@@ -29,8 +29,9 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val json = Json { ignoreUnknownKeys = true }
-    private val database = AMARadioDatabase.getDatabase(app)
-    private val stationDao = database.stationDao()
+    
+    // Lazy init database to prevent blocking service startup
+    private val stationDao by lazy { AMARadioDatabase.getDatabase(app).stationDao() }
 
     fun onGetLibraryRoot(browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
         val rootItem = MediaItem.Builder()
@@ -84,6 +85,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
+        val iconDir = java.io.File(app.cacheDir, "station_icons")
         
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
@@ -99,21 +101,20 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
                 })
             
-            // PERFORMANCE & SECURITY FIX FOR ANDROID AUTO:
-            // Android Auto (Gearhead) forbids file:/// URIs. 
-            // We must ALWAYS use our ContentProvider (content://) to serve icons,
-            // whether they are already in cache or need to be generated.
-            val iconUrl = station.IconUrl
-            if (!iconUrl.isNullOrEmpty() && iconUrl != "null" && !iconUrl.startsWith("http")) {
-                // If it's a local path but not our provider, wrap it
-                metadataBuilder.setArtworkUri(com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name))
-            } else if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
-                // Remote URLs are fine, Gearhead can load them
-                metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
+            // UNIFIED ICON LOGIC:
+            // 1. Check if we already have a high-quality cached icon (from PlayerService)
+            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
+            val artworkUri = if (iconFile.exists()) {
+                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
+            } else if (!station.IconUrl.isNullOrEmpty() && station.IconUrl != "null" && station.IconUrl.startsWith("http")) {
+                // 2. If not in cache, let Android Auto try the remote URL
+                Uri.parse(station.IconUrl)
             } else {
-                // Use our provider for everything else (Cache or Placeholder)
-                metadataBuilder.setArtworkUri(com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name))
+                // 3. Last resort: Generate our beautiful calculated placeholder
+                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
             }
+            
+            metadataBuilder.setArtworkUri(artworkUri)
             
             mediaItems.add(MediaItem.Builder()
                 .setMediaId(LEAF_PREFIX + station.StationUuid)
@@ -155,9 +156,13 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
         
         if (station != null) {
-            val iconUrl = station.IconUrl
-            val artworkUri = if (!iconUrl.isNullOrEmpty() && iconUrl != "null" && iconUrl.startsWith("http")) {
-                Uri.parse(iconUrl)
+            val iconDir = java.io.File(app.cacheDir, "station_icons")
+            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
+            
+            val artworkUri = if (iconFile.exists()) {
+                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
+            } else if (!station.IconUrl.isNullOrEmpty() && station.IconUrl != "null" && station.IconUrl.startsWith("http")) {
+                Uri.parse(station.IconUrl)
             } else {
                 com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
             }

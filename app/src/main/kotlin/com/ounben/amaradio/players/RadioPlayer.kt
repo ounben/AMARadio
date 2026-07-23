@@ -147,10 +147,12 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         userWantPlaying = true
         isPausing = false
         
-        if (uuid == currentStationUuid && playState == PlayState.Playing) return
+        // If already loading this specific station, don't restart task
+        if (uuid == currentStationUuid && (playState == PlayState.Playing || playState == PlayState.PrePlaying)) return
 
         currentStationUuid = uuid
         playerThreadHandler.post {
+            cancelStationLinkRetrieval()
             currentPlayer.stop()
             reconnectAttempts = 0
             stationLoadAttempts = 0
