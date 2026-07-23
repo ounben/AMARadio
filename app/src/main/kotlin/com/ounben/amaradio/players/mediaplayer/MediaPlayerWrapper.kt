@@ -3,6 +3,7 @@ package com.ounben.amaradio.players.mediaplayer
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
+import android.net.Uri
 import android.os.Handler
 import android.util.Log
 import com.ounben.amaradio.R
@@ -48,6 +49,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
     }
 
     private fun playProxyStream(proxyUrl: String) {
+        val attributedContext = context?.let { Utils.getAttributedContext(it) }
         playerIsInLegalState.set(false)
         if (mediaPlayer == null) {
             mediaPlayer = MediaPlayer()
@@ -59,7 +61,7 @@ class MediaPlayerWrapper(private val playerThreadHandler: Handler) : PlayerWrapp
         try {
             @Suppress("DEPRECATION")
             mediaPlayer!!.setAudioStreamType(AudioManager.STREAM_MUSIC)
-            mediaPlayer!!.setDataSource(proxyUrl)
+            mediaPlayer!!.setDataSource(attributedContext ?: context!!, Uri.parse(proxyUrl))
             mediaPlayer!!.prepareAsync()
             mediaPlayer!!.setOnPreparedListener {
                 playerIsInLegalState.set(true)

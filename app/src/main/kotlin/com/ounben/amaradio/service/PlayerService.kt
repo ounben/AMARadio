@@ -70,6 +70,14 @@ import java.io.FileOutputStream
 @Suppress("DEPRECATION")
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
+    override fun attachBaseContext(newBase: Context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            super.attachBaseContext(newBase.createAttributionContext("player_service"))
+        } else {
+            super.attachBaseContext(newBase)
+        }
+    }
+
     private val tag = "PLAY"
     private var sharedPref: SharedPreferences? = null
     private var trackHistoryRepository: TrackHistoryRepository? = null
@@ -151,6 +159,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? = mediaSession
 
+    /**
+     * Override onUpdateNotification to prevent Media3 from showing its own default notification.
+     * This allows us to maintain our custom notification logic while still being a MediaLibraryService.
+     */
+    override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) {
+        updateNotification(radioPlayer?.playState ?: PlayState.Paused)
+    }
+
     private val afChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
         if (radioPlayer?.isLocal == false) return@OnAudioFocusChangeListener
         Log.d(tag, "afChangeListener: focusChange=$focusChange")
@@ -220,18 +236,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
         handler = Handler(mainLooper)
         
-        val contextForMedia = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            createAttributionContext("media_playback")
-        } else {
-            this
-        }
-        itsContext = contextForMedia
+        itsContext = this
 
-        powerManager = contextForMedia.getSystemService(POWER_SERVICE) as? PowerManager
-        audioManager = contextForMedia.getSystemService(AUDIO_SERVICE) as? AudioManager
+        powerManager = getSystemService(POWER_SERVICE) as? PowerManager
+        audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
         
         // 1. Initialize RadioPlayer
-        radioPlayer = RadioPlayer(contextForMedia).apply { setPlayerListener(this@PlayerService) }
+        radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
 
         amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
 
@@ -242,8 +253,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         // 3. Create MediaSession IMMEDIATELY on the main thread but using the player's looper
         // We use the player's current internal player as the initial target.
         // It will be updated via session.setPlayer() in onPlayerCreated once the ForwardingPlayer is ready.
-        mediaSession = MediaLibrarySession.Builder(contextForMedia, radioPlayer?.player!!, MediaSessionCallback(this, amaradioBrowser))
+        mediaSession = MediaLibrarySession.Builder(this, radioPlayer?.player!!, MediaSessionCallback(this, amaradioBrowser))
             .setSessionActivity(sessionActivityPendingIntent)
+            .setSessionExtras(Bundle().apply { putString("android.media.metadata.ATTRIBUTION_TAG", "player_service") })
             .build()
         
         // 4. Load initial station to ensure non-empty state
@@ -277,7 +289,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         val channel = NotificationChannel(NOTIFICATION_CHANNEL_ID, "AMARadio Player", NotificationManager.IMPORTANCE_LOW)
-        channel.description = "Channel description"
+        channel.description = "AMARadio Playback Controls"
         channel.enableLights(false)
         channel.enableVibration(false)
         notificationManager.createNotificationChannel(channel)
@@ -731,6 +743,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 putString(MediaMetadataCompat.METADATA_KEY_TITLE, displayTitle)
                 putString(MediaMetadataCompat.METADATA_KEY_ARTIST, displayArtist)
                 putString(MediaMetadataCompat.METADATA_KEY_ALBUM, station.Name)
+                putString("android.media.metadata.ATTRIBUTION_TAG", "player_service")
             })
             .setIsBrowsable(false)
             .setIsPlayable(true)
@@ -744,17 +757,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private fun updateNotification(playState: PlayState) {
-        if (Looper.myLooper() != radioPlayer?.playerLooper) {
-            radioPlayer?.runInPlayerThread { updateNotification(playState) }
-            return
-        }
-
         val station = itsCurrentStation
         handler?.post {
             when (playState) {
                 PlayState.Idle -> {
-                    NotificationManagerCompat.from(this).cancel(NOTIFY_ID)
-                    notificationIsActive = false
+                    sendMessage(station?.Name ?: "", "", "", playState)
                 }
                 PlayState.PrePlaying -> {
                     sendMessage(station?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play), playState)
@@ -818,6 +825,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
                     putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
                     putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        putExtra("android.intent.extra.ATTRIBUTION_TAG", "player_service")
+                    }
                 }
                 sendBroadcast(i)
             }
@@ -826,6 +836,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 val i = Intent(AudioEffect.ACTION_CLOSE_AUDIO_EFFECT_CONTROL_SESSION).apply {
                     putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
                     putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                        putExtra("android.intent.extra.ATTRIBUTION_TAG", "player_service")
+                    }
                 }
                 sendBroadcast(i)
             }
@@ -949,8 +962,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     companion object {
-        const val NOTIFY_ID = 1
-        private const val NOTIFICATION_CHANNEL_ID = "default"
+        const val NOTIFY_ID = 1001
+        private const val NOTIFICATION_CHANNEL_ID = "amaradio_player_channel"
         const val METERED_CONNECTION_WARNING_KEY = "warn_no_wifi"
         const val PLAYER_SERVICE_TIMER_UPDATE = "com.ounben.amaradio.timerupdate"
         const val PLAYER_SERVICE_META_UPDATE = "com.ounben.amaradio.metaupdate"

@@ -17,6 +17,7 @@ import androidx.tvprovider.media.tv.TvContractCompat
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.service.MediaSessionCallback
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -42,7 +43,8 @@ fun <T : BaseProgram> Cursor.asSequence(fromCursor: (Cursor) -> T): Sequence<T> 
 
 @SuppressLint("RestrictedApi")
 class TvChannelManager(val app: AMARadioApp) {
-    private val helper = PreviewChannelHelper(app)
+    private val attributedContext = Utils.getAttributedContext(app)
+    private val helper = PreviewChannelHelper(attributedContext)
     private var channelId = INVALID_CONTENT_ID
     private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 

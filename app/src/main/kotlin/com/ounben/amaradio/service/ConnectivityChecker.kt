@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.Network
 import android.net.NetworkCapabilities
 import android.net.NetworkRequest
+import com.ounben.amaradio.Utils
 
 class ConnectivityChecker {
     enum class ConnectionType {
@@ -27,7 +28,8 @@ class ConnectivityChecker {
             return
         }
         lastConnectionType = getCurrentConnectionType(context)
-        connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        val attributedContext = Utils.getAttributedContext(context)
+        connectivityManager = attributedContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         if (connectivityManager != null) {
             networkCallback = object : ConnectivityManager.NetworkCallback() {
                 override fun onCapabilitiesChanged(network: Network, networkCapabilities: NetworkCapabilities) {
@@ -60,7 +62,8 @@ class ConnectivityChecker {
     companion object {
         @JvmStatic
         fun getCurrentConnectionType(context: Context): ConnectionType {
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val attributedContext = Utils.getAttributedContext(context)
+            val connectivityManager = attributedContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             return if (connectivityManager.isActiveNetworkMetered) ConnectionType.METERED else ConnectionType.NOT_METERED
         }
     }

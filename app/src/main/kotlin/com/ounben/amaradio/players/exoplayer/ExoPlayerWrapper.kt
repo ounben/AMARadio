@@ -91,6 +91,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     init {
+        val attributedContext = Utils.getAttributedContext(context)
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(C.USAGE_MEDIA)
             .setContentType(C.AUDIO_CONTENT_TYPE_MUSIC)
@@ -107,20 +108,19 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
             .build()
 
         // 1. Wurzel-Datenquelle erzwingen: IcyDataSource ist die Basis für ALLES
-        val app = context.applicationContext as AMARadioApp
+        val app = attributedContext.applicationContext as AMARadioApp
         val icyFactory = RadioDataSourceFactory(app.httpClient, this, this, false)
         
         // 2. Weiche einketten: Setzt Header, fordert Metadaten an
         val resolvingFactory = ResolvingDataSource.Factory(icyFactory, IcyMetadataResolver())
 
         // 3. Strikte Factory-Verdrahtung: Kein Fallback auf Standard-HTTP erlaubt
-        val strictMediaSourceFactory = DefaultMediaSourceFactory(context, Media3Utils.getRadioExtractorsFactory())
+        val strictMediaSourceFactory = DefaultMediaSourceFactory(attributedContext, Media3Utils.getRadioExtractorsFactory())
             .setDataSourceFactory(resolvingFactory)
 
-        internalPlayer = ExoPlayer.Builder(context)
+        internalPlayer = ExoPlayer.Builder(attributedContext)
             .setLooper(looper)
             .setAudioAttributes(audioAttributes, false)
-            .setWakeMode(C.WAKE_MODE_NETWORK)
             .setLoadControl(loadControl)
             .setMediaSourceFactory(strictMediaSourceFactory)
             .build()
@@ -140,6 +140,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: MediaMetadata?) {
+        val attributedContext = Utils.getAttributedContext(context)
         this.streamUrl = streamUrl
         this.stationName = metadata?.station?.toString() ?: metadata?.title?.toString()
         isHls = Utils.urlIndicatesHlsStream(streamUrl)
@@ -147,10 +148,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
 
         if (bandwidthMeter == null) {
-            bandwidthMeter = DefaultBandwidthMeter.Builder(context).build()
+            bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
         }
 
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
         val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
         val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
 

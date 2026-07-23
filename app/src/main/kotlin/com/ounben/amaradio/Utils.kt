@@ -67,6 +67,19 @@ object Utils {
     }
 
     @JvmStatic
+    fun getAttributedContext(context: Context): Context {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
+            try {
+                context.createAttributionContext("player_service")
+            } catch (_: Exception) {
+                context
+            }
+        } else {
+            context
+        }
+    }
+
+    @JvmStatic
     fun isTesting(): Boolean = testing.get()
 
     @JvmStatic
@@ -354,7 +367,8 @@ object Utils {
 
     @JvmStatic
     fun hasAnyConnection(context: Context): Boolean {
-        val connManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val attributedContext = getAttributedContext(context)
+        val connManager = attributedContext.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         val capabilities = connManager.getNetworkCapabilities(connManager.activeNetwork) ?: return false
         return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }

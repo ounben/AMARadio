@@ -266,6 +266,7 @@
     <string name="icon_click_trend_stable">Popularity stable</string>
 
     <string name="app_name">AMARadio</string>
+    <string name="attribution_player_label">AMARadio Player</string>
     <string name="ad_free_promise">100% Ad-Free &amp; Private</string>
 
     <string name="action_play_in_external">Play in external player</string>

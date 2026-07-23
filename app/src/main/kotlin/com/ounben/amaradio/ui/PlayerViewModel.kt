@@ -157,7 +157,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         }
 
         // 2. Check Volume
-        val audioManager = app.getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        val attributedContext = Utils.getAttributedContext(app)
+        val audioManager = attributedContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
         val volume = audioManager.getStreamVolume(AudioManager.STREAM_MUSIC)
         if (volume == 0) {
             _warningMessage.value = R.string.warning_volume_zero
