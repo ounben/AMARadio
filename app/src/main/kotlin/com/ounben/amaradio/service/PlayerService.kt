@@ -119,7 +119,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var lastPlayStartTime: Long = 0
     private var notificationIsActive = false
     private val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE
-    private lateinit var amaradioBrowser: AMARadioBrowser
+    internal lateinit var amaradioBrowser: AMARadioBrowser
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     private fun sendBroadCast(action: String) {
@@ -865,7 +865,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         Log.d(tag, "onStateChanged: state=$status, audioSessionId=$audioSessionId")
         lastErrorFromPlayer = -1
         if (status == PlayState.Playing) {
-            lastPlayStartTime = System.currentTimeMillis()
+            lastPlayStartTime = android.os.SystemClock.elapsedRealtime()
             if (audioSessionId > 0) {
                 val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
                     putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)

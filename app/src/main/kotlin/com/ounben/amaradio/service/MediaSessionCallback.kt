@@ -54,7 +54,49 @@ class MediaSessionCallback(
                  AppEventManager.sendEvent(intent)
             }
         }
-        return super.onSetMediaItems(session, controller, mediaItems, startIndex, startPositionMs)
+        
+        // Android Auto Fix: We must return items WITH playable URIs, 
+        // otherwise ExoPlayer will stay in BUFFERING state forever.
+        val playableItems = mediaItems.map { item ->
+            val stationId = AMARadioBrowser.stationIdFromMediaId(item.mediaId)
+            val service = context as? PlayerService
+            val station = service?.amaradioBrowser?.getStationById(stationId)
+            
+            if (station != null) {
+                val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
+                com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                    android.net.Uri.parse(streamUrl),
+                    item.mediaMetadata,
+                    item.mediaId
+                )
+            } else {
+                item
+            }
+        }
+        
+        return Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(playableItems, startIndex, startPositionMs))
+    }
+
+    override fun onAddMediaItems(session: MediaSession, controller: MediaSession.ControllerInfo, mediaItems: MutableList<MediaItem>): ListenableFuture<MutableList<MediaItem>> {
+        // Ensure items have URIs when being added from outside (e.g. Android Auto Voice Search)
+        val playableItems = mediaItems.map { item ->
+            val stationId = AMARadioBrowser.stationIdFromMediaId(item.mediaId)
+            val service = context as? PlayerService
+            val station = service?.amaradioBrowser?.getStationById(stationId)
+            
+            if (station != null) {
+                val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
+                com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                    android.net.Uri.parse(streamUrl),
+                    item.mediaMetadata,
+                    item.mediaId
+                )
+            } else {
+                item
+            }
+        }.toMutableList()
+        
+        return Futures.immediateFuture(playableItems)
     }
 
     override fun onPlaybackResumption(session: MediaSession, controller: MediaSession.ControllerInfo): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
