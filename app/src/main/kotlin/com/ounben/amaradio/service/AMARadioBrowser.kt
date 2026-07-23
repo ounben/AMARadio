@@ -81,7 +81,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
-        val iconDir = java.io.File(app.cacheDir, "station_icons")
         
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
@@ -97,32 +96,20 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
                 })
             
-            val iconFile = java.io.File(iconDir, "${station.StationUuid}.jpg")
-            if (iconFile.exists()) {
-                try {
-                    val data = iconFile.readBytes()
-                    metadataBuilder.setArtworkData(data, MediaMetadata.PICTURE_TYPE_FRONT_COVER)
-                } catch (e: Exception) {
-                    val iconUrl = station.IconUrl
-                    if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
-                        metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
-                    } else {
-                        val placeholder = com.ounben.amaradio.utils.StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
-                        val stream = java.io.ByteArrayOutputStream()
-                        placeholder.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, stream)
-                        metadataBuilder.setArtworkData(stream.toByteArray(), MediaMetadata.PICTURE_TYPE_FRONT_COVER)
-                    }
-                }
+            // PERFORMANCE & SECURITY FIX FOR ANDROID AUTO:
+            // Android Auto (Gearhead) forbids file:/// URIs. 
+            // We must ALWAYS use our ContentProvider (content://) to serve icons,
+            // whether they are already in cache or need to be generated.
+            val iconUrl = station.IconUrl
+            if (!iconUrl.isNullOrEmpty() && iconUrl != "null" && !iconUrl.startsWith("http")) {
+                // If it's a local path but not our provider, wrap it
+                metadataBuilder.setArtworkUri(com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name))
+            } else if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
+                // Remote URLs are fine, Gearhead can load them
+                metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
             } else {
-                val iconUrl = station.IconUrl
-                if (!iconUrl.isNullOrEmpty() && iconUrl != "null") {
-                    metadataBuilder.setArtworkUri(Uri.parse(iconUrl))
-                } else {
-                    val placeholder = com.ounben.amaradio.utils.StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
-                    val stream = java.io.ByteArrayOutputStream()
-                    placeholder.compress(android.graphics.Bitmap.CompressFormat.JPEG, 85, stream)
-                    metadataBuilder.setArtworkData(stream.toByteArray(), MediaMetadata.PICTURE_TYPE_FRONT_COVER)
-                }
+                // Use our provider for everything else (Cache or Placeholder)
+                metadataBuilder.setArtworkUri(com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name))
             }
             
             mediaItems.add(MediaItem.Builder()
@@ -171,13 +158,20 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
         
         if (station != null) {
+            val iconUrl = station.IconUrl
+            val artworkUri = if (!iconUrl.isNullOrEmpty() && iconUrl != "null" && iconUrl.startsWith("http")) {
+                Uri.parse(iconUrl)
+            } else {
+                com.ounben.amaradio.utils.StationIconProvider.getIconUri(station.StationUuid, station.Name)
+            }
+
             val item = MediaItem.Builder()
                 .setMediaId(mediaId)
                 .setMediaMetadata(MediaMetadata.Builder()
                     .setTitle(station.Name)
                     .setIsBrowsable(false)
                     .setIsPlayable(true)
-                    .setArtworkUri(Uri.parse(station.IconUrl ?: ""))
+                    .setArtworkUri(artworkUri)
                     .build())
                 .build()
             return Futures.immediateFuture(LibraryResult.ofItem(item, null))

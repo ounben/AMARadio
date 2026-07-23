@@ -104,5 +104,10 @@
                 android:value="true" />
         </service>
 
+        <provider
+            android:name="com.ounben.amaradio.utils.StationIconProvider"
+            android:authorities="com.ounben.amaradio.stationicons"
+            android:exported="true" />
+
     </application>
 </manifest>
