@@ -43,9 +43,11 @@ class StationIconProvider : ContentProvider() {
 
         // 2. Otherwise generate it on the fly
         try {
-            val bitmap = StationPlaceholderUtils.createPlaceholderBitmap(name, uuid)
+            // Speed Fix: Generate smaller bitmaps for Android Auto lists (256x256 is enough)
+            val bitmap = StationPlaceholderUtils.createPlaceholderBitmap(name, uuid, size = 256)
             FileOutputStream(iconFile).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
+                // Speed Fix: Lower quality slightly for faster compression
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
             }
             return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (e: Exception) {

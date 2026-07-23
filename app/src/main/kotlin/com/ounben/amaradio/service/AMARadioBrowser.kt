@@ -14,7 +14,8 @@ import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
-import com.ounben.amaradio.Utils
+import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.FilterTabItem
 import kotlinx.coroutines.CoroutineScope
@@ -28,6 +29,8 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
     private val json = Json { ignoreUnknownKeys = true }
+    private val database = AMARadioDatabase.getDatabase(app)
+    private val stationDao = database.stationDao()
 
     fun onGetLibraryRoot(browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
         val rootItem = MediaItem.Builder()
@@ -126,31 +129,25 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val tabs = try { json.decodeFromString<List<FilterTabItem>>(jsonStr) } catch (e: Exception) { emptyList() }
         val tab = tabs.find { it.id == filterId } ?: return emptyList()
 
-        val params = mutableMapOf<String, String>()
-        if (tab.name.isNotEmpty()) params["name"] = tab.name
-        if (tab.countryCode.isNotEmpty()) params["countrycode"] = tab.countryCode
-        if (tab.languageCode.isNotEmpty()) params["language"] = tab.languageCode
-        if (tab.tag.isNotEmpty()) params["tag"] = tab.tag
-        params["order"] = tab.sortBy
-        params["reverse"] = tab.reverse.toString()
-        params["hidebroken"] = "true"
-        params["limit"] = "100"
-
-        val resultString = Utils.downloadFeedRelative(app.httpClient, app, "json/stations/search", false, params)
-        return if (resultString != null) {
-            DataRadioStation.DecodeJson(resultString)?.toList() ?: emptyList()
-        } else emptyList()
+        // Sync with Smartphone App: Use local SQL database instead of remote JSON API
+        val results = stationDao.getStationsFiltered(
+            name = tab.name.ifEmpty { null },
+            countryCode = tab.countryCode.ifEmpty { null },
+            language = tab.languageCode.ifEmpty { null },
+            tag = tab.tag.ifEmpty { null },
+            orderBy = tab.sortBy.lowercase()
+        )
+        
+        return results.map { it.toDataStation() }
     }
 
     private suspend fun fetchLocalStations(): List<DataRadioStation> {
-        val countryCode = app.resources.configuration.locales[0].country.lowercase()
+        val countryCode = app.resources.configuration.locales[0].country.uppercase()
         if (countryCode.isEmpty()) return emptyList()
-        val url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true"
-        val params = mapOf("hidebroken" to "true")
-        val resultString = Utils.downloadFeedRelative(app.httpClient, app, url, false, params)
-        return if (resultString != null) {
-            DataRadioStation.DecodeJson(resultString)?.toList() ?: emptyList()
-        } else emptyList()
+        
+        // Sync with Smartphone App: Use local SQL database
+        val results = stationDao.getStationsByCountryCode(countryCode)
+        return results.map { it.toDataStation() }
     }
 
     fun onGetItem(browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
