@@ -7,6 +7,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -140,7 +141,7 @@ fun MainTopBar(
                     ) {
                         DropdownMenuItem(
                             text = { Text(stringResource(if (isGridView) R.string.action_list_view else R.string.action_grid_view)) },
-                            leadingIcon = { Icon(if (isGridView) Icons.Default.List else Icons.Default.GridView, contentDescription = null) },
+                            leadingIcon = { Icon(if (isGridView) Icons.AutoMirrored.Filled.List else Icons.Default.GridView, contentDescription = null) },
                             onClick = {
                                 onViewToggleClick()
                                 showMenu = false

@@ -64,12 +64,12 @@ class TrackHistoryInfoDialog(private val historyEntry: TrackHistoryEntry) : Bott
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = entry.track ?: "",
+                text = entry.track,
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
             Text(
-                text = entry.artist ?: "",
+                text = entry.artist,
                 style = MaterialTheme.typography.bodyLarge,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

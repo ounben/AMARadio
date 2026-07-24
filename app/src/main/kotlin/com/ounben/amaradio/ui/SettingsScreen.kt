@@ -8,6 +8,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Launch
+import androidx.compose.material.icons.automirrored.filled.LiveHelp
+import androidx.compose.material.icons.automirrored.filled.VolumeDown
+import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -134,7 +138,7 @@ fun SettingsScreen(
                 SettingsSwitch(
                     title = stringResource(R.string.settings_play_external),
                     checked = uiState.playExternal,
-                    icon = Icons.Default.Launch,
+                    icon = Icons.AutoMirrored.Filled.Launch,
                     onCheckedChange = { viewModel.updateBoolean("play_external", it) }
                 )
                 SettingsSwitch(
@@ -146,7 +150,7 @@ fun SettingsScreen(
                 SettingsSwitch(
                     title = stringResource(R.string.settings_pause_when_noisy),
                     checked = uiState.pauseWhenNoisy,
-                    icon = Icons.Default.VolumeDown,
+                    icon = Icons.AutoMirrored.Filled.VolumeDown,
                     onCheckedChange = { viewModel.updateBoolean("pause_when_noisy", it) }
                 )
                 /*
@@ -182,7 +186,7 @@ fun SettingsScreen(
                 )
                 SettingsClickable(
                     title = stringResource(R.string.settings_about),
-                    icon = Icons.Default.LiveHelp,
+                    icon = Icons.AutoMirrored.Filled.LiveHelp,
                     onClick = onOpenAbout
                 )
             }

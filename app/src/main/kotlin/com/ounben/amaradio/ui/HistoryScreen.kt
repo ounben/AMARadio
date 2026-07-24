@@ -34,18 +34,16 @@ fun HistoryScreen(
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        ScrollableTabRow(
+        SecondaryScrollableTabRow(
             selectedTabIndex = pagerState.currentPage,
             edgePadding = 16.dp,
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary,
-            indicator = { tabPositions ->
-                if (pagerState.currentPage < tabPositions.size) {
-                    TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                        color = MaterialTheme.colorScheme.primary
-                    )
-                }
+            indicator = {
+                TabRowDefaults.SecondaryIndicator(
+                    Modifier.tabIndicatorOffset(pagerState.currentPage),
+                    color = MaterialTheme.colorScheme.primary
+                )
             },
             divider = {}
         ) {

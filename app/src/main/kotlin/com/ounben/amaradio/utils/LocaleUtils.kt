@@ -27,7 +27,7 @@ object LocaleUtils {
             val tag = languageCode.replace("-r", "-")
             Locale.forLanguageTag(tag)
         } else {
-            Locale(languageCode)
+            Locale.forLanguageTag(languageCode)
         }
 
         Locale.setDefault(locale)

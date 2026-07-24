@@ -83,19 +83,17 @@ fun TabsScreen(
                 .background(MaterialTheme.colorScheme.secondary),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ScrollableTabRow(
+            SecondaryScrollableTabRow(
                 selectedTabIndex = pagerState.currentPage,
                 modifier = Modifier.weight(1f),
                 edgePadding = 16.dp,
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onSecondary,
-                indicator = { tabPositions ->
-                    if (pagerState.currentPage < tabPositions.size) {
-                        TabRowDefaults.SecondaryIndicator(
-                            Modifier.tabIndicatorOffset(tabPositions[pagerState.currentPage]),
-                            color = MaterialTheme.colorScheme.primary
-                        )
-                    }
+                indicator = {
+                    TabRowDefaults.SecondaryIndicator(
+                        Modifier.tabIndicatorOffset(pagerState.currentPage),
+                        color = MaterialTheme.colorScheme.primary
+                    )
                 },
                 divider = {}
             ) {

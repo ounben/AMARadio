@@ -99,6 +99,7 @@ class MediaSessionCallback(
         return Futures.immediateFuture(resolvedItems)
     }
 
+    @Deprecated("Deprecated in Media3")
     override fun onPlaybackResumption(session: MediaSession, controller: MediaSession.ControllerInfo): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
         val player = session.player
         val currentItem = player.currentMediaItem

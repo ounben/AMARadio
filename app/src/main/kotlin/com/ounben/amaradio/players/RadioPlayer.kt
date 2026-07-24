@@ -376,8 +376,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         playerListener?.foundShoutcastStream(shoutcastInfo, isHls)
     }
 
-    override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
-        lastLiveInfo = streamLiveInfo
-        playerListener?.foundLiveStreamInfo(streamLiveInfo)
+    override fun onDataSourceStreamLiveInfo(liveInfo: StreamLiveInfo) {
+        lastLiveInfo = liveInfo
+        playerListener?.foundLiveStreamInfo(liveInfo)
     }
 }

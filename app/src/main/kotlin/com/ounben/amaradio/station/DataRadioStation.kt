@@ -29,26 +29,27 @@ import okhttp3.OkHttpClient
 
 @Serializable
 @Parcelize
-class DataRadioStation : Parcelable {
-    @SerialName("name") var Name: String = ""
-    @SerialName("stationuuid") var StationUuid: String = ""
-    @SerialName("changeuuid") var ChangeUuid: String = ""
-    @SerialName("url") var StreamUrl: String = ""
-    @SerialName("homepage") var HomePageUrl: String = ""
-    @SerialName("favicon") var IconUrl: String = ""
-    @SerialName("country") var Country: String = ""
-    @SerialName("countrycode") var CountryCode: String = ""
-    @SerialName("state") var State: String = ""
-    @SerialName("tags") var TagsAll: String = ""
-    @SerialName("language") var Language: String = ""
-    @SerialName("clickcount") var ClickCount: Int = 0
-    @SerialName("clicktrend") var ClickTrend: Int = 0
-    @SerialName("votes") var Votes: Int = 0
-    @SerialName("bitrate") var Bitrate: Int = 0
-    @SerialName("codec") var Codec: String = ""
-    @SerialName("lastchangetime") var LastChangeTime: String = ""
-    @SerialName("creation") var Creation: String = ""
+data class DataRadioStation(
+    @SerialName("name") var Name: String = "",
+    @SerialName("stationuuid") var StationUuid: String = "",
+    @SerialName("changeuuid") var ChangeUuid: String = "",
+    @SerialName("url") var StreamUrl: String = "",
+    @SerialName("homepage") var HomePageUrl: String = "",
+    @SerialName("favicon") var IconUrl: String = "",
+    @SerialName("country") var Country: String = "",
+    @SerialName("countrycode") var CountryCode: String = "",
+    @SerialName("state") var State: String = "",
+    @SerialName("tags") var TagsAll: String = "",
+    @SerialName("language") var Language: String = "",
+    @SerialName("clickcount") var ClickCount: Int = 0,
+    @SerialName("clicktrend") var ClickTrend: Int = 0,
+    @SerialName("votes") var Votes: Int = 0,
+    @SerialName("bitrate") var Bitrate: Int = 0,
+    @SerialName("codec") var Codec: String = "",
+    @SerialName("lastchangetime") var LastChangeTime: String = "",
+    @SerialName("creation") var Creation: String = "",
     @SerialName("lastcheckoktime") var LastCheckOkTime: String = ""
+) : Parcelable {
 
     @IgnoredOnParcel @Transient var RefreshRetryCount: Int = 0
     @IgnoredOnParcel @Transient var Working: Boolean = true
@@ -145,14 +146,13 @@ class DataRadioStation : Parcelable {
      * Prevents TransactionTooLargeException with large metadata or Chinese characters.
      */
     fun getLightweightCopy(): DataRadioStation {
-        val copy = DataRadioStation()
-        copy.Name = this.Name
-        copy.StationUuid = this.StationUuid
-        copy.StreamUrl = this.StreamUrl
-        copy.IconUrl = this.IconUrl
-        copy.CountryCode = this.CountryCode
-        // We omit TagsAll and heavy descriptions to save space in Binder buffer
-        return copy
+        return DataRadioStation(
+            Name = this.Name,
+            StationUuid = this.StationUuid,
+            StreamUrl = this.StreamUrl,
+            IconUrl = this.IconUrl,
+            CountryCode = this.CountryCode
+        )
     }
 
     fun copyPropertiesFrom(other: DataRadioStation) {
@@ -172,6 +172,9 @@ class DataRadioStation : Parcelable {
         Votes = other.Votes
         Bitrate = other.Bitrate
         Codec = other.Codec
+        LastChangeTime = other.LastChangeTime
+        Creation = other.Creation
+        LastCheckOkTime = other.LastCheckOkTime
     }
 
     fun interface ShortcutReadyListener {

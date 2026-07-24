@@ -72,18 +72,15 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
     }
 
-    private val networkChangedReceiver: BroadcastReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            @Suppress("DEPRECATION")
-            if (ConnectivityManager.CONNECTIVITY_ACTION == intent.action) {
-                if (fullStopTask != null && audioSource != null && Utils.hasAnyConnection(context)) {
-                    Log.i("ExoPlayerWrapper", "Regained connection. Resuming playback.")
-                    cancelStopTask()
-                    playerThreadHandler.post {
-                        internalPlayer.setMediaSource(audioSource!!, false)
-                        internalPlayer.prepare()
-                        internalPlayer.playWhenReady = true
-                    }
+    private val networkCallback = object : android.net.ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: android.net.Network) {
+            if (fullStopTask != null && audioSource!! != null) {
+                Log.i("ExoPlayerWrapper", "Regained connection. Resuming playback.")
+                cancelStopTask()
+                playerThreadHandler.post {
+                    internalPlayer.setMediaSource(audioSource!!, false)
+                    internalPlayer.prepare()
+                    internalPlayer.playWhenReady = true
                 }
             }
         }
@@ -135,64 +132,72 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         bytesTransferred = 0
         cancelStopTask()
 
-        // Robustness Fix: Let Media3 handle the transition. No aggressive stop() here.
         playerThreadHandler.post {
-            if (bandwidthMeter == null) {
-                bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
-            }
+            // FULL RESET: Clear previous decoder session.
+            internalPlayer.stop()
+            internalPlayer.clearMediaItems()
             
-            val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
-            val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
-            val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
+            if (metadata != null) {
+                internalPlayer.playlistMetadata = metadata
+            }
 
-            val dedicatedClient = httpClient.newBuilder()
-                .addInterceptor { chain ->
-                    val request = chain.request()
-                    if (request.method == "HEAD") {
-                        chain.proceed(request.newBuilder().method("GET", null).build())
-                    } else {
-                        chain.proceed(request)
-                    }
+            // GRACE PERIOD: Allow the decoder thread to flush.
+            playerThreadHandler.post {
+                if (bandwidthMeter == null) {
+                    bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
                 }
-                .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-                .readTimeout(readTimeout, TimeUnit.SECONDS)
-                .build()
+                
+                val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
+                val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
+                val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
 
-            val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
+                val dedicatedClient = httpClient.newBuilder()
+                    .addInterceptor { chain ->
+                        val request = chain.request()
+                        if (request.method == "HEAD") {
+                            chain.proceed(request.newBuilder().method("GET", null).build())
+                        } else {
+                            chain.proceed(request)
+                        }
+                    }
+                    .connectTimeout(connectTimeout, TimeUnit.SECONDS)
+                    .readTimeout(readTimeout, TimeUnit.SECONDS)
+                    .build()
 
-            val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
-            val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
+                val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
+                val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
+                val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
+                val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
 
-            val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
-            val audioSource = if (isHls) {
-                HlsMediaSource.Factory(resolvingFactory)
-                    .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                    .createMediaSource(mediaItem)
-            } else {
-                ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
-                    .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                    .createMediaSource(mediaItem)
+                val audioSource = if (isHls) {
+                    HlsMediaSource.Factory(resolvingFactory)
+                        .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                        .createMediaSource(mediaItem)
+                } else {
+                    ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
+                        .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                        .createMediaSource(mediaItem)
+                }
+
+                this@ExoPlayerWrapper.audioSource = audioSource
+                playbackStartTime = SystemClock.elapsedRealtime()
+                internalPlayer.volume = currentVolume
+                internalPlayer.setMediaSource(audioSource, true)
+                internalPlayer.playWhenReady = true
+                internalPlayer.prepare()
             }
-
-            playbackStartTime = SystemClock.elapsedRealtime()
-            internalPlayer.volume = currentVolume
-            
-            // Media3-Native Way: Use setMediaSource with the pre-built source.
-            // This is more reliable for custom IcyDataSource handling.
-            internalPlayer.setMediaSource(audioSource, true)
-            internalPlayer.playWhenReady = true
-            internalPlayer.prepare()
         }
         
-        @Suppress("DEPRECATION")
-        try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
-        try { context.registerReceiver(networkChangedReceiver, IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)) } catch (_: Exception) {}
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+        try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
+        try { cm?.registerDefaultNetworkCallback(networkCallback) } catch (_: Exception) {}
     }
 
     override fun pause() {
         cancelStopTask()
         playerThreadHandler.post {
-            try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+            try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
             // Radio-Pause: Hard stop the engine to release network resources.
             // We KEEP the media items but we call stop() to drop the connection.
             internalPlayer.playWhenReady = false
@@ -205,7 +210,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
         isPlayingFlag = false
         playerThreadHandler.post {
-            try { context.unregisterReceiver(networkChangedReceiver) } catch (_: Exception) {}
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+            try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
             // Strikter Abbruch und Playlist-Löschung
             internalPlayer.stop()
             internalPlayer.clearMediaItems()

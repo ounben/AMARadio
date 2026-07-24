@@ -38,7 +38,7 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_21
-            freeCompilerArgs.add("-opt-in=androidx.media3.common.util.UnstableApi")
+            freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
             freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
         }
     }

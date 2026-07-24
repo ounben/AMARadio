@@ -34,7 +34,7 @@ abstract class AMARadioDatabase : RoomDatabase() {
                     .createFromAsset("databases/radio_browser_database.db")
                     .setJournalMode(JournalMode.WRITE_AHEAD_LOGGING)
                     .addCallback(CALLBACK)
-                    .fallbackToDestructiveMigration()
+                    .fallbackToDestructiveMigration(true)
                     .build()
                 INSTANCE = instance
                 instance

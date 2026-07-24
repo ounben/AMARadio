@@ -46,13 +46,13 @@ fun ServerInfoScreen(
             )
         }
 
-        TabRow(
+        SecondaryTabRow(
             selectedTabIndex = selectedTabIndex,
             containerColor = MaterialTheme.colorScheme.surface,
             contentColor = AmaradioAmber,
-            indicator = { tabPositions ->
+            indicator = {
                 TabRowDefaults.SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[selectedTabIndex]),
+                    Modifier.tabIndicatorOffset(selectedTabIndex),
                     color = AmaradioAmber
                 )
             }

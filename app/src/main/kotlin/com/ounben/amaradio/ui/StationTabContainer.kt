@@ -11,18 +11,16 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun TabHeader(titleRes: Int) {
-    ScrollableTabRow(
+    SecondaryScrollableTabRow(
         selectedTabIndex = 0,
         edgePadding = 16.dp,
         containerColor = MaterialTheme.colorScheme.secondary,
         contentColor = MaterialTheme.colorScheme.onSecondary,
-        indicator = { tabPositions ->
-            if (tabPositions.isNotEmpty()) {
-                TabRowDefaults.SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(tabPositions[0]),
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
+        indicator = {
+            TabRowDefaults.SecondaryIndicator(
+                Modifier.tabIndicatorOffset(0),
+                color = MaterialTheme.colorScheme.primary
+            )
         },
         divider = {}
     ) {

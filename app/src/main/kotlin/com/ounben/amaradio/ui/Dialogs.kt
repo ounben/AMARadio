@@ -10,6 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.Shortcut
+import androidx.compose.material.icons.automirrored.filled.Shortcut
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -393,7 +395,7 @@ fun StationOptionsDialog(
                             color = MaterialTheme.colorScheme.onSurface
                         ) 
                     },
-                    leadingContent = { Icon(Icons.Default.Shortcut, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = { Icon(Icons.AutoMirrored.Filled.Shortcut, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         // Shortcut logic
                         onDismiss()
