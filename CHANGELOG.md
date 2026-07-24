@@ -5,6 +5,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.14] - 2026-07-24
+### Added
+- **Icon Baking Engine**: Implemented a proactive background processing system for station logos. The app now automatically "bakes" (downloads and resizes) icons to a local cache, ensuring 100% icon coverage and instant delivery to System Notifications and Bluetooth units.
+- **Enhanced Search Weighted Scoring**: Significant overhaul of the search algorithm in Filters. "Starts-with" matches and word boundaries are now heavily prioritized (e.g., "Sweden" or "Switzerland" appear first when searching "sch"), drastically improving relevance for countries and tags.
+- **Adaptive UI Scrolling**: Searchable dialogs (Country, Language, Tag) now automatically scroll back to the top when the search query changes, ensuring the most relevant results are always visible.
+
+### Changed
+- **Modern Build Infrastructure**: Fully migrated to **Android Gradle Plugin 9.0** standards.
+- **Kotlin Integration**: Transitioned to built-in Kotlin support, removing legacy plugins for better build performance and future compatibility.
+- **Edge-to-Edge System Design**: Refined the UI to strictly follow modern Android 15 standards with transparent system bars and automatic `WindowInsets` handling.
+- **Internal Cleanup**: Removed deprecated icon usage and replaced them with official `AutoMirrored` Material versions.
+
+### Fixed
+- **Audio Engine Stabilization**: Hardened the ExoPlayer wrapper with an explicit hardware-stop and thread-grace-period mechanism. This resolves "pipelineFull" and MediaCodec overflow errors during rapid station switching.
+- **Android 14+ Compatibility**: Fixed a potential crash (`ForegroundServiceStartNotAllowedException`) by implementing a safer foreground state transition for the Player Service.
+- **UI Stability**: Resolved a fatal `IndexOutOfBoundsException` when deleting custom filter tabs by implementing safe index coercion in the TabRow components.
+- **Database Resilience**: Updated Room configuration to use the modern parameterized `fallbackToDestructiveMigration` API.
+
+
 ## [1.13] - 2026-07-19
 ### Added
 - **Room Database Optimization**: `StationUuid` is now the primary key for reliable updates (`REPLACE` strategy). Redundant `StationID` removed.

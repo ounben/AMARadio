@@ -66,7 +66,7 @@ Originally created as a personal project for the developer's mother to provide a
 ## Getting Started
 
 ### Installation
-The latest version (v1.13) introduces significant database performance optimizations, enhanced synchronization logic, and dynamic station placeholders. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v1.14) introduces significant stability improvements to the audio engine, proactive icon caching, and a modernized build infrastructure for Android 15. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
