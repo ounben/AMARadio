@@ -10,35 +10,35 @@ object SearchUtils {
         val name = targetName.lowercase().trim()
         val q = query.lowercase().trim()
         
-        if (name == q) return 5000.0 // Perfection
+        if (name == q) return 10000.0 // Absolute Perfektion
         
         var score = 0.0
+
+        // 1. FULL START BONUS: Der gesamte Name fängt mit der Suche an
+        if (name.startsWith(q)) {
+            score += 2000.0
+        }
         
-        // 1. Word Boundary Logic: Higher priority for words starting with query
-        // Examples: "TL" matching "Radio Tlemcen" or "Tlemcen Live"
+        // 2. Word Boundary Logic: Höchste Priorität für Wortanfänge
         val words = name.split(" ", "-", "_", ".", "(", ")", "/", "[", "]", "!", "?").filter { it.isNotEmpty() }
         
         words.forEachIndexed { index, word ->
             if (word.startsWith(q)) {
-                // Word start match: 
-                // - Highest if first word (1000)
-                // - Still very high for other words (800)
-                score += if (index == 0) 1000.0 else 800.0
+                // Wortanfang Treffer:
+                // - Erstes Wort bekommt massiven Bonus (1000)
+                // - Folgeworte bekommen hohen Bonus (500)
+                score += if (index == 0) 1000.0 else 500.0
             } else if (word.contains(q)) {
-                // Contains within word: much lower priority (10)
-                score += 10.0
+                // Treffer mitten im Wort: Sehr geringe Priorität (maximal 5 Punkte)
+                // Wir bestrafen die Position: Je später im Wort, desto weniger Punkte.
+                val position = word.indexOf(q)
+                score += (1.0 / (position + 1)) * 5.0
             }
         }
         
-        // 2. Acronym/Initial Logic (e.g., "RTL" contains "TL" but shouldn't win)
-        // We penalize if the query is just a substring in the middle of a word
-        if (!words.any { it.startsWith(q) } && name.contains(q)) {
-            score += 1.0 // Minimal point for substring
-        }
-
-        // 3. Length Proximity: Closer length to query wins ties
+        // 3. Length Proximity: Bei Punktegleichstand gewinnt das kürzere (präzisere) Wort
         val lengthDiff = Math.abs(name.length - q.length)
-        score += (1.0 / (lengthDiff + 1)) * 5.0
+        score += (1.0 / (lengthDiff + 1)) * 10.0
         
         return score
     }

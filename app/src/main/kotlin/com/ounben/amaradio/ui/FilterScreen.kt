@@ -511,9 +511,17 @@ fun SearchableSelectionDialog(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
+    val listState = androidx.compose.foundation.lazy.rememberLazyListState()
 
     LaunchedEffect(Unit) {
         focusRequester.requestFocus()
+    }
+
+    // Reset scroll to top when search query changes
+    LaunchedEffect(searchQuery) {
+        if (searchQuery.isNotEmpty()) {
+            listState.scrollToItem(0)
+        }
     }
 
     val filteredOptions = remember(searchQuery, options) {
@@ -521,6 +529,7 @@ fun SearchableSelectionDialog(
         if (q.isEmpty()) {
             options
         } else {
+            // Erst filtern (muss vorkommen), dann nach dem neuen gewichteten Score sortieren
             options.filter { it.label.contains(q, ignoreCase = true) }
                 .sortedWith(
                     compareByDescending<FilterViewModel.CategoryItem> { item ->
@@ -563,6 +572,7 @@ fun SearchableSelectionDialog(
                 )
 
                 androidx.compose.foundation.lazy.LazyColumn(
+                    state = listState,
                     modifier = Modifier.weight(1f),
                     contentPadding = PaddingValues(vertical = 4.dp)
                 ) {
