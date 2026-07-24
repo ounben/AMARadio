@@ -11,11 +11,13 @@ import com.ounben.amaradio.history.TrackHistoryEntry
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [TrackHistoryEntry::class, StationEntity::class], version = 4)
+@Database(entities = [TrackHistoryEntry::class, StationEntity::class, TagCacheEntity::class, LanguageCacheEntity::class], version = 6)
 @TypeConverters(Converters::class)
 abstract class AMARadioDatabase : RoomDatabase() {
     abstract fun songHistoryDao(): TrackHistoryDao
     abstract fun stationDao(): StationDao
+    abstract fun tagCacheDao(): TagCacheDao
+    abstract fun languageCacheDao(): LanguageCacheDao
 
     val databaseExecutor: Executor = Executors.newSingleThreadExecutor { runnable -> Thread(runnable, "AMARadioDatabase Executor") }
 

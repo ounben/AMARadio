@@ -23,6 +23,8 @@ import androidx.preference.PreferenceManager
 import androidx.core.content.edit
 import android.content.SharedPreferences
 import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.TagCacheEntity
+import com.ounben.amaradio.database.LanguageCacheEntity
 import com.ounben.amaradio.database.toDataStation
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.encodeToString
@@ -82,6 +84,31 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     init {
         loadSavedFilters()
+        
+        // REAKTIVE DATEN: Wir beobachten die SQL-Tabellen.
+        viewModelScope.launch {
+            val db = AMARadioDatabase.getDatabase(app)
+            
+            launch {
+                db.tagCacheDao().getAllTagsFlow().collect { entities ->
+                    if (entities.isNotEmpty()) {
+                        _uiState.update { it.copy(tags = entities.map { CategoryItem(it.tagName, it.tagName, count = it.stationCount ?: 0) }) }
+                    }
+                }
+            }
+
+            launch {
+                db.languageCacheDao().getAllLanguagesFlow().collect { entities ->
+                    if (entities.isNotEmpty()) {
+                        _uiState.update { it.copy(languages = entities.map { 
+                            val label = it.languageName.replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() }
+                            CategoryItem(it.languageName, label, count = it.stationCount ?: 0)
+                        }.sortedBy { it.label }) }
+                    }
+                }
+            }
+        }
+
         viewModelScope.launch {
             delay(100.milliseconds)
             fetchMetadata()
@@ -202,12 +229,38 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     fun fetchMetadata() {
         viewModelScope.launch {
-            val tagsData = loadLocalOrRemote("radio_browser_tag_cache", "json/tags?limit=1000", "tags")
-            val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")
-            val languagesData = loadLocalOrRemote("radio_browser_language_cache", "json/languages", "languages")
+            val db = AMARadioDatabase.getDatabase(app)
+            
+            // Check if SQL table is already filled (by your import)
+            val localTags = db.tagCacheDao().getAllTags()
 
-            val processedTags = withContext(Dispatchers.Default) {
-                tagsData.map { CategoryItem(it.Name, it.Name, count = it.UsedCount) }.sortedByDescending { it.count }
+            // Only fetch from JSON/API if SQL is completely empty
+            val tagsData = if (localTags.isEmpty()) {
+                loadLocalOrRemote("radio_browser_tag_cache", "json/tags?order=stationcount&reverse=true&limit=5000", "tags")
+            } else emptyList()
+
+            val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")
+
+            val localLanguages = db.languageCacheDao().getAllLanguages()
+            val languagesData = if (localLanguages.isEmpty()) {
+                loadLocalOrRemote("radio_browser_language_cache", "json/languages", "languages")
+            } else emptyList()
+
+            if (tagsData.isNotEmpty()) {
+                val processedTags = withContext(Dispatchers.Default) {
+                    tagsData.map { CategoryItem(it.Name, it.Name, count = it.UsedCount) }.sortedByDescending { it.count }
+                }
+                _uiState.update { it.copy(tags = processedTags) }
+                
+                withContext(Dispatchers.IO) {
+                    db.tagCacheDao().insertAll(tagsData.map { TagCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
+                }
+            }
+
+            if (languagesData.isNotEmpty()) {
+                withContext(Dispatchers.IO) {
+                    db.languageCacheDao().insertAll(languagesData.map { LanguageCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
+                }
             }
 
             val processedCountries = withContext(Dispatchers.Default) {
@@ -218,18 +271,9 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 }.sortedBy { it.label }
             }
 
-            val processedLanguages = withContext(Dispatchers.Default) {
-                languagesData.map { 
-                    val label = it.Name.replaceFirstChar { c -> if (c.isLowerCase()) c.titlecase(Locale.ROOT) else c.toString() }
-                    CategoryItem(it.Name, label, count = it.UsedCount)
-                }.sortedBy { it.label }
-            }
-
             _uiState.update { state ->
                 state.copy(
-                    countries = processedCountries,
-                    languages = processedLanguages,
-                    tags = processedTags
+                    countries = processedCountries
                 )
             }
         }
