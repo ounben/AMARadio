@@ -83,15 +83,19 @@ fun TabsScreen(
                 .background(MaterialTheme.colorScheme.secondary),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            val safeSelectedIndex = remember(pagerState.currentPage, tabs.size) {
+                pagerState.currentPage.coerceIn(0, (tabs.size - 1).coerceAtLeast(0))
+            }
+
             SecondaryScrollableTabRow(
-                selectedTabIndex = pagerState.currentPage,
+                selectedTabIndex = safeSelectedIndex,
                 modifier = Modifier.weight(1f),
                 edgePadding = 16.dp,
                 containerColor = Color.Transparent,
                 contentColor = MaterialTheme.colorScheme.onSecondary,
                 indicator = {
                     TabRowDefaults.SecondaryIndicator(
-                        Modifier.tabIndicatorOffset(pagerState.currentPage),
+                        Modifier.tabIndicatorOffset(safeSelectedIndex),
                         color = MaterialTheme.colorScheme.primary
                     )
                 },

@@ -34,14 +34,18 @@ fun HistoryScreen(
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
+        val safeSelectedIndex = remember(pagerState.currentPage) {
+            pagerState.currentPage.coerceIn(0, 1)
+        }
+
         SecondaryScrollableTabRow(
-            selectedTabIndex = pagerState.currentPage,
+            selectedTabIndex = safeSelectedIndex,
             edgePadding = 16.dp,
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary,
             indicator = {
                 TabRowDefaults.SecondaryIndicator(
-                    Modifier.tabIndicatorOffset(pagerState.currentPage),
+                    Modifier.tabIndicatorOffset(safeSelectedIndex),
                     color = MaterialTheme.colorScheme.primary
                 )
             },

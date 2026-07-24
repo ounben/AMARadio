@@ -594,24 +594,36 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
         builder.setStyle(style)
         val notification = builder.build()
+        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        
         try {
-            if (((playState == PlayState.Playing) || (playState == PlayState.PrePlaying)) || (playState == PlayState.Paused)) {
+            val isActiveState = (playState == PlayState.Playing || playState == PlayState.PrePlaying)
+            
+            if (isActiveState || (playState == PlayState.Paused && notificationIsActive)) {
+                // Only call startForeground if we are actively playing or already in foreground.
+                // This prevents ForegroundServiceStartNotAllowedException on Android 14+.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
                     startForeground(NOTIFY_ID, notification)
                 }
                 notificationIsActive = true
+            } else if (playState == PlayState.Paused) {
+                // If paused and not yet in foreground, just show a normal notification.
+                manager.notify(NOTIFY_ID, notification)
             } else {
+                // Idle or Error: Clean up
                 if (notificationIsActive) {
                     stopForeground(STOP_FOREGROUND_REMOVE)
                     notificationIsActive = false
                 } else {
-                    (itsContext!!.getSystemService(NOTIFICATION_SERVICE) as NotificationManager).notify(NOTIFY_ID, notification)
+                    manager.cancel(NOTIFY_ID)
                 }
             }
         } catch (e: Exception) {
-            Log.e(tag, "Failed to update foreground state", e)
+            Log.e(tag, "Foreground state update failed: ${e.message}")
+            // Fallback: Try showing a normal notification at least
+            try { manager.notify(NOTIFY_ID, notification) } catch (_: Exception) {}
         }
     }
 

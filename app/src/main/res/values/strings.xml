@@ -242,11 +242,11 @@
     <string name="tab_player_info">Info</string>
     <string name="tab_player_history">Track history</string>
 
-    <string name="database_summary_title">Local Database</string>
-    <string name="database_total_stations">Total Stations</string>
-    <string name="database_last_sync">Last Sync</string>
-    <string name="database_update_now">Update Database Now</string>
-    <string name="database_syncing">Syncing…</string>
+    <string name="database_summary_title" translatable="false">Local Database</string>
+    <string name="database_total_stations" translatable="false">Total Stations</string>
+    <string name="database_last_sync" translatable="false">Last Sync</string>
+    <string name="database_update_now" translatable="false">Update Database Now</string>
+    <string name="database_syncing" translatable="false">Syncing…</string>
 
     <string name="station_detail_bitrate">%1$1d kbps</string>
     <string name="station_detail_broken">BROKEN</string>
@@ -266,7 +266,7 @@
     <string name="icon_click_trend_stable">Popularity stable</string>
 
     <string name="app_name">AMARadio</string>
-    <string name="attribution_player_label">AMARadio Player</string>
+    <string name="attribution_player_label" translatable="false">AMARadio Player</string>
     <string name="ad_free_promise">100% Ad-Free &amp; Private</string>
 
     <string name="action_play_in_external">Play in external player</string>
