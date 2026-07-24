@@ -1,6 +1,5 @@
 plugins {
     id 'com.android.application'
-    id 'kotlin-android'
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
     id 'com.google.devtools.ksp'
@@ -48,6 +47,7 @@ android {
         viewBinding false
         aidl true
         compose true
+        resValues true
     }
 
     bundle {
@@ -101,10 +101,12 @@ android {
         animationsDisabled = true
         unitTests.returnDefaultValues = true
     }
+}
 
-    applicationVariants.all { variant ->
-        variant.outputs.all {
-            outputFileName = "AMARadio_${variant.versionName}.apk"
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        variant.outputs.forEach { output ->
+            output.outputFileName.set("AMARadio_${appVersion}.apk")
         }
     }
 }
