@@ -235,8 +235,9 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             val localTags = db.tagCacheDao().getAllTags()
 
             // Only fetch from JSON/API if SQL is completely empty
+            // We order by stationcount to get Phonk and other popular genres in the first batch
             val tagsData = if (localTags.isEmpty()) {
-                loadLocalOrRemote("radio_browser_tag_cache", "json/tags?order=stationcount&reverse=true&limit=5000", "tags")
+                loadLocalOrRemote("radio_browser_tag_cache", "json/tags?order=stationcount&reverse=true", "tags")
             } else emptyList()
 
             val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")

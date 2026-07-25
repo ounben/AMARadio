@@ -403,6 +403,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         if (station != null) {
             val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
             updateMetadata(station, displayTitle)
+            
+            // Fire & Forget: Report click to official API for community ranking
+            val app = application as AMARadioApp
+            Utils.reportClickToOfficialApi(app.httpClient, station.StationUuid)
         }
         
         lastErrorFromPlayer = -1

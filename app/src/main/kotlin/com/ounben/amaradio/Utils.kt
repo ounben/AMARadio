@@ -425,4 +425,32 @@ object Utils {
         bitmap?.let { builder.setIcon(Icon.createWithBitmap(it)) }
         return builder.build()
     }
+
+    /**
+     * Reports a click to the official radio-browser.info API to support their click count.
+     * Fixed server: de1.api.radio-browser.info
+     * Fire & Forget: No response needed, no stability impact on AMARadio.
+     */
+    @JvmStatic
+    fun reportClickToOfficialApi(httpClient: OkHttpClient, stationUuid: String) {
+        if (stationUuid.isBlank() || stationUuid == "null") return
+
+        val url = "https://de1.api.radio-browser.info/json/url/$stationUuid"
+        if (isDebug) Log.d("CLICK_REPORT", "Sending click to: $url")
+
+        val request = Request.Builder()
+            .url(url)
+            .build()
+
+        // Async enqueue (OkHttp internal thread pool)
+        httpClient.newCall(request).enqueue(object : Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                // Ignore, fire and forget
+            }
+            override fun onResponse(call: Call, response: Response) {
+                // Important: Close response body to release resources
+                response.close()
+            }
+        })
+    }
 }
