@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.15] - 2026-07-25
+### Added
+- **SQL Metadata Architecture**: Migrated Genre-Tags and Languages to a high-performance local SQL cache (`TagCache` and `LanguageCache`). This allows for instant, offline filter suggestions and supports massive datasets (e.g., 11,000+ tags) without performance degradation.
+- **Community Support (Click Counting)**: Integrated an asynchronous "Fire & Forget" reporting mechanism for the official radio-browser.info API. Playing a station now supports its global ranking via the official click count system.
+- **Expanded Results**: Increased the maximum number of stations displayed in searches and country lists from 100 to **300**, providing a broader selection for users.
+
+### Fixed
+- **Database Schema Integrity**: Resolved a `IllegalStateException` related to SQL index ordering (`DESC` vs `ASC`) in the pre-packaged database.
+
 ## [1.14] - 2026-07-24
 ### Added
 - **Icon Baking Engine**: Implemented a proactive background processing system for station logos. The app now automatically "bakes" (downloads and resizes) icons to a local cache, ensuring 100% icon coverage and instant delivery to System Notifications and Bluetooth units.

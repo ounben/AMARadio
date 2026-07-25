@@ -3,70 +3,48 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
 <a href='https://play.google.com/store/apps/details?id=com.ounben.amaradio'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height='60px'/></a>
 
-**AMARadio** is a professional, open-source Android application designed for streaming radio stations globally. It leverages the community-driven [radio-browser.info](https://www.radio-browser.info/) database to provide access to thousands of stations.
-
-This project is a refined fork of RadioDroid, optimized for a more focused, accessible, and stable user experience. The codebase has been completely migrated to **100% Kotlin**, adopting modern Android standards and ensuring full compatibility with Android 14 and 15.
+**AMARadio** is an open-source Android application for worldwide radio streaming. By leveraging the community-supported [radio-browser.info](https://www.radio-browser.info/) database, AMARadio provides instant access to thousands of stations in a stable, modern, and user-friendly environment.
 
 ## Core Philosophy
 
-**Ad-Free and Privacy-Focused**: AMARadio was developed with the primary goal of providing a clean, honest radio experience. It contains no advertisements, no tracking, and no bloatware. 
-
-Originally created as a personal project for the developer's mother to provide a simple, distraction-free way to enjoy global radio, AMARadio remains committed to these core values of transparency and accessibility for all users.
+AMARadio was developed to enable an honest and distraction-free listening experience. The app is **completely ad-free, contains no tracking, and no unnecessary bloatware**. Originally started as a personal project to create a simple and accessible interface for global radio, the app remains consistently transparent and easy to use – for everyone.
 
 ## Key Features
 
-- **Local-First Architecture**: Features a high-performance **Room Database** containing a pre-populated snapshot of thousands of global radio stations. It uses the `StationUuid` as a primary key, ensuring that updates from the API seamlessly overwrite existing records without duplication. This ensures near-instant searches and full offline browsing capability immediately after installation.
-- **Automated Background Sync**: An intelligent `SyncWorker` keeps the local database fresh by periodically fetching the latest station changes and popularity metrics from the global API via the optimized `json/stations/lastchange` endpoint.
-- **Smart Update Triggers**: The app automatically checks the database integrity 5 minutes after every startup. If the data is older than 24 hours, a silent background synchronization is triggered to ensure you always see the latest stations.
-- **Dynamic Station Placeholders**: Implements a sophisticated fallback system for stations missing logos. It automatically generates high-contrast, color-coded identifiers based on the station name and UUID for a consistent and professional look across the app and Android Auto.
-- **Functional-Only Filtering**: To ensure a frustration-free experience, all local station lists, category browses, and searches automatically filter for functional stations (`LastCheckOK = 1`), hiding broken links while allowing them to reappear automatically once they are fixed on the server.
-- **Advanced Android Auto Integration**: Fully optimized for vehicle head units. Personal filter tabs, "Local" station lists, and playback history are directly browsable via a specialized, driver-safe interface with high-contrast Material icons.
-- **Instantaneous UI**: Leverages an Activity-scoped ViewModel architecture and background pre-rendering to ensure that switching between tabs and opening the player is instant and flicker-free.
-- **Full Global Accessibility**: Extensively optimized for **TalkBack** and screen readers. Features semantic grouping of station information for fluid navigation, localized accessibility strings in all 74+ supported languages, and "speaking" status icons.
-- **Advanced Search and Filtering**: A dedicated filtering system allows users to find stations by Name, Country, Language, and Tags. 
-- **Dynamic UI Scaling**: Built-in accessibility settings allow for dynamic adjustment of the user interface, including font and component sizes, ranging from Compact to Extra Large.
-- **Multi-Language Support**: Support for over **74 locales**, including newly added African languages (Afrikaans, Amharic, Swahili, Zulu) and a dedicated in-app language selector.
-- **In-App Review Integration**: Features a non-intrusive feedback system using the Google Play Review API, allowing satisfied users to rate the app easily without interrupting their listening experience.
-- **Modern Material Design**: A clean, streamlined interface built with **Jetpack Compose**, featuring full support for Dark and Light modes and edge-to-edge system integration.
-- **Optimized Performance**: High-stability streaming engine based on AndroidX Media3 (ExoPlayer) with prioritized audio threads, intelligent connection management, and strict audio focus handling.
-- **Fail-Over API Support**: Automatic fallback to mirror servers ensures uninterrupted station browsing even if the primary database is down.
-- **Privacy & Compliance**: Fully compliant with modern Android privacy standards, including proper attribution tagging and secure background execution.
-- **Favorites and History**: Efficient management of preferred stations and playback history with support for M3U playlist export/import.
-- **Smart Playback Guards**: Proactively monitors system status to alert users if they attempt to play a station without an internet connection or while the system volume is muted.
-- **Sleep Timer**: Integrated sleep timer functionality to automatically stop playback after a set duration.
-- **Android TV Support**: Specialized user interface optimized for television and large-screen devices.
+- **Instantaneous UI**: Thanks to a highly optimized architecture, switching between tabs and opening the player occurs without delay or flickering.
+- **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
+- **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
+- **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
+- **Dynamic UI Scaling**: Custom settings allow for the adjustment of the user interface size from Compact to Extra Large.
+- **Broad Language Support**: Support for over **74 languages**, including a variety of African languages (Afrikaans, Amharic, Swahili, Zulu) with a dedicated in-app language selector.
+- **Modern Design**: Developed with **Jetpack Compose**, featuring seamless support for Dark/Light modes and edge-to-edge system integration.
+- **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, and intelligent connection management.
+- **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.
+- **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.
+- **Advanced Android Auto Integration**: Fully optimized for vehicle head units with driver-safe interfaces and high-contrast Material icons.
 
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/Screenshot_20260704_034847.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_034915.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_034956.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_035145.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (25).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (26).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (27).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (28).png" width="24%" />
 </p>
 <p align="center">
-  <img src="screenshots/Screenshot_20260704_044232.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044540.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044616.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044651.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (29).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (30).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (31).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (32).png" width="24%" />
 </p>
 <p align="center">
-  <img src="screenshots/Screenshot_20260704_044735.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044859.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044919.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_044932.png" width="24%" />
-</p>
-<p align="center">
-  <img src="screenshots/Screenshot_20260704_061009.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_061028.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_062257.png" width="24%" />
-  <img src="screenshots/Screenshot_20260704_080531.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore (33).png" width="24%" />
 </p>
 
 ## Getting Started
 
 ### Installation
-The latest version (v1.14) introduces significant stability improvements to the audio engine, proactive icon caching, and a modernized build infrastructure for Android 15. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version (v1.15) introduces a high-performance SQL metadata architecture and official click count support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -85,11 +63,11 @@ To build the project locally, ensure you have the latest version of Android Stud
 
 - **Language**: 100% Kotlin
 - **UI Framework**: Jetpack Compose & Material 3
-- **Architecture**: MVVM with Activity-scoped ViewModels for state persistence
-- **Persistence**: Room Database (Pre-populated) for stations and history
+- **Architecture**: MVVM with Activity-scoped ViewModels for state management
+- **Persistence**: Room Database for stations, history, and metadata cache
 - **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
-- **Target SDK**: 37 (Android 15+)
+- **Target SDK**: 37 (Android 17)
 - **Minimum SDK**: 26 (Android 8.0)
 
 ## Contributing
