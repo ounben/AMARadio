@@ -31,7 +31,7 @@ interface StationDao {
     @Query("SELECT COUNT(*) FROM Station WHERE LastCheckOK = 1")
     suspend fun getStationCount(): Int
 
-    @Query("SELECT * FROM Station WHERE CountryCode = :countryCode AND LastCheckOK = 1 ORDER BY clickcount DESC LIMIT 100")
+    @Query("SELECT * FROM Station WHERE CountryCode = :countryCode AND LastCheckOK = 1 ORDER BY clickcount DESC LIMIT 300")
     suspend fun getStationsByCountryCode(countryCode: String): List<StationEntity>
 
     // Advanced search with various sort options - only functional stations
@@ -47,7 +47,7 @@ interface StationDao {
             CASE WHEN :orderBy = 'name' THEN Name END ASC,
             CASE WHEN :orderBy = 'votes' THEN Votes END DESC,
             CASE WHEN :orderBy = 'lastchange' THEN LastChangeTime END DESC
-        LIMIT 100
+        LIMIT 300
     """)
     suspend fun getStationsFiltered(name: String?, countryCode: String?, language: String?, tag: String?, orderBy: String): List<StationEntity>
 
@@ -55,7 +55,7 @@ interface StationDao {
         SELECT * FROM Station 
         WHERE LastCheckOK = 1 
         AND (Name LIKE '%' || :query || '%' OR Tags LIKE '%' || :query || '%')
-        ORDER BY clickcount DESC LIMIT 100
+        ORDER BY clickcount DESC LIMIT 300
     """)
     suspend fun searchStations(query: String): List<StationEntity>
 
