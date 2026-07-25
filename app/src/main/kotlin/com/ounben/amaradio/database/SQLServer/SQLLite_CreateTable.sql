@@ -42,3 +42,24 @@ CREATE INDEX `index_Station_clickcount` ON `Station` (`clickcount`);
 
 -- 3. FTS fuer die Suche
 CREATE VIRTUAL TABLE `StationFTS` USING FTS4(content=`Station`, `Name`, `Tags`);
+
+
+-- Tabelle für den Tag-Cache erstellen
+CREATE TABLE IF NOT EXISTS TagCache (
+    TagName TEXT PRIMARY KEY NOT NULL COLLATE BINARY,
+    StationCount INTEGER DEFAULT 0,
+    StationCountWorking INTEGER DEFAULT 0
+);
+
+-- Index für schnelles Sortieren nach Beliebtheit (wichtig für die UI-Liste)
+CREATE INDEX IF NOT EXISTS index_TagCache_StationCount ON TagCache (StationCount DESC);
+
+-- Tabelle für den Sprachen-Cache erstellen
+CREATE TABLE IF NOT EXISTS LanguageCache (
+    LanguageName TEXT PRIMARY KEY NOT NULL COLLATE BINARY,
+    StationCount INTEGER DEFAULT 0,
+    StationCountWorking INTEGER DEFAULT 0
+);
+
+-- Index für schnelles Sortieren nach Beliebtheit
+CREATE INDEX IF NOT EXISTS index_LanguageCache_StationCount ON LanguageCache (StationCount DESC);
