@@ -85,7 +85,7 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     init {
         loadSavedFilters()
         
-        // REAKTIVE DATEN: Wir beobachten die SQL-Tabellen.
+        // REAKTIVE DATEN: Nur für Tags und Sprachen (SQL-Tabellen)
         viewModelScope.launch {
             val db = AMARadioDatabase.getDatabase(app)
             
@@ -109,10 +109,12 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             }
         }
 
+        // Initiales Laden
         viewModelScope.launch {
             delay(100.milliseconds)
             fetchMetadata()
-            // Search all tabs on startup if they have filters
+            
+            // Suche für alle Tabs ausführen
             _uiState.value.tabs.forEachIndexed { index, tab ->
                 if (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.languageCode.isNotEmpty() || tab.tag.isNotEmpty()) {
                     performSearch(index)
@@ -231,39 +233,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             val db = AMARadioDatabase.getDatabase(app)
             
-            // Check if SQL table is already filled (by your import)
-            val localTags = db.tagCacheDao().getAllTags()
-
-            // Only fetch from JSON/API if SQL is completely empty
-            // We order by stationcount to get Phonk and other popular genres in the first batch
-            val tagsData = if (localTags.isEmpty()) {
-                loadLocalOrRemote("radio_browser_tag_cache", "json/tags?order=stationcount&reverse=true", "tags")
-            } else emptyList()
-
+            // 1. LÄNDER: Immer aus JSON laden (da stabil und bewährt)
             val countriesData = loadLocalOrRemote("radio_browser_country_cache", "json/countrycodes", "countries")
-
-            val localLanguages = db.languageCacheDao().getAllLanguages()
-            val languagesData = if (localLanguages.isEmpty()) {
-                loadLocalOrRemote("radio_browser_language_cache", "json/languages", "languages")
-            } else emptyList()
-
-            if (tagsData.isNotEmpty()) {
-                val processedTags = withContext(Dispatchers.Default) {
-                    tagsData.map { CategoryItem(it.Name, it.Name, count = it.UsedCount) }.sortedByDescending { it.count }
-                }
-                _uiState.update { it.copy(tags = processedTags) }
-                
-                withContext(Dispatchers.IO) {
-                    db.tagCacheDao().insertAll(tagsData.map { TagCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
-                }
-            }
-
-            if (languagesData.isNotEmpty()) {
-                withContext(Dispatchers.IO) {
-                    db.languageCacheDao().insertAll(languagesData.map { LanguageCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
-                }
-            }
-
             val processedCountries = withContext(Dispatchers.Default) {
                 countriesData.map { 
                     val label = CountryCodeDictionary.instance.getCountryByCode(it.Name) ?: it.Name
@@ -272,11 +243,30 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 }.sortedBy { it.label }
             }
 
-            _uiState.update { state ->
-                state.copy(
-                    countries = processedCountries
-                )
+            // 2. TAGS & SPRACHEN: Nur laden, wenn SQL leer ist (Initial-Migration)
+            val localTags = withContext(Dispatchers.IO) { db.tagCacheDao().getAllTags() }
+            val localLanguages = withContext(Dispatchers.IO) { db.languageCacheDao().getAllLanguages() }
+
+            if (localTags.isEmpty()) {
+                val tagsData = loadLocalOrRemote("radio_browser_tag_cache", "json/tags?order=stationcount&reverse=true", "tags")
+                if (tagsData.isNotEmpty()) {
+                    withContext(Dispatchers.IO) {
+                        db.tagCacheDao().insertAll(tagsData.map { TagCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
+                    }
+                }
             }
+
+            if (localLanguages.isEmpty()) {
+                val languagesData = loadLocalOrRemote("radio_browser_language_cache", "json/languages", "languages")
+                if (languagesData.isNotEmpty()) {
+                    withContext(Dispatchers.IO) {
+                        db.languageCacheDao().insertAll(languagesData.map { LanguageCacheEntity(it.Name, it.UsedCount, it.UsedCount) })
+                    }
+                }
+            }
+
+            // UI-State nur für Länder sofort setzen (Tags/Sprachen kommen über Flows)
+            _uiState.update { it.copy(countries = processedCountries) }
         }
     }
 
