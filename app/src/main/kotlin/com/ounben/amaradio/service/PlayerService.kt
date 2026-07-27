@@ -11,7 +11,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.SharedPreferences
 import android.content.pm.ServiceInfo
-import android.graphics.BitmapFactory
 import android.graphics.Bitmap
 import android.media.AudioFocusRequest
 import android.media.AudioManager
@@ -677,10 +676,22 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
         // 1. STRIKT: Erst im UUID-basierten Cache nachsehen
         if (iconFile.exists()) {
-            val cached = BitmapFactory.decodeFile(iconFile.absolutePath)
-            if (cached != null) {
-                Log.d("METADATA_DEBUG", "Bild aus Cache geladen für ID: ${station.StationUuid}")
-                return cached
+            try {
+                val request = ImageRequest.Builder(this)
+                    .data(iconFile)
+                    .size(512, 512)
+                    .allowHardware(false) // Binder-Sicherheit
+                    .build()
+                val result = imageLoader.execute(request)
+                if (result is SuccessResult) {
+                    val bitmap = (result.drawable as? android.graphics.drawable.BitmapDrawable)?.bitmap
+                    if (bitmap != null) {
+                        Log.d("METADATA_DEBUG", "Bild aus Cache geladen für ID: ${station.StationUuid}")
+                        return bitmap
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e(tag, "Failed to decode cached icon", e)
             }
         }
 

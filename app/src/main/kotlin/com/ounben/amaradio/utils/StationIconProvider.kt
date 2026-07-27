@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
+import androidx.core.graphics.drawable.toBitmap
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -63,7 +64,7 @@ class StationIconProvider : ContentProvider() {
                             .build()
                         val result = context!!.imageLoader.execute(request)
                         if (result is SuccessResult) {
-                            val bitmap = (result.drawable as android.graphics.drawable.BitmapDrawable).bitmap
+                            val bitmap = result.drawable.toBitmap(256, 256, Bitmap.Config.RGB_565)
                             FileOutputStream(iconFile).use { out ->
                                 bitmap.compress(Bitmap.CompressFormat.JPEG, 85, out)
                             }
