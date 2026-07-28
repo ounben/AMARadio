@@ -50,6 +50,7 @@ import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.RadioPlayer
 import com.ounben.amaradio.players.selector.PlayerType
+import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
@@ -258,7 +259,22 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         // 4. Load initial station to ensure non-empty state
         val app = application as AMARadioApp
         val initialStation = app.historyManager.first ?: app.favouriteManager.first
-        initialStation?.let { setStation(it) }
+        if (initialStation != null) {
+            setStation(initialStation)
+        } else {
+            // SQL Fallback: Load top station from local region if history is empty
+            serviceScope.launch(Dispatchers.IO) {
+                val countryCode = com.ounben.amaradio.Utils.getCountryCode(this@PlayerService) ?: "DE"
+                val db = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(this@PlayerService)
+                val topStation = db.stationDao().getStationsByCountryCode(countryCode.uppercase()).firstOrNull()
+                
+                topStation?.let { entity ->
+                    withContext(Dispatchers.Main) {
+                        setStation(entity.toDataStation())
+                    }
+                }
+            }
+        }
 
         trackHistoryRepository = (application as AMARadioApp).trackHistoryRepository
         val headsetConnectionFilter = IntentFilter().apply {

@@ -1,24 +1,12 @@
-# Task-Liste: Android Auto Support für AMARadio
+# Task-Liste: Entfernung JSON-Fallback & Umstellung auf SQL
 
-- `[x]` **1. Manifest & Registrierung**
-    - `[x]` Android Auto Meta-Data in `AndroidManifest.xml` hinzufügen
-- `[x]` **2. Browsing-Struktur (Flattening & Consistency)**
-    - `[x]` Root-Struktur in `AMARadioBrowser.kt` abflachen (Favoriten, Verlauf, Lokal, Filter-Tabs)
-    - `[x]` Länder-Erkennung für "Lokal" zentralisieren in `Utils.kt`
-    - `[x]` Filter-Tabs in `AMARadioBrowser.kt` korrekt mappen
-- `[x]` **3. Sprachsteuerung & Suche**
-    - `[x]` `onPlayFromSearch` in `MediaSessionCallback.kt` implementieren
-    - `[x]` `onSearch` in `AMARadioBrowser.kt` / `MediaSessionCallback.kt` implementieren
-- `[x]` **4. Stabilität & Bilder**
-    - `[x]` Icons in `AMARadioBrowser.kt` via `StationIconProvider` absichern (UUID + Coil Cache)
-    - `[x]` Playback-State Handling für Android Auto optimieren
-- `[/]` **5. Verifizierung**
-    - `[ ]` Test mit DHU (Simulation)
-    - `[ ]` Prüfung der Sprachbefehle
-    - `[ ]` Visueller Check der Senderlogos
-    - `[ ]` Icons in `AMARadioBrowser.kt` via `StationIconProvider` absichern
-    - `[ ]` Playback-State Handling für Android Auto optimieren (Metadaten-Sync)
-- `[ ]` **5. Verifizierung**
-    - `[ ]` Test mit DHU
-    - `[ ]` Prüfung der Sprachbefehle
-    - `[ ]` Visueller Check der Senderlogos
+- `[x]` **1. Bereinigung Infrastruktur**
+    - `[x]` `FallbackStationsManager.kt` löschen
+    - `[x]` `fallback_stations.json` löschen
+    - `[x]` `AMARadioApp.kt` bereinigen (Entfernung Member & Init)
+- `[x]` **2. Programmlogik Anpassung**
+    - `[x]` `PlayerViewModel.kt` Fallback-Logik auf SQL umstellen
+    - `[x]` `PlayerService.kt` Initial-Station auf SQL umstellen (bei leerer Historie)
+- `[x]` **3. Verifizierung**
+    - `[x]` Kompilierung prüfen
+    - `[x]` Erststart-Szenario testen

@@ -1,45 +1,46 @@
-# Implementierung von Android Auto Support für AMARadio (StationUuid-Centric)
+# Entfernung des JSON-Fallbacks und Umstellung auf SQL-basierte Initialstation
 
-Dieses Dokument beschreibt den Plan zur Integration von Android Auto. Das System fungiert als reiner Anzeige-Client ("Dumb Client"). Die Datenhoheit liegt beim Smartphone. Zentraler Anker für alle Identifikationen und Caching-Prozesse ist die `StationUuid`.
-
-## Zusammenfassung
-Die App wird für Android Auto registriert. Die Navigationsstruktur spiegelt die Tabs des Smartphones wider. Alle Medien-Elemente und Aktionen werden über die `StationUuid` gesteuert. Bilder werden unter Berücksichtigung des bestehenden Coil-Mechanismus und des dedizierten `station_icons` Cache-Ordners geladen.
+Dieses Dokument beschreibt den Plan zur Entfernung des alten JSON-basierten Fallback-Systems (`fallback_stations.json`) und die Umstellung auf eine rein SQL-basierte Lösung. Zukünftig wird bei einer leeren Historie/Favoritenliste automatisch der populärste Sender aus der lokalen Region (basierend auf der Datenbank) als Startstation gewählt.
 
 ## Benutzerprüfung erforderlich
+
 > [!IMPORTANT]
-> - **StationUuid als einziger Primärschlüssel**: Alle `mediaId`s und Playback-Befehle nutzen ausschließlich das Feld `StationUuid`. Felder wie `uuid` oder `changeuuid` werden ignoriert.
-> - **Cache Priorisierung (Coil aware)**: Der `StationIconProvider` prüft zwingend zuerst den Ordner `cache/station_icons/[StationUuid].jpg`. Falls nicht vorhanden, wird Coil genutzt, um das Bild zu laden, und anschließend als JPEG in `station_icons` für Android Auto exportiert.
-> - **Robuste Sprachsuche**: Die Auflösung von Sprachbefehlen (z.B. "3 swr") zu einer `StationUuid` erfolgt über eine Schlagwort-basierte Suche in der lokalen SQL-Datenbank, um auch bei ungenauer Aussprache oder vertauschter Wortreihenfolge den richtigen Sender zu finden.
+> - Das gesamte `FallbackStationsManager` System wird gelöscht.
+> - Die Datei `fallback_stations.json` wird aus den Ressourcen entfernt.
+> - Der Start-Sender wird nun dynamisch aus der lokalen SQL-Datenbank ermittelt (basierend auf dem `countryCode` und dem `clickcount`).
 
 ## Geplante Änderungen
 
-### 1. Registrierung & Manifest
-- Offizielle Deklaration der Automotive-Kompatibilität in der `AndroidManifest.xml` (erledigt).
+### Infrastruktur & Bereinigung
 
-### 2. Navigations-Logik (StationUuid-basiert)
+#### [DELETE] [FallbackStationsManager.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/FallbackStationsManager.kt)
+- Entfernung der Klasse, die den JSON-Fallback verwaltet.
 
-#### [MODIFY] [AMARadioBrowser.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/service/AMARadioBrowser.kt)
-- **Flattening**: Direkte Anzeige von Favoriten, Verlauf, Lokal und Filter-Tabs auf Root-Ebene.
-- **StationUuid-Mapping**: Jedes `MediaItem` trägt die `StationUuid` als `mediaId` (Präfix `station_`).
-- **Dumb Search**: Suchergebnisse liefern `MediaItem`s, die strikt an ihre `StationUuid` gebunden sind.
+#### [DELETE] [fallback_stations.json](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/res/raw/fallback_stations.json)
+- Löschen der JSON-Datei mit den fest kodierten Sendern.
 
-### 3. Bildstabilität (StationUuid & Coil)
+#### [MODIFY] [AMARadioApp.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/AMARadioApp.kt)
+- Entfernung der Initialisierung des `FallbackStationsManager`.
 
-#### [MODIFY] [StationIconProvider.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/utils/StationIconProvider.kt)
-- **UUID-basiertes Dateisystem**: `openFile` sucht im Cache-Ordner nach `[StationUuid].jpg`.
-- **Coil-Integration**: Bei Cache-Miss wird Coil verwendet, um das Bild zu laden, und das Resultat als JPEG in `station_icons` abgelegt.
+### Programmlogik (SQL-basierter Fallback)
 
-### 4. Sprachsteuerung (Keyword-Resolution)
+#### [MODIFY] [PlayerService.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/service/PlayerService.kt)
+- Implementierung einer asynchronen Initialisierung des Start-Senders.
+- Falls Historie und Favoriten leer sind, wird der oberste Sender der lokalen Liste aus der SQL-Datenbank geladen.
 
-#### [MODIFY] [MediaSessionCallback.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/service/MediaSessionCallback.kt)
-- **onPlayFromSearch**: Implementierung einer Schlagwort-Suche. Wenn der Nutzer "3 swr" sagt, wird die Datenbank nach Sendern durchsucht, die sowohl "3" als auch "swr" im Namen haben. Der beste Treffer liefert die `StationUuid` für den Wiedergabestart.
+#### [MODIFY] [PlayerViewModel.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/ui/PlayerViewModel.kt)
+- Anpassung der Fallback-Kette: `History -> Favorites -> SQL Local Top`.
+- Entfernung der Abhängigkeit zum `fallbackStationsManager`.
+
+#### [MODIFY] [StationDao.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/database/StationDao.kt)
+- Sicherstellen, dass eine effiziente Methode existiert, um den Top-Sender für einen bestimmten Länder-Code abzufragen (bereits vorhanden: `getStationsByCountryCode`).
 
 ## Verifizierungsplan
 
 ### Automatisierte Tests
-- Build-Check.
+- Build-Check nach der Entfernung der Klassen und Ressourcen.
 
 ### Manuelle Verifizierung
-- **DHU Test**: Überprüfen der Sender-Identifikation via `StationUuid`.
-- **Icon Cache Check**: Verifizierung des UUID-basierten Caches.
-- **Sprachsteuerung**: Test von "3 swr" -> Auflösung zu "SWR3" -> Start Stream via `StationUuid`.
+- **Erststart-Szenario**: App-Daten löschen und prüfen, ob nach dem Start ein lokaler Sender (z.B. aus Deutschland/Schweiz) in der Player-Leiste erscheint, anstatt des alten polnischen Fallback-Senders.
+- **Android Auto**: Überprüfung, ob beim ersten Verbinden (ohne Historie) ein gültiger lokaler Sender angezeigt wird.
+- **Datenintegrität**: Sicherstellen, dass keine JSON-Abfragen mehr für den Fallback-Sender erfolgen.

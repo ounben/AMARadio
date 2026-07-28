@@ -69,24 +69,16 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                 if (_uiState.value.currentStation == null) updateState()
             }
         }
-
-        viewModelScope.launch {
-            app.fallbackStationsManager.stationsFlow.collect {
-                if (_uiState.value.currentStation == null) updateState()
-            }
-        }
     }
 
     private fun updateState() {
         var state = PlayerServiceUtil.getPlayerState()
         var station = PlayerServiceUtil.getCurrentStation()
         
-        // Initial fallback chain: History -> Favorites -> Defaults
+        // Initial fallback chain: History -> Favorites
         if (station == null) {
             val app = getApplication<AMARadioApp>()
-            station = app.historyManager.first 
-                ?: app.favouriteManager.first 
-                ?: app.fallbackStationsManager.first
+            station = app.historyManager.first ?: app.favouriteManager.first
             state = PlayState.Idle
         }
 
