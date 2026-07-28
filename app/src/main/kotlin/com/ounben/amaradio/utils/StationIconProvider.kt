@@ -52,7 +52,7 @@ class StationIconProvider : ContentProvider() {
         }
 
         // 2. PROACTIVE DOWNLOAD: If not in cache but we have a URL, try downloading it.
-        // We use a strict timeout to ensure Android Auto never hangs.
+        // We use Coil to benefit from its own disk cache and image processing.
         if (!remoteUrl.isNullOrBlank() && remoteUrl != "null") {
             try {
                 val success = runBlocking {
@@ -71,12 +71,13 @@ class StationIconProvider : ContentProvider() {
                             true
                         } else false
                     } catch (e: Exception) {
+                        Log.e("IconProvider", "Coil download failed for $uuid", e)
                         false
                     }
                 }
                 if (success) return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
             } catch (e: Exception) {
-                Log.e("IconProvider", "Proactive download failed for $uuid", e)
+                Log.e("IconProvider", "Proactive download handling failed for $uuid", e)
             }
         }
 

@@ -2,21 +2,29 @@ package com.ounben.amaradio.service
 
 import android.content.Context
 import android.content.Intent
+import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
 import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionCommand
+import androidx.media3.session.SessionResult
 import com.ounben.amaradio.AppEventManager
 import com.google.common.collect.ImmutableList
 import com.google.common.util.concurrent.Futures
 import com.google.common.util.concurrent.ListenableFuture
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.guava.future
 
 class MediaSessionCallback(
     private val context: Context,
     private val amaradioBrowser: AMARadioBrowser
 ) : MediaLibrarySession.Callback {
+
+    private val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun onConnect(session: MediaSession, controller: MediaSession.ControllerInfo): MediaSession.ConnectionResult {
         val sessionCommands = MediaSession.ConnectionResult.DEFAULT_SESSION_COMMANDS.buildUpon()
@@ -44,37 +52,48 @@ class MediaSessionCallback(
         return amaradioBrowser.onGetItem(browser, mediaId)
     }
 
+    override fun onSearch(session: MediaLibrarySession, browser: MediaSession.ControllerInfo, query: String, params: LibraryParams?): ListenableFuture<LibraryResult<Void>> {
+        session.notifySearchResultChanged(browser, query, 10, params)
+        return Futures.immediateFuture(LibraryResult.ofVoid())
+    }
+
     override fun onSetMediaItems(session: MediaSession, controller: MediaSession.ControllerInfo, mediaItems: MutableList<MediaItem>, startIndex: Int, startPositionMs: Long): ListenableFuture<MediaSession.MediaItemsWithStartPosition> {
-        if (mediaItems.isNotEmpty()) {
-            val mediaItem = mediaItems[0]
-            val stationId = AMARadioBrowser.stationIdFromMediaId(mediaItem.mediaId)
-            if (stationId.isNotEmpty()) {
-                 val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
-                 intent.putExtra(EXTRA_STATION_ID, stationId)
-                 AppEventManager.sendEvent(intent)
-            }
-        }
-        
-        // Android Auto Stability Fix: Provide valid URIs to Media3 immediately
-        val resolvedItems = mediaItems.map { item ->
-            val stationId = AMARadioBrowser.stationIdFromMediaId(item.mediaId)
-            val service = context as? PlayerService
-            val station = service?.amaradioBrowser?.getStationById(stationId)
-            
-            if (station != null) {
-                val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
-                if (streamUrl.isNotEmpty()) {
-                    return@map com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
-                        android.net.Uri.parse(streamUrl),
-                        item.mediaMetadata,
-                        item.mediaId
-                    )
+        return scope.future {
+            val resolvedItems = mediaItems.map { item ->
+                var finalItem = item
+                val searchQuery = item.requestMetadata.searchQuery
+                
+                // 1. Resolve Search Query to Station ID
+                val stationId = if (!searchQuery.isNullOrEmpty()) {
+                    amaradioBrowser.resolveStationByKeywords(searchQuery)
+                } else {
+                    AMARadioBrowser.stationIdFromMediaId(item.mediaId)
                 }
+
+                if (!stationId.isNullOrEmpty()) {
+                    // 2. Notify Service to start playback with proper warnings/history
+                    val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
+                    intent.putExtra(EXTRA_STATION_ID, stationId)
+                    AppEventManager.sendEvent(intent)
+
+                    // 3. Build valid MediaItem for immediate player preparation
+                    val service = context as? PlayerService
+                    val station = service?.amaradioBrowser?.getStationById(stationId)
+                    if (station != null) {
+                        val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
+                        if (streamUrl.isNotEmpty()) {
+                            finalItem = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
+                                streamUrl.toUri(),
+                                item.mediaMetadata.buildUpon().setTitle(station.Name).build(),
+                                station.StationUuid
+                            )
+                        }
+                    }
+                }
+                finalItem
             }
-            item
+            MediaSession.MediaItemsWithStartPosition(resolvedItems, startIndex, startPositionMs)
         }
-        
-        return Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(resolvedItems, startIndex, startPositionMs))
     }
 
     override fun onAddMediaItems(session: MediaSession, controller: MediaSession.ControllerInfo, mediaItems: MutableList<MediaItem>): ListenableFuture<MutableList<MediaItem>> {

@@ -53,10 +53,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 val rootChildren = createBrowsableMediaItemsForRoot()
                 Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
             }
-            MEDIA_ID_STATIONS_GROUP -> {
-                val stationTabs = createStationTabMediaItems()
-                Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(stationTabs), params))
-            }
             MEDIA_ID_MUSICS_FAVORITE -> {
                 scope.future {
                     val stations = app.favouriteManager.getList()
@@ -77,7 +73,18 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                         LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
                     }
                 } else {
-                    Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.of(), params))
+                    // SEARCH RESULTS: Media3 browsers call onGetChildren with the query as parentId
+                    // after receiving a notifySearchResultChanged from onSearch.
+                    scope.future {
+                        val results = stationDao.getStationsFiltered(
+                            name = parentId.ifEmpty { null },
+                            countryCode = null,
+                            language = null,
+                            tag = null,
+                            orderBy = "clickcount"
+                        ).map { it.toDataStation() }
+                        LibraryResult.ofItemList(createMediaItemsFromStations(results), params)
+                    }
                 }
             }
         }
@@ -92,7 +99,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             
             val metadataBuilder = MediaMetadata.Builder()
                 .setTitle(station.Name)
-                .setSubtitle("${station.Country} ${station.TagsAll}")
+                .setSubtitle("${station.Country ?: ""} ${station.TagsAll}".trim())
                 .setIsBrowsable(false)
                 .setIsPlayable(true)
                 .setExtras(Bundle().apply {
@@ -100,11 +107,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
                 })
             
-            // ANDROID AUTO ICON LOGIC:
-            // We funnel through StationIconProvider which handles:
-            // 1. Serving cached icons
-            // 2. Proactively downloading missing web icons
-            // 3. Generating placeholders as a final fallback
             val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
                 station.StationUuid, 
                 station.Name,
@@ -127,7 +129,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val tabs = try { json.decodeFromString<List<FilterTabItem>>(jsonStr) } catch (e: Exception) { emptyList() }
         val tab = tabs.find { it.id == filterId } ?: return emptyList()
 
-        // Sync with Smartphone App: Use local SQL database instead of remote JSON API
         val results = stationDao.getStationsFiltered(
             name = tab.name.ifEmpty { null },
             countryCode = tab.countryCode.ifEmpty { null },
@@ -140,10 +141,8 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     private suspend fun fetchLocalStations(): List<DataRadioStation> {
-        val countryCode = app.resources.configuration.locales[0].country.uppercase()
-        if (countryCode.isEmpty()) return emptyList()
+        val countryCode = com.ounben.amaradio.Utils.getCountryCode(app)?.uppercase() ?: return emptyList()
         
-        // Sync with Smartphone App: Use local SQL database
         val results = stationDao.getStationsByCountryCode(countryCode)
         return results.map { it.toDataStation() }
     }
@@ -173,25 +172,71 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         return Futures.immediateFuture(LibraryResult.ofError<MediaItem>(SessionError.ERROR_BAD_VALUE))
     }
 
+    fun onSearch(browser: MediaSession.ControllerInfo, query: String, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
+        Log.d("BROWSER", "onSearch: $query")
+        return scope.future {
+            val results = stationDao.getStationsFiltered(
+                name = query.ifEmpty { null },
+                countryCode = null,
+                language = null,
+                tag = null,
+                orderBy = "clickcount"
+            ).map { it.toDataStation() }
+            
+            LibraryResult.ofItemList(createMediaItemsFromStations(results), params)
+        }
+    }
+
+    /**
+     * Resolves a keyword search (like "3 swr") to a specific StationUuid.
+     * Prioritizes Favorites, then History, then general clickcount.
+     */
+    suspend fun resolveStationByKeywords(query: String): String? {
+        val keywords = query.lowercase().split(Regex("\\s+")).filter { it.isNotBlank() }
+        if (keywords.isEmpty()) return null
+        
+        // 1. Check Favorites
+        val favorites = app.favouriteManager.getList()
+        favorites.find { station ->
+            val name = station.Name.lowercase()
+            keywords.all { name.contains(it) }
+        }?.let { return it.StationUuid }
+        
+        // 2. Check History
+        val history = app.historyManager.getList()
+        history.find { station ->
+            val name = station.Name.lowercase()
+            keywords.all { name.contains(it) }
+        }?.let { return it.StationUuid }
+        
+        // 3. Search Database
+        // We use the first keyword as the primary search and then filter the rest locally for performance
+        val firstKeyword = keywords[0]
+        val results = stationDao.getStationsFiltered(
+            name = firstKeyword,
+            countryCode = null,
+            language = null,
+            tag = null,
+            orderBy = "clickcount"
+        )
+        
+        results.find { entity ->
+            val name = entity.name?.lowercase() ?: ""
+            keywords.all { name.contains(it) }
+        }?.let { return it.stationUuid }
+        
+        // 4. Final Fallback: Return the top result if we only have one word
+        return results.firstOrNull()?.stationUuid
+    }
+
     fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
 
     private fun createBrowsableMediaItemsForRoot(): List<MediaItem> {
         val resources = app.resources
         val mediaItems = ArrayList<MediaItem>()
         val packageName = app.packageName
-        
-        // 1. Stationen (Alle Tabs)
-        mediaItems.add(MediaItem.Builder()
-            .setMediaId(MEDIA_ID_STATIONS_GROUP)
-            .setMediaMetadata(MediaMetadata.Builder()
-                .setTitle(resources.getString(R.string.nav_item_stations))
-                .setIsBrowsable(true)
-                .setIsPlayable(false)
-                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_radio_24dp"))
-                .build())
-            .build())
 
-        // 2. Favorites
+        // 1. Favoriten (Prominent an erster Stelle für Auto)
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
             .setMediaMetadata(MediaMetadata.Builder()
@@ -202,7 +247,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .build())
             .build())
             
-        // 3. History
+        // 2. Verlauf
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_HISTORY)
             .setMediaMetadata(MediaMetadata.Builder()
@@ -212,24 +257,19 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_restore_black_24dp"))
                 .build())
             .build())
-        
-        return mediaItems
-    }
 
-    private fun createStationTabMediaItems(): List<MediaItem> {
-        val mediaItems = ArrayList<MediaItem>()
-        
-        // 1. Lokal (Tab Name)
+        // 3. Lokal (Basierend auf Smartphone-Standort, ohne neue Abfrage-Logik bei AA)
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_FILTER_PREFIX + "local")
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(app.getString(R.string.action_local))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_radio_24dp"))
                 .build())
             .build())
 
-        // 2. Saved Filter Tabs
+        // 4. Alle Filter-Tabs (Flach auf Root-Ebene für schnellen Zugriff)
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         val jsonStr = sharedPref.getString("filter_tabs_json", null)
         if (jsonStr != null) {
@@ -243,12 +283,14 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                                 .setTitle(tab.label)
                                 .setIsBrowsable(true)
                                 .setIsPlayable(false)
+                                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_folder_black_24dp"))
                                 .build())
                             .build())
                     }
                 }
             } catch (e: Exception) { /* ignore */ }
         }
+        
         return mediaItems
     }
 

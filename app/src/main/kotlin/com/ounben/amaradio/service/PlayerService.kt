@@ -113,6 +113,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     internal lateinit var amaradioBrowser: AMARadioBrowser
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
+    fun launchInServiceScope(block: suspend CoroutineScope.() -> Unit) {
+        serviceScope.launch(block = block)
+    }
+
     private fun sendBroadCast(action: String) {
         val local = Intent()
         local.action = action

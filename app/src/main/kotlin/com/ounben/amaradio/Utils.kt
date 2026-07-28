@@ -83,6 +83,14 @@ object Utils {
     fun isTesting(): Boolean = testing.get()
 
     @JvmStatic
+    fun getCountryCode(context: Context): String? {
+        val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as? android.telephony.TelephonyManager
+        return tm?.networkCountryIso?.takeIf { it.length == 2 }
+            ?: tm?.simCountryIso?.takeIf { it.length == 2 }
+            ?: context.resources.configuration.locales[0].country.takeIf { it.length == 2 }
+    }
+
+    @JvmStatic
     fun parseIntWithDefault(number: String?, defaultVal: Int): Int {
         return try {
             number?.toInt() ?: defaultVal

@@ -39,7 +39,7 @@ fun TabsScreen(
 ) {
     val context = LocalContext.current
     val app = context.applicationContext as AMARadioApp
-    val countryCode = remember { getCountryCode(context) }
+    val countryCode = remember { com.ounben.amaradio.Utils.getCountryCode(context) }
     val filterViewModel: FilterViewModel = viewModel()
     val filterState by filterViewModel.uiState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -173,11 +173,4 @@ fun TabsScreen(
             }
         }
     }
-}
-
-private fun getCountryCode(context: Context): String? {
-    val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as? TelephonyManager
-    return tm?.networkCountryIso?.takeIf { it.length == 2 }
-        ?: tm?.simCountryIso?.takeIf { it.length == 2 }
-        ?: context.resources.configuration.locales[0].country.takeIf { it.length == 2 }
 }
