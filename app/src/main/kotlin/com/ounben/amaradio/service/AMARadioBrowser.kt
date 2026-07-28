@@ -28,7 +28,10 @@ import androidx.preference.PreferenceManager
 class AMARadioBrowser(private val app: AMARadioApp) {
     private val stationIdToStation = HashMap<String, DataRadioStation>()
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val json = Json { ignoreUnknownKeys = true }
+    private val json = Json { 
+        ignoreUnknownKeys = true
+        encodeDefaults = true
+    }
     
     // Lazy init database to prevent blocking service startup
     private val stationDao by lazy { AMARadioDatabase.getDatabase(app).stationDao() }
@@ -40,6 +43,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
                 .setTitle(app.resources.getString(R.string.app_name))
+                .setExtras(Bundle().apply {
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2)
+                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2)
+                })
                 .build())
             .build()
         return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
@@ -105,6 +112,9 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setExtras(Bundle().apply {
                     putString("com.ounben.amaradio.STATION_ID", station.StationUuid)
                     putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
+                    // GOOGLE AUTO HINTS:
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("android.media.browse.CONTENT_STYLE_PLAYABLE_HINT", 2) // List style for playable items
                 })
             
             val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
@@ -236,40 +246,25 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val mediaItems = ArrayList<MediaItem>()
         val packageName = app.packageName
 
-        // 1. Favoriten (Prominent an erster Stelle für Auto)
-        mediaItems.add(MediaItem.Builder()
-            .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
-            .setMediaMetadata(MediaMetadata.Builder()
-                .setTitle(resources.getString(R.string.nav_item_starred))
-                .setIsBrowsable(true)
-                .setIsPlayable(false)
-                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_star_black_24dp"))
-                .build())
-            .build())
-            
-        // 2. Verlauf
-        mediaItems.add(MediaItem.Builder()
-            .setMediaId(MEDIA_ID_MUSICS_HISTORY)
-            .setMediaMetadata(MediaMetadata.Builder()
-                .setTitle(resources.getString(R.string.nav_item_history))
-                .setIsBrowsable(true)
-                .setIsPlayable(false)
-                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_restore_black_24dp"))
-                .build())
-            .build())
-
-        // 3. Lokal (Basierend auf Smartphone-Standort, ohne neue Abfrage-Logik bei AA)
+        // 1. LOKAL (Wie im Smartphone an erster Stelle)
+        val localIconUri = Uri.parse("android.resource://$packageName/drawable/ic_radio_white_24dp")
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_FILTER_PREFIX + "local")
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(app.getString(R.string.action_local))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
-                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_radio_24dp"))
+                .setArtworkUri(localIconUri)
+                .setExtras(Bundle().apply {
+                    putString("android.media.metadata.DISPLAY_ICON_URI", localIconUri.toString())
+                    // GOOGLE AUTO HINTS:
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
+                })
                 .build())
             .build())
 
-        // 4. Alle Filter-Tabs (Flach auf Root-Ebene für schnellen Zugriff)
+        // 2. FILTER-TABS (Direkt nach Lokal, wie im Smartphone-Pager)
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         val jsonStr = sharedPref.getString("filter_tabs_json", null)
         if (jsonStr != null) {
@@ -277,19 +272,64 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 val tabs = json.decodeFromString<List<FilterTabItem>>(jsonStr)
                 for (tab in tabs) {
                     if (tab.label.isNotEmpty()) {
+                        val filterIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
                         mediaItems.add(MediaItem.Builder()
                             .setMediaId(MEDIA_ID_FILTER_PREFIX + tab.id)
                             .setMediaMetadata(MediaMetadata.Builder()
                                 .setTitle(tab.label)
                                 .setIsBrowsable(true)
                                 .setIsPlayable(false)
-                                .setArtworkUri(Uri.parse("android.resource://$packageName/drawable/ic_folder_black_24dp"))
+                                .setArtworkUri(filterIconUri)
+                                .setExtras(Bundle().apply {
+                                    putString("android.media.metadata.DISPLAY_ICON_URI", filterIconUri.toString())
+                                    // GOOGLE AUTO HINTS:
+                                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
+                                })
                                 .build())
                             .build())
                     }
                 }
-            } catch (e: Exception) { /* ignore */ }
+            } catch (e: Exception) {
+                Log.e("BROWSER", "Error decoding filter tabs", e)
+            }
         }
+
+        // 3. FAVORITEN
+        val favoriteIconUri = Uri.parse("android.resource://$packageName/drawable/ic_star_white_24")
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(resources.getString(R.string.nav_item_starred))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .setArtworkUri(favoriteIconUri)
+                .setExtras(Bundle().apply {
+                    putString("android.media.metadata.DISPLAY_ICON_URI", favoriteIconUri.toString())
+                    // GOOGLE AUTO HINTS:
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
+                })
+                .build())
+            .build())
+            
+        // 4. VERLAUF
+        val historyIconUri = Uri.parse("android.resource://$packageName/drawable/ic_restore_white_24")
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_MUSICS_HISTORY)
+            .setMediaMetadata(MediaMetadata.Builder()
+                .setTitle(resources.getString(R.string.nav_item_history))
+                .setIsBrowsable(true)
+                .setIsPlayable(false)
+                .setArtworkUri(historyIconUri)
+                .setExtras(Bundle().apply {
+                    putString("android.media.metadata.DISPLAY_ICON_URI", historyIconUri.toString())
+                    // GOOGLE AUTO HINTS:
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
+                })
+                .build())
+            .build())
         
         return mediaItems
     }

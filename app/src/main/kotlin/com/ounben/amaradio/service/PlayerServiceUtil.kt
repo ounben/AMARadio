@@ -265,7 +265,7 @@ object PlayerServiceUtil {
         val px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 70f, r.displayMetrics)
 
         if (fromUrl.isNullOrBlank() || fromUrl == "null") {
-            holder.load(R.drawable.ic_radio_24dp) {
+            holder.load(R.drawable.ic_radio_white_24dp) {
                 size(px.toInt(), px.toInt())
                 crossfade(true)
             }
@@ -273,8 +273,8 @@ object PlayerServiceUtil {
         }
 
         holder.load(fromUrl) {
-            placeholder(R.drawable.ic_radio_24dp)
-            error(R.drawable.ic_radio_24dp)
+            placeholder(R.drawable.ic_radio_white_24dp)
+            error(R.drawable.ic_radio_white_24dp)
             if (px > 0) {
                 size(px.toInt(), px.toInt())
             }
