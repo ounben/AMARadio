@@ -14,7 +14,6 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="android:windowBackground">@color/windowBackground</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">#E0E0E0</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -58,7 +57,6 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme.Dark</item>
         <item name="android:windowBackground">@color/windowBackgroundDark</item>
         <item name="colorPrimary">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryDark">#000000</item>
         <item name="colorAccent">@color/colorAccentDark</item>
         <item name="colorControlActivated">@color/colorAccentDark</item>
         <item name="android:textCursorDrawable">@null</item>
@@ -103,7 +101,6 @@
 
     <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:windowBackground">@android:color/black</item>
-        <item name="android:windowFullscreen">true</item>
         <item name="android:windowContentOverlay">@null</item>
     </style>
 
