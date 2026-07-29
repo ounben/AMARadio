@@ -24,6 +24,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
 
     interface PlayerListener {
         fun onStateChanged(status: PlayState, audioSessionId: Int)
+        fun onStationTransitionStarting()
         fun onPlayerWarning(messageId: Int)
         fun onPlayerError(messageId: Int)
         fun onBufferedTimeUpdate(bufferedMs: Long)
@@ -127,7 +128,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
                 }
             }
             pendingPlayRunnable = playTask
-            playerThreadHandler.postDelayed(playTask, 180)
+            playerThreadHandler.postDelayed(playTask, 250) // Increased from 180ms to 250ms for stable decoder reset
         } else {
             executeActualPlayRemote(stationURL, streamName, metadata)
         }
@@ -151,6 +152,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         if (uuid == currentStationUuid && (playState == PlayState.Playing || playState == PlayState.PrePlaying)) return
 
         currentStationUuid = uuid
+        playerListener?.onStationTransitionStarting()
+        
         playerThreadHandler.post {
             cancelStationLinkRetrieval()
             currentPlayer.stop()

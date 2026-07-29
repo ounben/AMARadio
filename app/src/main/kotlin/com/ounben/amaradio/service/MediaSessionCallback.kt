@@ -82,9 +82,10 @@ class MediaSessionCallback(
                     if (station != null) {
                         val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
                         if (streamUrl.isNotEmpty()) {
+                            val fullMetadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
                             finalItem = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
                                 streamUrl.toUri(),
-                                item.mediaMetadata.buildUpon().setTitle(station.Name).build(),
+                                fullMetadata,
                                 station.StationUuid
                             )
                         }
@@ -105,9 +106,10 @@ class MediaSessionCallback(
             if (station != null) {
                 val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
                 if (streamUrl.isNotEmpty()) {
+                    val fullMetadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
                     return@map com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
                         android.net.Uri.parse(streamUrl),
-                        item.mediaMetadata,
+                        fullMetadata,
                         item.mediaId
                     )
                 }
@@ -131,12 +133,10 @@ class MediaSessionCallback(
             val station = service?.itsCurrentStation
             if (station != null) {
                 val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
+                val fullMetadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
                 val item = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(
                     android.net.Uri.parse(streamUrl),
-                    androidx.media3.common.MediaMetadata.Builder()
-                        .setTitle(station.Name)
-                        .setIsPlayable(true)
-                        .build(),
+                    fullMetadata,
                     station.StationUuid
                 )
                 Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(listOf(item), 0, 0))

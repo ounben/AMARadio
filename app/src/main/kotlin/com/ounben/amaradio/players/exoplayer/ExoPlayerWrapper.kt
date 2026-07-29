@@ -95,10 +95,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                5000,  // Min buffer: 5s
-                15000, // Max buffer: 15s
-                1000,  // Buffer for playback: 1s (Fix for AA USB latency)
-                2000   // Buffer for playback after rebuffer: 2s
+                8000,  // Min buffer: 8s (More stability for slow connections)
+                20000, // Max buffer: 20s
+                2000,  // Buffer for playback: 2s (Avoid immediate pipeline flood)
+                3000   // Buffer for playback after rebuffer: 3s
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
@@ -133,16 +133,25 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
 
         playerThreadHandler.post {
-            // FULL RESET: Clear previous decoder session.
+            // 1. HARD STOP: Stop engine to clear hardware decoder context
             internalPlayer.stop()
-            internalPlayer.clearMediaItems()
+            // CRITICAL: We NO LONGER call clearMediaItems() here.
+            // Keeping the items (and their metadata) ensures Android Auto 
+            // keeps the UI populated while the new stream is loading.
             
             if (metadata != null) {
                 internalPlayer.playlistMetadata = metadata
             }
 
-            // GRACE PERIOD: Allow the decoder thread to flush.
-            playerThreadHandler.post {
+            // 2. DECODER GRACE PERIOD: 
+            // We use a small delay to ensure the hardware decoder (especially on OPlus/MediaTek)
+            // has completely released the previous session before starting a new one (MP3 -> AAC switch).
+            playerThreadHandler.postDelayed({
+                if (streamUrl != this@ExoPlayerWrapper.streamUrl) return@postDelayed // Abort if user skipped again
+                
+                // Clear items just before setting the new one to minimize "black hole" time
+                internalPlayer.clearMediaItems()
+
                 if (bandwidthMeter == null) {
                     bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
                 }
@@ -167,6 +176,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
                 val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
                 val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
+                
+                // Optimized error handling for faster recovery in car context
                 val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
 
                 val audioSource = if (isHls) {
@@ -183,9 +194,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 playbackStartTime = SystemClock.elapsedRealtime()
                 internalPlayer.volume = currentVolume
                 internalPlayer.setMediaSource(audioSource, true)
-                internalPlayer.playWhenReady = true
                 internalPlayer.prepare()
-            }
+                internalPlayer.playWhenReady = true
+            }, 120) // 120ms is enough to clear the codec stack but unnoticeable to the user
         }
         
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
@@ -271,27 +282,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
-        playerThreadHandler.post {
-            // Metadaten Sanitizing für MediaSession
-            val rawTitle = streamLiveInfo.title
-            val parts = rawTitle.split(" - ", limit = 2)
-            
-            val (displayTitle, displayArtist) = if (parts.size == 2) {
-                Pair(parts[1].trim(), parts[0].trim())
-            } else {
-                Pair(rawTitle.ifEmpty { "Live Stream" }, stationName ?: "AMARadio")
-            }
-
-            val metadata = MediaMetadata.Builder()
-                .setTitle(displayTitle)
-                .setArtist(displayArtist)
-                .setStation(stationName)
-                .build()
-            
-            // Sofortiges Update triggert MediaSession Refresh
-            internalPlayer.playlistMetadata = metadata
-        }
-        
+        // We no longer push destructive "naked" metadata updates to the player here.
+        // Instead, we just report the info to the listener (RadioPlayer -> PlayerService).
+        // PlayerService will then call updateMetadata() which builds a COMPLETE metadata object 
+        // including artwork and the correct media type (MUSIC).
         stateListener?.onDataSourceStreamLiveInfo(streamLiveInfo)
     }
 

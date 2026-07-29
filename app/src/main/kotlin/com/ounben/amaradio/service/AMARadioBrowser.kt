@@ -42,9 +42,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             .setMediaMetadata(MediaMetadata.Builder()
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                 .setTitle(app.resources.getString(R.string.app_name))
                 .setExtras(Bundle().apply {
-                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2)
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music (more stable in AA than 2)
                     putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2)
                 })
                 .build())
@@ -102,32 +103,12 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
-            val isFavorite = app.favouriteManager.has(station.StationUuid)
             
-            val metadataBuilder = MediaMetadata.Builder()
-                .setTitle(station.Name)
-                .setSubtitle("${station.Country ?: ""} ${station.TagsAll}".trim())
-                .setIsBrowsable(false)
-                .setIsPlayable(true)
-                .setExtras(Bundle().apply {
-                    putString("com.ounben.amaradio.STATION_ID", station.StationUuid)
-                    putBoolean("androidx.media3.session.IS_FAVORITE", isFavorite)
-                    // GOOGLE AUTO HINTS:
-                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
-                    putInt("android.media.browse.CONTENT_STYLE_PLAYABLE_HINT", 2) // List style for playable items
-                })
-            
-            val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
-                station.StationUuid, 
-                station.Name,
-                station.IconUrl
-            )
-            
-            metadataBuilder.setArtworkUri(artworkUri)
+            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
             
             mediaItems.add(MediaItem.Builder()
                 .setMediaId(LEAF_PREFIX + station.StationUuid)
-                .setMediaMetadata(metadataBuilder.build())
+                .setMediaMetadata(metadata)
                 .build())
         }
         return ImmutableList.copyOf(mediaItems)
@@ -162,20 +143,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
         
         if (station != null) {
-            val artworkUri = com.ounben.amaradio.utils.StationIconProvider.getIconUri(
-                station.StationUuid, 
-                station.Name,
-                station.IconUrl
-            )
-
+            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
             val item = MediaItem.Builder()
                 .setMediaId(mediaId)
-                .setMediaMetadata(MediaMetadata.Builder()
-                    .setTitle(station.Name)
-                    .setIsBrowsable(false)
-                    .setIsPlayable(true)
-                    .setArtworkUri(artworkUri)
-                    .build())
+                .setMediaMetadata(metadata)
                 .build()
             return Futures.immediateFuture(LibraryResult.ofItem(item, null))
         }
@@ -252,13 +223,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             .setMediaId(MEDIA_ID_FILTER_PREFIX + "local")
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(app.getString(R.string.action_local))
+                .setSubtitle(app.getString(R.string.app_name))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                 .setArtworkUri(localIconUri)
                 .setExtras(Bundle().apply {
                     putString("android.media.metadata.DISPLAY_ICON_URI", localIconUri.toString())
                     // GOOGLE AUTO HINTS:
-                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
                     putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
                 })
                 .build())
@@ -277,13 +250,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                             .setMediaId(MEDIA_ID_FILTER_PREFIX + tab.id)
                             .setMediaMetadata(MediaMetadata.Builder()
                                 .setTitle(tab.label)
+                                .setSubtitle(app.getString(R.string.app_name))
                                 .setIsBrowsable(true)
                                 .setIsPlayable(false)
+                                .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                                 .setArtworkUri(filterIconUri)
                                 .setExtras(Bundle().apply {
                                     putString("android.media.metadata.DISPLAY_ICON_URI", filterIconUri.toString())
                                     // GOOGLE AUTO HINTS:
-                                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
                                     putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
                                 })
                                 .build())
@@ -301,13 +276,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(resources.getString(R.string.nav_item_starred))
+                .setSubtitle(app.getString(R.string.app_name))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                 .setArtworkUri(favoriteIconUri)
                 .setExtras(Bundle().apply {
                     putString("android.media.metadata.DISPLAY_ICON_URI", favoriteIconUri.toString())
                     // GOOGLE AUTO HINTS:
-                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
                     putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
                 })
                 .build())
@@ -319,13 +296,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             .setMediaId(MEDIA_ID_MUSICS_HISTORY)
             .setMediaMetadata(MediaMetadata.Builder()
                 .setTitle(resources.getString(R.string.nav_item_history))
+                .setSubtitle(app.getString(R.string.app_name))
                 .setIsBrowsable(true)
                 .setIsPlayable(false)
+                .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
                 .setArtworkUri(historyIconUri)
                 .setExtras(Bundle().apply {
                     putString("android.media.metadata.DISPLAY_ICON_URI", historyIconUri.toString())
                     // GOOGLE AUTO HINTS:
-                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 2) // Radio
+                    putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
                     putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 2) // List style
                 })
                 .build())
