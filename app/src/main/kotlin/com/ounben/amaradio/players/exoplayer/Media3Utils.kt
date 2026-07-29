@@ -9,7 +9,6 @@ import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.extractor.DefaultExtractorsFactory
-import androidx.media3.extractor.ts.DefaultTsPayloadReaderFactory
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.StationIconProvider
 import java.io.ByteArrayOutputStream
@@ -26,7 +25,7 @@ object Media3Utils {
      */
     fun buildMetadata(station: DataRadioStation, liveTitle: String? = null, bitmap: Bitmap? = null): MediaMetadata {
         val stationName = station.Name
-        val stationDetails = "${station.Country ?: ""} ${station.TagsAll}".trim().ifEmpty { "Radio" }
+        val stationDetails = "${station.Country} ${station.TagsAll}".trim().ifEmpty { "Radio" }
         
         // Line 2 content: Priority to Song Title, then Station Details (Country/Tags)
         val line2 = if (!liveTitle.isNullOrEmpty() && liveTitle != stationName) liveTitle else stationDetails
@@ -70,6 +69,27 @@ object Media3Utils {
         
         builder.setExtras(extras)
         return builder.build()
+    }
+
+    /**
+     * Builds metadata specifically for browsable folders in Android Auto.
+     * Uses LIST style (Hint 1) to match the station list appearance.
+     */
+    fun buildFolderMetadata(title: String, iconUri: Uri?): MediaMetadata {
+        return MediaMetadata.Builder()
+            .setTitle(title)
+            .setIsBrowsable(true)
+            .setIsPlayable(false)
+            .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
+            .setArtworkUri(iconUri)
+            .setExtras(Bundle().apply {
+                putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music (Folder)
+                putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 1) // 1 = LIST, 2 = GRID
+                if (iconUri != null) {
+                    putString("android.media.metadata.DISPLAY_ICON_URI", iconUri.toString())
+                }
+            })
+            .build()
     }
     
     /**
