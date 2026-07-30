@@ -136,6 +136,18 @@
                 android:resource="@xml/full_widget_info" />
         </receiver>
 
+        <receiver
+            android:name="com.ounben.amaradio.widget.AMARadioWidgetActionReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.ounben.amaradio.widget.PLAY_STATION" />
+                <action android:name="com.ounben.amaradio.widget.TOGGLE_PLAY_PAUSE" />
+                <action android:name="com.ounben.amaradio.widget.SKIP_NEXT" />
+                <action android:name="com.ounben.amaradio.widget.SKIP_PREV" />
+                <action android:name="com.ounben.amaradio.widget.SWITCH_TAB" />
+            </intent-filter>
+        </receiver>
+
         <provider
             android:name="com.ounben.amaradio.utils.StationIconProvider"
             android:authorities="com.ounben.amaradio.stationicons"

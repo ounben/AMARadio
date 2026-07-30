@@ -10,4 +10,7 @@ object WidgetState {
     val stationIconUrlKey = stringPreferencesKey("current_station_icon_url")
     val isPlayingKey = booleanPreferencesKey("is_playing")
     val activeTabKey = stringPreferencesKey("active_tab") // "favorites" or "history"
+    val favoritesJsonKey = stringPreferencesKey("favorites_json")
+    val historyJsonKey = stringPreferencesKey("history_json")
+    val updateCounterKey = androidx.datastore.preferences.core.intPreferencesKey("update_count")
 }
