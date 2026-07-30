@@ -11,7 +11,6 @@ import androidx.glance.action.clickable
 import androidx.glance.appwidget.*
 import androidx.glance.appwidget.action.actionRunCallback
 import androidx.glance.appwidget.lazy.*
-import androidx.glance.appwidget.state.getAppWidgetState
 import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -42,7 +41,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
             val currentName = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val currentDetails = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
 
-            // 2. REACTIVE SWITCH: Pick the correct pre-fetched list based on current UI state
+            // 2. REACTIVE SWITCH
             val stationsToShow = if (activeTab == "favorites") favoriteStations else historyStations
 
             FullWidgetContent(context, currentName, currentDetails, playingUuid, playingIconUrl, isPlaying, activeTab, stationsToShow)
@@ -192,7 +191,7 @@ fun StationRow(context: Context, station: DataRadioStation, isActive: Boolean, t
                 maxLines = 1
             )
             Text(
-                text = station.getShortDetails(context),
+                text = station.TagsAll,
                 style = TextStyle(color = secondaryColor, fontSize = 10.sp),
                 maxLines = 1
             )

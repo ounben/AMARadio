@@ -23,7 +23,7 @@ object WidgetUpdateHelper {
                     updateAppWidgetState(context, id) { prefs ->
                         station?.let {
                             prefs[WidgetState.stationNameKey] = it.Name
-                            prefs[WidgetState.stationDetailsKey] = it.getShortDetails(context)
+                            prefs[WidgetState.stationDetailsKey] = it.TagsAll
                             prefs[WidgetState.stationUuidKey] = it.StationUuid
                             prefs[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
@@ -39,7 +39,7 @@ object WidgetUpdateHelper {
                     updateAppWidgetState(context, id) { prefs ->
                         station?.let {
                             prefs[WidgetState.stationNameKey] = it.Name
-                            prefs[WidgetState.stationDetailsKey] = it.getShortDetails(context)
+                            prefs[WidgetState.stationDetailsKey] = it.TagsAll
                             prefs[WidgetState.stationUuidKey] = it.StationUuid
                             prefs[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
