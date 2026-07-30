@@ -378,6 +378,21 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     ACTION_STOP -> { stop(); return START_NOT_STICKY }
                     ACTION_PAUSE -> pause(PauseReason.USER)
                     ACTION_RESUME -> resume()
+                    ACTION_TOGGLE_PLAY_PAUSE -> {
+                        if (radioPlayer?.isPlaying() == true) pause(PauseReason.USER) else resume()
+                    }
+                    ACTION_PLAY_STATION -> {
+                        val stationId = it.getStringExtra(EXTRA_STATION_ID)
+                        if (stationId != null) {
+                            serviceScope.launch {
+                                val station = amaradioBrowser.getStationById(stationId)
+                                            ?: (application as AMARadioApp).favouriteManager.getById(stationId)
+                                            ?: (application as AMARadioApp).historyManager.getById(stationId)
+                                
+                                station?.let { playWithoutWarnings(it) }
+                            }
+                        }
+                    }
                     Intent.ACTION_MEDIA_BUTTON -> {
                         val key = IntentCompat.getParcelableExtra(it, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
                         if (key?.action == KeyEvent.ACTION_UP) {
@@ -1141,6 +1156,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         const val ACTION_PAUSE = "pause"; const val ACTION_RESUME = "resume"
         const val ACTION_SKIP_TO_NEXT = "next"; const val ACTION_SKIP_TO_PREVIOUS = "previous"
         const val ACTION_STOP = "stop"
+        const val ACTION_TOGGLE_PLAY_PAUSE = "com.ounben.amaradio.toggle"
+        const val ACTION_PLAY_STATION = "com.ounben.amaradio.play_station"
+        const val EXTRA_STATION_ID = "STATION_ID"
         private const val FULL_VOLUME = 100f; private const val DUCK_VOLUME = 40f
         private const val METERED_CONNECTION_WARNING_COOLDOWN = 20 * 1000
         private const val AUDIO_WARNING_DURATION = 2000

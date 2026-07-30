@@ -6,13 +6,16 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.MutablePreferences
 import com.ounben.amaradio.service.PlayerService
-import com.ounben.amaradio.service.MediaSessionCallback
 
 class PlayPauseActionCallback : ActionCallback {
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val toggleIntent = Intent("com.ounben.amaradio.TOGGLE_PLAY_PAUSE")
-        context.sendBroadcast(toggleIntent)
+        val intent = Intent(context, PlayerService::class.java).apply {
+            action = PlayerService.ACTION_TOGGLE_PLAY_PAUSE
+        }
+        context.startService(intent)
     }
 }
 
@@ -39,10 +42,12 @@ class PlayStationActionCallback : ActionCallback {
         val stationUuidKey = ActionParameters.Key<String>("extra_station_uuid")
     }
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val targetUuid = parameters.get(stationUuidKey) ?: return
-        val intent = Intent(MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID)
-        intent.putExtra(MediaSessionCallback.EXTRA_STATION_ID, targetUuid.toString())
-        context.sendBroadcast(intent)
+        val uuid = parameters[stationUuidKey]?.toString() ?: return
+        val intent = Intent(context, PlayerService::class.java).apply {
+            action = PlayerService.ACTION_PLAY_STATION
+            putExtra(PlayerService.EXTRA_STATION_ID, uuid)
+        }
+        context.startService(intent)
     }
 }
 
@@ -51,9 +56,11 @@ class SwitchTabActionCallback : ActionCallback {
         val tabKey = ActionParameters.Key<String>("extra_tab")
     }
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
-        val targetTab = parameters.get(tabKey) ?: "favorites"
+        val tab = parameters[tabKey]?.toString() ?: "favorites"
         updateAppWidgetState(context, glanceId) { prefs ->
-            prefs[WidgetState.activeTabKey] = targetTab.toString()
+            // Use explicit cast and key to avoid ambiguity
+            val p = prefs as MutablePreferences
+            p[WidgetState.activeTabKey] = tab
         }
         AMARadioFullWidget().update(context, glanceId)
     }
