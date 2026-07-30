@@ -10,8 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.Shortcut
-import androidx.compose.material.icons.automirrored.filled.Shortcut
+
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -329,6 +328,7 @@ fun StationOptionsDialog(
     station: DataRadioStation,
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
+    onDeleteClick: (() -> Unit)? = null,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -340,6 +340,36 @@ fun StationOptionsDialog(
         title = { Text(station.Name, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column {
+                ListItem(
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.detail_play),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.PlayCircle, contentDescription = null, tint = AmaradioAmber) },
+                    modifier = Modifier.clickable {
+                        StationActions.playInAMARadio(context, station)
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+                ListItem(
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.action_play_in_external),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    modifier = Modifier.clickable {
+                        Utils.playAndWarnIfMetered(context, station, PlayerType.EXTERNAL) {
+                            PlayStationTask.playExternal(station, context).execute()
+                        }
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
                 ListItem(
                     headlineContent = { 
                         Text(
@@ -388,20 +418,22 @@ fun StationOptionsDialog(
                     },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
-                ListItem(
-                    headlineContent = { 
-                        Text(
-                            text = stringResource(R.string.detail_create_shortcut),
-                            color = MaterialTheme.colorScheme.onSurface
-                        ) 
-                    },
-                    leadingContent = { Icon(Icons.AutoMirrored.Filled.Shortcut, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                    modifier = Modifier.clickable {
-                        // Shortcut logic
-                        onDismiss()
-                    },
-                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                )
+                if (onDeleteClick != null) {
+                    ListItem(
+                        headlineContent = { 
+                            Text(
+                                text = stringResource(R.string.action_delete),
+                                color = MaterialTheme.colorScheme.error
+                            ) 
+                        },
+                        leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        modifier = Modifier.clickable {
+                            onDeleteClick()
+                            onDismiss()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                    )
+                }
             }
         },
         confirmButton = {

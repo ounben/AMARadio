@@ -129,6 +129,7 @@ fun StationListTemplate(
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean,
+    onDeleteClick: ((DataRadioStation) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     PullToRefreshBox(
@@ -165,7 +166,8 @@ fun StationListTemplate(
                 isGrid = isGrid,
                 onStationClick = onStationClick,
                 onFavoriteClick = onFavoriteClick,
-                isFavorite = isFavorite
+                isFavorite = isFavorite,
+                onDeleteClick = onDeleteClick
             )
         }
     }
@@ -178,6 +180,7 @@ fun StationList(
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean,
+    onDeleteClick: ((DataRadioStation) -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
@@ -218,6 +221,7 @@ fun StationList(
             station = station,
             isFavorite = isFavorite(station.StationUuid),
             onFavoriteClick = { onFavoriteClick(station) },
+            onDeleteClick = onDeleteClick?.let { { it(station) } },
             onDismiss = { stationWithOptions = null }
         )
     }

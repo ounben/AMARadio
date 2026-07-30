@@ -4,7 +4,7 @@
     <string name="detail_name">Name</string>
     <string name="detail_tags">Tags</string>
     <string name="detail_country">Country</string>
-    <string name="detail_create_shortcut">Add to home screen</string>
+
     <string name="detail_language">Language</string>
     <string name="detail_weblink">Weblink</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
@@ -328,7 +328,7 @@
     <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
     <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
     <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
-    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+
     <string name="context_menu_delete">@string/action_delete</string>
 
     <!-- Accessibility -->

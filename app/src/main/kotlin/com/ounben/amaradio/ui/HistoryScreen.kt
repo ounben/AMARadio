@@ -9,6 +9,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -27,6 +28,8 @@ fun HistoryScreen(
     onTrackClick: (TrackHistoryEntry) -> Unit,
     isFavorite: (String) -> Boolean
 ) {
+    val context = LocalContext.current
+    val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
     val pagerState = rememberPagerState(pageCount = { 2 })
     val coroutineScope = rememberCoroutineScope()
     val uiState by localStationsViewModel.uiState.collectAsState()
@@ -79,7 +82,10 @@ fun HistoryScreen(
                     onRefresh = { /* Local data, already reactive */ },
                     onStationClick = onStationClick,
                     onFavoriteClick = onFavoriteClick,
-                    isFavorite = isFavorite
+                    isFavorite = isFavorite,
+                    onDeleteClick = { station ->
+                        app.historyManager.remove(station.StationUuid)
+                    }
                 )
             } else {
                 TrackList(
