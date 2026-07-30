@@ -6,20 +6,23 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.history.TrackHistoryDao
 import com.ounben.amaradio.history.TrackHistoryEntry
 import java.util.concurrent.Executor
 import java.util.concurrent.Executors
 
-@Database(entities = [TrackHistoryEntry::class, StationEntity::class, TagCacheEntity::class, LanguageCacheEntity::class], version = 6)
+@Database(entities = [StationEntity::class, TagCacheEntity::class, LanguageCacheEntity::class], version = 7)
 @TypeConverters(Converters::class)
 abstract class AMARadioDatabase : RoomDatabase() {
-    abstract fun songHistoryDao(): TrackHistoryDao
     abstract fun stationDao(): StationDao
     abstract fun tagCacheDao(): TagCacheDao
     abstract fun languageCacheDao(): LanguageCacheDao
 
-    val databaseExecutor: Executor = Executors.newSingleThreadExecutor { runnable -> Thread(runnable, "AMARadioDatabase Executor") }
+    // DEPRECATED: Song history moved to UserDatabase
+    fun songHistoryDao(): TrackHistoryDao {
+        return com.ounben.amaradio.database.user.AMARadioUserDatabase.getDatabase(AMARadioApp.instance).songHistoryDao()
+    }
 
     companion object {
         @Volatile
@@ -46,9 +49,7 @@ abstract class AMARadioDatabase : RoomDatabase() {
         private val CALLBACK: Callback = object : Callback() {
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
-                INSTANCE?.databaseExecutor?.execute {
-                    INSTANCE?.songHistoryDao()?.setLastHistoryItemEndTimeRelative(TrackHistoryEntry.MAX_UNKNOWN_TRACK_DURATION)
-                }
+                // Cleanup logic moved to UserDatabase where the table now resides
             }
         }
     }

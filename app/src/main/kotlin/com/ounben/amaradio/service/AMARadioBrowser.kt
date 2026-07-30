@@ -16,25 +16,21 @@ import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toDataStation
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.station.DataRadioStation
-import com.ounben.amaradio.ui.FilterTabItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.guava.future
-import kotlinx.serialization.json.Json
-import androidx.preference.PreferenceManager
+import kotlinx.coroutines.withContext
 
 class AMARadioBrowser(private val app: AMARadioApp) {
-    private val stationIdToStation = HashMap<String, DataRadioStation>()
+    private val stationIdToStation = java.util.concurrent.ConcurrentHashMap<String, DataRadioStation>()
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
-    private val json = Json { 
-        ignoreUnknownKeys = true
-        encodeDefaults = true
-    }
     
-    // Lazy init database to prevent blocking service startup
+    // Lazy init databases to prevent blocking service startup
     private val stationDao by lazy { AMARadioDatabase.getDatabase(app).stationDao() }
+    private val userDb by lazy { AMARadioUserDatabase.getDatabase(app) }
 
     fun onGetLibraryRoot(browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
         val rootItem = MediaItem.Builder()
@@ -54,27 +50,31 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     fun onGetChildren(browser: MediaSession.ControllerInfo, parentId: String, page: Int, pageSize: Int, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
-        Log.d("BROWSER", "onGetChildren for: $parentId")
+        Log.d("BROWSER", "onGetChildren for: $parentId, page: $page, size: $pageSize")
         
         return when (parentId) {
             MEDIA_ID_ROOT -> {
                 val rootChildren = createBrowsableMediaItemsForRoot()
-                Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(rootChildren), params))
+                Futures.immediateFuture(LibraryResult.ofItemList(paginate(rootChildren, page, pageSize), params))
             }
             MEDIA_ID_FILTERS_GROUP -> {
-                val filterGroups = createFilterGroupMediaItems()
-                Futures.immediateFuture(LibraryResult.ofItemList(ImmutableList.copyOf(filterGroups), params))
+                scope.future {
+                    val filterGroups = createFilterGroupMediaItems()
+                    LibraryResult.ofItemList(paginate(filterGroups, page, pageSize), params)
+                }
             }
             MEDIA_ID_MUSICS_FAVORITE -> {
                 scope.future {
                     val stations = app.favouriteManager.getList()
-                    LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                    val mediaItems = createMediaItemsFromStations(stations)
+                    LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                 }
             }
             MEDIA_ID_MUSICS_HISTORY -> {
                 scope.future {
                     val stations = app.historyManager.getList()
-                    LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                    val mediaItems = createMediaItemsFromStations(stations)
+                    LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                 }
             }
             else -> {
@@ -82,11 +82,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
                     scope.future {
                         val stations = if (filterId == "local") fetchLocalStations() else fetchStationsForFilter(filterId)
-                        LibraryResult.ofItemList(createMediaItemsFromStations(stations), params)
+                        val mediaItems = createMediaItemsFromStations(stations)
+                        LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                     }
                 } else {
-                    // SEARCH RESULTS: Media3 browsers call onGetChildren with the query as parentId
-                    // after receiving a notifySearchResultChanged from onSearch.
                     scope.future {
                         val results = stationDao.getStationsFiltered(
                             name = parentId.ifEmpty { null },
@@ -95,35 +94,40 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                             tag = null,
                             orderBy = "clickcount"
                         ).map { it.toDataStation() }
-                        LibraryResult.ofItemList(createMediaItemsFromStations(results), params)
+                        val mediaItems = createMediaItemsFromStations(results)
+                        LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                     }
                 }
             }
         }
     }
 
-    private fun createMediaItemsFromStations(stations: List<DataRadioStation>): ImmutableList<MediaItem> {
+    private fun paginate(items: List<MediaItem>, page: Int, pageSize: Int): ImmutableList<MediaItem> {
+        if (pageSize <= 0 || pageSize == Int.MAX_VALUE) return ImmutableList.copyOf(items)
+        val startIndex = (page * pageSize).coerceAtMost(items.size)
+        val endIndex = (startIndex + pageSize).coerceAtMost(items.size)
+        return if (startIndex < endIndex) {
+            ImmutableList.copyOf(items.subList(startIndex, endIndex))
+        } else {
+            ImmutableList.of()
+        }
+    }
+
+    private fun createMediaItemsFromStations(stations: List<DataRadioStation>): List<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
-        
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
-            
             val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
-            
             mediaItems.add(MediaItem.Builder()
                 .setMediaId(LEAF_PREFIX + station.StationUuid)
                 .setMediaMetadata(metadata)
                 .build())
         }
-        return ImmutableList.copyOf(mediaItems)
+        return mediaItems
     }
 
     private suspend fun fetchStationsForFilter(filterId: String): List<DataRadioStation> {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-        val jsonStr = sharedPref.getString("filter_tabs_json", null) ?: return emptyList()
-        val tabs = try { json.decodeFromString<List<FilterTabItem>>(jsonStr) } catch (e: Exception) { emptyList() }
-        val tab = tabs.find { it.id == filterId } ?: return emptyList()
-
+        val tab = userDb.filterTabDao().getAllTabs().find { it.id == filterId } ?: return emptyList()
         val results = stationDao.getStationsFiltered(
             name = tab.name.ifEmpty { null },
             countryCode = tab.countryCode.ifEmpty { null },
@@ -131,13 +135,11 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             tag = tab.tag.ifEmpty { null },
             orderBy = tab.sortBy.lowercase()
         )
-        
         return results.map { it.toDataStation() }
     }
 
     private suspend fun fetchLocalStations(): List<DataRadioStation> {
         val countryCode = com.ounben.amaradio.Utils.getCountryCode(app)?.uppercase() ?: return emptyList()
-        
         val results = stationDao.getStationsByCountryCode(countryCode)
         return results.map { it.toDataStation() }
     }
@@ -158,7 +160,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     fun onSearch(browser: MediaSession.ControllerInfo, query: String, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
-        Log.d("BROWSER", "onSearch: $query")
         return scope.future {
             val results = stationDao.getStationsFiltered(
                 name = query.ifEmpty { null },
@@ -167,50 +168,35 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 tag = null,
                 orderBy = "clickcount"
             ).map { it.toDataStation() }
-            
-            LibraryResult.ofItemList(createMediaItemsFromStations(results), params)
+            LibraryResult.ofItemList(ImmutableList.copyOf(createMediaItemsFromStations(results)), params)
         }
     }
 
-    /**
-     * Resolves a keyword search (like "3 swr") to a specific StationUuid.
-     * Prioritizes Favorites, then History, then general clickcount.
-     */
     suspend fun resolveStationByKeywords(query: String): String? {
         val keywords = query.lowercase().split(Regex("\\s+")).filter { it.isNotBlank() }
         if (keywords.isEmpty()) return null
         
-        // 1. Check Favorites
         val favorites = app.favouriteManager.getList()
         favorites.find { station ->
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
         }?.let { return it.StationUuid }
         
-        // 2. Check History
         val history = app.historyManager.getList()
         history.find { station ->
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
         }?.let { return it.StationUuid }
         
-        // 3. Search Database
-        // We use the first keyword as the primary search and then filter the rest locally for performance
         val firstKeyword = keywords[0]
         val results = stationDao.getStationsFiltered(
-            name = firstKeyword,
-            countryCode = null,
-            language = null,
-            tag = null,
-            orderBy = "clickcount"
+            name = firstKeyword, countryCode = null, language = null, tag = null, orderBy = "clickcount"
         )
-        
         results.find { entity ->
             val name = entity.name?.lowercase() ?: ""
             keywords.all { name.contains(it) }
         }?.let { return it.stationUuid }
         
-        // 4. Final Fallback: Return the top result if we only have one word
         return results.firstOrNull()?.stationUuid
     }
 
@@ -221,7 +207,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         val mediaItems = ArrayList<MediaItem>()
         val packageName = app.packageName
 
-        // 1. FILTER / DISCOVER GROUP (Hauptordner für alle Suchen/Tabs)
         val filterIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_FILTERS_GROUP)
@@ -231,7 +216,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             ))
             .build())
 
-        // 2. FAVORITEN
         val favoriteIconUri = Uri.parse("android.resource://$packageName/drawable/ic_star_white_24")
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_FAVORITE)
@@ -241,7 +225,6 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             ))
             .build())
             
-        // 3. VERLAUF
         val historyIconUri = Uri.parse("android.resource://$packageName/drawable/ic_restore_white_24")
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_MUSICS_HISTORY)
@@ -254,11 +237,10 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         return mediaItems
     }
 
-    private fun createFilterGroupMediaItems(): List<MediaItem> {
+    private suspend fun createFilterGroupMediaItems(): List<MediaItem> {
         val mediaItems = ArrayList<MediaItem>()
         val packageName = app.packageName
 
-        // 1. LOKAL
         val localIconUri = Uri.parse("android.resource://$packageName/drawable/ic_radio_white_24dp")
         mediaItems.add(MediaItem.Builder()
             .setMediaId(MEDIA_ID_FILTER_PREFIX + "local")
@@ -268,38 +250,29 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             ))
             .build())
 
-        // 2. FILTER-TABS (Deine personalisierten Folder)
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
-        val jsonStr = sharedPref.getString("filter_tabs_json", null)
-        if (jsonStr != null) {
-            try {
-                val tabs = json.decodeFromString<List<FilterTabItem>>(jsonStr)
-                for (tab in tabs) {
-                    if (tab.label.isNotEmpty()) {
-                        val tabIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
-                        mediaItems.add(MediaItem.Builder()
-                            .setMediaId(MEDIA_ID_FILTER_PREFIX + tab.id)
-                            .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
-                                tab.label,
-                                tabIconUri
-                            ))
-                            .build())
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("BROWSER", "Error decoding filter tabs", e)
+        val tabs = userDb.filterTabDao().getAllTabs()
+        for (tab in tabs) {
+            if (tab.label.isNotEmpty()) {
+                val tabIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
+                mediaItems.add(MediaItem.Builder()
+                    .setMediaId(MEDIA_ID_FILTER_PREFIX + tab.id)
+                    .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
+                        tab.label,
+                        tabIconUri
+                    ))
+                    .build())
             }
         }
         return mediaItems
     }
 
     companion object {
-        private const val MEDIA_ID_ROOT = "root_id"
-        private const val MEDIA_ID_FILTERS_GROUP = "filters_group_id"
-        private const val MEDIA_ID_MUSICS_FAVORITE = "favorites_id"
-        private const val MEDIA_ID_MUSICS_HISTORY = "history_id"
-        private const val MEDIA_ID_FILTER_PREFIX = "filter_"
-        private const val LEAF_PREFIX = "station_"
+        const val MEDIA_ID_ROOT = "root_id"
+        const val MEDIA_ID_FILTERS_GROUP = "filters_group_id"
+        const val MEDIA_ID_MUSICS_FAVORITE = "favorites_id"
+        const val MEDIA_ID_MUSICS_HISTORY = "history_id"
+        const val MEDIA_ID_FILTER_PREFIX = "filter_"
+        const val LEAF_PREFIX = "station_"
 
         @JvmStatic
         fun stationIdFromMediaId(mediaId: String?): String {

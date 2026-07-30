@@ -25,9 +25,10 @@ import android.content.SharedPreferences
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.TagCacheEntity
 import com.ounben.amaradio.database.LanguageCacheEntity
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.database.user.FilterTabEntity
 import com.ounben.amaradio.database.toDataStation
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -49,6 +50,20 @@ data class FilterTabItem(
     val sortBy: String = "clickcount",
     val reverse: Boolean = true,
     @kotlinx.serialization.Transient val stations: List<DataRadioStation> = emptyList()
+)
+
+fun FilterTabItem.toEntity(pos: Int) = FilterTabEntity(
+    id = id, label = label, name = name, countryCode = countryCode,
+    countryLabel = countryLabel, countryEmoji = countryEmoji,
+    languageCode = languageCode, languageLabel = languageLabel,
+    tag = tag, sortBy = sortBy, reverse = reverse, position = pos
+)
+
+fun FilterTabEntity.toItem() = FilterTabItem(
+    id = id, label = label, name = name, countryCode = countryCode,
+    countryLabel = countryLabel, countryEmoji = countryEmoji,
+    languageCode = languageCode, languageLabel = languageLabel,
+    tag = tag, sortBy = sortBy, reverse = reverse
 )
 
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
@@ -83,7 +98,29 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     }
 
     init {
-        loadSavedFilters()
+        // REAKTIVE DATEN: Filter-Tabs aus User DB laden
+        viewModelScope.launch {
+            val userDb = AMARadioUserDatabase.getDatabase(app)
+            userDb.filterTabDao().getAllTabsFlow().collect { entities ->
+                if (entities.isNotEmpty()) {
+                    val decodedTabs = entities.map { it.toItem() }
+                    val savedIndex = sharedPref.getInt("filter_selected_index", 0)
+                    _uiState.update { it.copy(
+                        tabs = decodedTabs, 
+                        selectedTabIndex = savedIndex.coerceIn(0, decodedTabs.size - 1)
+                    ) }
+                    
+                    // Trigger initial search for each tab if results are empty
+                    decodedTabs.forEachIndexed { index, tab ->
+                        if (tab.stations.isEmpty() && (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.tag.isNotEmpty())) {
+                            performSearch(index)
+                        }
+                    }
+                } else {
+                    _uiState.update { it.copy(tabs = listOf(FilterTabItem(label = "Filter"))) }
+                }
+            }
+        }
         
         // REAKTIVE DATEN: Nur für Tags und Sprachen (SQL-Tabellen)
         viewModelScope.launch {
@@ -113,13 +150,6 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch {
             delay(100.milliseconds)
             fetchMetadata()
-            
-            // Suche für alle Tabs ausführen
-            _uiState.value.tabs.forEachIndexed { index, tab ->
-                if (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.languageCode.isNotEmpty() || tab.tag.isNotEmpty()) {
-                    performSearch(index)
-                }
-            }
         }
         
         viewModelScope.launch {
@@ -142,29 +172,15 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         _uiState.update { it.copy(isGrid = isGrid) }
     }
 
-    private fun loadSavedFilters() {
-        val savedTabsJson = sharedPref.getString("filter_tabs_json", null)
-        val savedIndex = sharedPref.getInt("filter_selected_index", 0)
-        
-        if (savedTabsJson != null) {
-            try {
-                val decodedTabs = json.decodeFromString<List<FilterTabItem>>(savedTabsJson)
-                if (decodedTabs.isNotEmpty()) {
-                    _uiState.update { it.copy(tabs = decodedTabs, selectedTabIndex = savedIndex.coerceIn(0, decodedTabs.size - 1)) }
-                    return
-                }
-            } catch (e: Exception) {
-                Log.e("FILTER", "Error loading tabs", e)
-            }
-        }
-        _uiState.update { it.copy(tabs = listOf(FilterTabItem(label = "Filter"))) }
-    }
-
     fun saveFilters() {
         val state = _uiState.value
         viewModelScope.launch(Dispatchers.IO) {
+            val userDb = AMARadioUserDatabase.getDatabase(app)
+            val entities = state.tabs.mapIndexed { index, item -> item.toEntity(index) }
+            userDb.filterTabDao().deleteAll()
+            userDb.filterTabDao().insertAll(entities)
+            
             sharedPref.edit {
-                putString("filter_tabs_json", json.encodeToString(state.tabs))
                 putInt("filter_selected_index", state.selectedTabIndex)
             }
         }

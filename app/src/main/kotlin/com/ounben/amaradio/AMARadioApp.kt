@@ -17,6 +17,10 @@ import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.utils.LocaleUtils
 import com.ounben.amaradio.utils.TvChannelManager
 import kotlinx.coroutines.android.asCoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import okhttp3.ConnectionPool
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -63,12 +67,16 @@ class AMARadioApp : Application(), ImageLoaderFactory {
     }
 
     companion object {
+        lateinit var instance: AMARadioApp
+            private set
+
         init {
             AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         }
     }
 
     override fun onCreate() {
+        instance = this
         super.onCreate()
         Log.d("APP", "onCreate started")
         try {
@@ -85,6 +93,12 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
             CountryCodeDictionary.instance.load(this)
             CountryFlagsLoader.instance
+
+            // TRRIGGER USER DB MIGRATION BEFORE INITIALIZING MANAGERS
+            val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main + kotlinx.coroutines.SupervisorJob())
+            scope.launch {
+                com.ounben.amaradio.database.user.UserDatabaseMigration.migrateIfNeeded(this@AMARadioApp)
+            }
 
             historyManager = HistoryManager(this)
             favouriteManager = FavouriteManager(this)

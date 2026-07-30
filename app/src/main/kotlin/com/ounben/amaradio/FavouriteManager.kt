@@ -33,19 +33,7 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
         }
     }
 
-    override fun restore(station: DataRadioStation, pos: Int) {
-        if (!has(station.StationUuid)) {
-            super.restore(station, pos)
-        }
-    }
-
-    override fun load() {
-        super.load()
-        updateShortcuts()
-    }
-
-    override fun save() {
-        super.save()
+    override fun onDataChanged() {
         updateShortcuts()
     }
 

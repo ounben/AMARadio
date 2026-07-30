@@ -2,21 +2,15 @@ package com.ounben.amaradio
 
 import android.content.Context
 import android.util.Log
-import androidx.core.content.edit
-import androidx.preference.PreferenceManager
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.database.user.FavoriteEntity
+import com.ounben.amaradio.database.user.HistoryEntity
 import com.ounben.amaradio.station.DataRadioStation
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import java.io.Reader
 import java.io.Writer
+import java.util.Date
 
 open class StationSaveManager(protected val context: Context) {
     interface StationStatusListener {
@@ -28,172 +22,159 @@ open class StationSaveManager(protected val context: Context) {
     
     protected var stationStatusListener: StationStatusListener? = null
 
+    protected val userDb by lazy { AMARadioUserDatabase.getDatabase(context) }
+    
     private val _stationsFlow = MutableStateFlow<List<DataRadioStation>>(emptyList())
     val stationsFlow: StateFlow<List<DataRadioStation>> = _stationsFlow.asStateFlow()
 
     protected val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
-    private val jsonConfig = Json { 
-        ignoreUnknownKeys = true 
-        encodeDefaults = true
-    }
-
     init {
         @Suppress("LeakingThis")
-        load()
+        loadFromDb()
     }
 
     protected open fun getSaveId(): String = "default"
 
+    protected fun loadFromDb() {
+        scope.launch {
+            if (getSaveId() == "favourites") {
+                userDb.favoriteDao().getAllFavoritesFlow().collect { entities ->
+                    val stations = entities.map { it.toDataStation() }
+                    updateInMem(stations)
+                }
+            } else if (getSaveId() == "history") {
+                userDb.historyDao().getAllHistoryFlow().collect { entities ->
+                    val stations = entities.map { it.toDataStation() }
+                    updateInMem(stations)
+                }
+            }
+        }
+    }
+
+    private fun updateInMem(stations: List<DataRadioStation>) = synchronized(this) {
+        listStations.clear()
+        stationsSet.clear()
+        stations.forEach { 
+            it.queue = this
+            listStations.add(it)
+            stationsSet.add(it.StationUuid)
+        }
+        _stationsFlow.value = listStations.toList()
+        onDataChanged()
+    }
+
+    protected open fun onDataChanged() {
+        // Override in subclasses
+    }
+
     open fun add(station: DataRadioStation) {
         if (station.queue == null) station.queue = this
-        if (!stationsSet.contains(station.StationUuid)) {
-            listStations.add(station)
-            stationsSet.add(station.StationUuid)
-            save()
-            _stationsFlow.value = listStations.toList()
-            stationStatusListener?.onStationStatusChanged(station, favourite = true)
+        addInternal(station)
+    }
+
+    fun addFront(station: DataRadioStation) {
+        if (station.queue == null) station.queue = this
+        addInternal(station)
+    }
+
+    private fun addInternal(station: DataRadioStation) {
+        scope.launch(Dispatchers.IO) {
+            if (getSaveId() == "favourites") {
+                userDb.favoriteDao().insert(station.toFavoriteEntity())
+            } else if (getSaveId() == "history") {
+                userDb.historyDao().addStation(station.toHistoryEntity())
+            }
+            withContext(Dispatchers.Main) {
+                stationStatusListener?.onStationStatusChanged(station, favourite = true)
+            }
         }
     }
 
     open fun addMultiple(stations: List<DataRadioStation>) {
-        var changed = false
-        for (stationNew in stations) {
-            if (!stationsSet.contains(stationNew.StationUuid)) {
-                if (stationNew.queue == null) stationNew.queue = this
-                listStations.add(stationNew)
-                stationsSet.add(stationNew.StationUuid)
-                changed = true
+        scope.launch(Dispatchers.IO) {
+            stations.forEach { station ->
+                if (station.queue == null) station.queue = this@StationSaveManager
+                if (getSaveId() == "favourites") {
+                    userDb.favoriteDao().insert(station.toFavoriteEntity())
+                } else if (getSaveId() == "history") {
+                    userDb.historyDao().insert(station.toHistoryEntity())
+                }
             }
-        }
-        if (changed) {
-            save()
-            _stationsFlow.value = listStations.toList()
         }
     }
 
     open fun addAll(stations: List<DataRadioStation>?) {
         if (stations == null) return
-        var changed = false
-        for (station in stations) {
-            if (!stationsSet.contains(station.StationUuid)) {
-                station.queue = this
-                listStations.add(station)
-                stationsSet.add(station.StationUuid)
-                changed = true
-            }
-        }
-        if (changed) {
-            _stationsFlow.value = listStations.toList()
-        }
+        addMultiple(stations)
     }
 
-    fun addFront(station: DataRadioStation) {
-        if (station.queue == null) station.queue = this
-        listStations.removeAll { it.StationUuid == station.StationUuid }
-        listStations.add(0, station)
-        stationsSet.add(station.StationUuid)
-        save()
-        _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, favourite = true)
-    }
+    val first: DataRadioStation? get() = synchronized(this) { listStations.firstOrNull() }
 
-    val first: DataRadioStation? get() = listStations.firstOrNull()
+    fun getById(id: String): DataRadioStation? = synchronized(this) { listStations.find { it.StationUuid == id } }
 
-    fun getById(id: String): DataRadioStation? = listStations.find { it.StationUuid == id }
-
-    fun getNextById(id: String): DataRadioStation? {
+    fun getNextById(id: String): DataRadioStation? = synchronized(this) {
         if (listStations.isEmpty()) return null
         val idx = listStations.indexOfFirst { it.StationUuid == id }
         if (idx == -1 || idx == listStations.size - 1) return listStations[0]
         return listStations[idx + 1]
     }
 
-    fun getPreviousById(id: String): DataRadioStation? {
+    fun getPreviousById(id: String): DataRadioStation? = synchronized(this) {
         if (listStations.isEmpty()) return null
         val idx = listStations.indexOfFirst { it.StationUuid == id }
         if (idx == -1 || idx == 0) return listStations.last()
         return listStations[idx - 1]
     }
 
-    fun remove(id: String): Int {
+    fun remove(id: String): Int = synchronized(this) {
         val idx = listStations.indexOfFirst { it.StationUuid == id }
         if (idx != -1) {
-            val station = listStations.removeAt(idx)
-            stationsSet.remove(id)
-            save()
-            _stationsFlow.value = listStations.toList()
-            stationStatusListener?.onStationStatusChanged(station, favourite = false)
+            val station = listStations[idx]
+            scope.launch(Dispatchers.IO) {
+                if (getSaveId() == "favourites") {
+                    userDb.favoriteDao().deleteByUuid(id)
+                } else if (getSaveId() == "history") {
+                    userDb.historyDao().deleteByUuid(id)
+                }
+                withContext(Dispatchers.Main) {
+                    stationStatusListener?.onStationStatusChanged(station, favourite = false)
+                }
+            }
             return idx
         }
         return -1
     }
 
     open fun restore(station: DataRadioStation, pos: Int) {
-        station.queue = this
-        val safePos = pos.coerceIn(0, listStations.size)
-        listStations.add(safePos, station)
-        stationsSet.add(station.StationUuid)
-        save()
-        _stationsFlow.value = listStations.toList()
-        stationStatusListener?.onStationStatusChanged(station, favourite = true)
+        add(station)
     }
 
     fun clear() {
-        val oldStations = ArrayList(listStations)
-        listStations.clear()
-        stationsSet.clear()
-        save()
-        _stationsFlow.value = emptyList()
-        oldStations.forEach { stationStatusListener?.onStationStatusChanged(it, favourite = false) }
-    }
-
-    fun size(): Int = listStations.size
-    fun isEmpty(): Boolean = listStations.isEmpty()
-    fun has(id: String): Boolean = stationsSet.contains(id)
-
-    fun getList(): List<DataRadioStation> = java.util.Collections.unmodifiableList(listStations)
-
-    open fun load() {
-        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
-        val str = sharedPref.getString(getSaveId(), null)
-        if (str != null) {
-            try {
-                val arr = DataRadioStation.DecodeJson(str)
-                if (arr != null) {
-                    listStations.clear()
-                    stationsSet.clear()
-                    arr.distinctBy { it.StationUuid }.forEach {
-                        it.queue = this
-                        listStations.add(it)
-                        stationsSet.add(it.StationUuid)
-                    }
-                }
-            } catch (e: Exception) {
-                Log.e("SAVE", "Error loading stations", e)
-            }
-        }
-        _stationsFlow.value = listStations.toList()
-    }
-
-    open fun save() {
-        val stationsCopy = ArrayList(listStations)
         scope.launch(Dispatchers.IO) {
-            try {
-                val str = jsonConfig.encodeToString(stationsCopy)
-                PreferenceManager.getDefaultSharedPreferences(context).edit(commit = true) {
-                    putString(getSaveId(), str)
-                }
-            } catch (e: Exception) {
-                Log.e("SAVE", "Error saving stations", e)
+            if (getSaveId() == "favourites") {
+                val list = userDb.favoriteDao().getAllFavorites()
+                list.forEach { userDb.favoriteDao().delete(it) }
+            } else if (getSaveId() == "history") {
+                userDb.historyDao().clearAll()
             }
         }
     }
+
+    fun size(): Int = synchronized(this) { listStations.size }
+    fun isEmpty(): Boolean = synchronized(this) { listStations.isEmpty() }
+    fun has(id: String): Boolean = synchronized(this) { stationsSet.contains(id) }
+
+    fun getList(): List<DataRadioStation> = synchronized(this) { listStations.toList() }
+
+    open fun load() {}
+    open fun save() {}
 
     fun exportM3U(writer: Writer): Boolean {
+        val stations = getList()
         return try {
             writer.write("#EXTM3U\n")
-            listStations.forEach {
+            stations.forEach {
                 writer.write("#RADIOBROWSERUUID:${it.StationUuid}\n")
                 writer.write("#EXTINF:-1,${it.Name}\n")
                 writer.write("${it.StreamUrl}\n\n")
@@ -224,4 +205,28 @@ open class StationSaveManager(protected val context: Context) {
             null
         }
     }
+    
+    private fun FavoriteEntity.toDataStation() = DataRadioStation(
+        Name = name, StationUuid = stationUuid, StreamUrl = streamUrl, IconUrl = iconUrl,
+        Country = country, CountryCode = countryCode, TagsAll = tags, Language = language,
+        Codec = codec, Bitrate = bitrate
+    )
+
+    private fun HistoryEntity.toDataStation() = DataRadioStation(
+        Name = name, StationUuid = stationUuid, StreamUrl = streamUrl, IconUrl = iconUrl,
+        Country = country, CountryCode = countryCode, TagsAll = tags, Language = language,
+        Codec = codec, Bitrate = bitrate
+    )
+
+    private fun DataRadioStation.toFavoriteEntity() = FavoriteEntity(
+        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
+        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
+        codec = Codec, bitrate = Bitrate, addedAt = Date()
+    )
+
+    private fun DataRadioStation.toHistoryEntity() = HistoryEntity(
+        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
+        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
+        codec = Codec, bitrate = Bitrate, lastPlayedAt = Date()
+    )
 }

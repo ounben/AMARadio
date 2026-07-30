@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.ounben.amaradio.database.AMARadioDatabase
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import kotlinx.coroutines.flow.Flow
 import java.util.concurrent.Executor
 
@@ -20,9 +20,9 @@ class TrackHistoryRepository(application: Application) {
     private var insertsToTruncateLeft = 0
 
     init {
-        val db = AMARadioDatabase.getDatabase(application)
+        val db = AMARadioUserDatabase.getDatabase(application)
         dao = db.songHistoryDao()
-        queryExecutor = db.databaseExecutor
+        queryExecutor = db.databaseExecutor 
         allHistoryPagedFlow = Pager(
             config = PagingConfig(
                 pageSize = HISTORY_PAGE_SIZE,
