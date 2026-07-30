@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.18] - 2026-07-30
+### Added
+- **Dual-Database Architecture**: Implemented a strict separation between the global station catalog (`radio_browser_database.db`) and personal user data (`user_data.db`). This ensures user settings are never lost during global database updates.
+- **SQL Migration**: Migrated Favorites, Station History, and Filter Tabs from legacy JSON storage to high-performance SQL tables.
+- **Improved Android Auto Sync**: Lists in the vehicle now use direct SQL queries and Room flows, ensuring 100% consistency with the smartphone app.
+- **Real-time Update Signals**: Implemented reactive triggers to immediately refresh Android Auto displays when history or favorites change on the smartphone.
+- **Optimized Car History**: Added a smart 10-station limit for the history folder in Android Auto to enhance driver safety and focus.
+
+### Fixed
+- **Filter Tab Stability**: Resolved a critical issue where editing filters caused UI flickering and temporary loss of search results by implementing atomic SQL transactions and smart state merging.
+- **History Sync Lag**: Eliminated the delay between starting a station on the phone and seeing it in the car's history list.
+
 ## [1.17] - 2026-07-30
 ### Added
 - **Android Auto Stability (Media-Anchor)**: Implemented a robust "Media-Anchor" system to prevent session disconnects during station transitions. The app now strictly reports a loading state instead of falling into IDLE (0), ensuring the player window remains active in the car.
@@ -677,4 +689,3 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 ### Removed
 - Server selection from settings. There is an automatic fallback now.
 - Old main server is not used anymore (www.radio-browser.info/webservice)
-

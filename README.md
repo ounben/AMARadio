@@ -25,6 +25,7 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 - **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, and intelligent connection management.
 - **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.
 - **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.
+- **Robust Data Resilience**: Features a unique **Dual-Database Architecture** that strictly separates the global radio catalog from personal user data (Favorites, History, Filters). This ensures your personal settings are never lost during global database updates.
 
 ## Screenshots
 
@@ -47,7 +48,7 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 ## Getting Started
 
 ### Installation
-The latest version (v1.15) introduces a high-performance SQL metadata architecture and official click count support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+The latest version introduces a high-performance **Dual-Database Architecture**, SQL metadata caching, and official click count support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -67,7 +68,9 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Language**: 100% Kotlin
 - **UI Framework**: Jetpack Compose & Material 3
 - **Architecture**: MVVM with Activity-scoped ViewModels for state management
-- **Persistence**: Room Database for stations, history, and metadata cache
+- **Persistence**: 
+    - **Station Catalog**: High-performance SQL for the worldwide radio database.
+    - **User Storage**: Dedicated SQL-based **UserDatabase** for Favorites, History, and custom Filters (migrated from legacy JSON).
 - **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
 - **Media Engine**: AndroidX Media3 (ExoPlayer)
 - **Target SDK**: 37 (Android 17)
