@@ -25,6 +25,7 @@ object WidgetUpdateHelper {
                             prefs[WidgetState.stationNameKey] = it.Name
                             prefs[WidgetState.stationDetailsKey] = it.getShortDetails(context)
                             prefs[WidgetState.stationUuidKey] = it.StationUuid
+                            prefs[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         prefs[WidgetState.isPlayingKey] = isPlaying
                     }
@@ -40,6 +41,7 @@ object WidgetUpdateHelper {
                             prefs[WidgetState.stationNameKey] = it.Name
                             prefs[WidgetState.stationDetailsKey] = it.getShortDetails(context)
                             prefs[WidgetState.stationUuidKey] = it.StationUuid
+                            prefs[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         prefs[WidgetState.isPlayingKey] = isPlaying
                     }

@@ -27,19 +27,21 @@ class AMARadioSmallWidget : GlanceAppWidget() {
             val name = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val details = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
             val uuid = (prefs[WidgetState.stationUuidKey] ?: "").toString()
+            val iconUrl = (prefs[WidgetState.stationIconUrlKey] ?: "").toString()
             val isPlaying = prefs[WidgetState.isPlayingKey] ?: false
 
-            SmallWidgetContent(context, name, details, uuid, isPlaying)
+            SmallWidgetContent(context, name, details, uuid, iconUrl, isPlaying)
         }
     }
 }
 
 @Composable
-private fun SmallWidgetContent(
+fun SmallWidgetContent(
     context: Context,
     name: String,
     details: String,
     uuid: String,
+    iconUrl: String,
     isPlaying: Boolean
 ) {
     val backgroundColor = ColorProvider(R.color.widget_bg)
@@ -61,7 +63,7 @@ private fun SmallWidgetContent(
                 .clickable(actionStartActivity<ActivityMain>())
         ) {
             Image(
-                provider = WidgetImageLoader.getStationImage(context, uuid, name),
+                provider = WidgetImageLoader.getStationImage(context, uuid, name, iconUrl),
                 contentDescription = name,
                 modifier = GlanceModifier.fillMaxSize(),
                 contentScale = ContentScale.FillBounds

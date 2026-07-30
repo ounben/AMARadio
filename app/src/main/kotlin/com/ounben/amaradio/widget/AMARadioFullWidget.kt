@@ -29,34 +29,34 @@ class AMARadioFullWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         val userDb = AMARadioUserDatabase.getDatabase(context)
         
-        val initialPrefs = getAppWidgetState<Preferences>(context, id)
-        val initialTab = (initialPrefs[WidgetState.activeTabKey] ?: "favorites").toString()
-        
-        val stations = if (initialTab == "favorites") {
-            userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
-        } else {
-            userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
-        }
+        // 1. FETCH BOTH LISTS (30 each) before content. 
+        val favoriteStations = userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
+        val historyStations = userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
 
         provideContent {
             val prefs = currentState<Preferences>()
             val activeTab = (prefs[WidgetState.activeTabKey] ?: "favorites").toString()
             val playingUuid = (prefs[WidgetState.stationUuidKey] ?: "").toString()
+            val playingIconUrl = (prefs[WidgetState.stationIconUrlKey] ?: "").toString()
             val isPlaying = prefs[WidgetState.isPlayingKey] ?: false
             val currentName = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val currentDetails = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
 
-            FullWidgetContent(context, currentName, currentDetails, playingUuid, isPlaying, activeTab, stations)
+            // 2. REACTIVE SWITCH: Pick the correct pre-fetched list based on current UI state
+            val stationsToShow = if (activeTab == "favorites") favoriteStations else historyStations
+
+            FullWidgetContent(context, currentName, currentDetails, playingUuid, playingIconUrl, isPlaying, activeTab, stationsToShow)
         }
     }
 }
 
 @Composable
-private fun FullWidgetContent(
+fun FullWidgetContent(
     context: Context,
     name: String,
     details: String,
     playingUuid: String,
+    playingIconUrl: String,
     isPlaying: Boolean,
     activeTab: String,
     stations: List<DataRadioStation>
@@ -80,7 +80,7 @@ private fun FullWidgetContent(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                provider = WidgetImageLoader.getStationImage(context, playingUuid, name),
+                provider = WidgetImageLoader.getStationImage(context, playingUuid, name, playingIconUrl),
                 contentDescription = name,
                 modifier = GlanceModifier.size(40.dp).clickable(actionStartActivity<ActivityMain>()),
                 contentScale = ContentScale.FillBounds
@@ -179,7 +179,7 @@ fun StationRow(context: Context, station: DataRadioStation, isActive: Boolean, t
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            provider = WidgetImageLoader.getStationImage(context, station.StationUuid, station.Name),
+            provider = WidgetImageLoader.getStationImage(context, station.StationUuid, station.Name, station.IconUrl),
             contentDescription = station.Name,
             modifier = GlanceModifier.size(36.dp),
             contentScale = ContentScale.FillBounds

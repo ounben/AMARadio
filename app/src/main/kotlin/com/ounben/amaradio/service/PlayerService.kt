@@ -312,6 +312,40 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         channel.enableLights(false)
         channel.enableVibration(false)
         notificationManager.createNotificationChannel(channel)
+
+        // 5. Observe History & Favorites for Media3 Library updates (Android Auto & Widget Sync)
+        serviceScope.launch {
+            val app = application as AMARadioApp
+            
+            launch {
+                // Whenever history changes on smartphone, notify Android Auto & Widgets
+                app.historyManager.stationsFlow.collect { list ->
+                    // Small delay to ensure DB transaction is committed and settled
+                    delay(500)
+                    Log.d("PLAYER_SERVICE", "History changed, notifying Auto & Widgets.")
+                    
+                    mediaSession?.let { session ->
+                        // Using Int.MAX_VALUE forces Android Auto to ignore its local item cache and re-fetch everything
+                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_HISTORY, Int.MAX_VALUE, null)
+                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
+                    }
+                    
+                    WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false)
+                }
+            }
+            
+            launch {
+                // Whenever favorites change, notify Android Auto & Widgets
+                app.favouriteManager.stationsFlow.collect { list ->
+                    delay(500)
+                    mediaSession?.let { session ->
+                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_FAVORITE, Int.MAX_VALUE, null)
+                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
+                    }
+                    WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {
