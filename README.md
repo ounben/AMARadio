@@ -12,6 +12,10 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 ## Key Features
 
 - **Instantaneous UI**: Thanks to a highly optimized architecture, switching between tabs and opening the player occurs without delay or flickering.
+- **Advanced Android Auto Integration**: 
+    - **Stability (Media-Anchor)**: Specialized logic to prevent session disconnects during station switches on modern Android versions (15+).
+    - **HLS/TS Support**: Full compatibility with complex Transport Stream formats.
+    - **Optimized UI**: Compact list designs, driver-safe folder hierarchy, and prioritized metadata (Station Name first) for maximum legibility.
 - **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
@@ -21,7 +25,6 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 - **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, and intelligent connection management.
 - **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.
 - **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.
-- **Advanced Android Auto Integration**: Fully optimized for vehicle head units with driver-safe interfaces and high-contrast Material icons.
 
 ## Screenshots
 

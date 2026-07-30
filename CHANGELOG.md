@@ -5,6 +5,28 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.17] - 2026-07-30
+### Added
+- **Android Auto Stability (Media-Anchor)**: Implemented a robust "Media-Anchor" system to prevent session disconnects during station transitions. The app now strictly reports a loading state instead of falling into IDLE (0), ensuring the player window remains active in the car.
+- **HLS/TS Stream Support**: Re-enabled and optimized Transport Stream (.ts) support for HLS-based radio stations (e.g., Radio Italia).
+- **Nested Browser Hierarchy**: Reorganized the Android Auto browser for better clarity. Filters and custom tabs are now grouped in a dedicated "Discover" folder, while Favorites and History remain instantly accessible.
+- **Compact List UI**: Refined the look of folders in the vehicle display to match the sleek station list style (List-mode instead of Grid-mode).
+
+### Changed
+- **Optimized Car Metadata**: Reordered track information for better readability behind the wheel. The **Station Name** is now the primary focus (Line 1), while the current song title follows in the second line.
+- **Direct History Retrieval**: Simplified the synchronization between the smartphone and the vehicle. Android Auto now queries the station history directly from the local SQL storage whenever a folder is opened, ensuring 100% consistency.
+- **Media Type Normalization**: Standardized the entire metadata pipeline to use the `MUSIC` (1) media type, resolving compatibility issues on Android 15, 16, and 17 where the specialized `RADIO_STATION` (21) type was occasionally rejected.
+
+### Fixed
+- **"Gray Player" Elimination**: Resolved the issue where the car display would momentarily go empty during station switches by implementing a persistent metadata "vaccination" logic.
+- **Hardware Decoder Resilience**: Increased the grace period during codec handovers (MP3 <-> AAC) to 250ms, preventing `C2_CORRUPTED` errors on modern hardware chipsets.
+
+## [1.16] - 2026-07-29
+### Added
+- **Modern Build Infrastructure**: Fully migrated to **Android Gradle Plugin 9.0** and **Target SDK 37 (Android 17)** standards.
+- **Kotlin Integration**: Transitioned to built-in Kotlin support, removing legacy plugins for better build performance.
+- **Edge-to-Edge System Design**: Refined the UI to strictly follow modern Android standards with transparent system bars and automatic `WindowInsets` handling.
+
 ## [1.15] - 2026-07-25
 ### Added
 - **SQL Metadata Architecture**: Migrated Genre-Tags and Languages to a high-performance local SQL cache (`TagCache` and `LanguageCache`). This allows for instant, offline filter suggestions and supports massive datasets (e.g., 11,000+ tags) without performance degradation.
