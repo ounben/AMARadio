@@ -118,6 +118,10 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             val looper = audioThread.looper
             audioLooper = looper
             audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
+
+            // Prime Widgets
+            com.ounben.amaradio.widget.WidgetUpdateHelper.updateAllWidgets(this, null, false)
+
             Log.d("APP", "onCreate finished")
         } catch (e: Exception) {
             Log.e("APP", "onCreate failed", e)

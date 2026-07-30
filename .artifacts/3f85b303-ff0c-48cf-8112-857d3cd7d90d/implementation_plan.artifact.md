@@ -1,46 +1,40 @@
-# Entfernung des JSON-Fallbacks und Umstellung auf SQL-basierte Initialstation
+# Implementation Plan: Fix Widget Visibility & Metadata
 
-Dieses Dokument beschreibt den Plan zur Entfernung des alten JSON-basierten Fallback-Systems (`fallback_stations.json`) und die Umstellung auf eine rein SQL-basierte Lösung. Zukünftig wird bei einer leeren Historie/Favoritenliste automatisch der populärste Sender aus der lokalen Region (basierend auf der Datenbank) als Startstation gewählt.
+Dieses Update behebt das Problem, dass die AMARadio-Widgets nicht in der Widget-Auswahl des Launchers angezeigt werden. Wir optimieren die XML-Metadaten und die Manifest-Registrierung.
 
-## Benutzerprüfung erforderlich
+## User Review Required
 
 > [!IMPORTANT]
-> - Das gesamte `FallbackStationsManager` System wird gelöscht.
-> - Die Datei `fallback_stations.json` wird aus den Ressourcen entfernt.
-> - Der Start-Sender wird nun dynamisch aus der lokalen SQL-Datenbank ermittelt (basierend auf dem `countryCode` und dem `clickcount`).
+> Wir reduzieren die Mindestanforderungen an den Platzbedarf (`minWidth`), damit die Widgets auf allen Launchern (auch bei großen Gittern) sicher gelistet werden.
 
-## Geplante Änderungen
+## Proposed Changes
 
-### Infrastruktur & Bereinigung
+### 1. Metadaten-Optimierung (XML)
 
-#### [DELETE] [FallbackStationsManager.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/FallbackStationsManager.kt)
-- Entfernung der Klasse, die den JSON-Fallback verwaltet.
+#### [MODIFY] [small_widget_info.xml](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/res/xml/small_widget_info.xml)
+- Reduzierung von `minWidth` auf `160dp` (~2-3 Zellen).
+- Reduzierung von `minHeight` auf `40dp` (1 Zelle).
+- Beibehaltung von `targetCellWidth="4"`.
 
-#### [DELETE] [fallback_stations.json](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/res/raw/fallback_stations.json)
-- Löschen der JSON-Datei mit den fest kodierten Sendern.
+#### [MODIFY] [full_widget_info.xml](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/res/xml/full_widget_info.xml)
+- Reduzierung von `minWidth` auf `180dp`.
+- Reduzierung von `minHeight` auf `120dp` (~2-3 Zellen).
 
-#### [MODIFY] [AMARadioApp.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/AMARadioApp.kt)
-- Entfernung der Initialisierung des `FallbackStationsManager`.
+### 2. Manifest-Anpassung
 
-### Programmlogik (SQL-basierter Fallback)
+#### [MODIFY] [AndroidManifest.xml](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/AndroidManifest.xml)
+- Hinzufügen von `android:icon="@mipmap/ic_elgato_launcher"` zu beiden `receiver`-Tags.
+- Sicherstellen, dass die `label` korrekt gesetzt sind.
 
-#### [MODIFY] [PlayerService.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/service/PlayerService.kt)
-- Implementierung einer asynchronen Initialisierung des Start-Senders.
-- Falls Historie und Favoriten leer sind, wird der oberste Sender der lokalen Liste aus der SQL-Datenbank geladen.
+### 3. Widget-Code (State-Definition)
 
-#### [MODIFY] [PlayerViewModel.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/ui/PlayerViewModel.kt)
-- Anpassung der Fallback-Kette: `History -> Favorites -> SQL Local Top`.
-- Entfernung der Abhängigkeit zum `fallbackStationsManager`.
+#### [MODIFY] [AMARadioSmallWidget.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/widget/AMARadioSmallWidget.kt) / [AMARadioFullWidget.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/widget/AMARadioFullWidget.kt)
+- Explizites Überschreiben von `stateDefinition = PreferencesGlanceStateDefinition`.
 
-#### [MODIFY] [StationDao.kt](file:///C:/Users/bou/StudioProjects/AMARadio/app/src/main/kotlin/com/ounben/amaradio/database/StationDao.kt)
-- Sicherstellen, dass eine effiziente Methode existiert, um den Top-Sender für einen bestimmten Länder-Code abzufragen (bereits vorhanden: `getStationsByCountryCode`).
+## Verification Plan
 
-## Verifizierungsplan
-
-### Automatisierte Tests
-- Build-Check nach der Entfernung der Klassen und Ressourcen.
-
-### Manuelle Verifizierung
-- **Erststart-Szenario**: App-Daten löschen und prüfen, ob nach dem Start ein lokaler Sender (z.B. aus Deutschland/Schweiz) in der Player-Leiste erscheint, anstatt des alten polnischen Fallback-Senders.
-- **Android Auto**: Überprüfung, ob beim ersten Verbinden (ohne Historie) ein gültiger lokaler Sender angezeigt wird.
-- **Datenintegrität**: Sicherstellen, dass keine JSON-Abfragen mehr für den Fallback-Sender erfolgen.
+### Manual Verification
+1. App neu installieren.
+2. Widget-Picker öffnen.
+3. Suchen nach "AMARadio" -> Es müssen nun zwei Widgets ("AMARadio Compact" und "AMARadio Player") erscheinen.
+4. Widget zum Home-Screen hinzufügen und Funktion prüfen.

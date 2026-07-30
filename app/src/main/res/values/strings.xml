@@ -360,4 +360,9 @@
     <string name="app_id" translatable="false">app_id</string>
     <string name="alarm_backup" translatable="false">alarm_backup</string>
     <string name="alarm_fallback_info" translatable="false">alarm_fallback_info</string>
+
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Quick player controls</string>
+    <string name="widget_description_full">Player and station list</string>
 </resources>

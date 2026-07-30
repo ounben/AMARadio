@@ -55,6 +55,7 @@ import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
 import com.ounben.amaradio.utils.StationPlaceholderUtils
+import com.ounben.amaradio.widget.WidgetUpdateHelper
 import kotlinx.coroutines.*
 import java.util.Calendar
 import java.util.Date
@@ -299,6 +300,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                         
                         station?.let { playWithoutWarnings(it) }
                     }
+                } else if (intent.action == "com.ounben.amaradio.TOGGLE_PLAY_PAUSE") {
+                    if (radioPlayer?.isPlaying() == true) pause(PauseReason.USER) else resume()
                 }
             }
         }
@@ -416,6 +419,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 // 3. Ensure MediaSession is aware of the changes
                 mediaSession?.setCustomLayout(listOf())
                 updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+                
+                // Widget Update
+                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false)
             }
         }
     }
@@ -918,6 +924,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         updateNotification(status)
         val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, status as Parcelable) }
         AppEventManager.sendEvent(intent)
+
+        // Widget Update
+        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, status == PlayState.Playing || status == PlayState.PrePlaying)
     }
 
     override fun onPlayerWarning(messageId: Int) { 
@@ -1079,6 +1088,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     trackHistoryRepository?.insert(newEntry)
                 }
             }
+            // Widget Update on track change
+            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, true)
         }
     }
 

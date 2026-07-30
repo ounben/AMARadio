@@ -1,5 +1,7 @@
 package com.ounben.amaradio.database
 
+import com.ounben.amaradio.database.user.FavoriteEntity
+import com.ounben.amaradio.database.user.HistoryEntity
 import com.ounben.amaradio.station.DataRadioStation
 
 fun DataRadioStation.toEntity(): StationEntity {
@@ -62,4 +64,20 @@ fun StationEntity.toDataStation(): DataRadioStation {
     station.CountryCode = this.countryCode ?: ""
     station.LastChangeTime = this.lastChangeTime ?: ""
     return station
+}
+
+fun FavoriteEntity.toDataStation(): DataRadioStation {
+    return DataRadioStation(
+        Name = this.name, StationUuid = this.stationUuid, StreamUrl = this.streamUrl, IconUrl = this.iconUrl,
+        Country = this.country, CountryCode = this.countryCode, TagsAll = this.tags, Language = this.language,
+        Codec = this.codec, Bitrate = this.bitrate
+    )
+}
+
+fun HistoryEntity.toDataStation(): DataRadioStation {
+    return DataRadioStation(
+        Name = this.name, StationUuid = this.stationUuid, StreamUrl = this.streamUrl, IconUrl = this.iconUrl,
+        Country = this.country, CountryCode = this.countryCode, TagsAll = this.tags, Language = this.language,
+        Codec = this.codec, Bitrate = this.bitrate
+    )
 }

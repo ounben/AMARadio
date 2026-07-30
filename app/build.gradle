@@ -149,6 +149,10 @@ dependencies {
     ksp libs.androidx.room.compiler
     implementation libs.androidx.room.ktx
     implementation libs.androidx.room.paging
+    implementation libs.androidx.glance.appwidget
+    implementation libs.androidx.glance.material3
+    implementation libs.androidx.datastore.preferences.core
+    implementation libs.androidx.datastore.preferences
     implementation libs.androidx.lifecycle.runtime.ktx
     implementation libs.androidx.lifecycle.viewmodel.ktx
     implementation libs.kotlinx.coroutines.android
