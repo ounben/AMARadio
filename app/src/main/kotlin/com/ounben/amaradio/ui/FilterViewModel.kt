@@ -97,23 +97,40 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
+    private var isFirstTabsLoad = true
+
     init {
         // REAKTIVE DATEN: Filter-Tabs aus User DB laden
         viewModelScope.launch {
             val userDb = AMARadioUserDatabase.getDatabase(app)
             userDb.filterTabDao().getAllTabsFlow().collect { entities ->
                 if (entities.isNotEmpty()) {
-                    val decodedTabs = entities.map { it.toItem() }
+                    val dbTabs = entities.map { it.toItem() }
+                    val currentTabs = _uiState.value.tabs
+                    
+                    // SMART MERGE: Preserve stations in memory if they exist
+                    val mergedTabs = dbTabs.map { dbTab ->
+                        val existing = currentTabs.find { it.id == dbTab.id }
+                        if (existing != null && existing.stations.isNotEmpty()) {
+                            dbTab.copy(stations = existing.stations)
+                        } else {
+                            dbTab
+                        }
+                    }
+
                     val savedIndex = sharedPref.getInt("filter_selected_index", 0)
                     _uiState.update { it.copy(
-                        tabs = decodedTabs, 
-                        selectedTabIndex = savedIndex.coerceIn(0, decodedTabs.size - 1)
+                        tabs = mergedTabs, 
+                        selectedTabIndex = savedIndex.coerceIn(0, mergedTabs.size - 1)
                     ) }
                     
-                    // Trigger initial search for each tab if results are empty
-                    decodedTabs.forEachIndexed { index, tab ->
-                        if (tab.stations.isEmpty() && (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.tag.isNotEmpty())) {
-                            performSearch(index)
+                    // Trigger initial search ONLY on first load
+                    if (isFirstTabsLoad) {
+                        isFirstTabsLoad = false
+                        mergedTabs.forEachIndexed { index, tab ->
+                            if (tab.stations.isEmpty() && (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.tag.isNotEmpty())) {
+                                performSearch(index)
+                            }
                         }
                     }
                 } else {
@@ -177,8 +194,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         viewModelScope.launch(Dispatchers.IO) {
             val userDb = AMARadioUserDatabase.getDatabase(app)
             val entities = state.tabs.mapIndexed { index, item -> item.toEntity(index) }
-            userDb.filterTabDao().deleteAll()
-            userDb.filterTabDao().insertAll(entities)
+            // ATOMIC UPDATE: Use the transaction method to prevent empty emission flickering
+            userDb.filterTabDao().updateAllTabs(entities)
             
             sharedPref.edit {
                 putInt("filter_selected_index", state.selectedTabIndex)
@@ -233,17 +250,50 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    fun onNameChange(index: Int, newName: String) = updateTabAt(index) { it.copy(name = newName) }
-    fun onCountrySelect(index: Int, code: String, label: String) = updateTabAt(index) { 
-        it.copy(countryCode = code, countryLabel = label, countryEmoji = EmojiUtils.getFlagEmoji(code) ?: "") 
+    fun onNameChange(index: Int, newName: String) {
+        updateTabAt(index) { it.copy(name = newName) }
+        saveFilters()
     }
-    fun clearCountry(index: Int) = updateTabAt(index) { it.copy(countryCode = "", countryLabel = "", countryEmoji = "") }
-    fun onLanguageSelect(index: Int, code: String, label: String) = updateTabAt(index) { it.copy(languageCode = code, languageLabel = label) }
-    fun clearLanguage(index: Int) = updateTabAt(index) { it.copy(languageCode = "", languageLabel = "") }
-    fun onTagSelect(index: Int, selectedTag: String) = updateTabAt(index) { it.copy(tag = selectedTag) }
-    fun clearTag(index: Int) = updateTabAt(index) { it.copy(tag = "") }
-    fun onSortByChange(index: Int, newSort: String) = updateTabAt(index) { it.copy(sortBy = newSort) }
-    fun onReverseChange(index: Int, newReverse: Boolean) = updateTabAt(index) { it.copy(reverse = newReverse) }
+    
+    fun onCountrySelect(index: Int, code: String, label: String) {
+        updateTabAt(index) { it.copy(countryCode = code, countryLabel = label, countryEmoji = EmojiUtils.getFlagEmoji(code) ?: "") }
+        saveFilters()
+    }
+    
+    fun clearCountry(index: Int) {
+        updateTabAt(index) { it.copy(countryCode = "", countryLabel = "", countryEmoji = "") }
+        saveFilters()
+    }
+    
+    fun onLanguageSelect(index: Int, code: String, label: String) {
+        updateTabAt(index) { it.copy(languageCode = code, languageLabel = label) }
+        saveFilters()
+    }
+    
+    fun clearLanguage(index: Int) {
+        updateTabAt(index) { it.copy(languageCode = "", languageLabel = "") }
+        saveFilters()
+    }
+    
+    fun onTagSelect(index: Int, selectedTag: String) {
+        updateTabAt(index) { it.copy(tag = selectedTag) }
+        saveFilters()
+    }
+    
+    fun clearTag(index: Int) {
+        updateTabAt(index) { it.copy(tag = "") }
+        saveFilters()
+    }
+    
+    fun onSortByChange(index: Int, newSort: String) {
+        updateTabAt(index) { it.copy(sortBy = newSort) }
+        saveFilters()
+    }
+    
+    fun onReverseChange(index: Int, newReverse: Boolean) {
+        updateTabAt(index) { it.copy(reverse = newReverse) }
+        saveFilters()
+    }
 
     fun fetchMetadata() {
         viewModelScope.launch {
@@ -306,7 +356,6 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     fun performSearch(index: Int) {
         viewModelScope.launch {
             _uiState.update { it.copy(isSearching = true, error = null) }
-            saveFilters()
             
             val state = _uiState.value
             val tab = state.tabs.getOrNull(index) ?: return@launch

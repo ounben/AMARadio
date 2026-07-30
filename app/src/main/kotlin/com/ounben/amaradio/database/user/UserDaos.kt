@@ -77,4 +77,10 @@ interface FilterTabDao {
 
     @Query("DELETE FROM filter_tab")
     suspend fun deleteAll()
+
+    @Transaction
+    suspend fun updateAllTabs(tabs: List<FilterTabEntity>) {
+        deleteAll()
+        insertAll(tabs)
+    }
 }
