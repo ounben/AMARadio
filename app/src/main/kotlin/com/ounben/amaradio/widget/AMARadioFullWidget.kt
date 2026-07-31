@@ -44,6 +44,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
             val isPlaying = prefs[WidgetState.isPlayingKey] ?: false
             val currentName = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val currentDetails = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
+            val currentTrack = (prefs[WidgetState.currentTrackKey] ?: "").toString()
             
             // Critical: Observe counter to force instant recomposition on state push
             val counter = prefs[WidgetState.updateCounterKey] ?: 0
@@ -67,6 +68,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
                     context = context,
                     name = currentName,
                     details = currentDetails,
+                    trackInfo = currentTrack,
                     playingUuid = playingUuid,
                     playingIconUrl = playingIconUrl,
                     isPlaying = isPlaying,
@@ -82,6 +84,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
         context: Context,
         name: String,
         details: String,
+        trackInfo: String,
         playingUuid: String,
         playingIconUrl: String,
         isPlaying: Boolean,
@@ -115,7 +118,8 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 Spacer(modifier = GlanceModifier.width(8.dp))
                 Column(modifier = GlanceModifier.defaultWeight().clickable(actionStartActivity<ActivityMain>())) {
                     Text(text = name, style = TextStyle(color = textColor, fontSize = 14.sp, fontWeight = FontWeight.Bold), maxLines = 1)
-                    Text(text = details, style = TextStyle(color = secondaryColor, fontSize = 11.sp), maxLines = 1)
+                    val subTitle = if (isPlaying && trackInfo.isNotEmpty()) trackInfo else details
+                    Text(text = subTitle, style = TextStyle(color = secondaryColor, fontSize = 11.sp), maxLines = 1)
                 }
                 
                 Row(verticalAlignment = Alignment.CenterVertically) {

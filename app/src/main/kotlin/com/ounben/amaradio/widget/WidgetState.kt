@@ -13,4 +13,5 @@ object WidgetState {
     val favoritesJsonKey = stringPreferencesKey("favorites_json")
     val historyJsonKey = stringPreferencesKey("history_json")
     val updateCounterKey = androidx.datastore.preferences.core.intPreferencesKey("update_count")
+    val currentTrackKey = stringPreferencesKey("current_track_info")
 }

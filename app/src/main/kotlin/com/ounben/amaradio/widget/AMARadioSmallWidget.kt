@@ -32,6 +32,7 @@ class AMARadioSmallWidget : GlanceAppWidget() {
             val prefs = currentState<Preferences>()
             val name = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val details = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
+            val trackInfo = (prefs[WidgetState.currentTrackKey] ?: "").toString()
             val uuid = (prefs[WidgetState.stationUuidKey] ?: "").toString()
             val iconUrl = (prefs[WidgetState.stationIconUrlKey] ?: "").toString()
             val isPlaying = prefs[WidgetState.isPlayingKey] ?: false
@@ -40,7 +41,7 @@ class AMARadioSmallWidget : GlanceAppWidget() {
             val counter = prefs[WidgetState.updateCounterKey] ?: 0
 
             androidx.glance.GlanceTheme(colors = WidgetTheme.colors) {
-                SmallWidgetContent(context, name, details, uuid, iconUrl, isPlaying)
+                SmallWidgetContent(context, name, details, trackInfo, uuid, iconUrl, isPlaying)
             }
         }
     }
@@ -51,6 +52,7 @@ fun SmallWidgetContent(
     context: Context,
     name: String,
     details: String,
+    trackInfo: String,
     uuid: String,
     iconUrl: String,
     isPlaying: Boolean
@@ -94,13 +96,12 @@ fun SmallWidgetContent(
                 style = TextStyle(color = textColor, fontSize = 15.sp, fontWeight = FontWeight.Bold),
                 maxLines = 1
             )
-            if (details.isNotEmpty()) {
-                Text(
-                    text = details,
-                    style = TextStyle(color = secondaryColor, fontSize = 12.sp),
-                    maxLines = 1
-                )
-            }
+            val subTitle = if (isPlaying && trackInfo.isNotEmpty()) trackInfo else details
+            Text(
+                text = subTitle,
+                style = TextStyle(color = secondaryColor, fontSize = 12.sp),
+                maxLines = 1
+            )
         }
 
         // 3. Controls

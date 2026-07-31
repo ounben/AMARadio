@@ -57,6 +57,8 @@ import com.ounben.amaradio.station.live.StreamLiveInfo
 import com.ounben.amaradio.utils.StationPlaceholderUtils
 import com.ounben.amaradio.widget.WidgetUpdateHelper
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import java.util.Calendar
 import java.util.Date
 import android.os.Bundle
@@ -313,37 +315,27 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         channel.enableVibration(false)
         notificationManager.createNotificationChannel(channel)
 
-        // 5. Observe History & Favorites for Media3 Library updates (Android Auto & Widget Sync)
+        // 5. Observe History & Favorites for Media3 Library updates (Android Auto Sync)
         serviceScope.launch {
             val app = application as AMARadioApp
             
-            launch {
-                // Whenever history changes on smartphone, notify Android Auto & Widgets
-                app.historyManager.stationsFlow.collect { list ->
-                    // Small delay to ensure DB transaction is committed and settled
-                    delay(500)
-                    Log.d("PLAYER_SERVICE", "History changed, notifying Auto & Widgets.")
-                    
-                    mediaSession?.let { session ->
-                        // Using Int.MAX_VALUE forces Android Auto to ignore its local item cache and re-fetch everything
-                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_HISTORY, Int.MAX_VALUE, null)
-                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
-                    }
-                    
-                    WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false)
+            combine(
+                app.historyManager.stationsFlow,
+                app.favouriteManager.stationsFlow
+            ) { h, f -> h to f }
+            .distinctUntilChanged()
+            .collect {
+                // Debounce to settle DB transactions
+                delay(500)
+                Log.d("PLAYER_SERVICE", "History or Favorites changed, notifying Android Auto.")
+                
+                mediaSession?.let { session ->
+                    session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_HISTORY, Int.MAX_VALUE, null)
+                    session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_FAVORITE, Int.MAX_VALUE, null)
+                    session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
                 }
-            }
-            
-            launch {
-                // Whenever favorites change, notify Android Auto & Widgets
-                app.favouriteManager.stationsFlow.collect { list ->
-                    delay(500)
-                    mediaSession?.let { session ->
-                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_FAVORITE, Int.MAX_VALUE, null)
-                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
-                    }
-                    WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false)
-                }
+                
+                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
         }
     }
@@ -409,9 +401,20 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
         if ((itsCurrentStation != null) && (radioPlayer?.playState != PlayState.Idle)) {
             updateNotification(radioPlayer?.playState ?: PlayState.Paused)
+            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
         }
 
         return START_STICKY
+    }
+
+    private fun getCurrentTrackInfo(): String? {
+        val info = liveInfo
+        if (info.track.isNotEmpty() && info.artist.isNotEmpty()) {
+            return "${info.artist} - ${info.track}"
+        }
+        if (info.track.isNotEmpty()) return info.track
+        if (info.title.isNotEmpty()) return info.title
+        return null
     }
 
     private fun playWithoutWarnings(station: DataRadioStation) {
@@ -481,6 +484,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
             updateMetadata(station, displayTitle)
             
+            // Widget Update
+            WidgetUpdateHelper.updateAllWidgets(this@PlayerService, station, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
+
             // Fire & Forget: Report click to official API for community ranking
             val app = application as AMARadioApp
             Utils.reportClickToOfficialApi(app.httpClient, station.StationUuid)
@@ -975,7 +981,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         AppEventManager.sendEvent(intent)
 
         // Widget Update
-        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, status == PlayState.Playing || status == PlayState.PrePlaying)
+        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, status == PlayState.Playing || status == PlayState.PrePlaying, getCurrentTrackInfo())
     }
 
     override fun onPlayerWarning(messageId: Int) { 
@@ -1138,7 +1144,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 }
             }
             // Widget Update on track change
-            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, true)
+            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, true, getCurrentTrackInfo())
         }
     }
 

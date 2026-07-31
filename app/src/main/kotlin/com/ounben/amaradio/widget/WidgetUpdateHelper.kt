@@ -27,7 +27,7 @@ object WidgetUpdateHelper {
      * Pushes the current player state and serialized station lists to all widgets.
      * This follows the "Push" model to ensure instant updates and avoid LazyColumn freezing.
      */
-    fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean) {
+    fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean, trackInfo: String? = null) {
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             try {
@@ -53,6 +53,7 @@ object WidgetUpdateHelper {
                             m[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         m[WidgetState.isPlayingKey] = isPlaying
+                        m[WidgetState.currentTrackKey] = trackInfo ?: ""
                         
                         // Dependency trigger
                         val current = m[WidgetState.updateCounterKey] ?: 0
@@ -75,6 +76,7 @@ object WidgetUpdateHelper {
                             m[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         m[WidgetState.isPlayingKey] = isPlaying
+                        m[WidgetState.currentTrackKey] = trackInfo ?: ""
                         
                         // Push full lists
                         m[WidgetState.favoritesJsonKey] = favoritesJson
