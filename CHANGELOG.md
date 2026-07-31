@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.19] - 2026-07-31
+### Added
+- **Jetpack Glance Home Screen Widgets**: Introduced two modern, high-performance widgets for the Android Home Screen.
+    - **AMARadio Compact (4x1)**: Sleek player controls with real-time station info.
+    - **AMARadio Player (4x3)**: Full-featured widget with player controls and a scrollable list of Favorites/History.
+- **Push-Model Sync Architecture**: Implemented a reactive state-push mechanism that updates widget lists in less than 200ms when favorites are added or playback changes.
+- **Live Track Metadata**: Widgets now display real-time song information (Artist - Title) during playback, with an automatic fallback to genre tags when idle.
+- **Themed Professional Previews**: Replaced generic app icons in the widget picker with realistic, adaptive XML-based previews that respect System Light/Dark modes.
+- **Anti-Trampoline Interaction**: Migrated all widget clicks to an explicit broadcast system, eliminating UI lags and "Invisible Activity" hangs found in standard Glance implementations.
+
+### Changed
+- **SQL-First Initialization**: Completely removed the legacy `fallback_stations.json` system. The app now performs an intelligent local SQL query on the first start to provide the most popular stations for the user's specific region.
+- **Optimized UI Responsiveness**: Reduced internal synchronization delays to 150ms for a near-instant feedback loop between the app and the system launcher.
+
 ## [1.18] - 2026-07-30
 ### Added
 - **Dual-Database Architecture**: Implemented a strict separation between the global station catalog (`radio_browser_database.db`) and personal user data (`user_data.db`). This ensures user settings are never lost during global database updates.

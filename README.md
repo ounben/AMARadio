@@ -16,6 +16,10 @@ AMARadio was developed to enable an honest and distraction-free listening experi
     - **Stability (Media-Anchor)**: Specialized logic to prevent session disconnects during station switches on modern Android versions (15+).
     - **HLS/TS Support**: Full compatibility with complex Transport Stream formats.
     - **Optimized UI**: Compact list designs, driver-safe folder hierarchy, and prioritized metadata (Station Name first) for maximum legibility.
+- **Modern Home Screen Widgets**: Feature-rich widgets based on **Jetpack Glance**. 
+    - **Instant Sync**: Real-time updates for Favorites and History using a high-performance Push-model.
+    - **Live Track Info**: Displays current Artist and Song Title directly on the Home Screen.
+    - **Themed Previews**: Professional, adaptive previews in the system widget picker.
 - **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
