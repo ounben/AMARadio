@@ -25,25 +25,24 @@ object WidgetUpdateHelper {
 
     /**
      * Pushes the current player state and serialized station lists to all widgets.
-     * This follows the "Push" model to ensure instant updates.
+     * This follows the "Push" model to ensure instant updates and avoid LazyColumn freezing.
      */
     fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean) {
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             try {
+                // 1. Fetch fresh data from Room
                 val userDb = AMARadioUserDatabase.getDatabase(context)
-                val favorites = userDb.favoriteDao().getAllFavorites().take(15).map { it.toDataStation() }
-                val history = userDb.historyDao().getAllHistory().take(15).map { it.toDataStation() }
+                val favorites = userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
+                val history = userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
 
+                // 2. Serialize to JSON for Glance Preferences
                 val favoritesJson = json.encodeToString(favorites)
                 val historyJson = json.encodeToString(history)
 
-                val smallIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioSmallWidget::class.java)
-                val fullIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioFullWidget::class.java)
-
-                Log.d(TAG, "Updating widgets. Small: ${smallIds.size}, Full: ${fullIds.size}")
-
+                // 3. Update Small Widgets
                 val smallWidget = AMARadioSmallWidget()
+                val smallIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioSmallWidget::class.java)
                 smallIds.forEach { id ->
                     updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
                         val m = prefs.toMutablePreferences()
@@ -54,14 +53,18 @@ object WidgetUpdateHelper {
                             m[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         m[WidgetState.isPlayingKey] = isPlaying
-                        m[WidgetState.favoritesJsonKey] = favoritesJson
-                        m[WidgetState.historyJsonKey] = historyJson
+                        
+                        // Dependency trigger
+                        val current = m[WidgetState.updateCounterKey] ?: 0
+                        m[WidgetState.updateCounterKey] = current + 1
                         m
                     }
                     smallWidget.update(context, id)
                 }
 
+                // 4. Update Full Widgets
                 val fullWidget = AMARadioFullWidget()
+                val fullIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioFullWidget::class.java)
                 fullIds.forEach { id ->
                     updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
                         val m = prefs.toMutablePreferences()
@@ -72,26 +75,32 @@ object WidgetUpdateHelper {
                             m[WidgetState.stationIconUrlKey] = it.IconUrl
                         }
                         m[WidgetState.isPlayingKey] = isPlaying
+                        
+                        // Push full lists
                         m[WidgetState.favoritesJsonKey] = favoritesJson
                         m[WidgetState.historyJsonKey] = historyJson
                         
-                        // Force recomposition
+                        // Dependency trigger for Re-rendering
                         val current = m[WidgetState.updateCounterKey] ?: 0
                         m[WidgetState.updateCounterKey] = current + 1
                         m
                     }
                     fullWidget.update(context, id)
                 }
+                
+                Log.d(TAG, "Push complete: ${smallIds.size} small, ${fullIds.size} full updated.")
             } catch (e: Exception) {
-                Log.e(TAG, "Failed to update widgets", e)
+                Log.e(TAG, "Failed to push widget updates", e)
             }
         }
     }
 
     /**
-     * Refreshes all widgets by fetching fresh data from Room and pushing it to Glance state.
+     * Triggers a push update without changing the currently playing station info.
      */
     fun refreshAllWidgets(context: Context) {
+        // In a real app, you might want to preserve the current station info here,
+        // but for now, we just push the lists.
         updateAllWidgets(context, null, false)
     }
 }

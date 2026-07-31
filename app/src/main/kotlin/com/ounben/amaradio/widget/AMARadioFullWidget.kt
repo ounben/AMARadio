@@ -10,6 +10,7 @@ import androidx.glance.*
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.*
 import androidx.glance.appwidget.action.actionSendBroadcast
+import androidx.glance.appwidget.lazy.*
 import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
@@ -44,10 +45,10 @@ class AMARadioFullWidget : GlanceAppWidget() {
             val currentName = (prefs[WidgetState.stationNameKey] ?: context.getString(R.string.app_name)).toString()
             val currentDetails = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
             
-            // Observe the counter to ensure Glance recomposes
+            // Critical: Observe counter to force instant recomposition on state push
             val counter = prefs[WidgetState.updateCounterKey] ?: 0
 
-            // Deserialize station list from State (Push model)
+            // Deserialize station list from Pushed state
             val jsonStr = if (activeTab == "favorites") {
                 prefs[WidgetState.favoritesJsonKey]
             } else {
@@ -57,7 +58,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
             val stations = try {
                 json.decodeFromString<List<DataRadioStation>>(jsonStr)
             } catch (e: Exception) {
-                Log.e("FullWidget", "Failed to decode stations. JSON: $jsonStr", e)
+                Log.e("FullWidget", "JSON decode error", e)
                 emptyList()
             }
 
@@ -182,15 +183,16 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 )
             }
 
-            // 3. Body (List) - NO LazyColumn to avoid launcher cache freezes. 
-            // Limited to Top 12 items to stay within RemoteViews limits.
-            Column(modifier = GlanceModifier.fillMaxSize()) {
-                stations.forEach { station ->
+            // 3. Body (LazyColumn) - Now stable due to Push Model
+            LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
+                items(items = stations, itemId = { it.StationUuid.hashCode().toLong() }) { station ->
                     StationRow(context, station, station.StationUuid == playingUuid && isPlaying, textColor, secondaryColor, amber)
                 }
                 if (stations.isEmpty()) {
-                    Box(modifier = GlanceModifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
-                        Text(text = "Empty", style = TextStyle(color = secondaryColor, fontSize = 13.sp))
+                    item {
+                        Box(modifier = GlanceModifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
+                            Text(text = "Empty", style = TextStyle(color = secondaryColor, fontSize = 13.sp))
+                        }
                     }
                 }
             }
