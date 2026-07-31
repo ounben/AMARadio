@@ -253,11 +253,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val startActivityIntent = Intent(this, ActivityMain::class.java)
         val sessionActivityPendingIntent = PendingIntent.getActivity(this, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
 
-        // 3. Create MediaSession
-        // We use the player's current internal player as the initial target.
-        // It will be updated via session.setPlayer() in onPlayerCreated once the ForwardingPlayer is ready.
+        // 3. Create MediaSession with a unique ID to avoid IllegalStateException on rapid restarts
+        val sessionId = "AMARadioSession_${System.currentTimeMillis()}"
         val initialPlayer = currentForwardingPlayer ?: radioPlayer?.player!!
         mediaSession = MediaLibrarySession.Builder(this, initialPlayer, MediaSessionCallback(this, amaradioBrowser))
+            .setId(sessionId)
             .setSessionActivity(sessionActivityPendingIntent)
             .setSessionExtras(Bundle().apply { putString("android.media.metadata.ATTRIBUTION_TAG", "player_service") })
             .build()
