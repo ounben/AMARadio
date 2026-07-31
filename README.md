@@ -19,14 +19,14 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 - **Modern Home Screen Widgets**: Feature-rich widgets based on **Jetpack Glance**. 
     - **Instant Sync**: Real-time updates for Favorites and History using a high-performance Push-model.
     - **Live Track Info**: Displays current Artist and Song Title directly on the Home Screen.
-    - **Themed Previews**: Professional, adaptive previews in the system widget picker.
+    - **Professional Previews**: Adaptive PNG previews in the system widget picker.
 - **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
 - **Dynamic UI Scaling**: Custom settings allow for the adjustment of the user interface size from Compact to Extra Large.
 - **Broad Language Support**: Support for over **74 languages**, including a variety of African languages (Afrikaans, Amharic, Swahili, Zulu) with a dedicated in-app language selector.
 - **Modern Design**: Developed with **Jetpack Compose**, featuring seamless support for Dark/Light modes and edge-to-edge system integration.
-- **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, and intelligent connection management.
+- **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, dynamic session management, and intelligent connection management.
 - **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.
 - **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.
 - **Robust Data Resilience**: Features a unique **Dual-Database Architecture** that strictly separates the global radio catalog from personal user data (Favorites, History, Filters). This ensures your personal settings are never lost during global database updates.

@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.20] - 2026-07-31
+### Fixed
+- **Crash Prevention (ActivityNotFoundException)**: Implemented robust safety nets for all external intents. The app no longer crashes if a system component (like a file manager or web browser) is missing or disabled; instead, it provides clear user feedback.
+- **MediaSession Stability**: Resolved a critical `IllegalStateException` ("Session ID must be unique") by implementing dynamic, timestamp-based session IDs. This prevents race conditions during rapid service restarts on specific hardware (e.g., Xiaomi/Redmi).
+
 ## [1.19] - 2026-07-31
 ### Added
 - **Jetpack Glance Home Screen Widgets**: Introduced two modern, high-performance widgets for the Android Home Screen.
