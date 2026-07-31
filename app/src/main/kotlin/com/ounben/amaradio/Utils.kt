@@ -328,6 +328,27 @@ object Utils {
         PlayerServiceUtil.play(station)
     }
 
+    /**
+     * Safely starts an activity and catches ActivityNotFoundException.
+     * Shows a toast to the user if no app can handle the intent.
+     */
+    @JvmStatic
+    fun safeStartActivity(context: Context, intent: Intent, errorResId: Int = R.string.error_no_browser) {
+        try {
+            if (context !is Activity) {
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            context.startActivity(intent)
+        } catch (e: Exception) {
+            Log.e("Utils", "Failed to start activity for intent: ${intent.action}", e)
+            if (context is Activity) {
+                showModernToast(context, errorResId)
+            } else {
+                android.widget.Toast.makeText(context, errorResId, android.widget.Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+
     @JvmStatic
     fun shouldLoadIcons(context: Context): Boolean {
         if (loadIcons != -1) return loadIcons == 1

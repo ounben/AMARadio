@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.preference.PreferenceManager
 import com.google.android.play.core.review.ReviewManagerFactory
+import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 
 class ReviewManager(private val context: Context) {
 
@@ -89,8 +91,13 @@ class ReviewManager(private val context: Context) {
             activity.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, 
                 android.net.Uri.parse("market://details?id=$packageName")))
         } catch (e: Exception) {
-            activity.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, 
-                android.net.Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+            try {
+                activity.startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, 
+                    android.net.Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
+            } catch (e2: Exception) {
+                Log.e(TAG, "Failed to open Play Store or Browser", e2)
+                Utils.showModernToast(activity, R.string.error_no_browser)
+            }
         }
     }
 }

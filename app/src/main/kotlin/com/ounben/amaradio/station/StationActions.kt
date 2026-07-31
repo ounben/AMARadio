@@ -31,7 +31,7 @@ object StationActions {
         if (!TextUtils.isEmpty(station.HomePageUrl)) {
             val stationUrl = station.HomePageUrl.toUri()
             val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
-            activity.startActivity(newIntent)
+            Utils.safeStartActivity(activity, newIntent, R.string.error_no_browser)
         }
     }
 

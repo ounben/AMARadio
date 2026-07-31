@@ -114,20 +114,30 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     private fun triggerSaveM3U() {
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "audio/x-mpegurl"
-            putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+        try {
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "audio/x-mpegurl"
+                putExtra(Intent.EXTRA_TITLE, "playlist.m3u")
+            }
+            saveM3ULauncher.launch(intent)
+        } catch (e: Exception) {
+            Log.e("MAIN", "Failed to launch document creator", e)
+            Utils.showModernToast(this, R.string.error_no_file_manager)
         }
-        saveM3ULauncher.launch(intent)
     }
 
     private fun triggerLoadM3U() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "audio/x-mpegurl"
+        try {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "audio/x-mpegurl"
+            }
+            loadM3ULauncher.launch(intent)
+        } catch (e: Exception) {
+            Log.e("MAIN", "Failed to launch document picker", e)
+            Utils.showModernToast(this, R.string.error_no_file_manager)
         }
-        loadM3ULauncher.launch(intent)
     }
 
     private fun setupBroadcastReceiver() {
