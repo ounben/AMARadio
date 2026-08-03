@@ -67,25 +67,27 @@ class PlayStationTask(
                 return@launch
             }
 
-            // Playlist resolution
+            // Playlist resolution - Offload to IO dispatcher to avoid ANR on body.string()
             if (PlaylistParser.isPlaylist(streamUrl)) {
-                try {
-                    val request = Request.Builder()
-                        .url(streamUrl)
-                        .header("User-Agent", "AMARadio")
-                        .build()
-                    val response = withContext(Dispatchers.IO) { 
-                        AMARadioApp.httpClient.newCall(request).execute() 
-                    }
-                    if (response.isSuccessful) {
-                        val body = response.body.string()
-                        val resolvedUrl = PlaylistParser.parse(streamUrl, body)
-                        if (resolvedUrl != null) {
-                            streamUrl = resolvedUrl
+                val resolvedUrl = withContext(Dispatchers.IO) {
+                    try {
+                        val request = Request.Builder()
+                            .url(streamUrl)
+                            .header("User-Agent", "AMARadio")
+                            .build()
+                        AMARadioApp.httpClient.newCall(request).execute().use { response ->
+                            if (response.isSuccessful) {
+                                val body = response.body?.string().orEmpty()
+                                PlaylistParser.parse(streamUrl, body)
+                            } else null
                         }
+                    } catch (e: Exception) {
+                        Log.e("PLAY", "Playlist resolution failed for $streamUrl", e)
+                        null
                     }
-                } catch (e: Exception) {
-                    Log.e("PLAY", "Playlist resolution failed for $streamUrl", e)
+                }
+                if (resolvedUrl != null) {
+                    streamUrl = resolvedUrl
                 }
             }
 
