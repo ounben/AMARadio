@@ -23,11 +23,33 @@ object WidgetUpdateHelper {
         encodeDefaults = true
     }
 
+    // State memory to throttle redundant updates
+    private data class LastWidgetState(
+        val stationUuid: String?,
+        val isPlaying: Boolean,
+        val trackInfo: String?
+    )
+    private var lastState: LastWidgetState? = null
+
     /**
      * Pushes the current player state and serialized station lists to all widgets.
      * This follows the "Push" model to ensure instant updates and avoid LazyColumn freezing.
      */
     fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean, trackInfo: String? = null) {
+        // Filter out redundant updates (e.g., intermediate buffering states without content change)
+        if (station != null) {
+            val newState = LastWidgetState(station.StationUuid, isPlaying, trackInfo)
+            if (newState == lastState) {
+                // No visible change for the user, skip expensive DB/IPC operations
+                return
+            }
+            lastState = newState
+        } else {
+            // station == null usually means a manual refresh (refreshAllWidgets). 
+            // We force these through to ensure list synchronization.
+            lastState = null 
+        }
+
         val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             try {
