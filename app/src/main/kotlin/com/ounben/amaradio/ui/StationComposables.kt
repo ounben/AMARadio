@@ -9,7 +9,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
@@ -191,7 +193,11 @@ fun StationList(
             modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(stations, key = { it.StationUuid }) { station ->
+            itemsIndexed(
+                items = stations, 
+                key = { index, station -> "${station.StationUuid}_$index" },
+                contentType = { _, _ -> "station" }
+            ) { _, station ->
                 StationGridItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
@@ -203,7 +209,11 @@ fun StationList(
         }
     } else {
         LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-            items(stations, key = { it.StationUuid }) { station ->
+            itemsIndexed(
+                items = stations, 
+                key = { index, station -> "${station.StationUuid}_$index" },
+                contentType = { _, _ -> "station" }
+            ) { _, station ->
                 StationListItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
@@ -243,7 +253,11 @@ fun TrackList(
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(tracks.itemCount) { index ->
+            items(
+                count = tracks.itemCount,
+                key = { index -> tracks.peek(index)?.uid ?: "track_$index" },
+                contentType = { "track" }
+            ) { index ->
                 tracks[index]?.let { track ->
                     TrackListItem(
                         track = track, 
@@ -507,13 +521,21 @@ fun CategoryList(
             modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(8.dp)
         ) {
-            items(categories) { category ->
+            itemsIndexed(
+                items = categories,
+                key = { index, category -> "${category.Name}_$index" },
+                contentType = { _, _ -> "category" }
+            ) { _, category ->
                 CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
             }
         }
     } else {
         LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
-            items(categories) { category ->
+            itemsIndexed(
+                items = categories,
+                key = { index, category -> "${category.Name}_$index" },
+                contentType = { _, _ -> "category" }
+            ) { _, category ->
                 CategoryListItem(category = category, onClick = { onCategoryClick(category) })
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }

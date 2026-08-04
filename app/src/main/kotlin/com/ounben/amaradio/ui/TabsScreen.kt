@@ -140,35 +140,45 @@ fun TabsScreen(
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxSize(),
             beyondViewportPageCount = 0,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
+            key = { index -> 
+                val tab = tabs.getOrNull(index)
+                when (tab) {
+                    is MainTab.Local -> "local"
+                    is MainTab.Filter -> "filter_${tab.id}"
+                    null -> "empty_$index"
+                }
+            }
         ) { pageIndex ->
             if (pageIndex >= tabs.size) return@HorizontalPager
-
-            when (val tab = tabs[pageIndex]) {
-                is MainTab.Local -> {
-                    val stationsViewModel: StationsViewModel = viewModel(key = "local_stations")
-                    StationsScreen(
-                        viewModel = stationsViewModel,
-                        url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true",
-                        onStationClick = onStationClick,
-                        onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                            else app.favouriteManager.add(station)
-                        }
-                    )
-                }
-                is MainTab.Filter -> {
-                    FilterScreen(
-                        viewModel = filterViewModel,
-                        tabIndex = tab.index,
-                        onStationClick = onStationClick,
-                        onFavoriteClick = { station ->
-                            if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                            else app.favouriteManager.add(station)
-                        }
-                    )
+            
+            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                when (val tab = tabs[pageIndex]) {
+                    is MainTab.Local -> {
+                        val stationsViewModel: StationsViewModel = viewModel(key = "local_stations")
+                        StationsScreen(
+                            viewModel = stationsViewModel,
+                            url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true",
+                            onStationClick = onStationClick,
+                            onFavoriteClick = { station ->
+                                if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                else app.favouriteManager.add(station)
+                            }
+                        )
+                    }
+                    is MainTab.Filter -> {
+                        FilterScreen(
+                            viewModel = filterViewModel,
+                            tabIndex = tab.index,
+                            onStationClick = onStationClick,
+                            onFavoriteClick = { station ->
+                                if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                else app.favouriteManager.add(station)
+                            }
+                        )
+                    }
                 }
             }
         }

@@ -68,31 +68,34 @@ fun HistoryScreen(
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.weight(1f),
+            modifier = Modifier.fillMaxSize(),
             beyondViewportPageCount = 0,
-            verticalAlignment = Alignment.Top
+            verticalAlignment = Alignment.Top,
+            key = { page -> page }
         ) { pageIndex ->
-            if (pageIndex == 0) {
-                StationListTemplate(
-                    stations = uiState.filteredStations,
-                    isGrid = uiState.isGrid,
-                    isLoading = false,
-                    error = null,
-                    emptyMessage = stringResource(R.string.searchpreference_no_results),
-                    onRefresh = { /* Local data, already reactive */ },
-                    onStationClick = onStationClick,
-                    onFavoriteClick = onFavoriteClick,
-                    isFavorite = isFavorite,
-                    onDeleteClick = { station ->
-                        app.historyManager.remove(station.StationUuid)
-                    }
-                )
-            } else {
-                TrackList(
-                    tracks = tracks,
-                    onTrackClick = onTrackClick,
-                    onTrackLongClick = { trackWithOptions = it }
-                )
+            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                if (pageIndex == 0) {
+                    StationListTemplate(
+                        stations = uiState.filteredStations,
+                        isGrid = uiState.isGrid,
+                        isLoading = false,
+                        error = null,
+                        emptyMessage = stringResource(R.string.searchpreference_no_results),
+                        onRefresh = { /* Local data, already reactive */ },
+                        onStationClick = onStationClick,
+                        onFavoriteClick = onFavoriteClick,
+                        isFavorite = isFavorite,
+                        onDeleteClick = { station ->
+                            app.historyManager.remove(station.StationUuid)
+                        }
+                    )
+                } else {
+                    TrackList(
+                        tracks = tracks,
+                        onTrackClick = onTrackClick,
+                        onTrackLongClick = { trackWithOptions = it }
+                    )
+                }
             }
         }
     }

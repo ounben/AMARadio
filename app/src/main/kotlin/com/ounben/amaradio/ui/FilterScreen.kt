@@ -576,7 +576,11 @@ fun SearchableSelectionDialog(
                     modifier = Modifier.weight(1f),
                     contentPadding = PaddingValues(vertical = 4.dp)
                 ) {
-                    items(filteredOptions, key = { it.code + it.label + it.count }) { item ->
+                    items(
+                        items = filteredOptions, 
+                        key = { item -> "${item.code}_${item.label}_${item.count}" },
+                        contentType = { "category_item" }
+                    ) { item ->
                         ListItem(
                             headlineContent = { Text(item.label, style = MaterialTheme.typography.bodyLarge) },
                             supportingContent = if (item.count > 0) {
