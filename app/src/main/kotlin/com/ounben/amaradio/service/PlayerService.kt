@@ -364,6 +364,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         
         intent?.let {
             it.action?.let { action ->
+                // Fast-Path: Immediately show/update notification to satisfy foreground service start contract
+                val logicalState = if (pauseReason == PauseReason.USER) PlayState.Paused else (radioPlayer?.playState ?: PlayState.Idle)
+                updateNotification(logicalState)
+
                 when (action) {
                     ACTION_SKIP_TO_PREVIOUS -> previous()
                     ACTION_SKIP_TO_NEXT -> next()

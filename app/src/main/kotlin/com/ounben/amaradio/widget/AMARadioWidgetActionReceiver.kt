@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.PreferencesGlanceStateDefinition
@@ -36,25 +37,41 @@ class AMARadioWidgetActionReceiver : BroadcastReceiver() {
                     this.action = PlayerService.ACTION_PLAY_STATION
                     putExtra(PlayerService.EXTRA_STATION_ID, uuid)
                 }
-                context.startService(serviceIntent)
+                try {
+                    ContextCompat.startForegroundService(context, serviceIntent)
+                } catch (e: Exception) {
+                    Log.e("WidgetReceiver", "Failed to start PlayerService for PLAY_STATION", e)
+                }
             }
             ACTION_TOGGLE_PLAY_PAUSE -> {
                 val serviceIntent = Intent(context, PlayerService::class.java).apply {
                     this.action = PlayerService.ACTION_TOGGLE_PLAY_PAUSE
                 }
-                context.startService(serviceIntent)
+                try {
+                    ContextCompat.startForegroundService(context, serviceIntent)
+                } catch (e: Exception) {
+                    Log.e("WidgetReceiver", "Failed to start PlayerService for TOGGLE", e)
+                }
             }
             ACTION_SKIP_NEXT -> {
                 val serviceIntent = Intent(context, PlayerService::class.java).apply {
                     this.action = PlayerService.ACTION_SKIP_TO_NEXT
                 }
-                context.startService(serviceIntent)
+                try {
+                    ContextCompat.startForegroundService(context, serviceIntent)
+                } catch (e: Exception) {
+                    Log.e("WidgetReceiver", "Failed to start PlayerService for NEXT", e)
+                }
             }
             ACTION_SKIP_PREV -> {
                 val serviceIntent = Intent(context, PlayerService::class.java).apply {
                     this.action = PlayerService.ACTION_SKIP_TO_PREVIOUS
                 }
-                context.startService(serviceIntent)
+                try {
+                    ContextCompat.startForegroundService(context, serviceIntent)
+                } catch (e: Exception) {
+                    Log.e("WidgetReceiver", "Failed to start PlayerService for PREV", e)
+                }
             }
             ACTION_SWITCH_TAB -> {
                 val tab = intent.getStringExtra(EXTRA_TAB) ?: "favorites"
