@@ -58,6 +58,8 @@ import kotlin.time.Duration.Companion.milliseconds
 object Utils {
     private var loadIcons = -1
     private val testing = AtomicBoolean(false)
+    private val clickThrottleMap = java.util.concurrent.ConcurrentHashMap<String, Long>()
+    private const val CLICK_THROTTLE_MS = 5000L
     var isDebug = false
         private set
 
@@ -463,6 +465,15 @@ object Utils {
     @JvmStatic
     fun reportClickToOfficialApi(httpClient: OkHttpClient, stationUuid: String) {
         if (stationUuid.isBlank() || stationUuid == "null") return
+
+        // Throttle check: Prevent duplicate reporting within the same window (e.g., rapid Play/Pause toggle)
+        val now = System.currentTimeMillis()
+        val lastReportTime = clickThrottleMap[stationUuid] ?: 0L
+        if (now - lastReportTime < CLICK_THROTTLE_MS) {
+            // Already reported this station recently, skip to avoid API spamming
+            return
+        }
+        clickThrottleMap[stationUuid] = now
 
         val url = "https://de1.api.radio-browser.info/json/url/$stationUuid"
         if (isDebug) Log.d("CLICK_REPORT", "Sending click to: $url")
