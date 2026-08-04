@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.21] - 2026-08-04
+### Fixed
+- **ANR Prevention (Network I/O)**: Resolved a critical Main-thread block in `PlayStationTask` by offloading network response processing and stream reading to the `Dispatchers.IO` background thread.
+- **Widget Performance Optimization**: Hardened the `WidgetUpdateHelper` with a smart state-filtering mechanism. This prevents redundant "Update Storms" and potential system drosseling while maintaining 100% data consistency.
+
 ## [1.20] - 2026-07-31
 ### Fixed
 - **Crash Prevention (ActivityNotFoundException)**: Implemented robust safety nets for all external intents. The app no longer crashes if a system component (like a file manager or web browser) is missing or disabled; instead, it provides clear user feedback.
