@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.22] - 2026-08-04
+### Fixed
+- **Crash Prevention (Widget Background Start)**: Resolved a `BackgroundServiceStartNotAllowedException` that occurred when starting playback from the home screen widget after the app had been in the background for a long time. The app now uses modern foreground service initialization for all widget actions.
+- **Layout Stability (120Hz/Android 16)**: Fixed a critical `IllegalArgumentException` in the subcomposition layer. Optimized lazy lists and pagers with unique keys and explicit content types to ensure smooth performance on high-refresh-rate devices.
+- **API Traffic Throttling**: Implemented a 5-second "cooldown" for station click reporting. This prevents duplicate network calls and protects community API resources while maintaining accurate station rankings.
+
 ## [1.21] - 2026-08-04
 ### Fixed
 - **ANR Prevention (Network I/O)**: Resolved a critical Main-thread block in `PlayStationTask` by offloading network response processing and stream reading to the `Dispatchers.IO` background thread.

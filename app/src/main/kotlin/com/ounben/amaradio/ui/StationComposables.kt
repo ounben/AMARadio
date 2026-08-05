@@ -255,7 +255,10 @@ fun TrackList(
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(
                 count = tracks.itemCount,
-                key = { index -> tracks.peek(index)?.uid ?: "track_$index" },
+                key = { index -> 
+                    val track = tracks.peek(index)
+                    if (track != null) "${track.uid}_$index" else "placeholder_$index"
+                },
                 contentType = { "track" }
             ) { index ->
                 tracks[index]?.let { track ->
