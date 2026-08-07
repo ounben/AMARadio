@@ -42,9 +42,14 @@ object Media3Utils {
             .setIsBrowsable(false)
             .setIsPlayable(true)
             
-        // Use the IconProvider URI for the main artwork (Binder-safe)
         val artworkUri = StationIconProvider.getIconUri(station.StationUuid, station.Name, station.IconUrl)
-        builder.setArtworkUri(artworkUri)
+        
+        // COMPROMISE: If we have a bitmap, we skip setting the URI for the main builder.
+        // This prevents external controllers from trying to resolve the ContentProvider
+        // if they already received the direct artwork data below.
+        if (bitmap == null) {
+            builder.setArtworkUri(artworkUri)
+        }
 
         // Add extras for legacy Bluetooth and AA hints
         val extras = Bundle().apply {
@@ -54,7 +59,10 @@ object Media3Utils {
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, stationName)
             putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
             putInt("androidx.media.utils.extras.MEDIA_TYPE", 1)   // Music
-            putString("android.media.metadata.DISPLAY_ICON_URI", artworkUri.toString())
+            
+            if (bitmap == null) {
+                putString("android.media.metadata.DISPLAY_ICON_URI", artworkUri.toString())
+            }
         }
         
         // Only attach raw data if it's small or we really have no URI choice

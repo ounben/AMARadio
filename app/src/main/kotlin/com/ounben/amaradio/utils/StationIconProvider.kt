@@ -7,11 +7,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
-import androidx.core.graphics.drawable.toBitmap
-import coil.imageLoader
-import coil.request.ImageRequest
-import coil.request.SuccessResult
-import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 
@@ -40,7 +35,6 @@ class StationIconProvider : ContentProvider() {
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
         val uuid = uri.lastPathSegment ?: return null
         val name = uri.getQueryParameter("name") ?: "Radio"
-        val remoteUrl = uri.getQueryParameter("url")
         
         val cacheDir = context?.cacheDir ?: return null
         val iconDir = File(cacheDir, "station_icons").apply { if (!exists()) mkdirs() }
@@ -51,46 +45,17 @@ class StationIconProvider : ContentProvider() {
             return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
         }
 
-        // 2. PROACTIVE DOWNLOAD: If not in cache but we have a URL, try downloading it.
-        // We use Coil to benefit from its own disk cache and image processing.
-        if (!remoteUrl.isNullOrBlank() && remoteUrl != "null") {
-            try {
-                val success = runBlocking {
-                    try {
-                        val request = ImageRequest.Builder(context!!)
-                            .data(remoteUrl)
-                            .size(256, 256)
-                            .allowHardware(false)
-                            .build()
-                        val result = context!!.imageLoader.execute(request)
-                        if (result is SuccessResult) {
-                            val bitmap = result.drawable.toBitmap(256, 256, Bitmap.Config.RGB_565)
-                            FileOutputStream(iconFile).use { out ->
-                                bitmap.compress(Bitmap.CompressFormat.JPEG, 85, out)
-                            }
-                            true
-                        } else false
-                    } catch (e: Exception) {
-                        Log.e("IconProvider", "Coil download failed for $uuid", e)
-                        false
-                    }
-                }
-                if (success) return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
-            } catch (e: Exception) {
-                Log.e("IconProvider", "Proactive download handling failed for $uuid", e)
-            }
-        }
-
-        // 3. Fallback: Generate placeholder immediately if download failed or no URL.
-        try {
+        // 2. No Network in Provider: Synchronously generate placeholder to prevent IPC timeouts.
+        // Download of real icons is handled asynchronously by PlayerService.
+        return try {
             val bitmap = StationPlaceholderUtils.createPlaceholderBitmap(name, uuid, size = 256)
             FileOutputStream(iconFile).use { out ->
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
             }
-            return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
+            ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
         } catch (e: Exception) {
             Log.e("IconProvider", "Failed to serve icon for $uuid", e)
-            return null
+            null
         }
     }
 
