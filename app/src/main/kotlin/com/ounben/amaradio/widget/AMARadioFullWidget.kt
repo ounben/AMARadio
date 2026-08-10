@@ -38,6 +38,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
             val prefs = currentState<Preferences>()
+            val activeTab = (prefs[WidgetState.activeTabKey] ?: "favorites").toString()
             val playingUuid = (prefs[WidgetState.stationUuidKey] ?: "").toString()
             val playingIconUrl = (prefs[WidgetState.stationIconUrlKey] ?: "").toString()
             val isPlaying = prefs[WidgetState.isPlayingKey] ?: false
@@ -45,11 +46,14 @@ class AMARadioFullWidget : GlanceAppWidget() {
             val currentDetails = (prefs[WidgetState.stationDetailsKey] ?: "").toString()
             val currentTrack = (prefs[WidgetState.currentTrackKey] ?: "").toString()
             
-            // Critical: Observe counter to force instant recomposition on state push from SQL
             val counter = prefs[WidgetState.updateCounterKey] ?: 0
 
-            // Deserialize favorites list from Pushed state (updated automatically via Room Flow)
-            val jsonStr = prefs[WidgetState.favoritesJsonKey] ?: "[]"
+            // Choose the correct JSON list based on active tab
+            val jsonStr = if (activeTab == "favorites") {
+                prefs[WidgetState.favoritesJsonKey]
+            } else {
+                prefs[WidgetState.historyJsonKey]
+            } ?: "[]"
 
             val stations = try {
                 json.decodeFromString<List<DataRadioStation>>(jsonStr)
@@ -67,6 +71,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
                     playingUuid = playingUuid,
                     playingIconUrl = playingIconUrl,
                     isPlaying = isPlaying,
+                    activeTab = activeTab,
                     stations = stations
                 )
             }
@@ -82,6 +87,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
         playingUuid: String,
         playingIconUrl: String,
         isPlaying: Boolean,
+        activeTab: String,
         stations: List<DataRadioStation>
     ) {
         val backgroundColor = ColorProvider(R.color.widget_bg)
@@ -150,15 +156,37 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 }
             }
 
-            // 2. Title "Favoriten"
-            Box(modifier = GlanceModifier.fillMaxWidth().height(32.dp).background(surfaceVariantColor).padding(horizontal = 12.dp), contentAlignment = Alignment.CenterStart) {
-                Text(
-                    text = context.getString(R.string.nav_item_starred).uppercase(),
-                    style = TextStyle(color = amber, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+            // 2. Tab Bar
+            Row(modifier = GlanceModifier.fillMaxWidth().height(40.dp).background(surfaceVariantColor)) {
+                TabItem(
+                    label = context.getString(R.string.nav_item_starred),
+                    isActive = activeTab == "favorites",
+                    modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
+                    onClick = { 
+                        actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
+                            action = AMARadioWidgetActionReceiver.ACTION_SWITCH_TAB
+                            putExtra(AMARadioWidgetActionReceiver.EXTRA_TAB, "favorites")
+                        })
+                    },
+                    activeColor = amber,
+                    inactiveColor = secondaryColor
+                )
+                TabItem(
+                    label = context.getString(R.string.nav_item_history),
+                    isActive = activeTab == "history",
+                    modifier = GlanceModifier.defaultWeight().fillMaxHeight(),
+                    onClick = { 
+                        actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
+                            action = AMARadioWidgetActionReceiver.ACTION_SWITCH_TAB
+                            putExtra(AMARadioWidgetActionReceiver.EXTRA_TAB, "history")
+                        })
+                    },
+                    activeColor = amber,
+                    inactiveColor = secondaryColor
                 )
             }
 
-            // 3. Body (LazyColumn) - SQL backed Favorites
+            // 3. Body (LazyColumn) - Now dynamic based on tab
             LazyColumn(modifier = GlanceModifier.fillMaxSize()) {
                 items(items = stations, itemId = { it.StationUuid.hashCode().toLong() }) { station ->
                     StationRow(context, station, station.StationUuid == playingUuid && isPlaying, textColor, secondaryColor, amber)
@@ -166,9 +194,31 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 if (stations.isEmpty()) {
                     item {
                         Box(modifier = GlanceModifier.fillMaxWidth().padding(32.dp), contentAlignment = Alignment.Center) {
-                            Text(text = "Keine Favoriten vorhanden", style = TextStyle(color = secondaryColor, fontSize = 13.sp))
+                            Text(
+                                text = context.getString(R.string.searchpreference_no_results),
+                                style = TextStyle(color = secondaryColor, fontSize = 13.sp)
+                            )
                         }
                     }
+                }
+            }
+        }
+    }
+
+    @Composable
+    private fun TabItem(label: String, isActive: Boolean, modifier: GlanceModifier, onClick: () -> Action, activeColor: ColorProvider, inactiveColor: ColorProvider) {
+        Box(modifier = modifier.clickable(onClick()), contentAlignment = Alignment.Center) {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    text = label.uppercase(),
+                    style = TextStyle(
+                        color = if (isActive) activeColor else inactiveColor,
+                        fontSize = 12.sp,
+                        fontWeight = if (isActive) FontWeight.Bold else FontWeight.Normal
+                    )
+                )
+                if (isActive) {
+                    Spacer(modifier = GlanceModifier.height(2.dp).width(40.dp).background(activeColor))
                 }
             }
         }
