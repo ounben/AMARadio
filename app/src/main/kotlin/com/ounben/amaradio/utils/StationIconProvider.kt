@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
+import coil.imageLoader
 import java.io.File
 import java.io.FileOutputStream
 
@@ -33,29 +34,51 @@ class StationIconProvider : ContentProvider() {
     override fun onCreate(): Boolean = true
 
     override fun openFile(uri: Uri, mode: String): ParcelFileDescriptor? {
-        val uuid = uri.lastPathSegment ?: return null
+        val stationUuid = uri.lastPathSegment ?: return null
         val name = uri.getQueryParameter("name") ?: "Radio"
+        val remoteUrl = uri.getQueryParameter("url")
         
-        val cacheDir = context?.cacheDir ?: return null
-        val iconDir = File(cacheDir, "station_icons").apply { if (!exists()) mkdirs() }
-        val iconFile = File(iconDir, "$uuid.jpg")
+        val ctx = context ?: return null
+        
+        // 1. Suche im Master-Ordner station_icons
+        val iconDir = File(ctx.cacheDir, "station_icons")
+        val iconFile = File(iconDir, "$stationUuid.jpg")
 
-        // 1. If we have the real logo in cache, serve it immediately.
-        if (iconFile.exists() && iconFile.length() > 0) {
+        // Nur zurückgeben, wenn die Datei existiert und KEIN kleiner Platzhalter ist
+        if (iconFile.exists() && iconFile.length() > 2048) { // Echte Bilder sind meist > 2KB
             return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
         }
 
-        // 2. No Network in Provider: Synchronously generate placeholder to prevent IPC timeouts.
-        // Download of real icons is handled asynchronously by PlayerService.
-        return try {
-            val bitmap = StationPlaceholderUtils.createPlaceholderBitmap(name, uuid, size = 256)
-            FileOutputStream(iconFile).use { out ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+        // 2. Fallback: Suche in Coils internem Cache (wo die App-Liste ihre Bilder speichert)
+        if (!remoteUrl.isNullOrBlank() && remoteUrl != "null") {
+            try {
+                // Wir schauen direkt in den Coil Disk Cache. Das ist pfeilschnell und ohne Netzwerk.
+                val snapshot = ctx.imageLoader.diskCache?.get(remoteUrl)
+                snapshot?.use {
+                    val coilFile = it.data.toFile()
+                    if (coilFile.exists()) {
+                        if (!iconDir.exists()) iconDir.mkdirs()
+                        // Kopiere das echte Bild in unseren station_icons Ordner
+                        coilFile.copyTo(iconFile, overwrite = true)
+                        return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("IconProvider", "Coil cache lookup failed for $stationUuid", e)
             }
-            ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
-        } catch (e: Exception) {
-            Log.e("IconProvider", "Failed to serve icon for $uuid", e)
-            null
+        }
+
+        // 3. Letzter Ausweg: Platzhalter als RAM-Stream (KEINE Datei schreiben!)
+        // So verhindern wir, dass wir den Pfad für spätere echte Bilder mit einem Platzhalter-File blockieren.
+        return openPipeHelper(uri, "image/jpeg", null, null) { output, _, _, _, _ ->
+            try {
+                val bitmap = StationPlaceholderUtils.createPlaceholderBitmap(name, stationUuid, size = 256)
+                FileOutputStream(output.fileDescriptor).use { out ->
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
+                }
+            } catch (e: Exception) {
+                Log.e("IconProvider", "Pipe transfer failed for $stationUuid", e)
+            }
         }
     }
 

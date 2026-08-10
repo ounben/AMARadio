@@ -21,6 +21,7 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
+import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,7 +50,12 @@ import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.EmojiUtils
 import com.ounben.amaradio.utils.StationIconProvider
 import com.ounben.amaradio.utils.StationPlaceholderUtils
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
+import java.io.FileOutputStream
+import android.util.Log
 
 @Composable
 fun StationIcon(
@@ -78,14 +84,32 @@ fun StationIcon(
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
 
-    val imageRequest = remember(finalIconUri) {
+    val imageRequest = remember(finalIconUri, stationUuid) {
         ImageRequest.Builder(context)
             .data(finalIconUri)
-            .size(256, 256) // Downscale huge images (like Wikimedia) to save memory
-            .allowHardware(false) // Better compatibility for various UI components
+            .size(512, 512) // Nutze 512x512 für hohe Qualität im Widget
+            .allowHardware(false)
             .crossfade(true)
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .memoryCachePolicy(CachePolicy.ENABLED)
+            .listener(
+                onSuccess = { _, result ->
+                    // AUTOMATISCHES SPEICHERN: Wenn das Bild am Handy geladen wurde,
+                    // speichern wir es für das Widget/Android Auto im station_icons Ordner ab.
+                    val iconDir = File(context.cacheDir, "station_icons")
+                    val iconFile = File(iconDir, "$stationUuid.jpg")
+                    if (!iconFile.exists()) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            try {
+                                if (!iconDir.exists()) iconDir.mkdirs()
+                                val bitmap = result.drawable.toBitmap(512, 512, android.graphics.Bitmap.Config.RGB_565)
+                                FileOutputStream(iconFile).use { out ->
+                                    bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, out)
+                                }
+                                Log.d("StationIcon", "Bild automatisch gespeichert für Widget: $stationUuid")
+                            } catch (e: Exception) { /* ignore */ }
+                        }
+                    }
+                }
+            )
             .build()
     }
 

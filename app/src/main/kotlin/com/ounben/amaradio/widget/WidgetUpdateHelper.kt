@@ -11,6 +11,8 @@ import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -23,7 +25,26 @@ object WidgetUpdateHelper {
         encodeDefaults = true
     }
 
-    // State memory to throttle redundant updates
+    private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+
+    /**
+     * Starts a reactive listener that monitors Room database changes 
+     * and automatically pushes the fresh Favorites list to the widgets.
+     */
+    @OptIn(kotlinx.coroutines.FlowPreview::class)
+    fun startDatabaseObservation(context: Context) {
+        val userDb = AMARadioUserDatabase.getDatabase(context)
+        
+        scope.launch {
+            userDb.favoriteDao().getAllFavoritesFlow()
+                .debounce(1000) // Settling time for rapid changes
+                .collect {
+                    Log.d(TAG, "Favorites changed in SQL -> Updating Widgets")
+                    refreshAllWidgets(context)
+                }
+        }
+    }
+
     private data class LastWidgetState(
         val stationUuid: String?,
         val isPlaying: Boolean,
@@ -50,7 +71,6 @@ object WidgetUpdateHelper {
             lastState = null 
         }
 
-        val scope = CoroutineScope(Dispatchers.IO)
         scope.launch {
             try {
                 // 1. Fetch fresh data from Room

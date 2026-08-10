@@ -43,3 +43,5 @@ build/*
 
 *.aab
 /app/src/main/assets/databases/
+app/src/main/assets/databases/radio_browser_database.db
+

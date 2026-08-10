@@ -119,7 +119,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             audioLooper = looper
             audioDispatcher = Handler(looper).asCoroutineDispatcher("AudioThread")
 
-            // Prime Widgets
+            // Prime Widgets and start reactive SQL observation
+            com.ounben.amaradio.widget.WidgetUpdateHelper.startDatabaseObservation(this)
             com.ounben.amaradio.widget.WidgetUpdateHelper.updateAllWidgets(this, null, false)
 
             Log.d("APP", "onCreate finished")
