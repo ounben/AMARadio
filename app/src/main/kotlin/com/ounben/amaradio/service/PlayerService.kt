@@ -569,6 +569,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         clearTimer()
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopMeteredConnectionListener()
+        // WICHTIG: Erst alle Daten im Service löschen, dann das Widget ZWINGEN, alles zu leeren.
         WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, false, null)
     }
 

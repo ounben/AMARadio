@@ -16,6 +16,8 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -28,20 +30,20 @@ object WidgetUpdateHelper {
     }
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    private val updateMutex = Mutex()
 
     @OptIn(kotlinx.coroutines.FlowPreview::class)
     fun startDatabaseObservation(context: Context) {
         val userDb = AMARadioUserDatabase.getDatabase(context)
         
         scope.launch {
-            // Combine both flows to update widgets whenever favorites OR history change
             combine(
                 userDb.favoriteDao().getAllFavoritesFlow(),
                 userDb.historyDao().getAllHistoryFlow()
             ) { _, _ -> }
-            .debounce(1000) // Settling time for rapid changes
+            .debounce(1000) 
             .collect {
-                Log.d(TAG, "SQL Database changed (Fav/Hist) -> Updating Widgets")
+                Log.d(TAG, "SQL Database changed -> Updating Widgets")
                 refreshAllWidgets(context)
             }
         }
@@ -49,92 +51,77 @@ object WidgetUpdateHelper {
 
     fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean, trackInfo: String? = null) {
         scope.launch {
-            try {
-                // 1. Fetch fresh data from Room
-                val userDb = AMARadioUserDatabase.getDatabase(context)
-                val favorites = userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
-                val history = userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
+            updateMutex.withLock {
+                try {
+                    // 1. Fetch fresh data from Room
+                    val userDb = AMARadioUserDatabase.getDatabase(context)
+                    val favorites = userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
+                    val history = userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
 
-                // 2. Serialize to JSON for Glance Preferences
-                val favoritesJson = json.encodeToString(favorites)
-                val historyJson = json.encodeToString(history)
+                    // 2. Serialize to JSON for Glance Preferences
+                    val favoritesJson = json.encodeToString(favorites)
+                    val historyJson = json.encodeToString(history)
 
-                // 3. Update Small Widgets
-                val smallWidget = AMARadioSmallWidget()
-                val smallIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioSmallWidget::class.java)
-                smallIds.forEach { id ->
-                    updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
-                        val m = prefs.toMutablePreferences()
-                        station?.let {
-                            m[WidgetState.stationNameKey] = it.Name
-                            m[WidgetState.stationDetailsKey] = it.TagsAll
-                            m[WidgetState.stationUuidKey] = it.StationUuid
-                            m[WidgetState.stationIconUrlKey] = it.IconUrl
+                    val manager = GlanceAppWidgetManager(context)
+
+                    // 3. Update Small Widgets
+                    val smallWidget = AMARadioSmallWidget()
+                    val smallIds = manager.getGlanceIds(AMARadioSmallWidget::class.java)
+                    smallIds.forEach { id ->
+                        updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
+                            val m = prefs.toMutablePreferences()
+                            station?.let {
+                                m[WidgetState.stationNameKey] = it.Name
+                                m[WidgetState.stationDetailsKey] = it.TagsAll
+                                m[WidgetState.stationUuidKey] = it.StationUuid
+                                m[WidgetState.stationIconUrlKey] = it.IconUrl
+                            }
+                            m[WidgetState.isPlayingKey] = isPlaying
+                            m[WidgetState.currentTrackKey] = trackInfo ?: ""
+                            
+                            val current = m[WidgetState.updateCounterKey] ?: 0
+                            m[WidgetState.updateCounterKey] = current + 1
+                            m
                         }
-                        m[WidgetState.isPlayingKey] = isPlaying
-                        m[WidgetState.currentTrackKey] = trackInfo ?: ""
-                        
-                        // Dependency trigger
-                        val current = m[WidgetState.updateCounterKey] ?: 0
-                        m[WidgetState.updateCounterKey] = current + 1
-                        m
+                        smallWidget.update(context, id)
                     }
-                    smallWidget.update(context, id)
-                }
 
-                // 4. Update Full Widgets
-                val fullWidget = AMARadioFullWidget()
-                val fullIds = GlanceAppWidgetManager(context).getGlanceIds(AMARadioFullWidget::class.java)
-                fullIds.forEach { id ->
-                    updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
-                        val m = prefs.toMutablePreferences()
-                        station?.let {
-                            m[WidgetState.stationNameKey] = it.Name
-                            m[WidgetState.stationDetailsKey] = it.TagsAll
-                            m[WidgetState.stationUuidKey] = it.StationUuid
-                            m[WidgetState.stationIconUrlKey] = it.IconUrl
+                    // 4. Update Full Widgets
+                    val fullWidget = AMARadioFullWidget()
+                    val fullIds = manager.getGlanceIds(AMARadioFullWidget::class.java)
+                    fullIds.forEach { id ->
+                        updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
+                            val m = prefs.toMutablePreferences()
+                            station?.let {
+                                m[WidgetState.stationNameKey] = it.Name
+                                m[WidgetState.stationDetailsKey] = it.TagsAll
+                                m[WidgetState.stationUuidKey] = it.StationUuid
+                                m[WidgetState.stationIconUrlKey] = it.IconUrl
+                            }
+                            m[WidgetState.isPlayingKey] = isPlaying
+                            m[WidgetState.currentTrackKey] = trackInfo ?: ""
+                            
+                            m[WidgetState.favoritesJsonKey] = favoritesJson
+                            m[WidgetState.historyJsonKey] = historyJson
+                            
+                            val current = m[WidgetState.updateCounterKey] ?: 0
+                            m[WidgetState.updateCounterKey] = current + 1
+                            m
                         }
-                        m[WidgetState.isPlayingKey] = isPlaying
-                        m[WidgetState.currentTrackKey] = trackInfo ?: ""
-                        
-                        // Push full lists
-                        m[WidgetState.favoritesJsonKey] = favoritesJson
-                        m[WidgetState.historyJsonKey] = historyJson
-                        
-                        // Dependency trigger for Re-rendering
-                        val current = m[WidgetState.updateCounterKey] ?: 0
-                        m[WidgetState.updateCounterKey] = current + 1
-                        m
+                        fullWidget.update(context, id)
                     }
-                    fullWidget.update(context, id)
+                } catch (e: Exception) {
+                    Log.e(TAG, "Update failed", e)
                 }
-                
-                Log.d(TAG, "Push complete: ${smallIds.size} small, ${fullIds.size} full updated.")
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to push widget updates", e)
             }
         }
     }
 
-    /**
-     * Triggers a push update while preserving the current player state from the service.
-     */
     fun refreshAllWidgets(context: Context) {
         val currentStation = PlayerServiceUtil.getCurrentStation()
         val isPlaying = PlayerServiceUtil.isPlaying()
-        
-        // Construct track info from live metadata if available
         val live = PlayerServiceUtil.getMetadataLive()
-        val trackInfo = if (live.track.isNotEmpty() && live.artist.isNotEmpty()) {
-            "${live.artist} - ${live.track}"
-        } else if (live.track.isNotEmpty()) {
-            live.track
-        } else if (live.title.isNotEmpty()) {
-            live.title
-        } else {
-            null
-        }
-
+        val trackInfo = if (live.track.isNotEmpty()) live.track else if (live.title.isNotEmpty()) live.title else null
         updateAllWidgets(context, currentStation, isPlaying, trackInfo)
     }
 }

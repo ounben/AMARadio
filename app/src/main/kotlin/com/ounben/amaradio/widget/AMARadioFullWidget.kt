@@ -10,6 +10,7 @@ import androidx.glance.*
 import androidx.glance.action.clickable
 import androidx.glance.appwidget.*
 import androidx.glance.appwidget.action.actionSendBroadcast
+import androidx.glance.appwidget.action.actionStartService
 import androidx.glance.appwidget.lazy.*
 import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
@@ -23,6 +24,7 @@ import androidx.glance.action.actionStartActivity
 import androidx.datastore.preferences.core.Preferences
 import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.R
+import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.serialization.json.Json
 
@@ -126,9 +128,9 @@ class AMARadioFullWidget : GlanceAppWidget() {
                         provider = ImageProvider(R.drawable.ic_skip_previous_24dp),
                         contentDescription = "Prev",
                         modifier = GlanceModifier.size(32.dp).padding(4.dp).clickable(
-                            actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
-                                action = AMARadioWidgetActionReceiver.ACTION_SKIP_PREV
-                            })
+                            actionStartService(Intent(context, PlayerService::class.java).apply {
+                                action = PlayerService.ACTION_SKIP_TO_PREVIOUS
+                            }, isForegroundService = true)
                         ),
                         colorFilter = ColorFilter.tint(textColor)
                     )
@@ -137,9 +139,9 @@ class AMARadioFullWidget : GlanceAppWidget() {
                         provider = ImageProvider(playIcon),
                         contentDescription = "Play/Pause",
                         modifier = GlanceModifier.size(36.dp).padding(4.dp).clickable(
-                            actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
-                                action = AMARadioWidgetActionReceiver.ACTION_TOGGLE_PLAY_PAUSE
-                            })
+                            actionStartService(Intent(context, PlayerService::class.java).apply {
+                                action = PlayerService.ACTION_TOGGLE_PLAY_PAUSE
+                            }, isForegroundService = true)
                         ),
                         colorFilter = ColorFilter.tint(amber)
                     )
@@ -147,9 +149,9 @@ class AMARadioFullWidget : GlanceAppWidget() {
                         provider = ImageProvider(R.drawable.ic_skip_next_24dp),
                         contentDescription = "Next",
                         modifier = GlanceModifier.size(32.dp).padding(4.dp).clickable(
-                            actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
-                                action = AMARadioWidgetActionReceiver.ACTION_SKIP_NEXT
-                            })
+                            actionStartService(Intent(context, PlayerService::class.java).apply {
+                                action = PlayerService.ACTION_SKIP_TO_NEXT
+                            }, isForegroundService = true)
                         ),
                         colorFilter = ColorFilter.tint(textColor)
                     )
@@ -231,10 +233,10 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp, vertical = 4.dp)
                 .clickable(
-                    actionSendBroadcast(Intent(context, AMARadioWidgetActionReceiver::class.java).apply {
-                        action = AMARadioWidgetActionReceiver.ACTION_PLAY_STATION
-                        putExtra(AMARadioWidgetActionReceiver.EXTRA_STATION_UUID, station.StationUuid)
-                    })
+                    actionStartService(Intent(context, PlayerService::class.java).apply {
+                        action = PlayerService.ACTION_PLAY_STATION
+                        putExtra(PlayerService.EXTRA_STATION_ID, station.StationUuid)
+                    }, isForegroundService = true)
                 ),
             verticalAlignment = Alignment.CenterVertically
         ) {
