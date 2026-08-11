@@ -247,7 +247,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         // 1. Initialize RadioPlayer
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
 
-        amaradioBrowser = AMARadioBrowser(application as? AMARadioApp ?: (applicationContext as AMARadioApp))
+        amaradioBrowser = AMARadioBrowser(applicationContext as AMARadioApp)
 
         // 2. Setup Session Activity
         val startActivityIntent = Intent(this, ActivityMain::class.java)
@@ -267,22 +267,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val initialStation = app.historyManager.first ?: app.favouriteManager.first
         if (initialStation != null) {
             setStation(initialStation)
-        } else {
-            // SQL Fallback: Load top station from local region if history is empty
-            serviceScope.launch(Dispatchers.IO) {
-                val countryCode = com.ounben.amaradio.Utils.getCountryCode(this@PlayerService) ?: "DE"
-                val db = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(this@PlayerService)
-                val topStation = db.stationDao().getStationsByCountryCode(countryCode.uppercase()).firstOrNull()
-                
-                topStation?.let { entity ->
-                    withContext(Dispatchers.Main) {
-                        setStation(entity.toDataStation())
-                    }
-                }
-            }
         }
 
-        trackHistoryRepository = (application as AMARadioApp).trackHistoryRepository
+        trackHistoryRepository = app.trackHistoryRepository
         val headsetConnectionFilter = IntentFilter().apply {
             addAction(Intent.ACTION_HEADSET_PLUG)
             addAction(BluetoothHeadset.ACTION_CONNECTION_STATE_CHANGED)
@@ -297,12 +284,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     val stationId = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_ID)
                     if (stationId != null) {
                         val station = amaradioBrowser.getStationById(stationId)
-                                    ?: (application as AMARadioApp).favouriteManager.getById(stationId)
-                                    ?: (application as AMARadioApp).historyManager.getById(stationId)
+                                    ?: app.favouriteManager.getById(stationId)
+                                    ?: app.historyManager.getById(stationId)
                         
                         station?.let { playWithoutWarnings(it) }
                     }
-                } else if (intent.action == "com.ounben.amaradio.TOGGLE_PLAY_PAUSE") {
+                } else if (intent.action == ACTION_TOGGLE_PLAY_PAUSE) {
                     if (radioPlayer?.isPlaying() == true) pause(PauseReason.USER) else resume()
                 }
             }
@@ -462,6 +449,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     player.playlistMetadata = metadata
                     
                     // 2. Update the MediaItem's metadata (Critical for Android Auto)
+                    // Use item index directly as currentMediaItem can be null in STATE_IDLE
                     val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
                     if (player.mediaItemCount > itemIndex) {
                         val currentItem = player.getMediaItemAt(itemIndex)
@@ -476,8 +464,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 mediaSession?.setCustomLayout(listOf())
                 updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
                 
-                // Widget Update
-                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false)
+                Log.d(tag, "Station set: ${targetStation.Name}")
+                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
         }
     }
@@ -488,7 +476,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
             updateMetadata(station, displayTitle)
             
-            // Widget Update
+            Log.d(tag, "Playing station: ${station.Name}")
             WidgetUpdateHelper.updateAllWidgets(this@PlayerService, station, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
 
             // Fire & Forget: Report click to official API for community ranking
@@ -581,6 +569,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         clearTimer()
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopMeteredConnectionListener()
+        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, false, null)
     }
 
     private fun acquireAudioFocus(): Int {
@@ -984,8 +973,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val intent = Intent(PLAYER_SERVICE_STATE_CHANGE).apply { putExtra(PLAYER_SERVICE_STATE_EXTRA_KEY, status as Parcelable) }
         AppEventManager.sendEvent(intent)
 
-        // Widget Update
-        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, status == PlayState.Playing || status == PlayState.PrePlaying, getCurrentTrackInfo())
+        // Widget Update: Erkennt jetzt auch das Puffern (PrePlaying) als "Aktiv"
+        val isWidgetPlaying = (status == PlayState.Playing || status == PlayState.PrePlaying)
+        WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, isWidgetPlaying, getCurrentTrackInfo())
     }
 
     override fun onPlayerWarning(messageId: Int) { 
@@ -1004,8 +994,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             override fun stop() { this@PlayerService.stop() }
             override fun seekToNext() { this@PlayerService.next() }
             override fun seekToPrevious() { this@PlayerService.previous() }
-            override fun seekToNextMediaItem() { this@PlayerService.next() }
-            override fun seekToPreviousMediaItem() { this@PlayerService.previous() }
             override fun hasNextMediaItem(): Boolean = true
             override fun hasPreviousMediaItem(): Boolean = true
             override fun prepare() { 
@@ -1125,6 +1113,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val oldLiveInfo = this.liveInfo
         this.liveInfo = liveInfo
         if (oldLiveInfo.title != this.liveInfo.title) {
+            Log.d(tag, "New metadata: ${liveInfo.title}")
             sendBroadCast(PLAYER_SERVICE_META_UPDATE)
             updateMetadata() // Trigger metadata sync on live info change
             val currentTime = Calendar.getInstance().time
@@ -1147,8 +1136,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     trackHistoryRepository?.insert(newEntry)
                 }
             }
-            // Widget Update on track change
-            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, true, getCurrentTrackInfo())
+            // Widget Update bei Track-Wechsel
+            WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
         }
     }
 

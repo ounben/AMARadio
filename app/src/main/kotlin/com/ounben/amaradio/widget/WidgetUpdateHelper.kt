@@ -8,6 +8,7 @@ import androidx.glance.state.PreferencesGlanceStateDefinition
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.toDataStation
+import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -46,32 +47,7 @@ object WidgetUpdateHelper {
         }
     }
 
-    private data class LastWidgetState(
-        val stationUuid: String?,
-        val isPlaying: Boolean,
-        val trackInfo: String?
-    )
-    private var lastState: LastWidgetState? = null
-
-    /**
-     * Pushes the current player state and serialized station lists to all widgets.
-     * This follows the "Push" model to ensure instant updates and avoid LazyColumn freezing.
-     */
     fun updateAllWidgets(context: Context, station: DataRadioStation?, isPlaying: Boolean, trackInfo: String? = null) {
-        // Filter out redundant updates (e.g., intermediate buffering states without content change)
-        if (station != null) {
-            val newState = LastWidgetState(station.StationUuid, isPlaying, trackInfo)
-            if (newState == lastState) {
-                // No visible change for the user, skip expensive DB/IPC operations
-                return
-            }
-            lastState = newState
-        } else {
-            // station == null usually means a manual refresh (refreshAllWidgets). 
-            // We force these through to ensure list synchronization.
-            lastState = null 
-        }
-
         scope.launch {
             try {
                 // 1. Fetch fresh data from Room
@@ -141,11 +117,24 @@ object WidgetUpdateHelper {
     }
 
     /**
-     * Triggers a push update without changing the currently playing station info.
+     * Triggers a push update while preserving the current player state from the service.
      */
     fun refreshAllWidgets(context: Context) {
-        // In a real app, you might want to preserve the current station info here,
-        // but for now, we just push the lists.
-        updateAllWidgets(context, null, false)
+        val currentStation = PlayerServiceUtil.getCurrentStation()
+        val isPlaying = PlayerServiceUtil.isPlaying()
+        
+        // Construct track info from live metadata if available
+        val live = PlayerServiceUtil.getMetadataLive()
+        val trackInfo = if (live.track.isNotEmpty() && live.artist.isNotEmpty()) {
+            "${live.artist} - ${live.track}"
+        } else if (live.track.isNotEmpty()) {
+            live.track
+        } else if (live.title.isNotEmpty()) {
+            live.title
+        } else {
+            null
+        }
+
+        updateAllWidgets(context, currentStation, isPlaying, trackInfo)
     }
 }

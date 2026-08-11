@@ -85,7 +85,7 @@ class AMARadioWidgetActionReceiver : BroadcastReceiver() {
                             m
                         }
                     }
-                    // Trigger manual refresh of the widgets to reflect tab change
+                    // This now correctly preserves the player state from the service
                     WidgetUpdateHelper.refreshAllWidgets(context)
                 }
             }

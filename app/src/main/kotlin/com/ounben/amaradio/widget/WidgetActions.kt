@@ -6,7 +6,7 @@ import androidx.glance.GlanceId
 import androidx.glance.action.ActionParameters
 import androidx.glance.appwidget.action.ActionCallback
 import androidx.glance.appwidget.state.updateAppWidgetState
-import androidx.datastore.preferences.core.edit
+import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.datastore.preferences.core.MutablePreferences
 import com.ounben.amaradio.service.PlayerService
 
@@ -57,11 +57,12 @@ class SwitchTabActionCallback : ActionCallback {
     }
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         val tab = parameters[tabKey]?.toString() ?: "favorites"
-        updateAppWidgetState(context, glanceId) { prefs ->
-            // Use explicit cast and key to avoid ambiguity
-            val p = prefs as MutablePreferences
+        updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) { prefs ->
+            val p = prefs.toMutablePreferences()
             p[WidgetState.activeTabKey] = tab
+            p
         }
-        AMARadioFullWidget().update(context, glanceId)
+        // Use the helper to push fresh data and current player state
+        WidgetUpdateHelper.refreshAllWidgets(context)
     }
 }
