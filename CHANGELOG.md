@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.23] - 2026-08-11
+### Added
+- **Anti-Ghost-Task Architecture**: Migrated Widget interactions to direct service starts. This permanently resolves the "black screen" ghost task issue in Android 15 Recents (especially on Oppo/Realme devices).
+- **Hardenend Widget Sync**: Implemented a sequential update model (Mutex) and prioritized state-tracking to prevent sporadic "hanging" of track info or play/pause icons.
+- **Optimized Android Auto Browser**: 
+    - Restructured hierarchy to respect the 4-folder limit (Lokal, Filter, Favorites, History).
+    - Implemented "Pagination-First" metadata building, ensuring high-quality icons load instantly even in large local lists (300+ stations).
+- **Synchronized Tab State**: Switching tabs in the widget now correctly preserves and refreshes the current player status without flickering.
+
+### Fixed
+- **Widget Stop Reliability**: Resolved an issue where track data remained visible after stopping playback from the widget.
+- **Localization**: Standardized "No Results" messages in widgets using localized system strings.
+
 ## [1.22] - 2026-08-05
 ### Fixed
 - **Trackhistory Stability**: Resolved a potential `NullPointerException` and crash in the history list by implementing safe paging-item peeking and unique fallback keys.
