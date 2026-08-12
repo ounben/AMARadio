@@ -1,0 +1,197 @@
+@startuml AMARadio_ClassDiagram
+
+skinparam componentStyle rectangle
+skinparam packageStyle frame
+skinparam shadowing false
+
+package "App Architecture Layer" {
+    class AMARadioApp << (A, #FF7700) Application >> {
+        +instance: AMARadioApp
+        +historyManager: HistoryManager
+        +favouriteManager: FavouriteManager
+        +reviewManager: ReviewManager
+        +trackHistoryRepository: TrackHistoryRepository
+        +audioDispatcher: CoroutineDispatcher
+        +httpClient: OkHttpClient
+        +onCreate()
+        +rebuildHttpClient(): OkHttpClient
+    }
+
+    class ActivityMain << (A, #66BB6A) Activity >> {
+        -mainViewModel: MainViewModel
+        +onCreate()
+        -triggerSaveM3U()
+        -triggerLoadM3U()
+    }
+
+    class SplashActivity << (A, #66BB6A) Activity >> {
+        +onCreate()
+    }
+}
+
+package "UI / Presentation Layer" {
+    class MainViewModel << (V, #42A5F5) ViewModel >> {
+        -app: AMARadioApp
+        +uiState: StateFlow<MainUiState>
+        +setSearchQuery(query: String)
+        +toggleGridView()
+    }
+
+    class PlayerViewModel << (V, #42A5F5) ViewModel >> {
+        +uiState: StateFlow<PlayerUiState>
+        +bandwidth: StateFlow<String>
+        +play(station: DataRadioStation)
+        +togglePlayPause()
+        +toggleFavorite()
+    }
+
+    class StationsViewModel << (V, #42A5F5) ViewModel >> {
+        +uiState: StateFlow<StationsUiState>
+        +loadStations(url: String)
+        +search(style: SearchStyle, query: String)
+    }
+
+    class FilterViewModel << (V, #42A5F5) ViewModel >>
+    class TrackHistoryViewModel << (V, #42A5F5) ViewModel >>
+}
+
+package "Service / Media Layer" {
+    class PlayerService << (S, #FFA726) MediaLibraryService >> {
+        -radioPlayer: RadioPlayer
+        -mediaSession: MediaLibrarySession
+        -amaradioBrowser: AMARadioBrowser
+        +onStartCommand()
+        +onGetSession()
+    }
+
+    class AMARadioBrowser {
+        -stationDao: StationDao
+        -userDb: AMARadioUserDatabase
+        +onGetChildren(parentId: String)
+        +onSearch(query: String)
+    }
+
+    class RadioPlayer {
+        -currentPlayer: PlayerWrapper
+        -playerThreadHandler: Handler
+        +play(station: DataRadioStation)
+        +pause()
+        +stop()
+    }
+
+    interface PlayerWrapper {
+        +playRemote(client: OkHttpClient, url: String)
+        +pause()
+        +stop()
+        +setVolume(volume: Float)
+    }
+
+    class ExoPlayerWrapper {
+        -exoPlayer: ExoPlayer
+    }
+
+    class MediaPlayerWrapper {
+        -mediaPlayer: MediaPlayer
+    }
+
+    class PlayerServiceUtil << (H, #BDBDBD) Helper >> {
+        +startService(context: Context)
+        +play(station: DataRadioStation)
+        +pause(reason: PauseReason)
+        +getCurrentStation(): DataRadioStation
+    }
+}
+
+package "Domain / Manager Layer" {
+    class FavouriteManager {
+        -userDb: AMARadioUserDatabase
+        +stationsFlow: Flow<List<DataRadioStation>>
+        +add(station: DataRadioStation)
+        +remove(uuid: String)
+    }
+
+    class HistoryManager {
+        -userDb: AMARadioUserDatabase
+        +stationsFlow: Flow<List<DataRadioStation>>
+        +add(station: DataRadioStation)
+    }
+
+    class ReviewManager {
+        +maybeRequestReview(activity: Activity)
+    }
+}
+
+package "Data / Persistence Layer" {
+    class AMARadioDatabase << (D, #AB47BC) RoomDatabase >> {
+        +stationDao(): StationDao
+        +tagCacheDao(): TagCacheDao
+        +languageCacheDao(): LanguageCacheDao
+    }
+
+    class AMARadioUserDatabase << (D, #AB47BC) RoomDatabase >> {
+        +favoriteDao(): FavoriteDao
+        +historyDao(): HistoryDao
+        +filterTabDao(): FilterTabDao
+        +searchHistoryDao(): SearchHistoryDao
+    }
+
+    class TrackHistoryRepository {
+        -db: AMARadioUserDatabase
+        +insert(entry: TrackHistoryEntry)
+        +getAllHistory(): Flow<List<TrackHistoryEntry>>
+    }
+
+    interface StationDao
+    interface FavoriteDao
+    interface HistoryDao
+}
+
+package "Widget Layer" {
+    class WidgetUpdateHelper << (H, #BDBDBD) Helper >> {
+        +startDatabaseObservation(context: Context)
+        +updateAllWidgets(context: Context, station, isPlaying, trackInfo)
+    }
+}
+
+' Core Model
+class DataRadioStation << (M, #78909C) Model >> {
+    +StationUuid: String
+    +Name: String
+    +StreamUrl: String
+    +IconUrl: String
+}
+
+' Relationships
+AMARadioApp *-- FavouriteManager
+AMARadioApp *-- HistoryManager
+AMARadioApp *-- ReviewManager
+AMARadioApp *-- TrackHistoryRepository
+AMARadioApp ..> AMARadioUserDatabase
+AMARadioApp ..> AMARadioDatabase
+
+ActivityMain ..> MainViewModel
+ActivityMain ..> PlayerServiceUtil
+
+PlayerService *-- RadioPlayer
+PlayerService *-- AMARadioBrowser
+RadioPlayer o-- PlayerWrapper
+PlayerWrapper <|-- ExoPlayerWrapper
+PlayerWrapper <|-- MediaPlayerWrapper
+
+MainViewModel ..> AMARadioApp
+PlayerViewModel ..> PlayerServiceUtil
+PlayerViewModel ..> AMARadioApp
+StationsViewModel ..> AMARadioDatabase
+StationsViewModel ..> AMARadioApp
+
+FavouriteManager ..> AMARadioUserDatabase
+HistoryManager ..> AMARadioUserDatabase
+TrackHistoryRepository ..> AMARadioUserDatabase
+
+AMARadioBrowser ..> AMARadioDatabase
+AMARadioBrowser ..> AMARadioUserDatabase
+
+WidgetUpdateHelper ..> AMARadioUserDatabase
+WidgetUpdateHelper ..> PlayerServiceUtil
+
+@enduml
