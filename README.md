@@ -82,6 +82,12 @@ To build the project locally, ensure you have the latest version of Android Stud
 - **Target SDK**: 37 (Android 17)
 - **Minimum SDK**: 26 (Android 8.0)
 
+## UML
+
+<p align="center">
+  <img src="docs/UML/UML_AMARadio.png" width="100%" />
+</p>
+
 ## Contributing
 
 Contributions are welcome and appreciated. If you wish to improve the codebase, fix bugs, or update translations, please follow these steps:
