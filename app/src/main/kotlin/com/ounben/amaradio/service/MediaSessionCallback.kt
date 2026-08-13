@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.core.net.toUri
 import androidx.media3.common.MediaItem
+import androidx.media3.common.Player
 import androidx.media3.session.LibraryResult
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaLibraryService.MediaLibrarySession
@@ -34,9 +35,16 @@ class MediaSessionCallback(
             .add(SessionCommand.COMMAND_CODE_LIBRARY_SUBSCRIBE)
             .build()
 
+        val playerCommands = MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS.buildUpon()
+            .add(Player.COMMAND_SEEK_TO_NEXT)
+            .add(Player.COMMAND_SEEK_TO_PREVIOUS)
+            .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
+            .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
+            .build()
+
         return MediaSession.ConnectionResult.accept(
             sessionCommands,
-            MediaSession.ConnectionResult.DEFAULT_PLAYER_COMMANDS
+            playerCommands
         )
     }
 

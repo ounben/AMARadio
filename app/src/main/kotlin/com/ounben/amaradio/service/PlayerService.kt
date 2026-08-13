@@ -512,24 +512,38 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     fun next() {
         Log.d(tag, "next() called")
-        itsCurrentStation?.let {
-            val station = it.queue?.getNextById(it.StationUuid) ?: run {
-                Log.w(tag, "next() - no queue or station found")
-                return@let
-            }
-            if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
+        val station = itsCurrentStation ?: return
+        
+        // Fallback: If station has no queue (e.g. from search), try to use history or favorites
+        val queue = station.queue ?: run {
+            val app = application as AMARadioApp
+            if (!app.historyManager.isEmpty()) app.historyManager else app.favouriteManager
         }
+
+        val nextStation = queue.getNextById(station.StationUuid) ?: run {
+            Log.w(tag, "next() - no station found in queue")
+            return
+        }
+        
+        if (radioPlayer?.isPlaying() == true) playWithoutWarnings(nextStation) else playAndWarnIfMetered(nextStation)
     }
 
     fun previous() {
         Log.d(tag, "previous() called")
-        itsCurrentStation?.let {
-            val station = it.queue?.getPreviousById(it.StationUuid) ?: run {
-                Log.w(tag, "previous() - no queue or station found")
-                return@let
-            }
-            if (radioPlayer?.isPlaying() == true) playWithoutWarnings(station) else playAndWarnIfMetered(station)
+        val station = itsCurrentStation ?: return
+        
+        // Fallback: If station has no queue, try to use history or favorites
+        val queue = station.queue ?: run {
+            val app = application as AMARadioApp
+            if (!app.historyManager.isEmpty()) app.historyManager else app.favouriteManager
         }
+
+        val prevStation = queue.getPreviousById(station.StationUuid) ?: run {
+            Log.w(tag, "previous() - no station found in queue")
+            return
+        }
+        
+        if (radioPlayer?.isPlaying() == true) playWithoutWarnings(prevStation) else playAndWarnIfMetered(prevStation)
     }
 
     fun resume() {
@@ -1096,6 +1110,16 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     .add(Player.COMMAND_GET_TIMELINE)
                     .add(Player.COMMAND_PREPARE)
                     .build()
+            }
+
+            override fun isCommandAvailable(command: Int): Boolean {
+                return when (command) {
+                    Player.COMMAND_SEEK_TO_NEXT,
+                    Player.COMMAND_SEEK_TO_PREVIOUS,
+                    Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
+                    Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM -> true
+                    else -> super.isCommandAvailable(command)
+                }
             }
         }
         val session = mediaSession
