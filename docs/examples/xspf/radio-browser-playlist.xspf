@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<playlist version="1" xmlns="http://xspf.org/ns/0/">
+  <trackList>
+    <track>
+      <title>102.7 KIIS FM</title>
+      <location>https://stream.revma.ihrhls.com/zc185</location>
+      <image>https://i.iheart.com/v3/re/assets.brands/2ebe753539305728784b0f3b178eae45?ops=new(),flood(%22white%22),swap(),merge(%22over%22),gravity(%22center%22),contain(167,167),quality(80),format(%22png%22)</image>
+      <identifier>radiobrowser:c76686ca-a8b9-4db9-9839-1470c9599623</identifier></track>
+    <track>
+      <title>Classic Vinyl HD</title>
+      <location>https://icecast.walmradio.com:8443/classic</location>
+      <image>https://icecast.walmradio.com:8443/classic.jpg</image>
+      <identifier>radiobrowser:d1a54d2e-623e-4970-ab11-35f7b56c5ec3</identifier></track>
+    <track>
+      <title>MANGORADIO</title>
+      <location>https://mangoradio.stream.laut.fm/mangoradio</location>
+      <image>https://mangoradio.de/wp-content/uploads/cropped-Logo-192x192.webp</image>
+      <identifier>radiobrowser:78012206-1aa1-11e9-a80b-52543be04c81</identifier></track>
+    <track>
+      <title>Radio Anonymous</title>
+      <location>https://icecast.anon.fm/radio</location>
+      <image>https://icecast.anon.fm/logo.png</image>
+      <identifier>radiobrowser:3211ef33-3c51-4f9b-8950-936239528bf5</identifier></track>
+    <track>
+      <title>RTL</title>
+      <location>https://live.m6radio.quortex.io/webM89Hc99XApzgfhXNX8ASN5/grouprtl/national/short/audio-64000/index.m3u8</location>
+      <image>https://duckduckgo.com/i/035a5e15d396c67a.png</image>
+      <identifier>radiobrowser:042d3140-227c-4fac-9387-4903b692d5f2</identifier></track>
+    <track>
+      <title>Arabesk FM</title>
+      <location>http://yayin.arabeskfm.biz:8042/</location>
+      <image></image>
+      <identifier>radiobrowser:96201b3d-0601-11e8-ae97-52543be04c81</identifier></track>
+    <track>
+      <title>France Info</title>
+      <location>http://direct.franceinfo.fr/live/franceinfo-midfi.mp3</location>
+      <image>https://www.francetvinfo.fr/assets/common/images/pwa/ios/120-5487caf3.png</image>
+      <identifier>radiobrowser:1cfb151d-a341-11e9-a787-52543be04c81</identifier></track>
+    <track>
+      <title>WALM - Old Time Radio</title>
+      <location>https://icecast.walmradio.com:8443/otr</location>
+      <image>https://icecast.walmradio.com:8443/otr.jpg</image>
+      <identifier>radiobrowser:313046e3-b203-4b9d-bc3e-393da7d97126</identifier></track>
+    <track>
+      <title>CNN</title>
+      <location>https://tunein.cdnstream1.com/2868_96.mp3</location>
+      <image>https://www.cnn.com/media/sites/cnn/favicon.ico</image>
+      <identifier>radiobrowser:33178054-56cd-449c-8cf7-412cc7be936a</identifier></track>
+    <track>
+      <title>Radio Paradise Main Mix (EU) 320k AAC</title>
+      <location>http://stream-uk1.radioparadise.com/aac-320</location>
+      <image>https://radioparadise.com/apple-touch-icon.png</image>
+      <identifier>radiobrowser:9617a958-0601-11e8-ae97-52543be04c81</identifier></track></trackList></playlist>

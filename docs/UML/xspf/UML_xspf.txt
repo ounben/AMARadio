@@ -1,0 +1,147 @@
+@startuml AMARadio_Full_Architecture
+
+' --- Global Styles ---
+skinparam componentStyle rectangle
+skinparam shadowing false
+skinparam packageStyle frame
+skinparam linetype ortho
+
+' --- Layers ---
+
+package "1. Application & UI Layer" #E1F5FE {
+    class AMARadioApp <<Application>> {
+        +instance: AMARadioApp
+        +historyManager: HistoryManager
+        +favouriteManager: FavouriteManager
+        +customDatabase: AMARadioCustomDatabase
+        --
+        +onCreate()
+    }
+
+    class ActivityMain <<Activity>> {
+        -mainViewModel: MainViewModel
+        +onLoadXSPF()
+        +onSaveM3U()
+    }
+
+    class MainViewModel <<ViewModel>>
+    class PlayerViewModel <<ViewModel>>
+    class StationsViewModel <<ViewModel>>
+}
+
+package "2. Media & Service Layer" #FFF9C4 {
+    class PlayerService <<MediaLibraryService>> {
+        -radioPlayer: RadioPlayer
+        -mediaSession: MediaLibrarySession
+        -amaradioBrowser: AMARadioBrowser
+        +onStartCommand()
+    }
+
+    class AMARadioBrowser {
+        -stationDao: StationDao
+        -userDb: AMARadioUserDatabase
+        +onGetChildren()
+        note bottom: Strukturiert AA in:\nLokal, Filter, Favoriten, Verlauf
+    }
+
+    class RadioPlayer {
+        -currentPlayer: PlayerWrapper
+        +play(station)
+        +pause()
+    }
+
+    interface PlayerWrapper
+    class ExoPlayerWrapper implements PlayerWrapper
+}
+
+package "3. Logic & Domain Layer" #F3E5F5 {
+    class FavouriteManager {
+        +add(DataRadioStation)
+        +remove(uuid)
+    }
+
+    class HistoryManager {
+        +add(DataRadioStation)
+    }
+
+    class StationSaveManager {
+        +exportM3U()
+        +importXSPF(file)
+        -resolveStation()
+    }
+
+    class XSPFParser {
+        +parse(xml): List<ImportedStation>
+    }
+
+    class SmartIconResolver {
+        +processImportedImage(rawPath, uuid)
+        note right: Kopiert Bilder von /Downloads\nnach /cache/station_icons
+    }
+}
+
+package "4. Persistence Layer (3-Säulen)" #E8F5E9 {
+    ' Säule 1: Globaler Katalog
+    database "radio_browser.db" #C8E6C9 {
+        class StationEntity <<Entity>>
+        class AMARadioDatabase <<Room>>
+    }
+
+    ' Säule 2: User Verknüpfungen
+    database "user_data.db" #BBDEFB {
+        class FavoriteEntity <<Entity>>
+        class HistoryEntity <<Entity>>
+        class AMARadioUserDatabase <<Room>>
+    }
+
+    ' Säule 3: Custom Sidecar (NEU)
+    database "custom_stations.db" #FFE0B2 {
+        class CustomStationEntity <<Entity>>
+        class AMARadioCustomDatabase <<Room>>
+        note bottom: Schützt manuelle Sender\nvor Katalog-Updates
+    }
+}
+
+package "5. Widget Layer" #FAFAFA {
+    class AMARadioFullWidget <<Glance>>
+    class WidgetUpdateHelper {
+        +updateAllWidgets()
+        note left: Nutzt Mutex für\nsequenzielle Updates
+    }
+}
+
+' --- Relationships ---
+
+' App & Managers
+AMARadioApp *-- FavouriteManager
+AMARadioApp *-- HistoryManager
+AMARadioApp *-- AMARadioCustomDatabase
+
+' UI to Logic
+ActivityMain ..> MainViewModel
+ActivityMain ..> StationSaveManager : "Triggert Import"
+PlayerViewModel ..> PlayerService : "Steuert"
+
+' Service Layer
+PlayerService *-- RadioPlayer
+PlayerService *-- AMARadioBrowser
+AMARadioBrowser ..> AMARadioDatabase
+AMARadioBrowser ..> AMARadioUserDatabase
+
+' Logic to DB
+StationSaveManager ..> AMARadioUserDatabase
+StationSaveManager *-- XSPFParser
+StationSaveManager *-- SmartIconResolver
+SmartIconResolver ..> AMARadioCustomDatabase : "Speichert Metadaten"
+
+' Widgets
+WidgetUpdateHelper ..> AMARadioUserDatabase : "Beobachtet Flows"
+WidgetUpdateHelper ..> AMARadioFullWidget : "Pushed Status"
+PlayerService ..> WidgetUpdateHelper : "Meldet Playstate/Meta"
+
+' Models
+class DataRadioStation <<Model>>
+StationEntity ..> DataRadioStation : "Mapping"
+CustomStationEntity ..> DataRadioStation : "Mapping"
+
+@enduml
