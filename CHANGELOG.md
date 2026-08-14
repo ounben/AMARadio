@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.24] - 2026-08-14
+### Added
+- **Media Control Restoration**: Re-enabled and stabilized "Next" and "Previous" skip buttons in the Android System Notification and Lockscreen player. 
+- **Intelligent Queue Fallback**: Implemented an automatic queue discovery system. Stations started via search or widgets now automatically use the History or Favorites list as a backup queue for skip operations.
+- **Modernized Core Infrastructure**: Upgraded to **Gradle 9.7.0** and updated key dependencies including **Media3 (1.11.0)** and **Compose BOM (2026.08.00)** for improved performance and security.
+
+### Fixed
+- **MediaSession Command Routing**: Corrected a mapping issue where skip commands were occasionally rejected by the system due to strict Media3 live-stream policies.
+
 ## [1.23] - 2026-08-11
 ### Added
 - **Anti-Ghost-Task Architecture**: Migrated Widget interactions to direct service starts. This permanently resolves the "black screen" ghost task issue in Android 15 Recents (especially on Oppo/Realme devices).
