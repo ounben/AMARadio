@@ -49,6 +49,18 @@
             android:name="com.google.android.gms.car.application"
             android:resource="@xml/automotive_app_desc" />
 
+        <meta-data
+            android:name="com.google.android.gms.cast.framework.OPTIONS_PROVIDER_CLASS_NAME"
+            android:value="androidx.media3.cast.DefaultCastOptionsProvider" />
+
+        <receiver android:name="androidx.mediarouter.media.MediaTransferReceiver"
+            android:exported="true"
+            tools:ignore="ExportedReceiver">
+            <intent-filter>
+                <action android:name="androidx.mediarouter.media.MediaTransferReceiver" />
+            </intent-filter>
+        </receiver>
+
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme"

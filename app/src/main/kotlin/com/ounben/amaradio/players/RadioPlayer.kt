@@ -14,8 +14,10 @@ import com.ounben.amaradio.players.exoplayer.Media3Utils
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import com.ounben.amaradio.cast.CastManager
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
@@ -33,6 +35,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         fun onPlayerCreated(player: androidx.media3.common.Player)
     }
 
+    private var localPlayer: PlayerWrapper
+    private var castPlayer: PlayerWrapper? = null
     private var currentPlayer: PlayerWrapper
     private var currentTargetMediaItem: androidx.media3.common.MediaItem? = null
     
@@ -91,8 +95,58 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     init {
         val app = mainContext.applicationContext as AMARadioApp
         playerThreadHandler = Handler(app.audioLooper)
-        currentPlayer = ExoPlayerWrapper(mainContext, app.audioLooper)
+        
+        localPlayer = ExoPlayerWrapper(mainContext, app.audioLooper)
+        currentPlayer = localPlayer
         currentPlayer.setStateListener(this)
+
+        // Observe Cast state
+        CoroutineScope(Dispatchers.Main).launch {
+            CastManager.getInstance()?.isCasting?.collectLatest { isCasting ->
+                if (isCasting) {
+                    switchToCast()
+                } else {
+                    switchToLocal()
+                }
+            }
+        }
+    }
+
+    private fun switchToCast() {
+        val manager = CastManager.getInstance() ?: return
+        val player = manager.castPlayer ?: return
+        
+        if (castPlayer == null) {
+            castPlayer = CastPlayerWrapper(player).apply { setStateListener(this@RadioPlayer) }
+        }
+
+        if (currentPlayer != castPlayer) {
+            val wasPlaying = isPlaying()
+            currentPlayer.stop()
+            currentPlayer = castPlayer!!
+            
+            // Re-apply state to notify listeners (Service) about the new player instance
+            playerListener?.onPlayerCreated(currentPlayer.player!!)
+
+            if (wasPlaying && currentStation != null) {
+                play(currentStation!!)
+            }
+        }
+    }
+
+    private fun switchToLocal() {
+        if (currentPlayer != localPlayer) {
+            val wasPlaying = isPlaying()
+            currentPlayer.stop()
+            currentPlayer = localPlayer
+            
+            // Re-apply state to notify listeners (Service) about the new player instance
+            playerListener?.onPlayerCreated(currentPlayer.player!!)
+            
+            if (wasPlaying && currentStation != null) {
+                play(currentStation!!)
+            }
+        }
     }
 
     fun play(stationURL: String?, streamName: String?, metadata: androidx.media3.common.MediaMetadata? = null) {

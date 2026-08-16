@@ -172,25 +172,35 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private val afChangeListener = AudioManager.OnAudioFocusChangeListener { focusChange ->
         if (radioPlayer?.isLocal == false) return@OnAudioFocusChangeListener
-        Log.d(tag, "afChangeListener: focusChange=$focusChange")
+        if (Utils.isDebug) {
+            Log.d(tag, "afChangeListener: focusChange=$focusChange")
+        }
         when (focusChange) {
             AudioManager.AUDIOFOCUS_GAIN -> {
-                Log.d(tag, "audio focus gain")
+                if (Utils.isDebug) {
+                    Log.d(tag, "audio focus gain")
+                }
                 if (pauseReason == PauseReason.FOCUS_LOSS_TRANSIENT) {
                     resume()
                 }
                 radioPlayer?.setVolume(FULL_VOLUME)
             }
             AudioManager.AUDIOFOCUS_LOSS -> {
-                Log.d(tag, "audio focus loss")
+                if (Utils.isDebug) {
+                    Log.d(tag, "audio focus loss")
+                }
                 pause(PauseReason.FOCUS_LOSS)
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT -> {
-                Log.d(tag, "audio focus loss transient")
+                if (Utils.isDebug) {
+                    Log.d(tag, "audio focus loss transient")
+                }
                 pause(PauseReason.FOCUS_LOSS_TRANSIENT)
             }
             AudioManager.AUDIOFOCUS_LOSS_TRANSIENT_CAN_DUCK -> {
-                Log.d(tag, "audio focus loss transient can duck")
+                if (Utils.isDebug) {
+                    Log.d(tag, "audio focus loss transient can duck")
+                }
                 radioPlayer?.setVolume(DUCK_VOLUME)
             }
         }
@@ -228,6 +238,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     override fun onBind(intent: Intent?): IBinder {
+        if (Utils.isDebug) {
+            Log.d(tag, "onBind: intent=$intent")
+        }
         val binder = super.onBind(intent)
         return binder ?: itsBinder
     }
@@ -267,6 +280,19 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val initialStation = app.historyManager.first ?: app.favouriteManager.first
         if (initialStation != null) {
             setStation(initialStation)
+        } else {
+            // SQL Fallback: Load top station from local region if history is empty
+            serviceScope.launch(Dispatchers.IO) {
+                val countryCode = com.ounben.amaradio.Utils.getCountryCode(this@PlayerService) ?: "DE"
+                val db = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(this@PlayerService)
+                val topStation = db.stationDao().getStationsByCountryCode(countryCode.uppercase()).firstOrNull()
+                
+                topStation?.let { entity ->
+                    withContext(Dispatchers.Main) {
+                        setStation(entity.toDataStation())
+                    }
+                }
+            }
         }
 
         trackHistoryRepository = app.trackHistoryRepository
@@ -344,6 +370,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         PlayerServiceUtil.bindService(applicationContext)
+        if (Utils.isDebug) {
+            Log.d(tag, "onStartCommand: action=${intent?.action}")
+        }
         if (itsCurrentStation == null) {
             val app = application as AMARadioApp
             itsCurrentStation = app.historyManager.first ?: app.favouriteManager.first
@@ -430,10 +459,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     fun setStation(station: DataRadioStation) {
         val app = application as AMARadioApp
-        val fullStation = app.favouriteManager.getById(station.StationUuid) 
-                        ?: app.historyManager.getById(station.StationUuid)
+        val targetStation = app.favouriteManager.getById(station.StationUuid) 
+                        ?: app.historyManager.getById(station.StationUuid) 
+                        ?: station
         
-        val targetStation = fullStation ?: station
         this.itsCurrentStation = targetStation
         this.lastPlayStartTime = 0 // Reset time basis for new station to prevent AA sync issues
 
@@ -464,7 +493,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 mediaSession?.setCustomLayout(listOf())
                 updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
                 
-                Log.d(tag, "Station set: ${targetStation.Name}")
+                if (Utils.isDebug) {
+                    Log.d(tag, "Station set: ${targetStation.Name}")
+                }
                 WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
         }
@@ -476,7 +507,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
             updateMetadata(station, displayTitle)
             
-            Log.d(tag, "Playing station: ${station.Name}")
+            if (Utils.isDebug) {
+                Log.d(tag, "Playing station: ${station.Name}")
+            }
             WidgetUpdateHelper.updateAllWidgets(this@PlayerService, station, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
 
             // Fire & Forget: Report click to official API for community ranking
@@ -511,7 +544,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun next() {
-        Log.d(tag, "next() called")
+        if (Utils.isDebug) {
+            Log.d(tag, "next() called")
+        }
         val station = itsCurrentStation ?: return
         
         // Fallback: If station has no queue (e.g. from search), try to use history or favorites
@@ -521,7 +556,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
 
         val nextStation = queue.getNextById(station.StationUuid) ?: run {
-            Log.w(tag, "next() - no station found in queue")
+            if (Utils.isDebug) {
+                Log.w(tag, "next() - no station found in queue")
+            }
             return
         }
         
@@ -529,7 +566,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun previous() {
-        Log.d(tag, "previous() called")
+        if (Utils.isDebug) {
+            Log.d(tag, "previous() called")
+        }
         val station = itsCurrentStation ?: return
         
         // Fallback: If station has no queue, try to use history or favorites
@@ -539,7 +578,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
 
         val prevStation = queue.getPreviousById(station.StationUuid) ?: run {
-            Log.w(tag, "previous() - no station found in queue")
+            if (Utils.isDebug) {
+                Log.w(tag, "previous() - no station found in queue")
+            }
             return
         }
         
@@ -674,7 +715,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val pendingIntentPause = PendingIntent.getService(this, 0, pauseIntent, pendingIntentFlag)
             builder.addAction(R.drawable.ic_pause_24dp, getString(R.string.action_pause), pendingIntentPause)
             builder.setUsesChronometer(true).setOngoing(true)
-        } else if ((playState == PlayState.Paused) || (playState == PlayState.Idle)) {
+        } else {
             val resumeIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_RESUME }
             val pendingIntentResume = PendingIntent.getService(this, 0, resumeIntent, pendingIntentFlag)
             builder.addAction(R.drawable.ic_play_arrow_24dp, getString(R.string.action_resume), pendingIntentResume)
@@ -682,13 +723,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         builder.addAction(R.drawable.ic_skip_next_24dp, getString(R.string.action_skip_to_next), pendingIntentNext)
         
-        val style = mediaSession?.let { 
-            androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it)
-                .setShowActionsInCompactView(1, 2, 3)
-        } ?: @Suppress("DEPRECATION") androidx.media.app.NotificationCompat.MediaStyle()
-            .setShowActionsInCompactView(1, 2, 3)
-
-        builder.setStyle(style)
+        mediaSession?.let { builder.setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(1, 2, 3)) }
         val notification = builder.build()
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         
@@ -706,7 +741,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 notificationIsActive = true
             } else if (playState == PlayState.Paused) {
                 // If paused and not yet in foreground, just show a normal notification.
-                manager.notify(NOTIFY_ID, notification)
+                try {
+                    manager.notify(NOTIFY_ID, notification)
+                } catch (e: SecurityException) {
+                    if (Utils.isDebug) {
+                        Log.e(tag, "Permission missing for notification: ${e.message}")
+                    }
+                }
             } else {
                 // Idle or Error: Clean up
                 if (notificationIsActive) {
@@ -717,7 +758,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 }
             }
         } catch (e: Exception) {
-            Log.e(tag, "Foreground state update failed: ${e.message}")
+            if (Utils.isDebug) {
+                Log.e(tag, "Foreground state update failed: ${e.message}")
+            }
             // Fallback: Try showing a normal notification at least
             try { manager.notify(NOTIFY_ID, notification) } catch (_: Exception) {}
         }
@@ -754,11 +797,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 
                 // 3. Ensure MediaSession is aware of the changes
                 mediaSession?.setCustomLayout(listOf())
+                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
                 
-                Log.d("METADATA_DEBUG", "Metadata pushed to Player and Session. Artwork size: ${metadata.artworkData?.size} bytes")
-
-                // 4. Update System Notification
-                updateNotification(radioPlayer?.playState ?: PlayState.Paused)
+                if (Utils.isDebug) {
+                    Log.d("METADATA_DEBUG", "Metadata pushed to Player and Session. Artwork size: ${metadata.artworkData?.size} bytes")
+                }
             }
         }
     }
@@ -779,19 +822,25 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 if (result is SuccessResult) {
                     val bitmap = (result.drawable as? android.graphics.drawable.BitmapDrawable)?.bitmap
                     if (bitmap != null) {
-                        Log.d("METADATA_DEBUG", "Bild aus Cache geladen für ID: ${station.StationUuid}")
+                        if (Utils.isDebug) {
+                            Log.d("METADATA_DEBUG", "Bild aus Cache geladen für ID: ${station.StationUuid}")
+                        }
                         return bitmap
                     }
                 }
             } catch (e: Exception) {
-                Log.e(tag, "Failed to decode cached icon", e)
+                if (Utils.isDebug) {
+                    Log.e(tag, "Failed to decode cached icon", e)
+                }
             }
         }
 
         // 2. STRIKT: Über IconUrl (URL vom Radio-Browser) laden
         if (station.IconUrl.isNotEmpty()) {
             try {
-                Log.d("METADATA_DEBUG", "Lade Bild von URL: ${station.IconUrl}")
+                if (Utils.isDebug) {
+                    Log.d("METADATA_DEBUG", "Lade Bild von URL: ${station.IconUrl}")
+                }
                 val request = ImageRequest.Builder(this@PlayerService)
                     .data(station.IconUrl)
                     .size(512, 512)
@@ -804,7 +853,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     return bitmap
                 }
             } catch (e: Exception) {
-                Log.e(tag, "URL fetch failed for ID ${station.StationUuid}: ${station.IconUrl}", e)
+                if (Utils.isDebug) {
+                    Log.e(tag, "URL fetch failed for ID ${station.StationUuid}: ${station.IconUrl}", e)
+                }
             }
         }
 
@@ -812,7 +863,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val uuidResName = "s_" + station.StationUuid.lowercase().replace("-", "_")
         val uuidResId = resources.getIdentifier(uuidResName, "drawable", packageName)
         if (uuidResId != 0) {
-            Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für ID: $uuidResName")
+            if (Utils.isDebug) {
+                Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für ID: $uuidResName")
+            }
             try {
                 val bitmap = ResourcesCompat.getDrawable(resources, uuidResId, null)!!.toBitmap(512, 512, Bitmap.Config.RGB_565)
                 saveBitmapToFile(bitmap, iconFile)
@@ -824,7 +877,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val resName = station.Name.lowercase().replace(Regex("[^a-z0-9]"), "_").replace(Regex("__+"), "_").trim('_')
         val resId = resources.getIdentifier(resName, "drawable", packageName)
         if (resId != 0) {
-            Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für Name: $resName")
+            if (Utils.isDebug) {
+                Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für Name: $resName")
+            }
             try {
                 val bitmap = ResourcesCompat.getDrawable(resources, resId, null)!!.toBitmap(512, 512, Bitmap.Config.RGB_565)
                 saveBitmapToFile(bitmap, iconFile)
@@ -832,7 +887,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             } catch (e: Exception) { /* ignore */ }
         }
 
-        Log.w("METADATA_DEBUG", "Kein spezifisches Bild gefunden für ID: ${station.StationUuid}. Generiere dynamischen Platzhalter.")
+        if (Utils.isDebug) {
+            Log.w("METADATA_DEBUG", "Kein spezifisches Bild gefunden für ID: ${station.StationUuid}. Generiere dynamischen Platzhalter.")
+        }
         val placeholder = StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
         saveBitmapToFile(placeholder, iconFile)
         return placeholder
@@ -844,7 +901,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
             }
         } catch (e: Exception) {
-            Log.e(tag, "Save bitmap failed", e)
+            if (Utils.isDebug) {
+                Log.e(tag, "Save bitmap failed", e)
+            }
         }
     }
 
@@ -955,7 +1014,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             updateNotification(PlayState.Paused)
             return
         }
-        Log.d(tag, "onStateChanged: state=$status, audioSessionId=$audioSessionId")
+        if (Utils.isDebug) {
+            Log.d(tag, "onStateChanged: state=$status, audioSessionId=$audioSessionId")
+        }
         lastErrorFromPlayer = -1
         if (status == PlayState.Playing) {
             if (lastPlayStartTime <= 0) {
@@ -994,7 +1055,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     override fun onPlayerWarning(messageId: Int) { 
-        Log.w(tag, "Player warning: ${resources.getString(messageId)}")
+        if (Utils.isDebug) {
+            Log.w(tag, "Player warning: ${resources.getString(messageId)}")
+        }
     }
 
     override fun onPlayerError(messageId: Int) {
@@ -1009,6 +1072,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             override fun stop() { this@PlayerService.stop() }
             override fun seekToNext() { this@PlayerService.next() }
             override fun seekToPrevious() { this@PlayerService.previous() }
+            override fun seekToNextMediaItem() { this@PlayerService.next() }
+            override fun seekToPreviousMediaItem() { this@PlayerService.previous() }
             override fun hasNextMediaItem(): Boolean = true
             override fun hasPreviousMediaItem(): Boolean = true
             override fun prepare() { 
@@ -1117,7 +1182,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     Player.COMMAND_SEEK_TO_NEXT,
                     Player.COMMAND_SEEK_TO_PREVIOUS,
                     Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM,
-                    Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM -> true
+                    Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM,
+                    Player.COMMAND_STOP,
+                    Player.COMMAND_PLAY_PAUSE -> true
                     else -> super.isCommandAvailable(command)
                 }
             }
@@ -1138,7 +1205,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val oldLiveInfo = this.liveInfo
         this.liveInfo = liveInfo
         if (oldLiveInfo.title != this.liveInfo.title) {
-            Log.d(tag, "New metadata: ${liveInfo.title}")
+            if (Utils.isDebug) {
+                Log.d(tag, "New metadata: ${liveInfo.title}")
+            }
             sendBroadCast(PLAYER_SERVICE_META_UPDATE)
             updateMetadata() // Trigger metadata sync on live info change
             val currentTime = Calendar.getInstance().time

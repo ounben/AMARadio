@@ -40,6 +40,8 @@ class MediaSessionCallback(
             .add(Player.COMMAND_SEEK_TO_PREVIOUS)
             .add(Player.COMMAND_SEEK_TO_NEXT_MEDIA_ITEM)
             .add(Player.COMMAND_SEEK_TO_PREVIOUS_MEDIA_ITEM)
+            .add(Player.COMMAND_STOP)
+            .add(Player.COMMAND_PLAY_PAUSE)
             .build()
 
         return MediaSession.ConnectionResult.accept(

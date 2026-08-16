@@ -123,6 +123,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             com.ounben.amaradio.widget.WidgetUpdateHelper.startDatabaseObservation(this)
             com.ounben.amaradio.widget.WidgetUpdateHelper.updateAllWidgets(this, null, false)
 
+            // Initialize Google Cast
+            com.ounben.amaradio.cast.CastManager.init(this)
+
             Log.d("APP", "onCreate finished")
         } catch (e: Exception) {
             Log.e("APP", "onCreate failed", e)

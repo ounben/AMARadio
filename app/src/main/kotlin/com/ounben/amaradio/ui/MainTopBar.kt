@@ -21,6 +21,8 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.media3.common.util.UnstableApi
+import androidx.media3.cast.MediaRouteButton
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
@@ -29,7 +31,7 @@ import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
 import com.ounben.amaradio.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, UnstableApi::class)
 @Composable
 fun MainTopBar(
     isSearching: Boolean,
@@ -122,6 +124,10 @@ fun MainTopBar(
                         }
                     }
                 } else {
+                    MediaRouteButton(
+                        modifier = Modifier.size(48.dp)
+                    )
+
                     IconButton(onClick = { onSearchToggle(true) }) {
                         Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search))
                     }
