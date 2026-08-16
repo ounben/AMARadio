@@ -1189,13 +1189,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 }
             }
         }
-        val session = mediaSession
-        if (session != null) {
-            radioPlayer?.runInPlayerThread {
-                session.player = currentForwardingPlayer!!
-            }
-        }
+        
+        // Notify the MediaSession about the player change (especially for CastPlayer)
+        mediaSession?.setPlayer(currentForwardingPlayer!!)
     }
+    
     override fun onBufferedTimeUpdate(bufferedMs: Long) {}
     override fun foundShoutcastStream(bitrate: ShoutcastInfo?, isHls: Boolean) {
         this.streamInfo = bitrate; this.isHls = isHls
