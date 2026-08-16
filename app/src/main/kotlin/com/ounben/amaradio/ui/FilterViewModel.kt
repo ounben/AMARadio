@@ -69,7 +69,7 @@ fun FilterTabEntity.toItem() = FilterTabItem(
 class FilterViewModel(application: Application) : AndroidViewModel(application) {
 
     data class FilterUiState(
-        val tabs: List<FilterTabItem> = listOf(FilterTabItem(label = "Default")),
+        val tabs: List<FilterTabItem> = emptyList(),
         val selectedTabIndex: Int = 0,
         val favoriteIds: Set<String> = emptySet(),
         val isSearching: Boolean = false,
@@ -77,7 +77,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
         val languages: List<CategoryItem> = emptyList(),
         val tags: List<CategoryItem> = emptyList(),
         val error: String? = null,
-        val isGrid: Boolean = false
+        val isGrid: Boolean = false,
+        val isLoadedFromDb: Boolean = false
     )
 
     data class CategoryItem(val code: String, val label: String, val emoji: String = "", val count: Int = 0)
@@ -100,41 +101,45 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     private var isFirstTabsLoad = true
 
     init {
-        // REAKTIVE DATEN: Filter-Tabs aus User DB laden
         viewModelScope.launch {
             val userDb = AMARadioUserDatabase.getDatabase(app)
             userDb.filterTabDao().getAllTabsFlow().collect { entities ->
-                if (entities.isNotEmpty()) {
-                    val dbTabs = entities.map { it.toItem() }
-                    val currentTabs = _uiState.value.tabs
-                    
-                    // SMART MERGE: Preserve stations in memory if they exist
-                    val mergedTabs = dbTabs.map { dbTab ->
-                        val existing = currentTabs.find { it.id == dbTab.id }
-                        if (existing != null && existing.stations.isNotEmpty()) {
-                            dbTab.copy(stations = existing.stations)
-                        } else {
-                            dbTab
-                        }
+                val dbTabs = entities.map { it.toItem() }
+                val currentTabs = _uiState.value.tabs
+                
+                // SMART MERGE: Preserve stations in memory if they exist
+                val mergedTabs = dbTabs.map { dbTab ->
+                    val existing = currentTabs.find { it.id == dbTab.id }
+                    if (existing != null && existing.stations.isNotEmpty()) {
+                        dbTab.copy(stations = existing.stations)
+                    } else {
+                        dbTab
                     }
+                }
 
-                    val savedIndex = sharedPref.getInt("filter_selected_index", 0)
-                    _uiState.update { it.copy(
-                        tabs = mergedTabs, 
-                        selectedTabIndex = savedIndex.coerceIn(0, mergedTabs.size - 1)
-                    ) }
-                    
-                    // Trigger initial search ONLY on first load
-                    if (isFirstTabsLoad) {
-                        isFirstTabsLoad = false
-                        mergedTabs.forEachIndexed { index, tab ->
-                            if (tab.stations.isEmpty() && (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.tag.isNotEmpty())) {
-                                performSearch(index)
-                            }
+                val savedIndex = sharedPref.getInt("filter_selected_index", 0)
+                
+                // FALLBACK: Only if confirmed empty
+                val finalTabs = if (mergedTabs.isEmpty()) {
+                    listOf(FilterTabItem(label = "Filter"))
+                } else {
+                    mergedTabs
+                }
+
+                _uiState.update { it.copy(
+                    tabs = finalTabs, 
+                    selectedTabIndex = savedIndex.coerceIn(0, finalTabs.size - 1),
+                    isLoadedFromDb = true
+                ) }
+                
+                // Trigger initial search ONLY on first load
+                if (isFirstTabsLoad) {
+                    isFirstTabsLoad = false
+                    finalTabs.forEachIndexed { index, tab ->
+                        if (tab.stations.isEmpty() && (tab.name.isNotEmpty() || tab.countryCode.isNotEmpty() || tab.tag.isNotEmpty())) {
+                            performSearch(index)
                         }
                     }
-                } else {
-                    _uiState.update { it.copy(tabs = listOf(FilterTabItem(label = "Filter"))) }
                 }
             }
         }
@@ -191,6 +196,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     fun saveFilters() {
         val state = _uiState.value
+        if (!state.isLoadedFromDb) return
+
         viewModelScope.launch(Dispatchers.IO) {
             val userDb = AMARadioUserDatabase.getDatabase(app)
             val entities = state.tabs.mapIndexed { index, item -> item.toEntity(index) }
@@ -206,7 +213,9 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     // Tab Management
     fun selectTab(index: Int) {
         _uiState.update { it.copy(selectedTabIndex = index) }
-        saveFilters()
+        sharedPref.edit {
+            putInt("filter_selected_index", index)
+        }
     }
 
     fun addTab() {

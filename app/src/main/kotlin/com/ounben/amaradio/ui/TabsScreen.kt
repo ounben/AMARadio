@@ -55,7 +55,7 @@ fun TabsScreen(
     }
 
     val pagerState = rememberPagerState(
-        initialPage = initialTab.coerceIn(0, tabs.size - 1),
+        initialPage = if (tabs.isEmpty()) 0 else initialTab.coerceIn(0, tabs.size - 1),
         pageCount = { tabs.size }
     )
 
