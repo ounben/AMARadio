@@ -104,7 +104,10 @@ fun FilterScreen(
         }
 
         // 2. CONTENT AREA
-        if (currentTab.label.trim().isEmpty() && currentTab.name.isEmpty() && currentTab.countryCode.isEmpty() && currentTab.tag.isEmpty()) {
+        val isTabEmpty = currentTab.name.isEmpty() && currentTab.countryCode.isEmpty() && 
+                         currentTab.tag.isEmpty() && currentTab.languageCode.isEmpty()
+
+        if (isTabEmpty) {
             FilterEmptyState()
         } else {
             StationListTemplate(
@@ -346,7 +349,7 @@ fun FilterEmptyState() {
             .fillMaxSize()
             .padding(horizontal = 32.dp)
             .verticalScroll(rememberScrollState())
-            .background(MaterialTheme.colorScheme.background),
+            .background(MaterialTheme.colorScheme.surfaceVariant),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
