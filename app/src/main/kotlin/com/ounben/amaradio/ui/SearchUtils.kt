@@ -2,44 +2,54 @@ package com.ounben.amaradio.ui
 
 object SearchUtils {
     /**
-     * Highly optimized similarity for names (stations, countries, tags).
-     * Prioritizes character order and structural matches.
-     * Returns a score where higher is better.
+     * Calculates a relevance score for a target name based on multiple query words.
+     * Prioritizes word starts and exact matches.
      */
-    fun calculateScore(targetName: String, query: String): Double {
+    fun calculateMultiWordScore(targetName: String, queryWords: List<String>): Double {
+        if (queryWords.isEmpty()) return 0.0
         val name = targetName.lowercase().trim()
-        val q = query.lowercase().trim()
+        val wordsInName = name.split(Regex("""[\s\-_.\(\)/\[\]!?]+""")).filter { it.isNotEmpty() }
         
-        if (name == q) return 10000.0 // Absolute Perfektion
-        
-        var score = 0.0
+        var totalScore = 0.0
 
-        // 1. FULL START BONUS: Der gesamte Name fängt mit der Suche an
-        if (name.startsWith(q)) {
-            score += 2000.0
-        }
-        
-        // 2. Word Boundary Logic: Höchste Priorität für Wortanfänge
-        val words = name.split(" ", "-", "_", ".", "(", ")", "/", "[", "]", "!", "?").filter { it.isNotEmpty() }
-        
-        words.forEachIndexed { index, word ->
-            if (word.startsWith(q)) {
-                // Wortanfang Treffer:
-                // - Erstes Wort bekommt massiven Bonus (1000)
-                // - Folgeworte bekommen hohen Bonus (500)
-                score += if (index == 0) 1000.0 else 500.0
-            } else if (word.contains(q)) {
-                // Treffer mitten im Wort: Sehr geringe Priorität (maximal 5 Punkte)
-                // Wir bestrafen die Position: Je später im Wort, desto weniger Punkte.
-                val position = word.indexOf(q)
-                score += (1.0 / (position + 1)) * 5.0
+        for (q in queryWords) {
+            val query = q.lowercase().trim()
+            if (query.isEmpty()) continue
+
+            var wordScore = 0.0
+            
+            // 1. MASSIVE BONUS: Wort fängt exakt so an wie ein Wort im Namen
+            // Das sorgt dafür, dass "tle" -> "Tlemcen" (Wortanfang) gewinnt
+            wordsInName.forEachIndexed { index, word ->
+                if (word.startsWith(query)) {
+                    wordScore += if (index == 0) 5000.0 else 2000.0
+                    // Bonus für exakte Wort-Übereinstimmung
+                    if (word == query) wordScore += 1000.0
+                } else if (word.contains(query)) {
+                    // Treffer mitten im Wort (z.B. "tle" in "Beatle")
+                    // Bekommt nur sehr wenig Punkte (max 100)
+                    val pos = word.indexOf(query)
+                    wordScore += (1.0 / (pos + 1)) * 100.0
+                }
             }
+
+            // 2. GLOBAL START BONUS: Der gesamte String fängt so an
+            if (name.startsWith(query)) {
+                wordScore += 3000.0
+            }
+
+            totalScore += wordScore
         }
-        
-        // 3. Length Proximity: Bei Punktegleichstand gewinnt das kürzere (präzisere) Wort
-        val lengthDiff = Math.abs(name.length - q.length)
-        score += (1.0 / (lengthDiff + 1)) * 10.0
-        
-        return score
+
+        // Tie-Breaker: Kürzere Namen sind bei gleicher Punktzahl relevanter
+        totalScore += (1.0 / (name.length + 1)) * 10.0
+
+        return totalScore
+    }
+
+    /** Legacy support for single string queries */
+    fun calculateScore(targetName: String, query: String): Double {
+        val words = query.split(Regex("\\s+")).filter { it.isNotBlank() }
+        return calculateMultiWordScore(targetName, words)
     }
 }

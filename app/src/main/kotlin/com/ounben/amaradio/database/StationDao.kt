@@ -53,6 +53,16 @@ interface StationDao {
 
     @Query("""
         SELECT * FROM Station 
+        WHERE LastCheckOK = 1
+        AND (:w1 IS NULL OR (Name LIKE '%' || :w1 || '%' OR Tags LIKE '%' || :w1 || '%'))
+        AND (:w2 IS NULL OR (Name LIKE '%' || :w2 || '%' OR Tags LIKE '%' || :w2 || '%'))
+        AND (:w3 IS NULL OR (Name LIKE '%' || :w3 || '%' OR Tags LIKE '%' || :w3 || '%'))
+        ORDER BY clickcount DESC LIMIT 400
+    """)
+    suspend fun searchStationsMulti(w1: String?, w2: String?, w3: String?): List<StationEntity>
+
+    @Query("""
+        SELECT * FROM Station 
         WHERE LastCheckOK = 1 
         AND (Name LIKE '%' || :query || '%' OR Tags LIKE '%' || :query || '%')
         ORDER BY clickcount DESC LIMIT 300

@@ -90,12 +90,27 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
                     localDataFound = true
                 }
             } else if (url.startsWith("json/stations/byname/")) {
-                val nameQuery = java.net.URLDecoder.decode(url.substringAfter("byname/"), "UTF-8")
+                val nameQuery = java.net.URLDecoder.decode(url.substringAfter("byname/"), "UTF-8").trim()
+                val queryWords = nameQuery.split(Regex("\\s+")).filter { it.isNotBlank() }
+                
                 val localStations = withContext(Dispatchers.IO) {
-                    AMARadioDatabase.getDatabase(app).stationDao().searchStations(nameQuery)
+                    val dao = AMARadioDatabase.getDatabase(app).stationDao()
+                    if (queryWords.size > 1) {
+                        dao.searchStationsMulti(
+                            queryWords.getOrNull(0),
+                            queryWords.getOrNull(1),
+                            queryWords.getOrNull(2)
+                        )
+                    } else {
+                        dao.searchStations(nameQuery)
+                    }
                 }
+
                 if (localStations.isNotEmpty()) {
-                    val decoded = localStations.map { it.toDataStation() }
+                    val decoded = withContext(Dispatchers.Default) {
+                        localStations.map { it.toDataStation() }
+                            .sortedByDescending { SearchUtils.calculateMultiWordScore(it.Name, queryWords) }
+                    }
                     _uiState.update { it.copy(stations = decoded, filteredStations = decoded, isLoading = false) }
                     localDataFound = true
                 }

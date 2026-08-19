@@ -368,20 +368,37 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             
             val state = _uiState.value
             val tab = state.tabs.getOrNull(index) ?: return@launch
+            val nameQuery = tab.name.trim()
+            val queryWords = nameQuery.split(Regex("\\s+")).filter { it.isNotBlank() }
 
             // STRICT OFFLINE SEARCH: Only use local SQL database
             val localResults = withContext(Dispatchers.IO) {
-                AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(
-                    name = tab.name.ifEmpty { null },
-                    countryCode = tab.countryCode.ifEmpty { null },
-                    language = tab.languageCode.ifEmpty { null },
-                    tag = tab.tag.ifEmpty { null },
-                    orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
-                )
+                val dao = AMARadioDatabase.getDatabase(app).stationDao()
+                if (queryWords.size > 1 && tab.countryCode.isEmpty() && tab.tag.isEmpty() && tab.languageCode.isEmpty()) {
+                    // Optimized Multi-Word logic for name-heavy searches
+                    dao.searchStationsMulti(
+                        queryWords.getOrNull(0),
+                        queryWords.getOrNull(1),
+                        queryWords.getOrNull(2)
+                    )
+                } else {
+                    dao.getStationsFiltered(
+                        name = nameQuery.ifEmpty { null },
+                        countryCode = tab.countryCode.ifEmpty { null },
+                        language = tab.languageCode.ifEmpty { null },
+                        tag = tab.tag.ifEmpty { null },
+                        orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
+                    )
+                }
             }
 
             val decoded = withContext(Dispatchers.Default) {
-                localResults.map { it.toDataStation() }
+                val list = localResults.map { it.toDataStation() }
+                if (queryWords.isNotEmpty()) {
+                    list.sortedByDescending { SearchUtils.calculateMultiWordScore(it.Name, queryWords) }
+                } else {
+                    list
+                }
             }
             _uiState.update { s ->
                 val newTabs = s.tabs.toMutableList()

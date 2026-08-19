@@ -55,15 +55,26 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
             delay(300) 
             _uiState.update { it.copy(isSearching = true, error = null) }
 
+            val queryWords = cleanedQuery.split(Regex("\\s+")).filter { it.isNotBlank() }
+
             // STRICT OFFLINE SEARCH: Only use local SQL database
             val localResults = withContext(Dispatchers.IO) {
-                AMARadioDatabase.getDatabase(app).stationDao().searchStations(cleanedQuery)
+                val dao = AMARadioDatabase.getDatabase(app).stationDao()
+                if (queryWords.size > 1) {
+                    dao.searchStationsMulti(
+                        queryWords.getOrNull(0),
+                        queryWords.getOrNull(1),
+                        queryWords.getOrNull(2)
+                    )
+                } else {
+                    dao.searchStations(cleanedQuery)
+                }
             }
             
             val prioritized = withContext(Dispatchers.Default) {
                 val decoded = localResults.map { it.toDataStation() }
                 decoded.sortedWith(compareByDescending<DataRadioStation> { station ->
-                    SearchUtils.calculateScore(station.Name, cleanedQuery)
+                    SearchUtils.calculateMultiWordScore(station.Name, queryWords)
                 }.thenByDescending { it.ClickCount })
             }
             
