@@ -5,6 +5,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.25] - 2026-08-19
+### Added
+- **Google Cast (Chromecast) Support**: Full integration with the modern **Media3 Cast** framework. 
+    - Stream your favorite stations directly to Chromecast-enabled TVs and speakers.
+    - Features a native **MediaRouteButton** in the top toolbar for seamless device discovery and connection.
+    - Automatic player hand-off between local device and remote Cast receiver.
+- **Smart Metadata Cleaning**: Implemented a specialized extraction logic for technical stream metadata (specifically for **iHeartRadio** and **Kiss FM**). Technical tags like `text="..."` are now automatically cleaned to show only the pure Artist and Song Title.
+- **Startup Resilience (Gate-System)**: Introduced an atomic loading gate (`isLoadedFromDb`) in the Filter Tabs logic. This prevents a race condition where empty initial states could accidentally overwrite existing user data in the database during slow system startups.
+
+### Changed
+- **Optimized Pager Initialization**: Refined the tab pager state to be more robust during the transition from loading to displaying content.
+
 ## [1.24] - 2026-08-14
 ### Added
 - **Media Control Restoration**: Re-enabled and stabilized "Next" and "Previous" skip buttons in the Android System Notification and Lockscreen player. 

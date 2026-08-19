@@ -12,6 +12,7 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 ## Key Features
 
 - **Instantaneous UI**: Thanks to a highly optimized architecture, switching between tabs and opening the player occurs without delay or flickering.
+- **Google Cast (Chromecast) Support**: Stream directly to speakers and TVs using the modern **Media3 Cast** framework. Features a native Compose-based connection button for easy device management.
 - **Advanced Android Auto Integration**: 
     - **Stability (Media-Anchor)**: Specialized logic to prevent session disconnects during station switches on modern Android versions (15+).
     - **HLS/TS Support**: Full compatibility with complex Transport Stream formats.
@@ -78,7 +79,7 @@ To build the project locally, ensure you have the latest version of Android Stud
     - **Station Catalog**: High-performance SQL for the worldwide radio database.
     - **User Storage**: Dedicated SQL-based **UserDatabase** for Favorites, History, and custom Filters (migrated from legacy JSON).
 - **Networking**: OkHttp 5 & Coroutines for API communication, Coil for async image loading
-- **Media Engine**: AndroidX Media3 (ExoPlayer)
+- **Media Engine**: AndroidX Media3 (ExoPlayer & CastPlayer)
 - **Target SDK**: 37 (Android 17)
 - **Minimum SDK**: 26 (Android 8.0)
 
