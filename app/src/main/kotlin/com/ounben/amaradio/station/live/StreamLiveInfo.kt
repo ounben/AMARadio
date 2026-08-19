@@ -1,7 +1,6 @@
 package com.ounben.amaradio.station.live
 
 import android.os.Parcelable
-import android.text.TextUtils
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -24,23 +23,37 @@ class StreamLiveInfo(
     }
 
     private fun updateFromMetadata() {
-        rawMetadata?.let {
-            if (it.containsKey("StreamTitle")) {
-                val fullTitle = it["StreamTitle"] ?: ""
-                title = fullTitle
-                if (fullTitle.isNotEmpty()) {
-                    // Split by common separators: " - ", " – ", " : ", " by "
-                    val parts = fullTitle.split(Regex(" [-–:] | by ", RegexOption.IGNORE_CASE), 2)
-                    if (parts.size == 2) {
-                        artist = parts[0].trim()
-                        track = parts[1].trim()
-                    } else {
-                        artist = "" // Clear fallback to avoid duplication
-                        track = fullTitle.trim()
-                    }
-                }
-            }
+        val fullTitle = rawMetadata?.get("StreamTitle") ?: ""
+        if (fullTitle.isEmpty()) return
+
+        // 1. Pattern: artist="Name" title="Song" (Pure Technical iHeart style)
+        val techArtist = Regex("""artist="([^"]+)"""", RegexOption.IGNORE_CASE).find(fullTitle)?.groupValues?.get(1)
+        val techTitle = Regex("""(?:title|text)="([^"]+)"""", RegexOption.IGNORE_CASE).find(fullTitle)?.groupValues?.get(1)
+
+        if (techArtist != null && techTitle != null) {
+            artist = techArtist.trim()
+            track = techTitle.trim()
+            title = "$artist - $track"
+            return
         }
+
+        // 2. Pattern: Standard "Artist - Title" but with possible embedded tags
+        val parts = fullTitle.split(Regex(" [-–:] | by ", RegexOption.IGNORE_CASE), 2)
+        if (parts.size == 2) {
+            artist = sanitizeMetadataField(parts[0])
+            track = sanitizeMetadataField(parts[1])
+            title = if (artist.isNotEmpty()) "$artist - $track" else track
+        } else {
+            artist = ""
+            track = sanitizeMetadataField(fullTitle)
+            title = track
+        }
+    }
+
+    private fun sanitizeMetadataField(input: String): String {
+        val tagPattern = Regex("""(?:text|title|artist)="([^"]+)"""", RegexOption.IGNORE_CASE)
+        val match = tagPattern.find(input)
+        return if (match != null) match.groupValues[1].trim() else input.trim()
     }
 
     fun hasArtistAndTrack(): Boolean {
