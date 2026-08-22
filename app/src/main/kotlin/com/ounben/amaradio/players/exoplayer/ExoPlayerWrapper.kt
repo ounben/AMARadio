@@ -31,8 +31,6 @@ import androidx.media3.exoplayer.source.ProgressiveMediaSource
 import androidx.media3.exoplayer.upstream.DefaultBandwidthMeter
 import androidx.media3.exoplayer.upstream.DefaultLoadErrorHandlingPolicy
 import androidx.media3.exoplayer.upstream.LoadErrorHandlingPolicy
-import androidx.media3.extractor.metadata.icy.IcyHeaders
-import androidx.media3.extractor.metadata.icy.IcyInfo
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
@@ -383,19 +381,18 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
 
         override fun onMetadata(metadata: Metadata) {
-            for (i in 0 until metadata.length()) {
-                val entry = metadata[i]
-                if (entry is IcyInfo) {
-                    val liveInfo = StreamLiveInfo(null)
-                    liveInfo.addMetadata("StreamTitle", entry.title)
-                    onDataSourceStreamLiveInfo(liveInfo)
-                } else if (entry is IcyHeaders) {
-                    val shoutcastInfo = ShoutcastInfo()
-                    shoutcastInfo.audioName = entry.name
-                    shoutcastInfo.bitrate = entry.bitrate / 1000
-                    onDataSourceShoutcastInfo(shoutcastInfo)
-                }
-            }
+            MetadataHandler.handleMetadata(
+                metadata,
+                onStreamLiveInfo = { onDataSourceStreamLiveInfo(it) },
+                onShoutcastInfo = { onDataSourceShoutcastInfo(it) }
+            )
+        }
+
+        override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+            MetadataHandler.handleMediaMetadata(
+                mediaMetadata,
+                onStreamLiveInfo = { onDataSourceStreamLiveInfo(it) }
+            )
         }
     }
 }

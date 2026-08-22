@@ -6,12 +6,11 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Metadata
 import androidx.media3.common.Player
 import com.ounben.amaradio.players.exoplayer.Media3Utils
+import com.ounben.amaradio.players.exoplayer.MetadataHandler
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
 import okhttp3.OkHttpClient
 import androidx.core.net.toUri
-import androidx.media3.extractor.metadata.icy.IcyHeaders
-import androidx.media3.extractor.metadata.icy.IcyInfo
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 class CastPlayerWrapper(private val castPlayer: CastPlayer) : PlayerWrapper {
@@ -42,19 +41,18 @@ class CastPlayerWrapper(private val castPlayer: CastPlayer) : PlayerWrapper {
         }
 
         override fun onMetadata(metadata: Metadata) {
-            for (i in 0 until metadata.length()) {
-                val entry = metadata[i]
-                if (entry is IcyInfo) {
-                    val liveInfo = StreamLiveInfo(null)
-                    liveInfo.addMetadata("StreamTitle", entry.title)
-                    listener?.onDataSourceStreamLiveInfo(liveInfo)
-                } else if (entry is IcyHeaders) {
-                    val shoutcastInfo = ShoutcastInfo()
-                    shoutcastInfo.audioName = entry.name
-                    shoutcastInfo.bitrate = entry.bitrate / 1000
-                    listener?.onDataSourceShoutcastInfo(shoutcastInfo, false)
-                }
-            }
+            MetadataHandler.handleMetadata(
+                metadata,
+                onStreamLiveInfo = { listener?.onDataSourceStreamLiveInfo(it) },
+                onShoutcastInfo = { listener?.onDataSourceShoutcastInfo(it, false) }
+            )
+        }
+
+        override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+            MetadataHandler.handleMediaMetadata(
+                mediaMetadata,
+                onStreamLiveInfo = { listener?.onDataSourceStreamLiveInfo(it) }
+            )
         }
     }
 
