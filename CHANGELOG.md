@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.26] - 2026-08-23
+### Added
+- **Extended Metadata Support**: Full support for **Ogg Vorbis** and **Opus** stream metadata.
+    - Dynamically extracts Artist and Title information from Vorbis Comments and processed Media3 metadata fields.
+    - Seamlessly integrated into the existing metadata pipeline, ensuring high compatibility with Android Auto and system notifications.
+    - Centralized parsing logic in a new `MetadataHandler` for better maintainability and robustness across different player types (Local and Cast).
+- **Chained Stream Support**: Enhanced handling of Ogg "chained" streams, allowing for instant track title updates during continuous playback without requiring a stream restart.
+
 ## [1.25] - 2026-08-19
 ### Added
 - **Google Cast (Chromecast) Support**: Full integration with the modern **Media3 Cast** framework. 

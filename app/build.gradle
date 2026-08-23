@@ -61,7 +61,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 147
+        versionCode 148
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true
