@@ -229,7 +229,7 @@ fun MainScreen(
                             )
                         }
                         composable(Screen.Favourites.route) {
-                            val viewModel: LocalStationsViewModel = viewModel(key = "starred", factory = LocalStationsViewModelFactory(app, false))
+                            val viewModel: LocalStationsViewModel = viewModel(key = "starred", factory = LocalStationsViewModelFactory(app, LocalManagerType.FAVOURITES))
                             StarredScreen(
                                 viewModel = viewModel,
                                 onStationClick = { station -> 
@@ -241,7 +241,7 @@ fun MainScreen(
                             )
                         }
                         composable(Screen.History.route) {
-                            val localViewModel: LocalStationsViewModel = viewModel(key = "history", factory = LocalStationsViewModelFactory(app, true))
+                            val localViewModel: LocalStationsViewModel = viewModel(key = "history", factory = LocalStationsViewModelFactory(app, LocalManagerType.HISTORY))
                             HistoryScreen(
                                 localStationsViewModel = localViewModel,
                                 trackHistoryViewModel = trackHistoryViewModel,

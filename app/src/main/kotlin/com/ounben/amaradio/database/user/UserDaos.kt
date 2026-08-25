@@ -84,3 +84,39 @@ interface FilterTabDao {
         insertAll(tabs)
     }
 }
+
+@Dao
+interface CustomStationDao {
+    @Query("SELECT * FROM custom_station ORDER BY displayOrder ASC")
+    fun getAllCustomStationsFlow(): Flow<List<CustomStationEntity>>
+
+    @Query("SELECT * FROM custom_station ORDER BY displayOrder ASC")
+    suspend fun getAllCustomStations(): List<CustomStationEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(station: CustomStationEntity)
+
+    @Update
+    suspend fun update(station: CustomStationEntity)
+
+    @Delete
+    suspend fun delete(station: CustomStationEntity)
+
+    @Query("DELETE FROM custom_station WHERE stationUuid = :uuid")
+    suspend fun deleteByUuid(uuid: String)
+
+    @Query("SELECT MAX(displayOrder) FROM custom_station")
+    suspend fun getMaxOrder(): Int?
+
+    @Transaction
+    suspend fun updateAll(stations: List<CustomStationEntity>) {
+        deleteAll()
+        insertAll(stations)
+    }
+
+    @Query("DELETE FROM custom_station")
+    suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(stations: List<CustomStationEntity>)
+}

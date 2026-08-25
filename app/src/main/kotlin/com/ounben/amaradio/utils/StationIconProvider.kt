@@ -7,6 +7,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.ParcelFileDescriptor
 import android.util.Log
+import androidx.core.net.toUri
 import coil.imageLoader
 import java.io.File
 import java.io.FileOutputStream
@@ -47,6 +48,16 @@ class StationIconProvider : ContentProvider() {
         // Nur zurückgeben, wenn die Datei existiert und KEIN kleiner Platzhalter ist
         if (iconFile.exists() && iconFile.length() > 2048) { // Echte Bilder sind meist > 2KB
             return ParcelFileDescriptor.open(iconFile, ParcelFileDescriptor.MODE_READ_ONLY)
+        }
+
+        // 1b. Check if remoteUrl is a local file path
+        if (!remoteUrl.isNullOrBlank() && remoteUrl.startsWith("file:/")) {
+            try {
+                val localFile = File(remoteUrl.toUri().path ?: "")
+                if (localFile.exists()) {
+                    return ParcelFileDescriptor.open(localFile, ParcelFileDescriptor.MODE_READ_ONLY)
+                }
+            } catch (_: Exception) {}
         }
 
         // 2. Fallback: Suche in Coils internem Cache (wo die App-Liste ihre Bilder speichert)

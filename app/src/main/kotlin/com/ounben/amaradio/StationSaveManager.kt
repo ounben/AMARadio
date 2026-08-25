@@ -2,6 +2,8 @@ package com.ounben.amaradio
 
 import android.content.Context
 import android.util.Log
+import com.ounben.amaradio.database.toCustomEntity
+import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.FavoriteEntity
 import com.ounben.amaradio.database.user.HistoryEntity
@@ -48,6 +50,11 @@ open class StationSaveManager(protected val context: Context) {
                     val stations = entities.map { it.toDataStation() }
                     updateInMem(stations)
                 }
+            } else if (getSaveId() == "custom") {
+                userDb.customStationDao().getAllCustomStationsFlow().collect { entities ->
+                    val stations = entities.map { it.toDataStation() }
+                    updateInMem(stations)
+                }
             }
         }
     }
@@ -84,6 +91,9 @@ open class StationSaveManager(protected val context: Context) {
                 userDb.favoriteDao().insert(station.toFavoriteEntity())
             } else if (getSaveId() == "history") {
                 userDb.historyDao().addStation(station.toHistoryEntity())
+            } else if (getSaveId() == "custom") {
+                val maxOrder = userDb.customStationDao().getMaxOrder() ?: -1
+                userDb.customStationDao().insert(station.toCustomEntity(maxOrder + 1))
             }
             withContext(Dispatchers.Main) {
                 stationStatusListener?.onStationStatusChanged(station, favourite = true)
@@ -99,6 +109,9 @@ open class StationSaveManager(protected val context: Context) {
                     userDb.favoriteDao().insert(station.toFavoriteEntity())
                 } else if (getSaveId() == "history") {
                     userDb.historyDao().insert(station.toHistoryEntity())
+                } else if (getSaveId() == "custom") {
+                    val maxOrder = userDb.customStationDao().getMaxOrder() ?: -1
+                    userDb.customStationDao().insert(station.toCustomEntity(maxOrder + 1))
                 }
             }
         }
@@ -136,6 +149,8 @@ open class StationSaveManager(protected val context: Context) {
                     userDb.favoriteDao().deleteByUuid(id)
                 } else if (getSaveId() == "history") {
                     userDb.historyDao().deleteByUuid(id)
+                } else if (getSaveId() == "custom") {
+                    userDb.customStationDao().deleteByUuid(id)
                 }
                 withContext(Dispatchers.Main) {
                     stationStatusListener?.onStationStatusChanged(station, favourite = false)
@@ -157,6 +172,8 @@ open class StationSaveManager(protected val context: Context) {
                 list.forEach { userDb.favoriteDao().delete(it) }
             } else if (getSaveId() == "history") {
                 userDb.historyDao().clearAll()
+            } else if (getSaveId() == "custom") {
+                userDb.customStationDao().deleteAll()
             }
         }
     }

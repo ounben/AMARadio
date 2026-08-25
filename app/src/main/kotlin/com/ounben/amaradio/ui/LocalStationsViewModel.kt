@@ -20,7 +20,11 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.withContext
 import kotlinx.coroutines.Dispatchers
 
-class LocalStationsViewModel(application: Application, isHistory: Boolean) : AndroidViewModel(application) {
+enum class LocalManagerType {
+    HISTORY, FAVOURITES, CUSTOM
+}
+
+class LocalStationsViewModel(application: Application, type: LocalManagerType) : AndroidViewModel(application) {
 
     data class LocalStationsUiState(
         val stations: List<DataRadioStation> = emptyList(),
@@ -33,7 +37,11 @@ class LocalStationsViewModel(application: Application, isHistory: Boolean) : And
     val uiState: StateFlow<LocalStationsUiState> = _uiState.asStateFlow()
 
     private val app = application as AMARadioApp
-    private val manager = if (isHistory) app.historyManager else app.favouriteManager
+    private val manager = when (type) {
+        LocalManagerType.HISTORY -> app.historyManager
+        LocalManagerType.FAVOURITES -> app.favouriteManager
+        LocalManagerType.CUSTOM -> app.customStationManager
+    }
     private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
 
     private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -83,9 +91,9 @@ class LocalStationsViewModel(application: Application, isHistory: Boolean) : And
     }
 }
 
-class LocalStationsViewModelFactory(private val app: AMARadioApp, private val isHistory: Boolean) : ViewModelProvider.Factory {
+class LocalStationsViewModelFactory(private val app: AMARadioApp, private val type: LocalManagerType) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        return LocalStationsViewModel(app, isHistory) as T
+        return LocalStationsViewModel(app, type) as T
     }
 }

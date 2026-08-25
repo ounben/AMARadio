@@ -333,6 +333,15 @@
 
     <string name="context_menu_delete">@string/action_delete</string>
 
+    <string name="tab_custom_stations">Custom</string>
+    <string name="action_add_custom">Add Custom Station</string>
+    <string name="station_name">Station Name</string>
+    <string name="stream_url">Stream URL</string>
+    <string name="favicon_url">Favicon URL (optional)</string>
+    <string name="select_image">Select Image</string>
+    <string name="error_invalid_url">Please enter a valid URL</string>
+    <string name="action_save">Save</string>
+
     <!-- Accessibility -->
     <string name="accessibility_station_logo">Station logo</string>
     <string name="accessibility_favorite_selected">Favorite, selected</string>

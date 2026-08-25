@@ -77,6 +77,13 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                 }
             }
+            MEDIA_ID_MUSICS_CUSTOM -> {
+                scope.future {
+                    val stations = app.customStationManager.getList()
+                    val mediaItems = createMediaItemsFromStations(stations)
+                    LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
+                }
+            }
             else -> {
                 if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
                     val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
@@ -146,7 +153,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     fun onGetItem(browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
         val stationId = stationIdFromMediaId(mediaId)
-        val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
+        val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId) ?: app.customStationManager.getById(stationId)
         
         if (station != null) {
             val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
@@ -187,6 +194,12 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
         }?.let { return it.StationUuid }
+
+        val customs = app.customStationManager.getList()
+        customs.find { station ->
+            val name = station.Name.lowercase()
+            keywords.all { name.contains(it) }
+        }?.let { return it.StationUuid }
         
         val firstKeyword = keywords[0]
         val results = stationDao.getStationsFiltered(
@@ -200,21 +213,12 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         return results.firstOrNull()?.stationUuid
     }
 
-    fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId)
+    fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId) ?: app.customStationManager.getById(stationId)
 
     private fun createBrowsableMediaItemsForRoot(): List<MediaItem> {
         val resources = app.resources
         val mediaItems = ArrayList<MediaItem>()
         val packageName = app.packageName
-
-        val filterIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
-        mediaItems.add(MediaItem.Builder()
-            .setMediaId(MEDIA_ID_FILTERS_GROUP)
-            .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
-                app.getString(R.string.action_filter),
-                filterIconUri
-            ))
-            .build())
 
         val favoriteIconUri = Uri.parse("android.resource://$packageName/drawable/ic_star_white_24")
         mediaItems.add(MediaItem.Builder()
@@ -224,6 +228,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 favoriteIconUri
             ))
             .build())
+
+        val customIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_MUSICS_CUSTOM)
+            .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
+                resources.getString(R.string.tab_custom_stations),
+                customIconUri
+            ))
+            .build())
             
         val historyIconUri = Uri.parse("android.resource://$packageName/drawable/ic_restore_white_24")
         mediaItems.add(MediaItem.Builder()
@@ -231,6 +244,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
                 resources.getString(R.string.nav_item_history),
                 historyIconUri
+            ))
+            .build())
+
+        val filterIconUri = Uri.parse("android.resource://$packageName/drawable/ic_list_white_24dp")
+        mediaItems.add(MediaItem.Builder()
+            .setMediaId(MEDIA_ID_FILTERS_GROUP)
+            .setMediaMetadata(com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
+                app.getString(R.string.action_filter),
+                filterIconUri
             ))
             .build())
         
@@ -270,6 +292,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         const val MEDIA_ID_ROOT = "root_id"
         const val MEDIA_ID_FILTERS_GROUP = "filters_group_id"
         const val MEDIA_ID_MUSICS_FAVORITE = "favorites_id"
+        const val MEDIA_ID_MUSICS_CUSTOM = "custom_id"
         const val MEDIA_ID_MUSICS_HISTORY = "history_id"
         const val MEDIA_ID_FILTER_PREFIX = "filter_"
         const val LEAF_PREFIX = "station_"
