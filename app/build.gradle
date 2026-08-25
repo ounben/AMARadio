@@ -8,7 +8,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "1.25"
+def appVersion = "1.27"
 
 base {
     archivesName = "AMARadio_${appVersion}"
@@ -61,7 +61,7 @@ android {
         minSdkVersion 26
         targetSdkVersion 37
 
-        versionCode 148
+        versionCode 149
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true

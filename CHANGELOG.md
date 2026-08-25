@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.27] - 2026-08-25
+### Changed
+- **Media3 Performance Optimization**: Successfully migrated the Media3 Artwork loading system to the **Coil** image loading framework. 
+    - This eliminates redundant "naked" HTTP downloads by the system and utilizes the app's existing high-performance disk and memory caches.
+    - Improved memory management through automated downsampling, preventing OOM issues on lower-end devices during station transitions.
+
 ## [1.26] - 2026-08-23
 ### Added
 - **Extended Metadata Support**: Full support for **Ogg Vorbis** and **Opus** stream metadata.
