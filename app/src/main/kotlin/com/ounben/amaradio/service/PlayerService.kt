@@ -54,6 +54,7 @@ import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
+import com.ounben.amaradio.utils.CoilBitmapLoader
 import com.ounben.amaradio.utils.StationPlaceholderUtils
 import com.ounben.amaradio.widget.WidgetUpdateHelper
 import kotlinx.coroutines.*
@@ -272,6 +273,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         mediaSession = MediaLibrarySession.Builder(this, initialPlayer, MediaSessionCallback(this, amaradioBrowser))
             .setId(sessionId)
             .setSessionActivity(sessionActivityPendingIntent)
+            .setBitmapLoader(CoilBitmapLoader(this))
             .setSessionExtras(Bundle().apply { putString("android.media.metadata.ATTRIBUTION_TAG", "player_service") })
             .build()
         
