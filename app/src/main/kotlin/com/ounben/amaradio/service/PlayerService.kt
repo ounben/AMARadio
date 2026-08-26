@@ -16,6 +16,7 @@ import android.media.AudioFocusRequest
 import android.media.AudioManager
 import android.media.ToneGenerator
 import android.media.audiofx.AudioEffect
+import android.net.Uri
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.os.CountDownTimer
@@ -809,89 +810,64 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private suspend fun fetchStationBitmap(station: DataRadioStation): Bitmap {
-        val iconDir = File(cacheDir, "station_icons").apply { if (!exists()) mkdirs() }
+        val iconDir = File(filesDir, "station_icons").apply { if (!exists()) mkdirs() }
         val iconFile = File(iconDir, "${station.StationUuid}.jpg")
 
-        // 1. STRIKT: Erst im UUID-basierten Cache nachsehen
+        // 1. CHECK: If IconUrl is a local file, prioritize it
+        if (station.IconUrl.startsWith("file:/")) {
+            try {
+                // Strip query parameters (?t=...) for File matching
+                val cleanPath = Uri.parse(station.IconUrl).path ?: ""
+                val localFile = File(cleanPath)
+                if (localFile.exists()) {
+                    val request = ImageRequest.Builder(this)
+                        .data(localFile)
+                        .size(512, 512)
+                        .allowHardware(false)
+                        .build()
+                    val result = imageLoader.execute(request)
+                    if (result is SuccessResult) {
+                        val bitmap = (result.drawable as? android.graphics.drawable.BitmapDrawable)?.bitmap
+                        if (bitmap != null) return bitmap
+                    }
+                }
+            } catch (_: Exception) {}
+        }
+
+        // 2. STRIKT: Im UUID-basierten Cache nachsehen (den die Liste befüllt)
         if (iconFile.exists()) {
             try {
                 val request = ImageRequest.Builder(this)
                     .data(iconFile)
                     .size(512, 512)
-                    .allowHardware(false) // Binder-Sicherheit
+                    .allowHardware(false)
                     .build()
                 val result = imageLoader.execute(request)
                 if (result is SuccessResult) {
                     val bitmap = (result.drawable as? android.graphics.drawable.BitmapDrawable)?.bitmap
-                    if (bitmap != null) {
-                        if (Utils.isDebug) {
-                            Log.d("METADATA_DEBUG", "Bild aus Cache geladen für ID: ${station.StationUuid}")
-                        }
-                        return bitmap
-                    }
+                    if (bitmap != null) return bitmap
                 }
-            } catch (e: Exception) {
-                if (Utils.isDebug) {
-                    Log.e(tag, "Failed to decode cached icon", e)
-                }
-            }
+            } catch (_: Exception) {}
         }
 
-        // 2. STRIKT: Über IconUrl (URL vom Radio-Browser) laden
-        if (station.IconUrl.isNotEmpty()) {
+        // 3. STRIKT: Über URL laden (falls vorhanden)
+        if (station.IconUrl.isNotEmpty() && station.IconUrl.startsWith("http")) {
             try {
-                if (Utils.isDebug) {
-                    Log.d("METADATA_DEBUG", "Lade Bild von URL: ${station.IconUrl}")
-                }
-                val request = ImageRequest.Builder(this@PlayerService)
+                val request = ImageRequest.Builder(this)
                     .data(station.IconUrl)
                     .size(512, 512)
-                    .allowHardware(false) // Binder-Sicherheit
+                    .allowHardware(false)
                     .build()
                 val result = imageLoader.execute(request)
                 if (result is SuccessResult) {
-                    val bitmap = result.drawable.toBitmap(512, 512, Bitmap.Config.RGB_565)
+                    val bitmap = result.drawable.toBitmap(512, 512, Bitmap.Config.ARGB_8888)
                     saveBitmapToFile(bitmap, iconFile)
                     return bitmap
                 }
-            } catch (e: Exception) {
-                if (Utils.isDebug) {
-                    Log.e(tag, "URL fetch failed for ID ${station.StationUuid}: ${station.IconUrl}", e)
-                }
-            }
+            } catch (_: Exception) {}
         }
 
-        // 3. FALLBACK: Lokales Drawable via ID (Präfix 's_', da Ressourcen-IDs nicht mit Zahlen starten dürfen)
-        val uuidResName = "s_" + station.StationUuid.lowercase().replace("-", "_")
-        val uuidResId = resources.getIdentifier(uuidResName, "drawable", packageName)
-        if (uuidResId != 0) {
-            if (Utils.isDebug) {
-                Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für ID: $uuidResName")
-            }
-            try {
-                val bitmap = ResourcesCompat.getDrawable(resources, uuidResId, null)!!.toBitmap(512, 512, Bitmap.Config.RGB_565)
-                saveBitmapToFile(bitmap, iconFile)
-                return bitmap
-            } catch (e: Exception) { /* ignore */ }
-        }
-
-        // 4. FALLBACK: Lokales Drawable via Name
-        val resName = station.Name.lowercase().replace(Regex("[^a-z0-9]"), "_").replace(Regex("__+"), "_").trim('_')
-        val resId = resources.getIdentifier(resName, "drawable", packageName)
-        if (resId != 0) {
-            if (Utils.isDebug) {
-                Log.d("METADATA_DEBUG", "Lokales Drawable gefunden für Name: $resName")
-            }
-            try {
-                val bitmap = ResourcesCompat.getDrawable(resources, resId, null)!!.toBitmap(512, 512, Bitmap.Config.RGB_565)
-                saveBitmapToFile(bitmap, iconFile)
-                return bitmap
-            } catch (e: Exception) { /* ignore */ }
-        }
-
-        if (Utils.isDebug) {
-            Log.w("METADATA_DEBUG", "Kein spezifisches Bild gefunden für ID: ${station.StationUuid}. Generiere dynamischen Platzhalter.")
-        }
+        // 4. FALLBACK: Platzhalter generieren und speichern (Wichtig für Android Auto/Notifications)
         val placeholder = StationPlaceholderUtils.createPlaceholderBitmap(station.Name, station.StationUuid)
         saveBitmapToFile(placeholder, iconFile)
         return placeholder

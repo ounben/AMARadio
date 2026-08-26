@@ -35,18 +35,29 @@ class CustomStationsViewModel(application: Application) : AndroidViewModel(appli
 
     fun addCustomStation(name: String, url: String, iconUri: Uri?) {
         viewModelScope.launch(Dispatchers.IO) {
-            val stationUuid = CustomStationManager.generateUuidFromUrl(url)
-            var finalIconUrl = ""
+            // Check global database first for existing metadata
+            val catalogDb = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(app)
+            val existingStation = catalogDb.stationDao().getStationByUrl(url)
+            
+            val stationUuid = existingStation?.stationUuid ?: CustomStationManager.generateUuidFromUrl(url)
+            var finalIconUrl = existingStation?.favicon ?: ""
 
+            // Local image provided by user always wins
             if (iconUri != null) {
                 finalIconUrl = saveIconLocally(iconUri, stationUuid)
             }
 
             val station = DataRadioStation(
-                Name = name,
+                Name = name.ifBlank { existingStation?.name ?: "Custom Radio" },
                 StationUuid = stationUuid,
                 StreamUrl = url,
-                IconUrl = finalIconUrl
+                IconUrl = finalIconUrl,
+                Country = existingStation?.country ?: "",
+                CountryCode = existingStation?.countryCode ?: "",
+                TagsAll = existingStation?.tags ?: "",
+                Language = existingStation?.language ?: "",
+                Codec = existingStation?.codec ?: "",
+                Bitrate = existingStation?.bitrate ?: 0
             )
             manager.add(station)
         }
@@ -64,16 +75,22 @@ class CustomStationsViewModel(application: Application) : AndroidViewModel(appli
     }
 
     private suspend fun saveIconLocally(uri: Uri, uuid: String): String = withContext(Dispatchers.IO) {
-        val iconDir = File(app.filesDir, "station_pictures").apply { if (!exists()) mkdirs() }
+        val iconDir = File(app.filesDir, "station_icons").apply { if (!exists()) mkdirs() }
         val iconFile = File(iconDir, "$uuid.jpg")
         
+        // Force delete old file to ensure overwrite works and cache is invalidated
+        if (iconFile.exists()) iconFile.delete()
+
         try {
             app.contentResolver.openInputStream(uri)?.use { input ->
                 FileOutputStream(iconFile).use { output ->
                     input.copyTo(output)
                 }
             }
-            Uri.fromFile(iconFile).toString()
+            // Append timestamp as cache-buster for Coil
+            Uri.fromFile(iconFile).buildUpon()
+                .appendQueryParameter("t", System.currentTimeMillis().toString())
+                .build().toString()
         } catch (e: Exception) {
             ""
         }

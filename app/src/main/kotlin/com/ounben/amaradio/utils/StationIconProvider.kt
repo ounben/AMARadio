@@ -26,6 +26,9 @@ class StationIconProvider : ContentProvider() {
             
             if (!remoteUrl.isNullOrBlank() && remoteUrl != "null") {
                 builder.appendQueryParameter("url", remoteUrl)
+                // Pass through timestamp if present to invalidate external caches (Android Auto)
+                val uri = remoteUrl.toUri()
+                uri.getQueryParameter("t")?.let { builder.appendQueryParameter("t", it) }
             }
             
             return builder.build()
@@ -41,8 +44,8 @@ class StationIconProvider : ContentProvider() {
         
         val ctx = context ?: return null
         
-        // 1. Suche im Master-Ordner station_icons
-        val iconDir = File(ctx.cacheDir, "station_icons")
+        // 1. Suche im permanenten Ordner station_icons
+        val iconDir = File(ctx.filesDir, "station_icons")
         val iconFile = File(iconDir, "$stationUuid.jpg")
 
         // Nur zurückgeben, wenn die Datei existiert und KEIN kleiner Platzhalter ist

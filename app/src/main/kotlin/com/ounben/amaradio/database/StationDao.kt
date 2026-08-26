@@ -71,4 +71,7 @@ interface StationDao {
 
     @Query("DELETE FROM Station")
     suspend fun deleteAll()
+
+    @Query("SELECT * FROM Station WHERE Url = :url OR UrlCache = :url LIMIT 1")
+    suspend fun getStationByUrl(url: String): StationEntity?
 }

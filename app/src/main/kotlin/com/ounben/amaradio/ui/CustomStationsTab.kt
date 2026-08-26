@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.utils.StationIconProvider
 
 @Composable
 fun CustomStationsTab(
@@ -125,11 +126,11 @@ fun StationItem(
         headlineContent = { Text(station.Name, fontWeight = FontWeight.Bold) },
         supportingContent = { Text(station.StreamUrl, maxLines = 1) },
         leadingContent = {
-            AsyncImage(
-                model = station.IconUrl.ifEmpty { R.drawable.ic_radio_white_24dp },
-                contentDescription = null,
-                modifier = Modifier.size(48.dp),
-                contentScale = ContentScale.Crop
+            StationIcon(
+                stationName = station.Name,
+                stationUuid = station.StationUuid,
+                iconUrl = station.IconUrl,
+                modifier = Modifier.size(48.dp)
             )
         },
         trailingContent = {

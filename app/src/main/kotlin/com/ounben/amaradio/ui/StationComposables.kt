@@ -69,14 +69,20 @@ fun StationIcon(
     val placeholderColor = remember(stationUuid) { Color(StationPlaceholderUtils.getPlaceholderColor(stationUuid)) }
     
     val finalIconUri = remember(stationUuid, iconUrl) {
-        val iconDir = File(context.cacheDir, "station_icons")
+        val iconDir = File(context.filesDir, "station_icons")
         val iconFile = File(iconDir, "$stationUuid.jpg")
         
-        if (iconFile.exists()) {
+        if (!iconUrl.isNullOrBlank() && iconUrl.startsWith("file:/")) {
+            // Custom station with local picture: Use the timestamped URL from DB
+            android.net.Uri.parse(iconUrl)
+        } else if (iconFile.exists()) {
+            // Normal station with cached image
             StationIconProvider.getIconUri(stationUuid, stationName)
         } else if (!iconUrl.isNullOrBlank() && iconUrl != "null" && iconUrl.startsWith("http")) {
+            // Normal station, not yet cached: Use remote URL
             android.net.Uri.parse(iconUrl)
         } else {
+            // No URL and no cache: Show placeholder via provider
             StationIconProvider.getIconUri(stationUuid, stationName)
         }
     }
@@ -93,8 +99,8 @@ fun StationIcon(
             .listener(
                 onSuccess = { _, result ->
                     // AUTOMATISCHES SPEICHERN: Wenn das Bild am Handy geladen wurde,
-                    // speichern wir es für das Widget/Android Auto im station_icons Ordner ab.
-                    val iconDir = File(context.cacheDir, "station_icons")
+                    // speichern wir es permanent für das Widget/Android Auto ab.
+                    val iconDir = File(context.filesDir, "station_icons")
                     val iconFile = File(iconDir, "$stationUuid.jpg")
                     if (!iconFile.exists()) {
                         CoroutineScope(Dispatchers.IO).launch {
