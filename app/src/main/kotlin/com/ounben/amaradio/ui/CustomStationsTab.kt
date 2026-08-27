@@ -66,8 +66,9 @@ fun CustomStationsTab(
         FloatingActionButton(
             onClick = { showAddDialog = true },
             modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
         ) {
             Icon(Icons.Default.Add, contentDescription = stringResource(R.string.action_add_custom))
         }
@@ -98,6 +99,8 @@ fun CustomStationsTab(
     stationToDelete?.let { station ->
         AlertDialog(
             onDismissRequest = { stationToDelete = null },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
             title = { Text(stringResource(R.string.action_delete)) },
             text = { Text(station.Name) },
             confirmButton = {
@@ -177,6 +180,8 @@ fun AddEditCustomStationDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp,
         title = { Text(if (station == null) stringResource(R.string.action_add_custom) else stringResource(R.string.action_edit)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
