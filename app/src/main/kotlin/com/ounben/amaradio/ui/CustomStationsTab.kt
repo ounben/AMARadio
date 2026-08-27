@@ -6,6 +6,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -36,6 +39,7 @@ fun CustomStationsTab(
     var showAddDialog by remember { mutableStateOf(false) }
     var stationToEdit by remember { mutableStateOf<DataRadioStation?>(null) }
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }
+    var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
     Box(modifier = Modifier.fillMaxSize()) {
         if (uiState.filteredStations.isEmpty()) {
@@ -44,6 +48,22 @@ fun CustomStationsTab(
                     text = stringResource(R.string.searchpreference_no_results),
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+            }
+        } else if (uiState.isGrid) {
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(140.dp),
+                modifier = Modifier.fillMaxSize(),
+                contentPadding = PaddingValues(8.dp)
+            ) {
+                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { index, station ->
+                    StationGridItem(
+                        station = station,
+                        isFavorite = true, // Custom stations are always in this list
+                        onClick = { onStationClick(station) },
+                        onFavoriteClick = { /* No-op or remove? */ },
+                        onLongClick = { stationWithOptions = station }
+                    )
+                }
             }
         } else {
             LazyColumn(
@@ -114,6 +134,78 @@ fun CustomStationsTab(
             }
         )
     }
+
+    stationWithOptions?.let { station ->
+        val index = uiState.filteredStations.indexOf(station)
+        CustomStationOptionsDialog(
+            station = station,
+            onDismiss = { stationWithOptions = null },
+            onEdit = { 
+                stationToEdit = station
+                stationWithOptions = null
+            },
+            onDelete = {
+                stationToDelete = station
+                stationWithOptions = null
+            },
+            onMoveUp = if (index > 0) { { viewModel.reorder(index, index - 1) } } else null,
+            onMoveDown = if (index < uiState.filteredStations.size - 1) { { viewModel.reorder(index, index + 1) } } else null
+        )
+    }
+}
+
+@Composable
+fun CustomStationOptionsDialog(
+    station: DataRadioStation,
+    onDismiss: () -> Unit,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit,
+    onMoveUp: (() -> Unit)?,
+    onMoveDown: (() -> Unit)?
+) {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp,
+        title = { Text(station.Name) },
+        text = {
+            Column {
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_edit)) },
+                    leadingContent = { Icon(Icons.Default.Edit, contentDescription = null) },
+                    modifier = Modifier.clickable { onEdit() }
+                )
+                if (onMoveUp != null) {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_previous)) }, // Reuse skip prev for Up
+                        leadingContent = { Icon(Icons.Default.ArrowUpward, contentDescription = null) },
+                        modifier = Modifier.clickable { 
+                            onMoveUp()
+                            onDismiss()
+                        }
+                    )
+                }
+                if (onMoveDown != null) {
+                    ListItem(
+                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_next)) }, // Reuse skip next for Down
+                        leadingContent = { Icon(Icons.Default.ArrowDownward, contentDescription = null) },
+                        modifier = Modifier.clickable { 
+                            onMoveDown()
+                            onDismiss()
+                        }
+                    )
+                }
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) },
+                    leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                    modifier = Modifier.clickable { onDelete() }
+                )
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
+        }
+    )
 }
 
 @Composable

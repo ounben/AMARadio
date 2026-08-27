@@ -1,9 +1,11 @@
 package com.ounben.amaradio.ui
 
 import android.app.Application
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.CustomStationManager
 import com.ounben.amaradio.station.DataRadioStation
@@ -16,21 +18,39 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
-import java.util.UUID
 
 class CustomStationsViewModel(application: Application) : AndroidViewModel(application) {
     private val app = application as AMARadioApp
     private val manager = app.customStationManager
+    private val sharedPref = PreferenceManager.getDefaultSharedPreferences(application)
 
     private val _uiState = MutableStateFlow(LocalStationsViewModel.LocalStationsUiState())
     val uiState: StateFlow<LocalStationsViewModel.LocalStationsUiState> = _uiState.asStateFlow()
 
+    private val prefListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+        if (key == "icons_only_favorites_style") {
+            refreshGridMode()
+        }
+    }
+
     init {
+        refreshGridMode()
+        sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
+        
         viewModelScope.launch {
             manager.stationsFlow.collect { stations ->
                 _uiState.update { it.copy(stations = stations, filteredStations = stations) }
             }
         }
+    }
+
+    override fun onCleared() {
+        sharedPref.unregisterOnSharedPreferenceChangeListener(prefListener)
+    }
+
+    fun refreshGridMode() {
+        val isGrid = sharedPref.getBoolean("icons_only_favorites_style", false)
+        _uiState.update { it.copy(isGrid = isGrid) }
     }
 
     fun addCustomStation(name: String, url: String, iconUri: Uri?) {
