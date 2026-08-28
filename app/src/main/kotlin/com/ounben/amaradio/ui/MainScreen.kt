@@ -236,8 +236,11 @@ fun MainScreen(
                                     if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
                                     else playerViewModel.play(station)
                                 },
-                                onFavoriteClick = { station -> app.favouriteManager.remove(station.StationUuid) },
-                                isFavorite = { true }
+                                onFavoriteClick = { station -> 
+                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                    else app.favouriteManager.add(station)
+                                },
+                                isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
                             )
                         }
                         composable(Screen.History.route) {

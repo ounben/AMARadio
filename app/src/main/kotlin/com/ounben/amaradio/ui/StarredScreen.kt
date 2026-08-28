@@ -87,7 +87,9 @@ fun StarredScreen(
                 } else {
                     CustomStationsTab(
                         viewModel = customViewModel,
-                        onStationClick = onStationClick
+                        onStationClick = onStationClick,
+                        onFavoriteClick = onFavoriteClick,
+                        isFavorite = isFavorite
                     )
                 }
             }

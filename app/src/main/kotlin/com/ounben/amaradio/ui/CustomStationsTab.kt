@@ -17,23 +17,35 @@ import androidx.compose.material.icons.filled.ArrowUpward
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
+import com.ounben.amaradio.players.PlayStationTask
+import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.station.StationActions
 import com.ounben.amaradio.utils.StationIconProvider
 
 @Composable
 fun CustomStationsTab(
     viewModel: CustomStationsViewModel,
-    onStationClick: (DataRadioStation) -> Unit
+    onStationClick: (DataRadioStation) -> Unit,
+    onFavoriteClick: (DataRadioStation) -> Unit,
+    isFavorite: (String) -> Boolean
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
@@ -55,12 +67,12 @@ fun CustomStationsTab(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { index, station ->
+                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { _, station ->
                     StationGridItem(
                         station = station,
-                        isFavorite = true, // Custom stations are always in this list
+                        isFavorite = isFavorite(station.StationUuid),
                         onClick = { onStationClick(station) },
-                        onFavoriteClick = { /* No-op or remove? */ },
+                        onFavoriteClick = { onFavoriteClick(station) },
                         onLongClick = { stationWithOptions = station }
                     )
                 }
@@ -70,15 +82,15 @@ fun CustomStationsTab(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { index, station ->
-                    StationItem(
+                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { _, station ->
+                    StationListItem(
                         station = station,
+                        isFavorite = isFavorite(station.StationUuid),
                         onClick = { onStationClick(station) },
-                        onEditClick = { stationToEdit = station },
-                        onDeleteClick = { stationToDelete = station },
-                        onMoveUp = if (index > 0) { { viewModel.reorder(index, index - 1) } } else null,
-                        onMoveDown = if (index < uiState.filteredStations.size - 1) { { viewModel.reorder(index, index + 1) } } else null
+                        onFavoriteClick = { onFavoriteClick(station) },
+                        onLongClick = { stationWithOptions = station }
                     )
+                    HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                 }
             }
         }
@@ -163,94 +175,98 @@ fun CustomStationOptionsDialog(
     onMoveUp: (() -> Unit)?,
     onMoveDown: (() -> Unit)?
 ) {
+    val context = LocalContext.current
+
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp,
-        title = { Text(station.Name) },
+        title = { Text(station.Name, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.action_edit)) },
-                    leadingContent = { Icon(Icons.Default.Edit, contentDescription = null) },
-                    modifier = Modifier.clickable { onEdit() }
+                    headlineContent = { Text(stringResource(R.string.detail_play), color = MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Default.PlayCircle, contentDescription = null, tint = AmaradioAmber) },
+                    modifier = Modifier.clickable {
+                        StationActions.playInAMARadio(context, station)
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_play_in_external), color = MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    modifier = Modifier.clickable {
+                        Utils.playAndWarnIfMetered(context, station, PlayerType.EXTERNAL) {
+                            PlayStationTask.playExternal(station, context).execute()
+                        }
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+                
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
+
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_edit), color = MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    modifier = Modifier.clickable { onEdit() },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
                 if (onMoveUp != null) {
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_previous)) }, // Reuse skip prev for Up
-                        leadingContent = { Icon(Icons.Default.ArrowUpward, contentDescription = null) },
+                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_previous), color = MaterialTheme.colorScheme.onSurface) },
+                        leadingContent = { Icon(Icons.Default.ArrowUpward, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { 
                             onMoveUp()
                             onDismiss()
-                        }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
                 if (onMoveDown != null) {
                     ListItem(
-                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_next)) }, // Reuse skip next for Down
-                        leadingContent = { Icon(Icons.Default.ArrowDownward, contentDescription = null) },
+                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_next), color = MaterialTheme.colorScheme.onSurface) },
+                        leadingContent = { Icon(Icons.Default.ArrowDownward, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                         modifier = Modifier.clickable { 
                             onMoveDown()
                             onDismiss()
-                        }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                     )
                 }
+
+                HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
+
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_station_visit_website), color = MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    modifier = Modifier.clickable {
+                        StationActions.openStationHomeUrl(context, station)
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
+                ListItem(
+                    headlineContent = { Text(stringResource(R.string.action_station_share), color = MaterialTheme.colorScheme.onSurface) },
+                    leadingContent = { Icon(Icons.Default.Share, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    modifier = Modifier.clickable {
+                        StationActions.share(context, station)
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
+                )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) },
                     leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
-                    modifier = Modifier.clickable { onDelete() }
+                    modifier = Modifier.clickable { onDelete() },
+                    colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
             }
         },
         confirmButton = {
             TextButton(onClick = onDismiss) { Text(stringResource(R.string.action_cancel)) }
         }
-    )
-}
-
-@Composable
-fun StationItem(
-    station: DataRadioStation,
-    onClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-    onMoveUp: (() -> Unit)? = null,
-    onMoveDown: (() -> Unit)? = null
-) {
-    ListItem(
-        headlineContent = { Text(station.Name, fontWeight = FontWeight.Bold) },
-        supportingContent = { Text(station.StreamUrl, maxLines = 1) },
-        leadingContent = {
-            StationIcon(
-                stationName = station.Name,
-                stationUuid = station.StationUuid,
-                iconUrl = station.IconUrl,
-                modifier = Modifier.size(48.dp)
-            )
-        },
-        trailingContent = {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                Column {
-                    if (onMoveUp != null) {
-                        IconButton(onClick = onMoveUp, modifier = Modifier.size(24.dp)) {
-                            Icon(Icons.Default.ArrowUpward, contentDescription = null, modifier = Modifier.size(16.dp))
-                        }
-                    }
-                    if (onMoveDown != null) {
-                        IconButton(onClick = onMoveDown, modifier = Modifier.size(24.dp)) {
-                            Icon(Icons.Default.ArrowDownward, contentDescription = null, modifier = Modifier.size(16.dp))
-                        }
-                    }
-                }
-                IconButton(onClick = onEditClick) {
-                    Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.action_edit))
-                }
-                IconButton(onClick = onDeleteClick) {
-                    Icon(Icons.Default.Delete, contentDescription = stringResource(R.string.action_delete))
-                }
-            }
-        },
-        modifier = Modifier.clickable(onClick = onClick)
     )
 }
 
