@@ -1,32 +1,37 @@
 package com.ounben.amaradio.ui
 
+import android.content.ClipData
+import android.content.ClipDescription
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.draganddrop.dragAndDropSource
+import androidx.compose.foundation.draganddrop.dragAndDropTarget
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowDownward
-import androidx.compose.material.icons.filled.ArrowUpward
-import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Language
-import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.PlayCircle
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.DragAndDropTarget
+import androidx.compose.ui.draganddrop.DragAndDropTransferData
+import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.boundsInParent
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -38,8 +43,8 @@ import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
-import com.ounben.amaradio.utils.StationIconProvider
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun CustomStationsTab(
     viewModel: CustomStationsViewModel,
@@ -53,12 +58,22 @@ fun CustomStationsTab(
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
+    val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
+    var isDraggingActive by remember { mutableStateOf(false) }
+
+    LaunchedEffect(uiState.filteredStations) {
+        if (!isDraggingActive) {
+            stationsLocal.clear()
+            stationsLocal.addAll(uiState.filteredStations)
+        }
+    }
+
     Box(modifier = Modifier.fillMaxSize()) {
-        if (uiState.filteredStations.isEmpty()) {
+        if (stationsLocal.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(
                     text = stringResource(R.string.searchpreference_no_results),
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         } else if (uiState.isGrid) {
@@ -67,14 +82,88 @@ fun CustomStationsTab(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(8.dp)
             ) {
-                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { _, station ->
-                    StationGridItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) },
-                        onLongClick = { stationWithOptions = station }
-                    )
+                itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { _, station ->
+                    var isHovered by remember { mutableStateOf(false) }
+                    var handleBounds by remember { mutableStateOf(Rect.Zero) }
+                    
+                    Box(
+                        modifier = Modifier
+                            .animateItem() // Smooth animations for layout changes
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                            .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
+                            .dragAndDropTarget(
+                                shouldStartDragAndDrop = { event ->
+                                    event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                },
+                                target = remember {
+                                    object : DragAndDropTarget {
+                                        override fun onEntered(event: DragAndDropEvent) { isHovered = true }
+                                        override fun onExited(event: DragAndDropEvent) { isHovered = false }
+                                        override fun onDrop(event: DragAndDropEvent): Boolean {
+                                            isHovered = false
+                                            val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
+                                            val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
+                                            val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
+                                            
+                                            if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
+                                                val item = stationsLocal.removeAt(fromIndex)
+                                                stationsLocal.add(toIndex, item)
+                                                viewModel.updateAllOrder(stationsLocal)
+                                                return true
+                                            }
+                                            return false
+                                        }
+                                        override fun onEnded(event: DragAndDropEvent) {
+                                            isHovered = false
+                                            isDraggingActive = false
+                                        }
+                                    }
+                                }
+                            )
+                            .dragAndDropSource(
+                                block = {
+                                    detectDragGesturesAfterLongPress(
+                                        onDragStart = { offset ->
+                                            if (handleBounds.contains(offset)) {
+                                                isDraggingActive = true
+                                                startTransfer(
+                                                    DragAndDropTransferData(
+                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
+                                                    )
+                                                )
+                                            } else {
+                                                stationWithOptions = station
+                                            }
+                                        },
+                                        onDrag = { _, _ -> },
+                                        onDragEnd = { isDraggingActive = false },
+                                        onDragCancel = { isDraggingActive = false }
+                                    )
+                                }
+                            )
+                            .clickable { onStationClick(station) }
+                    ) {
+                        StationGridItem(
+                            station = station,
+                            isFavorite = isFavorite(station.StationUuid),
+                            onClick = { onStationClick(station) },
+                            onFavoriteClick = { onFavoriteClick(station) },
+                            onLongClick = { stationWithOptions = station },
+                            useInternalClickable = false,
+                            dragHandle = { modifier ->
+                                Icon(
+                                    imageVector = Icons.Default.SwapVert,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurface,
+                                    modifier = modifier
+                                        .size(48.dp)
+                                        .padding(12.dp)
+                                        .onGloballyPositioned { handleBounds = it.boundsInParent() }
+                                )
+                            }
+                        )
+                    }
                 }
             }
         } else {
@@ -82,14 +171,88 @@ fun CustomStationsTab(
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(bottom = 80.dp)
             ) {
-                itemsIndexed(uiState.filteredStations, key = { _, s -> s.StationUuid }) { _, station ->
-                    StationListItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) },
-                        onLongClick = { stationWithOptions = station }
-                    )
+                items(stationsLocal.size, key = { index -> stationsLocal[index].StationUuid }) { index ->
+                    val station = stationsLocal[index]
+                    var isHovered by remember { mutableStateOf(false) }
+                    var handleBounds by remember { mutableStateOf(Rect.Zero) }
+
+                    Box(
+                        modifier = Modifier
+                            .animateItem()
+                            .fillMaxWidth()
+                            .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
+                            .dragAndDropTarget(
+                                shouldStartDragAndDrop = { event ->
+                                    event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                                },
+                                target = remember {
+                                    object : DragAndDropTarget {
+                                        override fun onEntered(event: DragAndDropEvent) { isHovered = true }
+                                        override fun onExited(event: DragAndDropEvent) { isHovered = false }
+                                        override fun onDrop(event: DragAndDropEvent): Boolean {
+                                            isHovered = false
+                                            val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
+                                            val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
+                                            val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
+
+                                            if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
+                                                val item = stationsLocal.removeAt(fromIndex)
+                                                stationsLocal.add(toIndex, item)
+                                                viewModel.updateAllOrder(stationsLocal)
+                                                return true
+                                            }
+                                            return false
+                                        }
+                                        override fun onEnded(event: DragAndDropEvent) {
+                                            isHovered = false
+                                            isDraggingActive = false
+                                        }
+                                    }
+                                }
+                            )
+                            .dragAndDropSource(
+                                block = {
+                                    detectDragGesturesAfterLongPress(
+                                        onDragStart = { offset ->
+                                            if (handleBounds.contains(offset)) {
+                                                isDraggingActive = true
+                                                startTransfer(
+                                                    DragAndDropTransferData(
+                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
+                                                    )
+                                                )
+                                            } else {
+                                                stationWithOptions = station
+                                            }
+                                        },
+                                        onDrag = { _, _ -> },
+                                        onDragEnd = { isDraggingActive = false },
+                                        onDragCancel = { isDraggingActive = false }
+                                    )
+                                }
+                            )
+                            .clickable { onStationClick(station) }
+                    ) {
+                        StationListItem(
+                            station = station,
+                            isFavorite = isFavorite(station.StationUuid),
+                            onClick = { onStationClick(station) },
+                            onFavoriteClick = { onFavoriteClick(station) },
+                            onLongClick = { stationWithOptions = station },
+                            useInternalClickable = false,
+                            dragHandle = { modifier ->
+                                Icon(
+                                    imageVector = Icons.Default.SwapVert,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onSurface,
+                                    modifier = modifier
+                                        .size(48.dp)
+                                        .padding(12.dp)
+                                        .onGloballyPositioned { handleBounds = it.boundsInParent() }
+                                )
+                            }
+                        )
+                    }
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                 }
             }
@@ -148,7 +311,6 @@ fun CustomStationsTab(
     }
 
     stationWithOptions?.let { station ->
-        val index = uiState.filteredStations.indexOf(station)
         CustomStationOptionsDialog(
             station = station,
             onDismiss = { stationWithOptions = null },
@@ -159,9 +321,7 @@ fun CustomStationsTab(
             onDelete = {
                 stationToDelete = station
                 stationWithOptions = null
-            },
-            onMoveUp = if (index > 0) { { viewModel.reorder(index, index - 1) } } else null,
-            onMoveDown = if (index < uiState.filteredStations.size - 1) { { viewModel.reorder(index, index + 1) } } else null
+            }
         )
     }
 }
@@ -171,9 +331,7 @@ fun CustomStationOptionsDialog(
     station: DataRadioStation,
     onDismiss: () -> Unit,
     onEdit: () -> Unit,
-    onDelete: () -> Unit,
-    onMoveUp: (() -> Unit)?,
-    onMoveDown: (() -> Unit)?
+    onDelete: () -> Unit
 ) {
     val context = LocalContext.current
 
@@ -195,7 +353,7 @@ fun CustomStationOptionsDialog(
                 )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_play_in_external), color = MaterialTheme.colorScheme.onSurface) },
-                    leadingContent = { Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = { Icon(Icons.Default.PlayArrow, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface) },
                     modifier = Modifier.clickable {
                         Utils.playAndWarnIfMetered(context, station, PlayerType.EXTERNAL) {
                             PlayStationTask.playExternal(station, context).execute()
@@ -209,38 +367,16 @@ fun CustomStationOptionsDialog(
 
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_edit), color = MaterialTheme.colorScheme.onSurface) },
-                    leadingContent = { Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = { Icon(Icons.Default.Edit, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface) },
                     modifier = Modifier.clickable { onEdit() },
                     colors = ListItemDefaults.colors(containerColor = Color.Transparent)
                 )
-                if (onMoveUp != null) {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_previous), color = MaterialTheme.colorScheme.onSurface) },
-                        leadingContent = { Icon(Icons.Default.ArrowUpward, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { 
-                            onMoveUp()
-                            onDismiss()
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                }
-                if (onMoveDown != null) {
-                    ListItem(
-                        headlineContent = { Text(stringResource(R.string.description_btn_skip_to_next), color = MaterialTheme.colorScheme.onSurface) },
-                        leadingContent = { Icon(Icons.Default.ArrowDownward, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
-                        modifier = Modifier.clickable { 
-                            onMoveDown()
-                            onDismiss()
-                        },
-                        colors = ListItemDefaults.colors(containerColor = Color.Transparent)
-                    )
-                }
 
                 HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline.copy(alpha = 0.5f))
 
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_station_visit_website), color = MaterialTheme.colorScheme.onSurface) },
-                    leadingContent = { Icon(Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = { Icon(Icons.Default.Language, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface) },
                     modifier = Modifier.clickable {
                         StationActions.openStationHomeUrl(context, station)
                         onDismiss()
@@ -249,7 +385,7 @@ fun CustomStationOptionsDialog(
                 )
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_station_share), color = MaterialTheme.colorScheme.onSurface) },
-                    leadingContent = { Icon(Icons.Default.Share, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
+                    leadingContent = { Icon(Icons.Default.Share, contentDescription = null, tint = MaterialTheme.colorScheme.onSurface) },
                     modifier = Modifier.clickable {
                         StationActions.share(context, station)
                         onDismiss()

@@ -185,11 +185,11 @@ fun StationListTemplate(
                     }
                 }
             }
-        } else if (stations.isEmpty() && !isLoading) {
+        } else if (stations.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background), contentAlignment = Alignment.Center) {
                 Text(
                     text = emptyMessage,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
         } else {
@@ -369,7 +369,10 @@ fun StationListItem(
     isFavorite: Boolean,
     onClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    onLongClick: () -> Unit
+    onLongClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    useInternalClickable: Boolean = true,
+    dragHandle: (@Composable (Modifier) -> Unit)? = null
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
@@ -386,11 +389,15 @@ fun StationListItem(
     )
     
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick
+            .then(
+                if (useInternalClickable) {
+                    Modifier.combinedClickable(
+                        onClick = onClick,
+                        onLongClick = onLongClick
+                    )
+                } else Modifier
             )
             .semantics(mergeDescendants = true) {
                 contentDescription = accessibilityDesc
@@ -419,19 +426,24 @@ fun StationListItem(
             Text(
                 text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                color = MaterialTheme.colorScheme.onSurface,
                 maxLines = 1
             )
             if (station.TagsAll.isNotEmpty()) {
                 Text(
                     text = station.TagsAll,
                     style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
             }
         }
+        
+        if (dragHandle != null) {
+            dragHandle(Modifier)
+        }
+
         Box(
             modifier = Modifier
                 .minimumInteractiveComponentSize()
@@ -439,7 +451,6 @@ fun StationListItem(
                 .combinedClickable(
                     onClick = { 
                         if (!isFavorite) onFavoriteClick() 
-                        // Misclick protection: Removal only via long-click context menu
                     },
                     onLongClick = onLongClick
                 ),
@@ -451,7 +462,7 @@ fun StationListItem(
                     if (isFavorite) R.string.accessibility_favorite_selected 
                     else R.string.accessibility_favorite_not_selected
                 ),
-                tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
             )
         }
     }
@@ -464,7 +475,10 @@ fun StationGridItem(
     isFavorite: Boolean,
     onClick: () -> Unit,
     onFavoriteClick: () -> Unit,
-    onLongClick: () -> Unit
+    onLongClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    useInternalClickable: Boolean = true,
+    dragHandle: (@Composable (Modifier) -> Unit)? = null
 ) {
     val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
@@ -475,20 +489,24 @@ fun StationGridItem(
     )
 
     Card(
-        modifier = Modifier
+        modifier = modifier
             .padding(4.dp)
-            .combinedClickable(
-                onClick = onClick,
-                onLongClick = onLongClick
+            .then(
+                if (useInternalClickable) {
+                    Modifier.combinedClickable(
+                        onClick = onClick,
+                        onLongClick = onLongClick
+                    )
+                } else Modifier
             )
             .semantics(mergeDescendants = true) {
                 contentDescription = accessibilityDesc
             },
-        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(12.dp)
     ) {
-        Box(contentAlignment = Alignment.TopEnd) {
+        Box(modifier = Modifier.fillMaxWidth()) {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -510,19 +528,27 @@ fun StationGridItem(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .heightIn(min = 32.dp)
+                        .heightIn(min = 32.dp),
+                    color = MaterialTheme.colorScheme.onSurface
                 )
             }
 
-            // Favorite Star - Positioned at top-right of the gray background rectangle
+            // Drag Handle - Top Left
+            if (dragHandle != null) {
+                Box(modifier = Modifier.align(Alignment.TopStart)) {
+                    dragHandle(Modifier)
+                }
+            }
+
+            // Favorite Star - Top Right
             Box(
                 modifier = Modifier
+                    .align(Alignment.TopEnd)
                     .minimumInteractiveComponentSize()
                     .size(48.dp)
                     .combinedClickable(
                         onClick = {
                             if (!isFavorite) onFavoriteClick()
-                            // Misclick protection: Removal only via long-click context menu
                         },
                         onLongClick = onLongClick
                     ),
@@ -534,7 +560,7 @@ fun StationGridItem(
                         if (isFavorite) R.string.accessibility_favorite_selected 
                         else R.string.accessibility_favorite_not_selected
                     ),
-                    tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
                 )
             }
         }

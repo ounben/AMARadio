@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.CustomStationManager
+import com.ounben.amaradio.database.toCustomEntity
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -118,6 +119,10 @@ class CustomStationsViewModel(application: Application) : AndroidViewModel(appli
 
     fun reorder(fromIndex: Int, toIndex: Int) {
         manager.reorder(fromIndex, toIndex)
+    }
+
+    fun updateAllOrder(stations: List<DataRadioStation>) {
+        manager.persistOrder(stations)
     }
 
     fun remove(uuid: String) {

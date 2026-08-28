@@ -28,7 +28,13 @@ class CustomStationManager(ctx: Context) : StationSaveManager(ctx) {
             val item = newList.removeAt(fromIndex)
             newList.add(toIndex, item)
             
-            val entities = newList.mapIndexed { index, station ->
+            persistOrder(newList)
+        }
+    }
+
+    fun persistOrder(stations: List<DataRadioStation>) {
+        scope.launch(Dispatchers.IO) {
+            val entities = stations.mapIndexed { index, station ->
                 station.toCustomEntity(index)
             }
             userDb.customStationDao().updateAll(entities)
