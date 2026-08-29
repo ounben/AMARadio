@@ -41,9 +41,13 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
     }
 
     private fun DataRadioStation.toFavoriteEntityInternal(order: Int) = FavoriteEntity(
-        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
-        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
-        codec = Codec, bitrate = Bitrate, addedAt = Date(), displayOrder = order
+        StationUuid = StationUuid, Name = Name, Url = StreamUrl, Favicon = IconUrl,
+        Homepage = HomePageUrl, Country = Country, CountryCode = CountryCode, 
+        Tags = TagsAll, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, Subcountry = State, clickcount = ClickCount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime,
+        addedAt = Date(), displayOrder = order
     )
 
     init {

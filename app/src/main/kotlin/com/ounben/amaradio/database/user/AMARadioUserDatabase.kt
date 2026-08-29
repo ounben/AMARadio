@@ -19,7 +19,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
         TrackHistoryEntry::class,
         CustomStationEntity::class
     ], 
-    version = 3,
+    version = 4,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -78,6 +78,83 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // Migration for station_favourite
+                db.execSQL("""
+                    CREATE TABLE `station_favourite_new` (
+                        `StationUuid` TEXT NOT NULL, `Name` TEXT NOT NULL, `Url` TEXT NOT NULL, 
+                        `Homepage` TEXT NOT NULL DEFAULT '', `Favicon` TEXT NOT NULL, 
+                        `Country` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Tags` TEXT NOT NULL, 
+                        `Language` TEXT NOT NULL, `Votes` INTEGER NOT NULL DEFAULT 0, 
+                        `Subcountry` TEXT NOT NULL DEFAULT '', `clickcount` INTEGER NOT NULL DEFAULT 0, 
+                        `ClickTrend` INTEGER NOT NULL DEFAULT 0, `Codec` TEXT NOT NULL, 
+                        `Bitrate` INTEGER NOT NULL, `LastChangeTime` TEXT NOT NULL DEFAULT '', 
+                        `Creation` TEXT NOT NULL DEFAULT '', `ChangeUuid` TEXT NOT NULL DEFAULT '', 
+                        `LastCheckOkTime` TEXT NOT NULL DEFAULT '', `addedAt` INTEGER NOT NULL, 
+                        `displayOrder` INTEGER NOT NULL, PRIMARY KEY(`StationUuid`)
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    INSERT INTO `station_favourite_new` 
+                    (`StationUuid`, `Name`, `Url`, `Favicon`, `Country`, `CountryCode`, `Tags`, `Language`, `Codec`, `Bitrate`, `addedAt`, `displayOrder`)
+                    SELECT `stationUuid`, `name`, `streamUrl`, `iconUrl`, `country`, `countryCode`, `tags`, `language`, `codec`, `bitrate`, `addedAt`, `displayOrder` 
+                    FROM `station_favourite`
+                """.trimIndent())
+                db.execSQL("DROP TABLE `station_favourite`")
+                db.execSQL("ALTER TABLE `station_favourite_new` RENAME TO `station_favourite`")
+
+                // Migration for station_history
+                db.execSQL("""
+                    CREATE TABLE `station_history_new` (
+                        `StationUuid` TEXT NOT NULL, `Name` TEXT NOT NULL, `Url` TEXT NOT NULL, 
+                        `Homepage` TEXT NOT NULL DEFAULT '', `Favicon` TEXT NOT NULL, 
+                        `Country` TEXT NOT NULL, `CountryCode` TEXT NOT NULL, `Tags` TEXT NOT NULL, 
+                        `Language` TEXT NOT NULL, `Votes` INTEGER NOT NULL DEFAULT 0, 
+                        `Subcountry` TEXT NOT NULL DEFAULT '', `clickcount` INTEGER NOT NULL DEFAULT 0, 
+                        `ClickTrend` INTEGER NOT NULL DEFAULT 0, `Codec` TEXT NOT NULL, 
+                        `Bitrate` INTEGER NOT NULL, `LastChangeTime` TEXT NOT NULL DEFAULT '', 
+                        `Creation` TEXT NOT NULL DEFAULT '', `ChangeUuid` TEXT NOT NULL DEFAULT '', 
+                        `LastCheckOkTime` TEXT NOT NULL DEFAULT '', `lastPlayedAt` INTEGER NOT NULL, 
+                        PRIMARY KEY(`StationUuid`)
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    INSERT INTO `station_history_new` 
+                    (`StationUuid`, `Name`, `Url`, `Favicon`, `Country`, `CountryCode`, `Tags`, `Language`, `Codec`, `Bitrate`, `lastPlayedAt`)
+                    SELECT `stationUuid`, `name`, `streamUrl`, `iconUrl`, `country`, `countryCode`, `tags`, `language`, `codec`, `bitrate`, `lastPlayedAt` 
+                    FROM `station_history`
+                """.trimIndent())
+                db.execSQL("DROP TABLE `station_history`")
+                db.execSQL("ALTER TABLE `station_history_new` RENAME TO `station_history`")
+
+                // Migration for custom_station
+                db.execSQL("""
+                    CREATE TABLE `custom_station_new` (
+                        `StationUuid` TEXT NOT NULL, `Name` TEXT NOT NULL, `Url` TEXT NOT NULL, 
+                        `Homepage` TEXT NOT NULL DEFAULT '', `Favicon` TEXT NOT NULL, 
+                        `Country` TEXT NOT NULL DEFAULT '', `CountryCode` TEXT NOT NULL DEFAULT '', 
+                        `Tags` TEXT NOT NULL DEFAULT '', `Language` TEXT NOT NULL DEFAULT '', 
+                        `Votes` INTEGER NOT NULL DEFAULT 0, `Subcountry` TEXT NOT NULL DEFAULT '', 
+                        `clickcount` INTEGER NOT NULL DEFAULT 0, `ClickTrend` INTEGER NOT NULL DEFAULT 0, 
+                        `Codec` TEXT NOT NULL DEFAULT '', `Bitrate` INTEGER NOT NULL DEFAULT 0, 
+                        `LastChangeTime` TEXT NOT NULL DEFAULT '', `Creation` TEXT NOT NULL DEFAULT '', 
+                        `ChangeUuid` TEXT NOT NULL DEFAULT '', `LastCheckOkTime` TEXT NOT NULL DEFAULT '', 
+                        `displayOrder` INTEGER NOT NULL DEFAULT 0, `addedAt` INTEGER NOT NULL, 
+                        PRIMARY KEY(`StationUuid`)
+                    )
+                """.trimIndent())
+                db.execSQL("""
+                    INSERT INTO `custom_station_new` 
+                    (`StationUuid`, `Name`, `Url`, `Favicon`, `Country`, `CountryCode`, `Tags`, `Language`, `Codec`, `Bitrate`, `displayOrder`, `addedAt`)
+                    SELECT `stationUuid`, `name`, `streamUrl`, `iconUrl`, `country`, `countryCode`, `tags`, `language`, `codec`, `bitrate`, `displayOrder`, `addedAt` 
+                    FROM `custom_station`
+                """.trimIndent())
+                db.execSQL("DROP TABLE `custom_station`")
+                db.execSQL("ALTER TABLE `custom_station_new` RENAME TO `custom_station`")
+            }
+        }
+
         fun getDatabase(context: Context): AMARadioUserDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -85,8 +162,8 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
                     AMARadioUserDatabase::class.java,
                     "user_data.db"
                 )
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
-                .fallbackToDestructiveMigrationFrom(4) // Nur bei künftigen Fehlern ab v4 zerstörerisch
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+                .fallbackToDestructiveMigrationFrom(5) // Nur bei künftigen Fehlern ab v5 zerstörerisch
                 .addCallback(CALLBACK)
                 .build()
                 INSTANCE = instance

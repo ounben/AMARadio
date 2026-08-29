@@ -69,40 +69,58 @@ fun StationEntity.toDataStation(): DataRadioStation {
 
 fun FavoriteEntity.toDataStation(): DataRadioStation {
     return DataRadioStation(
-        Name = this.name, StationUuid = this.stationUuid, StreamUrl = this.streamUrl, IconUrl = this.iconUrl,
-        Country = this.country, CountryCode = this.countryCode, TagsAll = this.tags, Language = this.language,
-        Codec = this.codec, Bitrate = this.bitrate
+        Name = this.Name, StationUuid = this.StationUuid, StreamUrl = this.Url, IconUrl = this.Favicon,
+        HomePageUrl = this.Homepage, Country = this.Country, CountryCode = this.CountryCode, 
+        TagsAll = this.Tags, Language = this.Language, Codec = this.Codec, Bitrate = this.Bitrate,
+        Votes = this.Votes, State = this.Subcountry, ClickCount = this.clickcount, 
+        ClickTrend = this.ClickTrend, LastChangeTime = this.LastChangeTime, 
+        Creation = this.Creation, ChangeUuid = this.ChangeUuid, LastCheckOkTime = this.LastCheckOkTime
     )
 }
 
 fun HistoryEntity.toDataStation(): DataRadioStation {
     return DataRadioStation(
-        Name = this.name, StationUuid = this.stationUuid, StreamUrl = this.streamUrl, IconUrl = this.iconUrl,
-        Country = this.country, CountryCode = this.countryCode, TagsAll = this.tags, Language = this.language,
-        Codec = this.codec, Bitrate = this.bitrate
+        Name = this.Name, StationUuid = this.StationUuid, StreamUrl = this.Url, IconUrl = this.Favicon,
+        HomePageUrl = this.Homepage, Country = this.Country, CountryCode = this.CountryCode, 
+        TagsAll = this.Tags, Language = this.Language, Codec = this.Codec, Bitrate = this.Bitrate,
+        Votes = this.Votes, State = this.Subcountry, ClickCount = this.clickcount, 
+        ClickTrend = this.ClickTrend, LastChangeTime = this.LastChangeTime, 
+        Creation = this.Creation, ChangeUuid = this.ChangeUuid, LastCheckOkTime = this.LastCheckOkTime
     )
 }
 
 fun CustomStationEntity.toDataStation(): DataRadioStation {
     return DataRadioStation(
-        Name = this.name, StationUuid = this.stationUuid, StreamUrl = this.streamUrl, IconUrl = this.iconUrl,
-        Country = this.country, CountryCode = this.countryCode, TagsAll = this.tags, Language = this.language,
-        Codec = this.codec, Bitrate = this.bitrate
+        Name = this.Name, StationUuid = this.StationUuid, StreamUrl = this.Url, IconUrl = this.Favicon,
+        HomePageUrl = this.Homepage, Country = this.Country, CountryCode = this.CountryCode, 
+        TagsAll = this.Tags, Language = this.Language, Codec = this.Codec, Bitrate = this.Bitrate,
+        Votes = this.Votes, State = this.Subcountry, ClickCount = this.clickcount, 
+        ClickTrend = this.ClickTrend, LastChangeTime = this.LastChangeTime, 
+        Creation = this.Creation, ChangeUuid = this.ChangeUuid, LastCheckOkTime = this.LastCheckOkTime
     )
 }
 
 fun DataRadioStation.toCustomEntity(displayOrder: Int = 0): CustomStationEntity {
     return CustomStationEntity(
-        stationUuid = this.StationUuid,
-        name = this.Name,
-        streamUrl = this.StreamUrl,
-        iconUrl = this.IconUrl,
-        country = this.Country,
-        countryCode = this.CountryCode,
-        tags = this.TagsAll,
-        language = this.Language,
-        codec = this.Codec,
-        bitrate = this.Bitrate,
+        StationUuid = this.StationUuid,
+        Name = this.Name,
+        Url = this.StreamUrl,
+        Homepage = this.HomePageUrl,
+        Favicon = this.IconUrl,
+        Country = this.Country,
+        CountryCode = this.CountryCode,
+        Tags = this.TagsAll,
+        Language = this.Language,
+        Codec = this.Codec,
+        Bitrate = this.Bitrate,
+        Votes = this.Votes,
+        Subcountry = this.State,
+        clickcount = this.ClickCount,
+        ClickTrend = this.ClickTrend,
+        LastChangeTime = this.LastChangeTime,
+        Creation = this.Creation,
+        ChangeUuid = this.ChangeUuid,
+        LastCheckOkTime = this.LastCheckOkTime,
         displayOrder = displayOrder
     )
 }

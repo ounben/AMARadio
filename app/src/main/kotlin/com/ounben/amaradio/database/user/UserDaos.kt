@@ -20,13 +20,13 @@ interface FavoriteDao {
     @Delete
     suspend fun delete(favorite: FavoriteEntity)
 
-    @Query("DELETE FROM station_favourite WHERE stationUuid = :uuid")
+    @Query("DELETE FROM station_favourite WHERE StationUuid = :uuid")
     suspend fun deleteByUuid(uuid: String)
 
-    @Query("SELECT EXISTS(SELECT 1 FROM station_favourite WHERE stationUuid = :uuid)")
+    @Query("SELECT EXISTS(SELECT 1 FROM station_favourite WHERE StationUuid = :uuid)")
     suspend fun isFavorite(uuid: String): Boolean
 
-    @Query("SELECT * FROM station_favourite WHERE stationUuid = :uuid LIMIT 1")
+    @Query("SELECT * FROM station_favourite WHERE StationUuid = :uuid LIMIT 1")
     suspend fun getByUuid(uuid: String): FavoriteEntity?
 
     @Query("SELECT MAX(displayOrder) FROM station_favourite")
@@ -56,13 +56,13 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(history: HistoryEntity)
 
-    @Query("DELETE FROM station_history WHERE stationUuid = :uuid")
+    @Query("DELETE FROM station_history WHERE StationUuid = :uuid")
     suspend fun deleteByUuid(uuid: String)
 
     @Query("DELETE FROM station_history")
     suspend fun clearAll()
 
-    @Query("SELECT * FROM station_history WHERE stationUuid = :uuid LIMIT 1")
+    @Query("SELECT * FROM station_history WHERE StationUuid = :uuid LIMIT 1")
     suspend fun getByUuid(uuid: String): HistoryEntity?
 
     @Transaction
@@ -72,7 +72,7 @@ interface HistoryDao {
         trimHistory(25)
     }
 
-    @Query("DELETE FROM station_history WHERE stationUuid NOT IN (SELECT stationUuid FROM station_history ORDER BY lastPlayedAt DESC LIMIT :limit)")
+    @Query("DELETE FROM station_history WHERE StationUuid NOT IN (SELECT StationUuid FROM station_history ORDER BY lastPlayedAt DESC LIMIT :limit)")
     suspend fun trimHistory(limit: Int)
 }
 
@@ -120,7 +120,7 @@ interface CustomStationDao {
     @Delete
     suspend fun delete(station: CustomStationEntity)
 
-    @Query("DELETE FROM custom_station WHERE stationUuid = :uuid")
+    @Query("DELETE FROM custom_station WHERE StationUuid = :uuid")
     suspend fun deleteByUuid(uuid: String)
 
     @Query("SELECT MAX(displayOrder) FROM custom_station")

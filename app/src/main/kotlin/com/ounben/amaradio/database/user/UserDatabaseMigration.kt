@@ -89,30 +89,22 @@ object UserDatabaseMigration {
     }
 
     private fun DataRadioStation.toFavoriteEntity(order: Int) = FavoriteEntity(
-        stationUuid = StationUuid,
-        name = Name,
-        streamUrl = StreamUrl,
-        iconUrl = IconUrl,
-        country = Country,
-        countryCode = CountryCode,
-        tags = TagsAll,
-        language = Language,
-        codec = Codec,
-        bitrate = Bitrate,
-        displayOrder = order
+        StationUuid = StationUuid, Name = Name, Url = StreamUrl, Favicon = IconUrl,
+        Homepage = HomePageUrl, Country = Country, CountryCode = CountryCode, 
+        Tags = TagsAll, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, Subcountry = State, clickcount = ClickCount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime,
+        addedAt = Date(), displayOrder = order
     )
 
     private fun DataRadioStation.toHistoryEntity(date: Date) = HistoryEntity(
-        stationUuid = StationUuid,
-        name = Name,
-        streamUrl = StreamUrl,
-        iconUrl = IconUrl,
-        country = Country,
-        countryCode = CountryCode,
-        tags = TagsAll,
-        language = Language,
-        codec = Codec,
-        bitrate = Bitrate,
+        StationUuid = StationUuid, Name = Name, Url = StreamUrl, Favicon = IconUrl,
+        Homepage = HomePageUrl, Country = Country, CountryCode = CountryCode, 
+        Tags = TagsAll, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, Subcountry = State, clickcount = ClickCount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime,
         lastPlayedAt = date
     )
 

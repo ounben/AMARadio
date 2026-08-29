@@ -32,6 +32,12 @@ object StationActions {
             val stationUrl = station.HomePageUrl.toUri()
             val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
             Utils.safeStartActivity(activity, newIntent, R.string.error_no_browser)
+        } else {
+            if (activity is android.app.Activity) {
+                Utils.showModernToast(activity, R.string.error_no_homepage)
+            } else {
+                android.widget.Toast.makeText(activity, R.string.error_no_homepage, android.widget.Toast.LENGTH_SHORT).show()
+            }
         }
     }
 

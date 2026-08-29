@@ -92,6 +92,7 @@
     <string name="error_invalid_file_name">Invalid file name</string>
     <string name="error_no_file_manager">Could not find a system file manager. Please ensure a file explorer is installed and enabled.</string>
     <string name="error_no_browser">Could not find a web browser. Please install a browser to open this link.</string>
+    <string name="error_no_homepage">No homepage available for this station</string>
     <string name="label_button_cancel">Cancel</string>
     <string name="label_button_overwrite">Overwrite</string>
     <string name="notify_load_playlist_nok">Could not import from %1$s&#47;%2$s</string>

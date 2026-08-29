@@ -90,6 +90,7 @@
     <string name="error_empty_field">Dieses Feld ist erforderlich</string>
     <string name="error_invalid_file_name">Ungültiger Dateiname</string>
     <string name="label_button_cancel">Abbrechen</string>
+    <string name="error_no_homepage">Keine Webseite für diesen Sender verfügbar</string>
     <string name="label_button_overwrite">Überschreiben</string>
     <string name="notify_load_playlist_nok">Import von %1$s&#47;%2$s fehlgeschlagen</string>
     <string name="notify_load_playlist_now">Import von %1$s&#47;%2$s läuft, bitte warten.</string>

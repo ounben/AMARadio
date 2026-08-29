@@ -234,26 +234,40 @@ open class StationSaveManager(protected val context: Context) {
     }
     
     private fun FavoriteEntity.toDataStation() = DataRadioStation(
-        Name = name, StationUuid = stationUuid, StreamUrl = streamUrl, IconUrl = iconUrl,
-        Country = country, CountryCode = countryCode, TagsAll = tags, Language = language,
-        Codec = codec, Bitrate = bitrate
+        Name = Name, StationUuid = StationUuid, StreamUrl = Url, IconUrl = Favicon,
+        HomePageUrl = Homepage, Country = Country, CountryCode = CountryCode, 
+        TagsAll = Tags, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, State = Subcountry, ClickCount = clickcount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime
     )
 
     private fun HistoryEntity.toDataStation() = DataRadioStation(
-        Name = name, StationUuid = stationUuid, StreamUrl = streamUrl, IconUrl = iconUrl,
-        Country = country, CountryCode = countryCode, TagsAll = tags, Language = language,
-        Codec = codec, Bitrate = bitrate
+        Name = Name, StationUuid = StationUuid, StreamUrl = Url, IconUrl = Favicon,
+        HomePageUrl = Homepage, Country = Country, CountryCode = CountryCode, 
+        TagsAll = Tags, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, State = Subcountry, ClickCount = clickcount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime
     )
 
     private fun DataRadioStation.toFavoriteEntity(order: Int = 0) = FavoriteEntity(
-        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
-        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
-        codec = Codec, bitrate = Bitrate, addedAt = Date(), displayOrder = order
+        StationUuid = StationUuid, Name = Name, Url = StreamUrl, Favicon = IconUrl,
+        Homepage = HomePageUrl, Country = Country, CountryCode = CountryCode, 
+        Tags = TagsAll, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, Subcountry = State, clickcount = ClickCount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime,
+        addedAt = Date(), displayOrder = order
     )
 
     private fun DataRadioStation.toHistoryEntity() = HistoryEntity(
-        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
-        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
-        codec = Codec, bitrate = Bitrate, lastPlayedAt = Date()
+        StationUuid = StationUuid, Name = Name, Url = StreamUrl, Favicon = IconUrl,
+        Homepage = HomePageUrl, Country = Country, CountryCode = CountryCode, 
+        Tags = TagsAll, Language = Language, Codec = Codec, Bitrate = Bitrate,
+        Votes = Votes, Subcountry = State, clickcount = ClickCount, 
+        ClickTrend = ClickTrend, LastChangeTime = LastChangeTime, 
+        Creation = Creation, ChangeUuid = ChangeUuid, LastCheckOkTime = LastCheckOkTime,
+        lastPlayedAt = Date()
     )
 }
