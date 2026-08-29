@@ -693,7 +693,7 @@ fun ReorderableStationList(
                                         val handle = handleCoords
                                         val item = itemCoords
                                         if (handle != null && item != null) {
-                                            val handleRect = handle.boundsInParent()
+                                            val handleRect = item.localBoundingBoxOf(handle)
                                             // onDragStart offset is local to this Box.
                                             if (handleRect.contains(offset)) {
                                                 isDraggingActive = true
@@ -804,7 +804,7 @@ fun ReorderableStationList(
                                         val handle = handleCoords
                                         val item = itemCoords
                                         if (handle != null && item != null) {
-                                            val handleRect = handle.boundsInParent()
+                                            val handleRect = item.localBoundingBoxOf(handle)
                                             if (handleRect.contains(offset)) {
                                                 isDraggingActive = true
                                                 dragPointerY = item.positionInWindow().y + offset.y
