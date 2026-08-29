@@ -69,7 +69,7 @@ class CustomStationsViewModel(application: Application) : AndroidViewModel(appli
             }
 
             val station = DataRadioStation(
-                Name = name.ifBlank { existingStation?.name ?: "Custom Radio" },
+                Name = name.ifBlank { existingStation?.name ?: app.getString(com.ounben.amaradio.R.string.nav_item_stations) },
                 StationUuid = stationUuid,
                 StreamUrl = url,
                 IconUrl = finalIconUrl,

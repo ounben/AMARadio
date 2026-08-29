@@ -339,6 +339,14 @@
     <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
     <string name="context_menu_delete">@string/action_delete</string>
 
+    <string name="tab_custom_stations">Eigene</string>
+    <string name="action_add_custom">Eigenen Sender hinzufügen</string>
+    <string name="station_name">Sendername</string>
+    <string name="stream_url">Stream-URL</string>
+    <string name="favicon_url">Favicon-URL (optional)</string>
+    <string name="select_image">Bild auswählen</string>
+    <string name="action_save">Speichern</string>
+
     <!-- Accessibility -->
     <string name="accessibility_station_logo">Sender-Logo</string>
     <string name="accessibility_favorite_selected">Favorit, ausgewählt</string>
