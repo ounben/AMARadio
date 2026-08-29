@@ -91,20 +91,14 @@ object Media3Utils {
     }
     
     /**
-     * Factory for extractors optimized for unstable radio streams.
-     * Prevents termination at preroll boundaries.
+     * Factory for extractors optimized for live radio streams.
+     * We DISABLE seeking and indexing flags as they cause long delays 
+     * while the player tries to "calculate" the duration of an infinite stream.
      */
     fun getRadioExtractorsFactory(): DefaultExtractorsFactory {
         return DefaultExtractorsFactory()
-            .setConstantBitrateSeekingAlwaysEnabled(true)
-            .setMp3ExtractorFlags(
-                Mp3Extractor.FLAG_ENABLE_INDEX_SEEKING or
-                Mp3Extractor.FLAG_DISABLE_ID3_METADATA or
-                Mp3Extractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING_ALWAYS
-            )
-            .setAdtsExtractorFlags(
-                androidx.media3.extractor.ts.AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING
-            )
+            .setMp3ExtractorFlags(Mp3Extractor.FLAG_DISABLE_ID3_METADATA)
+            .setAdtsExtractorFlags(0)
     }
 
     /**

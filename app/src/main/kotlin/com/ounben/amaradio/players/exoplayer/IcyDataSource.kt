@@ -116,9 +116,9 @@ class IcyDataSource(
         }
 
         responseBody = response.body
-        // CRITICAL PERFORMANCE FIX: Use a BufferedInputStream to prevent stuttering/crackling
-        // during metadata extraction and slow network conditions.
-        byteStream = BufferedInputStream(responseBody?.byteStream(), 32 * 1024)
+        // NO EXTRA BUFFER: Use the direct stream. OkHttp is already efficient.
+        // This removes the potential "waiting for buffer to fill" delay at start.
+        byteStream = responseBody?.byteStream()
         responseHeaders = response.headers.toMultimap()
         
         opened = true

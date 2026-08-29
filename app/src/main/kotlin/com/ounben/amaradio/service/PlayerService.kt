@@ -441,7 +441,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private fun playWithoutWarnings(station: DataRadioStation) {
-        setStation(station)
+        // PREVIOUSLY: setStation(station) then playCurrentStation() triggered TWO heavy metadata updates 
+        // and TWO player stops. Now we just set the station reference and play.
+        this.itsCurrentStation = station
         playCurrentStation()
     }
 
@@ -702,17 +704,18 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         val contentIntent = PendingIntent.getActivity(itsContext!!, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
         val builder = NotificationCompat.Builder(itsContext!!, NOTIFICATION_CHANNEL_ID)
-            .setContentIntent(contentIntent)
-            .setContentTitle(theTitle)
-            .setContentText(msg)
-            .setWhen(System.currentTimeMillis())
-            .setTicker(theTicker)
-            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-            .setSmallIcon(R.drawable.ic_play_arrow_24dp)
-            .setLargeIcon(currentStationBitmap) // For compatibility with some vendor UIs
-            .addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
-            .addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
+        builder.setContentIntent(contentIntent)
+        builder.setContentTitle(theTitle)
+        builder.setContentText(msg)
+        builder.setWhen(System.currentTimeMillis())
+        builder.setTicker(theTicker)
+        builder.setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+        builder.setSmallIcon(R.drawable.ic_play_arrow_24dp)
+        builder.setLargeIcon(currentStationBitmap) // For compatibility with some vendor UIs
+        builder.addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
+        builder.addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
+        
         if ((playState == PlayState.Playing) || (playState == PlayState.PrePlaying)) {
             val pauseIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_PAUSE }
             val pendingIntentPause = PendingIntent.getService(this, 0, pauseIntent, pendingIntentFlag)
@@ -726,7 +729,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
         builder.addAction(R.drawable.ic_skip_next_24dp, getString(R.string.action_skip_to_next), pendingIntentNext)
         
-        mediaSession?.let { builder.setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(1, 2, 3)) }
+        mediaSession?.let { 
+            builder.setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(1, 2, 3)) 
+        }
         val notification = builder.build()
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
         
@@ -773,37 +778,48 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         handler?.post { Toast.makeText(this, resources.getString(messageId), Toast.LENGTH_SHORT).show() }
     }
 
+    private var lastPushedLiveTitle: String? = null
+    private var lastPushedStationUuid: String? = null
+
     private fun updateMetadata(station: DataRadioStation, liveTitle: String) {
+        val stationUuid = station.StationUuid
+        
+        // OPTIMIZATION 1: If title and station are same, abort immediately.
+        if (liveTitle == lastPushedLiveTitle && stationUuid == lastPushedStationUuid && currentStationBitmap != null) {
+            return
+        }
+        
+        val stationChanged = (stationUuid != lastPushedStationUuid)
+        lastPushedLiveTitle = liveTitle
+        lastPushedStationUuid = stationUuid
+
         serviceScope.launch {
-            val bitmap = fetchStationBitmap(station)
+            // OPTIMIZATION 2: Only re-fetch bitmap if station actually changed.
+            val bitmap = if (stationChanged || currentStationBitmap == null) {
+                fetchStationBitmap(station)
+            } else {
+                currentStationBitmap
+            }
             
-            // Switch back to player thread to apply metadata safely
+            // CRITICAL PERFORMANCE FIX: Build metadata (includes heavy JPEG compression) 
+            // on the background thread, NOT on the player/audio thread.
+            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station, liveTitle, bitmap)
+
             radioPlayer?.runInPlayerThread {
                 currentStationBitmap = bitmap
-                val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station, liveTitle, bitmap)
                 
-                // 1. Update Player Playlist Metadata
                 radioPlayer?.player?.let { player ->
-                    player.playlistMetadata = metadata
-                    
-                    // 2. Update the MediaItem's metadata (Critical for Android Auto)
-                    // Use item index directly as currentMediaItem can be null in STATE_IDLE
-                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
-                    if (player.mediaItemCount > itemIndex) {
-                        val currentItem = player.getMediaItemAt(itemIndex)
-                        val updatedItem = currentItem.buildUpon()
-                            .setMediaMetadata(metadata)
-                            .build()
-                        player.replaceMediaItem(itemIndex, updatedItem)
+                    // Only update if it's actually different to avoid triggering listener loops
+                    if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
+                        player.playlistMetadata = metadata
                     }
                 }
                 
-                // 3. Ensure MediaSession is aware of the changes
                 mediaSession?.setCustomLayout(listOf())
                 updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
                 
                 if (Utils.isDebug) {
-                    Log.d("METADATA_DEBUG", "Metadata pushed to Player and Session. Artwork size: ${metadata.artworkData?.size} bytes")
+                    Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
                 }
             }
         }
@@ -822,7 +838,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 if (localFile.exists()) {
                     val request = ImageRequest.Builder(this)
                         .data(localFile)
-                        .size(512, 512)
+                        .size(320, 320)
                         .allowHardware(false)
                         .build()
                     val result = imageLoader.execute(request)
@@ -839,7 +855,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             try {
                 val request = ImageRequest.Builder(this)
                     .data(iconFile)
-                    .size(512, 512)
+                    .size(320, 320)
                     .allowHardware(false)
                     .build()
                 val result = imageLoader.execute(request)
@@ -855,12 +871,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             try {
                 val request = ImageRequest.Builder(this)
                     .data(station.IconUrl)
-                    .size(512, 512)
+                    .size(320, 320)
                     .allowHardware(false)
                     .build()
                 val result = imageLoader.execute(request)
                 if (result is SuccessResult) {
-                    val bitmap = result.drawable.toBitmap(512, 512, Bitmap.Config.ARGB_8888)
+                    val bitmap = result.drawable.toBitmap(320, 320, Bitmap.Config.ARGB_8888)
                     saveBitmapToFile(bitmap, iconFile)
                     return bitmap
                 }

@@ -16,7 +16,6 @@ import androidx.media3.common.Player
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSpec
 import androidx.media3.datasource.HttpDataSource
-import androidx.media3.datasource.ResolvingDataSource
 import androidx.media3.datasource.TransferListener
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.DefaultLoadControl
@@ -89,20 +88,19 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                8000,
-                20000,
-                2000,
-                3000
+                2500,  // minBufferMs (Standard for Radio)
+                15000, // maxBufferMs
+                1000,  // bufferForPlaybackMs
+                1500   // bufferForPlaybackAfterRebufferMs
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
 
         val app = attributedContext.applicationContext as AMARadioApp
         val icyFactory = RadioDataSourceFactory(app.httpClient, this, this, false)
-        val resolvingFactory = ResolvingDataSource.Factory(icyFactory, IcyMetadataResolver())
 
         val strictMediaSourceFactory = DefaultMediaSourceFactory(attributedContext, Media3Utils.getRadioExtractorsFactory())
-            .setDataSourceFactory(resolvingFactory)
+            .setDataSourceFactory(icyFactory)
 
         internalPlayer = ExoPlayer.Builder(attributedContext)
             .setLooper(looper)
@@ -129,56 +127,53 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 internalPlayer.playlistMetadata = metadata
             }
 
-            playerThreadHandler.postDelayed({
-                if (streamUrl != this@ExoPlayerWrapper.streamUrl) return@postDelayed 
-                
-                internalPlayer.clearMediaItems()
+            // REMOVED delay. Reset immediately.
+            if (streamUrl != this@ExoPlayerWrapper.streamUrl) return@post
+            
+            internalPlayer.clearMediaItems()
 
-                if (bandwidthMeter == null) {
-                    bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
-                }
-                
-                val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
-                val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
-                val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
+            if (bandwidthMeter == null) {
+                bandwidthMeter = DefaultBandwidthMeter.Builder(attributedContext).build()
+            }
+            
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(attributedContext)
+            val connectTimeout = try { sharedPref.getInt("stream_connect_timeout", 10).toLong() } catch (_: Exception) { 10L }
+            val readTimeout = try { sharedPref.getInt("stream_read_timeout", 15).toLong() } catch (_: Exception) { 15L }
 
-                val dedicatedClient = httpClient.newBuilder()
-                    .addInterceptor { chain ->
-                        val request = chain.request()
-                        if (request.method == "HEAD") {
-                            chain.proceed(request.newBuilder().method("GET", null).build())
-                        } else {
-                            chain.proceed(request)
-                        }
+            val dedicatedClient = httpClient.newBuilder()
+                .addInterceptor { chain ->
+                    val request = chain.request()
+                    if (request.method == "HEAD") {
+                        chain.proceed(request.newBuilder().method("GET", null).build())
+                    } else {
+                        chain.proceed(request)
                     }
-                    .connectTimeout(connectTimeout, TimeUnit.SECONDS)
-                    .readTimeout(readTimeout, TimeUnit.SECONDS)
-                    .build()
-
-                val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
-                val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
-                val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
-                
-                val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
-
-                val audioSource = if (isHls) {
-                    HlsMediaSource.Factory(resolvingFactory)
-                        .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                        .createMediaSource(mediaItem)
-                } else {
-                    ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
-                        .setLoadErrorHandlingPolicy(errorHandlingPolicy)
-                        .setContinueLoadingCheckIntervalBytes(32 * 1024)
-                        .createMediaSource(mediaItem)
                 }
+                .connectTimeout(connectTimeout, TimeUnit.SECONDS)
+                .readTimeout(readTimeout, TimeUnit.SECONDS)
+                .build()
 
-                this@ExoPlayerWrapper.audioSource = audioSource
-                playbackStartTime = SystemClock.elapsedRealtime()
-                internalPlayer.volume = currentVolume
-                internalPlayer.setMediaSource(audioSource, true)
-                internalPlayer.prepare()
-                internalPlayer.playWhenReady = true
-            }, 120) 
+            val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
+            val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
+            val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
+
+            val audioSource = if (isHls) {
+                HlsMediaSource.Factory(baseFactory)
+                    .setAllowChunklessPreparation(true)
+                    .createMediaSource(mediaItem)
+            } else {
+                ProgressiveMediaSource.Factory(baseFactory, Media3Utils.getRadioExtractorsFactory())
+                    .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                    .setContinueLoadingCheckIntervalBytes(32 * 1024)
+                    .createMediaSource(mediaItem)
+            }
+
+            this@ExoPlayerWrapper.audioSource = audioSource
+            playbackStartTime = SystemClock.elapsedRealtime()
+            internalPlayer.volume = currentVolume
+            internalPlayer.setMediaSource(audioSource, true)
+            internalPlayer.prepare()
+            internalPlayer.playWhenReady = true
         }
         
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
@@ -372,14 +367,5 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 onStreamLiveInfo = { onDataSourceStreamLiveInfo(it) }
             )
         }
-    }
-}
-
-@UnstableApi
-private class IcyMetadataResolver : ResolvingDataSource.Resolver {
-    override fun resolveDataSpec(dataSpec: DataSpec): DataSpec {
-        return dataSpec.buildUpon()
-            .setHttpRequestHeaders(mapOf("Icy-MetaData" to "1", "Accept" to "*/*"))
-            .build()
     }
 }

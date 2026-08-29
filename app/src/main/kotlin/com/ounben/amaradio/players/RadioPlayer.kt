@@ -167,6 +167,12 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         }
 
         if (!isReconnect) {
+            // Check if we are already playing or preparing this exact URL to avoid redundant resets
+            if (lastStationURL == stationURL && (playState == PlayState.Playing || playState == PlayState.PrePlaying)) {
+                if (Utils.isDebug) Log.d(tag, "Already playing/preparing $stationURL, skipping reset.")
+                return
+            }
+
             reconnectAttempts = 0
             lastStationURL = stationURL
             lastStreamName = streamName
@@ -175,14 +181,11 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             pendingPlayRunnable?.let { playerThreadHandler.removeCallbacks(it) }
             prepareNewStream()
             
-            val playTask = Runnable {
-                val activeTarget = currentTargetMediaItem?.localConfiguration?.uri.toString()
-                if (activeTarget == stationURL && (stationUuid == null || stationUuid == currentStationUuid)) {
-                    executeActualPlayRemote(stationURL, streamName, metadata)
-                }
+            // Execute immediately instead of posting a delay
+            val activeTarget = currentTargetMediaItem?.localConfiguration?.uri.toString()
+            if (activeTarget == stationURL && (stationUuid == null || stationUuid == currentStationUuid)) {
+                executeActualPlayRemote(stationURL, streamName, metadata)
             }
-            pendingPlayRunnable = playTask
-            playerThreadHandler.postDelayed(playTask, 250) // Increased from 180ms to 250ms for stable decoder reset
         } else {
             executeActualPlayRemote(stationURL, streamName, metadata)
         }
@@ -202,7 +205,6 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         userWantPlaying = true
         isPausing = false
         
-        // If already loading this specific station, don't restart task
         if (uuid == currentStationUuid && (playState == PlayState.Playing || playState == PlayState.PrePlaying)) return
 
         currentStationUuid = uuid
@@ -210,7 +212,8 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         
         playerThreadHandler.post {
             cancelStationLinkRetrieval()
-            currentPlayer.stop()
+            // CRITICAL: We DON'T call stop() here anymore. 
+            // playInternal/prepareNewStream will handle the transition once the URL is ready.
             reconnectAttempts = 0
             stationLoadAttempts = 0
             currentStation = station
@@ -221,7 +224,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     private fun executePlayStationTask(station: DataRadioStation, metadata: androidx.media3.common.MediaMetadata? = null) {
         CoroutineScope(Dispatchers.Main).launch {
             if (!userWantPlaying || isPausing) return@launch
-            setState(PlayState.PrePlaying, -1)
+            // setState(PlayState.PrePlaying, -1) // REMOVED: Redundant, let playInternal handle it
             val task = PlayStationTask(station, mainContext,
                 { url -> 
                     playerThreadHandler.post {
