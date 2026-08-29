@@ -96,10 +96,11 @@ object Media3Utils {
      */
     fun getRadioExtractorsFactory(): DefaultExtractorsFactory {
         return DefaultExtractorsFactory()
-            .setConstantBitrateSeekingEnabled(true)
+            .setConstantBitrateSeekingAlwaysEnabled(true)
             .setMp3ExtractorFlags(
                 Mp3Extractor.FLAG_ENABLE_INDEX_SEEKING or
-                Mp3Extractor.FLAG_DISABLE_ID3_METADATA
+                Mp3Extractor.FLAG_DISABLE_ID3_METADATA or
+                Mp3Extractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING_ALWAYS
             )
             .setAdtsExtractorFlags(
                 androidx.media3.extractor.ts.AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING

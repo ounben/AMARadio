@@ -16,7 +16,9 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.ResponseBody
 import okhttp3.internal.closeQuietly
+import java.io.BufferedInputStream
 import java.io.IOException
+import java.io.InputStream
 import java.util.HashMap
 
 @UnstableApi
@@ -38,7 +40,7 @@ class IcyDataSource(
 
     private var dataSpec: DataSpec? = null
     private var responseBody: ResponseBody? = null
-    private var byteStream: java.io.InputStream? = null
+    private var byteStream: InputStream? = null
     private var responseHeaders: Map<String, List<String>> = HashMap()
     
     @Volatile
@@ -72,9 +74,11 @@ class IcyDataSource(
             builder.header("Icy-MetaData", "1")
         }
 
-        // 2. Add headers from DataSpec
+        // 2. Add headers from DataSpec (avoiding overwriting mandatory ones)
         for ((key, value) in dataSpec.httpRequestHeaders) {
-            builder.header(key, value)
+            if (!key.equals("User-Agent", ignoreCase = true) && !key.equals("Icy-MetaData", ignoreCase = true)) {
+                builder.header(key, value)
+            }
         }
         
         // 3. Add custom request properties
@@ -112,7 +116,9 @@ class IcyDataSource(
         }
 
         responseBody = response.body
-        byteStream = responseBody?.byteStream()
+        // CRITICAL PERFORMANCE FIX: Use a BufferedInputStream to prevent stuttering/crackling
+        // during metadata extraction and slow network conditions.
+        byteStream = BufferedInputStream(responseBody?.byteStream(), 32 * 1024)
         responseHeaders = response.headers.toMultimap()
         
         opened = true
@@ -131,7 +137,7 @@ class IcyDataSource(
         
         metadataBytesToRead = 0
         
-        // CRITICAL: Ignore Content-Length for ICY streams to treat them as infinite.
+        // Return UNSET for radio streams to treat them as infinite.
         if (!isHls) {
             return androidx.media3.common.C.LENGTH_UNSET.toLong()
         }
@@ -163,9 +169,11 @@ class IcyDataSource(
         try {
             val stream = byteStream ?: return -1
             
+            // Loop until we have read at least one byte or reached EOF
             while (opened) {
+                // Case 1: Reading metadata payload
                 if (metadataBytesToRead > 0) {
-                    val toRead = metadataBytesToRead - metadataBufferPos
+                    val toRead = Math.min(metadataBytesToRead - metadataBufferPos, metadataBuffer.size - metadataBufferPos)
                     val read = stream.read(metadataBuffer, metadataBufferPos, toRead)
                     
                     if (!opened) return -1 
@@ -180,6 +188,7 @@ class IcyDataSource(
                     continue 
                 }
 
+                // Case 2: Encountered metadata length byte
                 if (bytesUntilMetadata == 0) {
                     val lengthByte = stream.read()
                     
@@ -199,6 +208,7 @@ class IcyDataSource(
                     continue
                 }
 
+                // Case 3: Regular data read
                 val toRead = Math.min(readLength, bytesUntilMetadata)
                 val bytesRead = stream.read(buffer, offset, toRead)
                 
@@ -268,7 +278,12 @@ class IcyDataSource(
         }
     }
 
-    override fun getResponseHeaders(): Map<String, List<String>> = responseHeaders
+    override fun getResponseHeaders(): Map<String, List<String>> {
+        // Filter out ONLY the metadata interval header from the player. 
+        // This prevents the player from trying to strip metadata itself (Double Parsing),
+        // but still allows it to recognize the stream as a live ICY radio.
+        return responseHeaders.filterKeys { !it.equals("icy-metaint", ignoreCase = true) }
+    }
 
     override fun getResponseCode(): Int = responseCode
 
