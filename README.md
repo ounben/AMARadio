@@ -22,6 +22,10 @@ AMARadio was developed to enable an honest and distraction-free listening experi
     - **Sequential Sync**: High-performance reactive model with Mutex-based update sequencing for 100% state consistency.
     - **Live Track Info**: Real-time Artist and Song Title displays using optimized Media3 event listeners.
     - **Professional Previews**: Adaptive XML-based previews in the system widget picker.
+- **Custom Radio Stations**: A dedicated management system for personal streams.
+    - **Native Drag & Drop**: Smooth, high-performance reordering using the latest Compose 1.7 APIs.
+    - **Local Image Support**: Use your own icons for personal streams, with automated permanent storage.
+    - **Smart Catalog Matching**: Automatically retrieves metadata and tags if a custom URL matches an entry in the community database.
 - **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.

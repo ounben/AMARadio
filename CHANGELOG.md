@@ -5,7 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [1.27] - 2026-08-25
+## [1.28] - 2026-08-29
+### Added
+- **Custom Stations Feature**: Complete implementation of a new "Custom" tab allowing users to manage their own personal radio streams.
+    - **Full CRUD Support**: Add, edit, and delete custom stations with user-defined names and stream URLs.
+    - **Local Icon Management**: Support for picking local images from the device gallery. Icons are automatically scaled and stored permanently in a protected internal directory for 100% reliability in Widgets and Android Auto.
+    - **Native Drag & Drop Reordering**: Integrated the modern **Jetpack Compose 1.7 Drag & Drop API**. Users can now intuitively sort their custom list using a dedicated "Swap Vert" handle.
+    - **Optimistic UI Architecture**: Leverages `SnapshotStateList` and local memory buffering to provide 0ms latency during reordering, with background SQL persistence to prevent UI stuttering.
+    - **Smart Metadata Integration**: Custom stations are fully matched against the global catalog. If a stream URL exists in the database, the app automatically inherits official metadata, tags, and languages.
+    - **Unified Grid & List Design**: Full support for both Grid and List view modes, following the app's established "Flat Design" principles.
 ### Changed
 - **Media3 Performance Optimization**: Successfully migrated the Media3 Artwork loading system to the **Coil** image loading framework. 
     - This eliminates redundant "naked" HTTP downloads by the system and utilizes the app's existing high-performance disk and memory caches.
