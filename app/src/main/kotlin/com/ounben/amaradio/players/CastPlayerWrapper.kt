@@ -16,6 +16,7 @@ import androidx.core.net.toUri
 class CastPlayerWrapper(private val castPlayer: CastPlayer) : PlayerWrapper {
 
     private var listener: PlayerWrapper.PlayListener? = null
+    private var stationName: String? = null
 
     private val playerListener = object : Player.Listener {
         override fun onPlaybackStateChanged(playbackState: Int) {
@@ -51,6 +52,7 @@ class CastPlayerWrapper(private val castPlayer: CastPlayer) : PlayerWrapper {
         override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
             MetadataHandler.handleMediaMetadata(
                 mediaMetadata,
+                stationName,
                 onStreamLiveInfo = { listener?.onDataSourceStreamLiveInfo(it) }
             )
         }
@@ -61,6 +63,7 @@ class CastPlayerWrapper(private val castPlayer: CastPlayer) : PlayerWrapper {
     }
 
     override fun playRemote(httpClient: OkHttpClient, streamUrl: String, context: Context, metadata: MediaMetadata?) {
+        this.stationName = metadata?.station?.toString() ?: metadata?.title?.toString()
         val mediaItem = Media3Utils.buildLiveMediaItem(streamUrl.toUri(), metadata)
         castPlayer.setMediaItem(mediaItem)
         castPlayer.prepare()

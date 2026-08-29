@@ -63,16 +63,21 @@ class IcyDataSource(
             ?: throw HttpDataSourceException("Invalid URL", dataSpec, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
         
         val builder = Request.Builder().url(url)
+        
+        // 1. Mandatory Headers for Radio Stream Negotiation
         builder.header("User-Agent", "AMARadio")
+        builder.header("Accept-Encoding", "identity")
+        builder.header("Accept", "*/*")
+        if (!isHls) {
+            builder.header("Icy-MetaData", "1")
+        }
 
+        // 2. Add headers from DataSpec
         for ((key, value) in dataSpec.httpRequestHeaders) {
             builder.header(key, value)
         }
         
-        if (!isHls && !dataSpec.httpRequestHeaders.containsKey("Icy-MetaData")) {
-            builder.addHeader("Icy-MetaData", "1")
-        }
-        
+        // 3. Add custom request properties
         synchronized(requestProperties) {
             for ((key, value) in requestProperties) {
                 builder.header(key, value)
@@ -92,7 +97,6 @@ class IcyDataSource(
         } catch (e: IOException) {
             activeCall = null
             if (!opened) {
-                // If we cancelled it ourselves, return a generic cancelled exception
                 throw HttpDataSourceException("Connection cancelled", dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
             }
             throw HttpDataSourceException(e, dataSpec!!, PlaybackException.ERROR_CODE_IO_UNSPECIFIED, HttpDataSourceException.TYPE_OPEN)
@@ -127,21 +131,19 @@ class IcyDataSource(
         
         metadataBytesToRead = 0
         
+        // CRITICAL: Ignore Content-Length for ICY streams to treat them as infinite.
+        if (!isHls) {
+            return androidx.media3.common.C.LENGTH_UNSET.toLong()
+        }
+        
         return responseBody?.contentLength() ?: -1L
     }
 
     override fun close() {
         opened = false
-        
-        // CRITICAL FIX: Cancel the running OkHttp call to immediately drop the socket.
         activeCall?.cancel()
         activeCall = null
 
-        if (opened) { // Logic check: only if it was actually opened
-             dataSpec?.let { transferListener.onTransferEnd(this, it, true) }
-        }
-        
-        // Re-read dataSpec to ensure listener is notified even if we manually cleared opened
         dataSpec?.let { 
              try { transferListener.onTransferEnd(this, it, true) } catch(_: Exception) {}
         }
@@ -161,13 +163,12 @@ class IcyDataSource(
         try {
             val stream = byteStream ?: return -1
             
-            // CRITICAL FIX: Check 'opened' flag in every loop iteration to break immediately on pause
             while (opened) {
                 if (metadataBytesToRead > 0) {
                     val toRead = metadataBytesToRead - metadataBufferPos
                     val read = stream.read(metadataBuffer, metadataBufferPos, toRead)
                     
-                    if (!opened) return -1 // Check after blocking read
+                    if (!opened) return -1 
                     if (read == -1) return -1
                     
                     metadataBufferPos += read
@@ -176,14 +177,13 @@ class IcyDataSource(
                         metadataBytesToRead = 0
                         bytesUntilMetadata = shoutcastInfo?.metadataOffset ?: Int.MAX_VALUE
                     }
-                    if (read == 0) return 0 
-                    continue
+                    continue 
                 }
 
                 if (bytesUntilMetadata == 0) {
                     val lengthByte = stream.read()
                     
-                    if (!opened) return -1 // Check after blocking read
+                    if (!opened) return -1 
                     if (lengthByte == -1) return -1
                     
                     val length = lengthByte * 16
@@ -202,7 +202,7 @@ class IcyDataSource(
                 val toRead = Math.min(readLength, bytesUntilMetadata)
                 val bytesRead = stream.read(buffer, offset, toRead)
                 
-                if (!opened) return -1 // Check after blocking read
+                if (!opened) return -1 
                 if (bytesRead == -1) return -1
                 
                 if (bytesUntilMetadata != Int.MAX_VALUE) {
@@ -214,8 +214,6 @@ class IcyDataSource(
                     dataSourceListener.onDataSourceBytesRead(buffer, offset, bytesRead)
                     return bytesRead
                 }
-                
-                if (bytesRead == 0) return 0
             }
             return -1
         } catch (e: IOException) {
@@ -270,9 +268,7 @@ class IcyDataSource(
         }
     }
 
-    override fun getResponseHeaders(): Map<String, List<String>> {
-        return responseHeaders.filterKeys { !it.startsWith("icy-", ignoreCase = true) }
-    }
+    override fun getResponseHeaders(): Map<String, List<String>> = responseHeaders
 
     override fun getResponseCode(): Int = responseCode
 

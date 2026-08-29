@@ -14,7 +14,8 @@ object MetadataHandler {
 
     /**
      * Centralized metadata parsing for Media3 Player Listeners.
-     * Supports ICY (MP3/AAC) and Vorbis/Opus (Ogg) metadata.
+     * Processes Ogg/Vorbis and Icecast Headers.
+     * Note: IcyInfo is ignored here because IcyDataSource handles it with better timing.
      */
     fun handleMetadata(
         metadata: Metadata,
@@ -28,9 +29,8 @@ object MetadataHandler {
             val entry = metadata[i]
             when (entry) {
                 is IcyInfo -> {
-                    val liveInfo = StreamLiveInfo(null)
-                    liveInfo.addMetadata("StreamTitle", entry.title)
-                    onStreamLiveInfo(liveInfo)
+                    // IGNORED: We trust IcyDataSource for MP3/AAC metadata 
+                    // to avoid flickering and sync issues.
                 }
                 is IcyHeaders -> {
                     val shoutcastInfo = ShoutcastInfo()
@@ -39,7 +39,6 @@ object MetadataHandler {
                     onShoutcastInfo(shoutcastInfo)
                 }
                 is VorbisComment -> {
-                    // VorbisComment keys are already converted to upper case by Media3's constructor
                     when (entry.key) {
                         "TITLE" -> vorbisTitle = entry.value
                         "ARTIST" -> vorbisArtist = entry.value
@@ -48,8 +47,6 @@ object MetadataHandler {
             }
         }
 
-        // If we found Vorbis TITLE, we format it as "Artist - Title" to maintain
-        // compatibility with the existing StreamLiveInfo parsing/cleansing logic.
         if (!vorbisTitle.isNullOrEmpty()) {
             val formatted = if (!vorbisArtist.isNullOrEmpty()) "$vorbisArtist - $vorbisTitle" else vorbisTitle
             val liveInfo = StreamLiveInfo(null)
@@ -59,21 +56,27 @@ object MetadataHandler {
     }
 
     /**
-     * Fallback for streams where Vorbis comments are only available via MediaMetadata.
+     * Fallback for HLS or other streams where metadata is only available via MediaMetadata.
      */
     fun handleMediaMetadata(
         mediaMetadata: MediaMetadata,
+        stationName: String?,
         onStreamLiveInfo: (StreamLiveInfo) -> Unit
     ) {
-        // Guard: Ignore metadata updates that were pushed by the app itself
+        // Guard: Ignore static station metadata to prevent flickering back to station name.
+        // We check for our custom extra and also compare against the known station name.
         if (mediaMetadata.extras?.containsKey("com.ounben.amaradio.STATION_ID") == true) {
             return
         }
 
         val title = mediaMetadata.title?.toString()
         if (!title.isNullOrEmpty()) {
+            // Further guard: if the title is exactly the station name, it's likely not live info
+            if (stationName != null && title.equals(stationName, ignoreCase = true)) {
+                return
+            }
+
             val artist = mediaMetadata.artist?.toString()
-            // Format as "Artist - Title" for the existing StreamLiveInfo parser
             val formatted = if (!artist.isNullOrEmpty() && !title.contains(artist)) {
                 "$artist - $title"
             } else {

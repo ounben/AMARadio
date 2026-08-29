@@ -1,9 +1,6 @@
 package com.ounben.amaradio.players.exoplayer
 
-import android.content.BroadcastReceiver
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.net.ConnectivityManager
 import android.os.Handler
 import android.os.Looper
@@ -12,7 +9,6 @@ import android.util.Log
 import androidx.core.net.toUri
 import androidx.media3.common.AudioAttributes
 import androidx.media3.common.C
-import androidx.media3.common.ForwardingPlayer
 import androidx.media3.common.MediaMetadata
 import androidx.media3.common.Metadata
 import androidx.media3.common.PlaybackException
@@ -70,9 +66,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
     }
 
-    private val networkCallback = object : android.net.ConnectivityManager.NetworkCallback() {
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: android.net.Network) {
-            if (fullStopTask != null && audioSource!! != null) {
+            if (fullStopTask != null && audioSource != null) {
                 Log.i("ExoPlayerWrapper", "Regained connection. Resuming playback.")
                 cancelStopTask()
                 playerThreadHandler.post {
@@ -93,22 +89,18 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         val loadControl = DefaultLoadControl.Builder()
             .setBufferDurationsMs(
-                8000,  // Min buffer: 8s (More stability for slow connections)
-                20000, // Max buffer: 20s
-                2000,  // Buffer for playback: 2s (Avoid immediate pipeline flood)
-                3000   // Buffer for playback after rebuffer: 3s
+                8000,
+                20000,
+                2000,
+                3000
             )
             .setPrioritizeTimeOverSizeThresholds(true)
             .build()
 
-        // 1. Wurzel-Datenquelle erzwingen: IcyDataSource ist die Basis für ALLES
         val app = attributedContext.applicationContext as AMARadioApp
         val icyFactory = RadioDataSourceFactory(app.httpClient, this, this, false)
-        
-        // 2. Weiche einketten: Setzt Header, fordert Metadaten an
         val resolvingFactory = ResolvingDataSource.Factory(icyFactory, IcyMetadataResolver())
 
-        // 3. Strikte Factory-Verdrahtung: Kein Fallback auf Standard-HTTP erlaubt
         val strictMediaSourceFactory = DefaultMediaSourceFactory(attributedContext, Media3Utils.getRadioExtractorsFactory())
             .setDataSourceFactory(resolvingFactory)
 
@@ -131,23 +123,15 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
 
         playerThreadHandler.post {
-            // 1. HARD STOP: Stop engine to clear hardware decoder context
             internalPlayer.stop()
-            // CRITICAL: We NO LONGER call clearMediaItems() here.
-            // Keeping the items (and their metadata) ensures Android Auto 
-            // keeps the UI populated while the new stream is loading.
             
             if (metadata != null) {
                 internalPlayer.playlistMetadata = metadata
             }
 
-            // 2. DECODER GRACE PERIOD: 
-            // We use a small delay to ensure the hardware decoder (especially on OPlus/MediaTek)
-            // has completely released the previous session before starting a new one (MP3 -> AAC switch).
             playerThreadHandler.postDelayed({
-                if (streamUrl != this@ExoPlayerWrapper.streamUrl) return@postDelayed // Abort if user skipped again
+                if (streamUrl != this@ExoPlayerWrapper.streamUrl) return@postDelayed 
                 
-                // Clear items just before setting the new one to minimize "black hole" time
                 internalPlayer.clearMediaItems()
 
                 if (bandwidthMeter == null) {
@@ -175,7 +159,6 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 val baseFactory = RadioDataSourceFactory(dedicatedClient, this, this, isHls)
                 val resolvingFactory = ResolvingDataSource.Factory(baseFactory, IcyMetadataResolver())
                 
-                // Optimized error handling for faster recovery in car context
                 val errorHandlingPolicy = CustomLoadErrorHandlingPolicy()
 
                 val audioSource = if (isHls) {
@@ -185,6 +168,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 } else {
                     ProgressiveMediaSource.Factory(resolvingFactory, Media3Utils.getRadioExtractorsFactory())
                         .setLoadErrorHandlingPolicy(errorHandlingPolicy)
+                        .setContinueLoadingCheckIntervalBytes(32 * 1024)
                         .createMediaSource(mediaItem)
                 }
 
@@ -194,10 +178,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 internalPlayer.setMediaSource(audioSource, true)
                 internalPlayer.prepare()
                 internalPlayer.playWhenReady = true
-            }, 120) // 120ms is enough to clear the codec stack but unnoticeable to the user
+            }, 120) 
         }
         
-        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
         try { cm?.registerDefaultNetworkCallback(networkCallback) } catch (_: Exception) {}
     }
@@ -205,10 +189,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     override fun pause() {
         cancelStopTask()
         playerThreadHandler.post {
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
-            // Radio-Pause: Hard stop the engine to release network resources.
-            // We KEEP the media items but we call stop() to drop the connection.
             internalPlayer.playWhenReady = false
             internalPlayer.stop()
             isPlayingFlag = false
@@ -219,9 +201,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         cancelStopTask()
         isPlayingFlag = false
         playerThreadHandler.post {
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? android.net.ConnectivityManager
+            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
             try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
-            // Strikter Abbruch und Playlist-Löschung
             internalPlayer.stop()
             internalPlayer.clearMediaItems()
             playbackStartTime = 0
@@ -273,17 +254,10 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     }
 
     override fun onDataSourceShoutcastInfo(shoutcastInfo: ShoutcastInfo?) {
-        shoutcastInfo?.let { info ->
-            if (!info.audioName.isNullOrEmpty()) stationName = info.audioName
-            stateListener?.onDataSourceShoutcastInfo(info, isHls)
-        }
+        stateListener?.onDataSourceShoutcastInfo(shoutcastInfo ?: return, isHls)
     }
 
     override fun onDataSourceStreamLiveInfo(streamLiveInfo: StreamLiveInfo) {
-        // We no longer push destructive "naked" metadata updates to the player here.
-        // Instead, we just report the info to the listener (RadioPlayer -> PlayerService).
-        // PlayerService will then call updateMetadata() which builds a COMPLETE metadata object 
-        // including artwork and the correct media type (MUSIC).
         stateListener?.onDataSourceStreamLiveInfo(streamLiveInfo)
     }
 
@@ -361,10 +335,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 
         override fun onPlayWhenReadyChanged(playWhenReady: Boolean, reason: Int) {
             if (!playWhenReady) {
-                // Radio specific: Stop engine immediately on pause to drop connection
                 internalPlayer.stop()
             }
-            // CRITICAL: Notify state change immediately when play/pause is toggled
             stateListener?.onStateChanged(if (playWhenReady) PlayState.Playing else PlayState.Paused)
         }
 
@@ -381,6 +353,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
 
         override fun onMetadata(metadata: Metadata) {
+            // Only process player metadata for Ogg (Vorbis) or HLS.
+            // For ICY (MP3/AAC), we strictly rely on IcyDataSource to prevent flickering.
             MetadataHandler.handleMetadata(
                 metadata,
                 onStreamLiveInfo = { onDataSourceStreamLiveInfo(it) },
@@ -389,8 +363,12 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         }
 
         override fun onMediaMetadataChanged(mediaMetadata: MediaMetadata) {
+            // For HLS streams, this is the primary way to get metadata updates.
+            // For ICY, MetadataHandler.handleMediaMetadata will filter out the 
+            // static station info to prevent the "disappearing metadata" issue.
             MetadataHandler.handleMediaMetadata(
                 mediaMetadata,
+                stationName,
                 onStreamLiveInfo = { onDataSourceStreamLiveInfo(it) }
             )
         }
@@ -400,10 +378,8 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
 @UnstableApi
 private class IcyMetadataResolver : ResolvingDataSource.Resolver {
     override fun resolveDataSpec(dataSpec: DataSpec): DataSpec {
-        val newHeaders = dataSpec.httpRequestHeaders.toMutableMap()
-        newHeaders["Icy-MetaData"] = "1"
         return dataSpec.buildUpon()
-            .setHttpRequestHeaders(newHeaders)
+            .setHttpRequestHeaders(mapOf("Icy-MetaData" to "1", "Accept" to "*/*"))
             .build()
     }
 }
