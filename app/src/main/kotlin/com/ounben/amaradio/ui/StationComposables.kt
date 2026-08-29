@@ -717,7 +717,10 @@ fun ReorderableStationList(
                                 )
                             }
                         )
-                        .clickable { onStationClick(station) }
+                        .combinedClickable(
+                            onClick = { onStationClick(station) },
+                            onLongClick = { /* Handled by dragAndDropSource */ }
+                        )
                 ) {
                     StationGridItem(
                         station = station,
@@ -824,7 +827,10 @@ fun ReorderableStationList(
                                 )
                             }
                         )
-                        .clickable { onStationClick(station) }
+                        .combinedClickable(
+                            onClick = { onStationClick(station) },
+                            onLongClick = { /* Handled by dragAndDropSource */ }
+                        )
                 ) {
                     StationListItem(
                         station = station,
