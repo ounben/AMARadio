@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.29] - 2026-08-29
+### Fixed
+- **MP3 Preroll & Stream Continuity**: Resolved a critical issue where some stations (e.g., Radio Intereconomía) would stop playing after a few seconds of advertisement.
+    - **Icecast/Shoutcast Negotiation**: Enforced mandatory ICY metadata headers to ensure servers deliver unbounded live streams instead of finite files.
+    - **Resilient MP3 Extraction**: Hardened the MP3 extractor against sync frame corruptions (MPEG "Header missing") that typically occur at the boundary between ads and live content.
+    - **Infinite Stream Handling**: Configured the player to treat radio streams as strictly unbounded, ignoring misleading `Content-Length` headers from ad-insertion servers.
+- **Metadata Stability**: Fixed a "flickering" issue where track information would briefly appear and then disappear.
+    - Implemented intelligent filtering to prioritize live stream metadata over static station info.
+    - Added guards to prevent UI updates when metadata contains only the station name or redundant internal IDs.
+### Added
+- **Global Session Persistence**: Introduced a centralized `CookieJar` for the entire application. This allows ad-servers to recognize active sessions across reconnects, preventing repetitive advertisement loops.
+- **Enhanced Player Recovery**: Added a targeted recovery mechanism for `STATE_ENDED` events on live streams, ensuring instant resumption if a server forcibly closes a connection after a segment.
+
 ## [1.28] - 2026-08-29
 ### Added
 - **Custom Stations Feature**: Complete implementation of a new "Custom" tab allowing users to manage their own personal radio streams.
