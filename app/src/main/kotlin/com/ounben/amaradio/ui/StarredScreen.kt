@@ -25,8 +25,6 @@ fun StarredScreen(
 ) {
     val coroutineScope = rememberCoroutineScope()
     val pagerState = rememberPagerState(pageCount = { 2 })
-    val context = LocalContext.current
-    val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
 
     Column(modifier = Modifier.fillMaxSize()) {
         val safeSelectedIndex = remember(pagerState.currentPage) {
@@ -82,10 +80,7 @@ fun StarredScreen(
                             onStationClick = onStationClick,
                             onFavoriteClick = onFavoriteClick,
                             isFavorite = isFavorite,
-                            onReorder = { viewModel.updateAllOrder(it) },
-                            onDeleteClick = { station ->
-                                app.favouriteManager.remove(station.StationUuid)
-                            }
+                            onReorder = { viewModel.updateAllOrder(it) }
                         )
                     }
                 } else {

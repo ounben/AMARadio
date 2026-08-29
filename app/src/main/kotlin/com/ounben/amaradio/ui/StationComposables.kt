@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.SwapVert
 import androidx.compose.ui.geometry.Rect
 import android.content.ClipDescription
 import android.content.ClipData
+import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -69,10 +70,18 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import android.util.Log
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.grid.LazyGridState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.unit.toSize
+import kotlinx.coroutines.delay
+import kotlin.time.Duration.Companion.milliseconds
 
 @Composable
 fun StationIcon(
@@ -587,6 +596,9 @@ fun ReorderableStationList(
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
     var isDraggingActive by remember { mutableStateOf(false) }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+    
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
 
     LaunchedEffect(stations) {
         if (!isDraggingActive) {
@@ -595,23 +607,54 @@ fun ReorderableStationList(
         }
     }
 
+    var dragPointerY by remember { mutableStateOf<Float?>(null) }
+    var containerBounds by remember { mutableStateOf(Rect.Zero) }
+
+    LaunchedEffect(isDraggingActive, dragPointerY) {
+        if (isDraggingActive && dragPointerY != null) {
+            val scrollThreshold = 150f 
+            
+            while (isDraggingActive) {
+                val y = dragPointerY ?: break
+                val distFromTop = y - containerBounds.top
+                val distFromBottom = containerBounds.bottom - y
+                
+                var scrollAmount = 0f
+                if (distFromTop < scrollThreshold) {
+                    scrollAmount = -((scrollThreshold - distFromTop) / 3f)
+                } else if (distFromBottom < scrollThreshold) {
+                    scrollAmount = (scrollThreshold - distFromBottom) / 3f
+                }
+
+                if (scrollAmount != 0f) {
+                    if (isGrid) gridState.scrollBy(scrollAmount)
+                    else listState.scrollBy(scrollAmount)
+                }
+                delay(16.milliseconds)
+            }
+        }
+    }
+
     if (isGrid) {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Adaptive(140.dp),
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .onGloballyPositioned { containerBounds = it.boundsInWindow() },
             contentPadding = PaddingValues(8.dp)
         ) {
             itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { _, station ->
                 var isHovered by remember { mutableStateOf(false) }
-                var containerCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
                 var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+                var itemCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
 
                 Box(
                     modifier = Modifier
                         .animateItem()
                         .fillMaxWidth()
                         .padding(2.dp)
-                        .onGloballyPositioned { containerCoords = it }
+                        .onGloballyPositioned { itemCoords = it }
                         .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
                         .dragAndDropTarget(
                             shouldStartDragAndDrop = { event ->
@@ -638,6 +681,7 @@ fun ReorderableStationList(
                                     override fun onEnded(event: DragAndDropEvent) {
                                         isHovered = false
                                         isDraggingActive = false
+                                        dragPointerY = null
                                     }
                                 }
                             }
@@ -646,14 +690,14 @@ fun ReorderableStationList(
                             block = {
                                 detectDragGesturesAfterLongPress(
                                     onDragStart = { offset ->
-                                        val container = containerCoords
                                         val handle = handleCoords
-                                        if (container != null && handle != null) {
-                                            val windowOffset = container.positionInWindow() + offset
-                                            val handleBoundsInWindow = handle.boundsInWindow()
-                                            
-                                            if (handleBoundsInWindow.contains(windowOffset)) {
+                                        val item = itemCoords
+                                        if (handle != null && item != null) {
+                                            val handleRect = handle.boundsInParent()
+                                            // onDragStart offset is local to this Box.
+                                            if (handleRect.contains(offset)) {
                                                 isDraggingActive = true
+                                                dragPointerY = item.positionInWindow().y + offset.y
                                                 startTransfer(
                                                     DragAndDropTransferData(
                                                         ClipData.newPlainText("station_uuid", station.StationUuid)
@@ -662,15 +706,14 @@ fun ReorderableStationList(
                                                 return@detectDragGesturesAfterLongPress
                                             }
                                         }
-                                        if (onLongClick != null) {
-                                            onLongClick.invoke(station)
-                                        } else {
-                                            stationWithOptions = station
-                                        }
+                                        if (onLongClick != null) onLongClick.invoke(station) 
+                                        else stationWithOptions = station
                                     },
-                                    onDrag = { _, _ -> },
-                                    onDragEnd = { isDraggingActive = false },
-                                    onDragCancel = { isDraggingActive = false }
+                                    onDrag = { _, dragAmount -> 
+                                        dragPointerY = (dragPointerY ?: 0f) + dragAmount.y
+                                    },
+                                    onDragEnd = { isDraggingActive = false; dragPointerY = null },
+                                    onDragCancel = { isDraggingActive = false; dragPointerY = null }
                                 )
                             }
                         )
@@ -703,20 +746,23 @@ fun ReorderableStationList(
         }
     } else {
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            state = listState,
+            modifier = modifier
+                .fillMaxSize()
+                .onGloballyPositioned { containerBounds = it.boundsInWindow() },
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
             items(stationsLocal.size, key = { index -> stationsLocal[index].StationUuid }) { index ->
                 val station = stationsLocal[index]
                 var isHovered by remember { mutableStateOf(false) }
-                var containerCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
                 var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+                var itemCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
 
                 Box(
                     modifier = Modifier
                         .animateItem()
                         .fillMaxWidth()
-                        .onGloballyPositioned { containerCoords = it }
+                        .onGloballyPositioned { itemCoords = it }
                         .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
                         .dragAndDropTarget(
                             shouldStartDragAndDrop = { event ->
@@ -743,6 +789,7 @@ fun ReorderableStationList(
                                     override fun onEnded(event: DragAndDropEvent) {
                                         isHovered = false
                                         isDraggingActive = false
+                                        dragPointerY = null
                                     }
                                 }
                             }
@@ -751,14 +798,13 @@ fun ReorderableStationList(
                             block = {
                                 detectDragGesturesAfterLongPress(
                                     onDragStart = { offset ->
-                                        val container = containerCoords
                                         val handle = handleCoords
-                                        if (container != null && handle != null) {
-                                            val windowOffset = container.positionInWindow() + offset
-                                            val handleBoundsInWindow = handle.boundsInWindow()
-                                            
-                                            if (handleBoundsInWindow.contains(windowOffset)) {
+                                        val item = itemCoords
+                                        if (handle != null && item != null) {
+                                            val handleRect = handle.boundsInParent()
+                                            if (handleRect.contains(offset)) {
                                                 isDraggingActive = true
+                                                dragPointerY = item.positionInWindow().y + offset.y
                                                 startTransfer(
                                                     DragAndDropTransferData(
                                                         ClipData.newPlainText("station_uuid", station.StationUuid)
@@ -767,15 +813,14 @@ fun ReorderableStationList(
                                                 return@detectDragGesturesAfterLongPress
                                             }
                                         }
-                                        if (onLongClick != null) {
-                                            onLongClick.invoke(station)
-                                        } else {
-                                            stationWithOptions = station
-                                        }
+                                        if (onLongClick != null) onLongClick.invoke(station) 
+                                        else stationWithOptions = station
                                     },
-                                    onDrag = { _, _ -> },
-                                    onDragEnd = { isDraggingActive = false },
-                                    onDragCancel = { isDraggingActive = false }
+                                    onDrag = { _, dragAmount -> 
+                                        dragPointerY = (dragPointerY ?: 0f) + dragAmount.y
+                                    },
+                                    onDragEnd = { isDraggingActive = false; dragPointerY = null },
+                                    onDragCancel = { isDraggingActive = false; dragPointerY = null }
                                 )
                             }
                         )
