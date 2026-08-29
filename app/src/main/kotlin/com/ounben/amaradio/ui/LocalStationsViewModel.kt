@@ -89,6 +89,14 @@ class LocalStationsViewModel(application: Application, type: LocalManagerType) :
             }
         }
     }
+
+    fun reorder(fromIndex: Int, toIndex: Int) {
+        manager.reorder(fromIndex, toIndex)
+    }
+
+    fun updateAllOrder(stations: List<DataRadioStation>) {
+        manager.persistOrder(stations)
+    }
 }
 
 class LocalStationsViewModelFactory(private val app: AMARadioApp, private val type: LocalManagerType) : ViewModelProvider.Factory {

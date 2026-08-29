@@ -1,7 +1,6 @@
 package com.ounben.amaradio.ui
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
@@ -24,12 +23,10 @@ fun StarredScreen(
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+    val pagerState = rememberPagerState(pageCount = { 2 })
     val context = LocalContext.current
     val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
-    
-    val pagerState = rememberPagerState(pageCount = { 2 })
-    val coroutineScope = rememberCoroutineScope()
 
     Column(modifier = Modifier.fillMaxSize()) {
         val safeSelectedIndex = remember(pagerState.currentPage) {
@@ -70,20 +67,27 @@ fun StarredScreen(
         ) { pageIndex ->
             Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                 if (pageIndex == 0) {
-                    StationListTemplate(
-                        stations = uiState.filteredStations,
-                        isGrid = uiState.isGrid,
-                        isLoading = false,
-                        error = null,
-                        emptyMessage = stringResource(R.string.searchpreference_no_results),
-                        onRefresh = { /* Local data, already reactive */ },
-                        onStationClick = onStationClick,
-                        onFavoriteClick = onFavoriteClick,
-                        isFavorite = isFavorite,
-                        onDeleteClick = { station ->
-                            app.favouriteManager.remove(station.StationUuid)
+                    val favUiState by viewModel.uiState.collectAsState()
+                    if (favUiState.filteredStations.isEmpty()) {
+                        Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+                            Text(
+                                text = stringResource(R.string.searchpreference_no_results),
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
                         }
-                    )
+                    } else {
+                        ReorderableStationList(
+                            stations = favUiState.filteredStations,
+                            isGrid = favUiState.isGrid,
+                            onStationClick = onStationClick,
+                            onFavoriteClick = onFavoriteClick,
+                            isFavorite = isFavorite,
+                            onReorder = { viewModel.updateAllOrder(it) },
+                            onDeleteClick = { station ->
+                                app.favouriteManager.remove(station.StationUuid)
+                            }
+                        )
+                    }
                 } else {
                     CustomStationsTab(
                         viewModel = customViewModel,

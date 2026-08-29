@@ -1,37 +1,19 @@
 package com.ounben.amaradio.ui
 
-import android.content.ClipData
-import android.content.ClipDescription
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.draganddrop.dragAndDropSource
-import androidx.compose.foundation.draganddrop.dragAndDropTarget
-import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draganddrop.DragAndDropEvent
-import androidx.compose.ui.draganddrop.DragAndDropTarget
-import androidx.compose.ui.draganddrop.DragAndDropTransferData
-import androidx.compose.ui.draganddrop.mimeTypes
-import androidx.compose.ui.draganddrop.toAndroidDragEvent
-import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.boundsInParent
-import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -58,204 +40,24 @@ fun CustomStationsTab(
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
-    val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
-    var isDraggingActive by remember { mutableStateOf(false) }
-
-    LaunchedEffect(uiState.filteredStations) {
-        if (!isDraggingActive) {
-            stationsLocal.clear()
-            stationsLocal.addAll(uiState.filteredStations)
-        }
-    }
-
     Box(modifier = Modifier.fillMaxSize()) {
-        if (stationsLocal.isEmpty()) {
+        if (uiState.filteredStations.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                 Text(
                     text = stringResource(R.string.searchpreference_no_results),
                     color = MaterialTheme.colorScheme.onSurface
                 )
             }
-        } else if (uiState.isGrid) {
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(140.dp),
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(8.dp)
-            ) {
-                itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { _, station ->
-                    var isHovered by remember { mutableStateOf(false) }
-                    var handleBounds by remember { mutableStateOf(Rect.Zero) }
-                    
-                    Box(
-                        modifier = Modifier
-                            .animateItem() // Smooth animations for layout changes
-                            .fillMaxWidth()
-                            .padding(2.dp)
-                            .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
-                            .dragAndDropTarget(
-                                shouldStartDragAndDrop = { event ->
-                                    event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
-                                },
-                                target = remember {
-                                    object : DragAndDropTarget {
-                                        override fun onEntered(event: DragAndDropEvent) { isHovered = true }
-                                        override fun onExited(event: DragAndDropEvent) { isHovered = false }
-                                        override fun onDrop(event: DragAndDropEvent): Boolean {
-                                            isHovered = false
-                                            val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
-                                            val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
-                                            val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
-                                            
-                                            if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
-                                                val item = stationsLocal.removeAt(fromIndex)
-                                                stationsLocal.add(toIndex, item)
-                                                viewModel.updateAllOrder(stationsLocal)
-                                                return true
-                                            }
-                                            return false
-                                        }
-                                        override fun onEnded(event: DragAndDropEvent) {
-                                            isHovered = false
-                                            isDraggingActive = false
-                                        }
-                                    }
-                                }
-                            )
-                            .dragAndDropSource(
-                                block = {
-                                    detectDragGesturesAfterLongPress(
-                                        onDragStart = { offset ->
-                                            if (handleBounds.contains(offset)) {
-                                                isDraggingActive = true
-                                                startTransfer(
-                                                    DragAndDropTransferData(
-                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
-                                                    )
-                                                )
-                                            } else {
-                                                stationWithOptions = station
-                                            }
-                                        },
-                                        onDrag = { _, _ -> },
-                                        onDragEnd = { isDraggingActive = false },
-                                        onDragCancel = { isDraggingActive = false }
-                                    )
-                                }
-                            )
-                            .clickable { onStationClick(station) }
-                    ) {
-                        StationGridItem(
-                            station = station,
-                            isFavorite = isFavorite(station.StationUuid),
-                            onClick = { onStationClick(station) },
-                            onFavoriteClick = { onFavoriteClick(station) },
-                            onLongClick = { stationWithOptions = station },
-                            useInternalClickable = false,
-                            dragHandle = { modifier ->
-                                Icon(
-                                    imageVector = Icons.Default.SwapVert,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurface,
-                                    modifier = modifier
-                                        .size(48.dp)
-                                        .padding(12.dp)
-                                        .onGloballyPositioned { handleBounds = it.boundsInParent() }
-                                )
-                            }
-                        )
-                    }
-                }
-            }
         } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 80.dp)
-            ) {
-                items(stationsLocal.size, key = { index -> stationsLocal[index].StationUuid }) { index ->
-                    val station = stationsLocal[index]
-                    var isHovered by remember { mutableStateOf(false) }
-                    var handleBounds by remember { mutableStateOf(Rect.Zero) }
-
-                    Box(
-                        modifier = Modifier
-                            .animateItem()
-                            .fillMaxWidth()
-                            .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
-                            .dragAndDropTarget(
-                                shouldStartDragAndDrop = { event ->
-                                    event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
-                                },
-                                target = remember {
-                                    object : DragAndDropTarget {
-                                        override fun onEntered(event: DragAndDropEvent) { isHovered = true }
-                                        override fun onExited(event: DragAndDropEvent) { isHovered = false }
-                                        override fun onDrop(event: DragAndDropEvent): Boolean {
-                                            isHovered = false
-                                            val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
-                                            val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
-                                            val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
-
-                                            if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
-                                                val item = stationsLocal.removeAt(fromIndex)
-                                                stationsLocal.add(toIndex, item)
-                                                viewModel.updateAllOrder(stationsLocal)
-                                                return true
-                                            }
-                                            return false
-                                        }
-                                        override fun onEnded(event: DragAndDropEvent) {
-                                            isHovered = false
-                                            isDraggingActive = false
-                                        }
-                                    }
-                                }
-                            )
-                            .dragAndDropSource(
-                                block = {
-                                    detectDragGesturesAfterLongPress(
-                                        onDragStart = { offset ->
-                                            if (handleBounds.contains(offset)) {
-                                                isDraggingActive = true
-                                                startTransfer(
-                                                    DragAndDropTransferData(
-                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
-                                                    )
-                                                )
-                                            } else {
-                                                stationWithOptions = station
-                                            }
-                                        },
-                                        onDrag = { _, _ -> },
-                                        onDragEnd = { isDraggingActive = false },
-                                        onDragCancel = { isDraggingActive = false }
-                                    )
-                                }
-                            )
-                            .clickable { onStationClick(station) }
-                    ) {
-                        StationListItem(
-                            station = station,
-                            isFavorite = isFavorite(station.StationUuid),
-                            onClick = { onStationClick(station) },
-                            onFavoriteClick = { onFavoriteClick(station) },
-                            onLongClick = { stationWithOptions = station },
-                            useInternalClickable = false,
-                            dragHandle = { modifier ->
-                                Icon(
-                                    imageVector = Icons.Default.SwapVert,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onSurface,
-                                    modifier = modifier
-                                        .size(48.dp)
-                                        .padding(12.dp)
-                                        .onGloballyPositioned { handleBounds = it.boundsInParent() }
-                                )
-                            }
-                        )
-                    }
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
-                }
-            }
+            ReorderableStationList(
+                stations = uiState.filteredStations,
+                isGrid = uiState.isGrid,
+                onStationClick = onStationClick,
+                onFavoriteClick = onFavoriteClick,
+                isFavorite = isFavorite,
+                onReorder = { viewModel.updateAllOrder(it) },
+                onLongClick = { stationWithOptions = it }
+            )
         }
 
         FloatingActionButton(

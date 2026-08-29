@@ -20,7 +20,7 @@ class CustomStationManager(ctx: Context) : StationSaveManager(ctx) {
         }
     }
 
-    fun reorder(fromIndex: Int, toIndex: Int) {
+    override fun reorder(fromIndex: Int, toIndex: Int) {
         scope.launch(Dispatchers.IO) {
             val newList = listStations.toMutableList()
             if (fromIndex !in newList.indices || toIndex !in newList.indices) return@launch
@@ -32,7 +32,7 @@ class CustomStationManager(ctx: Context) : StationSaveManager(ctx) {
         }
     }
 
-    fun persistOrder(stations: List<DataRadioStation>) {
+    override fun persistOrder(stations: List<DataRadioStation>) {
         scope.launch(Dispatchers.IO) {
             val entities = stations.mapIndexed { index, station ->
                 station.toCustomEntity(index)

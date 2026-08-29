@@ -5,6 +5,19 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.draganddrop.dragAndDropSource
+import androidx.compose.foundation.draganddrop.dragAndDropTarget
+import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
+import androidx.compose.ui.draganddrop.DragAndDropEvent
+import androidx.compose.ui.draganddrop.DragAndDropTarget
+import androidx.compose.ui.draganddrop.DragAndDropTransferData
+import androidx.compose.ui.draganddrop.mimeTypes
+import androidx.compose.ui.draganddrop.toAndroidDragEvent
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.ui.geometry.Rect
+import android.content.ClipDescription
+import android.content.ClipData
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -56,6 +69,10 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import android.util.Log
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.unit.toSize
 
 @Composable
 fun StationIcon(
@@ -73,16 +90,12 @@ fun StationIcon(
         val iconFile = File(iconDir, "$stationUuid.jpg")
         
         if (!iconUrl.isNullOrBlank() && iconUrl.startsWith("file:/")) {
-            // Custom station with local picture: Use the timestamped URL from DB
             android.net.Uri.parse(iconUrl)
         } else if (iconFile.exists()) {
-            // Normal station with cached image
             StationIconProvider.getIconUri(stationUuid, stationName)
         } else if (!iconUrl.isNullOrBlank() && iconUrl != "null" && iconUrl.startsWith("http")) {
-            // Normal station, not yet cached: Use remote URL
             android.net.Uri.parse(iconUrl)
         } else {
-            // No URL and no cache: Show placeholder via provider
             StationIconProvider.getIconUri(stationUuid, stationName)
         }
     }
@@ -93,13 +106,11 @@ fun StationIcon(
     val imageRequest = remember(finalIconUri, stationUuid) {
         ImageRequest.Builder(context)
             .data(finalIconUri)
-            .size(512, 512) // Nutze 512x512 für hohe Qualität im Widget
+            .size(512, 512) 
             .allowHardware(false)
             .crossfade(true)
             .listener(
                 onSuccess = { _, result ->
-                    // AUTOMATISCHES SPEICHERN: Wenn das Bild am Handy geladen wurde,
-                    // speichern wir es permanent für das Widget/Android Auto ab.
                     val iconDir = File(context.filesDir, "station_icons")
                     val iconFile = File(iconDir, "$stationUuid.jpg")
                     if (!iconFile.exists()) {
@@ -110,8 +121,7 @@ fun StationIcon(
                                 FileOutputStream(iconFile).use { out ->
                                     bitmap.compress(android.graphics.Bitmap.CompressFormat.JPEG, 90, out)
                                 }
-                                Log.d("StationIcon", "Bild automatisch gespeichert für Widget: $stationUuid")
-                            } catch (e: Exception) { /* ignore */ }
+                            } catch (_: Exception) { }
                         }
                     }
                 }
@@ -125,7 +135,6 @@ fun StationIcon(
             .background(if (isError || isLoading) placeholderColor else Color.White),
         contentAlignment = Alignment.Center
     ) {
-        // Show placeholder text if loading or failed
         if (isLoading || isError) {
             Text(
                 text = placeholderText,
@@ -225,7 +234,7 @@ fun StationList(
         ) {
             itemsIndexed(
                 items = stations, 
-                key = { index, station -> "${station.StationUuid}_$index" },
+                key = { _, station -> station.StationUuid },
                 contentType = { _, _ -> "station" }
             ) { _, station ->
                 StationGridItem(
@@ -241,7 +250,7 @@ fun StationList(
         LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             itemsIndexed(
                 items = stations, 
-                key = { index, station -> "${station.StationUuid}_$index" },
+                key = { _, station -> station.StationUuid },
                 contentType = { _, _ -> "station" }
             ) { _, station ->
                 StationListItem(
@@ -332,7 +341,6 @@ fun TrackListItem(
         }
         Spacer(modifier = Modifier.width(12.dp))
         Column(modifier = Modifier.weight(1f)) {
-            // Desired format: Line 1 = Title, Line 2 = Artist
             val displayTitle = track.track.ifBlank { track.title }
             val displayArtist = if (track.track.isNotBlank()) track.artist else ""
 
@@ -380,12 +388,11 @@ fun StationListItem(
         station.getShortDetails(context) 
     }
 
-    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { notApplicable },
-        station.TagsAll.ifEmpty { notApplicable }
+        station.Language.ifEmpty { stringResource(R.string.not_applicable) },
+        station.TagsAll.ifEmpty { stringResource(R.string.not_applicable) }
     )
     
     Row(
@@ -480,12 +487,11 @@ fun StationGridItem(
     useInternalClickable: Boolean = true,
     dragHandle: (@Composable (Modifier) -> Unit)? = null
 ) {
-    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { notApplicable },
-        station.TagsAll.ifEmpty { notApplicable }
+        station.Language.ifEmpty { stringResource(R.string.not_applicable) },
+        station.TagsAll.ifEmpty { stringResource(R.string.not_applicable) }
     )
 
     Card(
@@ -533,14 +539,12 @@ fun StationGridItem(
                 )
             }
 
-            // Drag Handle - Top Left
             if (dragHandle != null) {
                 Box(modifier = Modifier.align(Alignment.TopStart)) {
                     dragHandle(Modifier)
                 }
             }
 
-            // Favorite Star - Top Right
             Box(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -564,6 +568,255 @@ fun StationGridItem(
                 )
             }
         }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun ReorderableStationList(
+    stations: List<DataRadioStation>,
+    isGrid: Boolean,
+    onStationClick: (DataRadioStation) -> Unit,
+    onFavoriteClick: (DataRadioStation) -> Unit,
+    isFavorite: (String) -> Boolean,
+    onReorder: (List<DataRadioStation>) -> Unit,
+    onDeleteClick: ((DataRadioStation) -> Unit)? = null,
+    onLongClick: ((DataRadioStation) -> Unit)? = null,
+    modifier: Modifier = Modifier
+) {
+    val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
+    var isDraggingActive by remember { mutableStateOf(false) }
+    var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+
+    LaunchedEffect(stations) {
+        if (!isDraggingActive) {
+            stationsLocal.clear()
+            stationsLocal.addAll(stations)
+        }
+    }
+
+    if (isGrid) {
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(140.dp),
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(8.dp)
+        ) {
+            itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { _, station ->
+                var isHovered by remember { mutableStateOf(false) }
+                var containerCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+                var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+
+                Box(
+                    modifier = Modifier
+                        .animateItem()
+                        .fillMaxWidth()
+                        .padding(2.dp)
+                        .onGloballyPositioned { containerCoords = it }
+                        .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
+                        .dragAndDropTarget(
+                            shouldStartDragAndDrop = { event ->
+                                event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                            },
+                            target = remember {
+                                object : DragAndDropTarget {
+                                    override fun onEntered(event: DragAndDropEvent) { isHovered = true }
+                                    override fun onExited(event: DragAndDropEvent) { isHovered = false }
+                                    override fun onDrop(event: DragAndDropEvent): Boolean {
+                                        isHovered = false
+                                        val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
+                                        val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
+                                        val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
+
+                                        if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
+                                            val item = stationsLocal.removeAt(fromIndex)
+                                            stationsLocal.add(toIndex, item)
+                                            onReorder(stationsLocal.toList())
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    override fun onEnded(event: DragAndDropEvent) {
+                                        isHovered = false
+                                        isDraggingActive = false
+                                    }
+                                }
+                            }
+                        )
+                        .dragAndDropSource(
+                            block = {
+                                detectDragGesturesAfterLongPress(
+                                    onDragStart = { offset ->
+                                        val container = containerCoords
+                                        val handle = handleCoords
+                                        if (container != null && handle != null) {
+                                            val windowOffset = container.positionInWindow() + offset
+                                            val handleBoundsInWindow = handle.boundsInWindow()
+                                            
+                                            if (handleBoundsInWindow.contains(windowOffset)) {
+                                                isDraggingActive = true
+                                                startTransfer(
+                                                    DragAndDropTransferData(
+                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
+                                                    )
+                                                )
+                                                return@detectDragGesturesAfterLongPress
+                                            }
+                                        }
+                                        if (onLongClick != null) {
+                                            onLongClick.invoke(station)
+                                        } else {
+                                            stationWithOptions = station
+                                        }
+                                    },
+                                    onDrag = { _, _ -> },
+                                    onDragEnd = { isDraggingActive = false },
+                                    onDragCancel = { isDraggingActive = false }
+                                )
+                            }
+                        )
+                        .clickable { onStationClick(station) }
+                ) {
+                    StationGridItem(
+                        station = station,
+                        isFavorite = isFavorite(station.StationUuid),
+                        onClick = { onStationClick(station) },
+                        onFavoriteClick = { onFavoriteClick(station) },
+                        onLongClick = { 
+                            if (onLongClick != null) onLongClick.invoke(station) 
+                            else stationWithOptions = station 
+                        },
+                        useInternalClickable = false,
+                        dragHandle = { dragModifier ->
+                            Icon(
+                                imageVector = Icons.Default.SwapVert,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = dragModifier
+                                    .size(48.dp)
+                                    .padding(12.dp)
+                                    .onGloballyPositioned { handleCoords = it }
+                            )
+                        }
+                    )
+                }
+            }
+        }
+    } else {
+        LazyColumn(
+            modifier = modifier.fillMaxSize(),
+            contentPadding = PaddingValues(bottom = 80.dp)
+        ) {
+            items(stationsLocal.size, key = { index -> stationsLocal[index].StationUuid }) { index ->
+                val station = stationsLocal[index]
+                var isHovered by remember { mutableStateOf(false) }
+                var containerCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+                var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
+
+                Box(
+                    modifier = Modifier
+                        .animateItem()
+                        .fillMaxWidth()
+                        .onGloballyPositioned { containerCoords = it }
+                        .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
+                        .dragAndDropTarget(
+                            shouldStartDragAndDrop = { event ->
+                                event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+                            },
+                            target = remember {
+                                object : DragAndDropTarget {
+                                    override fun onEntered(event: DragAndDropEvent) { isHovered = true }
+                                    override fun onExited(event: DragAndDropEvent) { isHovered = false }
+                                    override fun onDrop(event: DragAndDropEvent): Boolean {
+                                        isHovered = false
+                                        val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
+                                        val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
+                                        val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
+
+                                        if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
+                                            val item = stationsLocal.removeAt(fromIndex)
+                                            stationsLocal.add(toIndex, item)
+                                            onReorder(stationsLocal.toList())
+                                            return true
+                                        }
+                                        return false
+                                    }
+                                    override fun onEnded(event: DragAndDropEvent) {
+                                        isHovered = false
+                                        isDraggingActive = false
+                                    }
+                                }
+                            }
+                        )
+                        .dragAndDropSource(
+                            block = {
+                                detectDragGesturesAfterLongPress(
+                                    onDragStart = { offset ->
+                                        val container = containerCoords
+                                        val handle = handleCoords
+                                        if (container != null && handle != null) {
+                                            val windowOffset = container.positionInWindow() + offset
+                                            val handleBoundsInWindow = handle.boundsInWindow()
+                                            
+                                            if (handleBoundsInWindow.contains(windowOffset)) {
+                                                isDraggingActive = true
+                                                startTransfer(
+                                                    DragAndDropTransferData(
+                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
+                                                    )
+                                                )
+                                                return@detectDragGesturesAfterLongPress
+                                            }
+                                        }
+                                        if (onLongClick != null) {
+                                            onLongClick.invoke(station)
+                                        } else {
+                                            stationWithOptions = station
+                                        }
+                                    },
+                                    onDrag = { _, _ -> },
+                                    onDragEnd = { isDraggingActive = false },
+                                    onDragCancel = { isDraggingActive = false }
+                                )
+                            }
+                        )
+                        .clickable { onStationClick(station) }
+                ) {
+                    StationListItem(
+                        station = station,
+                        isFavorite = isFavorite(station.StationUuid),
+                        onClick = { onStationClick(station) },
+                        onFavoriteClick = { onFavoriteClick(station) },
+                        onLongClick = { 
+                            if (onLongClick != null) onLongClick.invoke(station) 
+                            else stationWithOptions = station 
+                        },
+                        useInternalClickable = false,
+                        dragHandle = { dragModifier ->
+                            Icon(
+                                imageVector = Icons.Default.SwapVert,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurface,
+                                modifier = dragModifier
+                                    .size(48.dp)
+                                    .padding(12.dp)
+                                    .onGloballyPositioned { handleCoords = it }
+                            )
+                        }
+                    )
+                }
+                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
+            }
+        }
+    }
+
+    stationWithOptions?.let { station ->
+        StationOptionsDialog(
+            station = station,
+            isFavorite = isFavorite(station.StationUuid),
+            onFavoriteClick = { onFavoriteClick(station) },
+            onDeleteClick = onDeleteClick?.let { { it(station) } },
+            onDismiss = { stationWithOptions = null }
+        )
     }
 }
 

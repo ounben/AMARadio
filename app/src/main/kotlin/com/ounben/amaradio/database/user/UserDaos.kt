@@ -5,14 +5,17 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FavoriteDao {
-    @Query("SELECT * FROM station_favourite ORDER BY addedAt DESC")
+    @Query("SELECT * FROM station_favourite ORDER BY displayOrder ASC")
     fun getAllFavoritesFlow(): Flow<List<FavoriteEntity>>
 
-    @Query("SELECT * FROM station_favourite ORDER BY addedAt DESC")
+    @Query("SELECT * FROM station_favourite ORDER BY displayOrder ASC")
     suspend fun getAllFavorites(): List<FavoriteEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favorite: FavoriteEntity)
+
+    @Update
+    suspend fun update(favorite: FavoriteEntity)
 
     @Delete
     suspend fun delete(favorite: FavoriteEntity)
@@ -25,6 +28,21 @@ interface FavoriteDao {
 
     @Query("SELECT * FROM station_favourite WHERE stationUuid = :uuid LIMIT 1")
     suspend fun getByUuid(uuid: String): FavoriteEntity?
+
+    @Query("SELECT MAX(displayOrder) FROM station_favourite")
+    suspend fun getMaxOrder(): Int?
+
+    @Transaction
+    suspend fun updateAll(stations: List<FavoriteEntity>) {
+        deleteAll()
+        insertAll(stations)
+    }
+
+    @Query("DELETE FROM station_favourite")
+    suspend fun deleteAll()
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAll(stations: List<FavoriteEntity>)
 }
 
 @Dao

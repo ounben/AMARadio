@@ -88,7 +88,8 @@ open class StationSaveManager(protected val context: Context) {
     private fun addInternal(station: DataRadioStation) {
         scope.launch(Dispatchers.IO) {
             if (getSaveId() == "favourites") {
-                userDb.favoriteDao().insert(station.toFavoriteEntity())
+                val maxOrder = userDb.favoriteDao().getMaxOrder() ?: -1
+                userDb.favoriteDao().insert(station.toFavoriteEntity(maxOrder + 1))
             } else if (getSaveId() == "history") {
                 userDb.historyDao().addStation(station.toHistoryEntity())
             } else if (getSaveId() == "custom") {
@@ -106,7 +107,8 @@ open class StationSaveManager(protected val context: Context) {
             stations.forEach { station ->
                 if (station.queue == null) station.queue = this@StationSaveManager
                 if (getSaveId() == "favourites") {
-                    userDb.favoriteDao().insert(station.toFavoriteEntity())
+                    val maxOrder = userDb.favoriteDao().getMaxOrder() ?: -1
+                    userDb.favoriteDao().insert(station.toFavoriteEntity(maxOrder + 1))
                 } else if (getSaveId() == "history") {
                     userDb.historyDao().insert(station.toHistoryEntity())
                 } else if (getSaveId() == "custom") {
@@ -163,6 +165,14 @@ open class StationSaveManager(protected val context: Context) {
 
     open fun restore(station: DataRadioStation, pos: Int) {
         add(station)
+    }
+
+    open fun reorder(fromIndex: Int, toIndex: Int) {
+        // Implement in subclasses
+    }
+
+    open fun persistOrder(stations: List<DataRadioStation>) {
+        // Implement in subclasses
     }
 
     fun clear() {
@@ -235,10 +245,10 @@ open class StationSaveManager(protected val context: Context) {
         Codec = codec, Bitrate = bitrate
     )
 
-    private fun DataRadioStation.toFavoriteEntity() = FavoriteEntity(
+    private fun DataRadioStation.toFavoriteEntity(order: Int = 0) = FavoriteEntity(
         stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
         country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
-        codec = Codec, bitrate = Bitrate, addedAt = Date()
+        codec = Codec, bitrate = Bitrate, addedAt = Date(), displayOrder = order
     )
 
     private fun DataRadioStation.toHistoryEntity() = HistoryEntity(

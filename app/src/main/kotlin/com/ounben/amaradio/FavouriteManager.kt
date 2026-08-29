@@ -6,7 +6,11 @@ import android.content.Intent
 import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.os.Build
+import com.ounben.amaradio.database.user.FavoriteEntity
 import com.ounben.amaradio.station.DataRadioStation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.Date
 import kotlin.math.min
 
 class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
@@ -14,6 +18,33 @@ class FavouriteManager(ctx: Context) : StationSaveManager(ctx) {
     override fun getSaveId(): String {
         return "favourites"
     }
+
+    override fun reorder(fromIndex: Int, toIndex: Int) {
+        scope.launch(Dispatchers.IO) {
+            val newList = listStations.toMutableList()
+            if (fromIndex !in newList.indices || toIndex !in newList.indices) return@launch
+            
+            val item = newList.removeAt(fromIndex)
+            newList.add(toIndex, item)
+            
+            persistOrder(newList)
+        }
+    }
+
+    override fun persistOrder(stations: List<DataRadioStation>) {
+        scope.launch(Dispatchers.IO) {
+            val entities = stations.mapIndexed { index, station ->
+                station.toFavoriteEntityInternal(index)
+            }
+            userDb.favoriteDao().updateAll(entities)
+        }
+    }
+
+    private fun DataRadioStation.toFavoriteEntityInternal(order: Int) = FavoriteEntity(
+        stationUuid = StationUuid, name = Name, streamUrl = StreamUrl, iconUrl = IconUrl,
+        country = Country, countryCode = CountryCode, tags = TagsAll, language = Language,
+        codec = Codec, bitrate = Bitrate, addedAt = Date(), displayOrder = order
+    )
 
     init {
         stationStatusListener = object : StationStatusListener {

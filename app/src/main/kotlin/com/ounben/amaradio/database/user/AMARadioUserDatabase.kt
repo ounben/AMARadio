@@ -19,7 +19,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
         TrackHistoryEntry::class,
         CustomStationEntity::class
     ], 
-    version = 2,
+    version = 3,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -60,6 +60,24 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_2_3 = object : Migration(2, 3) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                // 1. Add displayOrder column to station_favourite
+                db.execSQL("ALTER TABLE `station_favourite` ADD COLUMN `displayOrder` INTEGER NOT NULL DEFAULT 0")
+                
+                // 2. Initialize displayOrder based on existing addedAt (DESC)
+                // This ensures the current visual order is preserved as the new base order.
+                db.execSQL("""
+                    UPDATE `station_favourite` 
+                    SET `displayOrder` = (
+                        SELECT COUNT(*) 
+                        FROM `station_favourite` AS f2 
+                        WHERE f2.`addedAt` > `station_favourite`.`addedAt`
+                    )
+                """.trimIndent())
+            }
+        }
+
         fun getDatabase(context: Context): AMARadioUserDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -67,8 +85,8 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
                     AMARadioUserDatabase::class.java,
                     "user_data.db"
                 )
-                .addMigrations(MIGRATION_1_2)
-                .fallbackToDestructiveMigrationFrom(3) // Nur bei künftigen Fehlern ab v3 zerstörerisch
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+                .fallbackToDestructiveMigrationFrom(4) // Nur bei künftigen Fehlern ab v4 zerstörerisch
                 .addCallback(CALLBACK)
                 .build()
                 INSTANCE = instance

@@ -33,8 +33,8 @@ object UserDatabaseMigration {
             val favJson = sharedPref.getString("favourites", null)
             if (!favJson.isNullOrEmpty()) {
                 val stations = DataRadioStation.DecodeJson(favJson)
-                stations?.forEach { station ->
-                    userDb.favoriteDao().insert(station.toFavoriteEntity())
+                stations?.forEachIndexed { index, station ->
+                    userDb.favoriteDao().insert(station.toFavoriteEntity(index))
                 }
                 Log.d(TAG, "Migrated ${stations?.size ?: 0} favorites")
             }
@@ -88,7 +88,7 @@ object UserDatabaseMigration {
         }
     }
 
-    private fun DataRadioStation.toFavoriteEntity() = FavoriteEntity(
+    private fun DataRadioStation.toFavoriteEntity(order: Int) = FavoriteEntity(
         stationUuid = StationUuid,
         name = Name,
         streamUrl = StreamUrl,
@@ -98,7 +98,8 @@ object UserDatabaseMigration {
         tags = TagsAll,
         language = Language,
         codec = Codec,
-        bitrate = Bitrate
+        bitrate = Bitrate,
+        displayOrder = order
     )
 
     private fun DataRadioStation.toHistoryEntity(date: Date) = HistoryEntity(

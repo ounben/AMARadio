@@ -16,7 +16,8 @@ data class FavoriteEntity(
     val language: String,
     val codec: String,
     val bitrate: Int,
-    val addedAt: Date = Date()
+    val addedAt: Date = Date(),
+    val displayOrder: Int = 0
 )
 
 @Entity(tableName = "station_history")
