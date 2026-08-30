@@ -104,3 +104,6 @@ foojay-resolver = { id = "org.gradle.toolchains.foojay-resolver-convention", ver
 junit-platform = { id = "org.junit.platform", version.ref = "junitPlatform" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlinGradlePlugin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinGradlePlugin" }
+android-application = { id = "com.android.application", version.ref = "gradle" }
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradlePlugin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlinGradlePlugin" }

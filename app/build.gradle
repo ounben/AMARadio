@@ -1,9 +1,9 @@
 plugins {
-    id 'com.android.application'
+    alias(libs.plugins.android.application)
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.kotlin.serialization)
-    id 'com.google.devtools.ksp'
-    id 'kotlin-parcelize'
+    alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.kotlin.parcelize)
 }
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
@@ -11,7 +11,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 def appVersion = "1.29"
 
 base {
-    archivesName = "AMARadio_${appVersion}"
+    archivesName.set("AMARadio_${appVersion}")
 }
 
 def getAvailableLocales() {
@@ -28,7 +28,7 @@ def getAvailableLocales() {
 
 android {
     namespace 'com.ounben.amaradio'
-    compileSdkVersion 37
+    compileSdk 37
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_21
@@ -44,10 +44,11 @@ android {
     }
 
     buildFeatures {
-        viewBinding false
-        aidl true
-        compose true
-        resValues true
+        viewBinding = false
+        aidl = true
+        compose = true
+        resValues = true
+        buildConfig = false
     }
 
     bundle {
@@ -58,8 +59,8 @@ android {
 
     defaultConfig {
         applicationId "com.ounben.amaradio"
-        minSdkVersion 26
-        targetSdkVersion 37
+        minSdk 26
+        targetSdk 37
 
         versionCode 151
         versionName appVersion
