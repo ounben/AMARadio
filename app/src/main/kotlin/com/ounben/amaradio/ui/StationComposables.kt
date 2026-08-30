@@ -14,7 +14,7 @@ import androidx.compose.ui.draganddrop.DragAndDropTransferData
 import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.layout.onGloballyPositioned
-import androidx.compose.material.icons.filled.SwapVert
+import androidx.compose.material.icons.filled.DragHandle
 import sh.calvin.reorderable.rememberReorderableLazyListState
 import sh.calvin.reorderable.rememberReorderableLazyGridState
 import sh.calvin.reorderable.ReorderableItem
@@ -478,6 +478,10 @@ fun StationListItem(
             }
         }
         
+        if (dragHandle != null) {
+            dragHandle(Modifier.fillMaxHeight())
+        }
+
         Box(
             modifier = Modifier
                 .minimumInteractiveComponentSize()
@@ -498,10 +502,6 @@ fun StationListItem(
                 ),
                 tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
             )
-        }
-
-        if (dragHandle != null) {
-            dragHandle(Modifier.fillMaxHeight())
         }
     }
 }
@@ -572,8 +572,8 @@ fun StationGridItem(
             }
 
             if (dragHandle != null) {
-                Box(modifier = Modifier.align(Alignment.TopStart).fillMaxHeight()) {
-                    dragHandle(Modifier.fillMaxHeight())
+                Box(modifier = Modifier.align(Alignment.TopStart)) {
+                    dragHandle(Modifier)
                 }
             }
 
@@ -668,12 +668,12 @@ fun ReorderableStationList(
                                 with(itemScope) {
                                     Box(
                                         modifier = dragModifier
-                                            .width(56.dp)
+                                            .size(48.dp)
                                             .draggableHandle(),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Icon(
-                                            imageVector = Icons.Default.SwapVert,
+                                            imageVector = Icons.Default.DragHandle,
                                             contentDescription = null,
                                             tint = MaterialTheme.colorScheme.onSurface,
                                             modifier = Modifier.size(24.dp)
@@ -732,7 +732,7 @@ fun ReorderableStationList(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Icon(
-                                                imageVector = Icons.Default.SwapVert,
+                                                imageVector = Icons.Default.DragHandle,
                                                 contentDescription = null,
                                                 tint = MaterialTheme.colorScheme.onSurface,
                                                 modifier = Modifier.size(24.dp)
