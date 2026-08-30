@@ -142,7 +142,7 @@ open class StationSaveManager(protected val context: Context) {
         return listStations[idx - 1]
     }
 
-    fun remove(id: String): Int = synchronized(this) {
+    open fun remove(id: String): Int = synchronized(this) {
         val idx = listStations.indexOfFirst { it.StationUuid == id }
         if (idx != -1) {
             val station = listStations[idx]

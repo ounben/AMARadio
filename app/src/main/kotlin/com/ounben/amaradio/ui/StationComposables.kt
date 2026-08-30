@@ -623,7 +623,7 @@ fun ReorderableStationList(
     val gridState = rememberLazyGridState()
 
     LaunchedEffect(stations) {
-        if (stationsLocal.size != stations.size || stationsLocal.map { it.StationUuid } != stations.map { it.StationUuid }) {
+        if (stationsLocal.toList() != stations) {
             stationsLocal.clear()
             stationsLocal.addAll(stations)
         }
