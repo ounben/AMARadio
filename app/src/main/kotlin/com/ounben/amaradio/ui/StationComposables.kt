@@ -15,8 +15,15 @@ import androidx.compose.ui.draganddrop.mimeTypes
 import androidx.compose.ui.draganddrop.toAndroidDragEvent
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.material.icons.filled.SwapVert
+import sh.calvin.reorderable.rememberReorderableLazyListState
+import sh.calvin.reorderable.rememberReorderableLazyGridState
+import sh.calvin.reorderable.ReorderableItem
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.ui.geometry.Rect
+import androidx.compose.ui.zIndex
 import android.content.ClipDescription
+import androidx.compose.ui.input.pointer.pointerInput
+import kotlin.time.Duration.Companion.milliseconds
 import android.content.ClipData
 import androidx.compose.foundation.gestures.scrollBy
 import androidx.compose.foundation.lazy.LazyColumn
@@ -41,12 +48,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.layout.positionInWindow
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -407,59 +421,63 @@ fun StationListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .then(
-                if (useInternalClickable) {
-                    Modifier.combinedClickable(
-                        onClick = onClick,
-                        onLongClick = onLongClick
-                    )
-                } else Modifier
-            )
+            .height(IntrinsicSize.Min)
             .semantics(mergeDescendants = true) {
                 contentDescription = accessibilityDesc
             }
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(modifier = Modifier.size(44.dp), contentAlignment = Alignment.Center) {
-            StationIcon(
-                stationName = station.Name,
-                stationUuid = station.StationUuid,
-                iconUrl = station.IconUrl,
-                modifier = Modifier.fillMaxSize()
-            )
-        }
-        Spacer(modifier = Modifier.width(12.dp))
-        Column(modifier = Modifier.weight(1f)) {
-            Text(
-                text = station.Name,
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = MaterialTheme.colorScheme.onSurface
-            )
-            Text(
-                text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurface,
-                maxLines = 1
-            )
-            if (station.TagsAll.isNotEmpty()) {
-                Text(
-                    text = station.TagsAll,
-                    style = MaterialTheme.typography.labelSmall,
-                    color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
+        Row(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxHeight()
+                .then(
+                    if (useInternalClickable) {
+                        Modifier.combinedClickable(
+                            onClick = onClick,
+                            onLongClick = onLongClick
+                        )
+                    } else Modifier
+                ),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Box(modifier = Modifier.size(44.dp), contentAlignment = Alignment.Center) {
+                StationIcon(
+                    stationName = station.Name,
+                    stationUuid = station.StationUuid,
+                    iconUrl = station.IconUrl,
+                    modifier = Modifier.fillMaxSize()
                 )
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = station.Name,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1
+                )
+                if (station.TagsAll.isNotEmpty()) {
+                    Text(
+                        text = station.TagsAll,
+                        style = MaterialTheme.typography.labelSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
             }
         }
         
-        if (dragHandle != null) {
-            dragHandle(Modifier)
-        }
-
         Box(
             modifier = Modifier
                 .minimumInteractiveComponentSize()
@@ -480,6 +498,10 @@ fun StationListItem(
                 ),
                 tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
             )
+        }
+
+        if (dragHandle != null) {
+            dragHandle(Modifier.fillMaxHeight())
         }
     }
 }
@@ -506,14 +528,7 @@ fun StationGridItem(
     Card(
         modifier = modifier
             .padding(4.dp)
-            .then(
-                if (useInternalClickable) {
-                    Modifier.combinedClickable(
-                        onClick = onClick,
-                        onLongClick = onLongClick
-                    )
-                } else Modifier
-            )
+            .height(IntrinsicSize.Min)
             .semantics(mergeDescendants = true) {
                 contentDescription = accessibilityDesc
             },
@@ -525,6 +540,14 @@ fun StationGridItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .then(
+                        if (useInternalClickable) {
+                            Modifier.combinedClickable(
+                                onClick = onClick,
+                                onLongClick = onLongClick
+                            )
+                        } else Modifier
+                    )
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -549,8 +572,8 @@ fun StationGridItem(
             }
 
             if (dragHandle != null) {
-                Box(modifier = Modifier.align(Alignment.TopStart)) {
-                    dragHandle(Modifier)
+                Box(modifier = Modifier.align(Alignment.TopStart).fillMaxHeight()) {
+                    dragHandle(Modifier.fillMaxHeight())
                 }
             }
 
@@ -594,268 +617,138 @@ fun ReorderableStationList(
     modifier: Modifier = Modifier
 ) {
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
-    var isDraggingActive by remember { mutableStateOf(false) }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
     
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
 
     LaunchedEffect(stations) {
-        if (!isDraggingActive) {
+        if (stationsLocal.size != stations.size || stationsLocal.map { it.StationUuid } != stations.map { it.StationUuid }) {
             stationsLocal.clear()
             stationsLocal.addAll(stations)
         }
     }
 
-    var dragPointerY by remember { mutableStateOf<Float?>(null) }
-    var containerBounds by remember { mutableStateOf(Rect.Zero) }
-
-    LaunchedEffect(isDraggingActive, dragPointerY) {
-        if (isDraggingActive && dragPointerY != null) {
-            val scrollThreshold = 150f 
-            
-            while (isDraggingActive) {
-                val y = dragPointerY ?: break
-                val distFromTop = y - containerBounds.top
-                val distFromBottom = containerBounds.bottom - y
-                
-                var scrollAmount = 0f
-                if (distFromTop < scrollThreshold) {
-                    scrollAmount = -((scrollThreshold - distFromTop) / 3f)
-                } else if (distFromBottom < scrollThreshold) {
-                    scrollAmount = (scrollThreshold - distFromBottom) / 3f
-                }
-
-                if (scrollAmount != 0f) {
-                    if (isGrid) gridState.scrollBy(scrollAmount)
-                    else listState.scrollBy(scrollAmount)
-                }
-                delay(16.milliseconds)
-            }
-        }
-    }
-
     if (isGrid) {
+        val reorderableState = rememberReorderableLazyGridState(gridState) { from, to ->
+            stationsLocal.add(to.index, stationsLocal.removeAt(from.index))
+            onReorder(stationsLocal.toList())
+        }
+
         LazyVerticalGrid(
             state = gridState,
             columns = GridCells.Adaptive(140.dp),
-            modifier = modifier
-                .fillMaxSize()
-                .onGloballyPositioned { containerBounds = it.boundsInWindow() },
+            modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp)
         ) {
-            itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { _, station ->
-                var isHovered by remember { mutableStateOf(false) }
-                var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
-                var itemCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
-
-                Box(
-                    modifier = Modifier
-                        .animateItem()
-                        .fillMaxWidth()
-                        .padding(2.dp)
-                        .onGloballyPositioned { itemCoords = it }
-                        .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
-                        .dragAndDropTarget(
-                            shouldStartDragAndDrop = { event ->
-                                event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { index, station ->
+                ReorderableItem(reorderableState, key = station.StationUuid) { isDragging ->
+                    val itemScope = this
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(2.dp)
+                            .graphicsLayer {
+                                scaleX = if (isDragging) 1.05f else 1f
+                                scaleY = if (isDragging) 1.05f else 1f
+                                alpha = if (isDragging) 0.8f else 1f
+                            }
+                    ) {
+                        StationGridItem(
+                            station = station,
+                            isFavorite = isFavorite(station.StationUuid),
+                            onClick = { onStationClick(station) },
+                            onFavoriteClick = { onFavoriteClick(station) },
+                            onLongClick = { 
+                                if (onLongClick != null) onLongClick.invoke(station) 
+                                else stationWithOptions = station 
                             },
-                            target = remember {
-                                object : DragAndDropTarget {
-                                    override fun onEntered(event: DragAndDropEvent) { isHovered = true }
-                                    override fun onExited(event: DragAndDropEvent) { isHovered = false }
-                                    override fun onDrop(event: DragAndDropEvent): Boolean {
-                                        isHovered = false
-                                        val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
-                                        val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
-                                        val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
-
-                                        if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
-                                            val item = stationsLocal.removeAt(fromIndex)
-                                            stationsLocal.add(toIndex, item)
-                                            onReorder(stationsLocal.toList())
-                                            return true
-                                        }
-                                        return false
-                                    }
-                                    override fun onEnded(event: DragAndDropEvent) {
-                                        isHovered = false
-                                        isDraggingActive = false
-                                        dragPointerY = null
+                            useInternalClickable = true,
+                            dragHandle = { dragModifier ->
+                                with(itemScope) {
+                                    Box(
+                                        modifier = dragModifier
+                                            .width(56.dp)
+                                            .draggableHandle(),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.SwapVert,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.onSurface,
+                                            modifier = Modifier.size(24.dp)
+                                        )
                                     }
                                 }
                             }
                         )
-                        .dragAndDropSource(
-                            block = {
-                                detectDragGesturesAfterLongPress(
-                                    onDragStart = { offset ->
-                                        val handle = handleCoords
-                                        val item = itemCoords
-                                        if (handle != null && item != null) {
-                                            val handleRect = item.localBoundingBoxOf(handle)
-                                            // onDragStart offset is local to this Box.
-                                            if (handleRect.contains(offset)) {
-                                                isDraggingActive = true
-                                                dragPointerY = item.positionInWindow().y + offset.y
-                                                startTransfer(
-                                                    DragAndDropTransferData(
-                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
-                                                    )
-                                                )
-                                                return@detectDragGesturesAfterLongPress
-                                            }
-                                        }
-                                        if (onLongClick != null) onLongClick.invoke(station) 
-                                        else stationWithOptions = station
-                                    },
-                                    onDrag = { _, dragAmount -> 
-                                        dragPointerY = (dragPointerY ?: 0f) + dragAmount.y
-                                    },
-                                    onDragEnd = { isDraggingActive = false; dragPointerY = null },
-                                    onDragCancel = { isDraggingActive = false; dragPointerY = null }
-                                )
-                            }
-                        )
-                        .combinedClickable(
-                            onClick = { onStationClick(station) },
-                            onLongClick = { /* Handled by dragAndDropSource */ }
-                        )
-                ) {
-                    StationGridItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) },
-                        onLongClick = { 
-                            if (onLongClick != null) onLongClick.invoke(station) 
-                            else stationWithOptions = station 
-                        },
-                        useInternalClickable = false,
-                        dragHandle = { dragModifier ->
-                            Icon(
-                                imageVector = Icons.Default.SwapVert,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = dragModifier
-                                    .size(48.dp)
-                                    .padding(12.dp)
-                                    .onGloballyPositioned { handleCoords = it }
-                            )
-                        }
-                    )
+                    }
                 }
             }
         }
     } else {
+        val reorderableState = rememberReorderableLazyListState(listState) { from, to ->
+            stationsLocal.add(to.index, stationsLocal.removeAt(from.index))
+            onReorder(stationsLocal.toList())
+        }
+
         LazyColumn(
             state = listState,
-            modifier = modifier
-                .fillMaxSize()
-                .onGloballyPositioned { containerBounds = it.boundsInWindow() },
+            modifier = modifier.fillMaxSize(),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
-            items(stationsLocal.size, key = { index -> stationsLocal[index].StationUuid }) { index ->
-                val station = stationsLocal[index]
-                var isHovered by remember { mutableStateOf(false) }
-                var handleCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
-                var itemCoords: LayoutCoordinates? by remember { mutableStateOf(null) }
-
-                Box(
-                    modifier = Modifier
-                        .animateItem()
-                        .fillMaxWidth()
-                        .onGloballyPositioned { itemCoords = it }
-                        .background(if (isHovered) AmaradioAmber.copy(alpha = 0.2f) else Color.Transparent)
-                        .dragAndDropTarget(
-                            shouldStartDragAndDrop = { event ->
-                                event.mimeTypes().contains(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { index, station ->
+                ReorderableItem(reorderableState, key = station.StationUuid) { isDragging ->
+                    val itemScope = this
+                    val elevation by animateDpAsState(if (isDragging) 8.dp else 0.dp)
+                    
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .graphicsLayer {
+                                scaleX = if (isDragging) 1.03f else 1f
+                                scaleY = if (isDragging) 1.03f else 1f
                             },
-                            target = remember {
-                                object : DragAndDropTarget {
-                                    override fun onEntered(event: DragAndDropEvent) { isHovered = true }
-                                    override fun onExited(event: DragAndDropEvent) { isHovered = false }
-                                    override fun onDrop(event: DragAndDropEvent): Boolean {
-                                        isHovered = false
-                                        val draggedUuid = event.toAndroidDragEvent().clipData.getItemAt(0).text.toString()
-                                        val fromIndex = stationsLocal.indexOfFirst { it.StationUuid == draggedUuid }
-                                        val toIndex = stationsLocal.indexOfFirst { it.StationUuid == station.StationUuid }
-
-                                        if (fromIndex != -1 && toIndex != -1 && fromIndex != toIndex) {
-                                            val item = stationsLocal.removeAt(fromIndex)
-                                            stationsLocal.add(toIndex, item)
-                                            onReorder(stationsLocal.toList())
-                                            return true
+                        shadowElevation = elevation,
+                        tonalElevation = elevation
+                    ) {
+                        Column {
+                            StationListItem(
+                                station = station,
+                                isFavorite = isFavorite(station.StationUuid),
+                                onClick = { onStationClick(station) },
+                                onFavoriteClick = { onFavoriteClick(station) },
+                                onLongClick = { 
+                                    if (onLongClick != null) onLongClick.invoke(station) 
+                                    else stationWithOptions = station 
+                                },
+                                useInternalClickable = true,
+                                dragHandle = { dragModifier ->
+                                    with(itemScope) {
+                                        Box(
+                                            modifier = dragModifier
+                                                .width(56.dp)
+                                                .draggableHandle(),
+                                            contentAlignment = Alignment.Center
+                                        ) {
+                                            Icon(
+                                                imageVector = Icons.Default.SwapVert,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.onSurface,
+                                                modifier = Modifier.size(24.dp)
+                                            )
                                         }
-                                        return false
-                                    }
-                                    override fun onEnded(event: DragAndDropEvent) {
-                                        isHovered = false
-                                        isDraggingActive = false
-                                        dragPointerY = null
                                     }
                                 }
-                            }
-                        )
-                        .dragAndDropSource(
-                            block = {
-                                detectDragGesturesAfterLongPress(
-                                    onDragStart = { offset ->
-                                        val handle = handleCoords
-                                        val item = itemCoords
-                                        if (handle != null && item != null) {
-                                            val handleRect = item.localBoundingBoxOf(handle)
-                                            if (handleRect.contains(offset)) {
-                                                isDraggingActive = true
-                                                dragPointerY = item.positionInWindow().y + offset.y
-                                                startTransfer(
-                                                    DragAndDropTransferData(
-                                                        ClipData.newPlainText("station_uuid", station.StationUuid)
-                                                    )
-                                                )
-                                                return@detectDragGesturesAfterLongPress
-                                            }
-                                        }
-                                        if (onLongClick != null) onLongClick.invoke(station) 
-                                        else stationWithOptions = station
-                                    },
-                                    onDrag = { _, dragAmount -> 
-                                        dragPointerY = (dragPointerY ?: 0f) + dragAmount.y
-                                    },
-                                    onDragEnd = { isDraggingActive = false; dragPointerY = null },
-                                    onDragCancel = { isDraggingActive = false; dragPointerY = null }
-                                )
-                            }
-                        )
-                        .combinedClickable(
-                            onClick = { onStationClick(station) },
-                            onLongClick = { /* Handled by dragAndDropSource */ }
-                        )
-                ) {
-                    StationListItem(
-                        station = station,
-                        isFavorite = isFavorite(station.StationUuid),
-                        onClick = { onStationClick(station) },
-                        onFavoriteClick = { onFavoriteClick(station) },
-                        onLongClick = { 
-                            if (onLongClick != null) onLongClick.invoke(station) 
-                            else stationWithOptions = station 
-                        },
-                        useInternalClickable = false,
-                        dragHandle = { dragModifier ->
-                            Icon(
-                                imageVector = Icons.Default.SwapVert,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onSurface,
-                                modifier = dragModifier
-                                    .size(48.dp)
-                                    .padding(12.dp)
-                                    .onGloballyPositioned { handleCoords = it }
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = 12.dp),
+                                thickness = 0.5.dp,
+                                color = MaterialTheme.colorScheme.outline
                             )
                         }
-                    )
+                    }
                 }
-                HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
         }
     }
