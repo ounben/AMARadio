@@ -2,6 +2,8 @@ package com.ounben.amaradio.ui
 
 import android.app.Application
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -99,22 +101,66 @@ class CustomStationsViewModel(application: Application) : AndroidViewModel(appli
         val iconDir = File(app.filesDir, "station_icons").apply { if (!exists()) mkdirs() }
         val iconFile = File(iconDir, "$uuid.jpg")
         
-        // Force delete old file to ensure overwrite works and cache is invalidated
         if (iconFile.exists()) iconFile.delete()
 
         try {
             app.contentResolver.openInputStream(uri)?.use { input ->
-                FileOutputStream(iconFile).use { output ->
-                    input.copyTo(output)
+                val bytes = input.readBytes()
+                
+                // First decode with inJustDecodeBounds=true to check dimensions
+                val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options)
+                
+                val maxSize = 512
+                val width = options.outWidth
+                val height = options.outHeight
+                
+                // Calculate sample size
+                options.inSampleSize = calculateInSampleSize(options, maxSize, maxSize)
+                options.inJustDecodeBounds = false
+                
+                val decodedBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size, options) ?: return@withContext ""
+                
+                val finalBitmap = if (width > maxSize || height > maxSize) {
+                    val ratio = width.toFloat() / height
+                    val (newWidth, newHeight) = if (width > height) {
+                        maxSize to (maxSize / ratio).toInt()
+                    } else {
+                        (maxSize * ratio).toInt() to maxSize
+                    }
+                    Bitmap.createScaledBitmap(decodedBitmap, newWidth, newHeight, true)
+                } else {
+                    decodedBitmap
                 }
+
+                FileOutputStream(iconFile).use { output ->
+                    finalBitmap.compress(Bitmap.CompressFormat.JPEG, 85, output)
+                }
+                
+                if (finalBitmap != decodedBitmap) decodedBitmap.recycle()
+                finalBitmap.recycle()
             }
-            // Append timestamp as cache-buster for Coil
+            
             Uri.fromFile(iconFile).buildUpon()
                 .appendQueryParameter("t", System.currentTimeMillis().toString())
                 .build().toString()
         } catch (e: Exception) {
             ""
         }
+    }
+
+    private fun calculateInSampleSize(options: BitmapFactory.Options, reqWidth: Int, reqHeight: Int): Int {
+        val (height: Int, width: Int) = options.outHeight to options.outWidth
+        var inSampleSize = 1
+
+        if (height > reqHeight || width > reqWidth) {
+            val halfHeight: Int = height / 2
+            val halfWidth: Int = width / 2
+            while (halfHeight / inSampleSize >= reqHeight && halfWidth / inSampleSize >= reqWidth) {
+                inSampleSize *= 2
+            }
+        }
+        return inSampleSize
     }
 
     fun reorder(fromIndex: Int, toIndex: Int) {
