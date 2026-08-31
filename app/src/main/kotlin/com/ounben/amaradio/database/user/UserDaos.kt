@@ -123,6 +123,12 @@ interface CustomStationDao {
     @Query("DELETE FROM custom_station WHERE StationUuid = :uuid")
     suspend fun deleteByUuid(uuid: String)
 
+    @Query("SELECT * FROM custom_station WHERE StationUuid = :uuid LIMIT 1")
+    suspend fun getByUuid(uuid: String): CustomStationEntity?
+
+    @Query("SELECT * FROM custom_station WHERE Url = :url LIMIT 1")
+    suspend fun getByUrl(url: String): CustomStationEntity?
+
     @Query("SELECT MAX(displayOrder) FROM custom_station")
     suspend fun getMaxOrder(): Int?
 

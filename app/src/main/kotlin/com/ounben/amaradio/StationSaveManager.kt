@@ -2,6 +2,7 @@ package com.ounben.amaradio
 
 import android.content.Context
 import android.util.Log
+import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toCustomEntity
 import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
@@ -104,16 +105,19 @@ open class StationSaveManager(protected val context: Context) {
 
     open fun addMultiple(stations: List<DataRadioStation>) {
         scope.launch(Dispatchers.IO) {
+            var maxFavOrder = userDb.favoriteDao().getMaxOrder() ?: -1
+            var maxCustomOrder = userDb.customStationDao().getMaxOrder() ?: -1
+
             stations.forEach { station ->
                 if (station.queue == null) station.queue = this@StationSaveManager
                 if (getSaveId() == "favourites") {
-                    val maxOrder = userDb.favoriteDao().getMaxOrder() ?: -1
-                    userDb.favoriteDao().insert(station.toFavoriteEntity(maxOrder + 1))
+                    maxFavOrder++
+                    userDb.favoriteDao().insert(station.toFavoriteEntity(maxFavOrder))
                 } else if (getSaveId() == "history") {
                     userDb.historyDao().insert(station.toHistoryEntity())
                 } else if (getSaveId() == "custom") {
-                    val maxOrder = userDb.customStationDao().getMaxOrder() ?: -1
-                    userDb.customStationDao().insert(station.toCustomEntity(maxOrder + 1))
+                    maxCustomOrder++
+                    userDb.customStationDao().insert(station.toCustomEntity(maxCustomOrder))
                 }
             }
         }
@@ -216,17 +220,101 @@ open class StationSaveManager(protected val context: Context) {
 
     suspend fun importM3U(reader: Reader): List<DataRadioStation>? = withContext(Dispatchers.IO) {
         try {
-            val listUuids = ArrayList<String>()
-            reader.readLines().forEach { line ->
-                if (line.startsWith("#RADIOBROWSERUUID:")) {
+            val app = context.applicationContext as AMARadioApp
+            val catalogDao = AMARadioDatabase.getDatabase(context).stationDao()
+            val resultStations = mutableListOf<DataRadioStation>()
+
+            var currentUuid: String? = null
+            var currentTitle: String? = null
+
+            reader.readLines().forEach { rawLine ->
+                val line = rawLine.trim()
+                if (line.isEmpty()) return@forEach
+
+                if (line.startsWith("#RADIOBROWSERUUID:", ignoreCase = true)) {
                     val uuid = line.substringAfter("#RADIOBROWSERUUID:").trim()
-                    if (uuid.isNotEmpty()) listUuids.add(uuid)
+                    if (uuid.isNotEmpty()) {
+                        currentUuid = uuid
+                    }
+                } else if (line.startsWith("#EXTINF:", ignoreCase = true)) {
+                    val commaIndex = line.indexOf(",")
+                    if (commaIndex != -1) {
+                        currentTitle = line.substring(commaIndex + 1).trim()
+                    }
+                } else if (!line.startsWith("#")) {
+                    val streamUrl = line
+                    var station: DataRadioStation? = null
+
+                    // 1. If UUID is present, try local databases first
+                    val uuid = currentUuid
+                    if (!uuid.isNullOrEmpty()) {
+                        // Check local catalog DB
+                        val catalogEntity = catalogDao.getStationByUuid(uuid)
+                        if (catalogEntity != null) {
+                            station = catalogEntity.toDataStation()
+                        } else {
+                            // Check custom stations DB
+                            val customEntity = userDb.customStationDao().getByUuid(uuid)
+                            if (customEntity != null) {
+                                station = customEntity.toDataStation()
+                            } else {
+                                // Check favorites DB
+                                val favEntity = userDb.favoriteDao().getByUuid(uuid)
+                                if (favEntity != null) {
+                                    station = favEntity.toDataStation()
+                                } else {
+                                    // Check history DB
+                                    val histEntity = userDb.historyDao().getByUuid(uuid)
+                                    if (histEntity != null) {
+                                        station = histEntity.toDataStation()
+                                    } else if (!uuid.startsWith("custom_")) {
+                                        // Try online API for RadioBrowser UUIDs
+                                        try {
+                                            station = Utils.getStationByUuid(app.httpClient, context, uuid)
+                                        } catch (_: Exception) {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    // 2. If station not found by UUID, try lookup by Stream URL in local DB
+                    if (station == null) {
+                        val catalogEntity = catalogDao.getStationByUrl(streamUrl)
+                        if (catalogEntity != null) {
+                            station = catalogEntity.toDataStation()
+                        } else {
+                            val customEntity = userDb.customStationDao().getByUrl(streamUrl)
+                            if (customEntity != null) {
+                                station = customEntity.toDataStation()
+                            }
+                        }
+                    }
+
+                    // 3. Fallback: Create station object directly from M3U metadata
+                    if (station == null) {
+                        val fallbackName = currentTitle?.ifBlank { null } 
+                            ?: streamUrl.substringAfterLast("/").substringBefore("?").ifBlank { null }
+                            ?: "Radio Station"
+                        val fallbackUuid = uuid?.ifBlank { null } 
+                            ?: CustomStationManager.generateUuidFromUrl(streamUrl)
+
+                        station = DataRadioStation(
+                            Name = fallbackName,
+                            StationUuid = fallbackUuid,
+                            StreamUrl = streamUrl
+                        )
+                    }
+
+                    resultStations.add(station)
+
+                    // Reset for next entry
+                    currentUuid = null
+                    currentTitle = null
                 }
             }
-            if (listUuids.isEmpty()) return@withContext emptyList()
-            
-            val app = context.applicationContext as AMARadioApp
-            com.ounben.amaradio.Utils.getStationsByUuid(app.httpClient, context, listUuids)
+
+            resultStations
         } catch (e: Exception) {
             Log.e("LOAD", "M3U Import failed: $e")
             null
