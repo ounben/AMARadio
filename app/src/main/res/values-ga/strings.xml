@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Roghanna stáisiúin</string>
     <string name="not_applicable">n/b</string>
     <string name="accessibility_station_description">Stáisiún: %1$s, Teanga: %2$s, Clibeanna: %3$s</string>
+
+    <string name="error_no_file_manager">Níorbh fhéidir bainisteoir comhaid córais a aimsiú. Cinntigh le do thoil go bhfuil taiscéalaí comhad suiteáilte agus cumasaithe.</string>
+    <string name="error_no_browser">Níorbh fhéidir brabhsálaí gréasáin a aimsiú. Suiteáil brabhsálaí chun an nasc seo a oscailt.</string>
+    <string name="error_no_homepage">Níl aon leathanach baile ar fáil don stáisiún seo</string>
+    <string name="tab_custom_stations">Saincheaptha</string>
+    <string name="action_add_custom">Cuir Stáisiún an Chustaim leis</string>
+    <string name="station_name">Ainm an Stáisiúin</string>
+    <string name="stream_url">Sruth URL</string>
+    <string name="favicon_url">URL Favicon (roghnach)</string>
+    <string name="select_image">Roghnaigh Íomhá</string>
+    <string name="error_invalid_url">Cuir isteach URL bailí</string>
+    <string name="action_save">Sábháil</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Rialuithe imreoir tapa</string>
+    <string name="widget_description_full">Liosta imreoirí agus stáisiúin</string>
 </resources>

@@ -337,4 +337,22 @@
     <string name="accessibility_station_options">Stansiya seçimləri</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Stansiya: %1$s, Dil: %2$s, Teqlər: %3$s</string>
+
+    <string name="error_no_connection">İnternet bağlantısı yoxdur</string>
+    <string name="warning_volume_zero">Həcmi sıfırdır. Ola bilər ki, heç nə eşitməyəcəksiniz.</string>
+    <string name="error_no_file_manager">Sistem fayl menecerini tapmaq mümkün olmadı. Lütfən, fayl tədqiqatçısının quraşdırıldığına və işə salındığına əmin olun.</string>
+    <string name="error_no_browser">Veb brauzeri tapmaq mümkün olmadı. Bu linki açmaq üçün brauzer quraşdırın.</string>
+    <string name="error_no_homepage">Bu stansiya üçün əsas səhifə yoxdur</string>
+    <string name="tab_custom_stations">Xüsusi</string>
+    <string name="action_add_custom">Fərdi Stansiya əlavə edin</string>
+    <string name="station_name">Stansiya Adı</string>
+    <string name="stream_url">Yayım URL</string>
+    <string name="favicon_url">Favikon URL (isteğe bağlı)</string>
+    <string name="select_image">Şəkil seçin</string>
+    <string name="error_invalid_url">Lütfən, etibarlı URL daxil edin</string>
+    <string name="action_save">Saxla</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Sürətli oyunçu nəzarəti</string>
+    <string name="widget_description_full">Oyunçu və stansiya siyahısı</string>
 </resources>

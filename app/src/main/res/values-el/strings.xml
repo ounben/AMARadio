@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Επιλογές σταθμού</string>
     <string name="not_applicable">Δ/Υ</string>
     <string name="accessibility_station_description">Σταθμός: %1$s, Γλώσσα: %2$s, Ετικέτες: %3$s</string>
+
+    <string name="error_no_file_manager">Δεν ήταν δυνατή η εύρεση διαχειριστή αρχείων συστήματος. Βεβαιωθείτε ότι έχει εγκατασταθεί και ενεργοποιηθεί ένας εξερευνητής αρχείων.</string>
+    <string name="error_no_browser">Δεν ήταν δυνατή η εύρεση προγράμματος περιήγησης ιστού. Εγκαταστήστε ένα πρόγραμμα περιήγησης για να ανοίξετε αυτόν τον σύνδεσμο.</string>
+    <string name="error_no_homepage">Δεν υπάρχει διαθέσιμη αρχική σελίδα για αυτόν τον σταθμό</string>
+    <string name="tab_custom_stations">Εθιμο</string>
+    <string name="action_add_custom">Προσθήκη προσαρμοσμένου σταθμού</string>
+    <string name="station_name">Όνομα Σταθμού</string>
+    <string name="stream_url">URL ροής</string>
+    <string name="favicon_url">URL Favicon (προαιρετικό)</string>
+    <string name="select_image">Επιλέξτε Εικόνα</string>
+    <string name="error_invalid_url">Εισαγάγετε μια έγκυρη διεύθυνση URL</string>
+    <string name="action_save">Εκτός</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Γρήγορα χειριστήρια αναπαραγωγής</string>
+    <string name="widget_description_full">Λίστα αναπαραγωγής και σταθμών</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stacijas opcijas</string>
     <string name="not_applicable">nav piemērojams</string>
     <string name="accessibility_station_description">Stacija: %1$s, Valoda: %2$s, Birkas: %3$s</string>
+
+    <string name="error_no_file_manager">Nevarēja atrast sistēmas failu pārvaldnieku. Lūdzu, pārliecinieties, vai ir instalēts un iespējots failu pārlūks.</string>
+    <string name="error_no_browser">Nevarēja atrast tīmekļa pārlūkprogrammu. Lūdzu, instalējiet pārlūkprogrammu, lai atvērtu šo saiti.</string>
+    <string name="error_no_homepage">Šai stacijai nav pieejama mājaslapa</string>
+    <string name="tab_custom_stations">Pielāgots</string>
+    <string name="action_add_custom">Pievienojiet pielāgotu staciju</string>
+    <string name="station_name">Stacijas nosaukums</string>
+    <string name="stream_url">Straumes URL</string>
+    <string name="favicon_url">Favicon URL (neobligāti)</string>
+    <string name="select_image">Izvēlieties Attēls</string>
+    <string name="error_invalid_url">Lūdzu, ievadiet derīgu URL</string>
+    <string name="action_save">Saglabāt</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Ātrās atskaņotāja vadīklas</string>
+    <string name="widget_description_full">Spēlētāju un staciju saraksts</string>
 </resources>

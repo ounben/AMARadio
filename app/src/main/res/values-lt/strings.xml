@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stoties parinktys</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stotis: %1$s, Kalba: %2$s, Žymos: %3$s</string>
+
+    <string name="error_no_file_manager">Nepavyko rasti sistemos failų tvarkyklės. Įsitikinkite, kad įdiegta ir įjungta failų naršyklė.</string>
+    <string name="error_no_browser">Nepavyko rasti žiniatinklio naršyklės. Įdiekite naršyklę, kad atidarytumėte šią nuorodą.</string>
+    <string name="error_no_homepage">Nėra šios stoties pagrindinio puslapio</string>
+    <string name="tab_custom_stations">Pasirinktinis</string>
+    <string name="action_add_custom">Pridėti pasirinktinę stotį</string>
+    <string name="station_name">Stoties pavadinimas</string>
+    <string name="stream_url">Srauto URL</string>
+    <string name="favicon_url">Favicon URL (pasirenkama)</string>
+    <string name="select_image">Pasirinkite Vaizdas</string>
+    <string name="error_invalid_url">Įveskite tinkamą URL</string>
+    <string name="action_save">Išsaugoti</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Greitas grotuvo valdymas</string>
+    <string name="widget_description_full">Grotuvų ir stočių sąrašas</string>
 </resources>

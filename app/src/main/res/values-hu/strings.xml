@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Állomás beállításai</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Állomás: %1$s, Nyelv: %2$s, Címkék: %3$s</string>
+
+    <string name="error_no_file_manager">Nem található rendszerfájlkezelő. Győződjön meg róla, hogy a fájlkezelő telepítve van és engedélyezve van.</string>
+    <string name="error_no_browser">Nem található webböngésző. Kérjük, telepítsen egy böngészőt a hivatkozás megnyitásához.</string>
+    <string name="error_no_homepage">Ehhez az állomáshoz nem érhető el honlap</string>
+    <string name="tab_custom_stations">Szokás</string>
+    <string name="action_add_custom">Egyéni állomás hozzáadása</string>
+    <string name="station_name">Állomás neve</string>
+    <string name="stream_url">Stream URL</string>
+    <string name="favicon_url">Favicon URL (nem kötelező)</string>
+    <string name="select_image">Válassza a Kép lehetőséget</string>
+    <string name="error_invalid_url">Adjon meg egy érvényes URL-t</string>
+    <string name="action_save">Megtakarítás</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Gyors lejátszó vezérlők</string>
+    <string name="widget_description_full">Lejátszók és állomások listája</string>
 </resources>

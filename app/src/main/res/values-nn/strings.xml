@@ -343,4 +343,20 @@
     <string name="accessibility_station_options">Stasjonsval</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stasjon: %1$s, Språk: %2$s, Tagger: %3$s</string>
+
+    <string name="error_no_file_manager">Kunne ikke finne en systemfilbehandling. Sørg for at en filutforsker er installert og aktivert.</string>
+    <string name="error_no_browser">Kunne ikke finne en nettleser. Installer en nettleser for å åpne denne linken.</string>
+    <string name="error_no_homepage">Ingen hjemmeside tilgjengelig for denne stasjonen</string>
+    <string name="tab_custom_stations">Skikk</string>
+    <string name="action_add_custom">Legg til Custom Station</string>
+    <string name="station_name">Stasjonsnavn</string>
+    <string name="stream_url">Strøm URL</string>
+    <string name="favicon_url">Favorittikon-URL (valgfritt)</string>
+    <string name="select_image">Velg Bilde</string>
+    <string name="error_invalid_url">Vennligst skriv inn en gyldig URL</string>
+    <string name="action_save">Spare</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Raske spillerkontroller</string>
+    <string name="widget_description_full">Spiller og stasjonsliste</string>
 </resources>

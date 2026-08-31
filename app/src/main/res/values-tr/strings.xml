@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">İstasyon seçenekleri</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">İstasyon: %1$s, Dil: %2$s, Etiketler: %3$s</string>
+
+    <string name="error_no_file_manager">Sistem dosya yöneticisi bulunamadı. Lütfen bir dosya gezgininin kurulu ve etkin olduğundan emin olun.</string>
+    <string name="error_no_browser">Bir web tarayıcısı bulunamadı. Bu bağlantıyı açmak için lütfen bir tarayıcı yükleyin.</string>
+    <string name="error_no_homepage">Bu istasyon için ana sayfa mevcut değil</string>
+    <string name="tab_custom_stations">Gelenek</string>
+    <string name="action_add_custom">Özel İstasyon Ekle</string>
+    <string name="station_name">İstasyon Adı</string>
+    <string name="stream_url">Akış URL\'si</string>
+    <string name="favicon_url">Site simgesi URL\'si (isteğe bağlı)</string>
+    <string name="select_image">Resim Seç</string>
+    <string name="error_invalid_url">Lütfen geçerli bir URL girin</string>
+    <string name="action_save">Kaydetmek</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Hızlı oynatıcı kontrolleri</string>
+    <string name="widget_description_full">Oyuncu ve istasyon listesi</string>
 </resources>

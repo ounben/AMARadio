@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">電台選項</string>
     <string name="not_applicable">無</string>
     <string name="accessibility_station_description">電台：%1$s，語言：%2$s，標籤：%3$s</string>
+
+    <string name="error_no_file_manager">找不到系統檔案管理器。請確保已安裝並啟用文件瀏覽器。</string>
+    <string name="error_no_browser">找不到網頁瀏覽器。請安裝瀏覽器來開啟此連結。</string>
+    <string name="error_no_homepage">該站沒有可用的主頁</string>
+    <string name="tab_custom_stations">風俗</string>
+    <string name="action_add_custom">新增自訂站</string>
+    <string name="station_name">車站名稱</string>
+    <string name="stream_url">串流網址</string>
+    <string name="favicon_url">網站圖示 URL（可選）</string>
+    <string name="select_image">選擇影像</string>
+    <string name="error_invalid_url">請輸入有效的網址</string>
+    <string name="action_save">節省</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">快速播放器控制</string>
+    <string name="widget_description_full">播放器和電台列表</string>
 </resources>

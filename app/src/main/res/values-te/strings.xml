@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">స్టేషన్ ఎంపికలు</string>
     <string name="not_applicable">వర్తించదు</string>
     <string name="accessibility_station_description">స్టేషన్: %1$s, భాష: %2$s, ట్యాగ్‌లు: %3$s</string>
+
+    <string name="error_no_file_manager">సిస్టమ్ ఫైల్ మేనేజర్‌ని కనుగొనడం సాధ్యపడలేదు. దయచేసి ఫైల్ ఎక్స్‌ప్లోరర్ ఇన్‌స్టాల్ చేయబడిందని మరియు ప్రారంభించబడిందని నిర్ధారించుకోండి.</string>
+    <string name="error_no_browser">వెబ్ బ్రౌజర్‌ని కనుగొనడం సాధ్యపడలేదు. దయచేసి ఈ లింక్‌ను తెరవడానికి బ్రౌజర్‌ను ఇన్‌స్టాల్ చేయండి.</string>
+    <string name="error_no_homepage">ఈ స్టేషన్ కోసం హోమ్‌పేజీ అందుబాటులో లేదు</string>
+    <string name="tab_custom_stations">కస్టమ్</string>
+    <string name="action_add_custom">కస్టమ్ స్టేషన్‌ని జోడించండి</string>
+    <string name="station_name">స్టేషన్ పేరు</string>
+    <string name="stream_url">స్ట్రీమ్ URL</string>
+    <string name="favicon_url">ఫేవికాన్ URL (ఐచ్ఛికం)</string>
+    <string name="select_image">చిత్రాన్ని ఎంచుకోండి</string>
+    <string name="error_invalid_url">దయచేసి చెల్లుబాటు అయ్యే URLని నమోదు చేయండి</string>
+    <string name="action_save">సేవ్ చేయండి</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">త్వరిత ప్లేయర్ నియంత్రణలు</string>
+    <string name="widget_description_full">ప్లేయర్ మరియు స్టేషన్ జాబితా</string>
 </resources>

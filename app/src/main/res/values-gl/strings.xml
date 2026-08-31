@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Opcións da emisora</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Emisora: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
+
+    <string name="error_no_file_manager">Non se puido atopar un xestor de ficheiros do sistema. Asegúrate de ter instalado e activado un explorador de ficheiros.</string>
+    <string name="error_no_browser">Non se puido atopar un navegador web. Instala un navegador para abrir esta ligazón.</string>
+    <string name="error_no_homepage">Non hai páxina de inicio dispoñible para esta estación</string>
+    <string name="tab_custom_stations">Personalizado</string>
+    <string name="action_add_custom">Engadir estación personalizada</string>
+    <string name="station_name">Nome da estación</string>
+    <string name="stream_url">URL de transmisión</string>
+    <string name="favicon_url">URL do favicon (opcional)</string>
+    <string name="select_image">Seleccione Imaxe</string>
+    <string name="error_invalid_url">Introduce un URL válido</string>
+    <string name="action_save">Gardar</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Controis rápidos do xogador</string>
+    <string name="widget_description_full">Lista de reprodutores e emisoras</string>
 </resources>

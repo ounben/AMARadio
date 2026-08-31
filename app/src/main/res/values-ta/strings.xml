@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">நிலைய விருப்பங்கள்</string>
     <string name="not_applicable">பொருந்தாது</string>
     <string name="accessibility_station_description">நிலையம்: %1$s, மொழி: %2$s, குறிச்சொற்கள்: %3$s</string>
+
+    <string name="error_no_file_manager">கணினி கோப்பு மேலாளரைக் கண்டுபிடிக்க முடியவில்லை. கோப்பு எக்ஸ்ப்ளோரர் நிறுவப்பட்டு இயக்கப்பட்டிருப்பதை உறுதி செய்யவும்.</string>
+    <string name="error_no_browser">இணைய உலாவியைக் கண்டுபிடிக்க முடியவில்லை. இந்த இணைப்பைத் திறக்க உலாவியை நிறுவவும்.</string>
+    <string name="error_no_homepage">இந்த நிலையத்திற்கான முகப்புப்பக்கம் இல்லை</string>
+    <string name="tab_custom_stations">தனிப்பயன்</string>
+    <string name="action_add_custom">தனிப்பயன் நிலையத்தைச் சேர்க்கவும்</string>
+    <string name="station_name">நிலையத்தின் பெயர்</string>
+    <string name="stream_url">ஸ்ட்ரீம் URL</string>
+    <string name="favicon_url">ஃபேவிகான் URL (விரும்பினால்)</string>
+    <string name="select_image">படத்தைத் தேர்ந்தெடுக்கவும்</string>
+    <string name="error_invalid_url">சரியான URL ஐ உள்ளிடவும்</string>
+    <string name="action_save">சேமிக்கவும்</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">விரைவான பிளேயர் கட்டுப்பாடுகள்</string>
+    <string name="widget_description_full">பிளேயர் மற்றும் ஸ்டேஷன் பட்டியல்</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Opsionet e stacionit</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stacioni: %1$s, Gjuha: %2$s, Etiketat: %3$s</string>
+
+    <string name="error_no_file_manager">Nuk mund të gjente një menaxher skedari të sistemit. Sigurohuni që një eksplorues skedari të jetë i instaluar dhe aktivizuar.</string>
+    <string name="error_no_browser">Nuk mund të gjente një shfletues uebi. Ju lutemi instaloni një shfletues për të hapur këtë lidhje.</string>
+    <string name="error_no_homepage">Nuk ka faqe kryesore të disponueshme për këtë stacion</string>
+    <string name="tab_custom_stations">Me porosi</string>
+    <string name="action_add_custom">Shto Stacionin e personalizuar</string>
+    <string name="station_name">Emri i stacionit</string>
+    <string name="stream_url">URL-ja e transmetimit</string>
+    <string name="favicon_url">URL e faviconit (opsionale)</string>
+    <string name="select_image">Zgjidhni Imazhi</string>
+    <string name="error_invalid_url">Ju lutemi shkruani një URL të vlefshme</string>
+    <string name="action_save">Ruaj</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Kontrolle të shpejta të luajtësit</string>
+    <string name="widget_description_full">Lista e lojtarëve dhe stacioneve</string>
 </resources>

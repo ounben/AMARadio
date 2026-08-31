@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Izinketho zesiteshi</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Isiteshi: %1$s, Ulimi: %2$s, Omaka: %3$s</string>
+
+    <string name="error_no_file_manager">Ayikwazanga ukuthola isiphathi sefayela lesistimu. Sicela uqinisekise ukuthi isihloli sefayela sifakiwe futhi sinikwe amandla.</string>
+    <string name="error_no_browser">Ayikwazanga ukuthola isiphequluli sewebhu. Sicela ufake isiphequluli ukuze uvule lesi sixhumanisi.</string>
+    <string name="error_no_homepage">Alikho ikhasi eliyisiqalo elitholakalayo lalesi siteshi</string>
+    <string name="tab_custom_stations">Ngokwezifiso</string>
+    <string name="action_add_custom">Engeza Isiteshi Esingokwezifiso</string>
+    <string name="station_name">Igama Lesiteshi</string>
+    <string name="stream_url">I-URL yokusakaza</string>
+    <string name="favicon_url">I-URL yesithombe-skrini (uyazikhethela)</string>
+    <string name="select_image">Khetha Isithombe</string>
+    <string name="error_invalid_url">Sicela ufake i-URL evumelekile</string>
+    <string name="action_save">Londoloza</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Izilawuli zesidlali ezisheshayo</string>
+    <string name="widget_description_full">Uhlu lwesidlali kanye nesiteshi</string>
 </resources>

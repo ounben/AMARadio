@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">स्टेशन विकल्प</string>
     <string name="not_applicable">लागू नहीं</string>
     <string name="accessibility_station_description">स्टेशन: %1$s, भाषा: %2$s, टैग: %3$s</string>
+
+    <string name="error_no_file_manager">सिस्टम फ़ाइल प्रबंधक नहीं मिल सका. कृपया सुनिश्चित करें कि फ़ाइल एक्सप्लोरर स्थापित और सक्षम है।</string>
+    <string name="error_no_browser">वेब ब्राउज़र नहीं मिल सका. कृपया इस लिंक को खोलने के लिए एक ब्राउज़र इंस्टॉल करें।</string>
+    <string name="error_no_homepage">इस स्टेशन के लिए कोई मुखपृष्ठ उपलब्ध नहीं है</string>
+    <string name="tab_custom_stations">रिवाज़</string>
+    <string name="action_add_custom">कस्टम स्टेशन जोड़ें</string>
+    <string name="station_name">स्थानक का नाम</string>
+    <string name="stream_url">स्ट्रीम यूआरएल</string>
+    <string name="favicon_url">फ़ेविकॉन यूआरएल (वैकल्पिक)</string>
+    <string name="select_image">छवि का चयन करें</string>
+    <string name="error_invalid_url">क्रुपया मान्य यूआरएल दर्ज करें</string>
+    <string name="action_save">बचाना</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">त्वरित खिलाड़ी नियंत्रण</string>
+    <string name="widget_description_full">खिलाड़ी और स्टेशन सूची</string>
 </resources>

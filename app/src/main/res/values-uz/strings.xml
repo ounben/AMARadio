@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stansiya variantlari</string>
     <string name="not_applicable">mavjud emas</string>
     <string name="accessibility_station_description">Stansiya: %1$s, Til: %2$s, Teglar: %3$s</string>
+
+    <string name="error_no_file_manager">Tizim fayl boshqaruvchisi topilmadi. Iltimos, fayl tadqiqotchisi o\'rnatilgan va yoqilganligiga ishonch hosil qiling.</string>
+    <string name="error_no_browser">Veb-brauzer topilmadi. Iltimos, ushbu havolani ochish uchun brauzerni o\'rnating.</string>
+    <string name="error_no_homepage">Bu stansiya uchun bosh sahifa mavjud emas</string>
+    <string name="tab_custom_stations">Maxsus</string>
+    <string name="action_add_custom">Maxsus stantsiya qo\'shing</string>
+    <string name="station_name">Stansiya nomi</string>
+    <string name="stream_url">Strim URL</string>
+    <string name="favicon_url">Favicon URL (ixtiyoriy)</string>
+    <string name="select_image">Rasmni tanlang</string>
+    <string name="error_invalid_url">Yaroqli URL manzilini kiriting</string>
+    <string name="action_save">Saqlash</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Tez o\'yinchi boshqaruvi</string>
+    <string name="widget_description_full">O\'yinchilar va stantsiyalar ro\'yxati</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Valkostir stöðvar</string>
     <string name="not_applicable">á ekki við</string>
     <string name="accessibility_station_description">Stöð: %1$s, Tungumál: %2$s, Merki: %3$s</string>
+
+    <string name="error_no_file_manager">Gat ekki fundið kerfisskráastjóra. Gakktu úr skugga um að skráarkönnuður sé uppsettur og virkur.</string>
+    <string name="error_no_browser">Gat ekki fundið vafra. Vinsamlegast settu upp vafra til að opna þennan tengil.</string>
+    <string name="error_no_homepage">Engin heimasíða í boði fyrir þessa stöð</string>
+    <string name="tab_custom_stations">Sérsniðin</string>
+    <string name="action_add_custom">Bættu við sérsniðinni stöð</string>
+    <string name="station_name">Stöðvarheiti</string>
+    <string name="stream_url">Slóð á streymi</string>
+    <string name="favicon_url">Favicon URL (valfrjálst)</string>
+    <string name="select_image">Veldu Mynd</string>
+    <string name="error_invalid_url">Vinsamlegast sláðu inn gilda vefslóð</string>
+    <string name="action_save">Vista</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Fljótleg stjórntæki leikmanna</string>
+    <string name="widget_description_full">Leikmanna- og stöðvarlisti</string>
 </resources>

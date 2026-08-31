@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">سٹیشن کے اختیارات</string>
     <string name="not_applicable">لاگو نہیں ہوتا</string>
     <string name="accessibility_station_description">سٹیشن: %1$s، زبان: %2$s، ٹیگز: %3$s</string>
+
+    <string name="error_no_file_manager">سسٹم فائل مینیجر نہیں مل سکا۔ براہ کرم یقینی بنائیں کہ فائل ایکسپلورر انسٹال اور فعال ہے۔</string>
+    <string name="error_no_browser">ویب براؤزر نہیں مل سکا۔ براہ کرم اس لنک کو کھولنے کے لیے براؤزر انسٹال کریں۔</string>
+    <string name="error_no_homepage">اس اسٹیشن کے لیے کوئی ہوم پیج دستیاب نہیں ہے۔</string>
+    <string name="tab_custom_stations">حسب ضرورت</string>
+    <string name="action_add_custom">حسب ضرورت اسٹیشن شامل کریں۔</string>
+    <string name="station_name">اسٹیشن کا نام</string>
+    <string name="stream_url">سلسلہ یو آر ایل</string>
+    <string name="favicon_url">Favicon URL (اختیاری)</string>
+    <string name="select_image">تصویر منتخب کریں۔</string>
+    <string name="error_invalid_url">براہ کرم ایک درست URL درج کریں۔</string>
+    <string name="action_save">محفوظ کریں۔</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">فوری پلیئر کنٹرولز</string>
+    <string name="widget_description_full">پلیئر اور اسٹیشن کی فہرست</string>
 </resources>

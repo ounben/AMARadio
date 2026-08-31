@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stationsalternativ</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Station: %1$s, Språk: %2$s, Taggar: %3$s</string>
+
+    <string name="error_no_file_manager">Det gick inte att hitta en systemfilhanterare. Se till att en filutforskare är installerad och aktiverad.</string>
+    <string name="error_no_browser">Det gick inte att hitta en webbläsare. Installera en webbläsare för att öppna denna länk.</string>
+    <string name="error_no_homepage">Ingen hemsida tillgänglig för denna station</string>
+    <string name="tab_custom_stations">Beställnings</string>
+    <string name="action_add_custom">Lägg till Custom Station</string>
+    <string name="station_name">Stationens namn</string>
+    <string name="stream_url">Streama URL</string>
+    <string name="favicon_url">Favicon URL (valfritt)</string>
+    <string name="select_image">Välj Bild</string>
+    <string name="error_invalid_url">Ange en giltig URL</string>
+    <string name="action_save">Spara</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Snabba spelarkontroller</string>
+    <string name="widget_description_full">Spelare och stationslista</string>
 </resources>

@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Aseman asetukset</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Asema: %1$s, Kieli: %2$s, Tunnisteet: %3$s</string>
+
+    <string name="error_no_file_manager">Järjestelmän tiedostonhallintaa ei löytynyt. Varmista, että tiedostojen hallintaohjelma on asennettu ja käytössä.</string>
+    <string name="error_no_browser">Verkkoselainta ei löytynyt. Asenna selain avataksesi tämän linkin.</string>
+    <string name="error_no_homepage">Tälle asemalle ei ole saatavilla kotisivua</string>
+    <string name="tab_custom_stations">Mukautettu</string>
+    <string name="action_add_custom">Lisää mukautettu asema</string>
+    <string name="station_name">Aseman nimi</string>
+    <string name="stream_url">Striimin URL-osoite</string>
+    <string name="favicon_url">Favicon URL (valinnainen)</string>
+    <string name="select_image">Valitse Kuva</string>
+    <string name="error_invalid_url">Anna kelvollinen URL-osoite</string>
+    <string name="action_save">Tallentaa</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Soittimen nopeat ohjaimet</string>
+    <string name="widget_description_full">Soitin- ja asemaluettelo</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Опции на станцията</string>
     <string name="not_applicable">н/п</string>
     <string name="accessibility_station_description">Станция: %1$s, Език: %2$s, Тагове: %3$s</string>
+
+    <string name="error_no_file_manager">Не може да се намери системен файлов мениджър. Моля, уверете се, че File Explorer е инсталиран и активиран.</string>
+    <string name="error_no_browser">Не можах да намеря уеб браузър. Моля, инсталирайте браузър, за да отворите тази връзка.</string>
+    <string name="error_no_homepage">Няма налична начална страница за тази станция</string>
+    <string name="tab_custom_stations">По поръчка</string>
+    <string name="action_add_custom">Добавете персонализирана станция</string>
+    <string name="station_name">Име на станцията</string>
+    <string name="stream_url">URL адрес на потока</string>
+    <string name="favicon_url">URL адрес на фавикона (по избор)</string>
+    <string name="select_image">Изберете Изображение</string>
+    <string name="error_invalid_url">Моля, въведете валиден URL</string>
+    <string name="action_save">Запазване</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Бързи контроли на играча</string>
+    <string name="widget_description_full">Списък на плейъри и станции</string>
 </resources>

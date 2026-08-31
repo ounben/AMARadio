@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Għażliet tal-istazzjon</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Istazzjon: %1$s, Lingwa: %2$s, Tags: %3$s</string>
+
+    <string name="error_no_file_manager">Ma setgħetx issib maniġer tal-fajls tas-sistema. Jekk jogħġbok kun żgur li explorer tal-fajls huwa installat u attivat.</string>
+    <string name="error_no_browser">Ma setgħetx issib web browser. Jekk jogħġbok installa browser biex tiftaħ din il-link.</string>
+    <string name="error_no_homepage">L-ebda homepage disponibbli għal dan l-istazzjon</string>
+    <string name="tab_custom_stations">Custom</string>
+    <string name="action_add_custom">Żid Custom Station</string>
+    <string name="station_name">Isem tal-Istazzjon</string>
+    <string name="stream_url">Stream URL</string>
+    <string name="favicon_url">URL tal-favicon (mhux obbligatorju)</string>
+    <string name="select_image">Agħżel Image</string>
+    <string name="error_invalid_url">Jekk jogħġbok daħħal URL validu</string>
+    <string name="action_save">Ħlief</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Kontrolli tal-plejer malajr</string>
+    <string name="widget_description_full">Lista tal-plejers u l-istazzjonijiet</string>
 </resources>

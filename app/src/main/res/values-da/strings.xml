@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stationsindstillinger</string>
     <string name="not_applicable">n/v</string>
     <string name="accessibility_station_description">Station: %1$s, Sprog: %2$s, Tags: %3$s</string>
+
+    <string name="error_no_file_manager">Kunne ikke finde en systemfilhåndtering. Sørg for, at en filstifinder er installeret og aktiveret.</string>
+    <string name="error_no_browser">Kunne ikke finde en webbrowser. Installer venligst en browser for at åbne dette link.</string>
+    <string name="error_no_homepage">Ingen hjemmeside tilgængelig for denne station</string>
+    <string name="tab_custom_stations">Skik</string>
+    <string name="action_add_custom">Tilføj Custom Station</string>
+    <string name="station_name">Stations navn</string>
+    <string name="stream_url">Stream URL</string>
+    <string name="favicon_url">Favicon URL (valgfrit)</string>
+    <string name="select_image">Vælg Billede</string>
+    <string name="error_invalid_url">Indtast venligst en gyldig URL</string>
+    <string name="action_save">Spare</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Hurtig spillerkontrol</string>
+    <string name="widget_description_full">Spiller og stationsliste</string>
 </resources>

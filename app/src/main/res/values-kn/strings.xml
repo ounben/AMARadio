@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">ನಿಲ್ದಾಣದ ಆಯ್ಕೆಗಳು</string>
     <string name="not_applicable">ಅನ್ವಯಿಸುವುದಿಲ್ಲ</string>
     <string name="accessibility_station_description">ನಿಲ್ದಾಣ: %1$s, ಭಾಷೆ: %2$s, ಟ್ಯಾಗ್‌ಗಳು: %3$s</string>
+
+    <string name="error_no_file_manager">ಸಿಸ್ಟಮ್ ಫೈಲ್ ಮ್ಯಾನೇಜರ್ ಅನ್ನು ಕಂಡುಹಿಡಿಯಲಾಗಲಿಲ್ಲ. ದಯವಿಟ್ಟು ಫೈಲ್ ಎಕ್ಸ್‌ಪ್ಲೋರರ್ ಅನ್ನು ಸ್ಥಾಪಿಸಲಾಗಿದೆ ಮತ್ತು ಸಕ್ರಿಯಗೊಳಿಸಲಾಗಿದೆ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಳ್ಳಿ.</string>
+    <string name="error_no_browser">ವೆಬ್ ಬ್ರೌಸರ್ ಹುಡುಕಲಾಗಲಿಲ್ಲ. ಈ ಲಿಂಕ್ ಅನ್ನು ತೆರೆಯಲು ದಯವಿಟ್ಟು ಬ್ರೌಸರ್ ಅನ್ನು ಸ್ಥಾಪಿಸಿ.</string>
+    <string name="error_no_homepage">ಈ ನಿಲ್ದಾಣಕ್ಕೆ ಯಾವುದೇ ಮುಖಪುಟ ಲಭ್ಯವಿಲ್ಲ</string>
+    <string name="tab_custom_stations">ಕಸ್ಟಮ್</string>
+    <string name="action_add_custom">ಕಸ್ಟಮ್ ಸ್ಟೇಷನ್ ಸೇರಿಸಿ</string>
+    <string name="station_name">ನಿಲ್ದಾಣದ ಹೆಸರು</string>
+    <string name="stream_url">ಸ್ಟ್ರೀಮ್ URL</string>
+    <string name="favicon_url">ಫೆವಿಕಾನ್ URL (ಐಚ್ಛಿಕ)</string>
+    <string name="select_image">ಚಿತ್ರವನ್ನು ಆಯ್ಕೆಮಾಡಿ</string>
+    <string name="error_invalid_url">ದಯವಿಟ್ಟು ಮಾನ್ಯವಾದ URL ಅನ್ನು ನಮೂದಿಸಿ</string>
+    <string name="action_save">ಉಳಿಸಿ</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ತ್ವರಿತ ಆಟಗಾರ ನಿಯಂತ್ರಣಗಳು</string>
+    <string name="widget_description_full">ಆಟಗಾರ ಮತ್ತು ನಿಲ್ದಾಣದ ಪಟ್ಟಿ</string>
 </resources>

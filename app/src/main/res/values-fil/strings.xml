@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Mga opsyon sa istasyon</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Istasyon: %1$s, Wika: %2$s, Mga Tag: %3$s</string>
+
+    <string name="error_no_file_manager">Hindi makahanap ng system file manager. Pakitiyak na naka-install at naka-enable ang isang file explorer.</string>
+    <string name="error_no_browser">Hindi makahanap ng web browser. Mangyaring mag-install ng browser upang buksan ang link na ito.</string>
+    <string name="error_no_homepage">Walang available na homepage para sa istasyong ito</string>
+    <string name="tab_custom_stations">Custom</string>
+    <string name="action_add_custom">Magdagdag ng Custom na Istasyon</string>
+    <string name="station_name">Pangalan ng Istasyon</string>
+    <string name="stream_url">Stream URL</string>
+    <string name="favicon_url">Favicon URL (opsyonal)</string>
+    <string name="select_image">Piliin ang Imahe</string>
+    <string name="error_invalid_url">Mangyaring magpasok ng wastong URL</string>
+    <string name="action_save">I-save</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Mabilis na kontrol ng player</string>
+    <string name="widget_description_full">Listahan ng manlalaro at istasyon</string>
 </resources>

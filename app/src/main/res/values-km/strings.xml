@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">ជម្រើសស្ថានីយ</string>
     <string name="not_applicable">មិនមាន</string>
     <string name="accessibility_station_description">ស្ថានីយ៖ %1$s, ភាសា៖ %2$s, ស្លាក៖ %3$s</string>
+
+    <string name="error_no_file_manager">មិនអាចស្វែងរកកម្មវិធីគ្រប់គ្រងឯកសារប្រព័ន្ធបានទេ។ សូមប្រាកដថាកម្មវិធីរុករកឯកសារត្រូវបានដំឡើង និងបើកដំណើរការ។</string>
+    <string name="error_no_browser">មិនអាចស្វែងរកកម្មវិធីរុករកតាមអ៊ីនធឺណិតបានទេ។ សូមដំឡើងកម្មវិធីរុករកតាមអ៊ីនធឺណិត ដើម្បីបើកតំណនេះ។</string>
+    <string name="error_no_homepage">មិនមានគេហទំព័រសម្រាប់ស្ថានីយ៍នេះទេ។</string>
+    <string name="tab_custom_stations">ផ្ទាល់ខ្លួន</string>
+    <string name="action_add_custom">បន្ថែមស្ថានីយ៍ផ្ទាល់ខ្លួន</string>
+    <string name="station_name">ឈ្មោះស្ថានីយ៍</string>
+    <string name="stream_url">URL ស្ទ្រីម</string>
+    <string name="favicon_url">Favicon URL (ជាជម្រើស)</string>
+    <string name="select_image">ជ្រើសរើសរូបភាព</string>
+    <string name="error_invalid_url">សូមបញ្ចូល URL ត្រឹមត្រូវ។</string>
+    <string name="action_save">រក្សាទុក</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ការគ្រប់គ្រងអ្នកលេងរហ័ស</string>
+    <string name="widget_description_full">បញ្ជីចាក់និងស្ថានីយ៍</string>
 </resources>

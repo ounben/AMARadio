@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Opciones de la emisora</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Emisora: %1$s, Idioma: %2$s, Etiquetas: %3$s</string>
+
+    <string name="error_no_file_manager">No se pudo encontrar un administrador de archivos del sistema. Asegúrese de que haya un explorador de archivos instalado y habilitado.</string>
+    <string name="error_no_browser">No se pudo encontrar un navegador web. Instale un navegador para abrir este enlace.</string>
+    <string name="error_no_homepage">No hay página de inicio disponible para esta estación</string>
+    <string name="tab_custom_stations">Costumbre</string>
+    <string name="action_add_custom">Agregar estación personalizada</string>
+    <string name="station_name">Nombre de la estación</string>
+    <string name="stream_url">URL de transmisión</string>
+    <string name="favicon_url">URL de favicon (opcional)</string>
+    <string name="select_image">Seleccionar imagen</string>
+    <string name="error_invalid_url">Por favor ingresa una URL válida</string>
+    <string name="action_save">Ahorrar</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Controles rápidos del jugador</string>
+    <string name="widget_description_full">Lista de jugadores y estaciones</string>
 </resources>

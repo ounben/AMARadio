@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Opsi stasiun</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Stasiun: %1$s, Bahasa: %2$s, Tag: %3$s</string>
+
+    <string name="error_no_file_manager">Tidak dapat menemukan pengelola file sistem. Harap pastikan file explorer diinstal dan diaktifkan.</string>
+    <string name="error_no_browser">Tidak dapat menemukan browser web. Silakan instal browser untuk membuka tautan ini.</string>
+    <string name="error_no_homepage">Tidak ada beranda yang tersedia untuk stasiun ini</string>
+    <string name="tab_custom_stations">Kebiasaan</string>
+    <string name="action_add_custom">Tambahkan Stasiun Kustom</string>
+    <string name="station_name">Nama Stasiun</string>
+    <string name="stream_url">URL streaming</string>
+    <string name="favicon_url">URL Favicon (opsional)</string>
+    <string name="select_image">Pilih Gambar</string>
+    <string name="error_invalid_url">Silakan masukkan URL yang valid</string>
+    <string name="action_save">Menyimpan</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Kontrol pemutar cepat</string>
+    <string name="widget_description_full">Daftar pemutar dan stasiun</string>
 </resources>

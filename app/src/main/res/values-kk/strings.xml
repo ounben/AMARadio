@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Станция параметрлері</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Станция: %1$s, Тіл: %2$s, Тегтер: %3$s</string>
+
+    <string name="error_no_file_manager">Жүйелік файл менеджері табылмады. Файл шолғышының орнатылғанын және қосылғанын тексеріңіз.</string>
+    <string name="error_no_browser">Веб-шолғыш табылмады. Осы сілтемені ашу үшін браузерді орнатыңыз.</string>
+    <string name="error_no_homepage">Бұл станцияның басты беті жоқ</string>
+    <string name="tab_custom_stations">Арнаулы</string>
+    <string name="action_add_custom">Пайдаланушы станциясын қосыңыз</string>
+    <string name="station_name">Станция атауы</string>
+    <string name="stream_url">Ағын URL</string>
+    <string name="favicon_url">Favicon URL (міндетті емес)</string>
+    <string name="select_image">Суретті таңдаңыз</string>
+    <string name="error_invalid_url">Жарамды URL мекенжайын енгізіңіз</string>
+    <string name="action_save">Сақтау</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Жылдам ойнатқышты басқару</string>
+    <string name="widget_description_full">Ойыншы және станция тізімі</string>
 </resources>

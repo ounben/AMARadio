@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Možnosti stanice</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Stanica: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
+
+    <string name="error_no_file_manager">Nepodarilo sa nájsť správcu systémových súborov. Uistite sa, že je nainštalovaný a povolený prieskumník súborov.</string>
+    <string name="error_no_browser">Nepodarilo sa nájsť webový prehliadač. Ak chcete otvoriť tento odkaz, nainštalujte si prehliadač.</string>
+    <string name="error_no_homepage">Pre túto stanicu nie je k dispozícii žiadna domovská stránka</string>
+    <string name="tab_custom_stations">Vlastné</string>
+    <string name="action_add_custom">Pridať vlastnú stanicu</string>
+    <string name="station_name">Názov stanice</string>
+    <string name="stream_url">Webová adresa streamu</string>
+    <string name="favicon_url">Webová adresa ikony favicon (voliteľné)</string>
+    <string name="select_image">Vyberte Obrázok</string>
+    <string name="error_invalid_url">Zadajte platnú webovú adresu</string>
+    <string name="action_save">Uložiť</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Rýchle ovládanie prehrávača</string>
+    <string name="widget_description_full">Zoznam prehrávačov a staníc</string>
 </resources>

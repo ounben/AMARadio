@@ -344,4 +344,20 @@
     <string name="accessibility_station_options">Stationopties</string>
     <string name="not_applicable">N.v.t.</string>
     <string name="accessibility_station_description">Station: %1$s, Taal: %2$s, Tags: %3$s</string>
+
+    <string name="error_no_file_manager">Kon geen systeembestandsbeheerder vinden. Zorg ervoor dat een bestandsverkenner is geïnstalleerd en ingeschakeld.</string>
+    <string name="error_no_browser">Kon geen webbrowser vinden. Installeer een browser om deze link te openen.</string>
+    <string name="error_no_homepage">Er is geen homepage beschikbaar voor deze zender</string>
+    <string name="tab_custom_stations">Aangepast</string>
+    <string name="action_add_custom">Aangepast station toevoegen</string>
+    <string name="station_name">Stationsnaam</string>
+    <string name="stream_url">Stream-URL</string>
+    <string name="favicon_url">Favicon-URL (optioneel)</string>
+    <string name="select_image">Selecteer Afbeelding</string>
+    <string name="error_invalid_url">Voer een geldige URL in</string>
+    <string name="action_save">Redden</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Snelle spelerbediening</string>
+    <string name="widget_description_full">Speler- en zenderlijst</string>
 </resources>

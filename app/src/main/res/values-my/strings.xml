@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">အသံလွှင့်ဌာန ရွေးချယ်စရာများ</string>
     <string name="not_applicable">မသက်ဆိုင်ပါ</string>
     <string name="accessibility_station_description">အသံလွှင့်ဌာန- %1$s၊ ဘာသာစကား- %2$s၊ တဂ်များ- %3$s</string>
+
+    <string name="error_no_file_manager">စနစ်ဖိုင်မန်နေဂျာကို ရှာမတွေ့ပါ။ ဖိုင်ရှာဖွေသူအား ထည့်သွင်းပြီး ဖွင့်ထားကြောင်း သေချာပါစေ။</string>
+    <string name="error_no_browser">ဝဘ်ဘရောက်ဆာကို ရှာမတွေ့ပါ။ ဤလင့်ခ်ကိုဖွင့်ရန် ဘရောက်ဆာတစ်ခုကို ထည့်သွင်းပါ။</string>
+    <string name="error_no_homepage">ဤဘူတာရုံအတွက် ပင်မစာမျက်နှာမရှိပါ။</string>
+    <string name="tab_custom_stations">စိတ်ကြိုက်</string>
+    <string name="action_add_custom">စိတ်ကြိုက်ဘူတာကိုထည့်ပါ။</string>
+    <string name="station_name">ဘူတာအမည်</string>
+    <string name="stream_url">တိုက်ရိုက်လွှင့် URL</string>
+    <string name="favicon_url">Favicon URL (ချန်လှပ်ထားနိုင်သည်)</string>
+    <string name="select_image">Image ကို ရွေးပါ။</string>
+    <string name="error_invalid_url">ကျေးဇူးပြု၍ တရားဝင် URL ကိုထည့်ပါ။</string>
+    <string name="action_save">သိမ်းဆည်းပါ။</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">လျင်မြန်သောကစားသမားထိန်းချုပ်မှုများ</string>
+    <string name="widget_description_full">ကစားသမားများနှင့် ဘူတာရုံများစာရင်း</string>
 </resources>

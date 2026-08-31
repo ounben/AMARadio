@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">സ്റ്റേഷൻ ഓപ്ഷനുകൾ</string>
     <string name="not_applicable">ബാധകമല്ല</string>
     <string name="accessibility_station_description">സ്റ്റേഷൻ: %1$s, ഭാഷ: %2$s, ടാഗുകൾ: %3$s</string>
+
+    <string name="error_no_file_manager">ഒരു സിസ്റ്റം ഫയൽ മാനേജർ കണ്ടെത്താൻ കഴിഞ്ഞില്ല. ഒരു ഫയൽ എക്സ്പ്ലോറർ ഇൻസ്റ്റാൾ ചെയ്തിട്ടുണ്ടെന്നും പ്രവർത്തനക്ഷമമാക്കിയിട്ടുണ്ടെന്നും ഉറപ്പാക്കുക.</string>
+    <string name="error_no_browser">ഒരു വെബ് ബ്രൗസർ കണ്ടെത്താൻ കഴിഞ്ഞില്ല. ഈ ലിങ്ക് തുറക്കാൻ ഒരു ബ്രൗസർ ഇൻസ്റ്റാൾ ചെയ്യുക.</string>
+    <string name="error_no_homepage">ഈ സ്റ്റേഷന് ഹോംപേജ് ലഭ്യമല്ല</string>
+    <string name="tab_custom_stations">കസ്റ്റം</string>
+    <string name="action_add_custom">കസ്റ്റം സ്റ്റേഷൻ ചേർക്കുക</string>
+    <string name="station_name">സ്റ്റേഷൻ്റെ പേര്</string>
+    <string name="stream_url">സ്ട്രീം URL</string>
+    <string name="favicon_url">ഫാവിക്കോൺ URL (ഓപ്ഷണൽ)</string>
+    <string name="select_image">ചിത്രം തിരഞ്ഞെടുക്കുക</string>
+    <string name="error_invalid_url">ദയവായി സാധുവായ ഒരു URL നൽകുക</string>
+    <string name="action_save">സംരക്ഷിക്കുക</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ദ്രുത പ്ലെയർ നിയന്ത്രണങ്ങൾ</string>
+    <string name="widget_description_full">കളിക്കാരനും സ്റ്റേഷൻ ലിസ്റ്റും</string>
 </resources>

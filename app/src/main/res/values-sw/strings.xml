@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Chaguo za kituo</string>
     <string name="not_applicable">haipatikani</string>
     <string name="accessibility_station_description">Kituo: %1$s, Lugha: %2$s, Lebo: %3$s</string>
+
+    <string name="error_no_file_manager">Haikuweza kupata kidhibiti faili cha mfumo. Tafadhali hakikisha kuwa kichunguzi cha faili kimesakinishwa na kuwezeshwa.</string>
+    <string name="error_no_browser">Haikuweza kupata kivinjari. Tafadhali sakinisha kivinjari ili kufungua kiungo hiki.</string>
+    <string name="error_no_homepage">Hakuna ukurasa wa nyumbani unaopatikana kwa kituo hiki</string>
+    <string name="tab_custom_stations">Desturi</string>
+    <string name="action_add_custom">Ongeza Kituo Maalum</string>
+    <string name="station_name">Jina la Kituo</string>
+    <string name="stream_url">Tiririsha URL</string>
+    <string name="favicon_url">URL ya Favicon (hiari)</string>
+    <string name="select_image">Chagua Picha</string>
+    <string name="error_invalid_url">Tafadhali weka URL halali</string>
+    <string name="action_save">Hifadhi</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Vidhibiti vya haraka vya mchezaji</string>
+    <string name="widget_description_full">Mchezaji na orodha ya kituo</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Stasie-opsies</string>
     <string name="not_applicable">n.v.t.</string>
     <string name="accessibility_station_description">Stasie: %1$s, Taal: %2$s, Etikette: %3$s</string>
+
+    <string name="error_no_file_manager">Kon nie \'n stelsellêerbestuurder kry nie. Maak asseblief seker dat \'n lêerverkenner geïnstalleer en geaktiveer is.</string>
+    <string name="error_no_browser">Kon nie \'n webblaaier vind nie. Installeer asseblief \'n blaaier om hierdie skakel oop te maak.</string>
+    <string name="error_no_homepage">Geen tuisblad beskikbaar vir hierdie stasie nie</string>
+    <string name="tab_custom_stations">Pasgemaak</string>
+    <string name="action_add_custom">Voeg pasgemaakte stasie by</string>
+    <string name="station_name">Stasie Naam</string>
+    <string name="stream_url">Stroom URL</string>
+    <string name="favicon_url">Gunsteling-URL (opsioneel)</string>
+    <string name="select_image">Kies Beeld</string>
+    <string name="error_invalid_url">Voer asseblief \'n geldige URL in</string>
+    <string name="action_save">Stoor</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Vinnige spelerkontroles</string>
+    <string name="widget_description_full">Speler en stasie lys</string>
 </resources>

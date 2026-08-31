@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">放送局のオプション</string>
     <string name="not_applicable">該当なし</string>
     <string name="accessibility_station_description">放送局：%1$s、言語：%2$s、タグ：%3$s</string>
+
+    <string name="error_no_file_manager">システム ファイル マネージャーが見つかりませんでした。ファイル エクスプローラーがインストールされ、有効になっていることを確認してください。</string>
+    <string name="error_no_browser">Web ブラウザが見つかりませんでした。このリンクを開くにはブラウザをインストールしてください。</string>
+    <string name="error_no_homepage">この駅にはホームページがありません</string>
+    <string name="tab_custom_stations">カスタム</string>
+    <string name="action_add_custom">カスタムステーションの追加</string>
+    <string name="station_name">駅名</string>
+    <string name="stream_url">ストリームURL</string>
+    <string name="favicon_url">ファビコン URL (オプション)</string>
+    <string name="select_image">画像の選択</string>
+    <string name="error_invalid_url">有効な URL を入力してください</string>
+    <string name="action_save">保存</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">プレーヤーのクイックコントロール</string>
+    <string name="widget_description_full">プレーヤーとステーションのリスト</string>
 </resources>

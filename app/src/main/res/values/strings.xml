@@ -377,4 +377,6 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Quick player controls</string>
     <string name="widget_description_full">Player and station list</string>
+    <string name="detail_create_shortcut">Add to home screen</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
 </resources>

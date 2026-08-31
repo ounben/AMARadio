@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Jaama valikud</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Jaam: %1$s, Keel: %2$s, Sildid: %3$s</string>
+
+    <string name="error_no_file_manager">Süsteemi failihaldurit ei leitud. Veenduge, et failiuurija oleks installitud ja lubatud.</string>
+    <string name="error_no_browser">Veebibrauserit ei leitud. Selle lingi avamiseks installige brauser.</string>
+    <string name="error_no_homepage">Selle jaama jaoks pole kodulehte saadaval</string>
+    <string name="tab_custom_stations">Kohandatud</string>
+    <string name="action_add_custom">Lisa kohandatud jaam</string>
+    <string name="station_name">Jaama nimi</string>
+    <string name="stream_url">Voo URL</string>
+    <string name="favicon_url">Faviconi URL (valikuline)</string>
+    <string name="select_image">Valige Pilt</string>
+    <string name="error_invalid_url">Sisestage kehtiv URL</string>
+    <string name="action_save">Salvesta</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Kiire mängija juhtnupud</string>
+    <string name="widget_description_full">Mängija ja jaamade loend</string>
 </resources>

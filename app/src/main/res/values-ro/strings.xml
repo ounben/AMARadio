@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Opțiuni post</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Post: %1$s, Limbă: %2$s, Etichete: %3$s</string>
+
+    <string name="error_no_file_manager">Nu s-a putut găsi un manager de fișiere de sistem. Asigurați-vă că este instalat și activat un explorator de fișiere.</string>
+    <string name="error_no_browser">Nu s-a putut găsi un browser web. Vă rugăm să instalați un browser pentru a deschide acest link.</string>
+    <string name="error_no_homepage">Nicio pagină de pornire disponibilă pentru această stație</string>
+    <string name="tab_custom_stations">Personalizat</string>
+    <string name="action_add_custom">Adăugați stație personalizată</string>
+    <string name="station_name">Numele stației</string>
+    <string name="stream_url">Adresa URL a fluxului</string>
+    <string name="favicon_url">Adresa URL a faviconului (opțional)</string>
+    <string name="select_image">Selectați Imagine</string>
+    <string name="error_invalid_url">Vă rugăm să introduceți o adresă URL validă</string>
+    <string name="action_save">Salva</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Comenzi rapide ale jucătorului</string>
+    <string name="widget_description_full">Lista de jucători și posturi</string>
 </resources>

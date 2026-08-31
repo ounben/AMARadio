@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">સ્ટેશન વિકલ્પો</string>
     <string name="not_applicable">લાગુ પડતું નથી</string>
     <string name="accessibility_station_description">સ્ટેશન: %1$s, ભાષા: %2$s, ટૅગ્સ: %3$s</string>
+
+    <string name="error_no_file_manager">સિસ્ટમ ફાઇલ મેનેજર શોધી શક્યા નથી. કૃપા કરીને ખાતરી કરો કે ફાઇલ એક્સપ્લોરર ઇન્સ્ટોલ કરેલું અને સક્ષમ છે.</string>
+    <string name="error_no_browser">વેબ બ્રાઉઝર શોધી શકાયું નથી. કૃપા કરીને આ લિંક ખોલવા માટે બ્રાઉઝર ઇન્સ્ટોલ કરો.</string>
+    <string name="error_no_homepage">આ સ્ટેશન માટે કોઈ હોમપેજ ઉપલબ્ધ નથી</string>
+    <string name="tab_custom_stations">કસ્ટમ</string>
+    <string name="action_add_custom">કસ્ટમ સ્ટેશન ઉમેરો</string>
+    <string name="station_name">સ્ટેશનનું નામ</string>
+    <string name="stream_url">સ્ટ્રીમ URL</string>
+    <string name="favicon_url">ફેવિકોન URL (વૈકલ્પિક)</string>
+    <string name="select_image">છબી પસંદ કરો</string>
+    <string name="error_invalid_url">કૃપા કરીને માન્ય URL દાખલ કરો</string>
+    <string name="action_save">સાચવો</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ઝડપી પ્લેયર નિયંત્રણો</string>
+    <string name="widget_description_full">પ્લેયર અને સ્ટેશન યાદી</string>
 </resources>

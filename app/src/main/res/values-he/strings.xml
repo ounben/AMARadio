@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">אפשרויות תחנה</string>
     <string name="not_applicable">לא רלוונטי</string>
     <string name="accessibility_station_description">תחנה: %1$s, שפה: %2$s, תגיות: %3$s</string>
+
+    <string name="error_no_file_manager">לא הצליח למצוא מנהל קבצי מערכת. אנא ודא שסייר קבצים מותקן ומופעל.</string>
+    <string name="error_no_browser">לא הצליח למצוא דפדפן אינטרנט. אנא התקן דפדפן כדי לפתוח את הקישור הזה.</string>
+    <string name="error_no_homepage">אין דף בית זמין עבור תחנה זו</string>
+    <string name="tab_custom_stations">מִנְהָג</string>
+    <string name="action_add_custom">הוסף תחנה מותאמת אישית</string>
+    <string name="station_name">שם התחנה</string>
+    <string name="stream_url">כתובת אתר של זרם</string>
+    <string name="favicon_url">כתובת אתר Favicon (אופציונלי)</string>
+    <string name="select_image">בחר תמונה</string>
+    <string name="error_invalid_url">אנא הזן כתובת אתר חוקית</string>
+    <string name="action_save">לְהַצִיל</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">בקרות נגן מהירות</string>
+    <string name="widget_description_full">רשימת נגנים ותחנות</string>
 </resources>

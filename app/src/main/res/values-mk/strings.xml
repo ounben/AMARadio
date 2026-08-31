@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Опции на станицата</string>
     <string name="not_applicable">н/п</string>
     <string name="accessibility_station_description">Станица: %1$s, Јазик: %2$s, Тагови: %3$s</string>
+
+    <string name="error_no_file_manager">Не може да се најде системски управувач со датотеки. Проверете дали е инсталиран и овозможен истражувач на датотеки.</string>
+    <string name="error_no_browser">Не можев да најдам веб-прелистувач. Инсталирајте прелистувач за да ја отворите оваа врска.</string>
+    <string name="error_no_homepage">Нема достапна почетна страница за оваа станица</string>
+    <string name="tab_custom_stations">Прилагодено</string>
+    <string name="action_add_custom">Додајте прилагодена станица</string>
+    <string name="station_name">Име на станицата</string>
+    <string name="stream_url">URL-адреса за пренос</string>
+    <string name="favicon_url">URL на фавикон (изборно)</string>
+    <string name="select_image">Изберете Слика</string>
+    <string name="error_invalid_url">Ве молиме внесете важечка URL-адреса</string>
+    <string name="action_save">Зачувај</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Брзи контроли на плеерот</string>
+    <string name="widget_description_full">Список на плеер и станици</string>
 </resources>

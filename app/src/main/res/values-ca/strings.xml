@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Opcions de l\'emissora</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Emissora: %1$s, Idioma: %2$s, Etiquetes: %3$s</string>
+
+    <string name="error_no_file_manager">No s\'ha pogut trobar un gestor de fitxers del sistema. Assegureu-vos que hi hagi instal·lat i activat un explorador de fitxers.</string>
+    <string name="error_no_browser">No s\'ha pogut trobar un navegador web. Instal·leu un navegador per obrir aquest enllaç.</string>
+    <string name="error_no_homepage">No hi ha cap pàgina d\'inici disponible per a aquesta estació</string>
+    <string name="tab_custom_stations">Personalitzat</string>
+    <string name="action_add_custom">Afegeix una estació personalitzada</string>
+    <string name="station_name">Nom de l\'estació</string>
+    <string name="stream_url">URL del flux</string>
+    <string name="favicon_url">URL del favicon (opcional)</string>
+    <string name="select_image">Seleccioneu Imatge</string>
+    <string name="error_invalid_url">Introduïu un URL vàlid</string>
+    <string name="action_save">Desa</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Controls ràpids del jugador</string>
+    <string name="widget_description_full">Llista de reproductors i emissores</string>
 </resources>

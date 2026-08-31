@@ -341,4 +341,20 @@
     <string name="accessibility_station_options">电台选项</string>
     <string name="not_applicable">无</string>
     <string name="accessibility_station_description">电台：%1$s，语言：%2$s，标签：%3$s</string>
+
+    <string name="error_no_file_manager">找不到系统文件管理器。请确保已安装并启用文件浏览器。</string>
+    <string name="error_no_browser">找不到网络浏览器。请安装浏览器来打开此链接。</string>
+    <string name="error_no_homepage">该站没有可用的主页</string>
+    <string name="tab_custom_stations">风俗</string>
+    <string name="action_add_custom">添加自定义站</string>
+    <string name="station_name">车站名称</string>
+    <string name="stream_url">串流网址</string>
+    <string name="favicon_url">网站图标 URL（可选）</string>
+    <string name="select_image">选择图像</string>
+    <string name="error_invalid_url">请输入有效的网址</string>
+    <string name="action_save">节省</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">快速播放器控制</string>
+    <string name="widget_description_full">播放器和电台列表</string>
 </resources>

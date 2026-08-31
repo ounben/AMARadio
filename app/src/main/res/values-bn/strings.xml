@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">স্টেশন বিকল্প</string>
     <string name="not_applicable">প্রযোজ্য নয়</string>
     <string name="accessibility_station_description">স্টেশন: %1$s, ভাষা: %2$s, ট্যাগ: %3$s</string>
+
+    <string name="error_no_file_manager">একটি সিস্টেম ফাইল ম্যানেজার খুঁজে পাওয়া যায়নি. অনুগ্রহ করে নিশ্চিত করুন যে একটি ফাইল এক্সপ্লোরার ইনস্টল এবং সক্ষম করা আছে।</string>
+    <string name="error_no_browser">একটি ওয়েব ব্রাউজার খুঁজে পাওয়া যায়নি. এই লিঙ্ক খুলতে একটি ব্রাউজার ইনস্টল করুন.</string>
+    <string name="error_no_homepage">এই স্টেশনের জন্য কোনো হোমপেজ উপলব্ধ নেই৷</string>
+    <string name="tab_custom_stations">কাস্টম</string>
+    <string name="action_add_custom">কাস্টম স্টেশন যোগ করুন</string>
+    <string name="station_name">স্টেশনের নাম</string>
+    <string name="stream_url">স্ট্রিম URL</string>
+    <string name="favicon_url">ফেভিকন URL (ঐচ্ছিক)</string>
+    <string name="select_image">ছবি নির্বাচন করুন</string>
+    <string name="error_invalid_url">একটি বৈধ URL লিখুন</string>
+    <string name="action_save">সংরক্ষণ করুন</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">দ্রুত প্লেয়ার নিয়ন্ত্রণ</string>
+    <string name="widget_description_full">প্লেয়ার এবং স্টেশন তালিকা</string>
 </resources>

@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">სადგურის პარამეტრები</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">სადგური: %1$s, ენა: %2$s, ტეგები: %3$s</string>
+
+    <string name="error_no_file_manager">ვერ ვიპოვე სისტემის ფაილების მენეჯერი. გთხოვთ, დარწმუნდეთ, რომ ფაილების მკვლევარი დაინსტალირებული და ჩართულია.</string>
+    <string name="error_no_browser">ვებ ბრაუზერი ვერ ვიპოვე. გთხოვთ დააინსტალიროთ ბრაუზერი ამ ბმულის გასახსნელად.</string>
+    <string name="error_no_homepage">ამ სადგურისთვის მთავარი გვერდი არ არის ხელმისაწვდომი</string>
+    <string name="tab_custom_stations">საბაჟო</string>
+    <string name="action_add_custom">დაამატეთ საბაჟო სადგური</string>
+    <string name="station_name">სადგურის სახელი</string>
+    <string name="stream_url">ნაკადის URL</string>
+    <string name="favicon_url">ფავიკონის URL (არასავალდებულო)</string>
+    <string name="select_image">აირჩიეთ სურათი</string>
+    <string name="error_invalid_url">გთხოვთ, შეიყვანოთ სწორი URL</string>
+    <string name="action_save">შენახვა</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">მოთამაშის სწრაფი კონტროლი</string>
+    <string name="widget_description_full">მოთამაშისა და სადგურების სია</string>
 </resources>

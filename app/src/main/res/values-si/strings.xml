@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">ගුවන්විදුලි විකල්ප</string>
     <string name="not_applicable">අදාළ නොවේ</string>
     <string name="accessibility_station_description">ගුවන්විදුලිය: %1$s, භාෂාව: %2$s, ටැග්: %3$s</string>
+
+    <string name="error_no_file_manager">පද්ධති ගොනු කළමනාකරු සොයා ගැනීමට නොහැකි විය. කරුණාකර ගොනු ගවේෂකයක් ස්ථාපනය කර සබල කර ඇති බව සහතික කර ගන්න.</string>
+    <string name="error_no_browser">වෙබ් බ්‍රවුසරයක් සොයා ගැනීමට නොහැකි විය. මෙම සබැඳිය විවෘත කිරීමට කරුණාකර බ්‍රවුසරයක් ස්ථාපනය කරන්න.</string>
+    <string name="error_no_homepage">මෙම ස්ථානය සඳහා මුල් පිටුවක් නොමැත</string>
+    <string name="tab_custom_stations">අභිරුචි</string>
+    <string name="action_add_custom">අභිරුචි ස්ථානය එක් කරන්න</string>
+    <string name="station_name">දුම්රිය ස්ථානයේ නම</string>
+    <string name="stream_url">ප්‍රවාහ URL</string>
+    <string name="favicon_url">Favicon URL (විකල්ප)</string>
+    <string name="select_image">රූපය තෝරන්න</string>
+    <string name="error_invalid_url">කරුණාකර වලංගු URL එකක් ඇතුළු කරන්න</string>
+    <string name="action_save">සුරකින්න</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ඉක්මන් ක්‍රීඩක පාලනය</string>
+    <string name="widget_description_full">ක්රීඩකයා සහ ස්ථාන ලැයිස්තුව</string>
 </resources>

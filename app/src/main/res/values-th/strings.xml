@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">ตัวเลือกสถานี</string>
     <string name="not_applicable">ไม่มี</string>
     <string name="accessibility_station_description">สถานี: %1$s, ภาษา: %2$s, แท็ก: %3$s</string>
+
+    <string name="error_no_file_manager">ไม่พบตัวจัดการไฟล์ระบบ โปรดตรวจสอบให้แน่ใจว่าได้ติดตั้งและเปิดใช้งาน File Explorer แล้ว</string>
+    <string name="error_no_browser">ไม่พบเว็บเบราว์เซอร์ กรุณาติดตั้งเบราว์เซอร์เพื่อเปิดลิงค์นี้</string>
+    <string name="error_no_homepage">ไม่มีหน้าแรกสำหรับสถานีนี้</string>
+    <string name="tab_custom_stations">กำหนดเอง</string>
+    <string name="action_add_custom">เพิ่มสถานีแบบกำหนดเอง</string>
+    <string name="station_name">ชื่อสถานี</string>
+    <string name="stream_url">URL สตรีม</string>
+    <string name="favicon_url">URL ไอคอน Fav (ไม่บังคับ)</string>
+    <string name="select_image">เลือกรูปภาพ</string>
+    <string name="error_invalid_url">โปรดป้อน URL ที่ถูกต้อง</string>
+    <string name="action_save">บันทึก</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">การควบคุมผู้เล่นอย่างรวดเร็ว</string>
+    <string name="widget_description_full">รายชื่อผู้เล่นและสถานี</string>
 </resources>

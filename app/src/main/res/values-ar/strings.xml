@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">خيارات المحطة</string>
     <string name="not_applicable">غير متاح</string>
     <string name="accessibility_station_description">المحطة: %1$s، اللغة: %2$s، الوسوم: %3$s</string>
+
+    <string name="error_no_file_manager">تعذر العثور على مدير ملفات النظام. يرجى التأكد من تثبيت مستكشف الملفات وتمكينه.</string>
+    <string name="error_no_browser">تعذر العثور على متصفح الويب. الرجاء تثبيت متصفح لفتح هذا الرابط.</string>
+    <string name="error_no_homepage">لا توجد صفحة رئيسية متاحة لهذه المحطة</string>
+    <string name="tab_custom_stations">مخصص</string>
+    <string name="action_add_custom">إضافة محطة مخصصة</string>
+    <string name="station_name">اسم المحطة</string>
+    <string name="stream_url">عنوان URL للدفق</string>
+    <string name="favicon_url">عنوان URL للرمز المفضل (اختياري)</string>
+    <string name="select_image">حدد الصورة</string>
+    <string name="error_invalid_url">الرجاء إدخال عنوان URL صالح</string>
+    <string name="action_save">يحفظ</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ضوابط لاعب سريعة</string>
+    <string name="widget_description_full">قائمة اللاعبين والمحطات</string>
 </resources>

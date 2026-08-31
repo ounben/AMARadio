@@ -365,4 +365,12 @@
     <string name="accessibility_station_options">Sender-Optionen</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Sender: %1$s, Sprache: %2$s, Tags: %3$s</string>
+
+    <string name="error_no_file_manager">Keine Dateimanager-App gefunden. Bitte stelle sicher, dass ein Datei-Explorer installiert und aktiviert ist.</string>
+    <string name="error_no_browser">Kein Webbrowser gefunden. Bitte installiere einen Browser, um diesen Link zu öffnen.</string>
+    <string name="error_invalid_url">Bitte gib eine gültige URL ein</string>
+    <string name="widget_name_small">AMARadio Kompakt</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Schnelle Player-Steuerung</string>
+    <string name="widget_description_full">Player und Senderliste</string>
 </resources>

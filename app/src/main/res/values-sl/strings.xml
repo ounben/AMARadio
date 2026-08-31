@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Možnosti postaje</string>
     <string name="not_applicable">n/a</string>
     <string name="accessibility_station_description">Postaja: %1$s, Jezik: %2$s, Oznake: %3$s</string>
+
+    <string name="error_no_file_manager">Ni bilo mogoče najti upravitelja sistemskih datotek. Zagotovite, da je nameščen in omogočen raziskovalec datotek.</string>
+    <string name="error_no_browser">Spletnega brskalnika ni bilo mogoče najti. Namestite brskalnik, da odprete to povezavo.</string>
+    <string name="error_no_homepage">Za to postajo ni na voljo domača stran</string>
+    <string name="tab_custom_stations">Po meri</string>
+    <string name="action_add_custom">Dodajte postajo po meri</string>
+    <string name="station_name">Ime postaje</string>
+    <string name="stream_url">URL toka</string>
+    <string name="favicon_url">Favicon URL (neobvezno)</string>
+    <string name="select_image">Izberite Slika</string>
+    <string name="error_invalid_url">Vnesite veljaven URL</string>
+    <string name="action_save">Shrani</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Hitri nadzor igralca</string>
+    <string name="widget_description_full">Seznam predvajalnikov in postaj</string>
 </resources>

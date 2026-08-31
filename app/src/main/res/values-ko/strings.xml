@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">방송국 옵션</string>
     <string name="not_applicable">해당 없음</string>
     <string name="accessibility_station_description">방송국: %1$s, 언어: %2$s, 태그: %3$s</string>
+
+    <string name="error_no_file_manager">시스템 파일 관리자를 찾을 수 없습니다. 파일 탐색기가 설치되어 활성화되어 있는지 확인하세요.</string>
+    <string name="error_no_browser">웹 브라우저를 찾을 수 없습니다. 이 링크를 열려면 브라우저를 설치하세요.</string>
+    <string name="error_no_homepage">이 방송국에 사용할 수 있는 홈페이지가 없습니다.</string>
+    <string name="tab_custom_stations">관습</string>
+    <string name="action_add_custom">사용자 정의 스테이션 추가</string>
+    <string name="station_name">역 이름</string>
+    <string name="stream_url">스트림 URL</string>
+    <string name="favicon_url">파비콘 URL(선택사항)</string>
+    <string name="select_image">이미지 선택</string>
+    <string name="error_invalid_url">유효한 URL을 입력하세요.</string>
+    <string name="action_save">구하다</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">빠른 플레이어 컨트롤</string>
+    <string name="widget_description_full">플레이어 및 스테이션 목록</string>
 </resources>

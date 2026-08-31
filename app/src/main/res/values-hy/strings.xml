@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Կայանի ընտրանքներ</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Կայան՝ %1$s, Լեզու՝ %2$s, Պիտակներ՝ %3$s</string>
+
+    <string name="error_no_file_manager">Չհաջողվեց գտնել համակարգի ֆայլերի կառավարիչ: Խնդրում ենք համոզվել, որ ֆայլերի ուսումնասիրիչը տեղադրված է և միացված է:</string>
+    <string name="error_no_browser">Չհաջողվեց գտնել վեբ բրաուզեր: Խնդրում ենք տեղադրել զննարկիչ՝ այս հղումը բացելու համար:</string>
+    <string name="error_no_homepage">Այս կայանի համար հիմնական էջ չկա</string>
+    <string name="tab_custom_stations">Պատվերով</string>
+    <string name="action_add_custom">Ավելացնել Custom Station</string>
+    <string name="station_name">Կայանի անվանումը</string>
+    <string name="stream_url">Հոսքի URL</string>
+    <string name="favicon_url">Favicon URL (ըստ ցանկության)</string>
+    <string name="select_image">Ընտրեք Պատկեր</string>
+    <string name="error_invalid_url">Խնդրում ենք մուտքագրել վավեր URL</string>
+    <string name="action_save">Պահպանել</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Արագ նվագարկչի վերահսկում</string>
+    <string name="widget_description_full">Խաղացողի և կայանների ցուցակ</string>
 </resources>

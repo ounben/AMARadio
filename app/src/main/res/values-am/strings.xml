@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">የጣቢያ አማራጮች</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">ጣቢያ፡ %1$s፣ ቋንቋ፡ %2$s፣ መለያዎች፡ %3$s</string>
+
+    <string name="error_no_file_manager">የስርዓት ፋይል አቀናባሪ ማግኘት አልተቻለም። እባክዎ የፋይል አሳሽ መጫኑን እና መንቃቱን ያረጋግጡ።</string>
+    <string name="error_no_browser">የድር አሳሽ ማግኘት አልተቻለም። እባክዎ ይህን ሊንክ ለመክፈት አሳሽ ይጫኑ።</string>
+    <string name="error_no_homepage">ለዚህ ጣቢያ ምንም መነሻ ገጽ የለም።</string>
+    <string name="tab_custom_stations">ብጁ</string>
+    <string name="action_add_custom">ብጁ ጣቢያ ያክሉ</string>
+    <string name="station_name">የጣቢያ ስም</string>
+    <string name="stream_url">የዥረት URL</string>
+    <string name="favicon_url">Favicon URL (አማራጭ)</string>
+    <string name="select_image">ምስል ይምረጡ</string>
+    <string name="error_invalid_url">እባክህ የሚሰራ URL አስገባ</string>
+    <string name="action_save">አስቀምጥ</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">ፈጣን የተጫዋች መቆጣጠሪያዎች</string>
+    <string name="widget_description_full">የተጫዋች እና የጣቢያ ዝርዝር</string>
 </resources>

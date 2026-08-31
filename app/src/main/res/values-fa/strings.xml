@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">گزینه‌های ایستگاه</string>
     <string name="not_applicable">نامربوط</string>
     <string name="accessibility_station_description">ایستگاه: %1$s، زبان: %2$s، برچسب‌ها: %3$s</string>
+
+    <string name="error_no_file_manager">مدیر فایل سیستم پیدا نشد. لطفاً مطمئن شوید که فایل کاوشگر نصب و فعال است.</string>
+    <string name="error_no_browser">مرورگر وب پیدا نشد. لطفا یک مرورگر برای باز کردن این لینک نصب کنید.</string>
+    <string name="error_no_homepage">هیچ صفحه اصلی برای این ایستگاه موجود نیست</string>
+    <string name="tab_custom_stations">سفارشی</string>
+    <string name="action_add_custom">اضافه کردن ایستگاه سفارشی</string>
+    <string name="station_name">نام ایستگاه</string>
+    <string name="stream_url">URL جریان</string>
+    <string name="favicon_url">URL فاویکون (اختیاری)</string>
+    <string name="select_image">Image را انتخاب کنید</string>
+    <string name="error_invalid_url">لطفاً یک URL معتبر وارد کنید</string>
+    <string name="action_save">ذخیره کنید</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">کنترل سریع پخش کننده</string>
+    <string name="widget_description_full">لیست پخش و ایستگاه</string>
 </resources>

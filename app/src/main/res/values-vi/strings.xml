@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Tùy chọn đài</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Đài: %1$s, Ngôn ngữ: %2$s, Thẻ: %3$s</string>
+
+    <string name="error_no_file_manager">Không thể tìm thấy trình quản lý tập tin hệ thống. Hãy đảm bảo rằng trình khám phá tệp đã được cài đặt và kích hoạt.</string>
+    <string name="error_no_browser">Không thể tìm thấy trình duyệt web. Vui lòng cài đặt trình duyệt để mở liên kết này.</string>
+    <string name="error_no_homepage">Không có trang chủ nào cho đài này</string>
+    <string name="tab_custom_stations">Phong tục</string>
+    <string name="action_add_custom">Thêm trạm tùy chỉnh</string>
+    <string name="station_name">Tên trạm</string>
+    <string name="stream_url">URL luồng</string>
+    <string name="favicon_url">URL biểu tượng yêu thích (tùy chọn)</string>
+    <string name="select_image">Chọn hình ảnh</string>
+    <string name="error_invalid_url">Vui lòng nhập một URL hợp lệ</string>
+    <string name="action_save">Cứu</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Điều khiển trình phát nhanh</string>
+    <string name="widget_description_full">Danh sách người chơi và trạm</string>
 </resources>

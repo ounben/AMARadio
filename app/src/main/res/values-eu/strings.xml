@@ -341,4 +341,20 @@
     <string name="accessibility_station_options">Irratiaren aukerak</string>
     <string name="not_applicable">e/g</string>
     <string name="accessibility_station_description">Irratia: %1$s, Hizkuntza: %2$s, Etiketak: %3$s</string>
+
+    <string name="error_no_file_manager">Ezin izan da sistemako fitxategi-kudeatzailerik aurkitu. Mesedez, ziurtatu fitxategi-esploratzailea instalatuta eta gaituta dagoela.</string>
+    <string name="error_no_browser">Ezin izan da web arakatzailerik aurkitu. Mesedez, instalatu arakatzaile bat esteka hau irekitzeko.</string>
+    <string name="error_no_homepage">Ez dago hasierako orririk geltoki honetarako</string>
+    <string name="tab_custom_stations">Pertsonalizatua</string>
+    <string name="action_add_custom">Gehitu geltoki pertsonalizatua</string>
+    <string name="station_name">Geltokiaren izena</string>
+    <string name="stream_url">Korrontearen URLa</string>
+    <string name="favicon_url">Favicon URLa (aukerakoa)</string>
+    <string name="select_image">Hautatu Irudia</string>
+    <string name="error_invalid_url">Mesedez, sartu baliozko URL bat</string>
+    <string name="action_save">Gorde</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Jokalari-kontrol azkarrak</string>
+    <string name="widget_description_full">Jokalari eta geltokien zerrenda</string>
 </resources>

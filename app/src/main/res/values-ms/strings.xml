@@ -340,4 +340,20 @@
     <string name="accessibility_station_options">Pilihan stesen</string>
     <string name="not_applicable">t/a</string>
     <string name="accessibility_station_description">Stesen: %1$s, Bahasa: %2$s, Tag: %3$s</string>
+
+    <string name="error_no_file_manager">Tidak dapat mencari pengurus fail sistem. Sila pastikan penjelajah fail dipasang dan didayakan.</string>
+    <string name="error_no_browser">Tidak dapat mencari pelayar web. Sila pasang pelayar untuk membuka pautan ini.</string>
+    <string name="error_no_homepage">Tiada halaman utama tersedia untuk stesen ini</string>
+    <string name="tab_custom_stations">Adat</string>
+    <string name="action_add_custom">Tambah Stesen Tersuai</string>
+    <string name="station_name">Nama Stesen</string>
+    <string name="stream_url">URL strim</string>
+    <string name="favicon_url">URL Favicon (pilihan)</string>
+    <string name="select_image">Pilih Imej</string>
+    <string name="error_invalid_url">Sila masukkan URL yang sah</string>
+    <string name="action_save">Jimat</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">Kawalan pemain pantas</string>
+    <string name="widget_description_full">Senarai pemain dan stesen</string>
 </resources>
