@@ -238,6 +238,27 @@ object Utils {
 
     @JvmStatic
     suspend fun getRealStationLink(httpClient: OkHttpClient, ctx: Context, stationId: String): String? {
+        // 1. Try local databases first (Custom, Favorites, History, Catalog)
+        try {
+            val userDb = com.ounben.amaradio.database.user.AMARadioUserDatabase.getDatabase(ctx)
+            
+            val customUrl = userDb.customStationDao().getByUuid(stationId)?.Url
+            if (!customUrl.isNullOrEmpty()) return customUrl
+
+            val favUrl = userDb.favoriteDao().getByUuid(stationId)?.Url
+            if (!favUrl.isNullOrEmpty()) return favUrl
+
+            val histUrl = userDb.historyDao().getByUuid(stationId)?.Url
+            if (!histUrl.isNullOrEmpty()) return histUrl
+
+            val catalogDb = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(ctx)
+            val catalogUrl = catalogDb.stationDao().getStationByUuid(stationId)?.url
+            if (!catalogUrl.isNullOrEmpty()) return catalogUrl
+        } catch (e: Exception) {
+            Log.e("Utils", "Error checking local DBs for $stationId", e)
+        }
+
+        // 2. Fallback to RadioBrowser online API if not found in any local database
         val result = downloadFeedRelative(httpClient, ctx, "json/url/$stationId", true, null)
         if (result != null) {
             return try {

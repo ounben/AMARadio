@@ -27,12 +27,17 @@ class GetRealLinkAndPlayTask(context: Context, private val station: DataRadioSta
             val result = withContext(Dispatchers.IO) {
                 val context = contextRef.get()
                 if (context != null) {
-                    Utils.getRealStationLink(httpClient, context.applicationContext, station.StationUuid)
+                    if (station.StreamUrl.isNotEmpty()) {
+                        station.StreamUrl
+                    } else {
+                        val link = Utils.getRealStationLink(httpClient, context.applicationContext, station.StationUuid)
+                        link ?: station.StreamUrl
+                    }
                 } else null
             }
             
             val playerService = playerServiceRef.get()
-            if (result != null && playerService != null && job?.isCancelled == false) {
+            if (!result.isNullOrEmpty() && playerService != null && job?.isCancelled == false) {
                 try {
                     station.playableUrl = result
                     playerService.SetStation(station)

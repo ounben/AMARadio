@@ -267,7 +267,7 @@ open class StationSaveManager(protected val context: Context) {
                                     val histEntity = userDb.historyDao().getByUuid(uuid)
                                     if (histEntity != null) {
                                         station = histEntity.toDataStation()
-                                    } else if (!uuid.startsWith("custom_")) {
+                                    } else {
                                         // Try online API for RadioBrowser UUIDs
                                         try {
                                             station = Utils.getStationByUuid(app.httpClient, context, uuid)

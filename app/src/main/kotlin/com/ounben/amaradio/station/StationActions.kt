@@ -42,6 +42,16 @@ object StationActions {
     }
 
     private fun retrieveAndCopyStreamUrlToClipboard(context: Context, station: DataRadioStation) {
+        if (station.StreamUrl.isNotEmpty()) {
+            val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
+            if (clipboard != null) {
+                val clip = ClipData.newPlainText("Stream Url", station.StreamUrl)
+                clipboard.setPrimaryClip(clip)
+                (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_stream_url_copied) }
+            }
+            return
+        }
+
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val contextRef = WeakReference(context)
 
@@ -50,13 +60,13 @@ object StationActions {
                 val ctx = contextRef.get() ?: return@withContext null
                 val app = ctx.applicationContext as AMARadioApp
                 val httpClient = app.httpClient
-                Utils.getRealStationLink(httpClient, ctx, station.StationUuid)
+                Utils.getRealStationLink(httpClient, ctx, station.StationUuid) ?: station.StreamUrl
             }
 
             val ctx = contextRef.get() ?: return@launch
             AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
 
-            if (result != null) {
+            if (!result.isNullOrEmpty()) {
                 val clipboard = ctx.getSystemService(Context.CLIPBOARD_SERVICE) as? ClipboardManager
                 if (clipboard != null) {
                     val clip = ClipData.newPlainText("Stream Url", result)
@@ -88,6 +98,18 @@ object StationActions {
 
     @JvmStatic
     fun share(context: Context, station: DataRadioStation) {
+        val urlToShare = station.StreamUrl.ifEmpty { station.HomePageUrl }
+        if (urlToShare.isNotEmpty()) {
+            val share = Intent(Intent.ACTION_SEND)
+            share.type = "text/plain"
+            share.putExtra(Intent.EXTRA_SUBJECT, station.Name)
+            share.putExtra(Intent.EXTRA_TEXT, urlToShare)
+            val title = context.resources.getString(R.string.share_action)
+            val chooser = Intent.createChooser(share, title)
+            context.startActivity(chooser)
+            return
+        }
+
         AppEventManager.sendEvent(Intent(ActivityMain.ACTION_SHOW_LOADING))
         val contextRef = WeakReference(context)
 
@@ -96,13 +118,13 @@ object StationActions {
                 val ctx = contextRef.get() ?: return@withContext null
                 val app = ctx.applicationContext as AMARadioApp
                 val httpClient = app.httpClient
-                Utils.getRealStationLink(httpClient, ctx, station.StationUuid)
+                Utils.getRealStationLink(httpClient, ctx, station.StationUuid) ?: station.HomePageUrl
             }
 
             val ctx = contextRef.get() ?: return@launch
             AppEventManager.sendEvent(Intent(ActivityMain.ACTION_HIDE_LOADING))
 
-            if (result != null) {
+            if (!result.isNullOrEmpty()) {
                 val share = Intent(Intent.ACTION_SEND)
                 share.type = "text/plain"
                 share.putExtra(Intent.EXTRA_SUBJECT, station.Name)
