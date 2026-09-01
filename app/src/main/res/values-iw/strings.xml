@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="detail_name">שם</string>
+    <string name="detail_tags">תגיות</string>
+    <string name="detail_country">מדינה</string>
+    <string name="detail_create_shortcut">הוספה למסך הבית</string>
+    <string name="detail_language">שפה</string>
+    <string name="detail_weblink">קישור אינטרנט</string>
+    <string name="detail_visit_website">@string/action_station_visit_website</string>
+    <string name="detail_play">נגן</string>
+    <string name="detail_pause">השהה</string>
+    <string name="detail_stop">עצור</string>
+    <string name="detail_share">שתף</string>
+    <string name="detail_play_in_AMARadio">נגן ב-AMARadio</string>
+
+    <string name="action_links">קישורים</string>
+    <string name="action_homepage">דף הבית</string>
+    <string name="action_favorite">מועדף</string>
+    <string name="action_starred_add">הוספה למועדפים</string>
+    <string name="action_starred_remove">הסרה מהמועדפים</string>
+
+    <string name="action_station_visit_website">ביקור באתר</string>
+    <string name="action_station_copy_stream_url">העתק כתובת זרם</string>
+    <string name="action_station_share">שתף</string>
+
+    <string name="action_local">מקומי</string>
+    <string name="action_skip_to_next">הבא</string>
+    <string name="action_pause">השהה</string>
+    <string name="action_skip_to_previous">הקודם</string>
+    <string name="action_resume">המשך</string>
+    <string name="action_stop">עצור</string>
+    <string name="action_search">חיפוש</string>
+    <string name="action_delete">מחק</string>
+    <string name="action_delete_history">מחיקת היסטוריה</string>
+    <string name="action_delete_favorites">מחיקת כל המועדפים</string>
+    <string name="action_delete_stream_history">ניקוי היסטוריית שירים</string>
+    <string name="action_ok">אישור</string>
+    <string name="action_cancel">ביטול</string>
+    <string name="action_top_click">הכי פופולריים</string>
+    <string name="action_toggle_view">החלפת תצוגה</string>
+    <string name="action_top_vote">הכי הרבה הצבעות</string>
+    <string name="action_changed_lately">שונו לאחרונה</string>
+    <string name="action_currently_playing">מנגן כעת</string>
+    <string name="action_tags">תגיות</string>
+    <string name="action_countries">מדינות/אזורים</string>
+    <string name="action_languages">שפות</string>
+    <string name="action_edit">ערוך</string>
+    <string name="action_copy_info">העתק מידע</string>
+    <string name="action_rename_tab">שינוי שם הלשונית</string>
+    <string name="error_filter_name_required">אנא הזן שם ללשונית סינון זו תחילה</string>
+    <string name="confirm_delete_filter_tab">האם אתה בטוח שברצונך למחוק את המסנן "%1$s"?</string>
+    <string name="filter_empty_title">בנה את עדכון תחנות הרדיו המותאם אישית שלך</string>
+    <string name="filter_empty_desc">צור תצוגה מותאמת אישית על ידי שילוב קריטריונים מרובים. ניתן לצמצם את החיפוש לפי:</string>
+    <string name="filter_empty_filter_by">סנן לפי:</string>
+    <string name="filter_empty_filter_desc">מדינה, שם תחנה, תגיות או שפה</string>
+    <string name="filter_empty_sort_by">מיין לפי:</string>
+    <string name="filter_empty_sort_desc">לחיצות, סדר אלפביתי, הצבעות או שינוי אחרון</string>
+    <string name="filter_empty_hint">הקלד שם בשדה למעלה כדי לשמור תצוגה זו!</string>
+    <string name="error_station_load">לא ניתן להתחבר לתחנה</string>
+    <string name="error_list_update">לא ניתן להתחבר לשרת דפדפן הרדיו</string>
+
+    <string name="error_no_connection">אין חיבור לאינטרנט זמין</string>
+    <string name="warning_volume_zero">עוצמת הקול היא אפס. יתכן שלא תשמע דבר.</string>
+
+    <string name="share_action">שתף קישור לתחנה עם…</string>
+
+    <string name="nav_item_stations">תחנות</string>
+    <string name="nav_item_starred">מועדפים</string>
+    <string name="nav_item_history">היסטוריה</string>
+    <string name="nav_item_settings">הגדרות</string>
+
+    <string name="about_text">AMARadio היא 100% נטולת פרסומות וממוקדת בפרטיות.\n\nבמקור פיתחתי את האפליקציה הזו עבור אמא שלי כדי לספק לה חווית רדיו פשוטה וישרה ללא פרסומות מעצבנות או מעקב. זו הסיבה ש-AMARadio תמיד תישאר ללא פרסומות – זו הבטחה לה, שמשותפת לכולכם.\n\nפרויקט זה הוא פיצול (fork) של https://github.com/segler-alex/RadioDroid המצוין. כל קוד המקור הועבר מ-Java ל-Kotlin כדי להבטיח שהאפליקציה תישאר מודרנית ותואמת לגרסאות אנדרואיד עתידיות.\n\nקוד המקור זמין בכתובת: https://github.com/ounben/AMARadio\n\nאפליקציה זו משתמשת במדריך תחנות הרדיו החינמי בכתובת https://www.radio-browser.info . כל אחד יכול להוסיף לו תחנות. זה עובד כמו ויקיפדיה לתחנות רדיו מקוונות.\n\nליצירת קשר: ben@ounben.com\n\nדיווח על באגים: https://github.com/ounben/AMARadio/issues\n\nאם אתם אוהבים את התוכנה ורוצים לעזור, אל תהססו לשלוח לי אימייל. גם רעיונות לתכונות חדשות תמיד יתקבלו בברכה!\n\nאפליקציה זו היא תוכנה חופשית, ברישיון GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_version">גרסה: %1$s</string>
+    <string name="detail_star">הוספה למועדפים</string>
+    <string name="detail_unstar">הסרה מהמועדפים</string>
+    <string name="detail_play_in_external_player">@string/action_play_in_external</string>
+    <string name="progress_loading">טוען…</string>
+
+    <string name="sleep_timer" formatted="true">טיימר שינה: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">הפסקת נגינה לאחר הזמן שנבחר</string>
+    <string name="sleep_timer_apply">החל</string>
+    <string name="sleep_timer_clear">ביטול</string>
+    <string name="nav_item_add_sleep">טיימר שינה</string>
+
+    <string name="nav_item_save_playlist">ייצוא מועדפים כרשימת השמעה</string>
+    <string name="nav_item_load_playlist">ייבוא מועדפים מרשימת השמעה</string>
+    <string name="nav_item_save_history_playlist">ייצוא היסטוריה כרשימת השמעה</string>
+    <string name="confirm_overwrite_file">האם לדרוס את הקובץ?</string>
+    <string name="dialog_hint_file_name">הזן שם קובץ</string>
+    <string name="error_empty_field">שדה זה הוא חובה</string>
+    <string name="error_invalid_file_name">שם קובץ לא תקין</string>
+    <string name="label_button_cancel">ביטול</string>
+    <string name="label_button_overwrite">דרוס</string>
+    <string name="notify_load_playlist_nok">לא ניתן לייבא מ-%1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_now">מייבא מ-%1$s&#47;%2$s, אנא המתן.</string>
+    <string name="notify_load_playlist_ok">יובאו %1$d תחנות מ-%2$s&#47;%3$s</string>
+    <string name="notify_save_playlist_nok">לא ניתן לייצא ל-%1$s&#47;%2$s</string>
+    <string name="notify_save_playlist_now">מייצא ל-%1$s&#47;%2$s, אנא המתן.</string>
+    <string name="notify_save_playlist_ok">יוצא ל-%1$s&#47;%2$s בהצלחה</string>
+    <string name="notify_sync_list_deleted_entries">%1$d מתוך %2$d תחנות מקומיות ברשימה סומנו כלא קיימות בשרת</string>
+
+    <string name="searchpreference_clear_history">ניקוי היסטוריה</string>
+    <string name="searchpreference_no_results">אין תוצאות</string>
+    <string name="searchpreference_search">חיפוש…</string>
+    <string name="settings_appearance">מראה</string>
+    <string name="settings_theme_selection_title">ערכת נושא</string>
+    <string name="theme_light">בהיר</string>
+    <string name="theme_dark">כהה</string>
+    <string name="theme_system">לפי המערכת</string>
+    <string name="settings_compact_style">מצב קומפקטי</string>
+    <string name="settings_compact_style_desc_off">אייקון גדול עם פרטי התחנה</string>
+    <string name="settings_compact_style_desc_on">אייקון קטן ללא פרטי התחנה</string>
+    <string name="settings_bottom_navigation">ניווט תחתון</string>
+    <string name="settings_ui_scale">קנה מידה של הממשק</string>
+    <string name="settings_language">שפה</string>
+    <string name="ui_scale_compact">קומפקטי</string>
+    <string name="ui_scale_standard">סטנדרט מערכת</string>
+    <string name="ui_scale_large">גדול</string>
+    <string name="ui_scale_extra_large">גדול מאוד</string>
+
+    <string name="settings_interaction">אינטראקציה</string>
+    <string name="settings_single_use_tags">הצגת תגיות נדירות</string>
+    <string name="settings_single_use_tags_desc_off">תגיות נדירות לא יוצגו</string>
+    <string name="settings_single_use_tags_desc_on">תגיות נדירות יוצגו</string>
+
+    <string name="settings_show_broken">תחנות לא פעילות</string>
+    <string name="settings_show_broken_on">הצגת תחנות לא פעילות ברשימות</string>
+    <string name="settings_show_broken_off">אל תציג תחנות לא פעילות ברשימות</string>
+
+    <string name="settings_startup_behaviour">התנהגות בהפעלה</string>
+    <string name="action_grid_view">תצוגת רשת</string>
+    <string name="action_list_view">תצוגת רשימה</string>
+
+    <string name="startup_action_title">פעולה בהפעלה</string>
+    <string name="startup_action_title_desc">%s</string>
+    <string name="startup_show_all_stations">הצג את כל התחנות</string>
+    <string name="startup_show_favorites">הצג מועדפים</string>
+    <string name="startup_show_history">הצג היסטוריה</string>
+    <string name="startup_show_last_view">תצוגה אחרונה</string>
+
+    <string name="settings_load_icons">הצג אייקונים של תחנות</string>
+    <string name="settings_load_icons_on">אייקונים יורדו</string>
+    <string name="settings_load_icons_off">אייקונים לא יורדו</string>
+
+    <string name="settings_auto_favorite">הוספה אוטומטית למועדפים</string>
+    <string name="settings_auto_favorite_on">הוספת תחנות למועדפים באופן אוטומטי בזמן נגינה</string>
+    <string name="settings_auto_favorite_off">אל תוסיף תחנות למועדפים באופן אוטומטי</string>
+
+    <string name="settings_play">נגן</string>
+    <string name="settings_auto_play_on_startup">נגינה אוטומטית</string>
+    <string name="settings_auto_play_on_startup_on">נגן תחנה אחרונה בהפעלה</string>
+    <string name="settings_auto_play_on_startup_off">אל תנגן תחנה אחרונה בהפעלה</string>
+    <string name="settings_auto_off_on_startup">עצירה אוטומטית</string>
+    <string name="settings_auto_off_on_startup_on">השתמש בטיימר עצירה עם נגינה אוטומטית</string>
+    <string name="settings_auto_off_on_startup_off">אל תשתמש בטיימר עצירה עם נגינה אוטומטית</string>
+    <string name="settings_auto_off_sleep_timer">טיימר עצירה אוטומטית</string>
+    <string name="settings_auto_off_sleep_timer_desc">עצור נגינה לאחר %1$s דקות</string>
+    <string name="settings_play_external">הפעל נגן חיצוני</string>
+    <string name="settings_play_external_desc_on">נגן תחנות עם נגן חיצוני</string>
+    <string name="settings_play_external_desc_off">נגן תחנות עם AMARadio</string>
+    <string name="settings_equalizer">אקוולייזר</string>
+
+    <string name="settings_connectivity">קישוריות</string>
+    <string name="settings_connect_timeout">פסק זמן לחיבור</string>
+    <string name="settings_read_timeout">פסק זמן לקריאה</string>
+    <string name="settings_resume_timeout">פסק זמן להמשך</string>
+    <string name="settings_retry_timeout">פסק זמן לניסיון חוזר</string>
+    <string name="settings_retry_delay">עיכוב בחיבור חוזר</string>
+    <string name="settings_proxy">פרוקסי</string>
+    <string name="settings_proxy_login">שם משתמש</string>
+    <string name="settings_proxy_password">סיסמה</string>
+    <string name="settings_proxy_action_test">בדיקה</string>
+    <string name="settings_proxy_working">מחובר בהצלחה ל-%s</string>
+    <string name="settings_proxy_not_working">נכשל בחיבור ל-%1$s\n%2$s</string>
+    <string name="settings_proxy_invalid">ערכי הפרוקסי שהזנת אינם תקינים</string>
+    <string name="ignore_proxy_settings_invalid">התעלמות מהגדרות פרוקסי לא תקינות</string>
+    <string name="settings_seconds_format">%d שניות</string>
+    <string name="settings_milliseconds_format">%d מילי-שניות</string>
+
+    <string name="settings_pause_when_noisy">השהה בניתוק אוזניות</string>
+
+    <string name="settings_auto_resume_do_not_resume">אל תחדש נגינה</string>
+
+    <string name="settings_auto_resume_on_wired_headset_connected">חדש נגינה בחיבור חוטי</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">חידוש נגינה בחיבור אוזניות חוטיות</string>
+
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected">חדש נגינה בחיבור בלוטות\'</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">חידוש נגינה בחיבור מכשיר בלוטות\' A2DP</string>
+
+    <string name="settings_auto_resume_on_any_connected">חדש נגינה בכל חיבור</string>
+
+    <string name="settings_warn_no_wifi">אזהרת אי-שימוש ב-Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">הזהר בעת נגינה ללא חיבור Wi-Fi</string>
+    <string name="settings_warn_no_wifi_off">ללא אזהרה כשאין חיבור Wi-Fi</string>
+
+    <string name="notify_pre_play">מתחבר</string>
+    <string name="notify_play">מנגן</string>
+    <string name="notify_paused">מושהה</string>
+    <string name="notify_metered_connection">חיבור מוגבל (Metered)</string>
+
+    <string name="notify_starred">התחנה נוספה למועדפים</string>
+    <string name="notify_autostarred">התחנה נוספה אוטומטית למועדפים</string>
+    <string name="notify_unstarred">התחנה הוסרה מהמועדפים</string>
+    <string name="notify_deleted_favorites">המועדפים נמחקו</string>
+    <string name="notify_deleted_history">ההיסטוריה נמחקה</string>
+
+    <string name="notify_open_link_failure">לא נמצאה אפליקציה לפתיחת הקישור</string>
+
+    <string name="notify_station_removed_from_list">הוסרה תחנה אחת</string>
+    <string name="action_station_removed_from_list_undo">ביטול פעולה</string>
+
+    <string name="alert_delete_history">האם אתה באמת רוצה למחוק את ההיסטוריה?</string>
+    <string name="alert_delete_favorites">האם אתה באמת רוצה למחוק את כל המועדפים?</string>
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+
+    <string name="alert_select_player">אנא בחר נגן</string>
+    <string name="alert_select_player_name">שם</string>
+    <string name="hostname">שם מארח (Hostname)</string>
+    <string name="port">פורט</string>
+
+    <string name="alert_press_back_to_exit">לחץ שוב על \'חזור\' כדי לצאת</string>
+
+    <string name="error_stream_url">בעיה בכתובת הזרם (URL)</string>
+    <string name="error_caching_stream">בעיה במטמון הזרם</string>
+    <string name="error_play_stream">לא ניתן לנגן את הזרם</string>
+    <string name="error_stream_reconnect_timeout">לא ניתן להתחבר מחדש לזרם: פסק זמן</string>
+    <string name="warning_no_network_trying_resume">אין חיבור לרשת. מנסה לחדש כשהחיבור יחזור.</string>
+    <string name="giving_up_resume">מוותר על הניסיון לחדש את הנגינה</string>
+
+    <string name="error_grant_audiofocus">המערכת לא אישרה את הבקשה למיקוד אודיו</string>
+
+    <string name="error_no_equalizer_found">לא נמצאה אפליקציית אקוולייזר</string>
+
+    <string name="player_info_status">סטטוס:&#160;</string>
+    <string name="player_info_status_stopped">עצר</string>
+    <string name="player_info_status_playing">מנגן</string>
+    <string name="player_info_transferred">נתונים שהועברו: %1$s</string>
+
+    <string name="tab_player_art">עטיפת אלבום</string>
+    <string name="tab_player_info">מידע</string>
+    <string name="tab_player_history">היסטוריית שירים</string>
+
+    <string name="station_detail_bitrate">%1$1d kbps</string>
+    <string name="station_detail_broken">לא תקין</string>
+    <string name="station_detail_deleted_on_server">נמחק</string>
+
+    <string name="station_details_clicks">%1$d לחיצות</string>
+    <string name="station_details_votes">%1$d הצבעות</string>
+
+    <string name="image_button_disable">השבת</string>
+    <string name="image_button_delete">מחק</string>
+    <string name="image_button_more">עוד</string>
+    <string name="image_button_less">פחות</string>
+    <string name="image_button_repeat">חזרה</string>
+    <string name="image_button_dont_repeat">ללא חזרה</string>
+    <string name="icon_click_trend_decreasing">פופולריות בירידה</string>
+    <string name="icon_click_trend_increasing">פופולריות בעליה</string>
+    <string name="icon_click_trend_stable">פופולריות יציבה</string>
+
+    <string name="app_name">AMARadio</string>
+    <string name="ad_free_promise">100% ללא פרסומות ופרטי</string>
+
+    <string name="action_play_in_external">נגן בנגן חיצוני</string>
+    <string name="action_choose_external_player">בחר נגן חיצוני</string>
+
+    <string name="settings_disable_battery_optimization">אופטימיזציית סוללה</string>
+    <string name="settings_ignore_battery_optimization_summary_on">התעלמות מאופטימיזציית סוללה, AMARadio תמיד תוכל לקבל חזרה את המיקוד.</string>
+    <string name="settings_ignore_battery_optimization_summary_off">אופטימיזציית סוללה מופעלת, AMARadio עלולה לא להצליח לקבל חזרה את המיקוד ברקע.</string>
+    <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
+    <string name="settings_other">אחר</string>
+    <string name="settings_rate_app">דרג את AMARadio</string>
+    <string name="settings_rate_app_summary">אם אהבת את האפליקציה, אנא השאר ביקורת בחנות Play!</string>
+    <string name="settings_statistics">סטטיסטיקה</string>
+    <string name="settings_about">אודות AMARadio</string>
+
+    <string name="description_btn_skip_to_next">דלג לבא</string>
+    <string name="description_btn_skip_to_previous">דלג לקודם</string>
+
+    <string-array name="weekdays">
+        <item>א\'</item>
+        <item>ב\'</item>
+        <item>ג\'</item>
+        <item>ד\'</item>
+        <item>ה\'</item>
+        <item>ו\'</item>
+        <item>ש\'</item>
+    </string-array>
+
+    <string name="notify_stream_url_copied">כתובת הזרם הועתקה בהצלחה</string>
+    <string name="notify_track_info_copied">מידע השיר הועתק בהצלחה</string>
+
+    <string-array name="actions_station_link">
+        <item>ביקור באתר</item>
+        <item>העתק כתובת זרם</item>
+    </string-array>
+
+    <string name="alert_metered_connection_title">זוהה חיבור מוגבל (Metered)</string>
+    <string name="alert_metered_connection_message">חיבור מוגבל עלול לגרור עלויות נוספות, לחץ על \'אישור\' להמשך.</string>
+    <string name="nav_item_statistics">סטטיסטיקה</string>
+    <string name="nav_item_about">אודות</string>
+    <string name="refresh">רענן</string>
+    <string name="action_filter">מסנן</string>
+    <string name="filter_country">מדינה</string>
+    <string name="filter_tag">תגית</string>
+    <string name="filter_language">שפה</string>
+    <string name="filter_sort_by">מיון לפי</string>
+    <string name="filter_reverse">סדר הפוך</string>
+    <string name="filter_apply">החל מסנן</string>
+    <string name="sort_name">שם</string>
+    <string name="sort_votes">הצבעות</string>
+    <string name="sort_clicks">לחיצות</string>
+    <string name="sort_lastchange">שינוי אחרון</string>
+    <string name="filter_select_country">בחירת מדינה</string>
+    <string name="filter_select_language">בחירת שפה</string>
+    <string name="filter_type_tag">הקלד תגית…</string>
+    <string name="filter_tap_to_configure">לחץ להגדרה</string>
+
+    <string name="context_menu_share">@string/detail_share</string>
+    <string name="context_menu_visit_homepage">@string/action_station_visit_website</string>
+    <string name="context_menu_play_in_AMARadio">@string/detail_play_in_AMARadio</string>
+    <string name="context_menu_play_in_external_player">@string/action_play_in_external</string>
+    <string name="context_menu_create_shortcut">@string/detail_create_shortcut</string>
+    <string name="context_menu_delete">@string/action_delete</string>
+
+    <!-- Accessibility -->
+    <string name="accessibility_station_logo">לוגו התחנה</string>
+    <string name="accessibility_favorite_selected">מועדף, נבחר</string>
+    <string name="accessibility_favorite_not_selected">מועדף, לא נבחר</string>
+    <string name="accessibility_category_icon">סמל קטגוריה</string>
+    <string name="accessibility_playing">מנגן כעת</string>
+    <string name="accessibility_menu">פתח תפריט</string>
+    <string name="accessibility_search_back">סגור חיפוש</string>
+    <string name="accessibility_filter_reverse">הפוך סדר מיון</string>
+    <string name="accessibility_clear_text">נקה טקסט</string>
+    <string name="accessibility_back">חזרה</string>
+    <string name="accessibility_configure">הגדר</string>
+    <string name="accessibility_close">סגור</string>
+    <string name="accessibility_add_filter">הוסף מסנן</string>
+    <string name="accessibility_station_options">אפשרויות תחנה</string>
+    <string name="not_applicable">לא רלוונטי</string>
+    <string name="accessibility_station_description">תחנה: %1$s, שפה: %2$s, תגיות: %3$s</string>
+
+    <string name="error_no_file_manager">לא הצליח למצוא מנהל קבצי מערכת. אנא ודא שסייר קבצים מותקן ומופעל.</string>
+    <string name="error_no_browser">לא הצליח למצוא דפדפן אינטרנט. אנא התקן דפדפן כדי לפתוח את הקישור הזה.</string>
+    <string name="error_no_homepage">אין דף בית זמין עבור תחנה זו</string>
+    <string name="tab_custom_stations">מִנְהָג</string>
+    <string name="action_add_custom">הוסף תחנה מותאמת אישית</string>
+    <string name="station_name">שם התחנה</string>
+    <string name="stream_url">כתובת אתר של זרם</string>
+    <string name="favicon_url">כתובת אתר Favicon (אופציונלי)</string>
+    <string name="select_image">בחר תמונה</string>
+    <string name="error_invalid_url">אנא הזן כתובת אתר חוקית</string>
+    <string name="action_save">לְהַצִיל</string>
+    <string name="widget_name_small">AMARadio Compact</string>
+    <string name="widget_name_full">AMARadio Player</string>
+    <string name="widget_description_small">בקרות נגן מהירות</string>
+    <string name="widget_description_full">רשימת נגנים ותחנות</string>
+</resources>
