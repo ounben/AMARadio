@@ -263,6 +263,8 @@ fun AddEditCustomStationDialog(
                         }
                     }
                     
+                    Spacer(modifier = Modifier.weight(1f))
+
                     Button(onClick = { photoPickerLauncher.launch("image/*") }) {
                         Text(stringResource(R.string.select_image))
                     }
