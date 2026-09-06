@@ -5,27 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [1.30] - 2026-09-01
+## [1.31] - 2026-09-01
 ### Added
-- **Native Reorderable Drag & Drop**: Integrated the robust `sh.calvin.reorderable` library for smooth, high-performance intra-list reordering in Jetpack Compose.
-    - Features live item swapping with placement animations (`animateItem`).
-    - Uses the official Material `DragHandle` icon positioned at the far right for a clean, consistent list design.
-    - Integrated smart edge-scrolling when dragging items near screen boundaries.
-    - Eliminated long-press gesture conflicts between item options dialogs and drag handles.
-- **Resilient Multi-Database M3U Import**: Overhauled M3U playlist import (`importM3U`) to work 100% offline.
-    - Checks local catalog database (30,000+ stations), custom stations DB, favorites DB, and history DB before attempting any network requests.
-    - Added full support for standard M3U playlists (without `#RADIOBROWSERUUID:` comments) by parsing `#EXTINF` metadata and stream URLs directly.
-- **Custom Station Image Downsampling**: Local images selected for custom stations are now automatically downsampled to a maximum of 512x512 pixels before saving, saving storage space and improving UI rendering speed.
-- **Full 74-Language Localization Sync**: Methodically synchronized and translated all missing string resources across all 74 supported language files (`values-*/strings.xml`) via Google Translate API with placeholder protection.
+- **Hebrew & Indonesian Locale Fix**: Added `values-iw` and `values-id` resource directories and updated `LocaleUtils` for legacy ISO locale support.
 
 ### Changed
-- **Cross-Database Synchronization**: Editing or deleting a custom station now automatically updates or removes corresponding entries in the Favorites and History databases.
-- **Instant UI Updates**: Fixed UI state reactivity in `ReorderableStationList` so station metadata edits reflect immediately without requiring screen navigation.
-- **Instant Local Sharing**: `StationActions.share` and clipboard copying now prioritize local station URLs directly from DBs and item properties, eliminating network calls and loading delays.
-- **Gradle 10 Readiness & Build Modernization**:
-    - Centralized repository management in `settings.gradle`.
-    - Updated Android Gradle Plugin to 9.3.2 and Gradle wrapper to 9.7.1.
-    - Cleaned up deprecated AGP flags and removed redundant Kotlin plugin applications.
+- **Custom Station Dialog UI**: Right-aligned "Select Image" button in `AddEditCustomStationDialog`.
+- **Dependency Update**: Updated Android Gradle Plugin version to 9.4.0 in Version Catalog.
+
+## [1.30] - 2026-09-01
+### Added
+- **Native Reorderable Drag & Drop**: Integrated `sh.calvin.reorderable` (v3.1.0) for smooth list and grid reordering in Compose.
+    - Material `DragHandle` icon positioned at right (list) and top-left (grid).
+    - Resolved gesture conflicts with context menus.
+- **Resilient M3U Import**: Overhauled `importM3U` for 100% offline support. Queries local DBs (Catalog, Custom, Favorites, History) before network calls and parses standard `#EXTINF` metadata directly.
+- **Custom Station Image Downsampling**: Local images automatically scaled to max 512x512 JPEG on save.
+- **Full 74-Language Localization Sync**: Synchronized and translated all missing string resources across all 74 supported language files via Google Translate API.
+
+### Changed
+- **Cross-Database Synchronization**: Custom station edits and deletions automatically sync across `custom_station`, `station_favourite`, and `station_history` tables.
+- **Local Link Resolution**: `Utils.getRealStationLink` and `StationActions.share` query local DBs first instead of hitting online APIs.
+- **Gradle 10 Readiness**: Centralized repositories in `settings.gradle`, updated Gradle Wrapper to 9.7.1, AGP to 9.3.2, and removed deprecated flags.
 
 ## [1.29] - 2026-08-29
 ### Fixed
