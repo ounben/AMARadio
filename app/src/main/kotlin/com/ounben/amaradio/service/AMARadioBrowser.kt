@@ -94,12 +94,16 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                     }
                 } else {
                     scope.future {
+                        val words = parentId.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
                         val results = stationDao.getStationsFiltered(
-                            name = parentId.ifEmpty { null },
+                            w1 = words.getOrNull(0), 
+                            w2 = words.getOrNull(1), 
+                            w3 = words.getOrNull(2),
                             countryCode = null,
                             language = null,
                             tag = null,
-                            orderBy = "clickcount"
+                            orderBy = "Name",
+                            reverse = 0
                         ).map { it.toDataStation() }
                         val mediaItems = createMediaItemsFromStations(results)
                         LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
@@ -135,12 +139,16 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     private suspend fun fetchStationsForFilter(filterId: String): List<DataRadioStation> {
         val tab = userDb.filterTabDao().getAllTabs().find { it.id == filterId } ?: return emptyList()
+        val words = tab.name.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
         val results = stationDao.getStationsFiltered(
-            name = tab.name.ifEmpty { null },
+            w1 = words.getOrNull(0),
+            w2 = words.getOrNull(1),
+            w3 = words.getOrNull(2),
             countryCode = tab.countryCode.ifEmpty { null },
             language = tab.languageCode.ifEmpty { null },
             tag = tab.tag.ifEmpty { null },
-            orderBy = tab.sortBy.lowercase()
+            orderBy = tab.sortBy,
+            reverse = if (tab.reverse) 1 else 0
         )
         return results.map { it.toDataStation() }
     }
@@ -168,12 +176,16 @@ class AMARadioBrowser(private val app: AMARadioApp) {
 
     fun onSearch(browser: MediaSession.ControllerInfo, query: String, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
         return scope.future {
+            val words = query.trim().split(Regex("\\s+")).filter { it.isNotBlank() }
             val results = stationDao.getStationsFiltered(
-                name = query.ifEmpty { null },
+                w1 = words.getOrNull(0),
+                w2 = words.getOrNull(1),
+                w3 = words.getOrNull(2),
                 countryCode = null,
                 language = null,
                 tag = null,
-                orderBy = "clickcount"
+                orderBy = "Name",
+                reverse = 0
             ).map { it.toDataStation() }
             LibraryResult.ofItemList(ImmutableList.copyOf(createMediaItemsFromStations(results)), params)
         }
@@ -201,9 +213,15 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             keywords.all { name.contains(it) }
         }?.let { return it.StationUuid }
         
-        val firstKeyword = keywords[0]
         val results = stationDao.getStationsFiltered(
-            name = firstKeyword, countryCode = null, language = null, tag = null, orderBy = "clickcount"
+            w1 = keywords.getOrNull(0), 
+            w2 = keywords.getOrNull(1), 
+            w3 = keywords.getOrNull(2), 
+            countryCode = null, 
+            language = null, 
+            tag = null, 
+            orderBy = "Name", 
+            reverse = 0
         )
         results.find { entity ->
             val name = entity.name?.lowercase() ?: ""

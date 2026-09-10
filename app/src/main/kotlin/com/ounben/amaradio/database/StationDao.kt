@@ -38,18 +38,29 @@ interface StationDao {
     @Query("""
         SELECT * FROM Station 
         WHERE LastCheckOK = 1
-        AND (:name IS NULL OR Name LIKE '%' || :name || '%')
+        AND (:w1 IS NULL OR (Name LIKE '%' || :w1 || '%' OR Tags LIKE '%' || :w1 || '%'))
+        AND (:w2 IS NULL OR (Name LIKE '%' || :w2 || '%' OR Tags LIKE '%' || :w2 || '%'))
+        AND (:w3 IS NULL OR (Name LIKE '%' || :w3 || '%' OR Tags LIKE '%' || :w3 || '%'))
         AND (:countryCode IS NULL OR CountryCode = :countryCode)
         AND (:language IS NULL OR Language LIKE '%' || :language || '%')
         AND (:tag IS NULL OR Tags LIKE '%' || :tag || '%')
         ORDER BY 
-            CASE WHEN :orderBy = 'clickcount' THEN clickcount END DESC,
-            CASE WHEN :orderBy = 'name' THEN Name END ASC,
-            CASE WHEN :orderBy = 'votes' THEN Votes END DESC,
-            CASE WHEN :orderBy = 'lastchange' THEN LastChangeTime END DESC
-        LIMIT 300
+            CASE WHEN :orderBy = 'clickcount' AND :reverse = 1 THEN clickcount END DESC,
+            CASE WHEN :orderBy = 'clickcount' AND :reverse = 0 THEN clickcount END ASC,
+            CASE WHEN :orderBy = 'Name' AND :reverse = 1 THEN Name END COLLATE NOCASE DESC,
+            CASE WHEN :orderBy = 'Name' AND :reverse = 0 THEN Name END COLLATE NOCASE ASC,
+            CASE WHEN :orderBy = 'Votes' AND :reverse = 1 THEN Votes END DESC,
+            CASE WHEN :orderBy = 'Votes' AND :reverse = 0 THEN Votes END ASC,
+            CASE WHEN :orderBy = 'LastChangeTime' AND :reverse = 1 THEN LastChangeTime END DESC,
+            CASE WHEN :orderBy = 'LastChangeTime' AND :reverse = 0 THEN LastChangeTime END ASC,
+            clickcount DESC, Name COLLATE NOCASE ASC
+        LIMIT 500
     """)
-    suspend fun getStationsFiltered(name: String?, countryCode: String?, language: String?, tag: String?, orderBy: String): List<StationEntity>
+    suspend fun getStationsFiltered(
+        w1: String?, w2: String?, w3: String?, 
+        countryCode: String?, language: String?, tag: String?, 
+        orderBy: String, reverse: Int
+    ): List<StationEntity>
 
     @Query("""
         SELECT * FROM Station 

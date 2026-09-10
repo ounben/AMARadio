@@ -29,6 +29,7 @@ import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.FilterTabEntity
 import com.ounben.amaradio.database.toDataStation
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
@@ -49,7 +50,7 @@ data class FilterTabItem(
     val tag: String = "",
     val sortBy: String = "clickcount",
     val reverse: Boolean = true,
-    @kotlinx.serialization.Transient val stations: List<DataRadioStation> = emptyList()
+    @Transient val stations: List<DataRadioStation> = emptyList()
 )
 
 fun FilterTabItem.toEntity(pos: Int) = FilterTabEntity(
@@ -107,13 +108,31 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
                 val dbTabs = entities.map { it.toItem() }
                 val currentTabs = _uiState.value.tabs
                 
-                // SMART MERGE: Preserve stations in memory if they exist
+                // SMART MERGE: Preserve stations in memory ONLY if criteria haven't changed
                 val mergedTabs = dbTabs.map { dbTab ->
-                    val existing = currentTabs.find { it.id == dbTab.id }
-                    if (existing != null && existing.stations.isNotEmpty()) {
-                        dbTab.copy(stations = existing.stations)
+                    // Normalize sort keys for comparison
+                    val fixedSortBy = when (dbTab.sortBy) {
+                        "lastchange", "lastchangetime" -> "LastChangeTime"
+                        "name" -> "Name"
+                        "votes" -> "Votes"
+                        else -> dbTab.sortBy
+                    }
+                    val tab = if (fixedSortBy != dbTab.sortBy) dbTab.copy(sortBy = fixedSortBy) else dbTab
+                    
+                    val existing = currentTabs.find { it.id == tab.id }
+                    val criteriaChanged = existing != null && (
+                        existing.name != tab.name ||
+                        existing.countryCode != tab.countryCode ||
+                        existing.tag != tab.tag ||
+                        existing.languageCode != tab.languageCode ||
+                        existing.sortBy != tab.sortBy ||
+                        existing.reverse != tab.reverse
+                    )
+
+                    if (existing != null && existing.stations.isNotEmpty() && !criteriaChanged) {
+                        tab.copy(stations = existing.stations)
                     } else {
-                        dbTab
+                        tab // Criteria changed or new tab: Drop old stations
                     }
                 }
 
@@ -295,13 +314,15 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
     }
     
     fun onSortByChange(index: Int, newSort: String) {
-        updateTabAt(index) { it.copy(sortBy = newSort) }
+        updateTabAt(index) { it.copy(sortBy = newSort, stations = emptyList()) }
         saveFilters()
+        performSearch(index)
     }
     
     fun onReverseChange(index: Int, newReverse: Boolean) {
-        updateTabAt(index) { it.copy(reverse = newReverse) }
+        updateTabAt(index) { it.copy(reverse = newReverse, stations = emptyList()) }
         saveFilters()
+        performSearch(index)
     }
 
     fun fetchMetadata() {
@@ -364,6 +385,8 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
 
     fun performSearch(index: Int) {
         viewModelScope.launch {
+            // 1. Clear current stations immediately to force a full reload and show loading
+            updateTabAt(index) { it.copy(stations = emptyList()) }
             _uiState.update { it.copy(isSearching = true, error = null) }
             
             val state = _uiState.value
@@ -371,42 +394,50 @@ class FilterViewModel(application: Application) : AndroidViewModel(application) 
             val nameQuery = tab.name.trim()
             val queryWords = nameQuery.split(Regex("\\s+")).filter { it.isNotBlank() }
 
-            // STRICT OFFLINE SEARCH: Only use local SQL database
+            // 2. Fetch from DB
             val localResults = withContext(Dispatchers.IO) {
                 val dao = AMARadioDatabase.getDatabase(app).stationDao()
-                if (queryWords.size > 1 && tab.countryCode.isEmpty() && tab.tag.isEmpty() && tab.languageCode.isEmpty()) {
-                    // Optimized Multi-Word logic for name-heavy searches
-                    dao.searchStationsMulti(
-                        queryWords.getOrNull(0),
-                        queryWords.getOrNull(1),
-                        queryWords.getOrNull(2)
-                    )
-                } else {
-                    dao.getStationsFiltered(
-                        name = nameQuery.ifEmpty { null },
-                        countryCode = tab.countryCode.ifEmpty { null },
-                        language = tab.languageCode.ifEmpty { null },
-                        tag = tab.tag.ifEmpty { null },
-                        orderBy = tab.sortBy // 'clickcount', 'name', 'votes', 'lastchange'
-                    )
-                }
+                dao.getStationsFiltered(
+                    w1 = queryWords.getOrNull(0),
+                    w2 = queryWords.getOrNull(1),
+                    w3 = queryWords.getOrNull(2),
+                    countryCode = tab.countryCode.ifEmpty { null },
+                    language = tab.languageCode.ifEmpty { null },
+                    tag = tab.tag.ifEmpty { null },
+                    orderBy = tab.sortBy,
+                    reverse = if (tab.reverse) 1 else 0
+                )
             }
 
             val decoded = withContext(Dispatchers.Default) {
                 val list = localResults.map { it.toDataStation() }
-                if (queryWords.isNotEmpty()) {
-                    list.sortedByDescending { SearchUtils.calculateMultiWordScore(it.Name, queryWords) }
+                
+                // Define the primary comparator based on user preference
+                val baseComparator = when (tab.sortBy) {
+                    "Name" -> compareBy<DataRadioStation> { it.Name.trim().lowercase(Locale.ROOT) }
+                    "Votes" -> compareBy<DataRadioStation> { it.Votes }
+                    "clickcount" -> compareBy<DataRadioStation> { it.ClickCount }
+                    "LastChangeTime" -> compareBy<DataRadioStation> { it.LastChangeTime }
+                    else -> compareBy<DataRadioStation> { it.ClickCount }
+                }
+                
+                val userComparator = if (tab.reverse) baseComparator.reversed() else baseComparator
+
+                // PURE SORT: In Filter Tabs, we respect the user's sort choice strictly.
+                // We don't use Search relevance weighting here to avoid "jumping" items.
+                // Secondary sort is always 'clickcount' (if sorting by name) or 'Name' (otherwise).
+                val finalComparator = if (tab.sortBy == "Name") {
+                    userComparator.thenByDescending { it.ClickCount }
                 } else {
-                    list
+                    userComparator.thenBy { it.Name.trim().lowercase(Locale.ROOT) }
                 }
+
+                list.sortedWith(finalComparator)
             }
-            _uiState.update { s ->
-                val newTabs = s.tabs.toMutableList()
-                if (index in newTabs.indices) {
-                    newTabs[index] = newTabs[index].copy(stations = decoded)
-                }
-                s.copy(tabs = newTabs, isSearching = false)
-            }
+
+            // 3. Atomic update to ensure we don't overwrite other tab changes
+            updateTabAt(index) { it.copy(stations = decoded) }
+            _uiState.update { it.copy(isSearching = false) }
         }
     }
 }

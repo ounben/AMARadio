@@ -619,10 +619,10 @@ fun SortField(
     modifier: Modifier = Modifier
 ) {
     val options = listOf(
-        "name" to stringResource(R.string.sort_name),
-        "votes" to stringResource(R.string.sort_votes),
+        "Name" to stringResource(R.string.sort_name),
+        "Votes" to stringResource(R.string.sort_votes),
         "clickcount" to stringResource(R.string.sort_clicks),
-        "lastchangetime" to stringResource(R.string.sort_lastchange)
+        "LastChangeTime" to stringResource(R.string.sort_lastchange)
     )
     var expanded by remember { mutableStateOf(false) }
     val currentLabel = options.find { it.first == selectedSort }?.second ?: ""

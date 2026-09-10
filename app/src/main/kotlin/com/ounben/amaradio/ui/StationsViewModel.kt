@@ -117,7 +117,7 @@ class StationsViewModel(application: Application) : AndroidViewModel(application
             } else if (url.startsWith("json/stations/bytagexact/")) {
                 val tagQuery = java.net.URLDecoder.decode(url.substringAfter("bytagexact/"), "UTF-8")
                 val localStations = withContext(Dispatchers.IO) {
-                    AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(null, null, null, tagQuery, "clickcount")
+                    AMARadioDatabase.getDatabase(app).stationDao().getStationsFiltered(null, null, null, null, null, tagQuery, "Name", 0)
                 }
                 if (localStations.isNotEmpty()) {
                     val decoded = localStations.map { it.toDataStation() }
