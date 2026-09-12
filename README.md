@@ -43,19 +43,19 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 ## Screenshots
 
 <p align="center">
-  <img src="screenshots/AMARadio_Playstore (25).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (26).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (27).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (28).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Free_Worldwide_Radio.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Advanced_Filter_Option.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_UI_Scaling.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Languages.png" width="24%" />
 </p>
 <p align="center">
-  <img src="screenshots/AMARadio_Playstore (29).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (30).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (31).png" width="24%" />
-  <img src="screenshots/AMARadio_Playstore (32).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Grid_View_List_View.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Track_History_Station_History.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Light_Mode_Dark_Mode.png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Talkback.png" width="24%" />
 </p>
 <p align="center">
-  <img src="screenshots/AMARadio_Playstore (33).png" width="24%" />
+  <img src="screenshots/AMARadio_Playstore_Android_17_Updates.png" width="24%" />
 </p>
 
 ## Getting Started
