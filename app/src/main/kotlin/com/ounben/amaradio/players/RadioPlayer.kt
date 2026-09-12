@@ -93,10 +93,9 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
     }
 
     init {
-        val app = mainContext.applicationContext as AMARadioApp
-        playerThreadHandler = Handler(app.audioLooper)
+        playerThreadHandler = Handler(Looper.getMainLooper())
         
-        localPlayer = ExoPlayerWrapper(mainContext, app.audioLooper)
+        localPlayer = ExoPlayerWrapper(mainContext, Looper.getMainLooper())
         currentPlayer = localPlayer
         currentPlayer.setStateListener(this)
 

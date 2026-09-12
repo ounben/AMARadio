@@ -68,6 +68,7 @@ import android.support.v4.media.MediaMetadataCompat
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.ounben.amaradio.players.exoplayer.Media3Utils
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -473,36 +474,33 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
         // Prepare full metadata in background
         serviceScope.launch {
-            val bitmap = fetchStationBitmap(targetStation)
-            radioPlayer?.runInPlayerThread {
-                currentStationBitmap = bitmap
-                val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(targetStation, targetStation.Name, bitmap)
+            val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(targetStation) }
+            currentStationBitmap = bitmap
+            
+            val metadata = Media3Utils.buildMetadata(targetStation, targetStation.Name, bitmap)
+            
+            // 1. Update Player Playlist Metadata
+            radioPlayer?.player?.let { player ->
+                player.playlistMetadata = metadata
                 
-                // 1. Update Player Playlist Metadata
-                radioPlayer?.player?.let { player ->
-                    player.playlistMetadata = metadata
-                    
-                    // 2. Update the MediaItem's metadata (Critical for Android Auto)
-                    // Use item index directly as currentMediaItem can be null in STATE_IDLE
-                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
-                    if (player.mediaItemCount > itemIndex) {
-                        val currentItem = player.getMediaItemAt(itemIndex)
-                        val updatedItem = currentItem.buildUpon()
-                            .setMediaMetadata(metadata)
-                            .build()
-                        player.replaceMediaItem(itemIndex, updatedItem)
-                    }
+                val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                if (player.mediaItemCount > itemIndex) {
+                    val currentItem = player.getMediaItemAt(itemIndex)
+                    val updatedItem = currentItem.buildUpon()
+                        .setMediaMetadata(metadata)
+                        .build()
+                    player.replaceMediaItem(itemIndex, updatedItem)
                 }
-                
-                // 3. Ensure MediaSession is aware of the changes
-                mediaSession?.setCustomLayout(listOf())
-                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
-                
-                if (Utils.isDebug) {
-                    Log.d(tag, "Station set: ${targetStation.Name}")
-                }
-                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
+            
+            // 2. Ensure MediaSession is aware of the changes
+            mediaSession?.setCustomLayout(listOf())
+            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+            
+            if (Utils.isDebug) {
+                Log.d(tag, "Station set: ${targetStation.Name}")
+            }
+            WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
         }
     }
 
@@ -796,31 +794,26 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         serviceScope.launch {
             // OPTIMIZATION 2: Only re-fetch bitmap if station actually changed.
             val bitmap = if (stationChanged || currentStationBitmap == null) {
-                fetchStationBitmap(station)
+                withContext(Dispatchers.IO) { fetchStationBitmap(station) }
             } else {
                 currentStationBitmap
             }
             
-            // CRITICAL PERFORMANCE FIX: Build metadata (includes heavy JPEG compression) 
-            // on the background thread, NOT on the player/audio thread.
-            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station, liveTitle, bitmap)
+            val metadata = Media3Utils.buildMetadata(station, liveTitle, bitmap)
 
-            radioPlayer?.runInPlayerThread {
-                currentStationBitmap = bitmap
-                
-                radioPlayer?.player?.let { player ->
-                    // Only update if it's actually different to avoid triggering listener loops
-                    if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
-                        player.playlistMetadata = metadata
-                    }
+            currentStationBitmap = bitmap
+            
+            radioPlayer?.player?.let { player ->
+                if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
+                    player.playlistMetadata = metadata
                 }
-                
-                mediaSession?.setCustomLayout(listOf())
-                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
-                
-                if (Utils.isDebug) {
-                    Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
-                }
+            }
+            
+            mediaSession?.setCustomLayout(listOf())
+            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+            
+            if (Utils.isDebug) {
+                Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
             }
         }
     }
