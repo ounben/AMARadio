@@ -477,7 +477,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(targetStation) }
             currentStationBitmap = bitmap
             
-            val metadata = Media3Utils.buildMetadata(targetStation, targetStation.Name, bitmap)
+            // Initial metadata: line 2 will be station details (Country/Tags)
+            val metadata = Media3Utils.buildMetadata(targetStation, null, bitmap)
             
             // 1. Update Player Playlist Metadata
             radioPlayer?.player?.let { player ->
@@ -507,8 +508,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun playCurrentStation() {
         val station = itsCurrentStation
         if (station != null) {
-            val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
-            updateMetadata(station, displayTitle)
+            // Only reset metadata if we are switching to a DIFFERENT station
+            if (station.StationUuid != lastPushedStationUuid) {
+                liveInfo = StreamLiveInfo(null)
+                lastPushedLiveTitle = null
+            }
+            
+            updateMetadata() // Sync current state to system
             
             if (Utils.isDebug) {
                 Log.d(tag, "Playing station: ${station.Name}")
@@ -525,7 +531,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         this.pauseReason = PauseReason.NONE
         
         if (acquireAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            liveInfo = StreamLiveInfo(null)
             streamInfo = null
             acquireWakeLockAndWifiLock()
             radioPlayer?.setVolume(FULL_VOLUME)
@@ -539,6 +544,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun pause(reason: PauseReason) {
         if (Utils.isDebug) Log.d(tag, "pausing playback, reason $reason")
         this.pauseReason = reason
+        this.isTransitioning = false
         forceStopAudioWarning()
         if (reason == PauseReason.METERED_CONNECTION) lastMeteredConnectionWarningTime = System.currentTimeMillis()
         releaseWakeLockAndWifiLock()
@@ -781,13 +787,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun updateMetadata(station: DataRadioStation, liveTitle: String) {
         val stationUuid = station.StationUuid
+        val stationChanged = (stationUuid != lastPushedStationUuid)
         
-        // OPTIMIZATION 1: If title and station are same, abort immediately.
-        if (liveTitle == lastPushedLiveTitle && stationUuid == lastPushedStationUuid && currentStationBitmap != null) {
+        // Optimization: Only skip if EVERYTHING (station, title, bitmap) is identical
+        if (!stationChanged && liveTitle == lastPushedLiveTitle && currentStationBitmap != null) {
             return
         }
         
-        val stationChanged = (stationUuid != lastPushedStationUuid)
         lastPushedLiveTitle = liveTitle
         lastPushedStationUuid = stationUuid
 
@@ -804,24 +810,28 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             currentStationBitmap = bitmap
             
             radioPlayer?.player?.let { player ->
-                // 1. Update Playlist Metadata
+                // 1. Update Playlist Metadata (Main source for Media3 Session)
                 if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
                     player.playlistMetadata = metadata
                 }
 
-                // 2. Update current MediaItem metadata (Crucial for Notification update)
+                // 2. Update current MediaItem metadata (Crucial for system UI refresh on many Android versions)
                 val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
                 if (player.mediaItemCount > itemIndex) {
                     val currentItem = player.getMediaItemAt(itemIndex)
                     val updatedItem = currentItem.buildUpon()
                         .setMediaMetadata(metadata)
                         .build()
+                    // replaceMediaItem is necessary to trigger a formal metadata change event in the system
                     player.replaceMediaItem(itemIndex, updatedItem)
                 }
             }
             
-            mediaSession?.setCustomLayout(listOf())
-            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+            // Force a refresh of the MediaSession state for system UI (Lockscreen/Quick Settings)
+            handler?.post {
+                mediaSession?.setCustomLayout(listOf())
+                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+            }
             
             if (Utils.isDebug) {
                 Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
@@ -907,8 +917,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun updateMetadata() {
         val station = itsCurrentStation ?: return
-        val displayTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title.ifEmpty { station.Name }
-        updateMetadata(station, displayTitle)
+        // Keep the last known title even when paused/buffering to prevent metadata from disappearing in UI
+        updateMetadata(station, liveInfo.title)
+    }
+
+    private fun getDisplaySubtitle(): String {
+        val station = itsCurrentStation ?: return ""
+        val details = station.TagsAll.trim()
+        return liveInfo.title.ifEmpty { details }
     }
 
     private fun updateNotification(playState: PlayState) {
@@ -926,6 +942,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         lastNotificationUpdateTime = now
 
         handler?.post {
+            // Force a refresh of the MediaSession state for system UI (Lockscreen/Quick Settings)
+            mediaSession?.setCustomLayout(listOf())
+
             when (logicalState) {
                 PlayState.Idle -> {
                     // Only remove notification if logically stopped or user paused without activity.
@@ -936,11 +955,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     }
                 }
                 PlayState.PrePlaying -> {
-                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_pre_play), resources.getString(R.string.notify_pre_play), logicalState)
+                    val subtitle = getDisplaySubtitle().ifEmpty { resources.getString(R.string.notify_pre_play) }
+                    sendMessage(station?.Name ?: "", subtitle, resources.getString(R.string.notify_pre_play), logicalState)
                 }
                 PlayState.Playing -> {
-                    val title = liveInfo.title
-                    if (title.isNotEmpty()) sendMessage(station?.Name ?: "", title, title, logicalState)
+                    val subtitle = getDisplaySubtitle()
+                    if (subtitle.isNotEmpty()) sendMessage(station?.Name ?: "", subtitle, subtitle, logicalState)
                     else sendMessage(station?.Name ?: "", resources.getString(R.string.notify_play), station?.Name ?: "", logicalState)
                 }
                 PlayState.Paused -> {
@@ -1002,10 +1022,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     override fun onStateChanged(status: PlayState, audioSessionId: Int) {
-        if (status == PlayState.Playing) {
-            // Only end transition once we are truly playing
+        if (status == PlayState.Playing || status == PlayState.Paused || status == PlayState.Error) {
+            // Only end transition once we are truly in a stable state
             isTransitioning = false
         }
+
+        // IMPORTANT: Sync system metadata on every state change to handle Play/Pause text and button properly
+        updateMetadata()
         
         if (status == PlayState.Idle && pauseReason == PauseReason.USER) {
             // Keep the notification in Paused state even if engine stops
@@ -1102,23 +1125,20 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 val station = itsCurrentStation ?: return realMetadata
                 
                 // FORCE: If type is Radio Station (21) or title is missing, sanitize it to MUSIC (1).
-                // This fixes the Radio Italia HLS metadata drop.
                 if (realMetadata.title == null || realMetadata.mediaType == MediaMetadata.MEDIA_TYPE_RADIO_STATION) {
-                    val liveTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title
+                    val liveTitle = liveInfo.title.ifEmpty { station.Name }
                     return com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station, liveTitle, currentStationBitmap)
                 }
                 return realMetadata
             }
 
             override fun getMediaMetadata(): MediaMetadata {
-                // MediaMetadata in Media3 is the combined metadata of the current item and playlist.
-                // We ensure it always contains our station info.
                 val realMetadata = super.getMediaMetadata()
                 val station = itsCurrentStation ?: return realMetadata
 
                 // FORCE: If transition is active or metadata is incomplete, use our verified builder.
                 if (isTransitioning || realMetadata.title == null || realMetadata.artworkUri == null || realMetadata.mediaType == MediaMetadata.MEDIA_TYPE_RADIO_STATION) {
-                    val liveTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else liveInfo.title
+                    val liveTitle = liveInfo.title.ifEmpty { station.Name }
                     return com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station, liveTitle, currentStationBitmap)
                 }
                 return realMetadata
@@ -1198,14 +1218,16 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         sendBroadCast(PLAYER_SERVICE_META_UPDATE)
     }
     override fun foundLiveStreamInfo(liveInfo: StreamLiveInfo) {
-        val oldLiveInfo = this.liveInfo
+        val oldTitle = this.liveInfo.title
         this.liveInfo = liveInfo
-        if (oldLiveInfo.title != this.liveInfo.title) {
+        
+        if (oldTitle != this.liveInfo.title) {
             if (Utils.isDebug) {
-                Log.d(tag, "New metadata: ${liveInfo.title}")
+                Log.d(tag, "New metadata received: ${liveInfo.title}")
             }
             sendBroadCast(PLAYER_SERVICE_META_UPDATE)
-            updateMetadata() // Trigger metadata sync on live info change
+            updateMetadata() 
+            
             val currentTime = Calendar.getInstance().time
             trackHistoryRepository?.getLastInsertedHistoryItem { entry, dao ->
                 if ((entry != null) && (entry.title == this.liveInfo.title)) {

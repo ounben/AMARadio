@@ -22,9 +22,15 @@ object Media3Utils {
      */
     fun buildMetadata(station: DataRadioStation, liveTitle: String? = null, bitmap: Bitmap? = null): MediaMetadata {
         val stationName = station.Name
-        val stationDetails = "${station.Country} ${station.TagsAll}".trim().ifEmpty { "Radio" }
+        val stationDetails = station.TagsAll.trim()
         
-        val line2 = if (!liveTitle.isNullOrEmpty() && liveTitle != stationName) liveTitle else stationDetails
+        // Use liveTitle if it's different from the station name, 
+        // otherwise use stationDetails (Country/Tags) as fallback.
+        val line2 = if (!liveTitle.isNullOrEmpty() && liveTitle != stationName) {
+            liveTitle 
+        } else {
+            stationDetails
+        }
         
         val builder = MediaMetadata.Builder()
             .setTitle(stationName)
