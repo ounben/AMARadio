@@ -1,9 +1,16 @@
-# AMARadio
-
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
-<a href='https://play.google.com/store/apps/details?id=com.ounben.amaradio'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' height='60px'/></a>
+# AMARadio Open Source Radio
+Ad-Free - No Paywall - Just Radio
 
 **AMARadio** is an open-source Android application for worldwide radio streaming. By leveraging the community-supported [radio-browser.info](https://www.radio-browser.info/) database, AMARadio provides instant access to thousands of stations in a stable, modern, and user-friendly environment.
+
+
+<div align="left">
+  <a href="https://play.google.com/store/apps/details?id=com.ounben.amaradio"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="60" /></a>
+  <a href="obtainium://add/https://github.com/ounben/AMARadio"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="60" /></a>
+  <br />
+  <sub>(Obtainium installed? <a href="obtainium://add/https://github.com/ounben/AMARadio">Add directly</a> | No Obtainium? <a href="https://github.com/ImranR98/Obtainium">Download app</a>)</sub>
+</div>
 
 ## Core Philosophy
 
@@ -13,32 +20,57 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 
 - **Instantaneous UI**: Thanks to a highly optimized architecture, switching between tabs and opening the player occurs without delay or flickering.
 - **Google Cast (Chromecast) Support**: Stream directly to speakers and TVs using the modern **Media3 Cast** framework. Features a native Compose-based connection button for easy device management.
+  
 - **Advanced Android Auto Integration**: 
     - **Stability (Media-Anchor)**: Specialized logic to prevent session disconnects during station switches on modern Android versions (15+).
     - **HLS/TS Support**: Full compatibility with complex Transport Stream formats.
     - **Optimized UI**: Compact list designs, driver-safe folder hierarchy, and prioritized metadata (Station Name first) for maximum legibility.
+      
 - **Modern Home Screen Widgets**: Feature-rich widgets based on **Jetpack Glance**. 
     - **Anti-Ghost Architecture**: Optimized to prevent "black app" entries in Android Recents via direct background service starts.
     - **Sequential Sync**: High-performance reactive model with Mutex-based update sequencing for 100% state consistency.
     - **Live Track Info**: Real-time Artist and Song Title displays using optimized Media3 event listeners.
     - **Professional Previews**: Adaptive XML-based previews in the system widget picker.
+      
 - **Custom Radio Stations**: A dedicated management system for personal streams.
     - **Native Drag & Drop**: Smooth, high-performance reordering using the latest Compose 1.7 APIs.
     - **Local Image Support**: Use your own icons for personal streams, with automated permanent storage.
     - **Smart Catalog Matching**: Automatically retrieves metadata and tags if a custom URL matches an entry in the community database.
+      
 - **Comprehensive Accessibility**: Fully optimized for **TalkBack** and screen readers. Features semantic grouping of information, localized accessibility strings in over 74 languages, and "speaking" status icons for fluid navigation.
+  
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
+  
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
 - **Dynamic UI Scaling**: Custom settings allow for the adjustment of the user interface size from Compact to Extra Large.
-- **Broad Language Support**: Support for over **74 languages**, including a variety of African languages (Afrikaans, Amharic, Swahili, Zulu) with a dedicated in-app language selector.
-- **Ogg & Opus Metadata**: Full dynamic track information support for Ogg Vorbis and Opus streams, including seamless updates for chained streams.
-- **Modern Design**: Developed with **Jetpack Compose**, featuring seamless support for Dark/Light modes and edge-to-edge system integration.
-- **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, dynamic session management, and asynchronous network processing to prevent UI lag.
-- **Optimized Image Loading**: Leverages the **Coil** framework across the entire app, including the Media3 Session, to ensure memory-efficient and lightning-fast delivery of station icons and artwork.
-- **Data Consistency**: Specialized logic for instant synchronization between the Smartphone UI, Home Screen Widgets, and Android Auto units using direct SQL access and proactive reactive flows.
-- **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.
-- **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.
+  
+- **Broad Language Support**: Support for over **74 languages**, including a variety of African languages (Afrikaans, Amharic, Swahili, Zulu) with a dedicated in-app language selector.  
+
+- **Ogg & Opus Metadata**: Full dynamic track information support for Ogg Vorbis and Opus streams, including seamless updates for chained streams.  
+
+- **Modern Design**: Developed with **Jetpack Compose**, featuring seamless support for Dark/Light modes and edge-to-edge system integration.  
+
+- **High-Performance Streaming**: A robust engine based on **AndroidX Media3 (ExoPlayer)** with real-time audio thread prioritization, strict audio focus handling, dynamic session management, and asynchronous network processing to prevent UI lag.  
+
+- **Optimized Image Loading**: Leverages the **Coil** framework across the entire app, including the Media3 Session, to ensure memory-efficient and lightning-fast delivery of station icons and artwork.  
+
+- **Data Consistency**: Specialized logic for instant synchronization between the Smartphone UI, Home Screen Widgets, and Android Auto units using direct SQL access and proactive reactive flows.  
+
+- **High Availability**: Integrated failover support via mirror servers ensures uninterrupted station browsing even if the primary database is offline.  
+
+- **Smart Management**: Includes a sleep timer, efficient favorites management, and full support for M3U playlist export/import.  
+
 - **Robust Data Resilience**: Features a unique **Dual-Database Architecture** that strictly separates the global radio catalog from personal user data (Favorites, History, Filters). This ensures your personal settings are never lost during global database updates.
+
+ ## Youtube Video
+<p align="left">
+  <a href="https://www.youtube.com/watch?v=JTJLFj8M1XI">
+    <img src="https://img.youtube.com/vi/JTJLFj8M1XI/maxresdefault.jpg" alt="AMARadio Video Demo" width="600" />
+  </a>
+  <br />
+<sub>--> <a href="https://www.youtube.com/watch?v=JTJLFj8M1XI">Watch full video demo on YouTube</a></sub>  </a>
+</p>
+ 
 
 ## Screenshots
 
@@ -61,7 +93,7 @@ AMARadio was developed to enable an honest and distraction-free listening experi
 ## Getting Started
 
 ### Installation
-The latest version introduces a high-performance **Dual-Database Architecture**, SQL metadata caching, and official click count support. You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio) or the GitHub releases page.
+ You can download the application from the [Google Play Store](https://play.google.com/store/apps/details?id=com.ounben.amaradio), [Obtanium](https://obtainium.imranr.dev/) or the [GitHub releases page](https://github.com/ounben/AMARadio/releases) . 
 
 ### Building from Source
 To build the project locally, ensure you have the latest version of Android Studio installed.
@@ -91,8 +123,8 @@ To build the project locally, ensure you have the latest version of Android Stud
 
 ## UML
 
-<p align="center">
-  <img src="docs/UML/UML_AMARadio.png" width="100%" />
+<p align="left">
+  <img src="https://private-user-images.githubusercontent.com/48635796/635651865-36d1ab4c-a1e7-49a9-b36a-f514fcf62933.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODkyMzY0NTMsIm5iZiI6MTc4OTIzNjE1MywicGF0aCI6Ii80ODYzNTc5Ni82MzU2NTE4NjUtMzZkMWFiNGMtYTFlNy00OWE5LWIzNmEtZjUxNGZjZjYyOTMzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA5MTIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwOTEyVDE4MDIzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFkYTAzNDAwMmQ1MTRhN2QxYjYwZjEzZjA3ZjZkZmJiNzU5ZDI5Y2M3ODMxODVhODYyNzA2MTMzNTM1OGQyYWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.EFS0rawRRfCTtemnPS1rs3jMXG1VpGytSyhO0JL9APM" width="100%" />
 </p>
 
 ## Contributing
@@ -107,6 +139,6 @@ Contributions are welcome and appreciated. If you wish to improve the codebase, 
 This project is licensed under the **GNU General Public License v3.0**. Detailed information can be found in the [LICENSE](LICENSE) file.
 
 ---
-<p align="center">
-  AMARadio - Professional Radio Streaming for Android.
+<p align="left">
+  AMARadio - Ad-Free - No Paywall - Just Radio.
 </p>
