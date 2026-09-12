@@ -11,6 +11,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.ViewModelProvider
 import androidx.preference.PreferenceManager
+import com.ounben.amaradio.service.MediaSessionCallback
+import com.ounben.amaradio.service.PlayerService
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.ui.AMARadioTheme
 import com.ounben.amaradio.ui.MainScreen
@@ -108,8 +110,30 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             }
             
             setupBroadcastReceiver()
+            handleIntent(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "onCreate failed", e)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        if (intent == null) return
+        if (intent.action == MediaSessionCallback.ACTION_PLAY_STATION_BY_UUID) {
+            val uuid = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_UUID)
+            if (!uuid.isNullOrEmpty()) {
+                Log.d("MAIN", "Handling shortcut for station: $uuid")
+                val playIntent = Intent(this, PlayerService::class.java).apply {
+                    action = PlayerService.ACTION_PLAY_STATION
+                    putExtra(PlayerService.EXTRA_STATION_ID, uuid)
+                }
+                startService(playIntent)
+            }
         }
     }
 
