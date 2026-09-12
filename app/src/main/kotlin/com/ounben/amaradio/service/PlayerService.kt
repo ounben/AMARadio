@@ -804,8 +804,19 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             currentStationBitmap = bitmap
             
             radioPlayer?.player?.let { player ->
+                // 1. Update Playlist Metadata
                 if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
                     player.playlistMetadata = metadata
+                }
+
+                // 2. Update current MediaItem metadata (Crucial for Notification update)
+                val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                if (player.mediaItemCount > itemIndex) {
+                    val currentItem = player.getMediaItemAt(itemIndex)
+                    val updatedItem = currentItem.buildUpon()
+                        .setMediaMetadata(metadata)
+                        .build()
+                    player.replaceMediaItem(itemIndex, updatedItem)
                 }
             }
             
