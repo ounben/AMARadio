@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.32] - 2026-09-12
+### Fixed
+- **App Icon Shortcuts**: Resolved issue where selecting a station via app icon shortcuts would not trigger playback.
+- **Filter Tab Sorting**: Native SQL-level sorting for Name (case-insensitive), Votes, Clicks, and Last Change. Resolved inconsistencies between RAM cache and DB state.
+- **Search Consistency**: Standardized search and sort behavior across the main UI and Android Auto (Media Browser).
+
+### Added
+- **Multi-Word Filter Search**: Enhanced local filter search to support multiple keywords simultaneously.
+
+### Changed
+- **Increased Station Limits**: Local filter results now display up to 500 stations (previously 300).
+- **Dependency Infrastructure**: Updated to Media3 1.11.1, Room 2.8.5, Navigation-Compose 2.10.1, and Kotlin Gradle Plugin 2.4.20.
+
 ## [1.31] - 2026-09-01
 ### Added
 - **Hebrew & Indonesian Locale Fix**: Added `values-iw` and `values-id` resource directories and updated `LocaleUtils` for legacy ISO locale support.
