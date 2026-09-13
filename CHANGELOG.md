@@ -5,6 +5,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.34] - 2026-09-13
+### Fixed
+- **Full Player Favorite Sync**: Resolved an issue where favoriting a station from the full-screen player resulted in incomplete metadata (missing bitrate, codec, etc.) in the Starred tab. The app now automatically upgrades lightweight player objects to full data entries using local database lookup.
+
 ## [1.33] - 2026-09-13
 ### Fixed
 - **Media3 Stability**: Resolved a critical `IllegalStateException` (thread safety) by synchronizing Player and Session on the Main Thread. This prevents background crashes during metadata updates.
