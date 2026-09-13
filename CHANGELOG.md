@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.33] - 2026-09-13
+### Fixed
+- **Media3 Stability**: Resolved a critical `IllegalStateException` (thread safety) by synchronizing Player and Session on the Main Thread. This prevents background crashes during metadata updates.
+- **System Media Control Sync**: Fixed the "Two-Click" issue in the Android Media Player (Lockscreen/Quick Settings). Pause and Play buttons now respond instantly on the first tap.
+- **Metadata Precision**: Cleaned up the notification and lockscreen metadata. Line 2 now only shows the active song title (no fallbacks to "Radio" or station details). 
+- **Notification Updates**: Metadata now synchronizes instantly upon song change without requiring manual interaction or playback toggle.
+
 ## [1.32] - 2026-09-12
 ### Fixed
 - **App Icon Shortcuts**: Resolved issue where selecting a station via app icon shortcuts would not trigger playback.
