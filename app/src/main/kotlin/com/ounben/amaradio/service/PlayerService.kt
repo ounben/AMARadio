@@ -118,7 +118,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var notificationIsActive = false
     private var isTransitioning = false
     private var lastNotificationUpdateTime: Long = 0
-    private val NOTIFICATION_THROTTLE_MS = 1200L // Prevent system shedding (limit is ~5/sec)
+    private var lastNotifiedState: PlayState? = null
+    private val NOTIFICATION_THROTTLE_MS = 1200L 
     private val pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE
     internal lateinit var amaradioBrowser: AMARadioBrowser
     private val serviceScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
@@ -477,8 +478,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(targetStation) }
             currentStationBitmap = bitmap
             
-            // Initial metadata: line 2 will be station details (Country/Tags)
-            val metadata = Media3Utils.buildMetadata(targetStation, null, bitmap)
+            // Initial metadata: Use current live title if available, else null (will fallback to tags)
+            val metadata = Media3Utils.buildMetadata(targetStation, liveInfo.title, bitmap)
             
             // 1. Update Player Playlist Metadata
             radioPlayer?.player?.let { player ->
@@ -508,13 +509,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun playCurrentStation() {
         val station = itsCurrentStation
         if (station != null) {
-            // Only reset metadata if we are switching to a DIFFERENT station
-            if (station.StationUuid != lastPushedStationUuid) {
-                liveInfo = StreamLiveInfo(null)
-                lastPushedLiveTitle = null
-            }
+            // ALWAYS reset metadata for a fresh start. NO "old" data.
+            liveInfo = StreamLiveInfo(null)
+            lastPushedLiveTitle = null
             
-            updateMetadata() // Sync current state to system
+            updateMetadata() // Sync current state (clears subtitle)
             
             if (Utils.isDebug) {
                 Log.d(tag, "Playing station: ${station.Name}")
@@ -549,7 +548,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         if (reason == PauseReason.METERED_CONNECTION) lastMeteredConnectionWarningTime = System.currentTimeMillis()
         releaseWakeLockAndWifiLock()
         if (reason != PauseReason.FOCUS_LOSS_TRANSIENT) releaseAudioFocus()
+        
         radioPlayer?.pause()
+        
+        // Sync with MediaSession immediately on the Main thread
+        // No heavy metadata replacement here to avoid disrupting the Pause transition
+        mediaSession?.setCustomLayout(listOf())
     }
 
     fun next() {
@@ -621,7 +625,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun stop() {
         if (Utils.isDebug) Log.d(tag, "stopping playback.")
         isTransitioning = false
-        pauseReason = PauseReason.NONE
+        // User pause reason keeps the Play button in system UI
+        pauseReason = PauseReason.USER 
         lastMeteredConnectionWarningTime = 0
         notificationIsActive = false
         liveInfo = StreamLiveInfo(null)
@@ -633,7 +638,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         clearTimer()
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopMeteredConnectionListener()
-        // WICHTIG: Erst alle Daten im Service löschen, dann das Widget ZWINGEN, alles zu leeren.
+        
+        // Final sync to show Play button instead of nothing in Android Media Player
+        mediaSession?.setCustomLayout(listOf())
         WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, false, null)
     }
 
@@ -810,28 +817,29 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             currentStationBitmap = bitmap
             
             radioPlayer?.player?.let { player ->
-                // 1. Update Playlist Metadata (Main source for Media3 Session)
+                // 1. Update Playlist Metadata (Standard way)
                 if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
                     player.playlistMetadata = metadata
                 }
 
-                // 2. Update current MediaItem metadata (Crucial for system UI refresh on many Android versions)
-                val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
-                if (player.mediaItemCount > itemIndex) {
-                    val currentItem = player.getMediaItemAt(itemIndex)
-                    val updatedItem = currentItem.buildUpon()
-                        .setMediaMetadata(metadata)
-                        .build()
-                    // replaceMediaItem is necessary to trigger a formal metadata change event in the system
-                    player.replaceMediaItem(itemIndex, updatedItem)
+                // 2. Update current MediaItem metadata ONLY if it's a real title change 
+                // and we are not currently trying to pause/stop.
+                if (liveTitle.isNotEmpty() && !stationChanged && player.isPlaying) {
+                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                    if (player.mediaItemCount > itemIndex) {
+                        val currentItem = player.getMediaItemAt(itemIndex)
+                        if (currentItem.mediaMetadata.title != metadata.title) {
+                            val updatedItem = currentItem.buildUpon()
+                                .setMediaMetadata(metadata)
+                                .build()
+                            player.replaceMediaItem(itemIndex, updatedItem)
+                        }
+                    }
                 }
             }
             
-            // Force a refresh of the MediaSession state for system UI (Lockscreen/Quick Settings)
-            handler?.post {
-                mediaSession?.setCustomLayout(listOf())
-                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
-            }
+            // Sync notification UI
+            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
             
             if (Utils.isDebug) {
                 Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
@@ -917,14 +925,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private fun updateMetadata() {
         val station = itsCurrentStation ?: return
-        // Keep the last known title even when paused/buffering to prevent metadata from disappearing in UI
-        updateMetadata(station, liveInfo.title)
+        // STRICT: Clear title on pause/stop. Show ONLY when active (Playing or Buffering).
+        val currentTitle = if (radioPlayer?.isPlaying() == true || isTransitioning) liveInfo.title else ""
+        updateMetadata(station, currentTitle)
     }
 
     private fun getDisplaySubtitle(): String {
-        val station = itsCurrentStation ?: return ""
-        val details = station.TagsAll.trim()
-        return liveInfo.title.ifEmpty { details }
+        // NO fallbacks (no tags, no country).
+        return if (radioPlayer?.isPlaying() == true || isTransitioning) liveInfo.title else ""
     }
 
     private fun updateNotification(playState: PlayState) {
@@ -934,12 +942,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val now = System.currentTimeMillis()
         val isTransition = logicalState == PlayState.PrePlaying || logicalState == PlayState.Idle || isTransitioning
         
-        // Critical: Allow immediate updates for user-driven Pause/Resume or Errors.
-        // Throttle only frequent Metadata/Buffering updates to avoid system "Shedding".
-        if (!isTransition && logicalState != PlayState.Error && (now - lastNotificationUpdateTime < NOTIFICATION_THROTTLE_MS)) {
+        // CRITICAL FIX: Always allow state changes to pass the throttle (e.g. Play -> Pause).
+        // Only throttle frequent identical states (like continuous buffering or playing updates).
+        val stateChanged = logicalState != lastNotifiedState
+        if (!stateChanged && !isTransition && logicalState != PlayState.Error && (now - lastNotificationUpdateTime < NOTIFICATION_THROTTLE_MS)) {
             return
         }
         lastNotificationUpdateTime = now
+        lastNotifiedState = logicalState
 
         handler?.post {
             // Force a refresh of the MediaSession state for system UI (Lockscreen/Quick Settings)
@@ -955,16 +965,17 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     }
                 }
                 PlayState.PrePlaying -> {
-                    val subtitle = getDisplaySubtitle().ifEmpty { resources.getString(R.string.notify_pre_play) }
+                    // Only show "Connecting" ticker, keep subtitle clean or show title if already parsed
+                    val subtitle = getDisplaySubtitle()
                     sendMessage(station?.Name ?: "", subtitle, resources.getString(R.string.notify_pre_play), logicalState)
                 }
                 PlayState.Playing -> {
                     val subtitle = getDisplaySubtitle()
-                    if (subtitle.isNotEmpty()) sendMessage(station?.Name ?: "", subtitle, subtitle, logicalState)
-                    else sendMessage(station?.Name ?: "", resources.getString(R.string.notify_play), station?.Name ?: "", logicalState)
+                    sendMessage(station?.Name ?: "", subtitle, subtitle, logicalState)
                 }
                 PlayState.Paused -> {
-                    sendMessage(station?.Name ?: "", resources.getString(R.string.notify_paused), station?.Name ?: "", logicalState)
+                    val subtitle = getDisplaySubtitle()
+                    sendMessage(station?.Name ?: "", subtitle, station?.Name ?: "", logicalState)
                 }
                 PlayState.Error -> {
                     if (pauseReason != PauseReason.USER) {
@@ -1027,8 +1038,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             isTransitioning = false
         }
 
-        // IMPORTANT: Sync system metadata on every state change to handle Play/Pause text and button properly
-        updateMetadata()
+        // IMPORTANT: Sync system metadata. This handles the Play/Pause button and text in System UI.
+        updateMetadata() 
         
         if (status == PlayState.Idle && pauseReason == PauseReason.USER) {
             // Keep the notification in Paused state even if engine stops
@@ -1114,10 +1125,15 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
 
             override fun getPlaybackState(): Int {
-                // Persistent State for Android Auto: Never report IDLE during user pause or station transition.
-                if (pauseReason == PauseReason.USER) return Player.STATE_READY
-                if (isTransitioning) return Player.STATE_BUFFERING
-                return super.getPlaybackState()
+                if (isTransitioning) return STATE_BUFFERING
+                
+                val baseState = super.getPlaybackState()
+                // If we have a station loaded, we should appear as READY to the system 
+                // so the Play/Pause buttons work reliably and don't disappear.
+                if (itsCurrentStation != null && baseState != STATE_ENDED) {
+                    return STATE_READY
+                }
+                return baseState
             }
 
             override fun getPlaylistMetadata(): MediaMetadata {
@@ -1145,8 +1161,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             }
 
             override fun getPlayWhenReady(): Boolean {
-                // Force play button to show (playWhenReady = false) during user pause
-                return if (pauseReason == PauseReason.USER) false else super.getPlayWhenReady()
+                // If we are logically paused, we MUST report false to show the Play button.
+                if (pauseReason != PauseReason.NONE) return false
+                return super.getPlayWhenReady()
             }
 
             override fun getCurrentMediaItem(): androidx.media3.common.MediaItem? {
