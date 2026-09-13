@@ -68,6 +68,7 @@ import android.support.v4.media.MediaMetadataCompat
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
+import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.players.exoplayer.Media3Utils
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -443,10 +444,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private fun playWithoutWarnings(station: DataRadioStation) {
-        // PREVIOUSLY: setStation(station) then playCurrentStation() triggered TWO heavy metadata updates 
-        // and TWO player stops. Now we just set the station reference and play.
-        this.itsCurrentStation = station
-        playCurrentStation()
+        serviceScope.launch {
+            val fullStation = ensureFullStation(station)
+            withContext(Dispatchers.Main) {
+                this@PlayerService.itsCurrentStation = fullStation
+                playCurrentStation()
+            }
+        }
     }
 
     private fun playAndWarnIfMetered(station: DataRadioStation) {
@@ -465,45 +469,56 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun setStation(station: DataRadioStation) {
-        val app = application as AMARadioApp
-        val targetStation = app.favouriteManager.getById(station.StationUuid) 
-                        ?: app.historyManager.getById(station.StationUuid) 
-                        ?: station
-        
-        this.itsCurrentStation = targetStation
-        this.lastPlayStartTime = 0 // Reset time basis for new station to prevent AA sync issues
-
-        // Prepare full metadata in background
         serviceScope.launch {
-            val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(targetStation) }
-            currentStationBitmap = bitmap
+            val fullStation = ensureFullStation(station)
             
-            // Initial metadata: Use current live title if available, else null (will fallback to tags)
-            val metadata = Media3Utils.buildMetadata(targetStation, liveInfo.title, bitmap)
-            
-            // 1. Update Player Playlist Metadata
-            radioPlayer?.player?.let { player ->
-                player.playlistMetadata = metadata
+            withContext(Dispatchers.Main) {
+                this@PlayerService.itsCurrentStation = fullStation
+                this@PlayerService.lastPlayStartTime = 0 // Reset time basis for new station to prevent AA sync issues
+
+                // Prepare full metadata in background
+                val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(fullStation) }
+                currentStationBitmap = bitmap
                 
-                val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
-                if (player.mediaItemCount > itemIndex) {
-                    val currentItem = player.getMediaItemAt(itemIndex)
-                    val updatedItem = currentItem.buildUpon()
-                        .setMediaMetadata(metadata)
-                        .build()
-                    player.replaceMediaItem(itemIndex, updatedItem)
+                // Initial metadata: Use current live title if available, else null (will fallback to tags)
+                val metadata = Media3Utils.buildMetadata(fullStation, liveInfo.title, bitmap)
+                
+                // 1. Update Player Playlist Metadata
+                radioPlayer?.player?.let { player ->
+                    player.playlistMetadata = metadata
+                    
+                    val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
+                    if (player.mediaItemCount > itemIndex) {
+                        val currentItem = player.getMediaItemAt(itemIndex)
+                        val updatedItem = currentItem.buildUpon()
+                            .setMediaMetadata(metadata)
+                            .build()
+                        player.replaceMediaItem(itemIndex, updatedItem)
+                    }
                 }
+                
+                // 2. Ensure MediaSession is aware of the changes
+                mediaSession?.setCustomLayout(listOf())
+                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+                
+                if (Utils.isDebug) {
+                    Log.d(tag, "Station set: ${fullStation.Name}")
+                }
+                WidgetUpdateHelper.updateAllWidgets(this@PlayerService, fullStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
-            
-            // 2. Ensure MediaSession is aware of the changes
-            mediaSession?.setCustomLayout(listOf())
-            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
-            
-            if (Utils.isDebug) {
-                Log.d(tag, "Station set: ${targetStation.Name}")
-            }
-            WidgetUpdateHelper.updateAllWidgets(this@PlayerService, targetStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
         }
+    }
+
+    private suspend fun ensureFullStation(station: DataRadioStation): DataRadioStation {
+        val app = application as AMARadioApp
+        return app.favouriteManager.getById(station.StationUuid)
+            ?: app.historyManager.getById(station.StationUuid)
+            ?: app.customStationManager.getById(station.StationUuid)
+            ?: withContext(Dispatchers.IO) {
+                AMARadioDatabase.getDatabase(app)
+                    .stationDao().getStationByUuid(station.StationUuid)?.toDataStation()
+            }
+            ?: station
     }
 
     fun playCurrentStation() {
