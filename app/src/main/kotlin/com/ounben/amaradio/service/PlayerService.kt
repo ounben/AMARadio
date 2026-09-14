@@ -537,7 +537,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
             // Fire & Forget: Report click to official API for community ranking
             val app = application as AMARadioApp
-            Utils.reportClickToOfficialApi(app.httpClient, station.StationUuid)
+            Utils.reportClickToOfficialApi(this@PlayerService, app.httpClient, station.StationUuid)
         }
         
         lastErrorFromPlayer = -1

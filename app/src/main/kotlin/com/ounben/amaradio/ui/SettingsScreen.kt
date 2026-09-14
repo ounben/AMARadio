@@ -201,6 +201,14 @@ fun SettingsScreen(
                     icon = Icons.AutoMirrored.Filled.LiveHelp,
                     onClick = onOpenAbout
                 )
+
+                SettingsSwitch(
+                    title = stringResource(R.string.settings_station_click_counter),
+                    summary = stringResource(R.string.settings_station_click_counter_desc),
+                    checked = uiState.stationClickCounter,
+                    icon = Icons.Default.Analytics,
+                    onCheckedChange = { viewModel.updateBoolean("settings_station_click_counter", it) }
+                )
             }
         }
     }

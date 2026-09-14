@@ -30,6 +30,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val retryDelay: Int = 100,
         val resumeWithin: Int = 60,
         val autoDbUpdate: Boolean = true,
+        val stationClickCounter: Boolean = true,
         val isReviewCompleted: Boolean = false
     )
 
@@ -69,6 +70,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 retryDelay = sharedPref.getInt("settings_retry_delay", 100),
                 resumeWithin = sharedPref.getInt("settings_resume_within", 60),
                 autoDbUpdate = sharedPref.getBoolean("settings_auto_db_update", app.resources.getBoolean(R.bool.default_auto_db_update)),
+                stationClickCounter = sharedPref.getBoolean("settings_station_click_counter", app.resources.getBoolean(R.bool.default_station_click_counter)),
                 isReviewCompleted = sharedPref.getBoolean("review_completed", false)
             )
         }

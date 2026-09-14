@@ -484,8 +484,14 @@ object Utils {
      * Fire & Forget: No response needed, no stability impact on AMARadio.
      */
     @JvmStatic
-    fun reportClickToOfficialApi(httpClient: OkHttpClient, stationUuid: String) {
+    fun reportClickToOfficialApi(context: Context, httpClient: OkHttpClient, stationUuid: String) {
         if (stationUuid.isBlank() || stationUuid == "null") return
+
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val defaultEnabled = context.resources.getBoolean(R.bool.default_station_click_counter)
+        if (!sharedPref.getBoolean("settings_station_click_counter", defaultEnabled)) {
+            return
+        }
 
         // Throttle check: Prevent duplicate reporting within the same window (e.g., rapid Play/Pause toggle)
         val now = System.currentTimeMillis()

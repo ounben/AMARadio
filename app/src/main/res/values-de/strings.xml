@@ -181,6 +181,9 @@
     <string name="settings_auto_db_update">Hintergrund-Datenabgleich</string>
     <string name="settings_auto_db_update_desc">Sender-Datenbank automatisch über die Radio-Browser API aktualisieren (empfohlen).</string>
 
+    <string name="settings_station_click_counter">Sender-Klickzähler</string>
+    <string name="settings_station_click_counter_desc">Unterstütze die Statistiken von Radio-Browser, indem du Wiedergabe-Ereignisse anonym teilst.</string>
+
     <string name="settings_pause_when_noisy">Pause bei Kopfhörertrennung</string>
 
     <string name="settings_auto_resume_do_not_resume">Nicht fortsetzen</string>
