@@ -2,4 +2,5 @@
 <resources>
     <bool name="default_auto_db_update">true</bool>
     <bool name="default_station_click_counter">true</bool>
+    <bool name="auto_fetch_server_stats">true</bool>
 </resources>

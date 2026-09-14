@@ -8,6 +8,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.R
 import com.ounben.amaradio.data.DataStatistics
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toDataStation
@@ -51,7 +52,10 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
     }
 
     init {
-        loadStatistics()
+        val autoFetch = app.resources.getBoolean(R.bool.auto_fetch_server_stats)
+        if (autoFetch) {
+            loadStatistics()
+        }
         loadLocalDbInfo()
         
         sharedPref.registerOnSharedPreferenceChangeListener(prefListener)
