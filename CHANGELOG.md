@@ -5,6 +5,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.35] - 2026-09-14
+### Added
+- **Build Flavors (FOSS & Play Split)**: Separated the app into `foss` (pure open-source, no proprietary dependencies) and `play` flavors.
+    - Isolated Google Cast, Google Play Integrity, and Play In-App Reviews strictly within the `play` flavor.
+    - Added flavor-aware settings like "Background Data Sync" (opt-in for FOSS, opt-out for Play).
+    - Custom GitHub star prompts and review redirection links implemented specifically for FOSS users.
+- **Dynamic Startup Action**: Upgraded the "Start Behavior" feature. Users can now robustly choose their initial view (Stations, Favorites, History, or Last View) with **"Last View"** as the clean new default.
+
+### Fixed
+- **Robust Setting Keys**: Migrated the "Start action" configuration from fragile, localized strings to technical, language-independent internal keys, preventing breakage when switching system languages.
+- **Automated Upgrades**: Built-in silent migration routine to convert old localized settings values to the new robust format without losing user preferences.
+- **74-Language Localization Sync**: Automated cross-synchronization of all missing translations and newly added flavor-specific text properties across all 74 supported languages using the Google Translate API.
+
 ## [1.34] - 2026-09-13
 ### Fixed
 - **Full Player Favorite Sync**: Resolved an issue where favoriting a station from the full-screen player resulted in incomplete metadata (missing bitrate, codec, etc.) in the Starred tab. The app now automatically upgrades lightweight player objects to full data entries using local database lookup.
