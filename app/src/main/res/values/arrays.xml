@@ -31,11 +31,11 @@
         <item>@string/startup_show_all_stations</item>
         <item>@string/startup_show_last_view</item>
     </string-array>
-    <string-array name="startup_action_entryvalues">
-        <item>@string/startup_show_history</item>
-        <item>@string/startup_show_favorites</item>
-        <item>@string/startup_show_all_stations</item>
-        <item>@string/startup_show_last_view</item>
+    <string-array name="startup_action_entryvalues" translatable="false">
+        <item>history</item>
+        <item>favorites</item>
+        <item>stations</item>
+        <item>last</item>
     </string-array>
 
     <string-array name="theme_entries">

@@ -21,12 +21,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.core.content.edit
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.*
+import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
@@ -78,9 +80,40 @@ fun MainScreen(
 
     var isPlayerExpanded by remember { mutableStateOf(false) }
     
+    val settingsViewModel: SettingsViewModel = viewModel()
+    val settingsUiState by settingsViewModel.uiState.collectAsState()
+    
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val currentRoute = currentDestination?.route
+
+    // 1. Determine Initial Route (Startup Action)
+    val startRoute = remember(settingsUiState.startupAction) {
+        val action = settingsUiState.startupAction
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+        val lastRoute = sharedPref.getString("last_view_route", Screen.Stations.route) ?: Screen.Stations.route
+        
+        when (action) {
+            "history" -> Screen.History.route
+            "favorites" -> Screen.Favourites.route
+            "stations" -> Screen.Stations.route
+            "last" -> lastRoute
+            else -> Screen.Stations.route
+        }
+    }
+
+    // 2. Save Last View Route
+    LaunchedEffect(currentRoute) {
+        if (currentRoute != null && 
+            currentRoute != Screen.About.route && 
+            currentRoute != Screen.Statistics.route && 
+            currentRoute != Screen.Settings.route) {
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+            sharedPref.edit {
+                putString("last_view_route", currentRoute)
+            }
+        }
+    }
 
     // Fix: Identify if we are in Settings sub-screens
     val isSettingsSubScreen = currentRoute == Screen.About.route || currentRoute == Screen.Statistics.route
@@ -215,7 +248,7 @@ fun MainScreen(
                 } else {
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.Stations.route,
+                        startDestination = startRoute,
                         modifier = Modifier.fillMaxSize().padding(bottom = contentBottomPadding)
                     ) {
                         composable(Screen.Stations.route) {

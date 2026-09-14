@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.utils.LocaleUtils
+import androidx.core.content.edit
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -52,13 +53,29 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     private fun loadSettings() {
         val app = getApplication<Application>()
-        val defaultStartupAction = app.getString(R.string.startup_show_history)
+        val defaultStartupAction = "last"
+        
+        // Migration of old localized startup actions to technical keys
+        val rawValue = sharedPref.getString("startup_action", null)
+        if (rawValue != null && rawValue.contains("@string") || (rawValue != null && !listOf("history", "favorites", "stations", "last").contains(rawValue))) {
+            val migratedValue = when (rawValue) {
+                app.getString(R.string.startup_show_history) -> "history"
+                app.getString(R.string.startup_show_favorites) -> "favorites"
+                app.getString(R.string.startup_show_all_stations) -> "stations"
+                app.getString(R.string.startup_show_last_view) -> "last"
+                else -> "last"
+            }
+            sharedPref.edit { putString("startup_action", migratedValue) }
+        }
+
+        val currentAction = sharedPref.getString("startup_action", defaultStartupAction) ?: defaultStartupAction
+        
         _uiState.update {
             it.copy(
                 themeName = sharedPref.getString("theme_name", "system") ?: "system",
                 uiScaleLevel = sharedPref.getString("ui_scale_level", "standard") ?: "standard",
                 language = sharedPref.getString("settings_language", "system") ?: "system",
-                startupAction = sharedPref.getString("startup_action", defaultStartupAction) ?: defaultStartupAction,
+                startupAction = currentAction,
                 playExternal = sharedPref.getBoolean("play_external", false),
                 warnNoWifi = sharedPref.getBoolean("warn_no_wifi", false),
                 pauseWhenNoisy = sharedPref.getBoolean("pause_when_noisy", true),
@@ -78,18 +95,18 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
 
     fun updateString(key: String, value: String) {
         if (key == "settings_language") {
-            sharedPref.edit().putString(key, value).commit()
+            sharedPref.edit { putString(key, value) }
             LocaleUtils.applyLocale(value)
         } else {
-            sharedPref.edit().putString(key, value).apply()
+            sharedPref.edit { putString(key, value) }
         }
     }
 
     fun updateBoolean(key: String, value: Boolean) {
-        sharedPref.edit().putBoolean(key, value).apply()
+        sharedPref.edit { putBoolean(key, value) }
     }
 
     fun updateInt(key: String, value: Int) {
-        sharedPref.edit().putInt(key, value).apply()
+        sharedPref.edit { putInt(key, value) }
     }
 }
