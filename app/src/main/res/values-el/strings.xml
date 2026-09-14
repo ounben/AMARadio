@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Γρήγορα χειριστήρια αναπαραγωγής</string>
     <string name="widget_description_full">Λίστα αναπαραγωγής και σταθμών</string>
+
+    <string name="settings_auto_db_update">Συγχρονισμός δεδομένων παρασκηνίου</string>
+    <string name="settings_auto_db_update_desc">Αυτόματη ενημέρωση βάσης δεδομένων σταθμών μέσω Radio-Browser API (συνιστάται).</string>
+    <string name="settings_station_click_counter">Μετρητής κλικ σταθμού</string>
+    <string name="settings_station_click_counter_desc">Υποστήριξη στατιστικών του προγράμματος περιήγησης ραδιοφώνου με ανώνυμη κοινή χρήση συμβάντων αναπαραγωγής.</string>
+    <string name="settings_rate_app_github">Απολαμβάνετε το AMARadio;</string>
+    <string name="settings_rate_app_github_summary">Αφήστε ένα αστέρι στο GitHub! Βοηθά άλλους να ανακαλύψουν την εφαρμογή και υποστηρίζει μελλοντική ανάπτυξη.</string>
 </resources>

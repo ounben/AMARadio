@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Izilawuli zesidlali ezisheshayo</string>
     <string name="widget_description_full">Uhlu lwesidlali kanye nesiteshi</string>
+
+    <string name="settings_auto_db_update">Ukuvumelanisa Idatha Yasemuva</string>
+    <string name="settings_auto_db_update_desc">Buyekeza ngokuzenzakalela isizindalwazi sesiteshi ngeRadio-Browser API (kunconyiwe).</string>
+    <string name="settings_station_click_counter">Isibali sokuchofoza esiteshini</string>
+    <string name="settings_station_click_counter_desc">Sekela izibalo zeRadio-Browser ngokwabelana ngemicimbi yokudlala ngokungaziwa.</string>
+    <string name="settings_rate_app_github">Ujabulela i-AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Shiya inkanyezi ku-GitHub! Isiza abanye ukuthola uhlelo lokusebenza futhi isekele ukuthuthukiswa kwesikhathi esizayo.</string>
 </resources>

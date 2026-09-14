@@ -357,4 +357,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Jokalari-kontrol azkarrak</string>
     <string name="widget_description_full">Jokalari eta geltokien zerrenda</string>
+
+    <string name="settings_auto_db_update">Atzeko planoko datuen sinkronizazioa</string>
+    <string name="settings_auto_db_update_desc">Eguneratu automatikoki estazioen datu-basea Radio-Browser API bidez (gomendatua).</string>
+    <string name="settings_station_click_counter">Geltokiko klik-kontagailua</string>
+    <string name="settings_station_click_counter_desc">Onartu Radio-Browser-en estatistikak jolas-gertaerak modu anonimoan partekatuz.</string>
+    <string name="settings_rate_app_github">AMRadioz gozatzen?</string>
+    <string name="settings_rate_app_github_summary">Utzi izar bat GitHub-en! Besteei aplikazioa aurkitzen laguntzen die eta etorkizuneko garapena onartzen du.</string>
 </resources>

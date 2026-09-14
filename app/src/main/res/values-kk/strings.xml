@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Жылдам ойнатқышты басқару</string>
     <string name="widget_description_full">Ойыншы және станция тізімі</string>
+
+    <string name="settings_auto_db_update">Фондық деректерді синхрондау</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API арқылы станция дерекқорын автоматты түрде жаңарту (ұсынылады).</string>
+    <string name="settings_station_click_counter">Станцияны басу есептегіші</string>
+    <string name="settings_station_click_counter_desc">Ойын оқиғаларын жасырын түрде бөлісу арқылы Radio-Browser статистикасын қолдаңыз.</string>
+    <string name="settings_rate_app_github">AMARadio ұнай ма?</string>
+    <string name="settings_rate_app_github_summary">GitHub сайтында жұлдыз қалдырыңыз! Бұл басқаларға қолданбаны табуға көмектеседі және болашақ дамуды қолдайды.</string>
 </resources>

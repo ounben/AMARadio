@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ઝડપી પ્લેયર નિયંત્રણો</string>
     <string name="widget_description_full">પ્લેયર અને સ્ટેશન યાદી</string>
+
+    <string name="settings_auto_db_update">પૃષ્ઠભૂમિ ડેટા સમન્વયન</string>
+    <string name="settings_auto_db_update_desc">રેડિયો-બ્રાઉઝર API દ્વારા સ્ટેશન ડેટાબેઝને સ્વતઃ-અપડેટ કરો (ભલામણ કરેલ).</string>
+    <string name="settings_station_click_counter">સ્ટેશન ક્લિક કાઉન્ટર</string>
+    <string name="settings_station_click_counter_desc">પ્લે ઇવેન્ટ્સને અજ્ઞાત રૂપે શેર કરીને રેડિયો-બ્રાઉઝર આંકડાઓને સપોર્ટ કરો.</string>
+    <string name="settings_rate_app_github">AMARadio માણી રહ્યાં છો?</string>
+    <string name="settings_rate_app_github_summary">GitHub પર સ્ટાર છોડો! તે અન્ય લોકોને એપ્લિકેશન શોધવામાં મદદ કરે છે અને ભવિષ્યના વિકાસને સમર્થન આપે છે.</string>
 </resources>

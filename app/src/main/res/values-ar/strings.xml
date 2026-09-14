@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ضوابط لاعب سريعة</string>
     <string name="widget_description_full">قائمة اللاعبين والمحطات</string>
+
+    <string name="settings_auto_db_update">مزامنة بيانات الخلفية</string>
+    <string name="settings_auto_db_update_desc">التحديث التلقائي لقاعدة بيانات المحطة عبر Radio-Browser API (مستحسن).</string>
+    <string name="settings_station_click_counter">محطة انقر فوق العداد</string>
+    <string name="settings_station_click_counter_desc">دعم إحصائيات متصفح الراديو من خلال مشاركة أحداث اللعب بشكل مجهول.</string>
+    <string name="settings_rate_app_github">تتمتع AMARadio؟</string>
+    <string name="settings_rate_app_github_summary">اترك نجمة على جيثب! يساعد الآخرين على اكتشاف التطبيق ويدعم التطوير المستقبلي.</string>
 </resources>

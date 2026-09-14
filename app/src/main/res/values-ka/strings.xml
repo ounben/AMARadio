@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">მოთამაშის სწრაფი კონტროლი</string>
     <string name="widget_description_full">მოთამაშისა და სადგურების სია</string>
+
+    <string name="settings_auto_db_update">ფონური მონაცემთა სინქრონიზაცია</string>
+    <string name="settings_auto_db_update_desc">სადგურის მონაცემთა ბაზის ავტომატური განახლება Radio-Browser API-ით (რეკომენდებულია).</string>
+    <string name="settings_station_click_counter">სადგურის დაწკაპუნების მრიცხველი</string>
+    <string name="settings_station_click_counter_desc">მხარი დაუჭირეთ რადიო-ბრაუზერის სტატისტიკას სათამაშო მოვლენების ანონიმურად გაზიარებით.</string>
+    <string name="settings_rate_app_github">მოგწონთ AMARadio?</string>
+    <string name="settings_rate_app_github_summary">დატოვე ვარსკვლავი GitHub-ზე! ის ეხმარება სხვებს აპის აღმოჩენაში და მხარს უჭერს მომავალ განვითარებას.</string>
 </resources>

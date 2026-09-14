@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Rialuithe imreoir tapa</string>
     <string name="widget_description_full">Liosta imreoirí agus stáisiúin</string>
+
+    <string name="settings_auto_db_update">Sioncronú Sonraí Cúlra</string>
+    <string name="settings_auto_db_update_desc">Bunachar sonraí stáisiúin a nuashonrú go huathoibríoch trí API Brabhsálaí Raidió (molta).</string>
+    <string name="settings_station_click_counter">Stáisiún cliceáil gcuntar</string>
+    <string name="settings_station_click_counter_desc">Tacaigh le staitisticí Brabhsálaí Raidió trí imeachtaí súgartha a roinnt gan ainm.</string>
+    <string name="settings_rate_app_github">Ag baint suilt as AMAradio?</string>
+    <string name="settings_rate_app_github_summary">Fág réalta ar GitHub! Cabhraíonn sé le daoine eile an aip a aimsiú agus tacaíonn sé le forbairt sa todhchaí.</string>
 </resources>

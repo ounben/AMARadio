@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">လျင်မြန်သောကစားသမားထိန်းချုပ်မှုများ</string>
     <string name="widget_description_full">ကစားသမားများနှင့် ဘူတာရုံများစာရင်း</string>
+
+    <string name="settings_auto_db_update">နောက်ခံဒေတာ Sync</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API မှတစ်ဆင့် ဘူတာရုံဒေတာဘေ့စ်ကို အလိုအလျောက် အပ်ဒိတ်လုပ်ပါ (အကြံပြုထားသည်)။</string>
+    <string name="settings_station_click_counter">ဘူတာရုံကလစ်ကောင်တာ</string>
+    <string name="settings_station_click_counter_desc">ကစားပွဲများကို အမည်ဝှက်ဖြင့် မျှဝေခြင်းဖြင့် ရေဒီယို-ဘရောက်ဇာ စာရင်းဇယားများကို ပံ့ပိုးကူညီပါ။</string>
+    <string name="settings_rate_app_github">AMARadio ကို နှစ်သက်ပါသလား။</string>
+    <string name="settings_rate_app_github_summary">GitHub တွင် ကြယ်တစ်ပွင့် ထားခဲ့ပါ။ ၎င်းသည် အခြားသူများကို အက်ပ်ကို ရှာဖွေတွေ့ရှိရန် ကူညီပေးပြီး အနာဂတ်ဖွံ့ဖြိုးတိုးတက်မှုကို ပံ့ပိုးပေးသည်။</string>
 </resources>

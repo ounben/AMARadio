@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">விரைவான பிளேயர் கட்டுப்பாடுகள்</string>
     <string name="widget_description_full">பிளேயர் மற்றும் ஸ்டேஷன் பட்டியல்</string>
+
+    <string name="settings_auto_db_update">பின்னணி தரவு ஒத்திசைவு</string>
+    <string name="settings_auto_db_update_desc">ரேடியோ-உலாவி API வழியாக நிலைய தரவுத்தளத்தை தானாகப் புதுப்பிக்கவும் (பரிந்துரைக்கப்படுகிறது).</string>
+    <string name="settings_station_click_counter">ஸ்டேஷன் கிளிக் கவுண்டர்</string>
+    <string name="settings_station_click_counter_desc">விளையாட்டு நிகழ்வுகளை அநாமதேயமாகப் பகிர்வதன் மூலம் ரேடியோ-உலாவி புள்ளிவிவரங்களை ஆதரிக்கவும்.</string>
+    <string name="settings_rate_app_github">AMARadioவை அனுபவிக்கிறீர்களா?</string>
+    <string name="settings_rate_app_github_summary">GitHub இல் ஒரு நட்சத்திரத்தை விடுங்கள்! இது மற்றவர்கள் பயன்பாட்டைக் கண்டறிய உதவுகிறது மற்றும் எதிர்கால மேம்பாட்டை ஆதரிக்கிறது.</string>
 </resources>

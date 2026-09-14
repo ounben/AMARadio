@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">快速播放器控制</string>
     <string name="widget_description_full">播放器和電台列表</string>
+
+    <string name="settings_auto_db_update">後台資料同步</string>
+    <string name="settings_auto_db_update_desc">透過無線電瀏覽器 API 自動更新電台資料庫（建議）。</string>
+    <string name="settings_station_click_counter">車站點擊計數器</string>
+    <string name="settings_station_click_counter_desc">透過匿名共享播放事件支援廣播瀏覽器統計。</string>
+    <string name="settings_rate_app_github">喜歡 AMARadio 嗎？</string>
+    <string name="settings_rate_app_github_summary">在 GitHub 上留下一個星星吧！它可以幫助其他人發現該應用程式並支援未來的開發。</string>
 </resources>

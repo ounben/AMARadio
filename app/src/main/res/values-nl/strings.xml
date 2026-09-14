@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Snelle spelerbediening</string>
     <string name="widget_description_full">Speler- en zenderlijst</string>
+
+    <string name="settings_auto_db_update">Synchronisatie van achtergrondgegevens</string>
+    <string name="settings_auto_db_update_desc">Automatische update van de zenderdatabase via Radio-Browser API (aanbevolen).</string>
+    <string name="settings_station_click_counter">Stationklikteller</string>
+    <string name="settings_station_click_counter_desc">Ondersteun Radio-Browser-statistieken door anoniem speelevenementen te delen.</string>
+    <string name="settings_rate_app_github">Genieten van AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Laat een ster achter op GitHub! Het helpt anderen de app te ontdekken en ondersteunt toekomstige ontwikkeling.</string>
 </resources>

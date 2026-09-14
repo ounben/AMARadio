@@ -357,4 +357,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">快速播放器控制</string>
     <string name="widget_description_full">播放器和电台列表</string>
+
+    <string name="settings_auto_db_update">后台数据同步</string>
+    <string name="settings_auto_db_update_desc">通过无线电浏览器 API 自动更新电台数据库（推荐）。</string>
+    <string name="settings_station_click_counter">车站点击计数器</string>
+    <string name="settings_station_click_counter_desc">通过匿名共享播放事件支持广播浏览器统计。</string>
+    <string name="settings_rate_app_github">喜欢 AMARadio 吗？</string>
+    <string name="settings_rate_app_github_summary">在 GitHub 上留下一个星星吧！它可以帮助其他人发现该应用程序并支持未来的开发。</string>
 </resources>

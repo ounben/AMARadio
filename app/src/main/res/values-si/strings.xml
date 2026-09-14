@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ඉක්මන් ක්‍රීඩක පාලනය</string>
     <string name="widget_description_full">ක්රීඩකයා සහ ස්ථාන ලැයිස්තුව</string>
+
+    <string name="settings_auto_db_update">පසුබිම් දත්ත සමමුහුර්ත කිරීම</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API හරහා ස්ථාන දත්ත සමුදාය ස්වයංක්‍රීයව යාවත්කාලීන කරන්න (නිර්දේශිතයි).</string>
+    <string name="settings_station_click_counter">ස්ටේෂන් ක්ලික් කවුන්ටරය</string>
+    <string name="settings_station_click_counter_desc">ක්‍රීඩා සිදුවීම් නිර්නාමිකව බෙදාගැනීමෙන් රේඩියෝ-බ්‍රවුසර සංඛ්‍යාලේඛනවලට සහාය වන්න.</string>
+    <string name="settings_rate_app_github">AMARadio භුක්ති විඳිනවාද?</string>
+    <string name="settings_rate_app_github_summary">GitHub මත තරුවක් තබන්න! එය අන් අයට යෙදුම සොයා ගැනීමට සහ අනාගත සංවර්ධනයට සහාය වේ.</string>
 </resources>

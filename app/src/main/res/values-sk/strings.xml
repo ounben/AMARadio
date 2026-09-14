@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Rýchle ovládanie prehrávača</string>
     <string name="widget_description_full">Zoznam prehrávačov a staníc</string>
+
+    <string name="settings_auto_db_update">Synchronizácia údajov na pozadí</string>
+    <string name="settings_auto_db_update_desc">Automatická aktualizácia databázy staníc cez Radio-Browser API (odporúča sa).</string>
+    <string name="settings_station_click_counter">Počítadlo kliknutí stanice</string>
+    <string name="settings_station_click_counter_desc">Podporujte štatistiky Radio-Browser anonymným zdieľaním herných udalostí.</string>
+    <string name="settings_rate_app_github">Páči sa vám AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Nechajte hviezdu na GitHub! Pomáha ostatným objaviť aplikáciu a podporuje budúci vývoj.</string>
 </resources>

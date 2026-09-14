@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Hurtig spillerkontrol</string>
     <string name="widget_description_full">Spiller og stationsliste</string>
+
+    <string name="settings_auto_db_update">Baggrundsdatasynkronisering</string>
+    <string name="settings_auto_db_update_desc">Automatisk opdatering af stationsdatabase via Radio-Browser API (anbefales).</string>
+    <string name="settings_station_click_counter">Stations kliktæller</string>
+    <string name="settings_station_click_counter_desc">Støt Radio-Browser-statistikker ved anonymt at dele afspilningsbegivenheder.</string>
+    <string name="settings_rate_app_github">Nyder du AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Efterlad en stjerne på GitHub! Det hjælper andre med at opdage appen og understøtter fremtidig udvikling.</string>
 </resources>

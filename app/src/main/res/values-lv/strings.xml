@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Ātrās atskaņotāja vadīklas</string>
     <string name="widget_description_full">Spēlētāju un staciju saraksts</string>
+
+    <string name="settings_auto_db_update">Fona datu sinhronizācija</string>
+    <string name="settings_auto_db_update_desc">Automātiski atjaunināt staciju datu bāzi, izmantojot Radio-Browser API (ieteicams).</string>
+    <string name="settings_station_click_counter">Stacijas klikšķu skaitītājs</string>
+    <string name="settings_station_click_counter_desc">Atbalstiet radio pārlūkprogrammas statistiku, anonīmi kopīgojot atskaņošanas notikumus.</string>
+    <string name="settings_rate_app_github">Vai jums patīk AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Atstājiet zvaigznīti vietnē GitHub! Tas palīdz citiem atklāt lietotni un atbalsta turpmāko attīstību.</string>
 </resources>

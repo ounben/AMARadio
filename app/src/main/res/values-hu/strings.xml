@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Gyors lejátszó vezérlők</string>
     <string name="widget_description_full">Lejátszók és állomások listája</string>
+
+    <string name="settings_auto_db_update">Háttéradatok szinkronizálása</string>
+    <string name="settings_auto_db_update_desc">Állomásadatbázis automatikus frissítése a Radio-Browser API-n keresztül (ajánlott).</string>
+    <string name="settings_station_click_counter">Állomás kattintás számláló</string>
+    <string name="settings_station_click_counter_desc">Támogassa a Radio-Browser statisztikákat a játékesemények névtelen megosztásával.</string>
+    <string name="settings_rate_app_github">Élvezed az AMARadiót?</string>
+    <string name="settings_rate_app_github_summary">Hagyj csillagot a GitHubon! Segít másoknak felfedezni az alkalmazást, és támogatja a jövőbeli fejlesztést.</string>
 </resources>

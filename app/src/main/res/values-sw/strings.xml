@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Vidhibiti vya haraka vya mchezaji</string>
     <string name="widget_description_full">Mchezaji na orodha ya kituo</string>
+
+    <string name="settings_auto_db_update">Usawazishaji wa Data ya Mandharinyuma</string>
+    <string name="settings_auto_db_update_desc">Sasisha hifadhidata ya kituo kiotomatiki kupitia API ya Kivinjari-Radio (inapendekezwa).</string>
+    <string name="settings_station_click_counter">Kaunta ya kubofya kituo</string>
+    <string name="settings_station_click_counter_desc">Tumia takwimu za Kivinjari-Redio kwa kushiriki matukio ya kucheza bila kujulikana.</string>
+    <string name="settings_rate_app_github">Je, unafurahia AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Acha nyota kwenye GitHub! Husaidia wengine kugundua programu na kusaidia usanidi wa siku zijazo.</string>
 </resources>

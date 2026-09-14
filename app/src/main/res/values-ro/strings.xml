@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Comenzi rapide ale jucătorului</string>
     <string name="widget_description_full">Lista de jucători și posturi</string>
+
+    <string name="settings_auto_db_update">Sincronizarea datelor de fundal</string>
+    <string name="settings_auto_db_update_desc">Actualizare automată a bazei de date a stației prin API-ul Radio-Browser (recomandat).</string>
+    <string name="settings_station_click_counter">Contor de clicuri ale stației</string>
+    <string name="settings_station_click_counter_desc">Sprijină statisticile Radio-Browser prin partajarea anonimă a evenimentelor de joc.</string>
+    <string name="settings_rate_app_github">Vă bucurați de AMRadio?</string>
+    <string name="settings_rate_app_github_summary">Lăsați o stea pe GitHub! Îi ajută pe alții să descopere aplicația și sprijină dezvoltarea viitoare.</string>
 </resources>

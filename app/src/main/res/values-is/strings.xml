@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Fljótleg stjórntæki leikmanna</string>
     <string name="widget_description_full">Leikmanna- og stöðvarlisti</string>
+
+    <string name="settings_auto_db_update">Bakgrunnsgagnasamstilling</string>
+    <string name="settings_auto_db_update_desc">Uppfærðu gagnagrunn stöðvar sjálfkrafa með Radio-Browser API (mælt með).</string>
+    <string name="settings_station_click_counter">Stöðvar smelliteljari</string>
+    <string name="settings_station_click_counter_desc">Styðjið tölfræði útvarpsvafra með því að deila leikviðburðum nafnlaust.</string>
+    <string name="settings_rate_app_github">Hefurðu gaman af AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Skildu eftir stjörnu á GitHub! Það hjálpar öðrum að uppgötva appið og styður framtíðarþróun.</string>
 </resources>

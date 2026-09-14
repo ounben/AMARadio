@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">בקרות נגן מהירות</string>
     <string name="widget_description_full">רשימת נגנים ותחנות</string>
+
+    <string name="settings_auto_db_update">סנכרון נתונים ברקע</string>
+    <string name="settings_auto_db_update_desc">עדכון אוטומטי של מסד נתונים של תחנות באמצעות Radio-Browser API (מומלץ).</string>
+    <string name="settings_station_click_counter">מונה קליקים בתחנה</string>
+    <string name="settings_station_click_counter_desc">תמכו בסטטיסטיקות של דפדפן רדיו על ידי שיתוף אנונימי של אירועי משחק.</string>
+    <string name="settings_rate_app_github">נהנה מ-AMARadio?</string>
+    <string name="settings_rate_app_github_summary">השאר כוכב ב-GitHub! זה עוזר לאחרים לגלות את האפליקציה ותומך בפיתוח עתידי.</string>
 </resources>

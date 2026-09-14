@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">त्वरित खिलाड़ी नियंत्रण</string>
     <string name="widget_description_full">खिलाड़ी और स्टेशन सूची</string>
+
+    <string name="settings_auto_db_update">पृष्ठभूमि डेटा सिंक</string>
+    <string name="settings_auto_db_update_desc">रेडियो-ब्राउज़र एपीआई (अनुशंसित) के माध्यम से स्टेशन डेटाबेस को ऑटो-अपडेट करें।</string>
+    <string name="settings_station_click_counter">स्टेशन क्लिक काउंटर</string>
+    <string name="settings_station_click_counter_desc">गुमनाम रूप से खेल की घटनाओं को साझा करके रेडियो-ब्राउज़र आंकड़ों का समर्थन करें।</string>
+    <string name="settings_rate_app_github">क्या आप AMRadio का आनंद ले रहे हैं?</string>
+    <string name="settings_rate_app_github_summary">GitHub पर एक सितारा छोड़ें! यह दूसरों को ऐप खोजने में मदद करता है और भविष्य के विकास का समर्थन करता है।</string>
 </resources>

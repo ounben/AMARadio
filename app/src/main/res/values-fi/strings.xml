@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Soittimen nopeat ohjaimet</string>
     <string name="widget_description_full">Soitin- ja asemaluettelo</string>
+
+    <string name="settings_auto_db_update">Taustatietojen synkronointi</string>
+    <string name="settings_auto_db_update_desc">Päivitä asematietokanta automaattisesti Radio-Browser API:n kautta (suositus).</string>
+    <string name="settings_station_click_counter">Aseman napsautuslaskuri</string>
+    <string name="settings_station_click_counter_desc">Tue Radio-Browser-tilastoja jakamalla soittotapahtumia nimettömästi.</string>
+    <string name="settings_rate_app_github">Nautitko AMARadosta?</string>
+    <string name="settings_rate_app_github_summary">Jätä tähti GitHubiin! Se auttaa muita löytämään sovelluksen ja tukee tulevaa kehitystä.</string>
 </resources>

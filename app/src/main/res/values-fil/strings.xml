@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Mabilis na kontrol ng player</string>
     <string name="widget_description_full">Listahan ng manlalaro at istasyon</string>
+
+    <string name="settings_auto_db_update">Pag-sync ng Data sa Background</string>
+    <string name="settings_auto_db_update_desc">Awtomatikong i-update ang database ng istasyon sa pamamagitan ng Radio-Browser API (inirerekomenda).</string>
+    <string name="settings_station_click_counter">Station click counter</string>
+    <string name="settings_station_click_counter_desc">Suportahan ang mga istatistika ng Radio-Browser sa pamamagitan ng hindi nagpapakilalang pagbabahagi ng mga kaganapan sa paglalaro.</string>
+    <string name="settings_rate_app_github">Tinatangkilik ang AMRadio?</string>
+    <string name="settings_rate_app_github_summary">Mag-iwan ng star sa GitHub! Nakakatulong ito sa iba na matuklasan ang app at sumusuporta sa pag-unlad sa hinaharap.</string>
 </resources>

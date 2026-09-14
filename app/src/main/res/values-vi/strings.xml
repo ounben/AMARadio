@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Điều khiển trình phát nhanh</string>
     <string name="widget_description_full">Danh sách người chơi và trạm</string>
+
+    <string name="settings_auto_db_update">Đồng bộ hóa dữ liệu nền</string>
+    <string name="settings_auto_db_update_desc">Tự động cập nhật cơ sở dữ liệu trạm thông qua API Trình duyệt Radio (được khuyến nghị).</string>
+    <string name="settings_station_click_counter">Bộ đếm nhấp chuột trạm</string>
+    <string name="settings_station_click_counter_desc">Hỗ trợ số liệu thống kê của Trình duyệt Radio bằng cách chia sẻ ẩn danh các sự kiện chơi.</string>
+    <string name="settings_rate_app_github">Bạn đang thưởng thức AMRadio?</string>
+    <string name="settings_rate_app_github_summary">Để lại một ngôi sao trên GitHub! Nó giúp người khác khám phá ứng dụng và hỗ trợ sự phát triển trong tương lai.</string>
 </resources>

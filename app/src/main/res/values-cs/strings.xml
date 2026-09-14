@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Rychlé ovládání přehrávače</string>
     <string name="widget_description_full">Seznam přehrávačů a stanic</string>
+
+    <string name="settings_auto_db_update">Synchronizace dat na pozadí</string>
+    <string name="settings_auto_db_update_desc">Automatická aktualizace databáze stanic přes Radio-Browser API (doporučeno).</string>
+    <string name="settings_station_click_counter">Počítadlo kliknutí stanice</string>
+    <string name="settings_station_click_counter_desc">Podporujte statistiky Radio-Browser anonymním sdílením herních událostí.</string>
+    <string name="settings_rate_app_github">Líbí se vám AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Zanechte hvězdu na GitHubu! Pomáhá ostatním objevit aplikaci a podporuje budoucí vývoj.</string>
 </resources>

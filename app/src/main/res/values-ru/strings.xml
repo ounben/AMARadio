@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Быстрое управление игроком</string>
     <string name="widget_description_full">Список игроков и станций</string>
+
+    <string name="settings_auto_db_update">Фоновая синхронизация данных</string>
+    <string name="settings_auto_db_update_desc">Автообновление базы данных станций через API Radio-Browser (рекомендуется).</string>
+    <string name="settings_station_click_counter">Счетчик кликов станции</string>
+    <string name="settings_station_click_counter_desc">Поддерживайте статистику радио-браузера, анонимно делясь игровыми событиями.</string>
+    <string name="settings_rate_app_github">Наслаждаетесь АМАРадио?</string>
+    <string name="settings_rate_app_github_summary">Оставьте звезду на GitHub! Это помогает другим найти приложение и поддерживает дальнейшее развитие.</string>
 </resources>

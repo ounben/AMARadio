@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Kontrolle të shpejta të luajtësit</string>
     <string name="widget_description_full">Lista e lojtarëve dhe stacioneve</string>
+
+    <string name="settings_auto_db_update">Sinkronizimi i të dhënave në sfond</string>
+    <string name="settings_auto_db_update_desc">Përditëso automatikisht bazën e të dhënave të stacionit nëpërmjet API-së së shfletuesit të radios (rekomandohet).</string>
+    <string name="settings_station_click_counter">Numëruesi i klikimeve të stacionit</string>
+    <string name="settings_station_click_counter_desc">Mbështetni statistikat e Shfletuesit të Radios duke ndarë në mënyrë anonime ngjarjet e luajtjes.</string>
+    <string name="settings_rate_app_github">Të pëlqen AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Lini një yll në GitHub! Ai i ndihmon të tjerët të zbulojnë aplikacionin dhe mbështet zhvillimin e ardhshëm.</string>
 </resources>

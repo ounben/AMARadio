@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Արագ նվագարկչի վերահսկում</string>
     <string name="widget_description_full">Խաղացողի և կայանների ցուցակ</string>
+
+    <string name="settings_auto_db_update">Ֆոնային տվյալների համաժամացում</string>
+    <string name="settings_auto_db_update_desc">Ավտոմատ թարմացնել կայանի տվյալների բազան Radio-Browser API-ի միջոցով (խորհուրդ է տրվում):</string>
+    <string name="settings_station_click_counter">Կայանի սեղմումների հաշվիչ</string>
+    <string name="settings_station_click_counter_desc">Աջակցեք Radio-Browser-ի վիճակագրությանը` անանուն կերպով կիսելով խաղի իրադարձությունները:</string>
+    <string name="settings_rate_app_github">Վայելու՞մ եք AMARadio-ն:</string>
+    <string name="settings_rate_app_github_summary">Թողեք աստղ GitHub-ում: Այն օգնում է ուրիշներին բացահայտել հավելվածը և աջակցում է հետագա զարգացմանը:</string>
 </resources>

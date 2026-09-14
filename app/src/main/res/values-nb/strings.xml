@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Raske spillerkontroller</string>
     <string name="widget_description_full">Spiller og stasjonsliste</string>
+
+    <string name="settings_auto_db_update">Bakgrunnsdatasynkronisering</string>
+    <string name="settings_auto_db_update_desc">Automatisk oppdatering av stasjonsdatabase via Radio-Browser API (anbefalt).</string>
+    <string name="settings_station_click_counter">Stasjonsklikketeller</string>
+    <string name="settings_station_click_counter_desc">Støtt Radio-Browser-statistikk ved anonymt å dele spillbegivenheter.</string>
+    <string name="settings_rate_app_github">Liker du AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Legg igjen en stjerne på GitHub! Det hjelper andre med å oppdage appen og støtter fremtidig utvikling.</string>
 </resources>

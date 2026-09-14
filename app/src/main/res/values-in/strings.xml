@@ -360,4 +360,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Kontrol pemutar cepat</string>
     <string name="widget_description_full">Daftar pemutar dan stasiun</string>
+
+    <string name="settings_auto_db_update">Sinkronisasi Data Latar Belakang</string>
+    <string name="settings_auto_db_update_desc">Perbarui basis data stasiun secara otomatis melalui Radio-Browser API (disarankan).</string>
+    <string name="settings_station_click_counter">Penghitung klik stasiun</string>
+    <string name="settings_station_click_counter_desc">Dukung statistik Radio-Browser dengan membagikan acara bermain secara anonim.</string>
+    <string name="settings_rate_app_github">Menikmati AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Tinggalkan bintang di GitHub! Ini membantu orang lain menemukan aplikasi dan mendukung pengembangan di masa depan.</string>
 </resources>

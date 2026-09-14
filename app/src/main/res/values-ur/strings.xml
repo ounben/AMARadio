@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">فوری پلیئر کنٹرولز</string>
     <string name="widget_description_full">پلیئر اور اسٹیشن کی فہرست</string>
+
+    <string name="settings_auto_db_update">بیک گراؤنڈ ڈیٹا سنک</string>
+    <string name="settings_auto_db_update_desc">ریڈیو براؤزر API (تجویز کردہ) کے ذریعے اسٹیشن ڈیٹا بیس کو آٹو اپ ڈیٹ کریں۔</string>
+    <string name="settings_station_click_counter">اسٹیشن کلک کاؤنٹر</string>
+    <string name="settings_station_click_counter_desc">گمنام طور پر پلے ایونٹس کا اشتراک کرکے ریڈیو براؤزر کے اعدادوشمار کو سپورٹ کریں۔</string>
+    <string name="settings_rate_app_github">AMARadio سے لطف اندوز ہو رہے ہیں؟</string>
+    <string name="settings_rate_app_github_summary">GitHub پر ایک ستارہ چھوڑ دو! اس سے دوسروں کو ایپ دریافت کرنے میں مدد ملتی ہے اور مستقبل کی ترقی میں مدد ملتی ہے۔</string>
 </resources>

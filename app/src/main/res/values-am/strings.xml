@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ፈጣን የተጫዋች መቆጣጠሪያዎች</string>
     <string name="widget_description_full">የተጫዋች እና የጣቢያ ዝርዝር</string>
+
+    <string name="settings_auto_db_update">የበስተጀርባ ውሂብ ማመሳሰል</string>
+    <string name="settings_auto_db_update_desc">በራዲዮ-አሳሽ ኤፒአይ በኩል የጣቢያ ዳታቤዝ በራስ-አዘምን (የሚመከር)።</string>
+    <string name="settings_station_click_counter">የጣቢያ ጠቅታ ቆጣሪ</string>
+    <string name="settings_station_click_counter_desc">ማንነታቸው ሳይታወቅ የጨዋታ ዝግጅቶችን በማጋራት የራዲዮ-አሳሽ ስታቲስቲክስን ይደግፉ።</string>
+    <string name="settings_rate_app_github">በAMARadio እየተዝናኑ ነው?</string>
+    <string name="settings_rate_app_github_summary">በ GitHub ላይ ኮከብ ይተው! ሌሎች መተግበሪያውን እንዲያገኙ ያግዛል እና የወደፊት እድገትን ይደግፋል።</string>
 </resources>

@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Controls ràpids del jugador</string>
     <string name="widget_description_full">Llista de reproductors i emissores</string>
+
+    <string name="settings_auto_db_update">Sincronització de dades de fons</string>
+    <string name="settings_auto_db_update_desc">Actualització automàtica de la base de dades de l\'estació mitjançant l\'API Radio-Browser (recomanat).</string>
+    <string name="settings_station_click_counter">Comptador de clics de l\'estació</string>
+    <string name="settings_station_click_counter_desc">Admet les estadístiques del navegador de ràdio compartint esdeveniments de joc de manera anònima.</string>
+    <string name="settings_rate_app_github">Gaudeix d\'AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Deixa una estrella a GitHub! Ajuda a altres a descobrir l\'aplicació i dóna suport al desenvolupament futur.</string>
 </resources>

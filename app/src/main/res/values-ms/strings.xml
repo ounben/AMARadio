@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Kawalan pemain pantas</string>
     <string name="widget_description_full">Senarai pemain dan stesen</string>
+
+    <string name="settings_auto_db_update">Penyegerakan Data Latar Belakang</string>
+    <string name="settings_auto_db_update_desc">Autokemas kini pangkalan data stesen melalui Radio-Browser API (disyorkan).</string>
+    <string name="settings_station_click_counter">Kaunter klik stesen</string>
+    <string name="settings_station_click_counter_desc">Sokong statistik Pelayar Radio dengan berkongsi acara main secara tanpa nama.</string>
+    <string name="settings_rate_app_github">Menikmati AMRadio?</string>
+    <string name="settings_rate_app_github_summary">Tinggalkan bintang di GitHub! Ia membantu orang lain menemui apl dan menyokong pembangunan masa hadapan.</string>
 </resources>

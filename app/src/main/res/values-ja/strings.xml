@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">プレーヤーのクイックコントロール</string>
     <string name="widget_description_full">プレーヤーとステーションのリスト</string>
+
+    <string name="settings_auto_db_update">バックグラウンドデータ同期</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API 経由でステーション データベースを自動更新します (推奨)。</string>
+    <string name="settings_station_click_counter">ステーションクリックカウンター</string>
+    <string name="settings_station_click_counter_desc">プレイ イベントを匿名で共有することで、Radio-Browser 統計をサポートします。</string>
+    <string name="settings_rate_app_github">AMARadioをお楽しみですか?</string>
+    <string name="settings_rate_app_github_summary">GitHub にスターを残してください!他の人がアプリを発見するのに役立ち、将来の開発をサポートします。</string>
 </resources>

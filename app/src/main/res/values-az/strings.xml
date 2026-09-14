@@ -355,4 +355,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Sürətli oyunçu nəzarəti</string>
     <string name="widget_description_full">Oyunçu və stansiya siyahısı</string>
+
+    <string name="settings_auto_db_update">Background Data Sync</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API vasitəsilə stansiya verilənlər bazasını avtomatik yeniləyin (tövsiyə olunur).</string>
+    <string name="settings_station_click_counter">Stansiya klik sayğacı</string>
+    <string name="settings_station_click_counter_desc">Oyun hadisələrini anonim şəkildə paylaşaraq Radio-Brauzer statistikasını dəstəkləyin.</string>
+    <string name="settings_rate_app_github">AMARadio-dan zövq alırsınız?</string>
+    <string name="settings_rate_app_github_summary">GitHub-da ulduz buraxın! Bu, başqalarına proqramı kəşf etməyə kömək edir və gələcək inkişafı dəstəkləyir.</string>
 </resources>

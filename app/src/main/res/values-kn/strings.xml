@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ತ್ವರಿತ ಆಟಗಾರ ನಿಯಂತ್ರಣಗಳು</string>
     <string name="widget_description_full">ಆಟಗಾರ ಮತ್ತು ನಿಲ್ದಾಣದ ಪಟ್ಟಿ</string>
+
+    <string name="settings_auto_db_update">ಹಿನ್ನೆಲೆ ಡೇಟಾ ಸಿಂಕ್</string>
+    <string name="settings_auto_db_update_desc">ರೇಡಿಯೋ-ಬ್ರೌಸರ್ API ಮೂಲಕ ಸ್ಟೇಷನ್ ಡೇಟಾಬೇಸ್ ಅನ್ನು ಸ್ವಯಂ-ನವೀಕರಿಸಿ (ಶಿಫಾರಸು ಮಾಡಲಾಗಿದೆ).</string>
+    <string name="settings_station_click_counter">ಸ್ಟೇಷನ್ ಕ್ಲಿಕ್ ಕೌಂಟರ್</string>
+    <string name="settings_station_click_counter_desc">ಆಟದ ಈವೆಂಟ್‌ಗಳನ್ನು ಅನಾಮಧೇಯವಾಗಿ ಹಂಚಿಕೊಳ್ಳುವ ಮೂಲಕ ರೇಡಿಯೋ-ಬ್ರೌಸರ್ ಅಂಕಿಅಂಶಗಳನ್ನು ಬೆಂಬಲಿಸಿ.</string>
+    <string name="settings_rate_app_github">AMARadio ಅನ್ನು ಆನಂದಿಸುತ್ತಿರುವಿರಾ?</string>
+    <string name="settings_rate_app_github_summary">GitHub ನಲ್ಲಿ ನಕ್ಷತ್ರವನ್ನು ಬಿಡಿ! ಇದು ಇತರರಿಗೆ ಅಪ್ಲಿಕೇಶನ್ ಅನ್ನು ಅನ್ವೇಷಿಸಲು ಸಹಾಯ ಮಾಡುತ್ತದೆ ಮತ್ತು ಭವಿಷ್ಯದ ಅಭಿವೃದ್ಧಿಯನ್ನು ಬೆಂಬಲಿಸುತ್ತದೆ.</string>
 </resources>

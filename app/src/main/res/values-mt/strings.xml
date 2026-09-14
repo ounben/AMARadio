@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Kontrolli tal-plejer malajr</string>
     <string name="widget_description_full">Lista tal-plejers u l-istazzjonijiet</string>
+
+    <string name="settings_auto_db_update">Sinkronizzazzjoni tad-Data ta\' Sfond</string>
+    <string name="settings_auto_db_update_desc">Aġġorna awtomatikament id-database tal-istazzjon permezz tal-API tar-Radju-Browser (rakkomandat).</string>
+    <string name="settings_station_click_counter">Stazzjon ikklikkja counter</string>
+    <string name="settings_station_click_counter_desc">Appoġġa l-istatistika tar-Radju-Browser billi taqsam b\'mod anonimu avvenimenti tal-logħob.</string>
+    <string name="settings_rate_app_github">Tgawdi AMRadio?</string>
+    <string name="settings_rate_app_github_summary">Ħalli stilla fuq GitHub! Jgħin lill-oħrajn jiskopru l-app u jappoġġja l-iżvilupp futur.</string>
 </resources>

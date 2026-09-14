@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Tez o\'yinchi boshqaruvi</string>
     <string name="widget_description_full">O\'yinchilar va stantsiyalar ro\'yxati</string>
+
+    <string name="settings_auto_db_update">Fon ma\'lumotlarini sinxronlash</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API orqali stantsiya ma\'lumotlar bazasini avtomatik yangilash (tavsiya etiladi).</string>
+    <string name="settings_station_click_counter">Stantsiyani bosish hisoblagichi</string>
+    <string name="settings_station_click_counter_desc">O\'yin voqealarini anonim ravishda almashish orqali Radio-brauzer statistikasini qo\'llab-quvvatlang.</string>
+    <string name="settings_rate_app_github">AMARadio yoqyapsizmi?</string>
+    <string name="settings_rate_app_github_summary">GitHub\'da yulduz qoldiring! Bu boshqalarga ilovani topishga yordam beradi va kelajakdagi rivojlanishni qo\'llab-quvvatlaydi.</string>
 </resources>

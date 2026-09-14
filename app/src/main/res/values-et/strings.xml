@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Kiire mängija juhtnupud</string>
     <string name="widget_description_full">Mängija ja jaamade loend</string>
+
+    <string name="settings_auto_db_update">Taustaandmete sünkroonimine</string>
+    <string name="settings_auto_db_update_desc">Jaamade andmebaasi automaatne värskendamine Radio-Browser API kaudu (soovitatav).</string>
+    <string name="settings_station_click_counter">Jaama klikiloendur</string>
+    <string name="settings_station_click_counter_desc">Toetage raadiobrauseri statistikat, jagades mängusündmusi anonüümselt.</string>
+    <string name="settings_rate_app_github">Kas teile meeldib AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Jäta GitHubi tärn! See aitab teistel rakendust avastada ja toetab edasist arengut.</string>
 </resources>

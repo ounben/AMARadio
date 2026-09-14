@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Брзи контроли на плеерот</string>
     <string name="widget_description_full">Список на плеер и станици</string>
+
+    <string name="settings_auto_db_update">Синхронизација на податоци во заднина</string>
+    <string name="settings_auto_db_update_desc">Автоматско ажурирање на базата на податоци на станиците преку API на Radio-Browser (се препорачува).</string>
+    <string name="settings_station_click_counter">Бројач за кликнување на станицата</string>
+    <string name="settings_station_click_counter_desc">Поддржете ја статистиката на радио-прелистувачот со анонимно споделување настани за репродукција.</string>
+    <string name="settings_rate_app_github">Уживате во AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Оставете ѕвезда на GitHub! Им помага на другите да ја откријат апликацијата и го поддржува идниот развој.</string>
 </resources>

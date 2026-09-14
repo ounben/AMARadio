@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Hızlı oynatıcı kontrolleri</string>
     <string name="widget_description_full">Oyuncu ve istasyon listesi</string>
+
+    <string name="settings_auto_db_update">Arka Plan Veri Senkronizasyonu</string>
+    <string name="settings_auto_db_update_desc">Radyo Tarayıcı API\'si aracılığıyla istasyon veritabanını otomatik olarak güncelleyin (önerilir).</string>
+    <string name="settings_station_click_counter">İstasyon tıklama sayacı</string>
+    <string name="settings_station_click_counter_desc">Oyun etkinliklerini anonim olarak paylaşarak Radyo Tarayıcı istatistiklerini destekleyin.</string>
+    <string name="settings_rate_app_github">AMRadio\'yu beğeniyor musunuz?</string>
+    <string name="settings_rate_app_github_summary">GitHub\'a bir yıldız bırakın! Başkalarının uygulamayı keşfetmesine yardımcı olur ve gelecekteki gelişimi destekler.</string>
 </resources>

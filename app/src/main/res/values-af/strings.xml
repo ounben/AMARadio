@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Vinnige spelerkontroles</string>
     <string name="widget_description_full">Speler en stasie lys</string>
+
+    <string name="settings_auto_db_update">Agtergrond Data Sync</string>
+    <string name="settings_auto_db_update_desc">Werk stasiedatabasis outomaties op via Radio-Browser API (aanbeveel).</string>
+    <string name="settings_station_click_counter">Stasie klik teller</string>
+    <string name="settings_station_click_counter_desc">Ondersteun Radio-blaaier-statistieke deur speelgeleenthede anoniem te deel.</string>
+    <string name="settings_rate_app_github">Geniet jy AMARadio?</string>
+    <string name="settings_rate_app_github_summary">Los \'n ster op GitHub! Dit help ander om die toepassing te ontdek en ondersteun toekomstige ontwikkeling.</string>
 </resources>

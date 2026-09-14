@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Brze kontrole igrača</string>
     <string name="widget_description_full">Lista igrača i stanica</string>
+
+    <string name="settings_auto_db_update">Sinhronizacija podataka u pozadini</string>
+    <string name="settings_auto_db_update_desc">Automatsko ažuriranje baze podataka stanica putem Radio-Browser API-ja (preporučeno).</string>
+    <string name="settings_station_click_counter">Brojač klikova stanice</string>
+    <string name="settings_station_click_counter_desc">Podržite statistiku Radio-Browsera anonimnim dijeljenjem događaja igranja.</string>
+    <string name="settings_rate_app_github">Uživate u AMARadio-u?</string>
+    <string name="settings_rate_app_github_summary">Ostavite zvijezdu na GitHubu! Pomaže drugima da otkriju aplikaciju i podržava budući razvoj.</string>
 </resources>

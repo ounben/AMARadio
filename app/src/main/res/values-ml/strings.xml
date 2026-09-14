@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ദ്രുത പ്ലെയർ നിയന്ത്രണങ്ങൾ</string>
     <string name="widget_description_full">കളിക്കാരനും സ്റ്റേഷൻ ലിസ്റ്റും</string>
+
+    <string name="settings_auto_db_update">പശ്ചാത്തല ഡാറ്റ സമന്വയം</string>
+    <string name="settings_auto_db_update_desc">റേഡിയോ-ബ്രൗസർ API വഴി സ്റ്റേഷൻ ഡാറ്റാബേസ് സ്വയമേവ അപ്ഡേറ്റ് ചെയ്യുക (ശുപാർശ ചെയ്യുന്നത്).</string>
+    <string name="settings_station_click_counter">സ്റ്റേഷൻ ക്ലിക്ക് കൗണ്ടർ</string>
+    <string name="settings_station_click_counter_desc">പ്ലേ ഇവൻ്റുകൾ അജ്ഞാതമായി പങ്കിട്ടുകൊണ്ട് റേഡിയോ-ബ്രൗസർ സ്ഥിതിവിവരക്കണക്കുകൾ പിന്തുണയ്ക്കുക.</string>
+    <string name="settings_rate_app_github">AMARadio ആസ്വദിക്കുകയാണോ?</string>
+    <string name="settings_rate_app_github_summary">GitHub-ൽ ഒരു നക്ഷത്രം ഇടുക! ഇത് ആപ്പ് കണ്ടെത്താനും ഭാവി വികസനത്തെ പിന്തുണയ്ക്കാനും മറ്റുള്ളവരെ സഹായിക്കുന്നു.</string>
 </resources>

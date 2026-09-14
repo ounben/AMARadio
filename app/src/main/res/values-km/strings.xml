@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">ការគ្រប់គ្រងអ្នកលេងរហ័ស</string>
     <string name="widget_description_full">បញ្ជីចាក់និងស្ថានីយ៍</string>
+
+    <string name="settings_auto_db_update">សមកាលកម្មទិន្នន័យផ្ទៃខាងក្រោយ</string>
+    <string name="settings_auto_db_update_desc">ធ្វើបច្ចុប្បន្នភាពមូលដ្ឋានទិន្នន័យស្ថានីយ៍ដោយស្វ័យប្រវត្តិតាមរយៈ Radio-Browser API (បានណែនាំ)។</string>
+    <string name="settings_station_click_counter">ស្ថានីយចុចរាប់</string>
+    <string name="settings_station_click_counter_desc">គាំទ្រស្ថិតិរបស់ Radio-Browser ដោយចែករំលែកព្រឹត្តិការណ៍លេងដោយអនាមិក។</string>
+    <string name="settings_rate_app_github">រីករាយជាមួយ AMARadio?</string>
+    <string name="settings_rate_app_github_summary">ទុកផ្កាយនៅលើ GitHub! វាជួយឱ្យអ្នកដទៃរកឃើញកម្មវិធី និងគាំទ្រការអភិវឌ្ឍន៍នាពេលអនាគត។</string>
 </resources>

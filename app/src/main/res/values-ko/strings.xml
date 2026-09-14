@@ -356,4 +356,11 @@
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">빠른 플레이어 컨트롤</string>
     <string name="widget_description_full">플레이어 및 스테이션 목록</string>
+
+    <string name="settings_auto_db_update">백그라운드 데이터 동기화</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API를 통해 방송국 데이터베이스를 자동 업데이트합니다(권장).</string>
+    <string name="settings_station_click_counter">스테이션 클릭 카운터</string>
+    <string name="settings_station_click_counter_desc">익명으로 플레이 이벤트를 공유하여 라디오 브라우저 통계를 지원합니다.</string>
+    <string name="settings_rate_app_github">AMRadio를 즐기고 계시나요?</string>
+    <string name="settings_rate_app_github_summary">GitHub에 별표를 남겨주세요! 이는 다른 사람들이 앱을 발견하는 데 도움이 되고 향후 개발을 지원합니다.</string>
 </resources>
