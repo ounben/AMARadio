@@ -80,6 +80,17 @@ android {
         resValue 'string', 'available_locales', escapedLocales.join(",")
     }
 
+    flavorDimensions "dist"
+    productFlavors {
+        foss {
+            dimension "dist"
+            versionNameSuffix "-foss"
+        }
+        play {
+            dimension "dist"
+        }
+    }
+
 
     buildTypes {
         release {
@@ -107,7 +118,7 @@ android {
 androidComponents {
     onVariants(selector().all()) { variant ->
         variant.outputs.forEach { output ->
-            output.outputFileName.set("AMARadio_${appVersion}.apk")
+            output.outputFileName.set("AMARadio_${appVersion}_${variant.flavorName}.apk")
         }
     }
 }
@@ -164,11 +175,12 @@ dependencies {
     implementation libs.androidx.paging.compose
     implementation libs.reorderable
 
-    // Google Cast & Integrity
-    implementation libs.play.services.integrity
-    implementation libs.play.review
-    implementation libs.androidx.media3.cast
     implementation libs.androidx.work.runtime.ktx
+
+    // Play Store specific features (Google Play Services)
+    playImplementation libs.play.services.integrity
+    playImplementation libs.play.review
+    playImplementation libs.androidx.media3.cast
 
     testImplementation libs.junit
     testImplementation libs.junit.jupiter

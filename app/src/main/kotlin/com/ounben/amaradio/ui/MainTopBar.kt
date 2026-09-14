@@ -22,7 +22,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.media3.common.util.UnstableApi
-import androidx.media3.cast.MediaRouteButton
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
@@ -124,9 +123,7 @@ fun MainTopBar(
                         }
                     }
                 } else {
-                    MediaRouteButton(
-                        modifier = Modifier.size(48.dp)
-                    )
+                    CastButton()
 
                     IconButton(onClick = { onSearchToggle(true) }) {
                         Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search))
