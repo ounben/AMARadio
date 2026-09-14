@@ -22,6 +22,9 @@ class ReviewManager(private val context: Context) {
         private const val TAG = "ReviewManager"
     }
 
+    fun getLabelRes(): Int = R.string.settings_rate_app
+    fun getSummaryRes(): Int = R.string.settings_rate_app_summary
+
     /**
      * Returns true if the user has completed the review flow at least once.
      */

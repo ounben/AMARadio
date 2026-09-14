@@ -19,10 +19,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 
 @Composable
@@ -50,9 +52,10 @@ fun SettingsScreen(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             if (!uiState.isReviewCompleted) {
+                val app = LocalContext.current.applicationContext as AMARadioApp
                 SettingsClickable(
-                    title = stringResource(R.string.settings_rate_app),
-                    summary = stringResource(R.string.settings_rate_app_summary),
+                    title = stringResource(app.reviewManager.getLabelRes()),
+                    summary = stringResource(app.reviewManager.getSummaryRes()),
                     icon = Icons.Default.Star,
                     onClick = onRateApp
                 )
