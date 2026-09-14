@@ -15,6 +15,7 @@ import androidx.work.WorkerParameters
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.RadioBrowserServerManager
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.R
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toEntity
 import com.ounben.amaradio.station.DataRadioStation
@@ -32,8 +33,9 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
         val app = applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         
-        // Respect user setting (defaults to true)
-        if (!sharedPref.getBoolean("settings_auto_db_update", true)) {
+        // Respect user setting
+        val defaultSync = app.resources.getBoolean(R.bool.default_auto_db_update)
+        if (!sharedPref.getBoolean("settings_auto_db_update", defaultSync)) {
             return@withContext androidx.work.ListenableWorker.Result.success()
         }
 
@@ -81,7 +83,8 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
             val workManager = WorkManager.getInstance(context)
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
             
-            if (!sharedPref.getBoolean("settings_auto_db_update", true)) {
+            val defaultSync = context.resources.getBoolean(R.bool.default_auto_db_update)
+            if (!sharedPref.getBoolean("settings_auto_db_update", defaultSync)) {
                 workManager.cancelUniqueWork("ImmediateStartupSync")
                 workManager.cancelUniqueWork("StationSync")
                 return

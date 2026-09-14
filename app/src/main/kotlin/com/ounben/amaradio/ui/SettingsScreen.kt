@@ -67,8 +67,17 @@ fun SettingsScreen(
                         .padding(vertical = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(4.dp)
                 ) {
-                    InfoRow(stringResource(R.string.database_total_stations), serverInfoUiState.localStationCount.toString())
                     InfoRow(stringResource(R.string.database_last_sync), serverInfoUiState.lastSyncTime)
+                    
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    SettingsSwitch(
+                        title = stringResource(R.string.settings_auto_db_update),
+                        summary = stringResource(R.string.settings_auto_db_update_desc),
+                        checked = uiState.autoDbUpdate,
+                        icon = Icons.Default.CloudSync,
+                        onCheckedChange = { viewModel.updateBoolean("settings_auto_db_update", it) }
+                    )
                     
                     Spacer(modifier = Modifier.height(8.dp))
                     
@@ -214,6 +223,7 @@ fun SettingsSwitch(
     title: String,
     checked: Boolean,
     icon: ImageVector,
+    summary: String? = null,
     onCheckedChange: (Boolean) -> Unit
 ) {
     Row(
@@ -225,7 +235,12 @@ fun SettingsSwitch(
     ) {
         Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = title, modifier = Modifier.weight(1f), style = MaterialTheme.typography.bodyLarge)
+        Column(modifier = Modifier.weight(1f)) {
+            Text(text = title, style = MaterialTheme.typography.bodyLarge)
+            if (!summary.isNullOrBlank()) {
+                Text(text = summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        }
         Switch(checked = checked, onCheckedChange = onCheckedChange)
     }
 }
