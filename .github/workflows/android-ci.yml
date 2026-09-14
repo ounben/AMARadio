@@ -25,10 +25,16 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug --stacktrace
+        run: ./gradlew assembleFossDebug assemblePlayDebug --stacktrace
 
-      - name: Upload APK
+      - name: Upload FOSS Debug APK
         uses: actions/upload-artifact@v4
         with:
-          name: AMARadio-Debug-APK
-          path: app/build/outputs/apk/debug/*.apk
+          name: AMARadio-FOSS-Debug-APK
+          path: app/build/outputs/apk/foss/debug/*.apk
+
+      - name: Upload Play Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: AMARadio-Play-Debug-APK
+          path: app/build/outputs/apk/play/debug/*.apk
