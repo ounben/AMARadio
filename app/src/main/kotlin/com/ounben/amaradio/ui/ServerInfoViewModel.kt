@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.workDataOf
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.R
@@ -115,7 +116,9 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
         viewModelScope.launch {
             _uiState.update { it.copy(isSyncing = true) }
             
-            val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>().build()
+            val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>()
+                .setInputData(workDataOf("is_manual" to true))
+                .build()
             WorkManager.getInstance(app).enqueue(syncRequest)
             
             // The prefListener will pick up the completion of the worker 

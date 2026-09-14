@@ -33,9 +33,11 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
         val app = applicationContext as AMARadioApp
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(app)
         
-        // Respect user setting
+        // Enforce setting only for scheduled periodic or automated background work.
+        // If triggered manually, inputData contains "is_manual" = true to bypass this check.
+        val isManual = inputData.getBoolean("is_manual", false)
         val defaultSync = app.resources.getBoolean(R.bool.default_auto_db_update)
-        if (!sharedPref.getBoolean("settings_auto_db_update", defaultSync)) {
+        if (!isManual && !sharedPref.getBoolean("settings_auto_db_update", defaultSync)) {
             return@withContext androidx.work.ListenableWorker.Result.success()
         }
 
