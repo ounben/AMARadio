@@ -12,7 +12,7 @@
 - Broad Language Support
 - Modern Design: Jetpack Compose, Dark/Light modes.
 - Optimized Image Loading via Coil
-- Sleep timer, favorites management, and M3U playlist export/import.
+- Sleep timer, favorites management, custom station management, and M3U export/import.
 
 <b>Acknowledgments</b>
 Special thanks to the RadioDroid project for the inspiration and ground-breaking work in open-source radio streaming.
