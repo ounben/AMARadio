@@ -1,0 +1,18 @@
+<b>AMARadio</b> was developed to enable an honest and distraction-free radio listening experience. The radio app is completely ad-free, contains no tracking, and no unnecessary bloatware. Originally started as a personal project to create a simple and accessible interface for global radio, the app remains consistently transparent and easy to use – for everyone.
+
+<b>Key Features</b>
+- 60,000 stations via Radio-Browser API
+- Local Radio-Browser database
+- Optional background sync with Radio-Browser database
+- Android Auto Integration
+- Modern Home Screen Widgets
+- Custom Radio Stations
+- Advanced Search & Filtering: Find stations by Name, Country, Language, or Tags.
+- Dynamic UI Scaling
+- Broad Language Support
+- Modern Design: Jetpack Compose, Dark/Light modes.
+- Optimized Image Loading via Coil
+- Sleep timer, favorites management, and M3U playlist export/import.
+
+<b>Acknowledgments</b>
+Special thanks to the RadioDroid project for the inspiration and ground-breaking work in open-source radio streaming.
