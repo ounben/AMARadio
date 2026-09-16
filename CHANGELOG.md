@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.36] - 2026-09-14
+DB 20260916
+### Added
+- **F-Droid Build Compliance**: Prepped project settings for official F-Droid catalog indexing. Disabled the external Java-toolchain reflection wrapper (`foojay-resolver`) in `settings.gradle` to comply with F-Droid's strict source-built, offline-reproducible binary requirements.
+- **Fastlane Store Metadata**: Configured a complete automated app store directory (`fastlane/metadata/android/en-US/`) containing standardized titles, short summaries, keywords, and a comprehensive app description.
+
+### Fixed
+- **Instant Manual Sync Bypass**: Corrected database update behavior under the newly introduced FOSS isolation guidelines. Forcing an immediate refresh via "Update Database Now" now instantly fires and runs to completion, ignoring whether global background background data syncing is actively disabled.
+- **Kryptographic Build Security**: Hardened the local Gradle Wrapper infrastructure by baking the official SHA-256 distribution hash checksum into the gradle properties, completely securing remote environment downloads against Man-in-the-Middle (MitM) attacks.
+- **Flavor-Aware CI/CD Workflow**: Upgraded the internal GitHub Actions automation logic to properly target, build, and archive the individual `foss` and `play` debug artifacts into cleanly separated output files.
+
 ## [1.35] - 2026-09-14
 ### Added
 - **Build Flavors (FOSS & Play Split)**: Separated the app into `foss` (pure open-source, no proprietary dependencies) and `play` flavors.
