@@ -5,6 +5,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.37] - 2026-09-16
+### Added
+- **F-Droid Reproducible Build Pipeline**: Hardened the entire compilation chain to enable byte-accurate APK verification for F-Droid. 
+- **F-Droid VCS & Resource Determinism**: Deactivated unstable native resource crunching and compiler-inserted compilation environment trails (`vcsInfo`), guaranteeing consistent builds regardless of the machine's host operating system or folder naming structures.
+
+### Changed
+- **F-Droid Streamlined About Screen**: Simplified the version metadata presentation in the About screen. Extraneous local build compilation timestamps and volatile repository hashes were removed in favor of a clean, distraction-free display of the pure application version identifier.
+
 ## [1.36] - 2026-09-14
 DB 20260916
 ### Added

@@ -29,14 +29,7 @@ fun AboutScreen(onBack: () -> Unit) {
     val context = LocalContext.current
     val uriHandler = LocalUriHandler.current
     val version = stringResource(R.string.version_name)
-    val gitHash = stringResource(R.string.git_hash)
-    val buildDate = stringResource(R.string.build_date)
-    
-    val fullVersion = if (gitHash.isNotEmpty()) {
-        "$version (git $gitHash) $buildDate"
-    } else {
-        "$version $buildDate"
-    }
+    val fullVersion = version
 
     val aboutText = stringResource(R.string.about_text)
     

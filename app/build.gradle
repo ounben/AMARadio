@@ -8,7 +8,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "1.36"
+def appVersion = "1.37"
 
 base {
     archivesName.set("AMARadio_${appVersion}")
@@ -29,8 +29,10 @@ def getAvailableLocales() {
 def getGitHash() {
     try {
         def stdout = new ByteArrayOutputStream()
+        def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+        def cmd = isWindows ? ['cmd', '/c', 'git rev-parse --short HEAD'] : ['git', 'rev-parse', '--short', 'HEAD']
         exec {
-            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            commandLine cmd
             standardOutput = stdout
         }
         return stdout.toString().trim()
@@ -42,13 +44,15 @@ def getGitHash() {
 def getGitCommitDate() {
     try {
         def stdout = new ByteArrayOutputStream()
+        def isWindows = System.getProperty("os.name").toLowerCase().contains("win")
+        def cmd = isWindows ? ['cmd', '/c', 'git log -1 --format=%ci'] : ['git', 'log', '-1', '--format=%ci']
         exec {
-            commandLine 'git', 'log', '-1', '--format=%ci'
+            commandLine cmd
             standardOutput = stdout
         }
         return stdout.toString().trim()
     } catch (ignored) {
-        return "2026-09-14 00:00:00"
+        return "2026-09-16 00:00:00"
     }
 }
 
@@ -100,8 +104,8 @@ android {
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
         resValue 'string', 'version_name', appVersion
-        resValue 'string', 'git_hash', getGitHash()
-        resValue 'string', 'build_date', getGitCommitDate()
+        resValue 'string', 'git_hash', ""
+        resValue 'string', 'build_date', ""
 
         def escapedLocales = getAvailableLocales()
         resValue 'string', 'available_locales', escapedLocales.join(",")
