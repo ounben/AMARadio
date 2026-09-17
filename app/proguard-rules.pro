@@ -43,3 +43,7 @@
 # Common Android components
 -keep class androidx.lifecycle.** { *; }
 -keep class androidx.preference.** { *; }
+
+# Prevent R8 ServiceLoader optimization non-determinism (F-Droid compliance)
+-keep class kotlinx.coroutines.CoroutineExceptionHandler
+-keep class kotlinx.coroutines.internal.MainDispatcherFactory

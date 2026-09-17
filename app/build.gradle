@@ -113,6 +113,7 @@ android {
 
     aaptOptions {
         cruncherEnabled = false
+        ignoreAssetsPattern = "dexopt"
     }
 
     flavorDimensions "dist"
@@ -222,11 +223,4 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.vintage.engine
     testRuntimeOnly libs.junit.platform.launcher
-}
-
-// Disable baseline profile tasks for reproducible builds
-tasks.whenTaskAdded { task ->
-    if (task.name.contains("ArtProfile")) {
-        task.enabled = false
-    }
 }
