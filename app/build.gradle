@@ -26,6 +26,32 @@ def getAvailableLocales() {
     }
 }
 
+def getGitHash() {
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'rev-parse', '--short', 'HEAD'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (ignored) {
+        return "N/A"
+    }
+}
+
+def getGitCommitDate() {
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'log', '-1', '--format=%ci'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    } catch (ignored) {
+        return "2026-09-14 00:00:00"
+    }
+}
+
 android {
     namespace 'com.ounben.amaradio'
     compileSdk 37
@@ -66,6 +92,7 @@ android {
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true
+        vectorDrawables.generatedDensities = []
 
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas".toString())
@@ -73,11 +100,15 @@ android {
 
         resValue 'string', 'app_name_untranslated', 'AMARadio'
         resValue 'string', 'version_name', appVersion
-        resValue 'string', 'git_hash', "N/A"
-        resValue 'string', 'build_date', new Date().format('yyyy-MM-dd HH:mm:ss')
+        resValue 'string', 'git_hash', getGitHash()
+        resValue 'string', 'build_date', getGitCommitDate()
 
         def escapedLocales = getAvailableLocales()
         resValue 'string', 'available_locales', escapedLocales.join(",")
+    }
+
+    aaptOptions {
+        cruncherEnabled = false
     }
 
     flavorDimensions "dist"
@@ -98,6 +129,7 @@ android {
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
+            vcsInfo.include = false
         }
     }
 
@@ -186,4 +218,11 @@ dependencies {
     testImplementation libs.junit.jupiter
     testRuntimeOnly libs.junit.vintage.engine
     testRuntimeOnly libs.junit.platform.launcher
+}
+
+// Disable baseline profile tasks for reproducible builds
+tasks.whenTaskAdded { task ->
+    if (task.name.contains("ArtProfile")) {
+        task.enabled = false
+    }
 }
