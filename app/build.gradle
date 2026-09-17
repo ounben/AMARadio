@@ -135,6 +135,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.debug
             vcsInfo.include = false
+            dependenciesInfo {
+                includeInApk = false
+                includeInBundle = false
+            }
         }
     }
 
