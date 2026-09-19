@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.CountryCodeDictionary
-import com.ounben.amaradio.CountryFlagsLoader
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.data.DataCategory
 import com.ounben.amaradio.station.SearchStyle
@@ -73,14 +72,12 @@ class CategoriesViewModel(application: Application) : AndroidViewModel(applicati
                 val data = withContext(Dispatchers.Default) {
                     val categories = DataCategory.DecodeJson(result).toList()
                     val countryDict = CountryCodeDictionary.instance
-                    val flagsDict = CountryFlagsLoader.instance
                     
                     val filtered = categories.filter { 
                         !singleUseFilter || showSingleUseTags || (it.UsedCount > 1)
                     }.onEach { cat ->
                         if (searchStyle == SearchStyle.ByCountryCodeExact) {
                             cat.Label = countryDict.getCountryByCode(cat.Name)
-                            cat.Icon = flagsDict.getFlag(app, cat.Name)
                         }
                     }
 

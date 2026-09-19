@@ -25,7 +25,6 @@
 
         <item name="colorPlayerBackground">@color/colorPlayerBackground</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadow</item>
-        <item name="tagBackgroundColor">@color/tagBackgroundColor</item>
 
         <item name="menuTextColorSelected">@color/menuTextColorSelected</item>
         <item name="menuTextColorDefault">@color/menuTextColorDefault</item>
@@ -68,8 +67,6 @@
 
         <item name="colorPlayerBackground">@color/colorPlayerBackgroundDark</item>
         <item name="colorPlayerShadow">@color/colorPlayerShadowDark</item>
-
-        <item name="tagBackgroundColor">@color/tagBackgroundColorDark</item>
 
         <item name="menuTextColorSelected">@color/menuTextColorSelectedDark</item>
         <item name="menuTextColorDefault">@color/menuTextColorDefaultDark</item>

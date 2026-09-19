@@ -12,7 +12,6 @@ class DataCategory : Comparable<DataCategory> {
     @SerialName("stationcount") var UsedCount: Int = 0
     
     @Transient var Label: String? = null
-    @Transient var Icon: Drawable? = null
 
     val sortField: String
         get() = Label ?: Name

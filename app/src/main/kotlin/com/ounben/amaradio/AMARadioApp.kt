@@ -94,7 +94,6 @@ class AMARadioApp : Application(), ImageLoaderFactory {
             rebuildHttpClient()
 
             CountryCodeDictionary.instance.load(this)
-            CountryFlagsLoader.instance
 
             // TRRIGGER USER DB MIGRATION BEFORE INITIALIZING MANAGERS
             val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main + kotlinx.coroutines.SupervisorJob())
