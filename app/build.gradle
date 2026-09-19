@@ -120,7 +120,6 @@ android {
     productFlavors {
         foss {
             dimension "dist"
-            versionNameSuffix "-foss"
         }
         play {
             dimension "dist"
