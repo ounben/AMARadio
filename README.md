@@ -7,8 +7,13 @@ Ad-Free - No Paywall - Just Radio
 **AMARadio** is an open-source Android application for worldwide radio streaming. By leveraging the community-supported [radio-browser.info](https://www.radio-browser.info/) database, AMARadio provides instant access to thousands of stations in a stable, modern, and user-friendly environment.
 
 <div align="left">
-  <a href="https://play.google.com/store/apps/details?id=com.ounben.amaradio"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="60" /></a>
-  <a href="obtainium://add/https://github.com/ounben/AMARadio"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="60" /></a>
+  <a href="https://play.google.com/store/apps/details?id=com.ounben.amaradio"><img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" alt="Get it on Google Play" height="80" /></a>
+  <a href="https://f-droid.org/packages/com.ounben.amaradio">
+    <img src="https://f-droid.org/badge/get-it-on.png"
+    alt="Get it on F-Droid"
+    height="80">
+</a>
+  <a href="obtainium://add/https://github.com/ounben/AMARadio"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="80" /></a>
   <br />
   <sub>(Obtainium installed? <a href="obtainium://add/https://github.com/ounben/AMARadio">Add directly</a> | No Obtainium? <a href="https://github.com/ImranR98/Obtainium">Download app</a>)</sub>
 </div>
