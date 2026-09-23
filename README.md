@@ -150,7 +150,7 @@ Contributions are welcome and appreciated. If you wish to improve the codebase, 
 
 ## License
 
-This project is licensed under the **GNU General Public License v3.0**. Detailed information can be found in the [LICENSE](LICENSE) file.
+This project is licensed under the **GNU General Public License v3.0**. Detailed information can be found in the [LICENCE](LICENCE) file.
 
 ---
 <p align="left">
