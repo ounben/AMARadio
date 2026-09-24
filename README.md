@@ -1,4 +1,12 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Exodus Privacy](https://img.shields.io/badge/Exodus%20Privacy-0%20Tracker-brightgreen?logo=android)](https://reports.exodus-privacy.eu.org/de/reports/com.ounben.amaradio/latest/)
+[![VirusTotal](https://img.shields.io/badge/VirusTotal-0%2F96%20Clean-brightgreen?logo=virustotal&logoColor=white)](https://www.virustotal.com/gui/url/aa8b0a5d3cdb32e328509858b39baefc0e32b72732a566510e4dfc323b0ee43e/details)
+[![Google Play](https://img.shields.io/badge/Google_Play-AMARadio-410099?logo=googleplay&logoColor=white)](https://play.google.com/store/apps/details?id=com.ounben.amaradio)
+[![F-Droid](https://img.shields.io/f-droid/v/com.ounben.amaradio?logo=f-droid&logoColor=white&color=blue)](https://f-droid.org/packages/com.ounben.amaradio/)
+[![GitHub Release](https://img.shields.io/github/v/release/OunBen/AMARadio?logo=github&color=blue)](https://github.com/OunBen/AMARadio/releases/latest)
+[![Radio-Browser](https://img.shields.io/badge/Data-Radio--Browser.info-1E88E5?logo=radio&logoColor=white)](https://www.radio-browser.info/)
+[![Kotlin](https://img.shields.io/badge/Kotlin-100%25-7F52FF.svg?logo=kotlin&logoColor=white)](https://kotlinlang.org/)
+
 # AMARadio Open Source Radio
 Ad-Free - No Paywall - Just Radio
 
@@ -11,8 +19,7 @@ Ad-Free - No Paywall - Just Radio
   <a href="https://f-droid.org/packages/com.ounben.amaradio">
     <img src="https://f-droid.org/badge/get-it-on.png"
     alt="Get it on F-Droid"
-    height="80">
-</a>
+    height="80" /></a>
   <a href="obtainium://add/https://github.com/ounben/AMARadio"><img src="https://raw.githubusercontent.com/ImranR98/Obtainium/main/assets/graphics/badge_obtainium.png" alt="Get it on Obtainium" height="80" /></a>
   <br />
   <sub>(Obtainium installed? <a href="obtainium://add/https://github.com/ounben/AMARadio">Add directly</a> | No Obtainium? <a href="https://github.com/ImranR98/Obtainium">Download app</a>)</sub>
@@ -138,7 +145,7 @@ To build the project locally, ensure you have the latest version of Android Stud
 ## UML
 
 <p align="left">
-  <img src="https://private-user-images.githubusercontent.com/48635796/635651865-36d1ab4c-a1e7-49a9-b36a-f514fcf62933.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3ODkyMzY0NTMsIm5iZiI6MTc4OTIzNjE1MywicGF0aCI6Ii80ODYzNTc5Ni82MzU2NTE4NjUtMzZkMWFiNGMtYTFlNy00OWE5LWIzNmEtZjUxNGZjZjYyOTMzLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA5MTIlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwOTEyVDE4MDIzM1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTFkYTAzNDAwMmQ1MTRhN2QxYjYwZjEzZjA3ZjZkZmJiNzU5ZDI5Y2M3ODMxODVhODYyNzA2MTMzNTM1OGQyYWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.EFS0rawRRfCTtemnPS1rs3jMXG1VpGytSyhO0JL9APM" width="100%" />
+  <img src="docs/UML/UML_AMARadio_Custom_Favorit.png" width="100%" />
 </p>
 
 ## Contributing
