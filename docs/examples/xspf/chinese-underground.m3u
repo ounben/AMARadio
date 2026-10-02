@@ -1,0 +1,89 @@
+#EXTM3U
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/citypop-four.png" x-group-en="Underground & indie" x-name-en="City Pop Four (Taiwan city pop)" x-country="TW",City Pop Four 台湾城市流行
+https://m.radio.fm:8443/citypopfour
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/shanghai-lido.png" x-group-en="Underground & indie" x-name-en="Shanghai Lido (1940s Shanghai songs)",上海麗都電台（老上海时代曲）
+https://radio.nitro-server.uk/listen/1940sshanghaioldtimesmusicradio/radio.mp3
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/livesshhs.png" x-group-en="Underground & indie" x-name-en="LIVESSHHS (Chinese rock)",LIVESSHHS 中国摇滚
+https://stream.zeno.fm/f5j1tup1srouv
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/hkcr.png" x-group-en="Underground & indie" x-name-en="Hong Kong Community Radio" x-country="HK",香港聯合電台 HKCR
+https://stream-test.hkcr.live/hls/main.m3u8
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/belowground.png" x-group-en="Underground & indie" x-name-en="FM Belowground (Hong Kong)" x-country="HK",FM Belowground 地库电台
+https://listen.belowground.fm/radio/8000/radio.mp3
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/drhk.png" x-group-en="Underground & indie" x-name-en="Digital Radio Hong Kong" x-country="HK",香港數碼電台
+https://ice.digitalradiohk.net:8443/drhk
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/shirley-spinoza.png" x-group-en="Underground & indie" x-name-en="Shirley & Spinoza Radio",Shirley & Spinoza 大理怪奇电台
+https://s2.radio.co/sec5fa6199/listen
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/chinese-music-world.png" x-group-en="Underground & indie" x-name-en="Chinese Music World (traditional)" x-country="CN",中国民乐在线电台
+https://radio.chinesemusicworld.com/chinesemusic.mp3
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/thmr.png" x-group-en="Underground & indie" x-name-en="Touhou Music Radio" x-country="CN",东方音乐电台 THMR
+https://radio.yunmoan.cn/radio/touhou/128k
+#EXTINF:-1 group-title="地下与独立" tvg-logo="asset://curated/logos/phate.png" x-group-en="Underground & indie" x-name-en="Phate Radio (anime & games)" x-country="TW",飛特電台 Phate Radio
+https://stream.phate.io/phateio.mp3
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/formosa-new-voice.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Formosa New Voice FM98.5" x-country="TW",寶島新聲 FM98.5
+http://125.227.87.206:8000/FM98.5
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/green-peace.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Green Peace Radio FM97.3" x-country="TW",綠色和平電台 FM97.3
+http://202.39.43.67:1935/live/RA000086/playlist.m3u8
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/formosa-hakka.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Formosa Hakka Radio FM93.7" x-country="TW",寶島客家電台 FM93.7
+http://taiwan-radio.tw:8000/TP.FM93.7
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/xiagang.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Voice of Southern Taiwan FM90.5" x-country="TW",下港之聲 FM90.5
+http://59.120.255.155:8081/
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/dajin.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Dajin Radio FM106.3 (Kinmen)" x-country="TW",大金廣播 FM106.3（金門）
+http://61.220.75.207:8106/
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/victory-am774.png" x-group-en="Taiwan's ex-underground radio" x-name-en="Victory Voice AM774 (Tainan)" x-country="TW",勝利之聲 AM774（台南）
+http://test.taiwan-radio.tw:8000/TN.AM774
+#EXTINF:-1 group-title="台湾地下電台" tvg-logo="asset://curated/logos/radio-1766.png" x-group-en="Taiwan's ex-underground radio" x-name-en="1766 Online Radio" x-country="TW",1766 線上電臺
+http://livestream.1766.today:1768/live1.mp3
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/kuanghua.png" x-group-en="Cold War & international" x-name-en="Voice of Kuanghua" x-country="TW",光華之聲
+http://202.39.43.67:1935/live/RA000077/playlist.m3u8
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/fuhsing.png" x-group-en="Cold War & international" x-name-en="Fu Hsing Broadcasting Station" x-country="TW",復興廣播電臺
+http://202.39.43.67:1935/live/RA000024/playlist.m3u8
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/rti-mandarin.png" x-group-en="Cold War & international" x-name-en="Radio Taiwan International (Mandarin)" x-country="TW",中央廣播電臺 華語
+https://streamak0138.akamaized.net/live0138lh-mbm9/_definst_/rti3/playlist.m3u8
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/rfa-mandarin.png" x-group-en="Cold War & international" x-name-en="Radio Free Asia (Mandarin)" x-country="US",自由亚洲电台 普通话
+https://c44.radioboss.fm/hls/173/stream.m3u8
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/rfi-chinese.png" x-group-en="Cold War & international" x-name-en="RFI Chinese" x-country="FR",法国国际广播电台 华语
+https://rfichinois96k.ice.infomaniak.ch/rfichinois-96k.mp3
+#EXTINF:-1 group-title="心战与境外广播" tvg-logo="asset://curated/logos/vatican-chinese.png" x-group-en="Cold War & international" x-name-en="Vatican Radio (Chinese)" x-country="VA",梵蒂冈电台 中文
+https://radio.vaticannews.va/stream-zh
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/police-radio.png" x-group-en="Police, army, fishing & more" x-name-en="Police Broadcasting Service (Taiwan)" x-country="TW",警察廣播電臺
+https://stream.pbs.gov.tw/live/PBS/playlist.m3u8
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/voice-of-han.png" x-group-en="Police, army, fishing & more" x-name-en="Voice of Han (military radio)" x-country="TW",漢聲廣播電臺
+http://202.39.43.67:1935/live/RA000076/playlist.m3u8
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/fisheries.png" x-group-en="Police, army, fishing & more" x-name-en="Fisheries Radio (Taiwan)" x-country="TW",漁業廣播電臺
+https://stream.rcs.revma.com/mk0c5vq122hvv
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/taipei-indigenous.png" x-group-en="Police, army, fishing & more" x-name-en="Taipei Indigenous Channel AM1134" x-country="TW",臺北電台 原住民頻道 AM1134
+https://stream.ginnet.cloud/live0130lo-yfyo/_definst_/am/playlist.m3u8
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/cancheers.png" x-group-en="Police, army, fishing & more" x-name-en="CanCheers (radio for cancer patients)" x-country="TW",牽手之聲（癌友電台）
+https://us3.internet-radio.com/proxy/cancheers?mp=/stream
+#EXTINF:-1 group-title="军警渔与公益" tvg-logo="asset://curated/logos/vila-verde.png" x-group-en="Police, army, fishing & more" x-name-en="Rádio Vila Verde FM99.5 (Macau)" x-country="MO",綠邨電台 FM99.5（澳門）
+https://macaofm995.com/hls1/fm995.m3u8
+#EXTINF:-1 group-title="校园电台" tvg-logo="asset://curated/logos/nccu.png" x-group-en="Campus radio" x-name-en="Voice of NCCU FM88.7" x-country="TW",政大之聲 FM88.7
+https://vnccuonair.nccu.edu.tw/ade.taiwan.mp3
+#EXTINF:-1 group-title="校园电台" tvg-logo="asset://curated/logos/shih-hsin.png" x-group-en="Campus radio" x-name-en="Shih Hsin University Radio FM88.1" x-country="TW",世新廣播電臺 FM88.1
+https://stream.ginnet.cloud/live0115lo-89xv/_definst_/fm881/playlist.m3u8
+#EXTINF:-1 group-title="校园电台" tvg-logo="asset://curated/logos/ntua.png" x-group-en="Campus radio" x-name-en="Voice of NTUA FM88.3" x-country="TW",臺藝之聲 FM88.3
+https://votastream.ntua.edu.tw:8443/vota
+#EXTINF:-1 group-title="校园电台" tvg-logo="asset://curated/logos/fju.png" x-group-en="Campus radio" x-name-en="Voice of FJU FM88.5" x-country="TW",輔大之聲 FM88.5
+http://fjuvoice885.fju.edu.tw:8000/fjuvoice885.mp3
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/2cr.png" x-group-en="Overseas Chinese" x-name-en="2CR Australia Chinese Radio (Sydney)" x-country="AU",2CR 澳洲中文廣播電台（悉尼）
+https://listen10.as.amplifystreaming.com/listen/2cr/Chinese-Radio-2CR.mp3
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/2ac-cantonese.png" x-group-en="Overseas Chinese" x-name-en="2AC Australian Chinese Radio (Cantonese)" x-country="AU",2AC 澳洲華人電台 粵語台
+https://s1.voscast.com:10443/stream
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/ac878.png" x-group-en="Overseas Chinese" x-name-en="AC878 Australian Chinese FM (Sydney)" x-country="AU",AC878 澳洲華語 FM（悉尼）
+https://stream4.rcast.net/71937/
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/nz-906.png" x-group-en="Overseas Chinese" x-name-en="Radio Chinese FM90.6 (Auckland)" x-country="NZ",新西兰中文广播 FM90.6（奥克兰）
+https://s26.myradiostream.com:20274/listen.mp3
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/chmb-1320.png" x-group-en="Overseas Chinese" x-name-en="CHMB AM1320 (Vancouver)" x-country="CA",CHMB 華僑之聲 AM1320（温哥华）
+https://stream.radiojar.com/nugqupcv8qzuv
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/fairchild-1430.png" x-group-en="Overseas Chinese" x-name-en="Fairchild Radio AM1430 (Toronto)" x-country="CA",加拿大中文電台 AM1430（多伦多）
+https://stream.eseenet.com/radio/am1430.stream/playlist.m3u8
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/kazn-1300.png" x-group-en="Overseas Chinese" x-name-en="KAZN AM1300 (Los Angeles)" x-country="US",KAZN AM1300（洛杉矶）
+https://video1.getstreamhosting.com:8308/stream
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/wzrc-1480.png" x-group-en="Overseas Chinese" x-name-en="WZRC AM1480 New York (Cantonese)" x-country="US",WZRC AM1480 纽约粤语台
+https://video1.getstreamhosting.com:8288/stream
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/dubai-chinese.png" x-group-en="Overseas Chinese" x-name-en="Dubai Chinese Radio" x-country="AE",迪拜华人广播
+https://a10.asurahosting.com:7830/radio.mp3
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/jakarta-983.png" x-group-en="Overseas Chinese" x-name-en="Mandarin Station 98.3 (Jakarta)" x-country="ID",Mandarin Station 98.3（雅加达）
+https://stream01-ssl.arenastreaming.com:8043/stream
+#EXTINF:-1 group-title="海外华人" tvg-logo="asset://curated/logos/bigcow.png" x-group-en="Overseas Chinese" x-name-en="BIGCOWFM (Malaysia)" x-country="MY",大牛网络电台 BIGCOWFM（马来西亚）
+http://onairnow.ddns.net:8000/chinese.mp3
