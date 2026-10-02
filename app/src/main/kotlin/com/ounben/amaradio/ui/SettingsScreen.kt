@@ -172,6 +172,13 @@ fun SettingsScreen(
                     icon = Icons.Default.NotificationsOff,
                     onCheckedChange = { viewModel.updateBoolean("settings_remove_notification_on_stop", it) }
                 )
+                SettingsSwitch(
+                    title = stringResource(R.string.settings_auto_resume_audio_focus),
+                    summary = stringResource(R.string.settings_auto_resume_audio_focus_desc),
+                    checked = uiState.autoResumeAudioFocus,
+                    icon = Icons.AutoMirrored.Filled.VolumeUp,
+                    onCheckedChange = { viewModel.updateBoolean("settings_auto_resume_audio_focus", it) }
+                )
                 /*
                 SettingsClickable(
                     title = stringResource(R.string.settings_equalizer),

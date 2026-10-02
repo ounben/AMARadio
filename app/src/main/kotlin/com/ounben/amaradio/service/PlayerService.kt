@@ -186,7 +186,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 if (Utils.isDebug) {
                     Log.d(tag, "audio focus gain")
                 }
-                if (pauseReason == PauseReason.FOCUS_LOSS_TRANSIENT) {
+                val autoResume = sharedPref?.getBoolean("settings_auto_resume_audio_focus", true) ?: true
+                if (autoResume && pauseReason == PauseReason.FOCUS_LOSS_TRANSIENT) {
                     resume()
                 }
                 radioPlayer?.setVolume(FULL_VOLUME)

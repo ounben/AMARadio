@@ -164,6 +164,8 @@
     <string name="settings_play_external_desc_off">Play stations with AMARadio</string>
     <string name="settings_remove_notification_on_stop">Remove notification when app is closed</string>
     <string name="settings_remove_notification_on_stop_desc">Automatically dismiss the media notification when the app is closed from recent apps</string>
+    <string name="settings_auto_resume_audio_focus">Resume after audio focus loss</string>
+    <string name="settings_auto_resume_audio_focus_desc">Automatically resume playback after phone calls, alarms, or other audio stops</string>
     <string name="settings_equalizer">Equalizer</string>
 
     <string name="settings_connectivity">Connectivity</string>

@@ -33,6 +33,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val autoDbUpdate: Boolean = true,
         val stationClickCounter: Boolean = true,
         val removeNotificationOnStop: Boolean = true,
+        val autoResumeAudioFocus: Boolean = true,
         val isReviewCompleted: Boolean = false
     )
 
@@ -90,6 +91,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 autoDbUpdate = sharedPref.getBoolean("settings_auto_db_update", app.resources.getBoolean(R.bool.default_auto_db_update)),
                 stationClickCounter = sharedPref.getBoolean("settings_station_click_counter", app.resources.getBoolean(R.bool.default_station_click_counter)),
                 removeNotificationOnStop = sharedPref.getBoolean("settings_remove_notification_on_stop", true),
+                autoResumeAudioFocus = sharedPref.getBoolean("settings_auto_resume_audio_focus", true),
                 isReviewCompleted = sharedPref.getBoolean("review_completed", false)
             )
         }
