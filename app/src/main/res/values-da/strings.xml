@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Støt Radio-Browser-statistikker ved anonymt at dele afspilningsbegivenheder.</string>
     <string name="settings_rate_app_github">Nyder du AMARadio?</string>
     <string name="settings_rate_app_github_summary">Efterlad en stjerne på GitHub! Det hjælper andre med at opdage appen og understøtter fremtidig udvikling.</string>
+
+    <string name="settings_remove_notification_on_stop">Fjern notifikation, når appen er lukket</string>
+    <string name="settings_remove_notification_on_stop_desc">Afvis automatisk mediemeddelelsen, når appen lukkes fra de seneste apps</string>
+    <string name="settings_auto_resume_audio_focus">Genoptag efter tab af lydfokus</string>
+    <string name="settings_auto_resume_audio_focus_desc">Genoptag automatisk afspilning efter telefonopkald, alarmer eller anden lydstop</string>
 </resources>

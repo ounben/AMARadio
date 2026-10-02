@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">익명으로 플레이 이벤트를 공유하여 라디오 브라우저 통계를 지원합니다.</string>
     <string name="settings_rate_app_github">AMRadio를 즐기고 계시나요?</string>
     <string name="settings_rate_app_github_summary">GitHub에 별표를 남겨주세요! 이는 다른 사람들이 앱을 발견하는 데 도움이 되고 향후 개발을 지원합니다.</string>
+
+    <string name="settings_remove_notification_on_stop">앱이 닫힐 때 알림 제거</string>
+    <string name="settings_remove_notification_on_stop_desc">최근 앱에서 앱이 종료되면 미디어 알림을 자동으로 해제합니다.</string>
+    <string name="settings_auto_resume_audio_focus">오디오 포커스 손실 후 재개</string>
+    <string name="settings_auto_resume_audio_focus_desc">전화 통화, 알람 또는 기타 오디오 중지 후 자동으로 재생을 재개합니다.</string>
 </resources>

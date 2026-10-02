@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">പ്ലേ ഇവൻ്റുകൾ അജ്ഞാതമായി പങ്കിട്ടുകൊണ്ട് റേഡിയോ-ബ്രൗസർ സ്ഥിതിവിവരക്കണക്കുകൾ പിന്തുണയ്ക്കുക.</string>
     <string name="settings_rate_app_github">AMARadio ആസ്വദിക്കുകയാണോ?</string>
     <string name="settings_rate_app_github_summary">GitHub-ൽ ഒരു നക്ഷത്രം ഇടുക! ഇത് ആപ്പ് കണ്ടെത്താനും ഭാവി വികസനത്തെ പിന്തുണയ്ക്കാനും മറ്റുള്ളവരെ സഹായിക്കുന്നു.</string>
+
+    <string name="settings_remove_notification_on_stop">ആപ്പ് അടയ്‌ക്കുമ്പോൾ അറിയിപ്പ് നീക്കം ചെയ്യുക</string>
+    <string name="settings_remove_notification_on_stop_desc">സമീപകാല ആപ്പുകളിൽ നിന്ന് ആപ്പ് അടയ്‌ക്കുമ്പോൾ മീഡിയ അറിയിപ്പ് സ്വയമേവ നിരസിക്കുക</string>
+    <string name="settings_auto_resume_audio_focus">ഓഡിയോ ഫോക്കസ് നഷ്ടപ്പെട്ടതിന് ശേഷം പുനരാരംഭിക്കുക</string>
+    <string name="settings_auto_resume_audio_focus_desc">ഫോൺ കോളുകൾ, അലാറങ്ങൾ അല്ലെങ്കിൽ മറ്റ് ഓഡിയോ സ്റ്റോപ്പുകൾ എന്നിവയ്ക്ക് ശേഷം സ്വയമേവ പ്ലേബാക്ക് പുനരാരംഭിക്കുക</string>
 </resources>

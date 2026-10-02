@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Поддржете ја статистиката на радио-прелистувачот со анонимно споделување настани за репродукција.</string>
     <string name="settings_rate_app_github">Уживате во AMARadio?</string>
     <string name="settings_rate_app_github_summary">Оставете ѕвезда на GitHub! Им помага на другите да ја откријат апликацијата и го поддржува идниот развој.</string>
+
+    <string name="settings_remove_notification_on_stop">Отстранете го известувањето кога апликацијата е затворена</string>
+    <string name="settings_remove_notification_on_stop_desc">Автоматски отфрли го известувањето за медиуми кога апликацијата е затворена од неодамнешните апликации</string>
+    <string name="settings_auto_resume_audio_focus">Продолжете по губењето на аудио фокусот</string>
+    <string name="settings_auto_resume_audio_focus_desc">Автоматски продолжете со репродукцијата по телефонски повици, аларми или други аудио прекини</string>
 </resources>

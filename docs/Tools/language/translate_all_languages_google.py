@@ -41,7 +41,11 @@ GERMAN_MANUAL = {
     "error_no_browser": "Kein Webbrowser gefunden. Bitte installiere einen Browser, um diesen Link zu öffnen.",
     "error_invalid_url": "Bitte gib eine gültige URL ein",
     "detail_create_shortcut": "Zum Startbildschirm hinzufügen",
-    "context_menu_create_shortcut": "@string/detail_create_shortcut"
+    "context_menu_create_shortcut": "@string/detail_create_shortcut",
+    "settings_remove_notification_on_stop": "Benachrichtigung beim Schließen entfernen",
+    "settings_remove_notification_on_stop_desc": "Entfernt die Medien-Benachrichtigung automatisch, wenn die App aus den letzten Apps geschlossen wird",
+    "settings_auto_resume_audio_focus": "Wiedergabe nach Audio-Fokus-Verlust fortsetzen",
+    "settings_auto_resume_audio_focus_desc": "Setzt die Wiedergabe nach Telefonaten, Alarmen oder anderen Tönen automatisch fort"
 }
 
 def translate_google(text, target_lang):

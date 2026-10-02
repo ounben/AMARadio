@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">விளையாட்டு நிகழ்வுகளை அநாமதேயமாகப் பகிர்வதன் மூலம் ரேடியோ-உலாவி புள்ளிவிவரங்களை ஆதரிக்கவும்.</string>
     <string name="settings_rate_app_github">AMARadioவை அனுபவிக்கிறீர்களா?</string>
     <string name="settings_rate_app_github_summary">GitHub இல் ஒரு நட்சத்திரத்தை விடுங்கள்! இது மற்றவர்கள் பயன்பாட்டைக் கண்டறிய உதவுகிறது மற்றும் எதிர்கால மேம்பாட்டை ஆதரிக்கிறது.</string>
+
+    <string name="settings_remove_notification_on_stop">பயன்பாடு மூடப்பட்டவுடன் அறிவிப்பை அகற்றவும்</string>
+    <string name="settings_remove_notification_on_stop_desc">சமீபத்திய ஆப்ஸிலிருந்து ஆப்ஸ் மூடப்படும் போது மீடியா அறிவிப்பை தானாகவே நிராகரிக்கும்</string>
+    <string name="settings_auto_resume_audio_focus">ஆடியோ ஃபோகஸ் இழந்த பிறகு மீண்டும் தொடங்கவும்</string>
+    <string name="settings_auto_resume_audio_focus_desc">தொலைபேசி அழைப்புகள், அலாரங்கள் அல்லது பிற ஆடியோ நிறுத்தங்களுக்குப் பிறகு தானாகவே பிளேபேக்கைத் தொடங்கும்</string>
 </resources>

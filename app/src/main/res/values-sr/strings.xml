@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Подржите статистику Радио-претраживача анонимним дељењем догађаја играња.</string>
     <string name="settings_rate_app_github">Уживате у АМАРадио-у?</string>
     <string name="settings_rate_app_github_summary">Оставите звезду на ГитХуб-у! Помаже другима да открију апликацију и подржава будући развој.</string>
+
+    <string name="settings_remove_notification_on_stop">Уклоните обавештење када се апликација затвори</string>
+    <string name="settings_remove_notification_on_stop_desc">Аутоматски одбаци медијско обавештење када се апликација затвори из недавних апликација</string>
+    <string name="settings_auto_resume_audio_focus">Настави након губитка аудио фокуса</string>
+    <string name="settings_auto_resume_audio_focus_desc">Аутоматски наставите репродукцију након заустављања телефонских позива, аларма или другог звука</string>
 </resources>

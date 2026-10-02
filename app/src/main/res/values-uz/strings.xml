@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">O\'yin voqealarini anonim ravishda almashish orqali Radio-brauzer statistikasini qo\'llab-quvvatlang.</string>
     <string name="settings_rate_app_github">AMARadio yoqyapsizmi?</string>
     <string name="settings_rate_app_github_summary">GitHub\'da yulduz qoldiring! Bu boshqalarga ilovani topishga yordam beradi va kelajakdagi rivojlanishni qo\'llab-quvvatlaydi.</string>
+
+    <string name="settings_remove_notification_on_stop">Ilova yopilganda bildirishnomani olib tashlang</string>
+    <string name="settings_remove_notification_on_stop_desc">Ilova oxirgi ilovalardan yopilganda, media bildirishnomasini avtomatik ravishda o\'chirib qo\'ying</string>
+    <string name="settings_auto_resume_audio_focus">Audio fokus yo\'qolganidan keyin davom eting</string>
+    <string name="settings_auto_resume_audio_focus_desc">Telefon qo\'ng\'iroqlari, signallar yoki boshqa audio to\'xtashlardan keyin avtomatik ravishda o\'ynatishni davom ettiring</string>
 </resources>

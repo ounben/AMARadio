@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Sekela izibalo zeRadio-Browser ngokwabelana ngemicimbi yokudlala ngokungaziwa.</string>
     <string name="settings_rate_app_github">Ujabulela i-AMARadio?</string>
     <string name="settings_rate_app_github_summary">Shiya inkanyezi ku-GitHub! Isiza abanye ukuthola uhlelo lokusebenza futhi isekele ukuthuthukiswa kwesikhathi esizayo.</string>
+
+    <string name="settings_remove_notification_on_stop">Susa isaziso uma uhlelo lokusebenza luvaliwe</string>
+    <string name="settings_remove_notification_on_stop_desc">Cashisa ngokuzenzakalelayo isaziso semidiya lapho uhlelo lokusebenza luvaliwe ezinhlelweni zokusebenza zakamuva</string>
+    <string name="settings_auto_resume_audio_focus">Qalisa kabusha ngemva kokulahlekelwa ukugxila komsindo</string>
+    <string name="settings_auto_resume_audio_focus_desc">Qalisa kabusha ngokuzenzakalelayo ukudlala ngemva kwezingcingo, ama-alamu, noma okunye ukuma komsindo</string>
 </resources>

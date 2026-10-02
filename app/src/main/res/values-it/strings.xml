@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Supporta le statistiche del browser radio condividendo in modo anonimo gli eventi di gioco.</string>
     <string name="settings_rate_app_github">Ti piace AMARadio?</string>
     <string name="settings_rate_app_github_summary">Lascia una stella su GitHub! Aiuta gli altri a scoprire l\'app e supporta lo sviluppo futuro.</string>
+
+    <string name="settings_remove_notification_on_stop">Rimuovi la notifica quando l\'app viene chiusa</string>
+    <string name="settings_remove_notification_on_stop_desc">Ignora automaticamente la notifica multimediale quando l\'app viene chiusa dalle app recenti</string>
+    <string name="settings_auto_resume_audio_focus">Riprendi dopo la perdita del focus audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Riprendi automaticamente la riproduzione dopo telefonate, allarmi o altre interruzioni audio</string>
 </resources>

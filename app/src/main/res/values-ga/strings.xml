@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Tacaigh le staitisticí Brabhsálaí Raidió trí imeachtaí súgartha a roinnt gan ainm.</string>
     <string name="settings_rate_app_github">Ag baint suilt as AMAradio?</string>
     <string name="settings_rate_app_github_summary">Fág réalta ar GitHub! Cabhraíonn sé le daoine eile an aip a aimsiú agus tacaíonn sé le forbairt sa todhchaí.</string>
+
+    <string name="settings_remove_notification_on_stop">Bain fógra nuair a dhúntar an aip</string>
+    <string name="settings_remove_notification_on_stop_desc">Déan an fógra meán a dhíbhe go huathoibríoch nuair a dhúntar an aip ó aipeanna le déanaí</string>
+    <string name="settings_auto_resume_audio_focus">Atosú tar éis caillteanas fócas fuaime</string>
+    <string name="settings_auto_resume_audio_focus_desc">Athsheinm arís go huathoibríoch tar éis glaonna gutháin, aláraim nó stadanna fuaime eile</string>
 </resources>

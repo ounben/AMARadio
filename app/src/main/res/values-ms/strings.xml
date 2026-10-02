@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Sokong statistik Pelayar Radio dengan berkongsi acara main secara tanpa nama.</string>
     <string name="settings_rate_app_github">Menikmati AMRadio?</string>
     <string name="settings_rate_app_github_summary">Tinggalkan bintang di GitHub! Ia membantu orang lain menemui apl dan menyokong pembangunan masa hadapan.</string>
+
+    <string name="settings_remove_notification_on_stop">Alih keluar pemberitahuan apabila apl ditutup</string>
+    <string name="settings_remove_notification_on_stop_desc">Ketepikan pemberitahuan media secara automatik apabila apl ditutup daripada apl terbaharu</string>
+    <string name="settings_auto_resume_audio_focus">Sambung semula selepas kehilangan fokus audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Sambung semula main balik secara automatik selepas panggilan telefon, penggera atau audio berhenti</string>
 </resources>

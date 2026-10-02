@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Admite as estatísticas de Radio-Browser compartindo eventos de reprodución de forma anónima.</string>
     <string name="settings_rate_app_github">Estás a gozar de AMRadio?</string>
     <string name="settings_rate_app_github_summary">Deixa unha estrela en GitHub! Axuda a outros a descubrir a aplicación e apoia o desenvolvemento futuro.</string>
+
+    <string name="settings_remove_notification_on_stop">Elimina a notificación cando a aplicación estea pechada</string>
+    <string name="settings_remove_notification_on_stop_desc">Rexeita automaticamente a notificación multimedia cando se pecha a aplicación das aplicacións recentes</string>
+    <string name="settings_auto_resume_audio_focus">Retomar despois da perda do foco de audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Retoma a reprodución automaticamente despois de que se deteñan as chamadas telefónicas, as alarmas ou outros audios</string>
 </resources>

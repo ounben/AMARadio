@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">ማንነታቸው ሳይታወቅ የጨዋታ ዝግጅቶችን በማጋራት የራዲዮ-አሳሽ ስታቲስቲክስን ይደግፉ።</string>
     <string name="settings_rate_app_github">በAMARadio እየተዝናኑ ነው?</string>
     <string name="settings_rate_app_github_summary">በ GitHub ላይ ኮከብ ይተው! ሌሎች መተግበሪያውን እንዲያገኙ ያግዛል እና የወደፊት እድገትን ይደግፋል።</string>
+
+    <string name="settings_remove_notification_on_stop">መተግበሪያ ሲዘጋ ማሳወቂያን ያስወግዱ</string>
+    <string name="settings_remove_notification_on_stop_desc">መተግበሪያው ከቅርብ ጊዜ መተግበሪያዎች ሲዘጋ የማህደረ መረጃ ማሳወቂያውን በራስ-ሰር ያሰናብቱት።</string>
+    <string name="settings_auto_resume_audio_focus">የኦዲዮ ትኩረት ከጠፋ በኋላ ከቆመበት ቀጥል</string>
+    <string name="settings_auto_resume_audio_focus_desc">ከስልክ ጥሪዎች፣ ማንቂያዎች ወይም ሌላ የድምጽ ማቆሚያዎች በኋላ መልሶ ማጫወትን በራስ-ሰር ይቀጥሉ</string>
 </resources>

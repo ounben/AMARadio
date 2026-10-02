@@ -364,4 +364,9 @@
     <string name="settings_station_click_counter_desc">Onartu Radio-Browser-en estatistikak jolas-gertaerak modu anonimoan partekatuz.</string>
     <string name="settings_rate_app_github">AMRadioz gozatzen?</string>
     <string name="settings_rate_app_github_summary">Utzi izar bat GitHub-en! Besteei aplikazioa aurkitzen laguntzen die eta etorkizuneko garapena onartzen du.</string>
+
+    <string name="settings_remove_notification_on_stop">Kendu jakinarazpena aplikazioa itxita dagoenean</string>
+    <string name="settings_remove_notification_on_stop_desc">Baztertu automatikoki multimedia-jakinarazpena azken aplikazioetatik aplikazioa ixten denean</string>
+    <string name="settings_auto_resume_audio_focus">Berrekizu audio fokua galdu ondoren</string>
+    <string name="settings_auto_resume_audio_focus_desc">Berrekin automatikoki erreprodukzioari telefono-deiak, alarmak edo beste audio batzuk gelditu ondoren</string>
 </resources>

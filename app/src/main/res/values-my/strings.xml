@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">ကစားပွဲများကို အမည်ဝှက်ဖြင့် မျှဝေခြင်းဖြင့် ရေဒီယို-ဘရောက်ဇာ စာရင်းဇယားများကို ပံ့ပိုးကူညီပါ။</string>
     <string name="settings_rate_app_github">AMARadio ကို နှစ်သက်ပါသလား။</string>
     <string name="settings_rate_app_github_summary">GitHub တွင် ကြယ်တစ်ပွင့် ထားခဲ့ပါ။ ၎င်းသည် အခြားသူများကို အက်ပ်ကို ရှာဖွေတွေ့ရှိရန် ကူညီပေးပြီး အနာဂတ်ဖွံ့ဖြိုးတိုးတက်မှုကို ပံ့ပိုးပေးသည်။</string>
+
+    <string name="settings_remove_notification_on_stop">အက်ပ်ပိတ်သည့်အခါ အကြောင်းကြားချက်ကို ဖယ်ရှားပါ။</string>
+    <string name="settings_remove_notification_on_stop_desc">အက်ပ်ကို လတ်တလောအက်ပ်များမှ ပိတ်သည့်အခါ မီဒီယာသတိပေးချက်ကို အလိုအလျောက်ပိတ်ပါ။</string>
+    <string name="settings_auto_resume_audio_focus">အသံအာရုံစူးစိုက်မှုပျောက်ဆုံးပြီးနောက် ပြန်လည်စတင်ပါ။</string>
+    <string name="settings_auto_resume_audio_focus_desc">ဖုန်းခေါ်ဆိုမှုများ၊ နှိုးစက်များ သို့မဟုတ် အခြားအသံများရပ်တန့်ပြီးနောက် အလိုအလျောက်ပြန်ဖွင့်ပါ။</string>
 </resources>

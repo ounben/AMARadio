@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Podporujte štatistiky Radio-Browser anonymným zdieľaním herných udalostí.</string>
     <string name="settings_rate_app_github">Páči sa vám AMARadio?</string>
     <string name="settings_rate_app_github_summary">Nechajte hviezdu na GitHub! Pomáha ostatným objaviť aplikáciu a podporuje budúci vývoj.</string>
+
+    <string name="settings_remove_notification_on_stop">Odstrániť upozornenie po zatvorení aplikácie</string>
+    <string name="settings_remove_notification_on_stop_desc">Automaticky zrušiť mediálne upozornenie, keď sa aplikácia zatvorí z nedávnych aplikácií</string>
+    <string name="settings_auto_resume_audio_focus">Obnoviť po strate zamerania zvuku</string>
+    <string name="settings_auto_resume_audio_focus_desc">Automaticky obnoviť prehrávanie po telefónnych hovoroch, budíkoch alebo iných zastaveniach zvuku</string>
 </resources>

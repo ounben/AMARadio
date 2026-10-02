@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Поддерживайте статистику радио-браузера, анонимно делясь игровыми событиями.</string>
     <string name="settings_rate_app_github">Наслаждаетесь АМАРадио?</string>
     <string name="settings_rate_app_github_summary">Оставьте звезду на GitHub! Это помогает другим найти приложение и поддерживает дальнейшее развитие.</string>
+
+    <string name="settings_remove_notification_on_stop">Удалить уведомление, когда приложение закрыто</string>
+    <string name="settings_remove_notification_on_stop_desc">Автоматически закрывать медиа-уведомление при закрытии приложения из последних приложений.</string>
+    <string name="settings_auto_resume_audio_focus">Возобновление после потери фокуса звука</string>
+    <string name="settings_auto_resume_audio_focus_desc">Автоматически возобновлять воспроизведение после телефонных звонков, сигналов тревоги или других остановок звука.</string>
 </resources>

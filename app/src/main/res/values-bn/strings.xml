@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">বেনামে খেলার ঘটনা শেয়ার করে রেডিও-ব্রাউজার পরিসংখ্যান সমর্থন করুন।</string>
     <string name="settings_rate_app_github">AMARadio উপভোগ করছেন?</string>
     <string name="settings_rate_app_github_summary">GitHub এ একটি তারকা ছেড়ে দিন! এটি অন্যদের অ্যাপটি আবিষ্কার করতে সাহায্য করে এবং ভবিষ্যতের বিকাশকে সমর্থন করে।</string>
+
+    <string name="settings_remove_notification_on_stop">অ্যাপ বন্ধ হয়ে গেলে বিজ্ঞপ্তি সরান</string>
+    <string name="settings_remove_notification_on_stop_desc">সাম্প্রতিক অ্যাপ থেকে অ্যাপটি বন্ধ হয়ে গেলে স্বয়ংক্রিয়ভাবে মিডিয়া বিজ্ঞপ্তি খারিজ করুন</string>
+    <string name="settings_auto_resume_audio_focus">অডিও ফোকাস হারানোর পরে পুনরায় শুরু করুন</string>
+    <string name="settings_auto_resume_audio_focus_desc">ফোন কল, অ্যালার্ম বা অন্যান্য অডিও বন্ধ হওয়ার পরে স্বয়ংক্রিয়ভাবে প্লেব্যাক পুনরায় শুরু করুন</string>
 </resources>

@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Toetage raadiobrauseri statistikat, jagades mängusündmusi anonüümselt.</string>
     <string name="settings_rate_app_github">Kas teile meeldib AMARadio?</string>
     <string name="settings_rate_app_github_summary">Jäta GitHubi tärn! See aitab teistel rakendust avastada ja toetab edasist arengut.</string>
+
+    <string name="settings_remove_notification_on_stop">Eemaldage märguanne, kui rakendus on suletud</string>
+    <string name="settings_remove_notification_on_stop_desc">Lülitage meediumiteatis automaatselt välja, kui rakendus suletakse viimastest rakendustest</string>
+    <string name="settings_auto_resume_audio_focus">Jätkake pärast heli fookuse kadumist</string>
+    <string name="settings_auto_resume_audio_focus_desc">Jätkake taasesitust automaatselt pärast telefonikõnesid, äratusi või muu heli peatamist</string>
 </resources>

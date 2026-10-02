@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Ondersteun Radio-blaaier-statistieke deur speelgeleenthede anoniem te deel.</string>
     <string name="settings_rate_app_github">Geniet jy AMARadio?</string>
     <string name="settings_rate_app_github_summary">Los \'n ster op GitHub! Dit help ander om die toepassing te ontdek en ondersteun toekomstige ontwikkeling.</string>
+
+    <string name="settings_remove_notification_on_stop">Verwyder kennisgewing wanneer app gesluit is</string>
+    <string name="settings_remove_notification_on_stop_desc">Maak die mediakennisgewing outomaties toe wanneer die toepassing van onlangse toepassings gesluit is</string>
+    <string name="settings_auto_resume_audio_focus">Hervat na klankfokusverlies</string>
+    <string name="settings_auto_resume_audio_focus_desc">Hervat speel outomaties nadat telefoonoproepe, alarms of ander oudio gestop het</string>
 </resources>

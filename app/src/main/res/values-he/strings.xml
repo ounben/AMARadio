@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">תמכו בסטטיסטיקות של דפדפן רדיו על ידי שיתוף אנונימי של אירועי משחק.</string>
     <string name="settings_rate_app_github">נהנה מ-AMARadio?</string>
     <string name="settings_rate_app_github_summary">השאר כוכב ב-GitHub! זה עוזר לאחרים לגלות את האפליקציה ותומך בפיתוח עתידי.</string>
+
+    <string name="settings_remove_notification_on_stop">הסר הודעה כאשר האפליקציה סגורה</string>
+    <string name="settings_remove_notification_on_stop_desc">סגור אוטומטית את הודעת המדיה כאשר האפליקציה סגורה מאפליקציות אחרונות</string>
+    <string name="settings_auto_resume_audio_focus">המשך לאחר אובדן מיקוד השמע</string>
+    <string name="settings_auto_resume_audio_focus_desc">המשך הפעלה אוטומטית לאחר הפסקת שיחות טלפון, אזעקות או שמע אחר</string>
 </resources>

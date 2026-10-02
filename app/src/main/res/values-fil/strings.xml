@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Suportahan ang mga istatistika ng Radio-Browser sa pamamagitan ng hindi nagpapakilalang pagbabahagi ng mga kaganapan sa paglalaro.</string>
     <string name="settings_rate_app_github">Tinatangkilik ang AMRadio?</string>
     <string name="settings_rate_app_github_summary">Mag-iwan ng star sa GitHub! Nakakatulong ito sa iba na matuklasan ang app at sumusuporta sa pag-unlad sa hinaharap.</string>
+
+    <string name="settings_remove_notification_on_stop">Alisin ang notification kapag sarado ang app</string>
+    <string name="settings_remove_notification_on_stop_desc">Awtomatikong i-dismiss ang media notification kapag sarado ang app mula sa mga kamakailang app</string>
+    <string name="settings_auto_resume_audio_focus">Ipagpatuloy pagkatapos mawala ang audio focus</string>
+    <string name="settings_auto_resume_audio_focus_desc">Awtomatikong ipagpatuloy ang pag-playback pagkatapos ng mga tawag sa telepono, alarma, o iba pang paghinto ng audio</string>
 </resources>

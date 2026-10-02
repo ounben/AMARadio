@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Styðjið tölfræði útvarpsvafra með því að deila leikviðburðum nafnlaust.</string>
     <string name="settings_rate_app_github">Hefurðu gaman af AMARadio?</string>
     <string name="settings_rate_app_github_summary">Skildu eftir stjörnu á GitHub! Það hjálpar öðrum að uppgötva appið og styður framtíðarþróun.</string>
+
+    <string name="settings_remove_notification_on_stop">Fjarlægðu tilkynningu þegar app er lokað</string>
+    <string name="settings_remove_notification_on_stop_desc">Hunsaðu fjölmiðlatilkynninguna sjálfkrafa þegar forritinu er lokað frá nýlegum forritum</string>
+    <string name="settings_auto_resume_audio_focus">Haltu áfram eftir að hljóðfókus hefur tapast</string>
+    <string name="settings_auto_resume_audio_focus_desc">Haltu spilun sjálfkrafa áfram eftir að símtöl, vekjara eða annað hljóð hættir</string>
 </resources>

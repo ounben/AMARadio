@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">ක්‍රීඩා සිදුවීම් නිර්නාමිකව බෙදාගැනීමෙන් රේඩියෝ-බ්‍රවුසර සංඛ්‍යාලේඛනවලට සහාය වන්න.</string>
     <string name="settings_rate_app_github">AMARadio භුක්ති විඳිනවාද?</string>
     <string name="settings_rate_app_github_summary">GitHub මත තරුවක් තබන්න! එය අන් අයට යෙදුම සොයා ගැනීමට සහ අනාගත සංවර්ධනයට සහාය වේ.</string>
+
+    <string name="settings_remove_notification_on_stop">යෙදුම වසා ඇති විට දැනුම්දීම ඉවත් කරන්න</string>
+    <string name="settings_remove_notification_on_stop_desc">මෑත යෙදුම් වලින් යෙදුම වසා ඇති විට මාධ්‍ය දැනුම්දීම ස්වයංක්‍රීයව ඉවත ලන්න</string>
+    <string name="settings_auto_resume_audio_focus">ශ්‍රව්‍ය නාභිගත වීම නැතිවීමෙන් පසු නැවත ආරම්භ කරන්න</string>
+    <string name="settings_auto_resume_audio_focus_desc">දුරකථන ඇමතුම්, එලාම් හෝ වෙනත් ශ්‍රව්‍ය නැවතුම්වලින් පසු ස්වයංක්‍රීයව නැවත ධාවනය ආරම්භ කරන්න</string>
 </resources>

@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">គាំទ្រស្ថិតិរបស់ Radio-Browser ដោយចែករំលែកព្រឹត្តិការណ៍លេងដោយអនាមិក។</string>
     <string name="settings_rate_app_github">រីករាយជាមួយ AMARadio?</string>
     <string name="settings_rate_app_github_summary">ទុកផ្កាយនៅលើ GitHub! វាជួយឱ្យអ្នកដទៃរកឃើញកម្មវិធី និងគាំទ្រការអភិវឌ្ឍន៍នាពេលអនាគត។</string>
+
+    <string name="settings_remove_notification_on_stop">លុបការជូនដំណឹងនៅពេលកម្មវិធីបិទ</string>
+    <string name="settings_remove_notification_on_stop_desc">ច្រានចោលការជូនដំណឹងប្រព័ន្ធផ្សព្វផ្សាយដោយស្វ័យប្រវត្តិ នៅពេលដែលកម្មវិធីត្រូវបានបិទពីកម្មវិធីថ្មីៗ</string>
+    <string name="settings_auto_resume_audio_focus">បន្តបន្ទាប់ពីបាត់បង់ការផ្តោតអារម្មណ៍សំឡេង</string>
+    <string name="settings_auto_resume_audio_focus_desc">បន្តការចាក់សារថ្មីដោយស្វ័យប្រវត្តិបន្ទាប់ពីការហៅទូរសព្ទ សំឡេងរោទិ៍ ឬសំឡេងផ្សេងទៀតឈប់</string>
 </resources>

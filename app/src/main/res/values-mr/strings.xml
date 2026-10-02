@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">प्ले इव्हेंट निनावीपणे शेअर करून रेडिओ-ब्राउझर आकडेवारीचे समर्थन करा.</string>
     <string name="settings_rate_app_github">AMARadio चा आनंद घेत आहात?</string>
     <string name="settings_rate_app_github_summary">GitHub वर एक तारा सोडा! हे इतरांना ॲप शोधण्यात मदत करते आणि भविष्यातील विकासास समर्थन देते.</string>
+
+    <string name="settings_remove_notification_on_stop">ॲप बंद असताना सूचना काढून टाका</string>
+    <string name="settings_remove_notification_on_stop_desc">अलीकडील ॲप्समधून ॲप बंद झाल्यावर मीडिया सूचना स्वयंचलितपणे डिसमिस करा</string>
+    <string name="settings_auto_resume_audio_focus">ऑडिओ फोकस गमावल्यानंतर पुन्हा सुरू करा</string>
+    <string name="settings_auto_resume_audio_focus_desc">फोन कॉल, अलार्म किंवा इतर ऑडिओ थांबल्यानंतर स्वयंचलितपणे प्लेबॅक पुन्हा सुरू करा</string>
 </resources>

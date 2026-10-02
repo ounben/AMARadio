@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">ప్లే ఈవెంట్‌లను అనామకంగా భాగస్వామ్యం చేయడం ద్వారా రేడియో-బ్రౌజర్ గణాంకాలకు మద్దతు ఇవ్వండి.</string>
     <string name="settings_rate_app_github">AMARadioని ఆస్వాదిస్తున్నారా?</string>
     <string name="settings_rate_app_github_summary">GitHubలో నక్షత్రాన్ని వదిలివేయండి! ఇది ఇతరులకు యాప్‌ని కనుగొనడంలో సహాయపడుతుంది మరియు భవిష్యత్తు అభివృద్ధికి మద్దతు ఇస్తుంది.</string>
+
+    <string name="settings_remove_notification_on_stop">యాప్ మూసివేయబడినప్పుడు నోటిఫికేషన్‌ను తీసివేయండి</string>
+    <string name="settings_remove_notification_on_stop_desc">ఇటీవలి యాప్‌ల నుండి యాప్ మూసివేయబడినప్పుడు మీడియా నోటిఫికేషన్‌ను స్వయంచాలకంగా తీసివేయండి</string>
+    <string name="settings_auto_resume_audio_focus">ఆడియో ఫోకస్ కోల్పోయిన తర్వాత పునఃప్రారంభించండి</string>
+    <string name="settings_auto_resume_audio_focus_desc">ఫోన్ కాల్‌లు, అలారాలు లేదా ఇతర ఆడియో ఆపివేసిన తర్వాత స్వయంచాలకంగా ప్లేబ్యాక్‌ను పునఃప్రారంభించండి</string>
 </resources>

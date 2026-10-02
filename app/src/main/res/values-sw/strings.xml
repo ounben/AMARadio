@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Tumia takwimu za Kivinjari-Redio kwa kushiriki matukio ya kucheza bila kujulikana.</string>
     <string name="settings_rate_app_github">Je, unafurahia AMARadio?</string>
     <string name="settings_rate_app_github_summary">Acha nyota kwenye GitHub! Husaidia wengine kugundua programu na kusaidia usanidi wa siku zijazo.</string>
+
+    <string name="settings_remove_notification_on_stop">Ondoa arifa programu imefungwa</string>
+    <string name="settings_remove_notification_on_stop_desc">Ondoa arifa ya media kiotomatiki wakati programu imefungwa kutoka kwa programu za hivi majuzi</string>
+    <string name="settings_auto_resume_audio_focus">Endelea baada ya kupoteza umakini wa sauti</string>
+    <string name="settings_auto_resume_audio_focus_desc">Rejesha uchezaji kiotomatiki baada ya simu, kengele au sauti zingine kusimama</string>
 </resources>

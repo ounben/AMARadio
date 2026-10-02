@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Ойын оқиғаларын жасырын түрде бөлісу арқылы Radio-Browser статистикасын қолдаңыз.</string>
     <string name="settings_rate_app_github">AMARadio ұнай ма?</string>
     <string name="settings_rate_app_github_summary">GitHub сайтында жұлдыз қалдырыңыз! Бұл басқаларға қолданбаны табуға көмектеседі және болашақ дамуды қолдайды.</string>
+
+    <string name="settings_remove_notification_on_stop">Қолданба жабылған кезде хабарландыруды алып тастаңыз</string>
+    <string name="settings_remove_notification_on_stop_desc">Қолданба соңғы қолданбалардан жабылған кезде медиа хабарландыруын автоматты түрде жабыңыз</string>
+    <string name="settings_auto_resume_audio_focus">Дыбыс фокусын жоғалтқаннан кейін жалғастырыңыз</string>
+    <string name="settings_auto_resume_audio_focus_desc">Телефон қоңырауларынан, дабылдардан немесе басқа дыбыс тоқтағаннан кейін ойнатуды автоматты түрде жалғастырыңыз</string>
 </resources>

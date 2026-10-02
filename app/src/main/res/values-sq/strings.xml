@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Mbështetni statistikat e Shfletuesit të Radios duke ndarë në mënyrë anonime ngjarjet e luajtjes.</string>
     <string name="settings_rate_app_github">Të pëlqen AMARadio?</string>
     <string name="settings_rate_app_github_summary">Lini një yll në GitHub! Ai i ndihmon të tjerët të zbulojnë aplikacionin dhe mbështet zhvillimin e ardhshëm.</string>
+
+    <string name="settings_remove_notification_on_stop">Hiq njoftimin kur aplikacioni është i mbyllur</string>
+    <string name="settings_remove_notification_on_stop_desc">Hiq automatikisht njoftimin e medias kur aplikacioni mbyllet nga aplikacionet e fundit</string>
+    <string name="settings_auto_resume_audio_focus">Rifilloni pas humbjes së fokusit audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Rifilloni automatikisht riprodhimin pas telefonatave, alarmeve ose ndalimeve të tjera audio</string>
 </resources>

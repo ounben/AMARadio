@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Oyun etkinliklerini anonim olarak paylaşarak Radyo Tarayıcı istatistiklerini destekleyin.</string>
     <string name="settings_rate_app_github">AMRadio\'yu beğeniyor musunuz?</string>
     <string name="settings_rate_app_github_summary">GitHub\'a bir yıldız bırakın! Başkalarının uygulamayı keşfetmesine yardımcı olur ve gelecekteki gelişimi destekler.</string>
+
+    <string name="settings_remove_notification_on_stop">Uygulama kapatıldığında bildirimi kaldır</string>
+    <string name="settings_remove_notification_on_stop_desc">Uygulama son uygulamalardan kapatıldığında medya bildirimini otomatik olarak kapat</string>
+    <string name="settings_auto_resume_audio_focus">Ses odağı kaybından sonra devam et</string>
+    <string name="settings_auto_resume_audio_focus_desc">Telefon çağrıları, alarmlar veya diğer ses kesintilerinden sonra oynatmayı otomatik olarak devam ettirin</string>
 </resources>

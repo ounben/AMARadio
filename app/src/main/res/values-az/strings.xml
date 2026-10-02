@@ -362,4 +362,9 @@
     <string name="settings_station_click_counter_desc">Oyun hadisələrini anonim şəkildə paylaşaraq Radio-Brauzer statistikasını dəstəkləyin.</string>
     <string name="settings_rate_app_github">AMARadio-dan zövq alırsınız?</string>
     <string name="settings_rate_app_github_summary">GitHub-da ulduz buraxın! Bu, başqalarına proqramı kəşf etməyə kömək edir və gələcək inkişafı dəstəkləyir.</string>
+
+    <string name="settings_remove_notification_on_stop">Proqram bağlandıqda bildirişi silin</string>
+    <string name="settings_remove_notification_on_stop_desc">Tətbiq son tətbiqlərdən bağlandıqda media bildirişini avtomatik rədd edin</string>
+    <string name="settings_auto_resume_audio_focus">Audio fokus itkisindən sonra davam edin</string>
+    <string name="settings_auto_resume_audio_focus_desc">Telefon zəngləri, həyəcan siqnalları və ya digər audio dayanacaqlardan sonra oxutmanı avtomatik davam etdirin</string>
 </resources>

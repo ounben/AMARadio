@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">สนับสนุนสถิติวิทยุเบราว์เซอร์โดยการแชร์กิจกรรมการเล่นโดยไม่ระบุชื่อ</string>
     <string name="settings_rate_app_github">เพลิดเพลินกับ AMARadio ใช่ไหม?</string>
     <string name="settings_rate_app_github_summary">ทิ้งดาวบน GitHub! ช่วยให้ผู้อื่นค้นพบแอปและสนับสนุนการพัฒนาในอนาคต</string>
+
+    <string name="settings_remove_notification_on_stop">ลบการแจ้งเตือนเมื่อปิดแอป</string>
+    <string name="settings_remove_notification_on_stop_desc">ปิดการแจ้งเตือนสื่อโดยอัตโนมัติเมื่อแอปปิดจากแอปล่าสุด</string>
+    <string name="settings_auto_resume_audio_focus">ดำเนินการต่อหลังจากสูญเสียโฟกัสเสียง</string>
+    <string name="settings_auto_resume_audio_focus_desc">เล่นต่อโดยอัตโนมัติหลังการโทร การปลุก หรือเสียงอื่นๆ หยุดลง</string>
 </resources>

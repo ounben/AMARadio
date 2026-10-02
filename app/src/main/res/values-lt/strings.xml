@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Palaikykite radijo naršyklės statistiką anonimiškai bendrindami žaidimo įvykius.</string>
     <string name="settings_rate_app_github">Mėgaukitės AMARadio?</string>
     <string name="settings_rate_app_github_summary">Palikite žvaigždutę „GitHub“! Tai padeda kitiems atrasti programą ir palaiko būsimą plėtrą.</string>
+
+    <string name="settings_remove_notification_on_stop">Pašalinkite pranešimą, kai programa uždaroma</string>
+    <string name="settings_remove_notification_on_stop_desc">Automatiškai atsisakyti medijos pranešimo, kai programa uždaroma iš naujausių programų</string>
+    <string name="settings_auto_resume_audio_focus">Tęsti praradus garso fokusavimą</string>
+    <string name="settings_auto_resume_audio_focus_desc">Automatiškai atnaujinkite atkūrimą po telefono skambučių, signalų ar kito garso sustabdymo</string>
 </resources>

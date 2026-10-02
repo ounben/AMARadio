@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Support Radio-Browser statistics by anonymously sharing play events.</string>
     <string name="settings_rate_app_github">Enjoying AMARadio?</string>
     <string name="settings_rate_app_github_summary">Leave a star on GitHub! It helps others discover the app and supports future development.</string>
+
+    <string name="settings_remove_notification_on_stop">Remove notification when app is closed</string>
+    <string name="settings_remove_notification_on_stop_desc">Automatically dismiss the media notification when the app is closed from recent apps</string>
+    <string name="settings_auto_resume_audio_focus">Resume after audio focus loss</string>
+    <string name="settings_auto_resume_audio_focus_desc">Automatically resume playback after phone calls, alarms, or other audio stops</string>
 </resources>

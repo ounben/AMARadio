@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">गुमनाम रूप से खेल की घटनाओं को साझा करके रेडियो-ब्राउज़र आंकड़ों का समर्थन करें।</string>
     <string name="settings_rate_app_github">क्या आप AMRadio का आनंद ले रहे हैं?</string>
     <string name="settings_rate_app_github_summary">GitHub पर एक सितारा छोड़ें! यह दूसरों को ऐप खोजने में मदद करता है और भविष्य के विकास का समर्थन करता है।</string>
+
+    <string name="settings_remove_notification_on_stop">ऐप बंद होने पर नोटिफिकेशन हटा दें</string>
+    <string name="settings_remove_notification_on_stop_desc">हाल के ऐप्स से ऐप बंद होने पर मीडिया अधिसूचना को स्वचालित रूप से खारिज कर दें</string>
+    <string name="settings_auto_resume_audio_focus">ऑडियो फोकस हानि के बाद फिर से शुरू करें</string>
+    <string name="settings_auto_resume_audio_focus_desc">फ़ोन कॉल, अलार्म या अन्य ऑडियो बंद होने के बाद स्वचालित रूप से प्लेबैक फिर से शुरू करें</string>
 </resources>

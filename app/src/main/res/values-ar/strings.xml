@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">دعم إحصائيات متصفح الراديو من خلال مشاركة أحداث اللعب بشكل مجهول.</string>
     <string name="settings_rate_app_github">تتمتع AMARadio؟</string>
     <string name="settings_rate_app_github_summary">اترك نجمة على جيثب! يساعد الآخرين على اكتشاف التطبيق ويدعم التطوير المستقبلي.</string>
+
+    <string name="settings_remove_notification_on_stop">إزالة الإشعارات عند إغلاق التطبيق</string>
+    <string name="settings_remove_notification_on_stop_desc">تجاهل إشعارات الوسائط تلقائيًا عند إغلاق التطبيق من التطبيقات الحديثة</string>
+    <string name="settings_auto_resume_audio_focus">استئناف بعد فقدان التركيز الصوتي</string>
+    <string name="settings_auto_resume_audio_focus_desc">استئناف التشغيل تلقائيًا بعد المكالمات الهاتفية أو الإنذارات أو توقف الصوت الآخر</string>
 </resources>

@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Hỗ trợ số liệu thống kê của Trình duyệt Radio bằng cách chia sẻ ẩn danh các sự kiện chơi.</string>
     <string name="settings_rate_app_github">Bạn đang thưởng thức AMRadio?</string>
     <string name="settings_rate_app_github_summary">Để lại một ngôi sao trên GitHub! Nó giúp người khác khám phá ứng dụng và hỗ trợ sự phát triển trong tương lai.</string>
+
+    <string name="settings_remove_notification_on_stop">Xóa thông báo khi đóng ứng dụng</string>
+    <string name="settings_remove_notification_on_stop_desc">Tự động loại bỏ thông báo phương tiện khi đóng ứng dụng khỏi các ứng dụng gần đây</string>
+    <string name="settings_auto_resume_audio_focus">Tiếp tục sau khi mất tiêu điểm âm thanh</string>
+    <string name="settings_auto_resume_audio_focus_desc">Tự động tiếp tục phát lại sau khi gọi điện thoại, báo thức hoặc dừng âm thanh khác</string>
 </resources>

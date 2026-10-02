@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Támogassa a Radio-Browser statisztikákat a játékesemények névtelen megosztásával.</string>
     <string name="settings_rate_app_github">Élvezed az AMARadiót?</string>
     <string name="settings_rate_app_github_summary">Hagyj csillagot a GitHubon! Segít másoknak felfedezni az alkalmazást, és támogatja a jövőbeli fejlesztést.</string>
+
+    <string name="settings_remove_notification_on_stop">Távolítsa el az értesítést az alkalmazás bezárásakor</string>
+    <string name="settings_remove_notification_on_stop_desc">A médiaértesítés automatikus elvetése, ha az alkalmazást bezárják a legutóbbi alkalmazások közül</string>
+    <string name="settings_auto_resume_audio_focus">Folytatás a hangfókusz elvesztése után</string>
+    <string name="settings_auto_resume_audio_focus_desc">A lejátszás automatikus folytatása telefonhívások, riasztások vagy egyéb hangjelzések leállása után</string>
 </resources>

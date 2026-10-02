@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">透過匿名共享播放事件支援廣播瀏覽器統計。</string>
     <string name="settings_rate_app_github">喜歡 AMARadio 嗎？</string>
     <string name="settings_rate_app_github_summary">在 GitHub 上留下一個星星吧！它可以幫助其他人發現該應用程式並支援未來的開發。</string>
+
+    <string name="settings_remove_notification_on_stop">刪除應用程式關閉時的通知</string>
+    <string name="settings_remove_notification_on_stop_desc">當應用程式從最近的應用程式關閉時自動關閉媒體通知</string>
+    <string name="settings_auto_resume_audio_focus">音訊焦點遺失後恢復</string>
+    <string name="settings_auto_resume_audio_focus_desc">電話、鬧鐘或其他音訊停止後自動恢復播放</string>
 </resources>

@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">プレイ イベントを匿名で共有することで、Radio-Browser 統計をサポートします。</string>
     <string name="settings_rate_app_github">AMARadioをお楽しみですか?</string>
     <string name="settings_rate_app_github_summary">GitHub にスターを残してください!他の人がアプリを発見するのに役立ち、将来の開発をサポートします。</string>
+
+    <string name="settings_remove_notification_on_stop">アプリを閉じたときに通知を削除する</string>
+    <string name="settings_remove_notification_on_stop_desc">最近使用したアプリからアプリを閉じるとメディア通知を自動的に閉じる</string>
+    <string name="settings_auto_resume_audio_focus">音声フォーカスが失われた後に再開する</string>
+    <string name="settings_auto_resume_audio_focus_desc">電話、アラーム、その他の音声が停止した後、自動的に再生を再開します</string>
 </resources>

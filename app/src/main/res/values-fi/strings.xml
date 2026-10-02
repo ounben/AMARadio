@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Tue Radio-Browser-tilastoja jakamalla soittotapahtumia nimettömästi.</string>
     <string name="settings_rate_app_github">Nautitko AMARadosta?</string>
     <string name="settings_rate_app_github_summary">Jätä tähti GitHubiin! Se auttaa muita löytämään sovelluksen ja tukee tulevaa kehitystä.</string>
+
+    <string name="settings_remove_notification_on_stop">Poista ilmoitus, kun sovellus suljetaan</string>
+    <string name="settings_remove_notification_on_stop_desc">Ohita media-ilmoitus automaattisesti, kun sovellus suljetaan viimeaikaisista sovelluksista</string>
+    <string name="settings_auto_resume_audio_focus">Jatka äänen tarkennuksen häviämisen jälkeen</string>
+    <string name="settings_auto_resume_audio_focus_desc">Jatka toistoa automaattisesti puhelun, hälytyksen tai muun äänen pysähtymisen jälkeen</string>
 </resources>

@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Підтримуйте статистику Radio-Browser, анонімно ділячись ігровими подіями.</string>
     <string name="settings_rate_app_github">Подобається AMARadio?</string>
     <string name="settings_rate_app_github_summary">Залиште зірку на GitHub! Це допомагає іншим знайти додаток і підтримує майбутній розвиток.</string>
+
+    <string name="settings_remove_notification_on_stop">Видалити сповіщення, коли додаток закрито</string>
+    <string name="settings_remove_notification_on_stop_desc">Автоматично відхиляти медіасповіщення, коли програму закрито з останніх програм</string>
+    <string name="settings_auto_resume_audio_focus">Відновити після втрати фокусу звуку</string>
+    <string name="settings_auto_resume_audio_focus_desc">Автоматично відновлювати відтворення після телефонних дзвінків, сигналів будильника чи інших припинень звуку</string>
 </resources>

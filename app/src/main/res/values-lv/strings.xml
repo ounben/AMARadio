@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Atbalstiet radio pārlūkprogrammas statistiku, anonīmi kopīgojot atskaņošanas notikumus.</string>
     <string name="settings_rate_app_github">Vai jums patīk AMARadio?</string>
     <string name="settings_rate_app_github_summary">Atstājiet zvaigznīti vietnē GitHub! Tas palīdz citiem atklāt lietotni un atbalsta turpmāko attīstību.</string>
+
+    <string name="settings_remove_notification_on_stop">Noņemiet paziņojumu, kad lietotne ir aizvērta</string>
+    <string name="settings_remove_notification_on_stop_desc">Automātiski noraidīt multivides paziņojumu, kad lietotne tiek aizvērta no jaunākajām lietotnēm</string>
+    <string name="settings_auto_resume_audio_focus">Atsākt pēc audio fokusa zuduma</string>
+    <string name="settings_auto_resume_audio_focus_desc">Automātiski atsākt atskaņošanu pēc tālruņa zvaniem, modinātājiem vai cita veida skaņas apturēšanas</string>
 </resources>

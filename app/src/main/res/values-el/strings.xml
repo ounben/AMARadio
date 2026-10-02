@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Υποστήριξη στατιστικών του προγράμματος περιήγησης ραδιοφώνου με ανώνυμη κοινή χρήση συμβάντων αναπαραγωγής.</string>
     <string name="settings_rate_app_github">Απολαμβάνετε το AMARadio;</string>
     <string name="settings_rate_app_github_summary">Αφήστε ένα αστέρι στο GitHub! Βοηθά άλλους να ανακαλύψουν την εφαρμογή και υποστηρίζει μελλοντική ανάπτυξη.</string>
+
+    <string name="settings_remove_notification_on_stop">Καταργήστε την ειδοποίηση όταν η εφαρμογή είναι κλειστή</string>
+    <string name="settings_remove_notification_on_stop_desc">Αυτόματη απόρριψη της ειδοποίησης πολυμέσων όταν η εφαρμογή είναι κλειστή από πρόσφατες εφαρμογές</string>
+    <string name="settings_auto_resume_audio_focus">Συνέχιση μετά από απώλεια εστίασης ήχου</string>
+    <string name="settings_auto_resume_audio_focus_desc">Αυτόματη συνέχιση της αναπαραγωγής μετά από τηλεφωνικές κλήσεις, ξυπνητήρια ή άλλες στάσεις ήχου</string>
 </resources>

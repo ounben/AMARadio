@@ -363,4 +363,9 @@
     <string name="settings_station_click_counter_desc">Appoġġa l-istatistika tar-Radju-Browser billi taqsam b\'mod anonimu avvenimenti tal-logħob.</string>
     <string name="settings_rate_app_github">Tgawdi AMRadio?</string>
     <string name="settings_rate_app_github_summary">Ħalli stilla fuq GitHub! Jgħin lill-oħrajn jiskopru l-app u jappoġġja l-iżvilupp futur.</string>
+
+    <string name="settings_remove_notification_on_stop">Neħħi n-notifika meta l-app tkun magħluqa</string>
+    <string name="settings_remove_notification_on_stop_desc">Tiċħad awtomatikament in-notifika tal-midja meta l-app tingħalaq minn apps riċenti</string>
+    <string name="settings_auto_resume_audio_focus">Ibda wara t-telf tal-fokus tal-awdjo</string>
+    <string name="settings_auto_resume_audio_focus_desc">Ibda awtomatikament id-daqq wara telefonati, allarmi, jew waqfiet awdjo oħra</string>
 </resources>

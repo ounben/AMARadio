@@ -367,4 +367,9 @@
     <string name="settings_station_click_counter_desc">Dukung statistik Radio-Browser dengan membagikan acara bermain secara anonim.</string>
     <string name="settings_rate_app_github">Menikmati AMARadio?</string>
     <string name="settings_rate_app_github_summary">Tinggalkan bintang di GitHub! Ini membantu orang lain menemukan aplikasi dan mendukung pengembangan di masa depan.</string>
+
+    <string name="settings_remove_notification_on_stop">Hapus pemberitahuan saat aplikasi ditutup</string>
+    <string name="settings_remove_notification_on_stop_desc">Secara otomatis menutup pemberitahuan media ketika aplikasi ditutup dari aplikasi terbaru</string>
+    <string name="settings_auto_resume_audio_focus">Lanjutkan setelah kehilangan fokus audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Secara otomatis melanjutkan pemutaran setelah panggilan telepon, alarm, atau audio lainnya berhenti</string>
 </resources>
