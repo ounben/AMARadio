@@ -1,5 +1,7 @@
 package com.ounben.amaradio.ui
 
+import androidx.lifecycle.viewmodel.compose.viewModel
+
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -245,8 +247,11 @@ fun StationList(
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean,
     onDeleteClick: ((DataRadioStation) -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerViewModel: PlayerViewModel = viewModel()
 ) {
+    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playingStationUuid = playerUiState.currentStation?.StationUuid
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
     if (isGrid) {
@@ -263,6 +268,7 @@ fun StationList(
                 StationGridItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
+                    isPlaying = station.StationUuid == playingStationUuid,
                     onClick = { onStationClick(station) },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station }
@@ -279,6 +285,7 @@ fun StationList(
                 StationListItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
+                    isPlaying = station.StationUuid == playingStationUuid,
                     onClick = { onStationClick(station) },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station }
@@ -403,7 +410,8 @@ fun StationListItem(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
     useInternalClickable: Boolean = true,
-    dragHandle: (@Composable (Modifier) -> Unit)? = null
+    dragHandle: (@Composable (Modifier) -> Unit)? = null,
+    isPlaying: Boolean = false
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
@@ -458,7 +466,7 @@ fun StationListItem(
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = if (isPlaying) AmaradioAmber else MaterialTheme.colorScheme.onSurface
                 )
                 Text(
                     text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
@@ -516,7 +524,8 @@ fun StationGridItem(
     onLongClick: () -> Unit,
     modifier: Modifier = Modifier,
     useInternalClickable: Boolean = true,
-    dragHandle: (@Composable (Modifier) -> Unit)? = null
+    dragHandle: (@Composable (Modifier) -> Unit)? = null,
+    isPlaying: Boolean = false
 ) {
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
@@ -567,7 +576,7 @@ fun StationGridItem(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 32.dp),
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = if (isPlaying) AmaradioAmber else MaterialTheme.colorScheme.onSurface
                 )
             }
 
@@ -614,8 +623,11 @@ fun ReorderableStationList(
     onReorder: (List<DataRadioStation>) -> Unit,
     onDeleteClick: ((DataRadioStation) -> Unit)? = null,
     onLongClick: ((DataRadioStation) -> Unit)? = null,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    playerViewModel: PlayerViewModel = viewModel()
 ) {
+    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playingStationUuid = playerUiState.currentStation?.StationUuid
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
     
@@ -657,6 +669,7 @@ fun ReorderableStationList(
                         StationGridItem(
                             station = station,
                             isFavorite = isFavorite(station.StationUuid),
+                            isPlaying = station.StationUuid == playingStationUuid,
                             onClick = { onStationClick(station) },
                             onFavoriteClick = { onFavoriteClick(station) },
                             onLongClick = { 
@@ -716,6 +729,7 @@ fun ReorderableStationList(
                             StationListItem(
                                 station = station,
                                 isFavorite = isFavorite(station.StationUuid),
+                                isPlaying = station.StationUuid == playingStationUuid,
                                 onClick = { onStationClick(station) },
                                 onFavoriteClick = { onFavoriteClick(station) },
                                 onLongClick = { 
