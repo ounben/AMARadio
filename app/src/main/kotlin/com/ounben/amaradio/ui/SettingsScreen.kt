@@ -10,7 +10,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.automirrored.filled.LiveHelp
-import androidx.compose.material.icons.automirrored.filled.VolumeDown
 import androidx.compose.material.icons.automirrored.filled.VolumeUp
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
@@ -162,19 +161,17 @@ fun SettingsScreen(
                 SettingsSwitch(
                     title = stringResource(R.string.settings_pause_when_noisy),
                     checked = uiState.pauseWhenNoisy,
-                    icon = Icons.AutoMirrored.Filled.VolumeDown,
+                    icon = Icons.Default.Headphones,
                     onCheckedChange = { viewModel.updateBoolean("pause_when_noisy", it) }
                 )
                 SettingsSwitch(
                     title = stringResource(R.string.settings_remove_notification_on_stop),
-                    summary = stringResource(R.string.settings_remove_notification_on_stop_desc),
                     checked = uiState.removeNotificationOnStop,
                     icon = Icons.Default.NotificationsOff,
                     onCheckedChange = { viewModel.updateBoolean("settings_remove_notification_on_stop", it) }
                 )
                 SettingsSwitch(
                     title = stringResource(R.string.settings_auto_resume_audio_focus),
-                    summary = stringResource(R.string.settings_auto_resume_audio_focus_desc),
                     checked = uiState.autoResumeAudioFocus,
                     icon = Icons.AutoMirrored.Filled.VolumeUp,
                     onCheckedChange = { viewModel.updateBoolean("settings_auto_resume_audio_focus", it) }
