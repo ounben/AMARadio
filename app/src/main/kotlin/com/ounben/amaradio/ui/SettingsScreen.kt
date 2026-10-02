@@ -165,6 +165,13 @@ fun SettingsScreen(
                     icon = Icons.AutoMirrored.Filled.VolumeDown,
                     onCheckedChange = { viewModel.updateBoolean("pause_when_noisy", it) }
                 )
+                SettingsSwitch(
+                    title = stringResource(R.string.settings_remove_notification_on_stop),
+                    summary = stringResource(R.string.settings_remove_notification_on_stop_desc),
+                    checked = uiState.removeNotificationOnStop,
+                    icon = Icons.Default.NotificationsOff,
+                    onCheckedChange = { viewModel.updateBoolean("settings_remove_notification_on_stop", it) }
+                )
                 /*
                 SettingsClickable(
                     title = stringResource(R.string.settings_equalizer),

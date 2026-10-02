@@ -65,6 +65,7 @@ import java.util.Calendar
 import java.util.Date
 import android.os.Bundle
 import android.support.v4.media.MediaMetadataCompat
+import androidx.media3.common.C
 import coil.imageLoader
 import coil.request.ImageRequest
 import coil.request.SuccessResult
@@ -356,6 +357,28 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 
                 WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
+        }
+    }
+
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        val sharedPref = PreferenceManager.getDefaultSharedPreferences(this)
+        val removeOnStop = sharedPref.getBoolean("settings_remove_notification_on_stop", true)
+        
+        if (removeOnStop || radioPlayer?.isPlaying() != true) {
+            try {
+                if (Utils.isDebug) Log.d(tag, "onTaskRemoved: Stopping playback, notification, widgets and service")
+                stop()
+                NotificationManagerCompat.from(this).cancel(NOTIFY_ID)
+                stopSelf()
+            } catch (e: Exception) {
+                if (Utils.isDebug) Log.e(tag, "Error in onTaskRemoved", e)
+            }
+        }
+
+        try {
+            super.onTaskRemoved(rootIntent)
+        } catch (e: Exception) {
+            if (Utils.isDebug) Log.e(tag, "Safely caught MediaSessionService.onTaskRemoved exception", e)
         }
     }
 
@@ -1199,14 +1222,18 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 return realItem
             }
 
-            override fun getCurrentPosition(): Long {
-                // Return elapsed time for live streams to keep Bluetooth/AA happy
-                val now = android.os.SystemClock.elapsedRealtime()
-                if (radioPlayer?.isPlaying() == true && lastPlayStartTime > 0 && now > lastPlayStartTime) {
-                    return now - lastPlayStartTime
-                }
-                return 0L // Ensure we never return -1 or random values
+            override fun getApplicationLooper(): Looper {
+                return Looper.getMainLooper()
             }
+
+            override fun getCurrentPosition(): Long {
+                // Return 0L for live streams so Media3 doesn't flood Bluetooth/System with redundant PlaybackState updates every 3 seconds
+                return 0L
+            }
+
+            override fun isCurrentMediaItemLive(): Boolean = true
+            override fun isCurrentMediaItemDynamic(): Boolean = true
+            override fun getDuration(): Long = C.TIME_UNSET
 
             override fun getBufferedPosition(): Long {
                 val pos = super.getBufferedPosition()

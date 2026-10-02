@@ -162,6 +162,8 @@
     <string name="settings_play_external">Enable external player</string>
     <string name="settings_play_external_desc_on">Play stations with external player</string>
     <string name="settings_play_external_desc_off">Play stations with AMARadio</string>
+    <string name="settings_remove_notification_on_stop">Remove notification when app is closed</string>
+    <string name="settings_remove_notification_on_stop_desc">Automatically dismiss the media notification when the app is closed from recent apps</string>
     <string name="settings_equalizer">Equalizer</string>
 
     <string name="settings_connectivity">Connectivity</string>

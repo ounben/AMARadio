@@ -195,18 +195,40 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     override fun stop() {
         cancelStopTask()
         isPlayingFlag = false
-        playerThreadHandler.post {
-            val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-            try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
-            internalPlayer.stop()
-            internalPlayer.clearMediaItems()
-            playbackStartTime = 0
+        if (playerThreadHandler.looper.thread.isAlive) {
+            playerThreadHandler.post {
+                val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+                try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
+                try {
+                    internalPlayer.stop()
+                    internalPlayer.clearMediaItems()
+                } catch (e: Exception) {
+                    if (Utils.isDebug) Log.e("ExoPlayerWrapper", "Error stopping player", e)
+                }
+                playbackStartTime = 0
+            }
         }
     }
 
     override fun release() {
-        playerThreadHandler.post {
-            internalPlayer.release()
+        cancelStopTask()
+        isPlayingFlag = false
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
+        if (playerThreadHandler.looper.thread.isAlive) {
+            playerThreadHandler.post {
+                try {
+                    internalPlayer.stop()
+                    internalPlayer.release()
+                } catch (e: Exception) {
+                    if (Utils.isDebug) Log.e("ExoPlayerWrapper", "Error releasing player", e)
+                }
+            }
+        } else {
+            try {
+                internalPlayer.stop()
+                internalPlayer.release()
+            } catch (_: Exception) {}
         }
     }
 
