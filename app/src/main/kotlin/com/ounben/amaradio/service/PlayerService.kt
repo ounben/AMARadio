@@ -367,19 +367,25 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         
         if (removeOnStop || radioPlayer?.isPlaying() != true) {
             try {
-                if (Utils.isDebug) Log.d(tag, "onTaskRemoved: Stopping playback, notification, widgets and service")
+                if (Utils.isDebug) Log.d(tag, "onTaskRemoved: Stopping playback, releasing session and cancelling notification")
                 stop()
-                NotificationManagerCompat.from(this).cancel(NOTIFY_ID)
+                mediaSession?.run {
+                    release()
+                    mediaSession = null
+                }
+                stopForeground(STOP_FOREGROUND_REMOVE)
+                val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                manager.cancel(NOTIFY_ID)
                 stopSelf()
             } catch (e: Exception) {
                 if (Utils.isDebug) Log.e(tag, "Error in onTaskRemoved", e)
             }
-        }
-
-        try {
-            super.onTaskRemoved(rootIntent)
-        } catch (e: Exception) {
-            if (Utils.isDebug) Log.e(tag, "Safely caught MediaSessionService.onTaskRemoved exception", e)
+        } else {
+            try {
+                super.onTaskRemoved(rootIntent)
+            } catch (e: Exception) {
+                if (Utils.isDebug) Log.e(tag, "Safely caught MediaSessionService.onTaskRemoved exception", e)
+            }
         }
     }
 
