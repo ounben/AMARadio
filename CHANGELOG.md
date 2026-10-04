@@ -5,6 +5,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.41] - 2026-10-03
+### Added
+- **Active Station Highlighting**: The currently playing radio station is now cleanly highlighted in amber (`AmaradioAmber`) across all station lists and reorderable grids.
+- **Audio Focus Resume Toggle**: Added a user setting in Player options to control whether playback automatically resumes after losing audio focus (e.g. phone calls, alarms, or other audio interruptions).
+- **Automated Localization**: Synchronized missing translation keys across all 74 supported languages using automated translation scripts.
+- **M3U Playlist Examples**: Included pre-configured M3U playlist sample files for China streams.
+
+### Fixed
+- **Notification Dismissal on App Close**: Swiping the app away from recent apps now immediately stops playback, releases the MediaSession, and dismisses the media control notification from the lockscreen and Quick Settings.
+- **SQL Database Import Scripts**: Added clean database import scripts for AMARadio data.
+
 ## [1.40] - 2026-09-27
 ### Changed
 - **Privacy & Storage Modernization**: Removed deprecated `WRITE_EXTERNAL_STORAGE` permission requirement from `AndroidManifest.xml` in favor of full Storage Access Framework (SAF) integration for playlist import/export.
