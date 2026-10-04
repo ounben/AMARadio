@@ -1,0 +1,27 @@
+1. Import from Radio-Browser Mirror DB into SQLite via CSV
+
+2. Delete LastCheckOK 0
+
+3. Search Dublicate Stations:
+SELECT
+    Url,
+    COUNT(*) AS Gesamt_Anzahl,
+    MAX(StationID) AS Behalten_StationID
+FROM Station
+WHERE Url IS NOT NULL
+GROUP BY Url
+HAVING COUNT(*) > 1;
+
+4. Delete Dublicate Stations:
+
+DELETE FROM Station
+WHERE StationID NOT IN (
+    SELECT MAX(StationID)
+    FROM Station
+    WHERE Url IS NOT NULL
+    GROUP BY Url
+)
+AND Url IS NOT NULL;
+
+5. VACUUM;
+
