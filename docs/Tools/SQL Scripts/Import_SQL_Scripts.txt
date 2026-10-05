@@ -23,5 +23,20 @@ WHERE StationID NOT IN (
 )
 AND Url IS NOT NULL;
 
-5. VACUUM;
+5. Empty fields
+
+UPDATE Station
+SET
+    LastCheckTime = NULL,
+    LastCheckOkTime = NULL,
+    LastLocalCheckTime = NULL,
+    ClickTimestamp = NULL,
+    ChangeUuid = NULL,
+    ServerUuid = NULL,
+    ClickTrend = NULL,;
+
+6.
+
+PRAGMA page_size = 4096;
+VACUUM;
 

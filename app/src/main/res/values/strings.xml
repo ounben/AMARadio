@@ -166,6 +166,15 @@
     <string name="settings_remove_notification_on_stop_desc">Automatically dismiss the media notification when the app is closed from recent apps</string>
     <string name="settings_auto_resume_audio_focus">Resume after audio focus loss</string>
     <string name="settings_auto_resume_audio_focus_desc">Automatically resume playback after phone calls, alarms, or other audio stops</string>
+    <string name="settings_backup_restore">Backup &amp; Restore</string>
+    <string name="settings_export_backup">Create full backup (ZIP)</string>
+    <string name="settings_export_backup_desc">Saves all favorites, custom stations, and local icons into a single ZIP file</string>
+    <string name="settings_import_backup">Restore backup (ZIP)</string>
+    <string name="settings_import_backup_desc">Restores favorites, custom stations, and local icons from a backup ZIP file</string>
+    <string name="backup_export_success">Backup saved successfully</string>
+    <string name="backup_export_error">Failed to save backup</string>
+    <string name="backup_import_success">Backup restored successfully</string>
+    <string name="backup_import_error">Failed to restore backup</string>
     <string name="settings_equalizer">Equalizer</string>
 
     <string name="settings_connectivity">Connectivity</string>

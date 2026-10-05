@@ -77,6 +77,48 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
         }
     }
 
+    private val exportBackupLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                scope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openOutputStream(uri)?.use { os ->
+                                com.ounben.amaradio.backup.BackupManager.exportBackup(this@ActivityMain, os)
+                            } ?: false
+                        } catch (e: Exception) {
+                            Log.e("MAIN", "Backup export failed", e)
+                            false
+                        }
+                    }
+                    if (success) Utils.showModernToast(this@ActivityMain, R.string.backup_export_success)
+                    else Utils.showModernToast(this@ActivityMain, R.string.backup_export_error)
+                }
+            }
+        }
+    }
+
+    private val importBackupLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            result.data?.data?.let { uri ->
+                scope.launch {
+                    val success = withContext(Dispatchers.IO) {
+                        try {
+                            contentResolver.openInputStream(uri)?.use { isStr ->
+                                com.ounben.amaradio.backup.BackupManager.importBackup(this@ActivityMain, isStr)
+                            } ?: false
+                        } catch (e: Exception) {
+                            Log.e("MAIN", "Backup import failed", e)
+                            false
+                        }
+                    }
+                    if (success) Utils.showModernToast(this@ActivityMain, R.string.backup_import_success)
+                    else Utils.showModernToast(this@ActivityMain, R.string.backup_import_error)
+                }
+            }
+        }
+    }
+
     override fun attachBaseContext(newBase: Context) {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(newBase)
         val lang = sharedPref.getString("settings_language", "system") ?: "system"
@@ -104,7 +146,9 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                 AMARadioTheme {
                     MainScreen(
                         onSaveM3U = { triggerSaveM3U() },
-                        onLoadM3U = { triggerLoadM3U() }
+                        onLoadM3U = { triggerLoadM3U() },
+                        onExportBackup = { triggerExportBackup() },
+                        onImportBackup = { triggerImportBackup() }
                     )
                 }
             }
@@ -160,6 +204,34 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             loadM3ULauncher.launch(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "Failed to launch document picker", e)
+            Utils.showModernToast(this, R.string.error_no_file_manager)
+        }
+    }
+
+    private fun triggerExportBackup() {
+        try {
+            val dateStr = java.text.SimpleDateFormat("yyyyMMdd", java.util.Locale.getDefault()).format(java.util.Date())
+            val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "application/zip"
+                putExtra(Intent.EXTRA_TITLE, "AMARadio_Backup_$dateStr.zip")
+            }
+            exportBackupLauncher.launch(intent)
+        } catch (e: Exception) {
+            Log.e("MAIN", "Failed to launch backup creator", e)
+            Utils.showModernToast(this, R.string.error_no_file_manager)
+        }
+    }
+
+    private fun triggerImportBackup() {
+        try {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                addCategory(Intent.CATEGORY_OPENABLE)
+                type = "*/*"
+            }
+            importBackupLauncher.launch(intent)
+        } catch (e: Exception) {
+            Log.e("MAIN", "Failed to launch backup picker", e)
             Utils.showModernToast(this, R.string.error_no_file_manager)
         }
     }

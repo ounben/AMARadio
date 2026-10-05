@@ -48,7 +48,9 @@ sealed class Screen(val route: String, val titleRes: Int, val icon: androidx.com
 @Composable
 fun MainScreen(
     onSaveM3U: () -> Unit,
-    onLoadM3U: () -> Unit
+    onLoadM3U: () -> Unit,
+    onExportBackup: () -> Unit = {},
+    onImportBackup: () -> Unit = {}
 ) {
     val navController = rememberNavController()
     val context = LocalContext.current
@@ -322,6 +324,8 @@ fun MainScreen(
                                         app.reviewManager.launchReviewFlow(it)
                                     }
                                 },
+                                onExportBackup = onExportBackup,
+                                onImportBackup = onImportBackup,
                                 batterySummary = ""
                             )
                         }

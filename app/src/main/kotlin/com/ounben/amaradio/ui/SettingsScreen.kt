@@ -36,6 +36,8 @@ fun SettingsScreen(
     onOpenEqualizer: () -> Unit,
     onBatteryOptimize: () -> Unit,
     onRateApp: () -> Unit,
+    onExportBackup: () -> Unit,
+    onImportBackup: () -> Unit,
     batterySummary: String
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -193,6 +195,22 @@ fun SettingsScreen(
             //        onClick = onOpenProxy
             //    )
             // }
+
+            // Backup & Restore
+            SettingsCategory(title = stringResource(R.string.settings_backup_restore)) {
+                SettingsClickable(
+                    title = stringResource(R.string.settings_export_backup),
+                    summary = stringResource(R.string.settings_export_backup_desc),
+                    icon = Icons.Default.CloudUpload,
+                    onClick = onExportBackup
+                )
+                SettingsClickable(
+                    title = stringResource(R.string.settings_import_backup),
+                    summary = stringResource(R.string.settings_import_backup_desc),
+                    icon = Icons.Default.CloudDownload,
+                    onClick = onImportBackup
+                )
+            }
 
             // Other
             SettingsCategory(title = stringResource(R.string.settings_other)) {
