@@ -152,6 +152,10 @@ fun LocalDbTab(
                     Spacer(Modifier.height(8.dp))
                     InfoRow(stringResource(R.string.database_total_stations), uiState.localStationCount.toString())
                     InfoRow(stringResource(R.string.database_last_sync), uiState.lastSyncTime)
+                    if (uiState.isSyncing && uiState.syncProgressText.isNotEmpty()) {
+                        Spacer(Modifier.height(8.dp))
+                        InfoRow(stringResource(R.string.database_syncing), uiState.syncProgressText)
+                    }
                 }
             }
         }
@@ -173,7 +177,7 @@ fun LocalDbTab(
                     Icon(Icons.Default.Refresh, contentDescription = null)
                 }
                 Spacer(Modifier.width(8.dp))
-                Text(if (uiState.isSyncing) stringResource(R.string.database_syncing) else stringResource(R.string.database_update_now))
+                Text(if (uiState.isSyncing) "${stringResource(R.string.database_syncing)} ${uiState.syncProgressText}" else stringResource(R.string.database_update_now))
             }
         }
 

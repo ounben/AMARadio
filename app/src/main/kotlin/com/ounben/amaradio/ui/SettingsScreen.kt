@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
@@ -69,11 +70,40 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 8.dp),
-                    verticalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     InfoRow(stringResource(R.string.database_last_sync), serverInfoUiState.lastSyncTime)
-                    
-                    Spacer(modifier = Modifier.height(8.dp))
+                    InfoRow(stringResource(R.string.database_total_stations), "${serverInfoUiState.localStationCount}")
+
+                    if (serverInfoUiState.isSyncing) {
+                        Spacer(modifier = Modifier.height(4.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = stringResource(R.string.database_syncing),
+                                style = MaterialTheme.typography.bodySmall,
+                                fontWeight = FontWeight.Bold,
+                                color = AmaradioAmber
+                            )
+                            if (serverInfoUiState.syncProgressText.isNotEmpty()) {
+                                Text(
+                                    text = serverInfoUiState.syncProgressText,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
+                        LinearProgressIndicator(
+                            modifier = Modifier.fillMaxWidth().height(6.dp),
+                            color = AmaradioAmber
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(4.dp))
 
                     SettingsSwitch(
                         title = stringResource(R.string.settings_auto_db_update),
@@ -85,23 +115,51 @@ fun SettingsScreen(
                     
                     Spacer(modifier = Modifier.height(8.dp))
                     
-                    Button(
-                        onClick = { serverInfoViewModel.triggerManualSync() },
+                    Row(
                         modifier = Modifier.fillMaxWidth(),
-                        enabled = !serverInfoUiState.isSyncing,
-                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-                        if (serverInfoUiState.isSyncing) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(18.dp),
-                                color = Color.White,
-                                strokeWidth = 2.dp
-                            )
-                        } else {
-                            Icon(Icons.Default.Refresh, contentDescription = null)
+                        Button(
+                            onClick = { serverInfoViewModel.triggerFullUpdate() },
+                            modifier = Modifier.weight(1f),
+                            enabled = !serverInfoUiState.isSyncing,
+                            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(Icons.Default.Refresh, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = stringResource(R.string.database_full_update),
+                                    maxLines = 1,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
                         }
-                        Spacer(Modifier.width(8.dp))
-                        Text(if (serverInfoUiState.isSyncing) stringResource(R.string.database_syncing) else stringResource(R.string.database_update_now))
+
+                        Button(
+                            onClick = { serverInfoViewModel.triggerIncrementalUpdate() },
+                            modifier = Modifier.weight(1f),
+                            enabled = !serverInfoUiState.isSyncing,
+                            contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                        ) {
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(Icons.Default.Sync, contentDescription = null, modifier = Modifier.size(16.dp))
+                                Spacer(Modifier.width(4.dp))
+                                Text(
+                                    text = stringResource(R.string.database_incremental_update),
+                                    maxLines = 1,
+                                    textAlign = TextAlign.Center
+                                )
+                            }
+                        }
                     }
                 }
             }

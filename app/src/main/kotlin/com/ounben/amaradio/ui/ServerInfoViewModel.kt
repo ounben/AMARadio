@@ -8,13 +8,15 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.ounben.amaradio.AMARadioApp
-import com.ounben.amaradio.Utils
 import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.data.DataStatistics
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toDataStation
-import com.ounben.amaradio.service.SyncWorker
 import com.ounben.amaradio.station.DataRadioStation
+import com.ounben.amaradio.sync.DatabaseSync
+import com.ounben.amaradio.sync.DatabaseSyncState
+import com.ounben.amaradio.sync.DatabaseUpdate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +35,8 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
         val favoriteIds: Set<String> = emptySet(),
         val isLoading: Boolean = false,
         val isSyncing: Boolean = false,
+        val syncProgressText: String = "",
+        val currentSyncMode: String = "",
         val error: String? = null
     )
 
@@ -47,7 +51,6 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
         if (key == "last_db_sync_time") {
             val lastSync = prefs.getString("last_db_sync_time", "Never") ?: "Never"
             _uiState.update { it.copy(lastSyncTime = lastSync) }
-            // Also refresh local station count and recent changes as they likely changed too
             loadLocalDbInfo()
         }
     }
@@ -65,6 +68,39 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
             app.favouriteManager.stationsFlow.collect { favorites ->
                 val ids = favorites.map { it.StationUuid }.toSet()
                 _uiState.update { it.copy(favoriteIds = ids) }
+            }
+        }
+
+        // Observe live Sync Progress Flow
+        viewModelScope.launch {
+            DatabaseSync.progressFlow.collect { state ->
+                when (state) {
+                    is DatabaseSyncState.Idle -> {
+                        _uiState.update { it.copy(isSyncing = false, syncProgressText = "") }
+                    }
+                    is DatabaseSyncState.Running -> {
+                        _uiState.update { it.copy(
+                            isSyncing = true,
+                            syncProgressText = state.formattedProgress,
+                            currentSyncMode = state.mode
+                        ) }
+                    }
+                    is DatabaseSyncState.Success -> {
+                        _uiState.update { it.copy(
+                            isSyncing = false,
+                            syncProgressText = "",
+                            lastSyncTime = state.lastSyncTime
+                        ) }
+                        loadLocalDbInfo()
+                    }
+                    is DatabaseSyncState.Error -> {
+                        _uiState.update { it.copy(
+                            isSyncing = false,
+                            syncProgressText = "",
+                            error = state.message
+                        ) }
+                    }
+                }
             }
         }
     }
@@ -112,20 +148,26 @@ class ServerInfoViewModel(application: Application) : AndroidViewModel(applicati
         }
     }
 
+    fun triggerFullUpdate() {
+        startSyncWorker("full")
+    }
+
+    fun triggerIncrementalUpdate() {
+        startSyncWorker("incremental")
+    }
+
     fun triggerManualSync() {
+        triggerIncrementalUpdate()
+    }
+
+    private fun startSyncWorker(mode: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(isSyncing = true) }
+            _uiState.update { it.copy(isSyncing = true, currentSyncMode = mode, error = null) }
             
-            val syncRequest = OneTimeWorkRequestBuilder<SyncWorker>()
-                .setInputData(workDataOf("is_manual" to true))
+            val syncRequest = OneTimeWorkRequestBuilder<DatabaseUpdate>()
+                .setInputData(workDataOf(DatabaseUpdate.KEY_MODE to mode))
                 .build()
             WorkManager.getInstance(app).enqueue(syncRequest)
-            
-            // The prefListener will pick up the completion of the worker 
-            // when it writes to SharedPreferences. We just need to stop the indicator eventually.
-            // We'll keep the delay for UI feedback but the data update is now reactive.
-            kotlinx.coroutines.delay(2000)
-            _uiState.update { it.copy(isSyncing = false) }
         }
     }
 }
