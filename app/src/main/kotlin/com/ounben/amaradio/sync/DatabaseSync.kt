@@ -93,60 +93,19 @@ class DatabaseSync(private val context: Context) {
     private suspend fun performFullSync(
         onProgress: (current: Int, total: Int, formattedText: String) -> Unit
     ): Boolean = coroutineScope {
-        // 1. Primäre Datenquelle: Snapshot CDN GZIP
+        // 1. Primärer Versuchsablauf: Snapshot CDN GZIP
         try {
             val snapshotSuccess = performSnapshotSync(onProgress)
             if (snapshotSuccess) return@coroutineScope true
-        } catch (e: Exception) {
+            else Log.w("DatabaseSync", "Snapshot import returned false. Fallback to lastchange (1,000 stations)...")
+        } catch (t: Throwable) {
             coroutineContext.ensureActive()
-            Log.w("DatabaseSync", "Snapshot import failed: ${e.message}. Falling back to API full sync...", e)
+            Log.w("DatabaseSync", "Snapshot import failed: ${t.message}. Fallback to lastchange (1,000 stations)...", t)
         }
 
-        // 2. Fallback: Regulärer seitenweiser API Full Sync
-        Log.i("DatabaseSync", "Starting fallback API full sync...")
-        val totalCount = loader.getTotalStationCount() ?: 70000
-        var currentLoaded = 0
-        val chunkSize = 1000 // 1.000 Sender pro Abfrage
-        val parallelBatches = 2 // 2x 1.000 = 2.000 Sender pro Zyklus
-
-        reportProgress(0, totalCount, mode = "full", onProgress = onProgress)
-
-        while (currentLoaded < totalCount) {
-            coroutineContext.ensureActive()
-
-            val tasks = (0 until parallelBatches).map { batchIdx ->
-                val offset = currentLoaded + (batchIdx * chunkSize)
-                if (offset < totalCount) {
-                    async(Dispatchers.IO) {
-                        loader.getStationsChunk(offset = offset, limit = chunkSize)
-                    }
-                } else null
-            }.filterNotNull()
-
-            val results = tasks.awaitAll()
-            var batchCount = 0
-
-            for (chunk in results) {
-                if (!chunk.isNullOrEmpty()) {
-                    val entities = chunk.map { it.toEntity() }
-                    database.stationDao().syncBatch(entities)
-                    batchCount += chunk.size
-                }
-            }
-
-            if (batchCount == 0) {
-                // No more stations returned from API
-                break
-            }
-
-            currentLoaded += batchCount
-            reportProgress(currentLoaded, totalCount, mode = "full", onProgress = onProgress)
-        }
-
-        saveLastSyncTimestamp()
-        val finalSyncTime = prefs.getString("last_db_sync_time", "Just now") ?: "Just now"
-        _progressFlow.value = DatabaseSyncState.Success("Full sync completed", finalSyncTime)
-        true
+        // 2. Fallback bei Fehler: Inkrementeller Sync über lastchange (1.000 neueste Sender)
+        Log.i("DatabaseSync", "Snapshot failed -> Fallback to lastchange (1,000 stations) activated.")
+        performIncrementalSync(onProgress)
     }
 
     private suspend fun performSnapshotSync(
