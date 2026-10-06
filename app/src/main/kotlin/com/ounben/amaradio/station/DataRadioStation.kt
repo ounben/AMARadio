@@ -25,6 +25,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.Transient
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.decodeFromStream
 import okhttp3.OkHttpClient
 
 @Serializable
@@ -219,6 +220,17 @@ data class DataRadioStation(
             ignoreUnknownKeys = true 
             coerceInputValues = true
             encodeDefaults = true
+        }
+
+        @OptIn(kotlinx.serialization.ExperimentalSerializationApi::class)
+        @JvmStatic
+        fun DecodeJsonStream(stream: java.io.InputStream): List<DataRadioStation>? {
+            return try {
+                jsonConfig.decodeFromStream<List<DataRadioStation>>(stream)
+            } catch (e: Exception) {
+                Log.e(TAG, "DecodeJsonStream exception: ", e)
+                null
+            }
         }
 
         @JvmStatic

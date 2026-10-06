@@ -6,9 +6,15 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import androidx.preference.PreferenceManager
+import androidx.room.withTransaction
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toEntity
+import com.ounben.amaradio.station.DataRadioStation
+import okhttp3.Request
+import java.io.IOException
+import java.io.InputStream
+import java.util.zip.GZIPInputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -87,7 +93,18 @@ class DatabaseSync(private val context: Context) {
     private suspend fun performFullSync(
         onProgress: (current: Int, total: Int, formattedText: String) -> Unit
     ): Boolean = coroutineScope {
-        val totalCount = loader.getTotalStationCount() ?: 45000
+        // 1. Primäre Datenquelle: Snapshot CDN GZIP
+        try {
+            val snapshotSuccess = performSnapshotSync(onProgress)
+            if (snapshotSuccess) return@coroutineScope true
+        } catch (e: Exception) {
+            coroutineContext.ensureActive()
+            Log.w("DatabaseSync", "Snapshot import failed: ${e.message}. Falling back to API full sync...", e)
+        }
+
+        // 2. Fallback: Regulärer seitenweiser API Full Sync
+        Log.i("DatabaseSync", "Starting fallback API full sync...")
+        val totalCount = loader.getTotalStationCount() ?: 70000
         var currentLoaded = 0
         val chunkSize = 1000 // 1.000 Sender pro Abfrage
         val parallelBatches = 2 // 2x 1.000 = 2.000 Sender pro Zyklus
@@ -130,6 +147,81 @@ class DatabaseSync(private val context: Context) {
         val finalSyncTime = prefs.getString("last_db_sync_time", "Just now") ?: "Just now"
         _progressFlow.value = DatabaseSyncState.Success("Full sync completed", finalSyncTime)
         true
+    }
+
+    private suspend fun performSnapshotSync(
+        onProgress: (current: Int, total: Int, formattedText: String) -> Unit
+    ): Boolean = withContext(Dispatchers.IO) {
+        val snapshotUrl = "https://radiobrowser-cdn.ounben.com/stations.json.gz"
+        Log.i("DatabaseSync", "Starting snapshot download from $snapshotUrl...")
+
+        reportProgress(0, 50000, mode = "full", onProgress = onProgress)
+
+        try {
+            // 1. Request mit Accept-Encoding: gzip (ohne manuellen User-Agent Override)
+            val request = Request.Builder()
+                .url(snapshotUrl)
+                .header("Accept-Encoding", "gzip")
+                .build()
+
+            val response = app.httpClient.newCall(request).execute()
+            Log.i("DatabaseSync", "Snapshot HTTP response code: ${response.code}")
+
+            if (!response.isSuccessful) {
+                Log.e("DatabaseSync", "Snapshot HTTP response failed with code ${response.code}")
+                return@withContext false
+            }
+
+            val body = response.body
+            val rawStream = body.byteStream()
+
+            // 2. GZIP Dekomprimierung
+            val isGzip = response.header("Content-Encoding")?.contains("gzip", ignoreCase = true) == true ||
+                         snapshotUrl.endsWith(".gz")
+
+            val decompressedStream: InputStream = if (isGzip) GZIPInputStream(rawStream) else rawStream
+
+            Log.i("DatabaseSync", "Decoding stations JSON directly from GZIP stream...")
+            val stations = decompressedStream.use { stream ->
+                DataRadioStation.DecodeJsonStream(stream)
+            }
+
+            if (stations.isNullOrEmpty()) {
+                Log.e("DatabaseSync", "Failed to parse stations JSON or snapshot returned 0 stations")
+                return@withContext false
+            }
+
+            val totalCount = stations.size
+            Log.i("DatabaseSync", "Decoded $totalCount stations from snapshot JSON")
+            reportProgress(totalCount / 2, totalCount, mode = "full", onProgress = onProgress)
+
+            coroutineContext.ensureActive()
+
+            // 3. Chunked Room DB inserts inside database.withTransaction to avoid OOM / GC thrashing
+            Log.i("DatabaseSync", "Inserting $totalCount stations into Room database in chunks of 5,000...")
+            database.withTransaction {
+                stations.asSequence()
+                    .map { it.toEntity() }
+                    .chunked(5000)
+                    .forEachIndexed { index, chunk ->
+                        database.stationDao().insertAllInternal(chunk)
+                        val insertedSoFar = minOf((index + 1) * 5000, totalCount)
+                        reportProgress(insertedSoFar, totalCount, mode = "full", onProgress = onProgress)
+                    }
+            }
+
+            reportProgress(totalCount, totalCount, mode = "full", onProgress = onProgress)
+            saveLastSyncTimestamp()
+
+            val finalSyncTime = prefs.getString("last_db_sync_time", "Just now") ?: "Just now"
+            _progressFlow.value = DatabaseSyncState.Success("Snapshot import completed successfully", finalSyncTime)
+            Log.i("DatabaseSync", "Snapshot import completed successfully with $totalCount stations.")
+            true
+        } catch (t: Throwable) {
+            coroutineContext.ensureActive()
+            Log.e("DatabaseSync", "Snapshot import failed: ${t.message}", t)
+            false
+        }
     }
 
     private suspend fun performIncrementalSync(
