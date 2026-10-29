@@ -47,6 +47,18 @@ fun RecordingsTab() {
     var recordingWithOptions by remember { mutableStateOf<RecordEntity?>(null) }
     var recordingToDelete by remember { mutableStateOf<RecordEntity?>(null) }
 
+    // Auto-reconcile database with physical storage (cleans up externally deleted files)
+    LaunchedEffect(recordings) {
+        withContext(Dispatchers.IO) {
+            recordings.forEach { record ->
+                if (!isRecordingFileExists(context, record.fileUri)) {
+                    android.util.Log.d("RecordingsTab", "Cleaning up externally deleted recording: ${record.fileUri}")
+                    db.recordDao().deleteRecord(record.id)
+                }
+            }
+        }
+    }
+
     Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
         if (recordings.isEmpty()) {
             Box(
@@ -418,4 +430,17 @@ private fun formatDuration(ms: Long): String {
     val hours = ms / (1000 * 60 * 60)
     return if (hours > 0) String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds)
     else String.format(Locale.US, "%02d:%02d", minutes, seconds)
+}
+
+private fun isRecordingFileExists(context: Context, fileUriStr: String): Boolean {
+    return try {
+        val uri = Uri.parse(fileUriStr)
+        val pfd = context.contentResolver.openFileDescriptor(uri, "r")
+        if (pfd != null) {
+            pfd.close()
+            true
+        } else false
+    } catch (_: Exception) {
+        false
+    }
 }
