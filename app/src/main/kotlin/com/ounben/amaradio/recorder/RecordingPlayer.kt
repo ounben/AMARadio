@@ -104,7 +104,7 @@ fun RecordingPlayerDialog(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = record.stationName,
+                        text = record.Name,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.onSurface,
@@ -126,9 +126,9 @@ fun RecordingPlayerDialog(
 
                 Box(modifier = Modifier.size(110.dp), contentAlignment = Alignment.Center) {
                     StationIcon(
-                        stationName = record.stationName,
-                        stationUuid = record.stationUuid,
-                        iconUrl = null,
+                        stationName = record.Name,
+                        stationUuid = record.StationUuid,
+                        iconUrl = record.Favicon.ifEmpty { null },
                         modifier = Modifier.fillMaxSize()
                     )
                 }

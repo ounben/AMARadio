@@ -128,7 +128,7 @@ fun RecordingsTab() {
             },
             text = {
                 Text(
-                    text = "Delete recording: ${record.stationName}?",
+                    text = "Delete recording: ${record.Name}?",
                     color = MaterialTheme.colorScheme.onSurface
                 )
             },
@@ -197,16 +197,16 @@ fun RecordingListItem(
         ) {
             Box(modifier = Modifier.size(52.dp), contentAlignment = Alignment.Center) {
                 StationIcon(
-                    stationName = record.stationName,
-                    stationUuid = record.stationUuid,
-                    iconUrl = null,
+                    stationName = record.Name,
+                    stationUuid = record.StationUuid,
+                    iconUrl = record.Favicon.ifEmpty { null },
                     modifier = Modifier.fillMaxSize()
                 )
             }
             Spacer(modifier = Modifier.width(12.dp))
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = record.stationName,
+                    text = record.Name,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold,
                     maxLines = 1,
@@ -298,7 +298,7 @@ fun RecordingOptionsDialog(
         title = {
             Column {
                 Text(
-                    text = record.stationName,
+                    text = record.Name,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
@@ -413,8 +413,8 @@ private fun shareRecordingFile(context: Context, record: RecordEntity) {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "audio/*"
             putExtra(Intent.EXTRA_STREAM, uri)
-            putExtra(Intent.EXTRA_SUBJECT, record.stationName)
-            putExtra(Intent.EXTRA_TEXT, "${record.stationName}\nRecording: ${record.format.uppercase()}")
+            putExtra(Intent.EXTRA_SUBJECT, record.Name)
+            putExtra(Intent.EXTRA_TEXT, "${record.Name}\nRecording: ${record.format.uppercase()}")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         val chooser = Intent.createChooser(shareIntent, context.getString(R.string.action_station_share))
