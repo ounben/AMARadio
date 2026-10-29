@@ -46,11 +46,26 @@ fun RecordingPlayerDialog(
     val tracks by db.recordDao().getTracksForRecordingFlow(record.id).collectAsState(initial = emptyList())
 
     val exoPlayer = remember {
-        ExoPlayer.Builder(context).build().apply {
-            setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
-            prepare()
-            playWhenReady = true
+        val extractorsFactory = androidx.media3.extractor.DefaultExtractorsFactory().apply {
+            setAdtsExtractorFlags(
+                androidx.media3.extractor.ts.AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING
+            )
+            setMp3ExtractorFlags(
+                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING_ALWAYS
+            )
         }
+        val mediaSourceFactory = androidx.media3.exoplayer.source.DefaultMediaSourceFactory(
+            context,
+            extractorsFactory
+        )
+
+        ExoPlayer.Builder(context)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build().apply {
+                setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
+                prepare()
+                playWhenReady = true
+            }
     }
 
     DisposableEffect(exoPlayer) {
@@ -59,8 +74,11 @@ fun RecordingPlayerDialog(
                 isPlaying = playing
             }
             override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_READY && durationMs <= 0) {
-                    durationMs = exoPlayer.duration.coerceAtLeast(1L)
+                if (state == Player.STATE_READY && exoPlayer.duration > 0) {
+                    durationMs = exoPlayer.duration
+                } else if (state == Player.STATE_ENDED) {
+                    isPlaying = false
+                    currentPositionMs = durationMs
                 }
             }
         }
@@ -75,6 +93,9 @@ fun RecordingPlayerDialog(
         while (isPlaying) {
             if (!isSeeking) {
                 currentPositionMs = exoPlayer.currentPosition.coerceAtLeast(0L)
+            }
+            if (exoPlayer.duration > 0) {
+                durationMs = exoPlayer.duration
             }
             delay(200)
         }
@@ -207,7 +228,15 @@ fun RecordingPlayerDialog(
 
                     IconButton(
                         onClick = {
-                            if (isPlaying) exoPlayer.pause() else exoPlayer.play()
+                            if (exoPlayer.playbackState == Player.STATE_ENDED || currentPositionMs >= maxDuration - 500) {
+                                exoPlayer.seekTo(0L)
+                                currentPositionMs = 0L
+                                exoPlayer.play()
+                            } else if (isPlaying) {
+                                exoPlayer.pause()
+                            } else {
+                                exoPlayer.play()
+                            }
                         },
                         modifier = Modifier.size(64.dp)
                     ) {
