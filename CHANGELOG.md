@@ -5,6 +5,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.47] - 2026-10-31
+### Added
+- **Lossless Live Stream Recording Engine**: Added real-time, lossless radio stream recording (`.mp3` & `.m4a`/`.aac`) directly to Android MediaStore (`Music/AMARadio/<StationName>/`) with an independent background service (`RecordService`) and notification controls.
+- **Standalone Thread-Decoupled Recording Architecture**: Implemented a thread-decoupled Producer/Consumer engine (`ThreadDecoupledRecorder`) with a 256 KB in-memory ring queue and high-priority native Java thread (`Thread.MAX_PRIORITY`), completely isolating background stream recording from ExoPlayer station switches, GC pauses, and CPU spikes.
+- **Timer & Auto-Stop Controls**: Integrated recording timer choices (`5 min`, `15 min`, `30 min`, `1 h`, `2 h`, `∞ Infinite`) directly into the Player control bar, Top Bar, and station long-press options menu.
+- **Embedded ID3v2 Cover Art & Station Metadata**: Automatically embeds local cached station artwork (`station_icons/$stationUuid.jpg` or generated placeholder) into recorded MP3 audio files (`ID3v2.3 APIC`) without performing external network downloads. Saves full station metadata into the `recordings` table.
+- **Floating Recording Player Window (`RecordingPlayer.kt`)**: Added a dedicated, floating playback window (`RecordingPlayerDialog`) with a real-time seekbar/timeline slider, station artwork, +10s/-10s skip controls, interactive song chapter navigation, and automatic restart on playback completion.
+- **HLS (.m3u8) Stream Recorder**: Added real-time HLS playlist parsing (`HlsResolver.kt`) to stream and save raw audio segments loss-lessly without writing playlist text headers into audio files.
+- **Automatic Storage Reconciliation**: Added automatic background scanning on opening the Recordings tab to detect and purge orphaned database entries for audio files deleted externally via File Managers or Google Files.
+
+### Changed
+- **Isolated OkHttp Recorder Client**: Configured a dedicated, isolated `OkHttpClient` instance with its own `ConnectionPool` and `Dispatcher` for recording, eliminating socket stalls and network contention when changing stations in the radio player.
+- **Android Auto Media Resumption Fix**: Pre-initialized `PlayerService.itsCurrentStation` on cold start and added fallback to `app.historyManager.first` in `MediaSessionCallback.onPlaybackResumption`, ensuring Android Auto always resumes the exact most recently played station from AMARadio's history table instead of stale system-cached items.
+- **100% Offline Raw Resource Loading**: Replaced dynamic string reflection (`getIdentifier`) in `FilterViewModel.kt` with direct resource IDs (`R.raw.radio_browser_country_cache`, `R.raw.radio_browser_tag_cache`, `R.raw.radio_browser_language_cache`), preventing R8 resource shrinker stripping and eliminating unwanted fallback network calls to `json/countrycodes`.
+- **GZIP Fallback API Pause**: Added a 200 ms delay between sequential 1,000-station chunk fetches in `DatabaseSync.performApiFullSync()` to prevent rate-limiting on Radio-Browser servers.
+- **About Screen VersionCode & Website Link**: Added dynamic `versionCode` display (e.g. `Version: 1.47 (173)`) and clickable website link (`https://www.amaradio.org`) in `AboutScreen.kt`.
+
+### Fixed
+- **Audio Frame Dropout & Crackling Prevention**: Eliminated audio frame dropouts and clicking in recorded MP3 files by enforcing exact byte reading (`RecordIcyStream`) and removing `Icy-MetaData: 1` headers from live recording requests.
+- **Musicolet & MediaExtractor Compatibility (`w=0 e=4`)**: Encapsulated raw ADTS AAC streams into M4A/MP4 containers (`.m4a` / `audio/mp4`) via `AacMuxer.kt` and eliminated post-stream FileDescriptor truncation, resolving container parsing errors across external players.
+- **AAC ADTS Magic Byte Detection**: Updated bitwise syncword masking in `FormatParser.kt` to evaluate layer bits (`(b1 and 0x06) == 0x00`) and station database codecs (`station.Codec`), accurately distinguishing ADTS AAC from MP3.
+- **ExoPlayer Timeline Seeking for AAC/MP3**: Configured `AdtsExtractor` (`FLAG_ENABLE_CONSTANT_BITRATE_SEEKING`) and `Mp3Extractor` (`FLAG_ENABLE_CONSTANT_BITRATE_SEEKING_ALWAYS`) flags in `RecordingPlayerDialog`, enabling smooth timeline seeking and timestamp jumps for all recorded files.
+- **Graceful Disk Full Handling**: Added `onDiskError` exception handling in `ThreadDecoupledRecorder` to gracefully stop recording and finalize partial audio files cleanly if physical phone storage runs out (`ENOSPC`), displaying a clear user notification (`R.string.database_error_no_space`).
+
 ## [1.46] - 2026-10-23
 ### Added
 - **Multi-Tag Filter Engine & Logical Operators**: Added support for up to 3 filter tags with dynamic logical operators (`AND`, `OR`, `NOT`) in the local offline database (`StationDao.kt`), allowing advanced genre filtering (e.g. `pop` AND `80s`, or excluding genres with `NOT`).
