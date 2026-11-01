@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
 import com.ounben.amaradio.ui.SolidRedError
@@ -31,6 +33,7 @@ fun RecordButtonWithTimer(
     val recordManager = remember { RecordManager.getInstance(context) }
     val recordState by recordManager.recordingState.collectAsState()
     var showTimerMenu by remember { mutableStateOf(false) }
+    val noStationMsg = stringResource(R.string.error_station_load)
 
     Box(modifier = modifier) {
         IconButton(
@@ -41,7 +44,7 @@ fun RecordButtonWithTimer(
                     if (currentStation != null) {
                         showTimerMenu = true
                     } else {
-                        Toast.makeText(context, "No station playing", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, noStationMsg, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
@@ -61,13 +64,14 @@ fun RecordButtonWithTimer(
             onDismissRequest = { showTimerMenu = false },
             modifier = Modifier.background(MaterialTheme.colorScheme.surface)
         ) {
+            val infiniteLabel = stringResource(R.string.timer_infinite)
             val timerOptions = listOf(
-                "5 min" to 5 * 60 * 1000L,
+                " 5 min" to 5 * 60 * 1000L,
                 "15 min" to 15 * 60 * 1000L,
                 "30 min" to 30 * 60 * 1000L,
-                "1 h" to 60 * 60 * 1000L,
-                "2 h" to 120 * 60 * 1000L,
-                "∞ Endlos" to 0L
+                " 1 h" to 60 * 60 * 1000L,
+                " 2 h" to 120 * 60 * 1000L,
+                " $infiniteLabel" to 0L
             )
 
             timerOptions.forEach { (label, durationMs) ->

@@ -91,6 +91,11 @@
     <string name="dialog_hint_file_name">Enter file name</string>
     <string name="error_empty_field">This field is required</string>
     <string name="error_invalid_file_name">Invalid file name</string>
+    <string name="action_open_file_location">Open file location</string>
+    <string name="chapters">Chapters</string>
+    <string name="timer_infinite" translatable="false">∞</string>
+    <string name="error_cannot_open_file">Cannot open file</string>
+    <string name="error_sharing">Error sharing</string>
     <string name="error_no_file_manager">Could not find a system file manager. Please ensure a file explorer is installed and enabled.</string>
     <string name="error_no_browser">Could not find a web browser. Please install a browser to open this link.</string>
     <string name="error_no_homepage">No homepage available for this station</string>

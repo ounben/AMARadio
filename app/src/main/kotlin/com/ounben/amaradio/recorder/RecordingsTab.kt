@@ -66,7 +66,7 @@ fun RecordingsTab() {
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = "No recordings found.",
+                    text = stringResource(R.string.searchpreference_no_results),
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -128,7 +128,7 @@ fun RecordingsTab() {
             },
             text = {
                 Text(
-                    text = "Delete recording: ${record.Name}?",
+                    text = "${stringResource(R.string.action_delete)}: ${record.Name}?",
                     color = MaterialTheme.colorScheme.onSurface
                 )
             },
@@ -334,7 +334,7 @@ fun RecordingOptionsDialog(
                 )
 
                 ListItem(
-                    headlineContent = { Text("Open file location", color = MaterialTheme.colorScheme.onSurface) },
+                    headlineContent = { Text(stringResource(R.string.action_open_file_location), color = MaterialTheme.colorScheme.onSurface) },
                     leadingContent = { Icon(Icons.Default.FolderOpen, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                     modifier = Modifier.clickable {
                         onOpenFolder()
@@ -382,7 +382,7 @@ private fun openRecordingFile(context: Context, fileUriStr: String) {
         }
         context.startActivity(intent)
     } catch (_: Exception) {
-        Toast.makeText(context, "Cannot open recording file", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.error_cannot_open_file), Toast.LENGTH_SHORT).show()
     }
 }
 
@@ -402,7 +402,7 @@ private fun openRecordingFolder(context: Context, fileUriStr: String) {
             }
             context.startActivity(intent)
         } catch (_: Exception) {
-            Toast.makeText(context, "Cannot open file manager", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.error_no_file_manager), Toast.LENGTH_SHORT).show()
         }
     }
 }
@@ -420,7 +420,7 @@ private fun shareRecordingFile(context: Context, record: RecordEntity) {
         val chooser = Intent.createChooser(shareIntent, context.getString(R.string.action_station_share))
         context.startActivity(chooser)
     } catch (_: Exception) {
-        Toast.makeText(context, "Error sharing recording", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, context.getString(R.string.error_sharing), Toast.LENGTH_SHORT).show()
     }
 }
 
