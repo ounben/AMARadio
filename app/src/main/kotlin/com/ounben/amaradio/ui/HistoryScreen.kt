@@ -74,7 +74,7 @@ fun HistoryScreen(
             Tab(
                 selected = pagerState.currentPage == 2,
                 onClick = { coroutineScope.launch { pagerState.animateScrollToPage(2) } },
-                text = { Text(text = "Recordings") }
+                text = { Text(text = stringResource(R.string.tab_recordings)) }
             )
         }
 

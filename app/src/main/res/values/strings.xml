@@ -93,6 +93,7 @@
     <string name="error_invalid_file_name">Invalid file name</string>
     <string name="action_open_file_location">Open file location</string>
     <string name="action_record">Record</string>
+    <string name="tab_recordings">Recordings</string>
     <string name="chapters">Chapters</string>
     <string name="timer_infinite" translatable="false">∞</string>
     <string name="error_cannot_open_file">Cannot open file</string>
