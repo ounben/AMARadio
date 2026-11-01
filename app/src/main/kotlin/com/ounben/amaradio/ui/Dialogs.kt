@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -324,7 +325,10 @@ fun StationOptionsDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
-    
+    var showRecordTimerDialog by remember { mutableStateOf(false) }
+    val isDark = isSystemInDarkTheme()
+    val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
+
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
@@ -359,6 +363,19 @@ fun StationOptionsDialog(
                             PlayStationTask.playExternal(station, context).execute()
                         }
                         onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                )
+                ListItem(
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(R.string.action_record),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { Icon(Icons.Filled.RadioButtonChecked, contentDescription = null, tint = recordRedColor) },
+                    modifier = Modifier.clickable {
+                        showRecordTimerDialog = true
                     },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
@@ -437,6 +454,47 @@ fun StationOptionsDialog(
             }
         }
     )
+
+    if (showRecordTimerDialog) {
+        val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
+        val infiniteLabel = stringResource(R.string.timer_infinite)
+        val timerOptions = listOf(
+            " 5 min" to 5 * 60 * 1000L,
+            "15 min" to 15 * 60 * 1000L,
+            "30 min" to 30 * 60 * 1000L,
+            " 1 h" to 60 * 60 * 1000L,
+            " 2 h" to 120 * 60 * 1000L,
+            " $infiniteLabel" to 0L
+        )
+
+        AlertDialog(
+            onDismissRequest = { showRecordTimerDialog = false },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = { Text(stringResource(R.string.action_record), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
+            text = {
+                Column {
+                    timerOptions.forEach { (label, durationMs) ->
+                        ListItem(
+                            headlineContent = { Text(label, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
+                            leadingContent = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
+                            modifier = Modifier.clickable {
+                                showRecordTimerDialog = false
+                                recordManager.startRecording(station, durationMs)
+                                onDismiss()
+                            },
+                            colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { showRecordTimerDialog = false }) {
+                    Text(stringResource(R.string.label_button_cancel), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        )
+    }
 }
 
 @Composable
