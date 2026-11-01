@@ -181,6 +181,13 @@ class RecordManager private constructor(private val context: Context) {
                                 durationMs = elapsed,
                                 fileSizeBytes = _recordingState.value.fileSizeBytes + addedBytes
                             )
+                        },
+                        onDiskError = { e ->
+                            Log.e("RecordManager", "Storage full or disk write failed", e)
+                            _recordingState.value = _recordingState.value.copy(
+                                error = context.getString(com.ounben.amaradio.R.string.database_error_no_space)
+                            )
+                            stopRecording()
                         }
                     )
 

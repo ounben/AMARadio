@@ -14,7 +14,8 @@ import java.util.concurrent.TimeUnit
 class ThreadDecoupledRecorder(
     private val inputStream: InputStream,
     private val mediaWriter: MediaWriter,
-    private val onBytesWritten: (bytesCount: Long) -> Unit
+    private val onBytesWritten: (bytesCount: Long) -> Unit,
+    private val onDiskError: (Exception) -> Unit = {}
 ) {
     @Volatile
     private var isRunning = true
@@ -40,7 +41,10 @@ class ThreadDecoupledRecorder(
                 } catch (_: InterruptedException) {
                     break
                 } catch (e: Exception) {
-                    Log.e("DecoupledRecorder", "Consumer disk write error", e)
+                    Log.e("DecoupledRecorder", "Consumer disk write error (e.g. disk full)", e)
+                    isRunning = false
+                    onDiskError(e)
+                    break
                 }
             }
         }, "Recorder-Disk-Thread").apply {

@@ -85,6 +85,7 @@ class MediaWriter(
             totalBytesWritten += length
         } catch (e: Exception) {
             Log.e("MediaWriter", "Error writing audio bytes", e)
+            throw e
         }
     }
 
