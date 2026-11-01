@@ -138,10 +138,18 @@ class MediaSessionCallback(
         return if (currentItem != null) {
             Futures.immediateFuture(MediaSession.MediaItemsWithStartPosition(listOf(currentItem), 0, 0))
         } else {
-            // Fallback: If no item is set, try to get the last played station from the service
+            // Fallback: If no item is set, query most recent station from history or favorites
+            val app = context.applicationContext as? com.ounben.amaradio.AMARadioApp
             val service = context as? PlayerService
             val station = service?.itsCurrentStation
+                ?: app?.historyManager?.first
+                ?: app?.favouriteManager?.first
+                ?: app?.customStationManager?.first
+
             if (station != null) {
+                if (service?.itsCurrentStation == null) {
+                    service?.setStation(station)
+                }
                 val streamUrl = (if (!station.playableUrl.isNullOrEmpty()) station.playableUrl else station.StreamUrl) ?: ""
                 val fullMetadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
                 val item = com.ounben.amaradio.players.exoplayer.Media3Utils.buildLiveMediaItem(

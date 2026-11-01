@@ -267,8 +267,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         powerManager = getSystemService(POWER_SERVICE) as? PowerManager
         audioManager = getSystemService(AUDIO_SERVICE) as? AudioManager
         
-        // 1. Initialize RadioPlayer
+        // 1. Initialize RadioPlayer & Pre-initialize station from History for Cold Starts (Android Auto MediaResume)
         radioPlayer = RadioPlayer(this).apply { setPlayerListener(this@PlayerService) }
+        val resumeApp = applicationContext as? AMARadioApp
+        itsCurrentStation = resumeApp?.historyManager?.first ?: resumeApp?.favouriteManager?.first ?: resumeApp?.customStationManager?.first
 
         amaradioBrowser = AMARadioBrowser(applicationContext as AMARadioApp)
 
