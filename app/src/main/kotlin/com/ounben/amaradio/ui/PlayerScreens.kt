@@ -446,7 +446,7 @@ fun FullPlayer(
 
 /**
  * Permanent player column for the wide (landscape) layout, e.g. car tablets.
- * Large centred artwork and text that can be read at a glance, and big touch targets.
+ * Large centred artwork and text that can be read at a glance, and comfortable touch targets.
  * On short screens (small head units) the recent-tracks list is dropped so the
  * controls always stay fully visible.
  */
@@ -548,58 +548,58 @@ fun SidePanelPlayer(
 
             HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
 
-            // Big controls: sized to fit the narrowest panel (300dp)
+            // Controls: still comfortable touch targets (>= 44dp), but compact enough for small panels
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 8.dp, vertical = 12.dp),
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(
                     onClick = { playerViewModel.skipToPrevious() },
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
                         contentDescription = null,
-                        modifier = Modifier.size(52.dp),
+                        modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
                 IconButton(
                     onClick = { playerViewModel.togglePlayPause() },
-                    modifier = Modifier.size(96.dp)
+                    modifier = Modifier.size(72.dp)
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(88.dp),
+                        modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
 
                 IconButton(
                     onClick = { playerViewModel.skipToNext() },
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier.size(48.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
                         contentDescription = null,
-                        modifier = Modifier.size(52.dp),
+                        modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
                 IconButton(
                     onClick = { playerViewModel.toggleFavorite() },
-                    modifier = Modifier.size(56.dp)
+                    modifier = Modifier.size(44.dp)
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
-                        modifier = Modifier.size(36.dp),
+                        modifier = Modifier.size(26.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }

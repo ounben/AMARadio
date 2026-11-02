@@ -234,7 +234,7 @@ fun MainScreen(
         ) { innerPadding ->
             Row(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                 if (useWideLayout) {
-                    // Landscape: vertical navigation with big, labelled targets, easy to hit while parked
+                    // Landscape: vertical navigation with labelled targets (standard Material sizes)
                     NavigationRail(
                         containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -243,7 +243,7 @@ fun MainScreen(
                         Spacer(modifier = Modifier.weight(1f))
                         navItems.forEach { screen ->
                             NavigationRailItem(
-                                icon = { Icon(screen.icon, contentDescription = null, modifier = Modifier.size(32.dp)) },
+                                icon = { Icon(screen.icon, contentDescription = null) },
                                 label = { Text(stringResource(screen.titleRes), maxLines = 1) },
                                 selected = isNavItemSelected(screen),
                                 onClick = {
@@ -254,7 +254,6 @@ fun MainScreen(
                                     }
                                     onNavItemClick(screen)
                                 },
-                                modifier = Modifier.padding(vertical = 8.dp),
                                 colors = NavigationRailItemDefaults.colors(
                                     selectedIconColor = AmaradioAmber,
                                     selectedTextColor = AmaradioAmber,
