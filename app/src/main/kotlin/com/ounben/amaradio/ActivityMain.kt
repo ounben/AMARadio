@@ -70,7 +70,12 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     }
                     if (loadedStations != null && loadedStations.isNotEmpty()) {
                         app.favouriteManager.addMultiple(loadedStations)
-                        Utils.showModernToast(this@ActivityMain, R.string.notify_load_playlist_ok)
+                        Utils.showModernToast(
+                            this@ActivityMain,
+                            getString(R.string.notify_load_playlist_ok, loadedStations.size)
+                        )
+                    } else {
+                        Utils.showModernToast(this@ActivityMain, R.string.notify_load_playlist_nok)
                     }
                 }
             }

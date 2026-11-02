@@ -487,6 +487,12 @@ object Utils {
     }
 
     @JvmStatic
+    fun showModernToast(activity: Activity, message: String) {
+        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
+        showSnackbar(view, message)
+    }
+
+    @JvmStatic
     fun openBatteryOrAppSettings(context: Context) {
         try {
             // 1. Primary Intent: Direct to App Details Settings Page

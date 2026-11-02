@@ -92,12 +92,12 @@
     <string name="label_button_cancel">Abbrechen</string>
     <string name="error_no_homepage">Keine Webseite für diesen Radiosender verfügbar</string>
     <string name="label_button_overwrite">Überschreiben</string>
-    <string name="notify_load_playlist_nok">Import von %1$s&#47;%2$s fehlgeschlagen</string>
-    <string name="notify_load_playlist_now">Import von %1$s&#47;%2$s läuft, bitte warten.</string>
-    <string name="notify_load_playlist_ok">%1$d Sender von %2$s&#47;%3$s importiert</string>
-    <string name="notify_save_playlist_nok">Export nach %1$s&#47;%2$s fehlgeschlagen</string>
-    <string name="notify_save_playlist_now">Export nach %1$s&#47;%2$s läuft, bitte warten.</string>
-    <string name="notify_save_playlist_ok">Erfolgreich nach %1$s&#47;%2$s exportiert</string>
+    <string name="notify_load_playlist_nok">Import der Wiedergabeliste fehlgeschlagen</string>
+    <string name="notify_load_playlist_now">Importiere Wiedergabeliste, bitte warten…</string>
+    <string name="notify_load_playlist_ok">%1$d Sender importiert</string>
+    <string name="notify_save_playlist_nok">Export der Wiedergabeliste fehlgeschlagen</string>
+    <string name="notify_save_playlist_now">Exportiere Wiedergabeliste, bitte warten…</string>
+    <string name="notify_save_playlist_ok">Wiedergabeliste erfolgreich exportiert</string>
     <string name="notify_sync_list_deleted_entries">%1$d von %2$d lokalen Sendern in der Liste existieren nicht mehr auf dem Server</string>
 
     <string name="searchpreference_clear_history">Verlauf löschen</string>

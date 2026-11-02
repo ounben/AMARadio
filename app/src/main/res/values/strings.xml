@@ -103,12 +103,12 @@
     <string name="error_no_homepage">No homepage available for this station</string>
     <string name="label_button_cancel">Cancel</string>
     <string name="label_button_overwrite">Overwrite</string>
-    <string name="notify_load_playlist_nok">Could not import from %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importing from %1$s&#47;%2$s, please wait.</string>
-    <string name="notify_load_playlist_ok">Imported %1$d stations from %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Could not export to %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exporting to %1$s&#47;%2$s, please wait.</string>
-    <string name="notify_save_playlist_ok">Exported to %1$s&#47;%2$s successfully</string>
+    <string name="notify_load_playlist_nok">Could not import playlist</string>
+    <string name="notify_load_playlist_now">Importing playlist, please wait...</string>
+    <string name="notify_load_playlist_ok">%1$d stations imported</string>
+    <string name="notify_save_playlist_nok">Could not export playlist</string>
+    <string name="notify_save_playlist_now">Exporting playlist, please wait...</string>
+    <string name="notify_save_playlist_ok">Playlist exported successfully</string>
     <string name="notify_sync_list_deleted_entries">%1$d of %2$d local stations in the list marked non-existent on the server</string>
 
     <string name="searchpreference_clear_history">Clear history</string>
