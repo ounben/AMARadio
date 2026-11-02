@@ -59,7 +59,7 @@ Special thanks to the [RadioDroid](https://github.com/Segler-Alex/RadioDroid) pr
 - **Advanced Search & Filtering**: Find stations by Name, Country, Language, or Tags. Metadata for over **11,000 tags** is cached locally in a high-performance SQL database to enable instant offline suggestions.
 
 - **Community Support (Click Counting)**: Supports the global ranking of radio stations by reporting playback clicks directly to the official radio-browser.info API.
-- **Dynamic UI Scaling**: Custom settings allow for the adjustment of the user interface size from Compact to Extra Large.
+- **Dynamic UI Scaling**: Custom settings allow for the adjustment of the user interface size from Compact to Extra Large. The interface also adapts to landscape and other wide screens, such as car tablets and head units, with a side navigation rail and a player panel that stays visible next to the station lists.
 
 - **Broad Language Support**: Support for over **74 languages**, including a variety of African languages (Afrikaans, Amharic, Swahili, Zulu) with a dedicated in-app language selector.
 
