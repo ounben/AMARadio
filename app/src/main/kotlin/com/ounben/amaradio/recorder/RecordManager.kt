@@ -219,16 +219,21 @@ class RecordManager private constructor(private val context: Context) {
         if (!_recordingState.value.isRecording) return
 
         val station = currentStation
-        _recordingState.value = RecordingState(isRecording = false)
-
-        val result = if (station != null) mediaWriter?.finalizeFile(station.StationUuid) else mediaWriter?.finalizeFile("")
+        val writer = mediaWriter
+        val chapters = trackChapters.toList()
         mediaWriter = null
 
-        if (result != null && station != null) {
-            saveRecordingToDatabase(station, result, trackChapters.toList())
-        }
-
+        _recordingState.value = RecordingState(isRecording = false)
         RecordService.stopService(context)
+
+        if (station != null && writer != null) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val result = writer.finalizeFile(station.StationUuid)
+                if (result != null) {
+                    saveRecordingToDatabase(station, result, chapters)
+                }
+            }
+        }
     }
 
     private fun saveRecordingToDatabase(

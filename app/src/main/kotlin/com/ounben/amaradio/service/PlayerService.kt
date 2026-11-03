@@ -429,6 +429,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     startForeground(NOTIFY_ID, notification)
                 }
                 notificationIsActive = true
+            } catch (e: android.app.ForegroundServiceStartNotAllowedException) {
+                if (Utils.isDebug) Log.w(tag, "ForegroundServiceStartNotAllowedException in ensureForegroundStarted: ${e.message}")
             } catch (e: Exception) {
                 if (Utils.isDebug) Log.e(tag, "Failed to start foreground service in ensureForegroundStarted", e)
             }
