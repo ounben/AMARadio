@@ -1,5 +1,6 @@
 package com.ounben.amaradio.recorder
 
+import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -80,6 +81,13 @@ fun RecordButtonWithTimer(
                     leadingIcon = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
                     onClick = {
                         showTimerMenu = false
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                                (context as? android.app.Activity)?.let { activity ->
+                                    androidx.core.app.ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+                                }
+                            }
+                        }
                         currentStation?.let { station ->
                             recordManager.startRecording(station, durationMs)
                         }

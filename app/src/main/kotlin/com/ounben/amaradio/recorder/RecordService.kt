@@ -55,17 +55,22 @@ class RecordService : Service() {
     private fun startNotificationUpdates(stationName: String) {
         updateJob?.cancel()
         updateJob = CoroutineScope(Dispatchers.Main).launch {
+            var lastNotificationTime = 0L
             RecordManager.getInstance(applicationContext).recordingState.collectLatest { state ->
                 if (!state.isRecording) {
                     stopSelf()
                     return@collectLatest
                 }
 
-                val durationStr = formatDuration(state.durationMs)
-                val sizeStr = formatFileSize(state.fileSizeBytes)
-                val notification = buildNotification(stationName, durationStr, sizeStr)
-                val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-                nm.notify(NOTIFICATION_ID, notification)
+                val now = System.currentTimeMillis()
+                if (now - lastNotificationTime >= 1000L) {
+                    lastNotificationTime = now
+                    val durationStr = formatDuration(state.durationMs)
+                    val sizeStr = formatFileSize(state.fileSizeBytes)
+                    val notification = buildNotification(stationName, durationStr, sizeStr)
+                    val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+                    nm.notify(NOTIFICATION_ID, notification)
+                }
             }
         }
     }
@@ -83,14 +88,22 @@ class RecordService : Service() {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val recordStr = getString(R.string.action_record)
+        val stopStr = getString(R.string.action_stop)
+
         return NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("Recording: $stationName")
+            .setContentTitle("$recordStr: $stationName")
             .setContentText("$duration • $size")
             .setSmallIcon(R.drawable.ic_radio_24dp)
             .setContentIntent(mainPendingIntent)
             .setOngoing(true)
-            .addAction(R.drawable.ic_radio_24dp, "Stop", stopPendingIntent)
+            .setOnlyAlertOnce(true)
+            .setSound(null)
+            .setDefaults(0)
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)
+            .addAction(R.drawable.ic_stop_24dp, stopStr, stopPendingIntent)
             .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .build()
     }
 
@@ -100,7 +113,13 @@ class RecordService : Service() {
                 CHANNEL_ID,
                 "Radio Recorder",
                 NotificationManager.IMPORTANCE_LOW
-            )
+            ).apply {
+                description = "Active Radio Recording Progress"
+                setShowBadge(true)
+                setSound(null, null)
+                enableVibration(false)
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+            }
             val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             nm.createNotificationChannel(channel)
         }

@@ -328,6 +328,9 @@ fun StationOptionsDialog(
     var showRecordTimerDialog by remember { mutableStateOf(false) }
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
+    val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
+    val recordState by recordManager.recordingState.collectAsState()
+    val isThisStationRecording = recordState.isRecording && recordState.stationUuid == station.StationUuid
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -369,13 +372,24 @@ fun StationOptionsDialog(
                 ListItem(
                     headlineContent = { 
                         Text(
-                            text = stringResource(R.string.action_record),
-                            color = MaterialTheme.colorScheme.onSurface
+                            text = if (isThisStationRecording) stringResource(R.string.label_button_cancel) else stringResource(R.string.action_record),
+                            color = if (isThisStationRecording) recordRedColor else MaterialTheme.colorScheme.onSurface
                         ) 
                     },
-                    leadingContent = { Icon(Icons.Filled.RadioButtonChecked, contentDescription = null, tint = recordRedColor) },
+                    leadingContent = { 
+                        Icon(
+                            imageVector = if (isThisStationRecording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked, 
+                            contentDescription = null, 
+                            tint = recordRedColor
+                        ) 
+                    },
                     modifier = Modifier.clickable {
-                        showRecordTimerDialog = true
+                        if (isThisStationRecording) {
+                            recordManager.stopRecording()
+                            onDismiss()
+                        } else {
+                            showRecordTimerDialog = true
+                        }
                     },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
@@ -480,6 +494,13 @@ fun StationOptionsDialog(
                             leadingContent = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
                             modifier = Modifier.clickable {
                                 showRecordTimerDialog = false
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+                                    if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                                        (context as? android.app.Activity)?.let { activity ->
+                                            androidx.core.app.ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+                                        }
+                                    }
+                                }
                                 recordManager.startRecording(station, durationMs)
                                 onDismiss()
                             },
