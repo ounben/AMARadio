@@ -1,5 +1,6 @@
 package com.ounben.amaradio.service
 
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -415,6 +416,25 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         super.onDestroy()
     }
 
+    private fun ensureForegroundStarted() {
+        if (!notificationIsActive) {
+            val station = itsCurrentStation
+            val title = station?.Name ?: getString(R.string.app_name)
+            val subtitle = getDisplaySubtitle().ifEmpty { title }
+            val notification = buildNotificationObject(title, subtitle, title, PlayState.Idle)
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
+                } else {
+                    startForeground(NOTIFY_ID, notification)
+                }
+                notificationIsActive = true
+            } catch (e: Exception) {
+                if (Utils.isDebug) Log.e(tag, "Failed to start foreground service in ensureForegroundStarted", e)
+            }
+        }
+    }
+
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
         PlayerServiceUtil.bindService(applicationContext)
@@ -425,13 +445,12 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val app = application as AMARadioApp
             itsCurrentStation = app.historyManager.first ?: app.favouriteManager.first
         }
-        
+
+        // CRITICAL FAST-PATH: Always call ensureForegroundStarted() immediately to satisfy Android 12-16 5s FGS contract
+        ensureForegroundStarted()
+
         intent?.let {
             it.action?.let { action ->
-                // Fast-Path: Immediately show/update notification to satisfy foreground service start contract
-                val logicalState = if (pauseReason == PauseReason.USER) PlayState.Paused else (radioPlayer?.playState ?: PlayState.Idle)
-                updateNotification(logicalState)
-
                 when (action) {
                     ACTION_SKIP_TO_PREVIOUS -> previous()
                     ACTION_SKIP_TO_NEXT -> next()
@@ -444,7 +463,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     ACTION_PLAY_STATION -> {
                         val stationId = it.getStringExtra(EXTRA_STATION_ID)
                         if (!stationId.isNullOrEmpty()) {
-                            // Fast-Path: Instantly promote service to Foreground Service to satisfy Android 14+ FGS contract
                             val placeholderStation = DataRadioStation(StationUuid = stationId, Name = "Connecting...")
                             if (itsCurrentStation == null) {
                                 itsCurrentStation = placeholderStation
@@ -453,9 +471,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
                             serviceScope.launch {
                                 val station = amaradioBrowser.getStationById(stationId)
-                                            ?: (application as AMARadioApp).favouriteManager.getById(stationId)
-                                            ?: (application as AMARadioApp).historyManager.getById(stationId)
-                                            ?: placeholderStation
+                                                ?: (application as AMARadioApp).favouriteManager.getById(stationId)
+                                                ?: (application as AMARadioApp).historyManager.getById(stationId)
+                                                ?: placeholderStation
                                 
                                 withContext(Dispatchers.Main) {
                                     playWithoutWarnings(station)
@@ -464,12 +482,20 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                         }
                     }
                     Intent.ACTION_MEDIA_BUTTON -> {
-                        val key = IntentCompat.getParcelableExtra(it, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
-                        if (key?.action == KeyEvent.ACTION_UP) {
-                            when (key.keyCode) {
-                                KeyEvent.KEYCODE_MEDIA_PLAY -> resume()
-                                KeyEvent.KEYCODE_MEDIA_NEXT -> next()
-                                KeyEvent.KEYCODE_MEDIA_PREVIOUS -> previous()
+                        val keyEvent = IntentCompat.getParcelableExtra(it, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
+                        if (keyEvent != null && (keyEvent.action == KeyEvent.ACTION_UP || keyEvent.action == KeyEvent.ACTION_DOWN)) {
+                            if (keyEvent.action == KeyEvent.ACTION_UP) {
+                                when (keyEvent.keyCode) {
+                                    KeyEvent.KEYCODE_HEADSETHOOK,
+                                    KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
+                                        if (radioPlayer?.isPlaying() == true) pause(PauseReason.USER) else resume()
+                                    }
+                                    KeyEvent.KEYCODE_MEDIA_PLAY -> resume()
+                                    KeyEvent.KEYCODE_MEDIA_PAUSE -> pause(PauseReason.USER)
+                                    KeyEvent.KEYCODE_MEDIA_STOP -> stop()
+                                    KeyEvent.KEYCODE_MEDIA_NEXT -> next()
+                                    KeyEvent.KEYCODE_MEDIA_PREVIOUS -> previous()
+                                }
                             }
                         }
                     }
@@ -774,7 +800,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         wifiLock = null
     }
 
-    private fun sendMessage(theTitle: String, theMessage: String, theTicker: String, playState: PlayState?) {
+    private fun buildNotificationObject(theTitle: String, theMessage: String, theTicker: String, playState: PlayState?): Notification {
         var msg = theMessage
         val notificationIntent = Intent(this, ActivityMain::class.java).apply {
             putExtra("stationid", itsCurrentStation?.StationUuid)
@@ -786,25 +812,27 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         val pendingIntentNext = PendingIntent.getService(this, 0, nextIntent, pendingIntentFlag)
         val previousIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_SKIP_TO_PREVIOUS }
         val pendingIntentPrevious = PendingIntent.getService(this, 0, previousIntent, pendingIntentFlag)
+
         if (((playState == PlayState.Paused) || (playState == PlayState.Idle)) && (pauseReason == PauseReason.METERED_CONNECTION)) {
             msg = resources.getString(R.string.notify_metered_connection)
         } else if (lastErrorFromPlayer != -1) {
             try { msg = resources.getString(lastErrorFromPlayer) } catch (_: Exception) {}
         }
-        val contentIntent = PendingIntent.getActivity(itsContext!!, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
-        val builder = NotificationCompat.Builder(itsContext!!, NOTIFICATION_CHANNEL_ID)
-        builder.setContentIntent(contentIntent)
-        builder.setContentTitle(theTitle)
-        builder.setContentText(msg)
-        builder.setWhen(System.currentTimeMillis())
-        builder.setTicker(theTicker)
-        builder.setCategory(NotificationCompat.CATEGORY_TRANSPORT)
-        builder.setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-        builder.setSmallIcon(R.drawable.ic_play_arrow_24dp)
-        builder.setLargeIcon(currentStationBitmap) // For compatibility with some vendor UIs
-        builder.addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
-        builder.addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
-        
+
+        val contentIntent = PendingIntent.getActivity(itsContext ?: this, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT or pendingIntentFlag)
+        val builder = NotificationCompat.Builder(itsContext ?: this, NOTIFICATION_CHANNEL_ID)
+            .setContentIntent(contentIntent)
+            .setContentTitle(theTitle)
+            .setContentText(msg)
+            .setWhen(System.currentTimeMillis())
+            .setTicker(theTicker)
+            .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setSmallIcon(R.drawable.ic_play_arrow_24dp)
+            .setLargeIcon(currentStationBitmap)
+            .addAction(R.drawable.ic_stop_24dp, getString(R.string.action_stop), pendingIntentStop)
+            .addAction(R.drawable.ic_skip_previous_24dp, getString(R.string.action_skip_to_previous), pendingIntentPrevious)
+
         if ((playState == PlayState.Playing) || (playState == PlayState.PrePlaying)) {
             val pauseIntent = Intent(this, PlayerService::class.java).apply { action = ACTION_PAUSE }
             val pendingIntentPause = PendingIntent.getService(this, 0, pauseIntent, pendingIntentFlag)
@@ -817,36 +845,28 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             builder.setUsesChronometer(false).setDeleteIntent(pendingIntentStop).setOngoing(false)
         }
         builder.addAction(R.drawable.ic_skip_next_24dp, getString(R.string.action_skip_to_next), pendingIntentNext)
-        
-        mediaSession?.let { 
-            builder.setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(1, 2, 3)) 
+
+        mediaSession?.let {
+            builder.setStyle(androidx.media3.session.MediaStyleNotificationHelper.MediaStyle(it).setShowActionsInCompactView(1, 2, 3))
         }
-        val notification = builder.build()
+        return builder.build()
+    }
+
+    private fun sendMessage(theTitle: String, theMessage: String, theTicker: String, playState: PlayState?) {
+        val notification = buildNotificationObject(theTitle, theMessage, theTicker, playState)
         val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        
+
         try {
-            val isActiveState = (playState == PlayState.Playing || playState == PlayState.PrePlaying)
-            
-            if (isActiveState || (playState == PlayState.Paused && notificationIsActive)) {
-                // Only call startForeground if we are actively playing or already in foreground.
-                // This prevents ForegroundServiceStartNotAllowedException on Android 14+.
+            val isPlayingOrPaused = (playState == PlayState.Playing || playState == PlayState.PrePlaying || playState == PlayState.Paused)
+
+            if (isPlayingOrPaused || !notificationIsActive) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     startForeground(NOTIFY_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_MEDIA_PLAYBACK)
                 } else {
                     startForeground(NOTIFY_ID, notification)
                 }
                 notificationIsActive = true
-            } else if (playState == PlayState.Paused) {
-                // If paused and not yet in foreground, just show a normal notification.
-                try {
-                    manager.notify(NOTIFY_ID, notification)
-                } catch (e: SecurityException) {
-                    if (Utils.isDebug) {
-                        Log.e(tag, "Permission missing for notification: ${e.message}")
-                    }
-                }
             } else {
-                // Idle or Error: Clean up
                 if (notificationIsActive) {
                     stopForeground(STOP_FOREGROUND_REMOVE)
                     notificationIsActive = false
@@ -858,7 +878,6 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             if (Utils.isDebug) {
                 Log.e(tag, "Foreground state update failed: ${e.message}")
             }
-            // Fallback: Try showing a normal notification at least
             try { manager.notify(NOTIFY_ID, notification) } catch (_: Exception) {}
         }
     }
