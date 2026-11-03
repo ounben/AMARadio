@@ -17,6 +17,7 @@ object AacMuxer {
     fun muxAdtsToM4a(inputFile: File, outputFile: File): Boolean {
         var extractor: MediaExtractor? = null
         var muxer: MediaMuxer? = null
+        var isMuxerStarted = false
         try {
             extractor = MediaExtractor()
             extractor.setDataSource(inputFile.absolutePath)
@@ -44,6 +45,7 @@ object AacMuxer {
             muxer = MediaMuxer(outputFile.absolutePath, MediaMuxer.OutputFormat.MUXER_OUTPUT_MPEG_4)
             val muxerTrackIndex = muxer.addTrack(format)
             muxer.start()
+            isMuxerStarted = true
 
             val maxBufferSize = try {
                 format.getInteger(MediaFormat.KEY_MAX_INPUT_SIZE)
@@ -66,13 +68,21 @@ object AacMuxer {
                 extractor.advance()
             }
 
-            muxer.stop()
+            if (isMuxerStarted) {
+                muxer.stop()
+                isMuxerStarted = false
+            }
             return true
         } catch (e: Exception) {
             Log.e("AacMuxer", "Error muxing ADTS to M4A", e)
             return false
         } finally {
             try { extractor?.release() } catch (_: Exception) {}
+            try {
+                if (isMuxerStarted) {
+                    muxer?.stop()
+                }
+            } catch (_: Exception) {}
             try { muxer?.release() } catch (_: Exception) {}
         }
     }

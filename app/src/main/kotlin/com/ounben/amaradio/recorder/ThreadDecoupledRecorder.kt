@@ -68,7 +68,11 @@ class ThreadDecoupledRecorder(
                 } catch (_: InterruptedException) {
                     break
                 } catch (e: Exception) {
-                    Log.e("DecoupledRecorder", "Producer network read error", e)
+                    if (isRunning && e !is java.io.InterruptedIOException && e !is java.net.SocketException) {
+                        Log.e("DecoupledRecorder", "Producer network read error", e)
+                    } else {
+                        Log.d("DecoupledRecorder", "Producer network stream stopped cleanly by user")
+                    }
                     break
                 }
             }
