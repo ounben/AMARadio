@@ -1079,35 +1079,52 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun warnAboutMeteredConnection(playerType: PlayerType) {
-        stopMeteredConnectionListener()
-        pause(PauseReason.METERED_CONNECTION)
-        handler?.post {
-            toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
-            toneGenerator?.startTone(ToneGenerator.TONE_SUP_RADIO_NOTAVAIL, AUDIO_WARNING_DURATION)
+        try {
+            stopMeteredConnectionListener()
+            pause(PauseReason.METERED_CONNECTION)
+            handler?.post {
+                try {
+                    toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
+                    toneGenerator?.startTone(ToneGenerator.TONE_SUP_RADIO_NOTAVAIL, AUDIO_WARNING_DURATION)
+                } catch (e: Exception) {
+                    Log.e(tag, "Error playing metered connection warning tone", e)
+                }
+            }
+            val runnable = Runnable {
+                try {
+                    toneGenerator?.stopTone()
+                    toneGenerator?.release()
+                } catch (_: Exception) {}
+                toneGenerator = null
+                toneGeneratorStopRunnable = null
+            }
+            toneGeneratorStopRunnable = runnable
+            handler?.postDelayed(runnable, AUDIO_WARNING_DURATION.toLong())
+            val broadcast = Intent(PLAYER_SERVICE_METERED_CONNECTION).apply { putExtra(PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, playerType as Parcelable) }
+            AppEventManager.sendEvent(broadcast)
+            updateNotification(PlayState.Paused)
+        } catch (e: Exception) {
+            Log.e(tag, "Error in warnAboutMeteredConnection", e)
         }
-        val runnable = Runnable {
-            toneGenerator?.let { it.stopTone(); it.release() }
-            toneGenerator = null
-            toneGeneratorStopRunnable = null
-        }
-        toneGeneratorStopRunnable = runnable
-        handler?.postDelayed(runnable, AUDIO_WARNING_DURATION.toLong())
-        val broadcast = Intent(PLAYER_SERVICE_METERED_CONNECTION).apply { putExtra(PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, playerType as Parcelable) }
-        AppEventManager.sendEvent(broadcast)
-        updateNotification(PlayState.Paused)
     }
 
     private fun forceStopAudioWarning() {
-        toneGeneratorStopRunnable?.let { runnable ->
-            handler?.removeCallbacks(runnable)
-            toneGeneratorStopRunnable = null
-        }
-        toneGenerator?.let {
-            handler?.post {
-                it.stopTone()
-                it.release()
+        try {
+            toneGeneratorStopRunnable?.let { runnable ->
+                handler?.removeCallbacks(runnable)
+                toneGeneratorStopRunnable = null
             }
-            toneGenerator = null
+            toneGenerator?.let { tg ->
+                handler?.post {
+                    try {
+                        tg.stopTone()
+                        tg.release()
+                    } catch (_: Exception) {}
+                }
+                toneGenerator = null
+            }
+        } catch (e: Exception) {
+            Log.e(tag, "Error in forceStopAudioWarning", e)
         }
     }
 
