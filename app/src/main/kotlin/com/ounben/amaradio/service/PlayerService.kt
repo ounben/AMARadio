@@ -1083,27 +1083,31 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         pause(PauseReason.METERED_CONNECTION)
         handler?.post {
             toneGenerator = ToneGenerator(AudioManager.STREAM_MUSIC, 100)
-            toneGenerator!!.startTone(ToneGenerator.TONE_SUP_RADIO_NOTAVAIL, AUDIO_WARNING_DURATION)
+            toneGenerator?.startTone(ToneGenerator.TONE_SUP_RADIO_NOTAVAIL, AUDIO_WARNING_DURATION)
         }
-        toneGeneratorStopRunnable = Runnable {
+        val runnable = Runnable {
             toneGenerator?.let { it.stopTone(); it.release() }
             toneGenerator = null
             toneGeneratorStopRunnable = null
         }
-        handler?.postDelayed(toneGeneratorStopRunnable!!, AUDIO_WARNING_DURATION.toLong())
+        toneGeneratorStopRunnable = runnable
+        handler?.postDelayed(runnable, AUDIO_WARNING_DURATION.toLong())
         val broadcast = Intent(PLAYER_SERVICE_METERED_CONNECTION).apply { putExtra(PLAYER_SERVICE_METERED_CONNECTION_PLAYER_TYPE, playerType as Parcelable) }
         AppEventManager.sendEvent(broadcast)
         updateNotification(PlayState.Paused)
     }
 
     private fun forceStopAudioWarning() {
-        toneGenerator?.let {
-            handler?.removeCallbacks(toneGeneratorStopRunnable!!)
+        toneGeneratorStopRunnable?.let { runnable ->
+            handler?.removeCallbacks(runnable)
             toneGeneratorStopRunnable = null
+        }
+        toneGenerator?.let {
             handler?.post {
-                toneGenerator?.let { it.stopTone(); it.release() }
-                toneGenerator = null
+                it.stopTone()
+                it.release()
             }
+            toneGenerator = null
         }
     }
 
