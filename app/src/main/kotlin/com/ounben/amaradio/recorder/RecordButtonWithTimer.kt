@@ -54,8 +54,8 @@ fun RecordButtonWithTimer(
             val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
             Icon(
                 imageVector = if (recordState.isRecording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked,
-                contentDescription = "Record",
-                modifier = Modifier.size(iconSize),
+                contentDescription = stringResource(R.string.action_record),
+                modifier = Modifier.size(if (recordState.isRecording) iconSize * 1.22f else iconSize),
                 tint = if (recordState.isRecording) recordRedColor else MaterialTheme.colorScheme.onSurfaceVariant
             )
         }

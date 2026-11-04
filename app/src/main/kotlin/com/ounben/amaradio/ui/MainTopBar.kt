@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.media3.common.util.UnstableApi
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
@@ -90,21 +91,24 @@ fun MainTopBar(
                             painter = painterResource(R.drawable.ic_cat_face),
                             contentDescription = null,
                             modifier = Modifier
-                                .size(32.dp)
-                                .clip(RoundedCornerShape(8.dp)),
+                                .size(28.dp)
+                                .clip(RoundedCornerShape(6.dp)),
                             tint = Color.Unspecified
                         )
-                        Spacer(modifier = Modifier.width(12.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = stringResource(R.string.app_name),
                             color = AmaradioAmber,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
+                            fontSize = 18.sp,
+                            maxLines = 1,
+                            softWrap = false,
+                            overflow = TextOverflow.Clip
                         )
                         if (isLoading) {
-                            Spacer(modifier = Modifier.width(12.dp))
+                            Spacer(modifier = Modifier.width(6.dp))
                             CircularProgressIndicator(
-                                modifier = Modifier.size(20.dp),
+                                modifier = Modifier.size(16.dp),
                                 strokeWidth = 2.dp,
                                 color = AmaradioAmber
                             )
@@ -122,7 +126,10 @@ fun MainTopBar(
             actions = {
                 if (isSearching) {
                     if (searchQuery.isNotEmpty()) {
-                        IconButton(onClick = { onSearchQueryChange("") }) {
+                        IconButton(
+                            onClick = { onSearchQueryChange("") },
+                            modifier = Modifier.size(38.dp)
+                        ) {
                             Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text))
                         }
                     }
@@ -130,18 +137,31 @@ fun MainTopBar(
                     CastButton()
 
                     // Record Button with Timer
-                    com.ounben.amaradio.recorder.RecordButtonWithTimer(currentStation = currentStation)
+                    com.ounben.amaradio.recorder.RecordButtonWithTimer(
+                        currentStation = currentStation,
+                        iconSize = 22.dp,
+                        modifier = Modifier.size(38.dp)
+                    )
 
-                    IconButton(onClick = { onSearchToggle(true) }) {
-                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search))
+                    IconButton(
+                        onClick = { onSearchToggle(true) },
+                        modifier = Modifier.size(38.dp)
+                    ) {
+                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search), modifier = Modifier.size(22.dp))
                     }
-                    IconButton(onClick = onFilterClick) {
-                        Icon(Icons.Default.FilterList, contentDescription = stringResource(R.string.action_filter))
+                    IconButton(
+                        onClick = onFilterClick,
+                        modifier = Modifier.size(38.dp)
+                    ) {
+                        Icon(Icons.Default.FilterList, contentDescription = stringResource(R.string.action_filter), modifier = Modifier.size(22.dp))
                     }
                     
                     var showMenu by remember { mutableStateOf(false) }
-                    IconButton(onClick = { showMenu = true }) {
-                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.accessibility_menu))
+                    IconButton(
+                        onClick = { showMenu = true },
+                        modifier = Modifier.size(38.dp)
+                    ) {
+                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.accessibility_menu), modifier = Modifier.size(22.dp))
                     }
 
                     DropdownMenu(
