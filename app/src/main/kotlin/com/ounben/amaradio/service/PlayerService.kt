@@ -553,6 +553,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             val fullStation = ensureFullStation(station)
             
             withContext(Dispatchers.Main) {
+                if (this@PlayerService.itsCurrentStation?.StationUuid != fullStation.StationUuid) {
+                    currentStationBitmap = null
+                }
                 this@PlayerService.itsCurrentStation = fullStation
                 this@PlayerService.lastPlayStartTime = 0 // Reset time basis for new station to prevent AA sync issues
 
@@ -605,10 +608,19 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     fun playCurrentStation() {
         val station = itsCurrentStation
         if (station != null) {
-            // ALWAYS reset metadata for a fresh start. NO "old" data.
+            // ALWAYS reset metadata & bitmap for a fresh start. NO "old" data.
             liveInfo = StreamLiveInfo(null)
             lastPushedLiveTitle = null
-            
+            currentStationBitmap = null
+
+            serviceScope.launch {
+                val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(station) }
+                currentStationBitmap = bitmap
+                withContext(Dispatchers.Main) {
+                    updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.PrePlaying)
+                }
+            }
+
             updateMetadata() // Sync current state (clears subtitle)
             
             if (Utils.isDebug) {
