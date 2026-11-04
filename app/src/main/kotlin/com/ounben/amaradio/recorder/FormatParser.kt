@@ -17,7 +17,7 @@ object FormatParser {
         // 1. Check Station Codec from DB first if explicit
         if (!codec.isNullOrBlank()) {
             val lowerCodec = codec.lowercase()
-            if (lowerCodec.contains("aac")) return AudioFormat.AAC
+            if (lowerCodec.contains("aac") || lowerCodec.contains("mp4") || lowerCodec.contains("flv")) return AudioFormat.AAC
             if (lowerCodec.contains("ogg")) return AudioFormat.OGG
             if (lowerCodec.contains("flac")) return AudioFormat.FLAC
             if (lowerCodec.contains("mp3") || lowerCodec.contains("mpeg")) return AudioFormat.MP3
