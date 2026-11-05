@@ -8,15 +8,15 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 /**
- * Creates ID3v2.3 APIC Cover Art tags and MP4 covr atoms from local cached station artwork (or generated placeholder).
- * Strictly uses local files (station_icons/$stationUuid.jpg) without performing any network downloads.
+ * Creates ID3v2.3 and MP4 metadata tags (Album, Artist, Title, Cover Art) from local station artwork & station name.
+ * Embedded directly into .mp3 and .m4a recording files.
  */
 object TagEmbedder {
 
     fun createId3v2CoverArtTag(context: Context, stationUuid: String, stationName: String): ByteArray? {
         val jpegBytes = getStationJpegBytes(context, stationUuid, stationName) ?: return null
         return try {
-            createId3v2Tag(jpegBytes)
+            createId3v2Tag(jpegBytes, stationName)
         } catch (e: Exception) {
             Log.e("TagEmbedder", "Error creating ID3 tag", e)
             null
@@ -35,7 +35,7 @@ object TagEmbedder {
             val oldMoovSize = readInt32(fileBytes, moovOffset)
             if (oldMoovSize <= 8 || moovOffset + oldMoovSize > fileBytes.size) return false
 
-            val udtaAtom = createUdtaAtom(jpegBytes)
+            val udtaAtom = createUdtaAtom(jpegBytes, stationName)
 
             // Build new file: [0 .. moovEnd-1] + udtaAtom + [moovEnd .. EOF]
             val moovEnd = moovOffset + oldMoovSize
@@ -51,44 +51,60 @@ object TagEmbedder {
             m4aFile.writeBytes(baos.toByteArray())
             true
         } catch (e: Exception) {
-            Log.e("TagEmbedder", "Error embedding M4A cover art", e)
+            Log.e("TagEmbedder", "Error embedding M4A cover art & album metadata", e)
             false
         }
     }
 
-    private fun createUdtaAtom(jpegBytes: ByteArray): ByteArray {
-        // 1. 'data' atom (type = 13 for JPEG)
+    private fun createUdtaAtom(jpegBytes: ByteArray, stationName: String): ByteArray {
+        // 1. 'covr' atom
         val dataPayload = ByteArray(16 + jpegBytes.size)
         writeInt32(dataPayload, 0, dataPayload.size)
         dataPayload[4] = 'd'.code.toByte()
         dataPayload[5] = 'a'.code.toByte()
         dataPayload[6] = 't'.code.toByte()
         dataPayload[7] = 'a'.code.toByte()
-        // Type indicator = 13 (JPEG image)
-        dataPayload[8] = 0
-        dataPayload[9] = 0
-        dataPayload[10] = 0
-        dataPayload[11] = 13
-        // Locale = 0
-        dataPayload[12] = 0
-        dataPayload[13] = 0
-        dataPayload[14] = 0
-        dataPayload[15] = 0
+        dataPayload[8] = 0; dataPayload[9] = 0; dataPayload[10] = 0; dataPayload[11] = 13 // JPEG image
+        dataPayload[12] = 0; dataPayload[13] = 0; dataPayload[14] = 0; dataPayload[15] = 0
         System.arraycopy(jpegBytes, 0, dataPayload, 16, jpegBytes.size)
 
-        // 2. 'covr' atom
         val covrAtom = createAtom("covr", dataPayload)
 
-        // 3. 'ilst' atom
-        val ilstAtom = createAtom("ilst", covrAtom)
+        // 2. '©alb' (Album) atom -> Station Name
+        val albAtom = createTextAtom("\u00a9alb", stationName)
 
-        // 4. 'meta' atom (12 bytes header: size, 'meta', flags=0)
+        // 3. '©ART' (Artist) atom -> Station Name
+        val artAtom = createTextAtom("\u00a9ART", stationName)
+
+        // 4. '©nam' (Title) atom -> Station Name
+        val namAtom = createTextAtom("\u00a9nam", stationName)
+
+        // Combine metadata atoms into 'ilst'
+        val ilstPayload = covrAtom + albAtom + artAtom + namAtom
+        val ilstAtom = createAtom("ilst", ilstPayload)
+
+        // 'meta' atom
         val metaHeader = byteArrayOf(0, 0, 0, 0)
         val metaPayload = metaHeader + ilstAtom
         val metaAtom = createAtom("meta", metaPayload)
 
-        // 5. 'udta' atom
+        // 'udta' atom
         return createAtom("udta", metaAtom)
+    }
+
+    private fun createTextAtom(type: String, text: String): ByteArray {
+        val textBytes = text.toByteArray(Charsets.UTF_8)
+        val dataPayload = ByteArray(16 + textBytes.size)
+        writeInt32(dataPayload, 0, dataPayload.size)
+        dataPayload[4] = 'd'.code.toByte()
+        dataPayload[5] = 'a'.code.toByte()
+        dataPayload[6] = 't'.code.toByte()
+        dataPayload[7] = 'a'.code.toByte()
+        dataPayload[8] = 0; dataPayload[9] = 0; dataPayload[10] = 0; dataPayload[11] = 1 // UTF-8 text
+        dataPayload[12] = 0; dataPayload[13] = 0; dataPayload[14] = 0; dataPayload[15] = 0
+        System.arraycopy(textBytes, 0, dataPayload, 16, textBytes.size)
+
+        return createAtom(type, dataPayload)
     }
 
     private fun createAtom(type: String, payload: ByteArray): ByteArray {
@@ -161,7 +177,37 @@ object TagEmbedder {
         } catch (_: Exception) { null }
     }
 
-    private fun createId3v2Tag(jpegBytes: ByteArray): ByteArray {
+    private fun createId3v2Tag(jpegBytes: ByteArray, stationName: String): ByteArray {
+        // 1. APIC Frame (Cover Art)
+        val apicFrame = createApicFrame(jpegBytes)
+        // 2. TALB Frame (Album)
+        val talbFrame = createTextFrame("TALB", stationName)
+        // 3. TPE1 Frame (Artist)
+        val tpe1Frame = createTextFrame("TPE1", stationName)
+
+        val framesPayload = apicFrame + talbFrame + tpe1Frame
+        val tagSize = framesPayload.size
+
+        val id3Header = ByteArray(10)
+        id3Header[0] = 'I'.code.toByte()
+        id3Header[1] = 'D'.code.toByte()
+        id3Header[2] = '3'.code.toByte()
+        id3Header[3] = 0x03
+        id3Header[4] = 0x00
+        id3Header[5] = 0x00
+
+        id3Header[6] = ((tagSize shr 21) and 0x7F).toByte()
+        id3Header[7] = ((tagSize shr 14) and 0x7F).toByte()
+        id3Header[8] = ((tagSize shr 7) and 0x7F).toByte()
+        id3Header[9] = (tagSize and 0x7F).toByte()
+
+        val totalTag = ByteArray(10 + framesPayload.size)
+        System.arraycopy(id3Header, 0, totalTag, 0, 10)
+        System.arraycopy(framesPayload, 0, totalTag, 10, framesPayload.size)
+        return totalTag
+    }
+
+    private fun createApicFrame(jpegBytes: ByteArray): ByteArray {
         val mimeBytes = "image/jpeg".toByteArray(Charsets.ISO_8859_1) + byteArrayOf(0)
         val descriptionBytes = byteArrayOf(0)
         val pictureType = 0x03.toByte()
@@ -188,24 +234,27 @@ object TagEmbedder {
         System.arraycopy(descriptionBytes, 0, apicFrame, pos, descriptionBytes.size)
         pos += descriptionBytes.size
         System.arraycopy(jpegBytes, 0, apicFrame, pos, jpegBytes.size)
+        return apicFrame
+    }
 
-        val tagSize = apicFrame.size
-        val id3Header = ByteArray(10)
-        id3Header[0] = 'I'.code.toByte()
-        id3Header[1] = 'D'.code.toByte()
-        id3Header[2] = '3'.code.toByte()
-        id3Header[3] = 0x03
-        id3Header[4] = 0x00
-        id3Header[5] = 0x00
+    private fun createTextFrame(frameId: String, text: String): ByteArray {
+        val textBytes = text.toByteArray(Charsets.ISO_8859_1)
+        val payloadSize = 1 + textBytes.size
+        val frame = ByteArray(10 + payloadSize)
+        frame[0] = frameId[0].code.toByte()
+        frame[1] = frameId[1].code.toByte()
+        frame[2] = frameId[2].code.toByte()
+        frame[3] = frameId[3].code.toByte()
 
-        id3Header[6] = ((tagSize shr 21) and 0x7F).toByte()
-        id3Header[7] = ((tagSize shr 14) and 0x7F).toByte()
-        id3Header[8] = ((tagSize shr 7) and 0x7F).toByte()
-        id3Header[9] = (tagSize and 0x7F).toByte()
+        frame[4] = (payloadSize shr 24).toByte()
+        frame[5] = (payloadSize shr 16).toByte()
+        frame[6] = (payloadSize shr 8).toByte()
+        frame[7] = (payloadSize and 0xFF).toByte()
 
-        val totalTag = ByteArray(10 + apicFrame.size)
-        System.arraycopy(id3Header, 0, totalTag, 0, 10)
-        System.arraycopy(apicFrame, 0, totalTag, 10, apicFrame.size)
-        return totalTag
+        frame[8] = 0x00
+        frame[9] = 0x00
+        frame[10] = 0x00 // Encoding = ISO-8859-1
+        System.arraycopy(textBytes, 0, frame, 11, textBytes.size)
+        return frame
     }
 }
