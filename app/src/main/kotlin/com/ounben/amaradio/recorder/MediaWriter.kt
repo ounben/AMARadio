@@ -38,6 +38,20 @@ class MediaWriter(
 
         val relativePath = "${Environment.DIRECTORY_MUSIC}/AMARadio/$sanitizedStation"
 
+        // Ensure target directory exists on legacy storage (API < 29)
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+            try {
+                @Suppress("DEPRECATION")
+                val musicDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+                val targetDir = File(musicDir, "AMARadio/$sanitizedStation")
+                if (!targetDir.exists()) {
+                    targetDir.mkdirs()
+                }
+            } catch (e: Exception) {
+                Log.e("MediaWriter", "Error creating target directory for $sanitizedStation", e)
+            }
+        }
+
         val contentValues = ContentValues().apply {
             put(MediaStore.Audio.Media.DISPLAY_NAME, partFileName)
             put(MediaStore.Audio.Media.MIME_TYPE, format.mimeType)
