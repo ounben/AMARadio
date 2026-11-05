@@ -62,8 +62,8 @@ class MediaWriter(
                 val rawOs = context.contentResolver.openOutputStream(fileUri!!)
                 outputStream = if (rawOs != null) java.io.BufferedOutputStream(rawOs, 64 * 1024) else null
 
-                // Write ID3v2 Cover Art Tag at offset 0 if format is MP3
-                if (outputStream != null && format == FormatParser.AudioFormat.MP3 && stationUuid.isNotEmpty()) {
+                // Write ID3v2 Cover Art Tag at offset 0 if format is MP3 or AAC_PLUS
+                if (outputStream != null && (format == FormatParser.AudioFormat.MP3 || format == FormatParser.AudioFormat.AAC_PLUS) && stationUuid.isNotEmpty()) {
                     val id3Tag = TagEmbedder.createId3v2CoverArtTag(context, stationUuid, stationName)
                     if (id3Tag != null && id3Tag.isNotEmpty()) {
                         outputStream?.write(id3Tag)
@@ -121,7 +121,9 @@ class MediaWriter(
                     val pfd = context.contentResolver.openFileDescriptor(uri, "rwt")
                     pfd?.use { descriptor ->
                         java.io.FileOutputStream(descriptor.fileDescriptor).use { os ->
+                            os.channel.truncate(0)
                             tempM4aFile.inputStream().use { input -> input.copyTo(os) }
+                            os.flush()
                         }
                     }
                     totalBytesWritten = tempM4aFile.length()

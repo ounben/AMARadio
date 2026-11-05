@@ -1,13 +1,14 @@
 package com.ounben.amaradio.recorder
 
 /**
- * Detects audio format (MP3, AAC, OGG, FLAC) from audio Magic Bytes or Content-Type headers.
+ * Detects audio format (MP3, AAC, AAC+, OGG, FLAC) from audio Magic Bytes or Content-Type headers.
  */
 object FormatParser {
 
     enum class AudioFormat(val extension: String, val mimeType: String) {
         MP3("mp3", "audio/mpeg"),
         AAC("m4a", "audio/mp4"),
+        AAC_PLUS("aac", "audio/aac"),
         OGG("ogg", "audio/ogg"),
         FLAC("flac", "audio/flac"),
         UNKNOWN("mp3", "audio/mpeg") // Safe default
@@ -17,6 +18,7 @@ object FormatParser {
         // 1. Check Station Codec from DB first if explicit
         if (!codec.isNullOrBlank()) {
             val lowerCodec = codec.lowercase()
+            if (lowerCodec.contains("aac+") || lowerCodec.contains("he-aac")) return AudioFormat.AAC_PLUS
             if (lowerCodec.contains("aac") || lowerCodec.contains("mp4") || lowerCodec.contains("flv")) return AudioFormat.AAC
             if (lowerCodec.contains("ogg")) return AudioFormat.OGG
             if (lowerCodec.contains("flac")) return AudioFormat.FLAC
@@ -26,6 +28,7 @@ object FormatParser {
         // 2. Check Content-Type header
         if (!contentType.isNullOrBlank()) {
             val lowerCT = contentType.lowercase()
+            if (lowerCT.contains("aacp") || lowerCT.contains("aac+")) return AudioFormat.AAC_PLUS
             if (lowerCT.contains("aac")) return AudioFormat.AAC
             if (lowerCT.contains("ogg")) return AudioFormat.OGG
             if (lowerCT.contains("flac")) return AudioFormat.FLAC
@@ -62,6 +65,4 @@ object FormatParser {
 
         return AudioFormat.UNKNOWN
     }
-
-
 }
