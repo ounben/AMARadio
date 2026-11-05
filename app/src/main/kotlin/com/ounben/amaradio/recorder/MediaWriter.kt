@@ -79,9 +79,16 @@ class MediaWriter(
         }
     }
 
+    private val oggStreamHandler = OggStreamHandler()
+
     fun write(data: ByteArray, length: Int) {
         try {
-            outputStream?.write(data, 0, length)
+            val bytesToWrite = if (format == FormatParser.AudioFormat.OGG) {
+                oggStreamHandler.processOggChunk(data, length)
+            } else {
+                data
+            }
+            outputStream?.write(bytesToWrite, 0, length)
             totalBytesWritten += length
         } catch (e: Exception) {
             Log.e("MediaWriter", "Error writing audio bytes", e)
