@@ -18,6 +18,7 @@ import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,9 +49,9 @@ fun RecordingsTab() {
     val allRecordings by db.recordDao().getAllRecordingsFlow().collectAsState(initial = emptyList())
     val recordedStations by db.recordDao().getRecordedStationNamesFlow().collectAsState(initial = emptyList())
 
-    var selectedStation by remember { mutableStateOf("") }
-    var startDateMs by remember { mutableLongStateOf(0L) }
-    var endDateMs by remember { mutableLongStateOf(0L) }
+    var selectedStation by rememberSaveable { mutableStateOf("") }
+    var startDateMs by rememberSaveable { mutableLongStateOf(0L) }
+    var endDateMs by rememberSaveable { mutableLongStateOf(0L) }
 
     val recordings by db.recordDao().getFilteredRecordingsFlow(
         stationName = selectedStation,
