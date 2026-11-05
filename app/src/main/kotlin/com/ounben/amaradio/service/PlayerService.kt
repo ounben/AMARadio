@@ -906,56 +906,45 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun updateMetadata(station: DataRadioStation, liveTitle: String) {
         val stationUuid = station.StationUuid
         val stationChanged = (stationUuid != lastPushedStationUuid)
-        
-        // Optimization: Only skip if EVERYTHING (station, title, bitmap) is identical
+
         if (!stationChanged && liveTitle == lastPushedLiveTitle && currentStationBitmap != null) {
             return
         }
-        
-        lastPushedLiveTitle = liveTitle
-        lastPushedStationUuid = stationUuid
 
         serviceScope.launch {
-            // OPTIMIZATION 2: Only re-fetch bitmap if station actually changed.
-            val bitmap = if (stationChanged || currentStationBitmap == null) {
-                withContext(Dispatchers.IO) { fetchStationBitmap(station) }
-            } else {
-                currentStationBitmap
+            if (stationChanged) {
+                currentStationBitmap = null
             }
-            
-            val metadata = Media3Utils.buildMetadata(station, liveTitle, bitmap)
 
-            currentStationBitmap = bitmap
-            
-            radioPlayer?.player?.let { player ->
-                if (radioPlayer?.isLocal == true) {
-                    // 1. Update Playlist Metadata (Standard way)
-                    if (player.playlistMetadata.title != metadata.title || player.playlistMetadata.artist != metadata.artist) {
+            val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(station) }
+
+            if (itsCurrentStation?.StationUuid == stationUuid) {
+                currentStationBitmap = bitmap
+                lastPushedLiveTitle = liveTitle
+                lastPushedStationUuid = stationUuid
+
+                val metadata = Media3Utils.buildMetadata(station, liveTitle, bitmap)
+
+                radioPlayer?.player?.let { player ->
+                    if (radioPlayer?.isLocal == true) {
                         player.playlistMetadata = metadata
-                    }
-
-                    // 2. Update current MediaItem metadata ONLY if it's a real title change 
-                    // and we are not currently trying to pause/stop.
-                    if (liveTitle.isNotEmpty() && !stationChanged && player.isPlaying) {
                         val itemIndex = player.currentMediaItemIndex.coerceAtLeast(0)
                         if (player.mediaItemCount > itemIndex) {
                             val currentItem = player.getMediaItemAt(itemIndex)
-                            if (currentItem.mediaMetadata.title != metadata.title) {
-                                val updatedItem = currentItem.buildUpon()
-                                    .setMediaMetadata(metadata)
-                                    .build()
-                                player.replaceMediaItem(itemIndex, updatedItem)
-                            }
+                            val updatedItem = currentItem.buildUpon()
+                                .setMediaMetadata(metadata)
+                                .build()
+                            player.replaceMediaItem(itemIndex, updatedItem)
                         }
                     }
                 }
-            }
-            
-            // Sync notification UI
-            updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
-            
-            if (Utils.isDebug) {
-                Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
+
+                mediaSession?.setCustomLayout(listOf())
+                updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.Paused)
+
+                if (Utils.isDebug) {
+                    Log.d("METADATA_SYNC", "Metadata synced. Station: ${station.Name}, Title: $liveTitle")
+                }
             }
         }
     }
