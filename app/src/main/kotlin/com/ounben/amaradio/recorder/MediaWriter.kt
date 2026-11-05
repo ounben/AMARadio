@@ -108,6 +108,9 @@ class MediaWriter(
 
                 val tempM4aFile = File(context.cacheDir, "temp_rec_${startTimeMs}.m4a")
                 if (AacMuxer.muxAdtsToM4a(tempPartFile, tempM4aFile)) {
+                    if (stationUuid.isNotEmpty()) {
+                        TagEmbedder.embedM4aCoverArt(tempM4aFile, context, stationUuid, stationName)
+                    }
                     val pfd = context.contentResolver.openFileDescriptor(uri, "rwt")
                     pfd?.use { descriptor ->
                         java.io.FileOutputStream(descriptor.fileDescriptor).use { os ->
