@@ -120,11 +120,12 @@ class RecordManager private constructor(private val context: Context) {
             return
         }
 
+        var currentStreamUrl = station.StreamUrl
         var reconnectAttempts = 0
 
         while (_recordingState.value.isRecording) {
             val request = okhttp3.Request.Builder()
-                .url(station.StreamUrl)
+                .url(currentStreamUrl)
                 .header("User-Agent", userAgent)
                 .build()
 
@@ -143,6 +144,7 @@ class RecordManager private constructor(private val context: Context) {
 
                     reconnectAttempts = 0
                     val contentType = response.header("Content-Type")
+                    Log.i("RecordManager", "Connected to ${station.Name}. HTTP ${response.code}, Content-Type: $contentType")
                     val rawStream: InputStream = response.body?.byteStream() ?: return@use
 
                     if (!initialFormatDetected) {
@@ -154,11 +156,20 @@ class RecordManager private constructor(private val context: Context) {
                             bytesRead += r
                         }
 
+                        // Check if response is a PLS/M3U playlist instead of audio
+                        val resolvedUrl = resolvePlaylistStreamUrl(isolatedClient, userAgent, currentStreamUrl, contentType, peekBuffer.copyOf(bytesRead))
+                        if (resolvedUrl != null && resolvedUrl != currentStreamUrl) {
+                            Log.i("RecordManager", "Resolved playlist for ${station.Name}: $currentStreamUrl -> $resolvedUrl")
+                            currentStreamUrl = resolvedUrl
+                            return@use
+                        }
+
                         val detectedFormat = FormatParser.detectFormat(station.Codec, contentType, peekBuffer.copyOf(bytesRead))
+                        Log.i("RecordManager", "Detected format for ${station.Name}: ${detectedFormat.extension} (${detectedFormat.mimeType})")
                         mediaWriter = MediaWriter(context, station.Name, detectedFormat)
 
                         if (mediaWriter?.openStream(station.StationUuid) != true) {
-                            Log.e("RecordManager", "Failed to open MediaWriter stream")
+                            Log.e("RecordManager", "Failed to open MediaWriter stream for ${station.Name}")
                             stopRecording()
                             return
                         }
@@ -206,6 +217,42 @@ class RecordManager private constructor(private val context: Context) {
                 try { Thread.sleep(2000) } catch (_: Exception) {}
             }
         }
+    }
+
+    private fun resolvePlaylistStreamUrl(
+        client: okhttp3.OkHttpClient,
+        userAgent: String,
+        url: String,
+        contentType: String?,
+        sampleBytes: ByteArray
+    ): String? {
+        val isPlsOrM3u = url.lowercase().endsWith(".pls") || 
+                         url.lowercase().endsWith(".m3u") || 
+                         (contentType != null && (contentType.contains("scpls") || contentType.contains("mpegurl") || contentType.contains("playlist")))
+        
+        val text = String(sampleBytes, Charsets.UTF_8)
+        if (text.contains("[playlist]") || text.contains("File1=", ignoreCase = true)) {
+            val fileMatch = Regex("""File1\s*=\s*(https?://[^\s\r\n]+)""", RegexOption.IGNORE_CASE).find(text)
+            if (fileMatch != null) return fileMatch.groupValues[1].trim()
+        } else if (text.contains("#EXTM3U") || text.lines().any { it.trim().startsWith("http") }) {
+            val line = text.lines().firstOrNull { it.trim().startsWith("http") }
+            if (line != null) return line.trim()
+        }
+
+        if (isPlsOrM3u) {
+            try {
+                val req = okhttp3.Request.Builder().url(url).header("User-Agent", userAgent).build()
+                client.newCall(req).execute().use { res ->
+                    val bodyText = res.body?.string() ?: ""
+                    val fileMatch = Regex("""File1\s*=\s*(https?://[^\s\r\n]+)""", RegexOption.IGNORE_CASE).find(bodyText)
+                    if (fileMatch != null) return fileMatch.groupValues[1].trim()
+                    val line = bodyText.lines().firstOrNull { it.trim().startsWith("http") }
+                    if (line != null) return line.trim()
+                }
+            } catch (_: Exception) {}
+        }
+
+        return null
     }
 
     fun stopRecording() {

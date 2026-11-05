@@ -59,15 +59,17 @@ class MediaWriter(
         return try {
             fileUri = context.contentResolver.insert(collection, contentValues)
             if (fileUri != null) {
+                Log.i("MediaWriter", "MediaStore file created: $finalFileName at URI: $fileUri ($relativePath)")
                 val rawOs = context.contentResolver.openOutputStream(fileUri!!)
                 outputStream = if (rawOs != null) java.io.BufferedOutputStream(rawOs, 64 * 1024) else null
 
-                // Write ID3v2 Cover Art Tag at offset 0 if format is MP3 or AAC_PLUS
-                if (outputStream != null && (format == FormatParser.AudioFormat.MP3 || format == FormatParser.AudioFormat.AAC_PLUS) && stationUuid.isNotEmpty()) {
+                // Write ID3v2 Cover Art Tag at offset 0 if format is MP3
+                if (outputStream != null && format == FormatParser.AudioFormat.MP3 && stationUuid.isNotEmpty()) {
                     val id3Tag = TagEmbedder.createId3v2CoverArtTag(context, stationUuid, stationName)
                     if (id3Tag != null && id3Tag.isNotEmpty()) {
                         outputStream?.write(id3Tag)
                         totalBytesWritten += id3Tag.size
+                        Log.i("MediaWriter", "Wrote ID3v2 cover art tag (${id3Tag.size} bytes) for $stationName")
                     }
                 }
 
