@@ -7,6 +7,7 @@ import android.text.format.Formatter
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
@@ -19,6 +20,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -42,15 +44,28 @@ fun RecordingsTab() {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
     val db = remember { AMARadioUserDatabase.getDatabase(context) }
-    val recordings by db.recordDao().getAllRecordingsFlow().collectAsState(initial = emptyList())
+
+    val allRecordings by db.recordDao().getAllRecordingsFlow().collectAsState(initial = emptyList())
+    val recordedStations by db.recordDao().getRecordedStationNamesFlow().collectAsState(initial = emptyList())
+
+    var selectedStation by remember { mutableStateOf("") }
+    var startDateMs by remember { mutableLongStateOf(0L) }
+    var endDateMs by remember { mutableLongStateOf(0L) }
+
+    val recordings by db.recordDao().getFilteredRecordingsFlow(
+        stationName = selectedStation,
+        startTimestamp = startDateMs,
+        endTimestamp = endDateMs
+    ).collectAsState(initial = emptyList())
+
     var recordingToPlay by remember { mutableStateOf<RecordEntity?>(null) }
     var recordingWithOptions by remember { mutableStateOf<RecordEntity?>(null) }
     var recordingToDelete by remember { mutableStateOf<RecordEntity?>(null) }
 
     // Auto-reconcile database with physical storage (cleans up externally deleted files)
-    LaunchedEffect(recordings) {
+    LaunchedEffect(allRecordings) {
         withContext(Dispatchers.IO) {
-            recordings.forEach { record ->
+            allRecordings.forEach { record ->
                 if (!isRecordingFileExists(context, record.fileUri)) {
                     android.util.Log.d("RecordingsTab", "Cleaning up externally deleted recording: ${record.fileUri}")
                     db.recordDao().deleteRecord(record.id)
@@ -59,35 +74,50 @@ fun RecordingsTab() {
         }
     }
 
-    Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-        if (recordings.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize().padding(32.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.searchpreference_no_results),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+    Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        // Sticky Recording Filter Header
+        RecordingFilterHeader(
+            recordedStations = recordedStations,
+            selectedStation = selectedStation,
+            onStationSelected = { selectedStation = it },
+            startDateMs = startDateMs,
+            endDateMs = endDateMs,
+            onDateRangeSelected = { start, end ->
+                startDateMs = start
+                endDateMs = end
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 16.dp)
-            ) {
-                items(recordings, key = { it.id }) { record ->
-                    Column {
-                        RecordingListItem(
-                            record = record,
-                            onPlay = { recordingToPlay = record },
-                            onLongClick = { recordingWithOptions = record }
-                        )
-                        HorizontalDivider(
-                            modifier = Modifier.padding(horizontal = 12.dp),
-                            thickness = 0.5.dp,
-                            color = MaterialTheme.colorScheme.outline
-                        )
+        )
+
+        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+            if (recordings.isEmpty()) {
+                Box(
+                    modifier = Modifier.fillMaxSize().padding(32.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.searchpreference_no_results),
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+            } else {
+                LazyColumn(
+                    modifier = Modifier.fillMaxSize(),
+                    contentPadding = PaddingValues(bottom = 16.dp)
+                ) {
+                    items(recordings, key = { it.id }) { record ->
+                        Column {
+                            RecordingListItem(
+                                record = record,
+                                onPlay = { recordingToPlay = record },
+                                onLongClick = { recordingWithOptions = record }
+                            )
+                            HorizontalDivider(
+                                modifier = Modifier.padding(horizontal = 12.dp),
+                                thickness = 0.5.dp,
+                                color = MaterialTheme.colorScheme.outline
+                            )
+                        }
                     }
                 }
             }
@@ -161,6 +191,178 @@ fun RecordingsTab() {
                 }
             }
         )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RecordingFilterHeader(
+    recordedStations: List<String>,
+    selectedStation: String,
+    onStationSelected: (String) -> Unit,
+    startDateMs: Long,
+    endDateMs: Long,
+    onDateRangeSelected: (Long, Long) -> Unit
+) {
+    var showStationDropdown by remember { mutableStateOf(false) }
+    var showDateRangePicker by remember { mutableStateOf(false) }
+
+    val dateRangeLabel = remember(startDateMs, endDateMs) {
+        if (startDateMs > 0L && endDateMs > 0L) {
+            val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            "${fmt.format(Date(startDateMs))} - ${fmt.format(Date(endDateMs))}"
+        } else if (startDateMs > 0L) {
+            val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
+            "From ${fmt.format(Date(startDateMs))}"
+        } else {
+            "All"
+        }
+    }
+
+    Surface(
+        tonalElevation = 0.dp,
+        modifier = Modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.secondary
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp, vertical = 6.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Station Dropdown Filter (Links, exakt 50% der Zeilenbreite)
+            Box(modifier = Modifier.weight(1f)) {
+                FilterChip(
+                    selected = selectedStation.isNotEmpty(),
+                    onClick = { showStationDropdown = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(
+                            text = selectedStation.ifEmpty { "All" },
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    leadingIcon = { Icon(Icons.Default.Radio, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        labelColor = MaterialTheme.colorScheme.onSurface,
+                        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        selectedContainerColor = AmaradioAmber,
+                        selectedLabelColor = Color.Black,
+                        selectedLeadingIconColor = Color.Black,
+                        selectedTrailingIconColor = Color.Black
+                    )
+                )
+
+                DropdownMenu(
+                    expanded = showStationDropdown,
+                    onDismissRequest = { showStationDropdown = false },
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("All", fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                        onClick = {
+                            onStationSelected("")
+                            showStationDropdown = false
+                        }
+                    )
+                    if (recordedStations.isNotEmpty()) {
+                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
+                    }
+                    recordedStations.forEach { stationName ->
+                        DropdownMenuItem(
+                            text = { Text(stationName, fontWeight = if (selectedStation == stationName) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                            onClick = {
+                                onStationSelected(stationName)
+                                showStationDropdown = false
+                            }
+                        )
+                    }
+                }
+            }
+
+            // Von - Bis Date Range Filter Chip (Rechts, exakt 50% der Zeilenbreite)
+            Box(modifier = Modifier.weight(1f)) {
+                FilterChip(
+                    selected = startDateMs > 0L,
+                    onClick = { showDateRangePicker = true },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = {
+                        Text(
+                            text = dateRangeLabel,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                    trailingIcon = {
+                        if (startDateMs > 0L) {
+                            IconButton(
+                                onClick = { onDateRangeSelected(0L, 0L) },
+                                modifier = Modifier.size(18.dp)
+                            ) {
+                                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.sleep_timer_clear), modifier = Modifier.size(14.dp), tint = Color.Black)
+                            }
+                        } else {
+                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp))
+                        }
+                    },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        labelColor = MaterialTheme.colorScheme.onSurface,
+                        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        selectedContainerColor = AmaradioAmber,
+                        selectedLabelColor = Color.Black,
+                        selectedLeadingIconColor = Color.Black,
+                        selectedTrailingIconColor = Color.Black
+                    )
+                )
+            }
+        }
+    }
+
+    if (showDateRangePicker) {
+        val dateRangePickerState = rememberDateRangePickerState(
+            initialSelectedStartDateMillis = if (startDateMs > 0L) startDateMs else null,
+            initialSelectedEndDateMillis = if (endDateMs > 0L) endDateMs else null
+        )
+
+        DatePickerDialog(
+            onDismissRequest = { showDateRangePicker = false },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        val start = dateRangePickerState.selectedStartDateMillis ?: 0L
+                        val rawEnd = dateRangePickerState.selectedEndDateMillis ?: start
+                        val end = if (rawEnd > 0L) rawEnd + (24 * 60 * 60 * 1000L - 1) else 0L
+                        onDateRangeSelected(start, end)
+                        showDateRangePicker = false
+                    }
+                ) {
+                    Text(stringResource(R.string.filter_apply), fontWeight = FontWeight.Bold, color = AmaradioAmber)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDateRangePicker = false }) {
+                    Text(stringResource(R.string.label_button_cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            }
+        ) {
+            DateRangePicker(
+                state = dateRangePickerState,
+                title = null,
+                headline = null,
+                showModeToggle = false,
+                colors = DatePickerDefaults.colors(
+                    selectedDayContainerColor = AmaradioAmber,
+                    selectedDayContentColor = Color.Black,
+                    dayInSelectionRangeContainerColor = AmaradioAmber.copy(alpha = 0.2f)
+                )
+            )
+        }
     }
 }
 
