@@ -152,7 +152,16 @@ class MediaWriter(
     }
 
     private fun sanitizeFileName(name: String): String {
-        return name.replace(Regex("""[\\/:*?"<>|]"""), "_").trim().ifEmpty { "Radio_Station" }
+        var sanitized = name.replace(Regex("""[\\/:*?"<>|]"""), "_").trim()
+        // Strip leading dots to prevent Android OS from treating folder/file as hidden
+        while (sanitized.startsWith(".")) {
+            sanitized = sanitized.substring(1).trim()
+        }
+        // Strip trailing dots
+        while (sanitized.endsWith(".")) {
+            sanitized = sanitized.substring(0, sanitized.length - 1).trim()
+        }
+        return sanitized.ifEmpty { "Radio_Station" }
     }
 
     data class RecordingResult(
