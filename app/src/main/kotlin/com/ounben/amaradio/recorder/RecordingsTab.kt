@@ -3,6 +3,8 @@ package com.ounben.amaradio.recorder
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
+import android.provider.DocumentsContract
 import android.text.format.Formatter
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -138,7 +140,7 @@ fun RecordingsTab() {
             record = record,
             onPlay = { recordingToPlay = record },
             onPlayExternal = { openRecordingFile(context, record.fileUri) },
-            onOpenFolder = { openRecordingFolder(context, record.fileUri) },
+            onOpenFolder = { openRecordingFolder(context, record) },
             onShare = { shareRecordingFile(context, record) },
             onDeleteClick = { recordingToDelete = record },
             onDismiss = { recordingWithOptions = null }
@@ -589,25 +591,45 @@ private fun openRecordingFile(context: Context, fileUriStr: String) {
     }
 }
 
-private fun openRecordingFolder(context: Context, fileUriStr: String) {
+private fun openRecordingFolder(context: Context, record: RecordEntity) {
+    val sanitizedStation = record.Name.replace(Regex("""[\\/:*?"<>|.]"""), "_").trim().ifEmpty { "Radio_Station" }
+    val folderPath = "${Environment.DIRECTORY_MUSIC}/AMARadio/$sanitizedStation"
+
+    // 1. Primary Method: Standard System File Explorer (com.android.externalstorage.documents)
     try {
-        val uri = Uri.parse(fileUriStr)
+        val treeUri = DocumentsContract.buildDocumentUri(
+            "com.android.externalstorage.documents",
+            "primary:$folderPath"
+        )
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            setDataAndType(uri, "resource/folder")
+            setDataAndType(treeUri, DocumentsContract.Document.MIME_TYPE_DIR)
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
         context.startActivity(intent)
-    } catch (_: Exception) {
-        try {
-            val intent = Intent(Intent.ACTION_VIEW).apply {
-                setDataAndType(Uri.parse(fileUriStr), "audio/*")
-                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
-            }
-            context.startActivity(intent)
-        } catch (_: Exception) {
-            Toast.makeText(context, context.getString(R.string.error_no_file_manager), Toast.LENGTH_SHORT).show()
+        return
+    } catch (_: Exception) {}
+
+    // 2. Fallback: System Documents Provider (vnd.android.document/directory)
+    try {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(Uri.parse(record.fileUri), "vnd.android.document/directory")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
-    }
+        context.startActivity(intent)
+        return
+    } catch (_: Exception) {}
+
+    // 3. Fallback: OEM File Manager Intent (resource/folder)
+    try {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(Uri.parse(record.fileUri), "resource/folder")
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_ACTIVITY_NEW_TASK)
+        }
+        context.startActivity(intent)
+        return
+    } catch (_: Exception) {}
+
+    Toast.makeText(context, context.getString(R.string.error_no_file_manager), Toast.LENGTH_SHORT).show()
 }
 
 private fun shareRecordingFile(context: Context, record: RecordEntity) {
