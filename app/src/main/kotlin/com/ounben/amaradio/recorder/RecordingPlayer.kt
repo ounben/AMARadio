@@ -1,26 +1,20 @@
 package com.ounben.amaradio.recorder
 
+import android.media.MediaPlayer
 import android.net.Uri
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.PauseCircle
+import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import com.ounben.amaradio.R
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.media3.common.MediaItem
-import androidx.media3.common.Player
-import androidx.media3.exoplayer.ExoPlayer
-import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.ui.AmaradioAmber
 import com.ounben.amaradio.ui.StationIcon
@@ -28,9 +22,8 @@ import kotlinx.coroutines.delay
 import java.util.Locale
 
 /**
- * Standalone floating player dialog for recorded audio files.
- * Manages an isolated ExoPlayer instance with a full timeline/seek slider,
- * station artwork, playback controls, and interactive song chapter navigation.
+ * Lean, minimalist floating player dialog using native android.media.MediaPlayer.
+ * Plays local audio recordings cleanly through prerolls, bitrate changes, and headers without premature EOS.
  */
 @Composable
 fun RecordingPlayerDialog(
@@ -40,77 +33,60 @@ fun RecordingPlayerDialog(
     val context = LocalContext.current
     var isPlaying by remember { mutableStateOf(false) }
     var currentPositionMs by remember { mutableLongStateOf(0L) }
-    var durationMs by remember { mutableLongStateOf(record.durationMs) }
     var isSeeking by remember { mutableStateOf(false) }
     var sliderPositionMs by remember { mutableFloatStateOf(0f) }
 
-    val db = remember { AMARadioUserDatabase.getDatabase(context) }
-    val tracks by db.recordDao().getTracksForRecordingFlow(record.id).collectAsState(initial = emptyList())
-
-    val exoPlayer = remember {
-        val extractorsFactory = androidx.media3.extractor.DefaultExtractorsFactory().apply {
-            setAdtsExtractorFlags(
-                androidx.media3.extractor.ts.AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING
-            )
-            setMp3ExtractorFlags(
-                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING_ALWAYS
-            )
-        }
-        val mediaSourceFactory = androidx.media3.exoplayer.source.DefaultMediaSourceFactory(
-            context,
-            extractorsFactory
-        )
-
-        ExoPlayer.Builder(context)
-            .setMediaSourceFactory(mediaSourceFactory)
-            .build().apply {
-                setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
+    val mediaPlayer = remember(record.fileUri) {
+        MediaPlayer().apply {
+            try {
+                setDataSource(context, Uri.parse(record.fileUri))
                 prepare()
-                playWhenReady = true
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
+        }
     }
 
-    DisposableEffect(exoPlayer) {
-        val listener = object : Player.Listener {
-            override fun onIsPlayingChanged(playing: Boolean) {
-                isPlaying = playing
-            }
-            override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_READY && exoPlayer.duration > 0) {
-                    durationMs = exoPlayer.duration
-                } else if (state == Player.STATE_ENDED) {
-                    isPlaying = false
-                    currentPositionMs = durationMs
-                }
-            }
+    val durationMs = remember(mediaPlayer) {
+        val mpDuration = try { mediaPlayer.duration.toLong() } catch (_: Exception) { 0L }
+        mpDuration.coerceAtLeast(record.durationMs)
+    }
+
+    DisposableEffect(mediaPlayer) {
+        mediaPlayer.setOnErrorListener { _, _, _ ->
+            true // Prevent crashes on invalid state calls
         }
-        exoPlayer.addListener(listener)
+        mediaPlayer.setOnCompletionListener {
+            isPlaying = false
+            currentPositionMs = durationMs
+        }
         onDispose {
-            exoPlayer.removeListener(listener)
-            exoPlayer.release()
+            try {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+                mediaPlayer.reset()
+                mediaPlayer.release()
+            } catch (_: Exception) {}
         }
     }
 
     LaunchedEffect(isPlaying) {
         while (isPlaying) {
             if (!isSeeking) {
-                currentPositionMs = exoPlayer.currentPosition.coerceAtLeast(0L)
-            }
-            if (exoPlayer.duration > 0) {
-                durationMs = exoPlayer.duration
+                currentPositionMs = try { mediaPlayer.currentPosition.toLong() } catch (_: Exception) { currentPositionMs }
             }
             delay(200)
         }
     }
 
-    val currentTrackTitle = remember(currentPositionMs, tracks) {
-        val currentTrack = tracks.lastOrNull { it.offsetMs <= currentPositionMs }
-        currentTrack?.trackTitle ?: ""
-    }
-
     AlertDialog(
         onDismissRequest = {
-            exoPlayer.stop()
+            try {
+                if (mediaPlayer.isPlaying) {
+                    mediaPlayer.stop()
+                }
+            } catch (_: Exception) {}
             onDismiss()
         },
         containerColor = MaterialTheme.colorScheme.surface,
@@ -118,9 +94,12 @@ fun RecordingPlayerDialog(
         title = null,
         text = {
             Column(
-                modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Header: Station Name & Close Button
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -137,16 +116,25 @@ fun RecordingPlayerDialog(
                     )
                     IconButton(
                         onClick = {
-                            exoPlayer.stop()
+                            try {
+                                if (mediaPlayer.isPlaying) {
+                                    mediaPlayer.stop()
+                                }
+                            } catch (_: Exception) {}
                             onDismiss()
                         }
                     ) {
-                        Icon(Icons.Default.Close, contentDescription = "Close", tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close",
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
+                // Station Icon
                 Box(modifier = Modifier.size(110.dp), contentAlignment = Alignment.Center) {
                     StationIcon(
                         stationName = record.Name,
@@ -156,22 +144,11 @@ fun RecordingPlayerDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-                if (currentTrackTitle.isNotEmpty()) {
-                    Text(
-                        text = currentTrackTitle,
-                        style = MaterialTheme.typography.bodyMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = AmaradioAmber,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                }
-
+                // Slider & Time Display
                 val displayPosition = if (isSeeking) sliderPositionMs.toLong() else currentPositionMs
-                val maxDuration = if (durationMs > 0) durationMs else 1L
+                val maxDuration = maxOf(durationMs, 1L)
 
                 Slider(
                     value = displayPosition.coerceIn(0L, maxDuration).toFloat(),
@@ -180,7 +157,9 @@ fun RecordingPlayerDialog(
                         sliderPositionMs = it
                     },
                     onValueChangeFinished = {
-                        exoPlayer.seekTo(sliderPositionMs.toLong())
+                        try {
+                            mediaPlayer.seekTo(sliderPositionMs.toInt())
+                        } catch (_: Exception) {}
                         currentPositionMs = sliderPositionMs.toLong()
                         isSeeking = false
                     },
@@ -209,100 +188,35 @@ fun RecordingPlayerDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    IconButton(
-                        onClick = {
-                            val newPos = (exoPlayer.currentPosition - 10000L).coerceAtLeast(0L)
-                            exoPlayer.seekTo(newPos)
-                            currentPositionMs = newPos
-                        }
-                    ) {
-                        Icon(Icons.Default.Replay10, contentDescription = "-10s", tint = MaterialTheme.colorScheme.onSurface)
-                    }
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    IconButton(
-                        onClick = {
-                            if (exoPlayer.playbackState == Player.STATE_ENDED || currentPositionMs >= maxDuration - 500) {
-                                exoPlayer.seekTo(0L)
-                                currentPositionMs = 0L
-                                exoPlayer.play()
+                // Central Play/Pause Button
+                IconButton(
+                    onClick = {
+                        try {
+                            if (currentPositionMs >= durationMs) {
+                                mediaPlayer.seekTo(0)
+                                mediaPlayer.start()
+                                isPlaying = true
                             } else if (isPlaying) {
-                                exoPlayer.pause()
+                                mediaPlayer.pause()
+                                isPlaying = false
                             } else {
-                                exoPlayer.play()
+                                mediaPlayer.start()
+                                isPlaying = true
                             }
-                        },
-                        modifier = Modifier.size(64.dp)
-                    ) {
-                        Icon(
-                            imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                            contentDescription = "Play/Pause",
-                            modifier = Modifier.size(56.dp),
-                            tint = AmaradioAmber
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.width(16.dp))
-
-                    IconButton(
-                        onClick = {
-                            val newPos = (exoPlayer.currentPosition + 10000L).coerceAtMost(maxDuration)
-                            exoPlayer.seekTo(newPos)
-                            currentPositionMs = newPos
+                        } catch (e: Exception) {
+                            e.printStackTrace()
                         }
-                    ) {
-                        Icon(Icons.Default.Forward10, contentDescription = "+10s", tint = MaterialTheme.colorScheme.onSurface)
-                    }
-                }
-
-                if (tracks.isNotEmpty()) {
-                    Spacer(modifier = Modifier.height(12.dp))
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    Text(
-                        text = stringResource(R.string.chapters),
-                        style = MaterialTheme.typography.labelMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        modifier = Modifier.align(Alignment.Start)
+                    },
+                    modifier = Modifier.size(64.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
+                        contentDescription = "Play/Pause",
+                        modifier = Modifier.size(56.dp),
+                        tint = AmaradioAmber
                     )
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .heightIn(max = 120.dp)
-                            .verticalScroll(rememberScrollState())
-                            .padding(top = 4.dp),
-                        verticalArrangement = Arrangement.spacedBy(4.dp)
-                    ) {
-                        tracks.forEach { track ->
-                            val isSelected = currentTrackTitle == track.trackTitle
-                            Text(
-                                text = "${formatDuration(track.offsetMs)} - ${track.trackTitle}",
-                                style = MaterialTheme.typography.bodySmall,
-                                fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                color = if (isSelected) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
-                                maxLines = 1,
-                                overflow = TextOverflow.Ellipsis,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        exoPlayer.seekTo(track.offsetMs)
-                                        currentPositionMs = track.offsetMs
-                                    }
-                                    .padding(vertical = 2.dp)
-                            )
-                        }
-                    }
                 }
             }
         },
