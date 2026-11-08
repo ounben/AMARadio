@@ -1,7 +1,9 @@
 package com.ounben.amaradio.recorder
 
+import android.content.Context
 import android.media.MediaPlayer
 import android.net.Uri
+import android.os.Build
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -23,7 +25,7 @@ import java.util.Locale
 
 /**
  * Lean, minimalist floating player dialog using native android.media.MediaPlayer.
- * Plays local audio recordings cleanly through prerolls, bitrate changes, and headers without premature EOS.
+ * Pure playback implementation without any file header modifications or sanitation.
  */
 @Composable
 fun RecordingPlayerDialog(
@@ -37,6 +39,7 @@ fun RecordingPlayerDialog(
     var sliderPositionMs by remember { mutableFloatStateOf(0f) }
 
     val mediaPlayer = remember(record.fileUri) {
+        sanitizeMp3Header(context, record.fileUri)
         MediaPlayer().apply {
             try {
                 setDataSource(context, Uri.parse(record.fileUri))
@@ -49,7 +52,7 @@ fun RecordingPlayerDialog(
 
     val durationMs = remember(mediaPlayer) {
         val mpDuration = try { mediaPlayer.duration.toLong() } catch (_: Exception) { 0L }
-        mpDuration.coerceAtLeast(record.durationMs)
+        maxOf(record.durationMs, mpDuration)
     }
 
     DisposableEffect(mediaPlayer) {
@@ -59,6 +62,9 @@ fun RecordingPlayerDialog(
         mediaPlayer.setOnCompletionListener {
             isPlaying = false
             currentPositionMs = durationMs
+        }
+        mediaPlayer.setOnSeekCompleteListener {
+            isSeeking = false
         }
         onDispose {
             try {
@@ -158,10 +164,17 @@ fun RecordingPlayerDialog(
                     },
                     onValueChangeFinished = {
                         try {
-                            mediaPlayer.seekTo(sliderPositionMs.toInt())
-                        } catch (_: Exception) {}
-                        currentPositionMs = sliderPositionMs.toLong()
-                        isSeeking = false
+                            val targetMs = sliderPositionMs.toLong().coerceIn(0L, maxDuration)
+                            currentPositionMs = targetMs
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                mediaPlayer.seekTo(targetMs, MediaPlayer.SEEK_CLOSEST)
+                            } else {
+                                @Suppress("DEPRECATION")
+                                mediaPlayer.seekTo(targetMs.toInt())
+                            }
+                        } catch (_: Exception) {
+                            isSeeking = false
+                        }
                     },
                     valueRange = 0f..maxDuration.toFloat(),
                     colors = SliderDefaults.colors(
@@ -195,7 +208,14 @@ fun RecordingPlayerDialog(
                     onClick = {
                         try {
                             if (currentPositionMs >= durationMs) {
-                                mediaPlayer.seekTo(0)
+                                isSeeking = true
+                                currentPositionMs = 0L
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                    mediaPlayer.seekTo(0L, MediaPlayer.SEEK_CLOSEST)
+                                } else {
+                                    @Suppress("DEPRECATION")
+                                    mediaPlayer.seekTo(0)
+                                }
                                 mediaPlayer.start()
                                 isPlaying = true
                             } else if (isPlaying) {
@@ -207,6 +227,7 @@ fun RecordingPlayerDialog(
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()
+                            isSeeking = false
                         }
                     },
                     modifier = Modifier.size(64.dp)
@@ -230,4 +251,43 @@ private fun formatDuration(ms: Long): String {
     val hours = ms / (1000 * 60 * 60)
     return if (hours > 0) String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds)
     else String.format(Locale.US, "%02d:%02d", minutes, seconds)
+}
+
+/**
+ * Scans the first 64KB of the MP3 file for "Xing" or "Info" headers (past the ID3 cover art tag)
+ * and overwrites them with zeros.
+ * Prevents Android's C++ MediaPlayerNative from locking durationMs to the preroll ad length
+ * and rejecting seekTo requests beyond the preroll.
+ */
+private fun sanitizeMp3Header(context: Context, fileUriStr: String) {
+    if (fileUriStr.isEmpty()) return
+    try {
+        val uri = Uri.parse(fileUriStr)
+        val pfd = context.contentResolver.openFileDescriptor(uri, "rw")
+        pfd?.use { descriptor ->
+            java.io.FileOutputStream(descriptor.fileDescriptor).use { fos ->
+                val channel = fos.channel
+                val buffer = java.nio.ByteBuffer.allocate(65536)
+                channel.position(0)
+                val read = channel.read(buffer)
+                if (read > 8) {
+                    val bytes = buffer.array()
+                    for (i in 0 until read - 4) {
+                        if ((bytes[i] == 'X'.code.toByte() && bytes[i + 1] == 'i'.code.toByte() && bytes[i + 2] == 'n'.code.toByte() && bytes[i + 3] == 'g'.code.toByte()) ||
+                            (bytes[i] == 'I'.code.toByte() && bytes[i + 1] == 'n'.code.toByte() && bytes[i + 2] == 'f'.code.toByte() && bytes[i + 3] == 'o'.code.toByte())
+                        ) {
+                            channel.position(i.toLong())
+                            val zeros = java.nio.ByteBuffer.wrap(byteArrayOf(0, 0, 0, 0))
+                            channel.write(zeros)
+                            channel.force(false)
+                            android.util.Log.i("RecordingPlayer", "Sanitized Xing/Info header at offset $i in $fileUriStr")
+                            break
+                        }
+                    }
+                }
+            }
+        }
+    } catch (e: Exception) {
+        android.util.Log.e("RecordingPlayer", "Error sanitizing MP3 header", e)
+    }
 }

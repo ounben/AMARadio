@@ -151,29 +151,64 @@ class MediaWriter(
             }
         }
 
-        val durationMs = System.currentTimeMillis() - startTimeMs
-
-        // Finalize MediaStore entry: Rename .part to final name and clear IS_PENDING
-        val updateValues = ContentValues().apply {
-            put(MediaStore.Audio.Media.DISPLAY_NAME, finalFileName)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                put(MediaStore.Audio.Media.IS_PENDING, 0)
+        // If MP3 stream, sanitize Xing/Info header in-place so C++ MediaPlayerNative doesn't cap durationMs
+        if (format == FormatParser.AudioFormat.MP3) {
+            try {
+                val pfd = context.contentResolver.openFileDescriptor(uri, "rw")
+                pfd?.use { descriptor ->
+                    val buffer = ByteArray(65536)
+                    var read = -1
+                    java.io.FileInputStream(descriptor.fileDescriptor).use { fis ->
+                        read = fis.read(buffer)
+                    }
+                    if (read > 8) {
+                        for (i in 0 until read - 4) {
+                            if ((buffer[i] == 'X'.code.toByte() && buffer[i + 1] == 'i'.code.toByte() && buffer[i + 2] == 'n'.code.toByte() && buffer[i + 3] == 'g'.code.toByte()) ||
+                                (buffer[i] == 'I'.code.toByte() && buffer[i + 1] == 'n'.code.toByte() && buffer[i + 2] == 'f'.code.toByte() && buffer[i + 3] == 'o'.code.toByte())
+                            ) {
+                                java.io.FileOutputStream(descriptor.fileDescriptor).use { fos ->
+                                    val channel = fos.channel
+                                    channel.position(i.toLong())
+                                    channel.write(java.nio.ByteBuffer.wrap(byteArrayOf(0, 0, 0, 0)))
+                                    channel.force(true)
+                                }
+                                Log.i("MediaWriter", "Sanitized MP3 Xing/Info header at offset $i in $finalFileName")
+                                break
+                            }
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                Log.e("MediaWriter", "Error sanitizing MP3 header in MediaStore", e)
             }
         }
 
-        try {
-            context.contentResolver.update(uri, updateValues, null, null)
-        } catch (e: Exception) {
-            Log.e("MediaWriter", "Error finalizing MediaStore entry", e)
-        }
+        val wallClockDurationMs = System.currentTimeMillis() - startTimeMs
+        val exactAudioDurationMs = getExactAudioFileDurationMs(context, uri)
+        val finalDurationMs = if (exactAudioDurationMs > 0L) exactAudioDurationMs else wallClockDurationMs
+
+        Log.i("MediaWriter", "Recording finalized for $finalFileName. Exact audio file duration: ${finalDurationMs}ms (wall-clock: ${wallClockDurationMs}ms)")
 
         return RecordingResult(
             uri = uri,
             fileName = finalFileName,
-            durationMs = durationMs,
+            durationMs = finalDurationMs,
             fileSizeBytes = totalBytesWritten,
             format = format
         )
+    }
+
+    private fun getExactAudioFileDurationMs(context: Context, fileUri: Uri): Long {
+        val retriever = android.media.MediaMetadataRetriever()
+        return try {
+            retriever.setDataSource(context, fileUri)
+            val durationStr = retriever.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION)
+            durationStr?.toLongOrNull() ?: 0L
+        } catch (_: Exception) {
+            0L
+        } finally {
+            try { retriever.release() } catch (_: Exception) {}
+        }
     }
 
     private fun sanitizeFileName(name: String): String {

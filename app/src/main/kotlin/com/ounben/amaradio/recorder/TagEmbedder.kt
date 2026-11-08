@@ -23,6 +23,28 @@ object TagEmbedder {
         }
     }
 
+    fun sanitizeMp3File(mp3File: File) {
+        try {
+            if (!mp3File.exists() || mp3File.length() < 100) return
+            val bytes = mp3File.readBytes()
+            val maxScan = minOf(bytes.size - 4, 65536)
+            for (i in 0 until maxScan) {
+                if ((bytes[i] == 'X'.code.toByte() && bytes[i + 1] == 'i'.code.toByte() && bytes[i + 2] == 'n'.code.toByte() && bytes[i + 3] == 'g'.code.toByte()) ||
+                    (bytes[i] == 'I'.code.toByte() && bytes[i + 1] == 'n'.code.toByte() && bytes[i + 2] == 'f'.code.toByte() && bytes[i + 3] == 'o'.code.toByte())
+                ) {
+                    val raf = java.io.RandomAccessFile(mp3File, "rw")
+                    raf.seek(i.toLong())
+                    raf.write(byteArrayOf(0, 0, 0, 0))
+                    raf.close()
+                    Log.i("TagEmbedder", "Sanitized Xing/Info header in MP3 file at offset $i")
+                    break
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("TagEmbedder", "Error sanitizing MP3 file header", e)
+        }
+    }
+
     fun embedM4aCoverArt(m4aFile: File, context: Context, stationUuid: String, stationName: String): Boolean {
         val jpegBytes = getStationJpegBytes(context, stationUuid, stationName) ?: return false
         return try {
