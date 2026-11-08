@@ -179,6 +179,7 @@ fun FullPlayer(
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
     val context = LocalContext.current
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
+    var showRemoveFavoriteDialog by remember { mutableStateOf(false) }
     
     val station = uiState.currentStation
     val liveInfo = uiState.liveInfo
@@ -371,7 +372,15 @@ fun FullPlayer(
                     iconSize = 32.dp
                 )
 
-                IconButton(onClick = { playerViewModel.toggleFavorite() }) {
+                IconButton(
+                    onClick = {
+                        if (uiState.isFavorite) {
+                            showRemoveFavoriteDialog = true
+                        } else {
+                            playerViewModel.toggleFavorite()
+                        }
+                    }
+                ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
@@ -381,6 +390,49 @@ fun FullPlayer(
                 }
             }
         }
+    }
+
+    if (showRemoveFavoriteDialog) {
+        AlertDialog(
+            onDismissRequest = { showRemoveFavoriteDialog = false },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = {
+                Text(
+                    text = stringResource(R.string.detail_unstar),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            text = {
+                Text(
+                    text = "${stringResource(R.string.detail_unstar)}: ${station?.Name ?: ""}?",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        playerViewModel.toggleFavorite()
+                        showRemoveFavoriteDialog = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.action_ok),
+                        fontWeight = FontWeight.Bold,
+                        color = AmaradioAmber
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRemoveFavoriteDialog = false }) {
+                    Text(
+                        text = stringResource(R.string.action_cancel),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        )
     }
 
     trackWithOptions?.let { track ->
