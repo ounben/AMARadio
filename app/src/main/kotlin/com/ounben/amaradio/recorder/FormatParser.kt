@@ -1,7 +1,7 @@
 package com.ounben.amaradio.recorder
 
 /**
- * Detects audio format (MP3, AAC, AAC+, OGG, FLAC) from audio Magic Bytes or Content-Type headers.
+ * Detects audio format (MP3, AAC, AAC+, OGG, OGG_FLAC, FLAC) from audio Magic Bytes or Content-Type headers.
  */
 object FormatParser {
 
@@ -10,16 +10,20 @@ object FormatParser {
         AAC("m4a", "audio/mp4"),
         AAC_PLUS("aac", "audio/aac"),
         OGG("ogg", "audio/ogg"),
+        OGG_FLAC("oga", "audio/ogg"),
         FLAC("flac", "audio/flac"),
         UNKNOWN("mp3", "audio/mpeg") // Safe default
     }
 
     fun detectFormat(codec: String?, contentType: String?, sampleBytes: ByteArray): AudioFormat {
+        val sampleString = if (sampleBytes.isNotEmpty()) String(sampleBytes, Charsets.ISO_8859_1) else ""
+
         // 1. Check Station Codec from DB first if explicit
         if (!codec.isNullOrBlank()) {
             val lowerCodec = codec.lowercase()
             if (lowerCodec.contains("aac+") || lowerCodec.contains("he-aac")) return AudioFormat.AAC_PLUS
             if (lowerCodec.contains("aac") || lowerCodec.contains("mp4") || lowerCodec.contains("flv")) return AudioFormat.AAC
+            if (lowerCodec.contains("ogg") && lowerCodec.contains("flac")) return AudioFormat.OGG_FLAC
             if (lowerCodec.contains("ogg")) return AudioFormat.OGG
             if (lowerCodec.contains("flac")) return AudioFormat.FLAC
             if (lowerCodec.contains("mp3") || lowerCodec.contains("mpeg")) return AudioFormat.MP3
@@ -30,12 +34,13 @@ object FormatParser {
             val lowerCT = contentType.lowercase()
             if (lowerCT.contains("aacp") || lowerCT.contains("aac+")) return AudioFormat.AAC_PLUS
             if (lowerCT.contains("aac")) return AudioFormat.AAC
+            if (lowerCT.contains("ogg") && lowerCT.contains("flac")) return AudioFormat.OGG_FLAC
             if (lowerCT.contains("ogg")) return AudioFormat.OGG
             if (lowerCT.contains("flac")) return AudioFormat.FLAC
             if (lowerCT.contains("mpeg") || lowerCT.contains("mp3")) return AudioFormat.MP3
         }
 
-        // 3. Check Magic Bytes
+        // 3. Check Magic Bytes & Ogg Codec Headers
         if (sampleBytes.size >= 4) {
             val b0 = sampleBytes[0].toInt() and 0xFF
             val b1 = sampleBytes[1].toInt() and 0xFF
@@ -44,6 +49,10 @@ object FormatParser {
 
             // OGG: "OggS" (0x4F 0x67 0x67 0x53)
             if (b0 == 0x4F && b1 == 0x67 && b2 == 0x67 && b3 == 0x53) {
+                // Check if payload contains FLAC codec marker (\x7fFLAC or fLaC)
+                if (sampleString.contains("FLAC", ignoreCase = true) || sampleString.contains("fLaC")) {
+                    return AudioFormat.OGG_FLAC
+                }
                 return AudioFormat.OGG
             }
 

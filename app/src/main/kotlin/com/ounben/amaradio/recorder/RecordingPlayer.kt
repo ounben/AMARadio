@@ -1,9 +1,7 @@
 package com.ounben.amaradio.recorder
 
-import android.content.Context
-import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Build
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -14,18 +12,26 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.MediaItem
+import androidx.media3.common.PlaybackException
+import androidx.media3.common.Player
+import androidx.media3.exoplayer.ExoPlayer
+import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.ui.AmaradioAmber
+import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import kotlinx.coroutines.delay
 import java.util.Locale
 
 /**
- * Lean, minimalist floating player dialog using native android.media.MediaPlayer.
- * Pure playback implementation without any file header modifications or sanitation.
+ * Lean, minimalist floating player dialog using AndroidX Media3 (ExoPlayer).
+ * Decodes OggFLAC, OggVorbis, OggOpus, MP3, AAC, M4A, and FLAC containers cleanly
+ * without C++ Stagefright status=0x1 native crashes.
  */
 @Composable
 fun RecordingPlayerDialog(
@@ -35,52 +41,73 @@ fun RecordingPlayerDialog(
     val context = LocalContext.current
     var isPlaying by remember { mutableStateOf(false) }
     var currentPositionMs by remember { mutableLongStateOf(0L) }
+    var durationMs by remember { mutableLongStateOf(record.durationMs) }
     var isSeeking by remember { mutableStateOf(false) }
     var sliderPositionMs by remember { mutableFloatStateOf(0f) }
+    var playerError by remember { mutableStateOf<String?>(null) }
 
-    val mediaPlayer = remember(record.fileUri) {
-        sanitizeMp3Header(context, record.fileUri)
-        MediaPlayer().apply {
-            try {
-                setDataSource(context, Uri.parse(record.fileUri))
+    val exoPlayer = remember(record.fileUri) {
+        val extractorsFactory = androidx.media3.extractor.DefaultExtractorsFactory().apply {
+            setMp3ExtractorFlags(
+                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_INDEX_SEEKING or
+                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_DISABLE_ID3_METADATA
+            )
+            setConstantBitrateSeekingAlwaysEnabled(false)
+        }
+        val mediaSourceFactory = androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(
+            androidx.media3.datasource.DefaultDataSource.Factory(context),
+            extractorsFactory
+        )
+
+        ExoPlayer.Builder(context)
+            .setMediaSourceFactory(mediaSourceFactory)
+            .build().apply {
+                setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
                 prepare()
-            } catch (e: Exception) {
-                e.printStackTrace()
+                playWhenReady = true
+            }
+    }
+
+    DisposableEffect(exoPlayer) {
+        val listener = object : Player.Listener {
+            override fun onIsPlayingChanged(playing: Boolean) {
+                isPlaying = playing
+            }
+
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_READY && exoPlayer.duration > 0) {
+                    val exDuration = exoPlayer.duration
+                    if (record.format.equals("ogg", ignoreCase = true) || exDuration > record.durationMs * 3 || exDuration <= 0L) {
+                        durationMs = record.durationMs
+                    } else {
+                        durationMs = exDuration
+                    }
+                } else if (state == Player.STATE_ENDED) {
+                    isPlaying = false
+                    exoPlayer.seekTo(0L)
+                    currentPositionMs = 0L
+                }
+            }
+
+            override fun onPlayerError(error: PlaybackException) {
+                Log.e("RecordingPlayer", "ExoPlayer playback error for ${record.fileUri}", error)
+                playerError = context.getString(R.string.error_cannot_open_file)
+                isPlaying = false
             }
         }
-    }
-
-    val durationMs = remember(mediaPlayer) {
-        val mpDuration = try { mediaPlayer.duration.toLong() } catch (_: Exception) { 0L }
-        maxOf(record.durationMs, mpDuration)
-    }
-
-    DisposableEffect(mediaPlayer) {
-        mediaPlayer.setOnErrorListener { _, _, _ ->
-            true // Prevent crashes on invalid state calls
-        }
-        mediaPlayer.setOnCompletionListener {
-            isPlaying = false
-            currentPositionMs = durationMs
-        }
-        mediaPlayer.setOnSeekCompleteListener {
-            isSeeking = false
-        }
+        exoPlayer.addListener(listener)
         onDispose {
-            try {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
-                }
-                mediaPlayer.reset()
-                mediaPlayer.release()
-            } catch (_: Exception) {}
+            exoPlayer.removeListener(listener)
+            exoPlayer.stop()
+            exoPlayer.release()
         }
     }
 
     LaunchedEffect(isPlaying) {
         while (isPlaying) {
             if (!isSeeking) {
-                currentPositionMs = try { mediaPlayer.currentPosition.toLong() } catch (_: Exception) { currentPositionMs }
+                val pos = exoPlayer.currentPosition.coerceAtLeast(0L)
+                currentPositionMs = pos.coerceIn(0L, durationMs)
             }
             delay(200)
         }
@@ -89,9 +116,7 @@ fun RecordingPlayerDialog(
     AlertDialog(
         onDismissRequest = {
             try {
-                if (mediaPlayer.isPlaying) {
-                    mediaPlayer.stop()
-                }
+                exoPlayer.stop()
             } catch (_: Exception) {}
             onDismiss()
         },
@@ -123,9 +148,7 @@ fun RecordingPlayerDialog(
                     IconButton(
                         onClick = {
                             try {
-                                if (mediaPlayer.isPlaying) {
-                                    mediaPlayer.stop()
-                                }
+                                exoPlayer.stop()
                             } catch (_: Exception) {}
                             onDismiss()
                         }
@@ -152,9 +175,20 @@ fun RecordingPlayerDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
+                // Error Message Display if playerError != null
+                if (playerError != null) {
+                    Text(
+                        text = playerError!!,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = SolidRedError,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                }
+
                 // Slider & Time Display
-                val displayPosition = if (isSeeking) sliderPositionMs.toLong() else currentPositionMs
                 val maxDuration = maxOf(durationMs, 1L)
+                val displayPosition = (if (isSeeking) sliderPositionMs.toLong() else currentPositionMs).coerceIn(0L, maxDuration)
 
                 Slider(
                     value = displayPosition.coerceIn(0L, maxDuration).toFloat(),
@@ -166,15 +200,9 @@ fun RecordingPlayerDialog(
                         try {
                             val targetMs = sliderPositionMs.toLong().coerceIn(0L, maxDuration)
                             currentPositionMs = targetMs
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                mediaPlayer.seekTo(targetMs, MediaPlayer.SEEK_CLOSEST)
-                            } else {
-                                @Suppress("DEPRECATION")
-                                mediaPlayer.seekTo(targetMs.toInt())
-                            }
-                        } catch (_: Exception) {
-                            isSeeking = false
-                        }
+                            exoPlayer.seekTo(targetMs)
+                        } catch (_: Exception) {}
+                        isSeeking = false
                     },
                     valueRange = 0f..maxDuration.toFloat(),
                     colors = SliderDefaults.colors(
@@ -207,22 +235,17 @@ fun RecordingPlayerDialog(
                 IconButton(
                     onClick = {
                         try {
-                            if (currentPositionMs >= durationMs) {
+                            if (exoPlayer.playbackState == Player.STATE_ENDED || currentPositionMs >= durationMs) {
                                 isSeeking = true
                                 currentPositionMs = 0L
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    mediaPlayer.seekTo(0L, MediaPlayer.SEEK_CLOSEST)
-                                } else {
-                                    @Suppress("DEPRECATION")
-                                    mediaPlayer.seekTo(0)
-                                }
-                                mediaPlayer.start()
+                                exoPlayer.seekTo(0L)
+                                exoPlayer.play()
                                 isPlaying = true
                             } else if (isPlaying) {
-                                mediaPlayer.pause()
+                                exoPlayer.pause()
                                 isPlaying = false
                             } else {
-                                mediaPlayer.start()
+                                exoPlayer.play()
                                 isPlaying = true
                             }
                         } catch (e: Exception) {
@@ -251,43 +274,4 @@ private fun formatDuration(ms: Long): String {
     val hours = ms / (1000 * 60 * 60)
     return if (hours > 0) String.format(Locale.US, "%d:%02d:%02d", hours, minutes, seconds)
     else String.format(Locale.US, "%02d:%02d", minutes, seconds)
-}
-
-/**
- * Scans the first 64KB of the MP3 file for "Xing" or "Info" headers (past the ID3 cover art tag)
- * and overwrites them with zeros.
- * Prevents Android's C++ MediaPlayerNative from locking durationMs to the preroll ad length
- * and rejecting seekTo requests beyond the preroll.
- */
-private fun sanitizeMp3Header(context: Context, fileUriStr: String) {
-    if (fileUriStr.isEmpty()) return
-    try {
-        val uri = Uri.parse(fileUriStr)
-        val pfd = context.contentResolver.openFileDescriptor(uri, "rw")
-        pfd?.use { descriptor ->
-            java.io.FileOutputStream(descriptor.fileDescriptor).use { fos ->
-                val channel = fos.channel
-                val buffer = java.nio.ByteBuffer.allocate(65536)
-                channel.position(0)
-                val read = channel.read(buffer)
-                if (read > 8) {
-                    val bytes = buffer.array()
-                    for (i in 0 until read - 4) {
-                        if ((bytes[i] == 'X'.code.toByte() && bytes[i + 1] == 'i'.code.toByte() && bytes[i + 2] == 'n'.code.toByte() && bytes[i + 3] == 'g'.code.toByte()) ||
-                            (bytes[i] == 'I'.code.toByte() && bytes[i + 1] == 'n'.code.toByte() && bytes[i + 2] == 'f'.code.toByte() && bytes[i + 3] == 'o'.code.toByte())
-                        ) {
-                            channel.position(i.toLong())
-                            val zeros = java.nio.ByteBuffer.wrap(byteArrayOf(0, 0, 0, 0))
-                            channel.write(zeros)
-                            channel.force(false)
-                            android.util.Log.i("RecordingPlayer", "Sanitized Xing/Info header at offset $i in $fileUriStr")
-                            break
-                        }
-                    }
-                }
-            }
-        }
-    } catch (e: Exception) {
-        android.util.Log.e("RecordingPlayer", "Error sanitizing MP3 header", e)
-    }
 }

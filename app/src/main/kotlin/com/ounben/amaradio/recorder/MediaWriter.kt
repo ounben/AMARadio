@@ -53,7 +53,7 @@ class MediaWriter(
         }
 
         val contentValues = ContentValues().apply {
-            put(MediaStore.Audio.Media.DISPLAY_NAME, partFileName)
+            put(MediaStore.Audio.Media.DISPLAY_NAME, finalFileName)
             put(MediaStore.Audio.Media.MIME_TYPE, format.mimeType)
             put(MediaStore.Audio.Media.TITLE, sanitizedStation)
             put(MediaStore.Audio.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
@@ -99,7 +99,10 @@ class MediaWriter(
 
     fun write(data: ByteArray, length: Int) {
         try {
-            val bytesToWrite = if (format == FormatParser.AudioFormat.OGG) {
+            if (totalBytesWritten == 0L) {
+                startTimeMs = System.currentTimeMillis()
+            }
+            val bytesToWrite = if (format == FormatParser.AudioFormat.OGG || format == FormatParser.AudioFormat.OGG_FLAC) {
                 oggStreamHandler.processOggChunk(data, length)
             } else {
                 data
@@ -185,9 +188,27 @@ class MediaWriter(
 
         val wallClockDurationMs = System.currentTimeMillis() - startTimeMs
         val exactAudioDurationMs = getExactAudioFileDurationMs(context, uri)
-        val finalDurationMs = if (exactAudioDurationMs > 0L) exactAudioDurationMs else wallClockDurationMs
+        val finalDurationMs = if (format == FormatParser.AudioFormat.OGG || format == FormatParser.AudioFormat.OGG_FLAC || exactAudioDurationMs <= 0L || exactAudioDurationMs > wallClockDurationMs * 3) {
+            wallClockDurationMs
+        } else {
+            exactAudioDurationMs
+        }
 
-        Log.i("MediaWriter", "Recording finalized for $finalFileName. Exact audio file duration: ${finalDurationMs}ms (wall-clock: ${wallClockDurationMs}ms)")
+        // Finalize MediaStore entry: Rename .part to final name, write DURATION, and clear IS_PENDING
+        val updateValues = ContentValues().apply {
+            put(MediaStore.Audio.Media.DISPLAY_NAME, finalFileName)
+            put(MediaStore.Audio.Media.DURATION, finalDurationMs)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Audio.Media.IS_PENDING, 0)
+            }
+        }
+
+        try {
+            val count = context.contentResolver.update(uri, updateValues, null, null)
+            Log.i("MediaWriter", "Finalized MediaStore entry (IS_PENDING=0, DURATION=${finalDurationMs}ms, updated=$count) for $finalFileName ($totalBytesWritten bytes)")
+        } catch (e: Exception) {
+            Log.e("MediaWriter", "Error finalizing MediaStore entry", e)
+        }
 
         return RecordingResult(
             uri = uri,
@@ -212,13 +233,11 @@ class MediaWriter(
     }
 
     private fun sanitizeFileName(name: String): String {
-        var sanitized = name.replace(Regex("""[\\/:*?"<>|]"""), "_").trim()
-        // Strip leading dots to prevent Android OS from treating folder/file as hidden
-        while (sanitized.startsWith(".")) {
+        var sanitized = name.replace(Regex("""[\\/:*?"<>|!#$%&'()+,;=@\[\]^`{}~.]"""), "_").trim()
+        while (sanitized.startsWith("_")) {
             sanitized = sanitized.substring(1).trim()
         }
-        // Strip trailing dots
-        while (sanitized.endsWith(".")) {
+        while (sanitized.endsWith("_")) {
             sanitized = sanitized.substring(0, sanitized.length - 1).trim()
         }
         return sanitized.ifEmpty { "Radio_Station" }
