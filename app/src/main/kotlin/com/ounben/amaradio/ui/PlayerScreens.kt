@@ -460,6 +460,7 @@ fun SidePanelPlayer(
     val historyFlow = remember(trackHistoryViewModel) { trackHistoryViewModel.allHistoryPaged }
     val tracks = historyFlow.collectAsLazyPagingItems()
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
+    var showRemoveFavoriteDialog by remember { mutableStateOf(false) }
 
     val station = uiState.currentStation
     val liveInfo = uiState.liveInfo
@@ -593,7 +594,14 @@ fun SidePanelPlayer(
                 }
 
                 IconButton(
-                    onClick = { playerViewModel.toggleFavorite() },
+                    onClick = {
+                        // Same as FullPlayer: removing a favourite asks for confirmation
+                        if (uiState.isFavorite) {
+                            showRemoveFavoriteDialog = true
+                        } else {
+                            playerViewModel.toggleFavorite()
+                        }
+                    },
                     modifier = Modifier.size(44.dp)
                 ) {
                     Icon(
@@ -605,6 +613,49 @@ fun SidePanelPlayer(
                 }
             }
         }
+    }
+
+    if (showRemoveFavoriteDialog) {
+        AlertDialog(
+            onDismissRequest = { showRemoveFavoriteDialog = false },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = {
+                Text(
+                    text = stringResource(R.string.detail_unstar),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            text = {
+                Text(
+                    text = "${stringResource(R.string.detail_unstar)}: ${station?.Name ?: ""}?",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        playerViewModel.toggleFavorite()
+                        showRemoveFavoriteDialog = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.action_ok),
+                        fontWeight = FontWeight.Bold,
+                        color = AmaradioAmber
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRemoveFavoriteDialog = false }) {
+                    Text(
+                        text = stringResource(R.string.action_cancel),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        )
     }
 
     trackWithOptions?.let { track ->
