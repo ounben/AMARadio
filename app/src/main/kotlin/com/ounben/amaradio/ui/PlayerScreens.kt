@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -385,6 +386,228 @@ fun FullPlayer(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
                         modifier = Modifier.size(32.dp),
+                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    }
+
+    if (showRemoveFavoriteDialog) {
+        AlertDialog(
+            onDismissRequest = { showRemoveFavoriteDialog = false },
+            containerColor = MaterialTheme.colorScheme.surface,
+            tonalElevation = 0.dp,
+            title = {
+                Text(
+                    text = stringResource(R.string.detail_unstar),
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            text = {
+                Text(
+                    text = "${stringResource(R.string.detail_unstar)}: ${station?.Name ?: ""}?",
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = {
+                        playerViewModel.toggleFavorite()
+                        showRemoveFavoriteDialog = false
+                    }
+                ) {
+                    Text(
+                        text = stringResource(R.string.action_ok),
+                        fontWeight = FontWeight.Bold,
+                        color = AmaradioAmber
+                    )
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showRemoveFavoriteDialog = false }) {
+                    Text(
+                        text = stringResource(R.string.action_cancel),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        )
+    }
+
+    trackWithOptions?.let { track ->
+        TrackOptionsDialog(
+            track = track,
+            onDismiss = { trackWithOptions = null }
+        )
+    }
+}
+
+/**
+ * Permanent player column for the wide (landscape) layout, e.g. car tablets.
+ * Large centred artwork and text that can be read at a glance, and comfortable touch targets.
+ * On short screens (small head units) the recent-tracks list is dropped so the
+ * controls always stay fully visible.
+ */
+@Composable
+fun SidePanelPlayer(
+    playerViewModel: PlayerViewModel,
+    trackHistoryViewModel: TrackHistoryViewModel,
+    modifier: Modifier = Modifier
+) {
+    val uiState by playerViewModel.uiState.collectAsState()
+    val historyFlow = remember(trackHistoryViewModel) { trackHistoryViewModel.allHistoryPaged }
+    val tracks = historyFlow.collectAsLazyPagingItems()
+    var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
+    var showRemoveFavoriteDialog by remember { mutableStateOf(false) }
+
+    val station = uiState.currentStation
+    val liveInfo = uiState.liveInfo
+    val songTitle = if (liveInfo.track.isNotEmpty()) liveInfo.track else if (liveInfo.title.isNotEmpty()) liveInfo.title else ""
+    val artistName = if (liveInfo.track.isNotEmpty()) liveInfo.artist else ""
+    val isPlaying = uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying
+
+    BoxWithConstraints(modifier = modifier.background(MaterialTheme.colorScheme.surfaceVariant)) {
+        val showTrackList = maxHeight >= 480.dp
+        val iconSize = (maxHeight * 0.26f).coerceIn(64.dp, 140.dp)
+
+        Column(modifier = Modifier.fillMaxSize()) {
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = if (showTrackList) Arrangement.Top else Arrangement.Center
+            ) {
+                Box(modifier = Modifier.size(iconSize), contentAlignment = Alignment.Center) {
+                    StationIcon(
+                        stationName = station?.Name ?: "",
+                        stationUuid = station?.StationUuid ?: "",
+                        iconUrl = station?.IconUrl,
+                        modifier = Modifier.fillMaxSize()
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // Fixed number of lines (" " placeholders) so the layout does not jump with metadata
+                Text(
+                    text = (station?.Name ?: "").ifEmpty { " " },
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = AmaradioAmber,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = songTitle.ifEmpty { " " },
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.onSurface,
+                    minLines = if (showTrackList) 2 else 1,
+                    maxLines = if (showTrackList) 2 else 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Text(
+                    text = artistName.ifEmpty { " " },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Box(modifier = Modifier.padding(top = 4.dp), contentAlignment = Alignment.Center) {
+                    PlayerStatusRow(
+                        playState = uiState.playState,
+                        bandwidthFlow = playerViewModel.bandwidth,
+                        showText = true
+                    )
+                }
+
+                if (showTrackList) {
+                    Spacer(modifier = Modifier.height(16.dp))
+                    Text(
+                        text = stringResource(R.string.tab_player_history),
+                        style = MaterialTheme.typography.titleSmall,
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)
+                    )
+                    TrackList(
+                        tracks = tracks,
+                        onTrackClick = { },
+                        onTrackLongClick = { trackWithOptions = it },
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            }
+
+            HorizontalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
+
+            // Controls: still comfortable touch targets (>= 44dp), but compact enough for small panels
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(
+                    onClick = { playerViewModel.skipToPrevious() },
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.SkipPrevious,
+                        contentDescription = null,
+                        modifier = Modifier.size(36.dp),
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                IconButton(
+                    onClick = { playerViewModel.togglePlayPause() },
+                    modifier = Modifier.size(72.dp)
+                ) {
+                    Icon(
+                        imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
+                        contentDescription = null,
+                        modifier = Modifier.size(64.dp),
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+
+                IconButton(
+                    onClick = { playerViewModel.skipToNext() },
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.SkipNext,
+                        contentDescription = null,
+                        modifier = Modifier.size(36.dp),
+                        tint = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+
+                IconButton(
+                    onClick = {
+                        // Same as FullPlayer: removing a favourite asks for confirmation
+                        if (uiState.isFavorite) {
+                            showRemoveFavoriteDialog = true
+                        } else {
+                            playerViewModel.toggleFavorite()
+                        }
+                    },
+                    modifier = Modifier.size(44.dp)
+                ) {
+                    Icon(
+                        imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                        contentDescription = null,
+                        modifier = Modifier.size(26.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }

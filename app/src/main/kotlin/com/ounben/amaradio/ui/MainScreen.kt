@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.content.edit
 import com.ounben.amaradio.Utils
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -123,6 +124,30 @@ fun MainScreen(
     val isSettingsSubScreen = currentRoute == Screen.About.route || currentRoute == Screen.Statistics.route
     val isSettingsActive = currentRoute == Screen.Settings.route || isSettingsSubScreen
 
+    // Shared by the bottom navigation bar (portrait) and the navigation rail (landscape)
+    val navItems = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
+
+    fun isNavItemSelected(screen: Screen): Boolean =
+        if (screen == Screen.Settings) isSettingsActive
+        else currentDestination?.hierarchy?.any { it.route == screen.route } == true
+
+    fun onNavItemClick(screen: Screen) {
+        if (screen == Screen.Settings && isSettingsSubScreen) {
+            // Jump back to main settings if on sub-screen
+            navController.popBackStack(Screen.Settings.route, false)
+        } else {
+            isPlayerExpanded = false
+            if (screen == Screen.Stations) mainViewModel.setStationsInitialTab(0)
+            navController.navigate(screen.route) {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+        }
+    }
+
     BackHandler(enabled = isPlayerExpanded) { isPlayerExpanded = false }
 
     BackHandler(enabled = mainUiState.isSearching) {
@@ -130,7 +155,20 @@ fun MainScreen(
         searchViewModel.clearResults()
     }
 
-    Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        // Landscape screens (car tablets, tablets, phones held sideways) use a wide layout:
+        // navigation rail on the left and a permanent player column on the right, instead of
+        // bottom bar + mini player, which together take almost half of a landscape screen's height.
+        // maxWidth/maxHeight already include the app's own UI scale (see Theme.kt).
+        val useWideLayout = maxWidth > maxHeight && maxWidth >= 560.dp
+        val sidePanelWidth = (maxWidth * 0.36f).coerceIn(300.dp, 440.dp)
+        val showSidePlayer = useWideLayout && playerUiState.currentStation != null
+
+        // The expandable full-screen player is not used in the wide layout
+        LaunchedEffect(useWideLayout) {
+            if (useWideLayout) isPlayerExpanded = false
+        }
+
         Scaffold(
             topBar = {
                 MainTopBar(
@@ -167,7 +205,7 @@ fun MainScreen(
                 )
             },
             bottomBar = {
-                if (!mainUiState.isSearching) {
+                if (!useWideLayout && !mainUiState.isSearching) {
                     NavigationBar(
                         modifier = Modifier
                             .navigationBarsPadding()
@@ -177,31 +215,11 @@ fun MainScreen(
                         tonalElevation = 0.dp,
                         windowInsets = WindowInsets(0, 0, 0, 0)
                     ) {
-                        val items = listOf(Screen.Stations, Screen.Favourites, Screen.History, Screen.Settings)
-                        
-                        items.forEach { screen ->
-                            val isSelected = if (screen == Screen.Settings) isSettingsActive 
-                                           else currentDestination?.hierarchy?.any { it.route == screen.route } == true
-
+                        navItems.forEach { screen ->
                             NavigationBarItem(
                                 icon = { Icon(screen.icon, contentDescription = stringResource(screen.titleRes)) },
-                                selected = isSelected,
-                                onClick = {
-                                    if (screen == Screen.Settings && isSettingsSubScreen) {
-                                        // Jump back to main settings if on sub-screen
-                                        navController.popBackStack(Screen.Settings.route, false)
-                                    } else {
-                                        isPlayerExpanded = false
-                                        if (screen == Screen.Stations) mainViewModel.setStationsInitialTab(0)
-                                        navController.navigate(screen.route) {
-                                            popUpTo(navController.graph.findStartDestination().id) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
-                                            restoreState = true
-                                        }
-                                    }
-                                },
+                                selected = isNavItemSelected(screen),
+                                onClick = { onNavItemClick(screen) },
                                 colors = NavigationBarItemDefaults.colors(
                                     selectedIconColor = AmaradioAmber,
                                     selectedTextColor = AmaradioAmber,
@@ -214,186 +232,234 @@ fun MainScreen(
                 }
             }
         ) { innerPadding ->
-            Box(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
-                // Fixed bottom padding to avoid measurement loops during scrolling
-                val contentBottomPadding = 110.dp 
-                
-                if (mainUiState.isSearching) {
-                    Surface(
-                        modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) contentBottomPadding else 0.dp),
-                        color = MaterialTheme.colorScheme.background
+            Row(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
+                if (useWideLayout) {
+                    // Landscape: vertical navigation with labelled targets (standard Material sizes)
+                    NavigationRail(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        contentColor = MaterialTheme.colorScheme.onSurface,
+                        windowInsets = WindowInsets(0, 0, 0, 0)
                     ) {
-                        if (searchUiState.isSearching && searchUiState.results.isEmpty()) {
-                            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(color = AmaradioAmber)
-                            }
-                        } else if (searchUiState.results.isEmpty() && mainUiState.searchQuery.isNotEmpty()) {
-                            Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.TopCenter) {
-                                Text(stringResource(R.string.searchpreference_no_results), color = MaterialTheme.colorScheme.onSurfaceVariant)
-                            }
-                        } else {
-                            StationListTemplate(
-                                stations = searchUiState.results,
-                                isGrid = mainUiState.isGridView,
-                                isLoading = searchUiState.isSearching,
-                                error = searchUiState.error,
-                                emptyMessage = stringResource(R.string.searchpreference_no_results),
-                                onStationClick = { station ->
-                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else playerViewModel.play(station)
-                                    mainViewModel.setSearchActive(false)
-                                    searchViewModel.clearResults()
+                        Spacer(modifier = Modifier.weight(1f))
+                        navItems.forEach { screen ->
+                            NavigationRailItem(
+                                icon = { Icon(screen.icon, contentDescription = null) },
+                                label = { Text(stringResource(screen.titleRes), maxLines = 1) },
+                                selected = isNavItemSelected(screen),
+                                onClick = {
+                                    // The rail stays visible while searching: leave search before navigating
+                                    if (mainUiState.isSearching) {
+                                        mainViewModel.setSearchActive(false)
+                                        searchViewModel.clearResults()
+                                    }
+                                    onNavItemClick(screen)
                                 },
-                                onFavoriteClick = { station ->
-                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                    else app.favouriteManager.add(station)
-                                },
-                                isFavorite = { uuid -> searchUiState.favoriteIds.contains(uuid) }
+                                colors = NavigationRailItemDefaults.colors(
+                                    selectedIconColor = AmaradioAmber,
+                                    selectedTextColor = AmaradioAmber,
+                                    indicatorColor = Color.Transparent,
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurface,
+                                    unselectedTextColor = MaterialTheme.colorScheme.onSurface
+                                )
                             )
+                        }
+                        Spacer(modifier = Modifier.weight(1f))
+                    }
+                    VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
+                }
+
+                Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                    // Fixed bottom padding to avoid measurement loops during scrolling.
+                    // In the wide layout the player has its own column, so nothing overlaps the content.
+                    val contentBottomPadding = if (useWideLayout) 0.dp else 110.dp
+                
+                    if (mainUiState.isSearching) {
+                        Surface(
+                            modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) contentBottomPadding else 0.dp),
+                            color = MaterialTheme.colorScheme.background
+                        ) {
+                            if (searchUiState.isSearching && searchUiState.results.isEmpty()) {
+                                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                                    CircularProgressIndicator(color = AmaradioAmber)
+                                }
+                            } else if (searchUiState.results.isEmpty() && mainUiState.searchQuery.isNotEmpty()) {
+                                Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.TopCenter) {
+                                    Text(stringResource(R.string.searchpreference_no_results), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                }
+                            } else {
+                                StationListTemplate(
+                                    stations = searchUiState.results,
+                                    isGrid = mainUiState.isGridView,
+                                    isLoading = searchUiState.isSearching,
+                                    error = searchUiState.error,
+                                    emptyMessage = stringResource(R.string.searchpreference_no_results),
+                                    onStationClick = { station ->
+                                        if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                        else playerViewModel.play(station)
+                                        mainViewModel.setSearchActive(false)
+                                        searchViewModel.clearResults()
+                                    },
+                                    onFavoriteClick = { station ->
+                                        if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                        else app.favouriteManager.add(station)
+                                    },
+                                    isFavorite = { uuid -> searchUiState.favoriteIds.contains(uuid) }
+                                )
+                            }
+                        }
+                    } else {
+                        NavHost(
+                            navController = navController,
+                            startDestination = startRoute,
+                            modifier = Modifier.fillMaxSize().padding(bottom = contentBottomPadding)
+                        ) {
+                            composable(Screen.Stations.route) {
+                                TabsScreen(
+                                    initialTab = mainUiState.stationsInitialTab,
+                                    onStationClick = { station -> 
+                                        if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                        else playerViewModel.play(station)
+                                    },
+                                    onCategoryClick = { }
+                                )
+                            }
+                            composable(Screen.Favourites.route) {
+                                val viewModel: LocalStationsViewModel = viewModel(key = "starred", factory = LocalStationsViewModelFactory(app, LocalManagerType.FAVOURITES))
+                                StarredScreen(
+                                    viewModel = viewModel,
+                                    onStationClick = { station -> 
+                                        if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                        else playerViewModel.play(station)
+                                    },
+                                    onFavoriteClick = { station -> 
+                                        if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                        else app.favouriteManager.add(station)
+                                    },
+                                    isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
+                                )
+                            }
+                            composable(Screen.History.route) {
+                                val localViewModel: LocalStationsViewModel = viewModel(key = "history", factory = LocalStationsViewModelFactory(app, LocalManagerType.HISTORY))
+                                HistoryScreen(
+                                    localStationsViewModel = localViewModel,
+                                    trackHistoryViewModel = trackHistoryViewModel,
+                                    onStationClick = { station -> 
+                                        if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                        else playerViewModel.play(station)
+                                    },
+                                    onFavoriteClick = { station -> 
+                                        if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                        else app.favouriteManager.add(station)
+                                    },
+                                    onTrackClick = { },
+                                    isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
+                                )
+                            }
+                            composable(Screen.Settings.route) {
+                                val viewModel: SettingsViewModel = viewModel()
+                                SettingsScreen(
+                                    viewModel = viewModel,
+                                    serverInfoViewModel = serverInfoViewModel,
+                                    onOpenProxy = { showProxyDialog = true },
+                                    onOpenAbout = { 
+                                        isPlayerExpanded = false
+                                        navController.navigate(Screen.About.route) 
+                                    },
+                                    onOpenStatistics = { 
+                                        isPlayerExpanded = false
+                                        navController.navigate(Screen.Statistics.route) 
+                                    },
+                                    onOpenEqualizer = { 
+                                        val intent = Intent("android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL")
+                                        intent.putExtra("android.media.extra.PACKAGE_NAME", context.packageName)
+                                        intent.putExtra("android.media.extra.AUDIO_SESSION", 0)
+                                        try { context.startActivity(intent) } catch (_: Exception) {}
+                                    },
+                                    onBatteryOptimize = {
+                                        Utils.openBatteryOrAppSettings(context)
+                                    },
+                                    onRateApp = {
+                                        (context as? android.app.Activity)?.let {
+                                            app.reviewManager.launchReviewFlow(it)
+                                        }
+                                    },
+                                    onExportBackup = onExportBackup,
+                                    onImportBackup = onImportBackup
+                                )
+                            }
+                            composable(Screen.About.route) { AboutScreen { navController.popBackStack() } }
+                            composable(Screen.Statistics.route) { 
+                                ServerInfoScreen(
+                                    viewModel = serverInfoViewModel,
+                                    currentPlayingUuid = playerUiState.currentStation?.StationUuid,
+                                    isPlaying = playerUiState.playState == PlayState.Playing,
+                                    onStationClick = { station ->
+                                        if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
+                                        else playerViewModel.play(station)
+                                    },
+                                    onFavoriteClick = { station ->
+                                        if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                        else app.favouriteManager.add(station)
+                                    },
+                                    onBack = { navController.popBackStack() }
+                                )
+                            }
                         }
                     }
-                } else {
-                    NavHost(
-                        navController = navController,
-                        startDestination = startRoute,
-                        modifier = Modifier.fillMaxSize().padding(bottom = contentBottomPadding)
+
+                    // MiniPlayer / FullPlayer Container (portrait and narrow screens only)
+                    if (!useWideLayout) Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .then(
+                                if (isPlayerExpanded && playerUiState.currentStation != null) 
+                                    Modifier.fillMaxHeight()
+                                else 
+                                    Modifier.wrapContentHeight()
+                            )
+                            .align(Alignment.BottomCenter)
+                            .background(MaterialTheme.colorScheme.surfaceVariant)
+                            .draggable(
+                                orientation = Orientation.Vertical,
+                                state = rememberDraggableState { /* ignore delta */ },
+                                onDragStopped = { velocity ->
+                                    if (velocity < -500f && playerUiState.currentStation != null) isPlayerExpanded = true
+                                    if (velocity > 500f) isPlayerExpanded = false
+                                }
+                            )
                     ) {
-                        composable(Screen.Stations.route) {
-                            TabsScreen(
-                                initialTab = mainUiState.stationsInitialTab,
-                                onStationClick = { station -> 
-                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else playerViewModel.play(station)
+                        if (isPlayerExpanded && playerUiState.currentStation != null) {
+                            Column {
+                                Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
+                                    Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
+                                }
+                                FullPlayer(
+                                    playerViewModel = playerViewModel,
+                                    trackHistoryViewModel = trackHistoryViewModel,
+                                    onTrackClick = { }
+                                )
+                            }
+                        } else {
+                            MiniPlayer(
+                                viewModel = playerViewModel,
+                                isHeaderRole = false,
+                                onToggleBottomSheet = { 
+                                    if (playerUiState.currentStation != null) isPlayerExpanded = true 
                                 },
-                                onCategoryClick = { }
-                            )
-                        }
-                        composable(Screen.Favourites.route) {
-                            val viewModel: LocalStationsViewModel = viewModel(key = "starred", factory = LocalStationsViewModelFactory(app, LocalManagerType.FAVOURITES))
-                            StarredScreen(
-                                viewModel = viewModel,
-                                onStationClick = { station -> 
-                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else playerViewModel.play(station)
-                                },
-                                onFavoriteClick = { station -> 
-                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                    else app.favouriteManager.add(station)
-                                },
-                                isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
-                            )
-                        }
-                        composable(Screen.History.route) {
-                            val localViewModel: LocalStationsViewModel = viewModel(key = "history", factory = LocalStationsViewModelFactory(app, LocalManagerType.HISTORY))
-                            HistoryScreen(
-                                localStationsViewModel = localViewModel,
-                                trackHistoryViewModel = trackHistoryViewModel,
-                                onStationClick = { station -> 
-                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else playerViewModel.play(station)
-                                },
-                                onFavoriteClick = { station -> 
-                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                    else app.favouriteManager.add(station)
-                                },
-                                onTrackClick = { },
-                                isFavorite = { uuid -> mainUiState.favoriteIds.contains(uuid) }
-                            )
-                        }
-                        composable(Screen.Settings.route) {
-                            val viewModel: SettingsViewModel = viewModel()
-                            SettingsScreen(
-                                viewModel = viewModel,
-                                serverInfoViewModel = serverInfoViewModel,
-                                onOpenProxy = { showProxyDialog = true },
-                                onOpenAbout = { 
-                                    isPlayerExpanded = false
-                                    navController.navigate(Screen.About.route) 
-                                },
-                                onOpenStatistics = { 
-                                    isPlayerExpanded = false
-                                    navController.navigate(Screen.Statistics.route) 
-                                },
-                                onOpenEqualizer = { 
-                                    val intent = Intent("android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL")
-                                    intent.putExtra("android.media.extra.PACKAGE_NAME", context.packageName)
-                                    intent.putExtra("android.media.extra.AUDIO_SESSION", 0)
-                                    try { context.startActivity(intent) } catch (_: Exception) {}
-                                },
-                                onBatteryOptimize = {
-                                    Utils.openBatteryOrAppSettings(context)
-                                },
-                                onRateApp = {
-                                    (context as? android.app.Activity)?.let {
-                                        app.reviewManager.launchReviewFlow(it)
-                                    }
-                                },
-                                onExportBackup = onExportBackup,
-                                onImportBackup = onImportBackup
-                            )
-                        }
-                        composable(Screen.About.route) { AboutScreen { navController.popBackStack() } }
-                        composable(Screen.Statistics.route) { 
-                            ServerInfoScreen(
-                                viewModel = serverInfoViewModel,
-                                currentPlayingUuid = playerUiState.currentStation?.StationUuid,
-                                isPlaying = playerUiState.playState == PlayState.Playing,
-                                onStationClick = { station ->
-                                    if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
-                                    else playerViewModel.play(station)
-                                },
-                                onFavoriteClick = { station ->
-                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                    else app.favouriteManager.add(station)
-                                },
-                                onBack = { navController.popBackStack() }
+                                onMoreClick = { }
                             )
                         }
                     }
                 }
 
-                // MiniPlayer / FullPlayer Container
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .then(
-                            if (isPlayerExpanded && playerUiState.currentStation != null) 
-                                Modifier.fillMaxHeight()
-                            else 
-                                Modifier.wrapContentHeight()
-                        )
-                        .align(Alignment.BottomCenter)
-                        .background(MaterialTheme.colorScheme.surfaceVariant)
-                        .draggable(
-                            orientation = Orientation.Vertical,
-                            state = rememberDraggableState { /* ignore delta */ },
-                            onDragStopped = { velocity ->
-                                if (velocity < -500f && playerUiState.currentStation != null) isPlayerExpanded = true
-                                if (velocity > 500f) isPlayerExpanded = false
-                            }
-                        )
-                ) {
-                    if (isPlayerExpanded && playerUiState.currentStation != null) {
-                        Column {
-                            Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
-                                Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
-                            }
-                            FullPlayer(
-                                playerViewModel = playerViewModel,
-                                trackHistoryViewModel = trackHistoryViewModel,
-                                onTrackClick = { }
-                            )
-                        }
-                    } else {
-                        MiniPlayer(
-                            viewModel = playerViewModel,
-                            isHeaderRole = false,
-                            onToggleBottomSheet = { 
-                                if (playerUiState.currentStation != null) isPlayerExpanded = true 
-                            },
-                            onMoreClick = { }
-                        )
-                    }
+                // Wide layout: the player is always visible in its own column on the right
+                if (showSidePlayer) {
+                    VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
+                    SidePanelPlayer(
+                        playerViewModel = playerViewModel,
+                        trackHistoryViewModel = trackHistoryViewModel,
+                        modifier = Modifier.width(sidePanelWidth).fillMaxHeight()
+                    )
                 }
             }
         }
