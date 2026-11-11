@@ -331,29 +331,29 @@ fun FullPlayer(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 16.dp, horizontal = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
+                    .padding(vertical = 12.dp, horizontal = 8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 IconButton(onClick = { playerViewModel.skipToPrevious() }) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
                         contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
 
                 IconButton(
                     onClick = { playerViewModel.togglePlayPause() },
-                    modifier = Modifier.size(80.dp)
+                    modifier = Modifier.size(64.dp)
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(72.dp),
+                        modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -362,7 +362,7 @@ fun FullPlayer(
                     Icon(
                         imageVector = Icons.Default.SkipNext,
                         contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
@@ -370,7 +370,7 @@ fun FullPlayer(
                 // Record Button (🔴 / 🛑) with Timer Selection
                 com.ounben.amaradio.recorder.RecordButtonWithTimer(
                     currentStation = station,
-                    iconSize = 32.dp
+                    iconSize = 28.dp
                 )
 
                 IconButton(
@@ -385,7 +385,7 @@ fun FullPlayer(
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
-                        modifier = Modifier.size(32.dp),
+                        modifier = Modifier.size(28.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
@@ -592,6 +592,12 @@ fun SidePanelPlayer(
                         tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
+
+                // Record Button (🔴 / 🛑) with Timer Selection
+                com.ounben.amaradio.recorder.RecordButtonWithTimer(
+                    currentStation = station,
+                    iconSize = 26.dp
+                )
 
                 IconButton(
                     onClick = {
