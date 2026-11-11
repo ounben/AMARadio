@@ -52,6 +52,9 @@ fun RecordingPlayerDialog(
                 androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_INDEX_SEEKING or
                 androidx.media3.extractor.mp3.Mp3Extractor.FLAG_DISABLE_ID3_METADATA
             )
+            setAdtsExtractorFlags(
+                androidx.media3.extractor.ts.AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING
+            )
             setConstantBitrateSeekingAlwaysEnabled(false)
         }
         val mediaSourceFactory = androidx.media3.exoplayer.source.ProgressiveMediaSource.Factory(
