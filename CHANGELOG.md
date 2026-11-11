@@ -5,6 +5,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.48] - 2026-11-10
+### Added
+- **OGG Stream Recording & Synchronization**: Added live Ogg stream BOS (Beginning of Stream) page synchronization, zero-basing granulepos values, and recalculating 32-bit Ogg page CRC32 checksums (RFC 3533 polynomial `0x04C11DB7`) to ensure recorded `.ogg` files start at sample 0 and pass FFmpeg, VLC, and Musicolet validation without CRC mismatches.
+- **OggFLAC Codec Detection & Extension Mapping**: Added Ogg packet payload analysis (`\x01vorbis`, `OpusHead`, `\x7fFLAC` / `fLaC`) in `FormatParser.kt` to detect OggFLAC streams, mapping them to standard `.oga` extension for seamless hardware/software decoder routing.
+- **Full Player Favorite Removal Confirmation**: Added a confirmation dialog (`R.string.detail_unstar`) when tapping the filled favorite star in the Fullscreen Player, preventing accidental deletion of favorite stations.
+
+### Changed
+- **MediaStore Duration Normalization**: Ensured `MediaStore.Audio.Media.DURATION` and SQLite recording table duration always use measured `wallClockDurationMs` (e.g. 14s instead of live Icecast server uptime 22h), resolving 22-hour duration displays across external audio players.
+- **Gradle Wrapper Upgrade**: Updated Gradle build toolchain to version `9.5.1`.
+
+### Fixed
+- **MP3 Preroll & Xing Header Neutralization**: Automatically neutralizes Xing/Info VBR headers in Frame 0 of MP3 files containing preroll ads, preventing ExoPlayer and C++ `MediaPlayerNative` from capping playback and seeking to 2.8 seconds.
+- **Raw ADTS AAC Constant Bitrate Seeking**: Configured `AdtsExtractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING` in Media3 ExoPlayer, enabling fluid timeline scrubbing and timestamp jumps for raw `.aac` recordings (e.g. *Fox News Radio*).
+- **Filename Special Character Sanitization**: Enhanced filename sanitization (`sanitizeFileName`) to strip special characters (like `!`, `#`, `$`, `%`) from station names (e.g. *Dance Wave!*), preventing MediaStore `.pending` file locks.
+- **Android 10 / Legacy Storage Fallback**: Added explicit directory creation (`targetDir.mkdirs()`) for legacy Android 8.0/9.0 (API < 29) devices without requiring `WRITE_EXTERNAL_STORAGE` manifest permissions on Scoped Storage.
+
 ## [1.47] - 2026-10-31
 ### Added
 - **Lossless Live Stream Recording Engine**: Added real-time, lossless radio stream recording (`.mp3` & `.m4a`/`.aac`) directly to Android MediaStore (`Music/AMARadio/<StationName>/`) with an independent background service (`RecordService`) and notification controls.
