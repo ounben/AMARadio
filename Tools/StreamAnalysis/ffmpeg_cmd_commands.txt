@@ -1,0 +1,9 @@
+curl.exe -I "https://dancewave.online/dance.ogg"
+ 
+ffmpeg -v error -i "https://dancewave.online/dance.ogg" -f null -
+
+ffmpeg -i "http://stream1.dancewave.online:8080/dance.ogg" -c copy "dance_recording.ogg"
+
+ffplay -nodisp "C:\Users\bou\Desktop\Dance Wave_20261109_014451.ogg"
+
+ffmpeg -v info -i "C:\Users\bou\Desktop\Dance Wave_20261109_014451.ogg" -f null -
