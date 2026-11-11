@@ -62,7 +62,21 @@ fun RecordingPlayerDialog(
             extractorsFactory
         )
 
-        ExoPlayer.Builder(context)
+        val renderersFactory = object : androidx.media3.exoplayer.DefaultRenderersFactory(context) {
+            override fun buildAudioSink(
+                ctx: android.content.Context,
+                enableFloatOutput: Boolean,
+                enableAudioTrackPlaybackParams: Boolean
+            ): androidx.media3.exoplayer.audio.AudioSink {
+                return androidx.media3.exoplayer.audio.DefaultAudioSink.Builder(ctx)
+                    .setEnableFloatOutput(false)
+                    .build()
+            }
+        }.apply {
+            setEnableDecoderFallback(true)
+        }
+
+        ExoPlayer.Builder(context, renderersFactory)
             .setMediaSourceFactory(mediaSourceFactory)
             .build().apply {
                 setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))

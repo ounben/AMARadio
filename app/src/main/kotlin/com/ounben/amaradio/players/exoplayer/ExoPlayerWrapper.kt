@@ -19,6 +19,8 @@ import androidx.media3.datasource.HttpDataSource
 import androidx.media3.datasource.TransferListener
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.exoplayer.DefaultLoadControl
+import androidx.media3.exoplayer.DefaultRenderersFactory
+import androidx.media3.exoplayer.audio.DefaultAudioSink
 import androidx.media3.exoplayer.hls.HlsMediaSource
 import androidx.media3.exoplayer.source.DefaultMediaSourceFactory
 import androidx.media3.exoplayer.source.MediaSource
@@ -102,7 +104,21 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         val strictMediaSourceFactory = DefaultMediaSourceFactory(attributedContext, Media3Utils.getRadioExtractorsFactory())
             .setDataSourceFactory(icyFactory)
 
-        internalPlayer = ExoPlayer.Builder(attributedContext)
+        val renderersFactory = object : DefaultRenderersFactory(attributedContext) {
+            override fun buildAudioSink(
+                context: Context,
+                enableFloatOutput: Boolean,
+                enableAudioTrackPlaybackParams: Boolean
+            ): androidx.media3.exoplayer.audio.AudioSink {
+                return DefaultAudioSink.Builder(context)
+                    .setEnableFloatOutput(false)
+                    .build()
+            }
+        }.apply {
+            setEnableDecoderFallback(true)
+        }
+
+        internalPlayer = ExoPlayer.Builder(attributedContext, renderersFactory)
             .setLooper(looper)
             .setAudioAttributes(audioAttributes, false)
             .setLoadControl(loadControl)
