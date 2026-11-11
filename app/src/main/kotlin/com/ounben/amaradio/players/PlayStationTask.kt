@@ -43,9 +43,15 @@ class PlayStationTask(
         @JvmStatic
         fun playExternal(stationToPlay: DataRadioStation, ctx: Context): PlayStationTask {
             return PlayStationTask(stationToPlay, ctx, { url ->
-                val share = Intent(Intent.ACTION_VIEW)
-                share.setDataAndType(url.toUri(), "audio/*")
-                ctx.startActivity(share)
+                try {
+                    val share = Intent(Intent.ACTION_VIEW).apply {
+                        setDataAndType(url.toUri(), "audio/*")
+                        addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    }
+                    ctx.startActivity(share)
+                } catch (_: Exception) {
+                    Toast.makeText(ctx, ctx.getString(R.string.error_external_player_not_found), Toast.LENGTH_SHORT).show()
+                }
             }, null)
         }
     }
