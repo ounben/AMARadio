@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,7 +43,7 @@ fun TabsScreen(
     val app = context.applicationContext as AMARadioApp
     val countryCode = Utils.getCountryCode(context) ?: "DE"
     val filterViewModel: FilterViewModel = viewModel()
-    val filterState by filterViewModel.uiState.collectAsState()
+    val filterState by filterViewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
     // Build Dynamic Tab List (Guaranteed non-empty: at least Local tab exists)
