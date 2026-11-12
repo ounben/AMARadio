@@ -44,6 +44,7 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -253,7 +254,7 @@ fun StationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel()
 ) {
-    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
@@ -629,7 +630,7 @@ fun ReorderableStationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel()
 ) {
-    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
