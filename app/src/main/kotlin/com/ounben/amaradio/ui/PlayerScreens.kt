@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -48,7 +49,7 @@ fun MiniPlayer(
     onMoreClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
     val station = uiState.currentStation
     val liveInfo = uiState.liveInfo
@@ -176,7 +177,7 @@ fun FullPlayer(
     trackHistoryViewModel: TrackHistoryViewModel,
     onTrackClick: (TrackHistoryEntry) -> Unit
 ) {
-    val uiState by playerViewModel.uiState.collectAsState()
+    val uiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
     val context = LocalContext.current
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
@@ -326,7 +327,7 @@ fun FullPlayer(
             color = MaterialTheme.colorScheme.surfaceVariant
         ) {
             val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
-            val recordState by recordManager.recordingState.collectAsState()
+            val recordState by recordManager.recordingState.collectAsStateWithLifecycle()
 
             Row(
                 modifier = Modifier
@@ -456,7 +457,7 @@ fun SidePanelPlayer(
     trackHistoryViewModel: TrackHistoryViewModel,
     modifier: Modifier = Modifier
 ) {
-    val uiState by playerViewModel.uiState.collectAsState()
+    val uiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val historyFlow = remember(trackHistoryViewModel) { trackHistoryViewModel.allHistoryPaged }
     val tracks = historyFlow.collectAsLazyPagingItems()
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
@@ -691,7 +692,7 @@ fun PlayerStatusRow(
         modifier = Modifier.wrapContentHeight()
     ) {
         if (playState == PlayState.PrePlaying || playState == PlayState.Playing) {
-            val bandwidth by bandwidthFlow.collectAsState()
+            val bandwidth by bandwidthFlow.collectAsStateWithLifecycle()
             Text(
                 text = bandwidth.ifEmpty { "0.0 kB/s" },
                 color = color,
