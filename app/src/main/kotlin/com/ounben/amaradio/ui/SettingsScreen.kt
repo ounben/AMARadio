@@ -34,6 +34,7 @@ import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
+import java.util.Locale
 
 @Serializable
 private data class CountryJson(
@@ -254,7 +255,7 @@ fun SettingsScreen(
                             val json = Json { ignoreUnknownKeys = true }
                             val countries = json.decodeFromString<List<CountryJson>>(jsonContent)
                             val categories = countries.mapNotNull { item ->
-                                val code = item.code?.uppercase() ?: return@mapNotNull null
+                                val code = item.code?.uppercase(Locale.ROOT) ?: return@mapNotNull null
                                 val rawName = item.name ?: code
                                 val label = com.ounben.amaradio.CountryCodeDictionary.instance.getCountryByCode(code) ?: rawName
                                 val emoji = com.ounben.amaradio.utils.EmojiUtils.getFlagEmoji(code) ?: ""
