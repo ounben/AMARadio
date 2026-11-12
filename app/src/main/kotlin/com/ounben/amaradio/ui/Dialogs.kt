@@ -325,6 +325,15 @@ fun StationOptionsDialog(
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
+    val showRecorder = remember(context) {
+        try {
+            context.resources.getBoolean(
+                context.resources.getIdentifier("show_recorder_button", "bool", context.packageName)
+            )
+        } catch (_: Exception) {
+            true
+        }
+    }
     var showRecordTimerDialog by remember { mutableStateOf(false) }
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
@@ -369,30 +378,32 @@ fun StationOptionsDialog(
                     },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
-                ListItem(
-                    headlineContent = { 
-                        Text(
-                            text = if (isThisStationRecording) stringResource(R.string.label_button_cancel) else stringResource(R.string.action_record),
-                            color = if (isThisStationRecording) recordRedColor else MaterialTheme.colorScheme.onSurface
-                        ) 
-                    },
-                    leadingContent = { 
-                        Icon(
-                            imageVector = if (isThisStationRecording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked, 
-                            contentDescription = null, 
-                            tint = recordRedColor
-                        ) 
-                    },
-                    modifier = Modifier.clickable {
-                        if (isThisStationRecording) {
-                            recordManager.stopRecording()
-                            onDismiss()
-                        } else {
-                            showRecordTimerDialog = true
-                        }
-                    },
-                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
-                )
+                if (showRecorder) {
+                    ListItem(
+                        headlineContent = { 
+                            Text(
+                                text = if (isThisStationRecording) stringResource(R.string.label_button_cancel) else stringResource(R.string.action_record),
+                                color = if (isThisStationRecording) recordRedColor else MaterialTheme.colorScheme.onSurface
+                            ) 
+                        },
+                        leadingContent = { 
+                            Icon(
+                                imageVector = if (isThisStationRecording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked, 
+                                contentDescription = null, 
+                                tint = recordRedColor
+                            ) 
+                        },
+                        modifier = Modifier.clickable {
+                            if (isThisStationRecording) {
+                                recordManager.stopRecording()
+                                onDismiss()
+                            } else {
+                                showRecordTimerDialog = true
+                            }
+                        },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                    )
+                }
                 ListItem(
                     headlineContent = { 
                         Text(

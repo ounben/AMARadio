@@ -31,6 +31,18 @@ fun RecordButtonWithTimer(
     iconSize: Dp = 24.dp
 ) {
     val context = LocalContext.current
+    val showRecorder = remember(context) {
+        try {
+            context.resources.getBoolean(
+                context.resources.getIdentifier("show_recorder_button", "bool", context.packageName)
+            )
+        } catch (_: Exception) {
+            true
+        }
+    }
+
+    if (!showRecorder) return
+
     val recordManager = remember { RecordManager.getInstance(context) }
     val recordState by recordManager.recordingState.collectAsState()
     var showTimerMenu by remember { mutableStateOf(false) }

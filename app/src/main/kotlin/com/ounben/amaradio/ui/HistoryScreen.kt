@@ -34,7 +34,17 @@ fun HistoryScreen(
 ) {
     val context = LocalContext.current
     val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
-    val pagerState = rememberPagerState(pageCount = { 3 })
+    val showRecorder = remember(context) {
+        try {
+            context.resources.getBoolean(
+                context.resources.getIdentifier("show_recorder_button", "bool", context.packageName)
+            )
+        } catch (_: Exception) {
+            true
+        }
+    }
+    val pageCount = if (showRecorder) 3 else 2
+    val pagerState = rememberPagerState(pageCount = { pageCount })
     val coroutineScope = rememberCoroutineScope()
     val uiState by localStationsViewModel.uiState.collectAsState()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
@@ -42,8 +52,8 @@ fun HistoryScreen(
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }
 
     Column(modifier = Modifier.fillMaxSize()) {
-        val safeSelectedIndex = remember(pagerState.currentPage) {
-            pagerState.currentPage.coerceIn(0, 2)
+        val safeSelectedIndex = remember(pagerState.currentPage, pageCount) {
+            pagerState.currentPage.coerceIn(0, pageCount - 1)
         }
 
         SecondaryScrollableTabRow(
@@ -52,7 +62,7 @@ fun HistoryScreen(
             containerColor = MaterialTheme.colorScheme.secondary,
             contentColor = MaterialTheme.colorScheme.onSecondary,
             indicator = {
-                if (safeSelectedIndex in 0..2) {
+                if (safeSelectedIndex in 0 until pageCount) {
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(safeSelectedIndex),
                         color = MaterialTheme.colorScheme.primary
@@ -71,11 +81,13 @@ fun HistoryScreen(
                 onClick = { coroutineScope.launch { pagerState.animateScrollToPage(1) } },
                 text = { Text(text = stringResource(R.string.tab_player_history)) }
             )
-            Tab(
-                selected = pagerState.currentPage == 2,
-                onClick = { coroutineScope.launch { pagerState.animateScrollToPage(2) } },
-                text = { Text(text = stringResource(R.string.tab_recordings)) }
-            )
+            if (showRecorder) {
+                Tab(
+                    selected = pagerState.currentPage == 2,
+                    onClick = { coroutineScope.launch { pagerState.animateScrollToPage(2) } },
+                    text = { Text(text = stringResource(R.string.tab_recordings)) }
+                )
+            }
         }
 
         HorizontalPager(

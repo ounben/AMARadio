@@ -120,9 +120,11 @@ android {
     productFlavors {
         foss {
             dimension "dist"
+            resValue 'bool', 'show_recorder_button', 'true'
         }
         play {
             dimension "dist"
+            resValue 'bool', 'show_recorder_button', 'false'
         }
     }
 
