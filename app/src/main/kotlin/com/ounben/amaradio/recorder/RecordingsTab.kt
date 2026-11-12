@@ -419,7 +419,7 @@ fun RecordingListItem(
                     color = MaterialTheme.colorScheme.onSurface
                 )
                 Text(
-                    text = "$dateStr • $durationStr • $sizeStr (${record.format.uppercase()})",
+                    text = "$dateStr • $durationStr • $sizeStr (${record.format.uppercase(Locale.ROOT)})",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1
@@ -510,7 +510,7 @@ fun RecordingOptionsDialog(
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = "$dateStr • $durationStr • $sizeStr (${record.format.uppercase()})",
+                    text = "$dateStr • $durationStr • $sizeStr (${record.format.uppercase(Locale.ROOT)})",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -639,7 +639,7 @@ private fun shareRecordingFile(context: Context, record: RecordEntity) {
             type = "audio/*"
             putExtra(Intent.EXTRA_STREAM, uri)
             putExtra(Intent.EXTRA_SUBJECT, record.Name)
-            putExtra(Intent.EXTRA_TEXT, "${record.Name}\nRecording: ${record.format.uppercase()}")
+            putExtra(Intent.EXTRA_TEXT, "${record.Name}\nRecording: ${record.format.uppercase(Locale.ROOT)}")
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
         val chooser = Intent.createChooser(shareIntent, context.getString(R.string.action_station_share))
