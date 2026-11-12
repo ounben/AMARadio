@@ -26,6 +26,7 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 private sealed class MainTab {
     object Local : MainTab()
@@ -122,8 +123,8 @@ fun TabsScreen(
                                 val title = when (tab) {
                                     is MainTab.Local -> {
                                         if (manualCountry.isNotEmpty() && manualCountry != "SYSTEM") {
-                                            val flag = com.ounben.amaradio.utils.EmojiUtils.getFlagEmoji(manualCountry.uppercase()) ?: ""
-                                            if (flag.isNotEmpty()) "$flag ${manualCountry.uppercase()}" else manualCountry.uppercase()
+                                            val flag = com.ounben.amaradio.utils.EmojiUtils.getFlagEmoji(manualCountry.uppercase(Locale.ROOT)) ?: ""
+                                            if (flag.isNotEmpty()) "$flag ${manualCountry.uppercase(Locale.ROOT)}" else manualCountry.uppercase(Locale.ROOT)
                                         } else {
                                             stringResource(R.string.action_local)
                                         }
