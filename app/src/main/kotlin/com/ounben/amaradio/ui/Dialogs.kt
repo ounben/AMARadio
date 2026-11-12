@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -164,7 +165,7 @@ fun PlayerSelectorDialogCompose(
 @Composable
 fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
     val viewModel: ProxyViewModel = viewModel()
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -329,7 +330,7 @@ fun StationOptionsDialog(
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
     val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
-    val recordState by recordManager.recordingState.collectAsState()
+    val recordState by recordManager.recordingState.collectAsStateWithLifecycle()
     val isThisStationRecording = recordState.isRecording && recordState.stationUuid == station.StationUuid
 
     AlertDialog(
