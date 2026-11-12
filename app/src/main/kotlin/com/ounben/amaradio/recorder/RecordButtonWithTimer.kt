@@ -12,6 +12,7 @@ import androidx.compose.material.icons.filled.Stop
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -32,7 +33,7 @@ fun RecordButtonWithTimer(
 ) {
     val context = LocalContext.current
     val recordManager = remember { RecordManager.getInstance(context) }
-    val recordState by recordManager.recordingState.collectAsState()
+    val recordState by recordManager.recordingState.collectAsStateWithLifecycle()
     var showTimerMenu by remember { mutableStateOf(false) }
     val noStationMsg = stringResource(R.string.error_station_load)
 
