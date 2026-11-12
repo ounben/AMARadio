@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.WarningAmber
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -54,8 +55,8 @@ fun SettingsScreen(
     onExportBackup: () -> Unit,
     onImportBackup: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val serverInfoUiState by serverInfoViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val serverInfoUiState by serverInfoViewModel.uiState.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
     val context = LocalContext.current
