@@ -22,6 +22,7 @@ import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -58,7 +59,7 @@ fun FilterScreen(
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentTab = uiState.tabs.getOrNull(tabIndex) ?: return
     
     var showFilterSheet by remember { mutableStateOf(false) }
