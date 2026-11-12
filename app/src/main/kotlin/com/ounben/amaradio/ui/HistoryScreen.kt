@@ -8,6 +8,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -36,7 +37,7 @@ fun HistoryScreen(
     val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
     val pagerState = rememberPagerState(pageCount = { 3 })
     val coroutineScope = rememberCoroutineScope()
-    val uiState by localStationsViewModel.uiState.collectAsState()
+    val uiState by localStationsViewModel.uiState.collectAsStateWithLifecycle()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }
