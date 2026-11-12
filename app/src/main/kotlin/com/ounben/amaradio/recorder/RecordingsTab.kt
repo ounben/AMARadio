@@ -20,6 +20,7 @@ import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -48,8 +49,8 @@ fun RecordingsTab() {
     val coroutineScope = rememberCoroutineScope()
     val db = remember { AMARadioUserDatabase.getDatabase(context) }
 
-    val allRecordings by db.recordDao().getAllRecordingsFlow().collectAsState(initial = emptyList())
-    val recordedStations by db.recordDao().getRecordedStationNamesFlow().collectAsState(initial = emptyList())
+    val allRecordings by db.recordDao().getAllRecordingsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
+    val recordedStations by db.recordDao().getRecordedStationNamesFlow().collectAsStateWithLifecycle(initialValue = emptyList())
 
     var selectedStation by rememberSaveable { mutableStateOf("") }
     var startDateMs by rememberSaveable { mutableLongStateOf(0L) }
@@ -59,7 +60,7 @@ fun RecordingsTab() {
         stationName = selectedStation,
         startTimestamp = startDateMs,
         endTimestamp = endDateMs
-    ).collectAsState(initial = emptyList())
+    ).collectAsStateWithLifecycle(initialValue = emptyList())
 
     var recordingToPlay by remember { mutableStateOf<RecordEntity?>(null) }
     var recordingWithOptions by remember { mutableStateOf<RecordEntity?>(null) }
@@ -379,7 +380,7 @@ fun RecordingListItem(
     val context = LocalContext.current
     val db = remember { AMARadioUserDatabase.getDatabase(context) }
     var expanded by remember { mutableStateOf(false) }
-    val tracks by db.recordDao().getTracksForRecordingFlow(record.id).collectAsState(initial = emptyList())
+    val tracks by db.recordDao().getTracksForRecordingFlow(record.id).collectAsStateWithLifecycle(initialValue = emptyList())
 
     val dateStr = remember(record.timestamp) {
         SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()).format(Date(record.timestamp))
