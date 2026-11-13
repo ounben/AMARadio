@@ -112,7 +112,7 @@
     <string name="settings_compact_style_desc_off">Großes Icon mit Radiosenderdetails</string>
     <string name="settings_compact_style_desc_on">Kleines Icon ohne Radiosenderdetails</string>
     <string name="settings_bottom_navigation">Navigation unten</string>
-    <string name="settings_ui_scale">UI Skalierung</string>
+    <string name="settings_ui_scale">UI-Skalierung</string>
     <string name="settings_language">Sprache</string>
     <string name="ui_scale_compact">Kompakt</string>
     <string name="ui_scale_standard">Systemstandard</string>
@@ -192,7 +192,7 @@
     <string name="settings_auto_resume_on_wired_headset_connected_on">Wiedergabe bei Kopfhöreranschluss fortsetzen</string>
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Fortsetzen bei Bluetooth-Verbindung</string>
-    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Wiedergabe bei Bluetooth A2DP Verbindung fortsetzen</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Wiedergabe bei Bluetooth-A2DP-Verbindung fortsetzen</string>
 
     <string name="settings_auto_resume_on_any_connected">Bei jeder Verbindung fortsetzen</string>
 
@@ -229,8 +229,8 @@
 
     <string name="alert_press_back_to_exit">Noch einmal zurück zum Beenden</string>
 
-    <string name="error_stream_url">Stream-URL Problem</string>
-    <string name="error_caching_stream">Stream-Caching Problem</string>
+    <string name="error_stream_url">Stream-URL-Problem</string>
+    <string name="error_caching_stream">Stream-Caching-Problem</string>
     <string name="error_play_stream">Stream kann nicht abgespielt werden</string>
     <string name="error_stream_reconnect_timeout">Stream-Wiederverbindung fehlgeschlagen: Zeitüberschreitung</string>
     <string name="warning_no_network_trying_resume">Keine Netzwerkverbindung. Fortsetzung bei Verbindung.</string>
@@ -371,7 +371,7 @@
     <string name="settings_remove_notification_on_stop">Benachrichtigung beim Stoppen entfernen</string>
     <string name="settings_remove_notification_on_stop_desc">Entfernt die Medien-Benachrichtigung automatisch, wenn die Wiedergabe gestoppt wird</string>
     <string name="settings_auto_resume_audio_focus">Wiedergabe nach Audio-Fokus-Verlust fortsetzen</string>
-    <string name="settings_auto_resume_audio_focus_desc">Setzt die Wiedergabe nach Telefonaten, Alarmen oder anderen Tönen automatisch fort</string>
+    <string name="settings_auto_resume_audio_focus_desc">Wiedergabe nach Telefonaten, Alarmen oder anderen Tönen automatisch fortsetzen</string>
 
     <string name="settings_backup_restore">Sicherung und Wiederherstellung</string>
     <string name="settings_export_backup">Vollständige Sicherung erstellen (ZIP)</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">Weiter</string>
 
     <string name="action_later">Später</string>
+
+    <string name="action_open_file_location">Dateispeicherort öffnen</string>
+    <string name="action_record">Aufzeichnen</string>
+    <string name="tab_recordings">Aufnahmen</string>
+    <string name="chapters">Kapitel</string>
+    <string name="error_cannot_open_file">Datei kann nicht geöffnet werden</string>
+    <string name="error_external_player_not_found">Keine externe Audioplayer-App gefunden</string>
+    <string name="error_sharing">Fehler beim Teilen</string>
 </resources>

@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Ongeldige bestandsnaam</string>
     <string name="label_button_cancel">Annuleren</string>
     <string name="label_button_overwrite">Overschrijven</string>
-    <string name="notify_load_playlist_nok">Kan niet importeren van %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Bezig met importeren van %1$s&#47;%2$s, even geduld.</string>
-    <string name="notify_load_playlist_ok">%1$d stations geïmporteerd van %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Kan niet exporteren naar %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Bezig met exporteren naar %1$s&#47;%2$s, even geduld.</string>
-    <string name="notify_save_playlist_ok">Succesvol geëxporteerd naar %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Kan afspeellijst niet importeren</string>
+    <string name="notify_load_playlist_now">Afspeellijst importeren, even geduld…</string>
+    <string name="notify_load_playlist_ok">%1$d stations geïmporteerd</string>
+    <string name="notify_save_playlist_nok">Kan afspeellijst niet exporteren</string>
+    <string name="notify_save_playlist_now">Afspeellijst exporteren, even geduld…</string>
+    <string name="notify_save_playlist_ok">Afspeellijst succesvol geëxporteerd</string>
     <string name="notify_sync_list_deleted_entries">%1$d van de %2$d lokale stations in de lijst gemarkeerd als niet bestaand op de server</string>
 
     <string name="searchpreference_clear_history">Geschiedenis wissen</string>
@@ -111,7 +111,7 @@
     <string name="settings_compact_style_desc_off">Groot pictogram met radiostationdetails</string>
     <string name="settings_compact_style_desc_on">Klein pictogram zonder radiostationdetails</string>
     <string name="settings_bottom_navigation">Navigatie onderaan</string>
-    <string name="settings_ui_scale">UI Schaling</string>
+    <string name="settings_ui_scale">UI-schaling</string>
     <string name="settings_language">Taal</string>
     <string name="ui_scale_compact">Compact</string>
     <string name="ui_scale_standard">Systeemstandaard</string>
@@ -189,7 +189,7 @@
 
     <string name="settings_auto_resume_on_any_connected">Hervatten op elke verbinding</string>
 
-    <string name="settings_warn_no_wifi">Wi-Fi waarschuwing</string>
+    <string name="settings_warn_no_wifi">Wi-Fi-waarschuwing</string>
     <string name="settings_warn_no_wifi_on">Waarschuwen bij afspelen zonder Wi-Fi</string>
     <string name="settings_warn_no_wifi_off">Geen waarschuwing bij ontbreken Wi-Fi</string>
 
@@ -365,7 +365,7 @@
     <string name="settings_remove_notification_on_stop">Verwijder de melding bij stoppen</string>
     <string name="settings_remove_notification_on_stop_desc">Sluit automatisch de mediamelding af wanneer het afspelen wordt gestopt</string>
     <string name="settings_auto_resume_audio_focus">Hervatten na verlies van audiofocus</string>
-    <string name="settings_auto_resume_audio_focus_desc">Hervat het afspelen automatisch nadat telefoongesprekken, alarmen of andere audio-stops zijn</string>
+    <string name="settings_auto_resume_audio_focus_desc">Hervat het afspelen automatisch nadat telefoongesprekken, alarmen of andere audio zijn gestopt</string>
 
     <string name="settings_backup_restore">Back-up en herstel</string>
     <string name="settings_export_backup">Volledige back-up maken (ZIP)</string>
@@ -393,7 +393,7 @@
 
     <string name="settings_disable_battery_optimization_desc">Om het afspelen voort te zetten wanneer het scherm is uitgeschakeld, stelt u het batterijgebruik in op \'Onbeperkt\'.</string>
     <string name="battery_opt_open_settings">Instellingen openen</string>
-    <string name="battery_opt_later">Laters</string>
+    <string name="battery_opt_later">Later</string>
 
     <string name="cast_network_title">Zoek Cast-apparaten</string>
     <string name="cast_network_reason">Geef toegang tot het lokale netwerk om Cast-luidsprekers en tv\'s te vinden en er verbinding mee te maken via je wifi-netwerk. Nadat je toegang hebt verleend, tik je nogmaals op Casten om een ​​apparaat te kiezen.</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Doorgaan</string>
 
     <string name="action_later">Later</string>
+
+    <string name="action_open_file_location">Bestandslocatie openen</string>
+    <string name="action_record">Opnemen</string>
+    <string name="tab_recordings">Opnames</string>
+    <string name="chapters">Hoofdstukken</string>
+    <string name="error_cannot_open_file">Kan bestand niet openen</string>
+    <string name="error_external_player_not_found">Geen externe audiospeler-app gevonden</string>
+    <string name="error_sharing">Fout bij delen</string>
 </resources>

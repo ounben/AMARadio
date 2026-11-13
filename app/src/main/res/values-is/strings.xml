@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Ógilt skráarheiti</string>
     <string name="label_button_cancel">Hætta við</string>
     <string name="label_button_overwrite">Skrifa yfir</string>
-    <string name="notify_load_playlist_nok">Gat ekki flutt inn frá %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Flyt inn frá %1$s&#47;%2$s, vinsamlegast bíðið.</string>
-    <string name="notify_load_playlist_ok">Flutti inn %1$d stöðvar frá %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Gat ekki flutt út í %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Flyt út í %1$s&#47;%2$s, vinsamlegast bíðið.</string>
-    <string name="notify_save_playlist_ok">Útflutningur í %1$s&#47;%2$s tókst</string>
+    <string name="notify_load_playlist_nok">Gat ekki flutt inn spilunarlista</string>
+    <string name="notify_load_playlist_now">Flyt inn spilunarlista, vinsamlegast bíðið…</string>
+    <string name="notify_load_playlist_ok">%1$d stöðvar fluttar inn</string>
+    <string name="notify_save_playlist_nok">Gat ekki flutt út spilunarlista</string>
+    <string name="notify_save_playlist_now">Flyt út spilunarlista, vinsamlegast bíðið…</string>
+    <string name="notify_save_playlist_ok">Spilunarlisti fluttur út</string>
     <string name="notify_sync_list_deleted_entries">%1$d af %2$d staðbundnum stöðvum á listanum eru merktar sem ekki til á þjóni</string>
 
     <string name="searchpreference_clear_history">Hreinsa feril</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Halda áfram</string>
 
     <string name="action_later">Seinna</string>
+
+    <string name="action_open_file_location">Opna skráarstaðsetningu</string>
+    <string name="action_record">Upptaka</string>
+    <string name="tab_recordings">Upptökur</string>
+    <string name="chapters">Kaflar</string>
+    <string name="error_cannot_open_file">Get ekki opnað skrá</string>
+    <string name="error_external_player_not_found">Ekkert ytri hljóðspilaraforrit fannst</string>
+    <string name="error_sharing">Villa við að deila</string>
 </resources>

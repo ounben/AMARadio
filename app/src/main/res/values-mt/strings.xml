@@ -362,7 +362,7 @@
     <string name="settings_station_click_counter">Counter tal-klicks tal-istazzjonijiet tar-radju</string>
     <string name="settings_station_click_counter_desc">Appoġġa l-istatistika ta\' Radio-Browser billi taqsam b\'mod anonimu avvenimenti tad-daqq.</string>
 
-    <string name="settings_remove_notification_on_stop">Neħħi n-notifika meta jepfej id-daqq</string>
+    <string name="settings_remove_notification_on_stop">Neħħi n-notifika meta jieqaf id-daqq</string>
     <string name="settings_remove_notification_on_stop_desc">Tiċħad awtomatikament in-notifika tal-midja meta d-daqq jieqaf</string>
     <string name="settings_auto_resume_audio_focus">Ibda wara t-telf tal-fokus tal-awdjo</string>
     <string name="settings_auto_resume_audio_focus_desc">Ibda awtomatikament id-daqq wara telefonati, allarmi, jew waqfiet awdjo oħra</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Kompli</string>
 
     <string name="action_later">Aktar tard</string>
+
+    <string name="action_open_file_location">Iftaħ il-post tal-fajl</string>
+    <string name="action_record">Rekord</string>
+    <string name="tab_recordings">Reġistrazzjonijiet</string>
+    <string name="chapters">Kapitli</string>
+    <string name="error_cannot_open_file">Ma jistax jiftaħ il-fajl</string>
+    <string name="error_external_player_not_found">Ma nstabet l-ebda app tal-awdjo player estern</string>
+    <string name="error_sharing">Qsim ta\' żbalji</string>
 </resources>

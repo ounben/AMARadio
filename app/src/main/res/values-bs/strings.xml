@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nevažeći naziv datoteke</string>
     <string name="label_button_cancel">Odustani</string>
     <string name="label_button_overwrite">Prepiši</string>
-    <string name="notify_load_playlist_nok">Nije moguće uvesti iz %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Uvozi se iz %1$s&#47;%2$s, molimo sačekajte.</string>
-    <string name="notify_load_playlist_ok">Uvezeno %1$d stanica iz %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Nije moguće izvesti u %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Izvozi se u %1$s&#47;%2$s, molimo sačekajte.</string>
-    <string name="notify_save_playlist_ok">Uspješno izvezeno u %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Nije moguće uvesti listu za reprodukciju</string>
+    <string name="notify_load_playlist_now">Uvozi se lista za reprodukciju, molimo sačekajte…</string>
+    <string name="notify_load_playlist_ok">Uvezeno %1$d stanica</string>
+    <string name="notify_save_playlist_nok">Nije moguće izvesti listu za reprodukciju</string>
+    <string name="notify_save_playlist_now">Izvozi se lista za reprodukciju, molimo sačekajte…</string>
+    <string name="notify_save_playlist_ok">Lista za reprodukciju uspješno izvezena</string>
     <string name="notify_sync_list_deleted_entries">%1$d od %2$d lokalnih stanica na listi su označene kao nepostojeće na serveru</string>
 
     <string name="searchpreference_clear_history">Očisti historiju</string>
@@ -403,4 +403,12 @@
     <string name="cast_network_continue">Nastavi</string>
 
     <string name="action_later">Kasnije</string>
+
+    <string name="action_open_file_location">Otvorite lokaciju datoteke</string>
+    <string name="action_record">Snimi</string>
+    <string name="tab_recordings">Snimci</string>
+    <string name="chapters">Poglavlja</string>
+    <string name="error_cannot_open_file">Nije moguće otvoriti fajl</string>
+    <string name="error_external_player_not_found">Nije pronađena nijedna aplikacija za vanjski audio player</string>
+    <string name="error_sharing">Greška pri dijeljenju</string>
 </resources>

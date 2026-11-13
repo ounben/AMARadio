@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Neplatný název souboru</string>
     <string name="label_button_cancel">Zrušit</string>
     <string name="label_button_overwrite">Přepsat</string>
-    <string name="notify_load_playlist_nok">Nepodařilo se importovat z %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importuji z %1$s&#47;%2$s, čekejte prosím.</string>
-    <string name="notify_load_playlist_ok">Importováno %1$d stanic z %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Nepodařilo se exportovat do %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportuji do %1$s&#47;%2$s, čekejte prosím.</string>
-    <string name="notify_save_playlist_ok">Export do %1$s&#47;%2$s byl úspěšný</string>
+    <string name="notify_load_playlist_nok">Nepodařilo se importovat playlist</string>
+    <string name="notify_load_playlist_now">Importuji playlist, čekejte prosím…</string>
+    <string name="notify_load_playlist_ok">Importováno %1$d stanic</string>
+    <string name="notify_save_playlist_nok">Nepodařilo se exportovat playlist</string>
+    <string name="notify_save_playlist_now">Exportuji playlist, čekejte prosím…</string>
+    <string name="notify_save_playlist_ok">Playlist byl úspěšně exportován</string>
     <string name="notify_sync_list_deleted_entries">%1$d z %2$d místních stanic v seznamu označeno jako neexistující na serveru</string>
 
     <string name="searchpreference_clear_history">Vymazat historii</string>
@@ -340,7 +340,7 @@
     <string name="accessibility_station_description">Stanice: %1$s, Jazyk: %2$s, Štítky: %3$s</string>
 
     <string name="error_no_file_manager">Nelze najít správce systémových souborů. Ujistěte se, že je nainstalován a povolen průzkumník souborů.</string>
-    <string name="error_no_browser">Nelze najít webový prohlížeč. Chcete-li otevřítani tento odkaz, nainstalujte si prohlížeč.</string>
+    <string name="error_no_browser">Nelze najít webový prohlížeč. Chcete-li otevřít tento odkaz, nainstalujte si prohlížeč.</string>
     <string name="error_no_homepage">Pro tuto stanici není k dispozici žádná domovská stránka</string>
     <string name="tab_custom_stations">Vlastní</string>
     <string name="action_add_custom">Přidat vlastní rádiovou stanici</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Pokračovat</string>
 
     <string name="action_later">Později</string>
+
+    <string name="action_open_file_location">Otevřete umístění souboru</string>
+    <string name="action_record">Nahrávat</string>
+    <string name="tab_recordings">Nahrávky</string>
+    <string name="chapters">Kapitoly</string>
+    <string name="error_cannot_open_file">Nelze otevřít soubor</string>
+    <string name="error_external_player_not_found">Nebyla nalezena žádná aplikace pro externí audio přehrávač</string>
+    <string name="error_sharing">Chyba při sdílení</string>
 </resources>

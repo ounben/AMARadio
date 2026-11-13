@@ -34,7 +34,7 @@
     <string name="action_delete_history">מעקן היסטאָריע</string>
     <string name="action_delete_favorites">מעקן אַלע פֿאַוואָריטן</string>
     <string name="action_delete_stream_history">רייניקן לידער היסטאָריע</string>
-    <string name="action_ok">פֿאַראַן (OK)</string>
+    <string name="action_ok">אָקיי</string>
     <string name="action_cancel">אַנולירן</string>
     <string name="action_top_click">מערסט קליקט</string>
     <string name="action_toggle_view">טוישן אויסזען</string>
@@ -125,7 +125,7 @@
     <string name="settings_single_use_tags_desc_off">זעלטן גענוצטע טאַגס וועלן נישט געווײַזט ווערן</string>
     <string name="settings_single_use_tags_desc_on">זעלטן גענוצטע טאַגס וועלן געווײַזט ווערן</string>
 
-    <string name="settings_show_broken">אומפֿאַנגענע ראַדיאָ סטענציעס</string>
+    <string name="settings_show_broken">נישט-אַרבעטנדיקע ראַדיאָ סטענציעس</string>
     <string name="settings_show_broken_on">ווײַזן אומפֿאַנגענע סטענציעס אין ליסטעס</string>
     <string name="settings_show_broken_off">באַהאַלטן אומפֿאַנגענע סטענציעס אין ליסטעס</string>
 
@@ -148,7 +148,7 @@
     <string name="settings_auto_favorite_on">לייגן צו ראַדיאָ סטענציעס אויטאָמאַטיש צו פֿאַוואָריטן בײַם שפּילן</string>
     <string name="settings_auto_favorite_off">נישט לייגן צו ראַדיאָ סטענציעס אויטאָמאַטיש צו פֿאַוואָריטן בײַם שפּילן</string>
 
-    <string name="settings_play">נאַוויגאַטאָר/נגן</string>
+    <string name="settings_play">נגן</string>
     <string name="settings_auto_play_on_startup">אויטאָמאַטיש שפּילן</string>
     <string name="settings_auto_play_on_startup_on">שפּילן די לעצטע ראַדיאָ סטענציע בײַם אָנהייב</string>
     <string name="settings_auto_play_on_startup_off">נישט שפּילן די לעצטע ראַדיאָ סטענציע בײַם אָנהייב</string>
@@ -216,7 +216,7 @@
     <string name="yes">יאָ</string>
     <string name="no">ניין</string>
 
-    <string name="alert_select_player">ביטע קלײַבט אויס אַ נגן</string>
+    <string name="alert_select_player">ביטע קלייבט אויס אַ שפּילער</string>
     <string name="alert_select_player_name">נאָמען</string>
     <string name="hostname">סערווער אַדרעס</string>
     <string name="port">נעצווערק פּאָרט</string>
@@ -272,7 +272,7 @@
     <string name="settings_rate_app">אָפּשאַצן AMARadio</string>
     <string name="settings_rate_app_summary">אויב די אַפּליקאַציע געפֿעלט אייך, بيטע לאָזט אַ רעוויע אין Play Store!</string>
     <string name="settings_rate_app_github">האָט איר הנאה פֿון AMARadio?</string>
-    <string name="settings_rate_app_github_summary">לאָזט אַ שטערן אויף GitHub! דאָס העלפֿט אַנדערע צו געפֿינען די אַפּ.</string>
+    <string name="settings_rate_app_github_summary">לאָזט אַ שטערן אויף GitHub! דאָס העלפֿט אַנדערע צו געפֿינען די אַפּ און שטיצט צוקונפֿטיקע אַנטוויקלונג.</string>
     <string name="settings_statistics">סטאַטיסטיק</string>
     <string name="settings_about">וועגן AMARadio</string>
 
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">פאָרזעצן</string>
 
     <string name="action_later">שפּעטער</string>
+
+    <string name="action_open_file_location">עפענען טעקע אָרט</string>
+    <string name="action_record">רעקאָרד</string>
+    <string name="tab_recordings">רעקאָרדינגס</string>
+    <string name="chapters">קאפיטלען</string>
+    <string name="error_cannot_open_file">קענען ניט עפענען טעקע</string>
+    <string name="error_external_player_not_found">קיין פונדרויסנדיק אַודיאָ שפּילער אַפּ געפֿונען</string>
+    <string name="error_sharing">טעות ייַנטיילונג</string>
 </resources>

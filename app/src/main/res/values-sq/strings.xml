@@ -349,7 +349,7 @@
     <string name="station_name">Emri i stacionit radiofonik</string>
     <string name="stream_url">URL-ja e transmetimit</string>
     <string name="favicon_url">URL e logos së stacionit (Favicon)</string>
-    <string name="select_image">Zgjidhni Imazhi</string>
+    <string name="select_image">Zgjidhni imazhin</string>
     <string name="error_invalid_url">Ju lutemi shkruani një URL të vlefshme</string>
     <string name="action_save">Ruaj</string>
     <string name="widget_name_small">AMARadio Compact</string>
@@ -397,9 +397,17 @@
 
     <string name="cast_network_title">Gjeni pajisjet e Cast</string>
     <string name="cast_network_reason">Lejo qasjen në rrjetin lokal për të gjetur dhe lidhur me altoparlantët dhe televizorët Cast në Wi-Fi. Pasi të keni lejuar aksesin, trokitni sërish Transmeto për të zgjedhur një pajisje.</string>
-    <string name="cast_network_denied">Qasja në rrjetin lokal është çaktivizuar. Lejo pajisjet në afërsi te cilësimet e aplikacionit dhe më pas trokit sërish Transme. Riprodhimi i radios në këtë telefon mbetet i disponueshëm.</string>
+    <string name="cast_network_denied">Qasja në rrjetin lokal është çaktivizuar. Lejo pajisjet në afërsi te cilësimet e aplikacionit dhe më pas trokit sërish Transmeto. Riprodhimi i radios në këtë telefon mbetet i disponueshëm.</string>
     <string name="cast_network_settings">Hap cilësimet</string>
     <string name="cast_network_continue">Vazhdoni</string>
 
     <string name="action_later">Më vonë</string>
+
+    <string name="action_open_file_location">Hap vendndodhjen e skedarit</string>
+    <string name="action_record">Regjistro</string>
+    <string name="tab_recordings">Regjistrimet</string>
+    <string name="chapters">Kapitujt</string>
+    <string name="error_cannot_open_file">Skedari nuk mund të hapet</string>
+    <string name="error_external_player_not_found">Nuk u gjet asnjë aplikacion i jashtëm i riprodhuesit audio</string>
+    <string name="error_sharing">Gabim në ndarjen</string>
 </resources>

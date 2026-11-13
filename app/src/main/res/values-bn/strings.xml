@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">অবৈধ ফাইলের নাম</string>
     <string name="label_button_cancel">বাতিল</string>
     <string name="label_button_overwrite">ওভাররাইট</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s থেকে ইম্পোর্ট করা যায়নি</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s থেকে ইম্পোর্ট করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s থেকে %1$dটি স্টেশন ইম্পোর্ট করা হয়েছে</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s-এ এক্সপোর্ট করা যায়নি</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s-এ এক্সপোর্ট করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন।</string>
-    <string name="notify_save_playlist_ok">সফলভাবে %1$s&#47;%2$s-এ এক্সপোর্ট করা হয়েছে</string>
+    <string name="notify_load_playlist_nok">প্লেলিস্ট ইম্পোর্ট করা যায়নি</string>
+    <string name="notify_load_playlist_now">প্লেলিস্ট ইম্পোর্ট করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন…</string>
+    <string name="notify_load_playlist_ok">%1$dটি স্টেশন ইম্পোর্ট করা হয়েছে</string>
+    <string name="notify_save_playlist_nok">প্লেলিস্ট এক্সপোর্ট করা যায়নি</string>
+    <string name="notify_save_playlist_now">প্লেলিস্ট এক্সপোর্ট করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন…</string>
+    <string name="notify_save_playlist_ok">প্লেলিস্ট সফলভাবে এক্সপোর্ট করা হয়েছে</string>
     <string name="notify_sync_list_deleted_entries">তালিকায় থাকা %2$dটি স্থানীয় স্টেশনের মধ্যে %1$dটি সার্ভারে বিদ্যমান নেই বলে চিহ্নিত করা হয়েছে</string>
 
     <string name="searchpreference_clear_history">ইতিহাস মুছুন</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">চালিয়ে যান</string>
 
     <string name="action_later">পরে</string>
+
+    <string name="action_open_file_location">ফাইলের অবস্থান খুলুন</string>
+    <string name="action_record">রেকর্ড করুন</string>
+    <string name="tab_recordings">রেকর্ডিং</string>
+    <string name="chapters">অধ্যায়</string>
+    <string name="error_cannot_open_file">ফাইল খুলতে পারে না</string>
+    <string name="error_external_player_not_found">কোনো বাহ্যিক অডিও প্লেয়ার অ্যাপ পাওয়া যায়নি</string>
+    <string name="error_sharing">শেয়ার করতে ত্রুটি</string>
 </resources>

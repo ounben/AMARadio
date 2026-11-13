@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nome de ficheiro inválido</string>
     <string name="label_button_cancel">Cancelar</string>
     <string name="label_button_overwrite">Substituir</string>
-    <string name="notify_load_playlist_nok">Não foi possível importar de %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">A importar de %1$s&#47;%2$s, por favor aguarde.</string>
-    <string name="notify_load_playlist_ok">Importadas %1$d estações de %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Não foi possível exportar para %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">A exportar para %1$s&#47;%2$s, por favor aguarde.</string>
-    <string name="notify_save_playlist_ok">Exportado para %1$s&#47;%2$s com sucesso</string>
+    <string name="notify_load_playlist_nok">Não foi possível importar a lista de reprodução</string>
+    <string name="notify_load_playlist_now">A importar lista de reprodução, por favor aguarde…</string>
+    <string name="notify_load_playlist_ok">%1$d estações importadas</string>
+    <string name="notify_save_playlist_nok">Não foi possível exportar a lista de reprodução</string>
+    <string name="notify_save_playlist_now">A exportar lista de reprodução, por favor aguarde…</string>
+    <string name="notify_save_playlist_ok">Lista de reprodução exportada com sucesso</string>
     <string name="notify_sync_list_deleted_entries">%1$d de %2$d estações locais na lista foram marcadas como inexistentes no servidor</string>
 
     <string name="searchpreference_clear_history">Limpar histórico</string>
@@ -396,10 +396,18 @@
     <string name="battery_opt_later">Mais tarde</string>
 
     <string name="cast_network_title">Encontre dispositivos de transmissão</string>
-    <string name="cast_network_reason">Permita que o acesso à rede local encontre e se conecte a alto-falantes e TVs do Google Cast no seu Wi-Fi. Após permitir o acesso, toque em Transmitir novamente para escolher um dispositivo.</string>
-    <string name="cast_network_denied">O acesso à rede local está desativado. Permitir dispositivos próximos nas configurações do aplicativo e toque em Transmitir novamente. A reprodução de rádio neste telefone permanece disponível.</string>
+    <string name="cast_network_reason">Permita o acesso à rede local para encontrar e ligar a colunas e TVs do Google Cast no seu Wi-Fi. Após permitir o acesso, toque em Transmitir novamente para escolher um dispositivo.</string>
+    <string name="cast_network_denied">O acesso à rede local está desativado. Permita dispositivos próximos nas definições da aplicação e toque em Transmitir novamente. A reprodução de rádio neste telemóvel permanece disponível.</string>
     <string name="cast_network_settings">Abrir configurações</string>
     <string name="cast_network_continue">Continuar</string>
 
     <string name="action_later">Mais tarde</string>
+
+    <string name="action_open_file_location">Abrir local do arquivo</string>
+    <string name="action_record">Gravar</string>
+    <string name="tab_recordings">Gravações</string>
+    <string name="chapters">Capítulos</string>
+    <string name="error_cannot_open_file">Não é possível abrir o arquivo</string>
+    <string name="error_external_player_not_found">Nenhum aplicativo reprodutor de áudio externo encontrado</string>
+    <string name="error_sharing">Erro ao compartilhar</string>
 </resources>

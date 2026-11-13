@@ -93,12 +93,12 @@
     <string name="error_invalid_file_name">Ongeldige lêernaam</string>
     <string name="label_button_cancel">Kanselleer</string>
     <string name="label_button_overwrite">Oorskryf</string>
-    <string name="notify_load_playlist_nok">Kon nie invoer vanaf %1$s&#47;%2$s nie</string>
-    <string name="notify_load_playlist_now">Voer in vanaf %1$s&#47;%2$s, wag asseblief.</string>
-    <string name="notify_load_playlist_ok">%1$d stasies vanaf %2$s&#47;%3$s ingevoer</string>
-    <string name="notify_save_playlist_nok">Kon nie uitvoer na %1$s&#47;%2$s nie</string>
-    <string name="notify_save_playlist_now">Voer tans uit na %1$s&#47;%2$s, wag asseblief.</string>
-    <string name="notify_save_playlist_ok">Suksesvol uitgevoer na %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Kon nie snitlys invoer nie</string>
+    <string name="notify_load_playlist_now">Voer snitlys in, wag asseblief…</string>
+    <string name="notify_load_playlist_ok">%1$d stasies ingevoer</string>
+    <string name="notify_save_playlist_nok">Kon nie snitlys uitvoer nie</string>
+    <string name="notify_save_playlist_now">Voer snitlys uit, wag asseblief…</string>
+    <string name="notify_save_playlist_ok">Snitlys suksesvol uitgevoer</string>
     <string name="notify_sync_list_deleted_entries">%1$d van %2$d plaaslike stasies in die lys is as nie-bestaande op die bediener gemerk</string>
 
     <string name="searchpreference_clear_history">Vee geskiedenis uit</string>
@@ -160,7 +160,7 @@
     <string name="settings_play_external">Aktiveer eksterne speler</string>
     <string name="settings_play_external_desc_on">Speel radiostasies met eksterne speler</string>
     <string name="settings_play_external_desc_off">Speel radiostasies met AMARadio</string>
-    <string name="settings_equalizer">Toonbeheer (Equalizer)</string>
+    <string name="settings_equalizer">Toonbeheer</string>
 
     <string name="settings_connectivity">Konnektiwiteit</string>
     <string name="settings_connect_timeout">Konneksie-uitteltyd</string>
@@ -400,10 +400,18 @@
     <string name="battery_opt_later">Later</string>
 
     <string name="cast_network_title">Soek Cast-toestelle</string>
-    <string name="cast_network_reason">Laat plaaslike netwerktoegang toe om Cast-luidsprekers en TV\'s op jou Wi-Fi te vind en daaraan te koppel. Nadat u toegang toegelaat het, tik weer uitsaai om \'n toestel te kies.</string>
-    <string name="cast_network_denied">Plaaslike netwerktoegang is gedeaktiveer. Laat Naby-toestelle toe in programinstellings, en tik dan weer uit. Radioterugspeel op hierdie foon bly beskikbaar.</string>
+    <string name="cast_network_reason">Laat plaaslike netwerktoegang toe om Cast-luidsprekers en TV\'s op jou Wi-Fi te vind en daaraan te koppel. Nadat jy toegang toegelaat het, tik weer op Cast om \'n toestel te kies.</string>
+    <string name="cast_network_denied">Plaaslike netwerktoegang is gedeaktiveer. Laat Naby-toestelle toe in programinstellings, en tik dan weer op Cast. Radioterugspeel op hierdie foon bly beskikbaar.</string>
     <string name="cast_network_settings">Maak instellings oop</string>
     <string name="cast_network_continue">Gaan voort</string>
 
     <string name="action_later">Later</string>
+
+    <string name="action_open_file_location">Maak lêerligging oop</string>
+    <string name="action_record">Neem op</string>
+    <string name="tab_recordings">Opnames</string>
+    <string name="chapters">Hoofstukke</string>
+    <string name="error_cannot_open_file">Kan nie lêer oopmaak nie</string>
+    <string name="error_external_player_not_found">Geen eksterne oudiospeler-toepassing gevind nie</string>
+    <string name="error_sharing">Kon nie deel nie</string>
 </resources>

@@ -402,4 +402,12 @@
     <string name="cast_network_continue">തുടരുക</string>
 
     <string name="action_later">പിന്നീട്</string>
+
+    <string name="action_open_file_location">ഫയൽ ലൊക്കേഷൻ തുറക്കുക</string>
+    <string name="action_record">രേഖപ്പെടുത്തുക</string>
+    <string name="tab_recordings">റെക്കോർഡിംഗുകൾ</string>
+    <string name="chapters">അധ്യായങ്ങൾ</string>
+    <string name="error_cannot_open_file">ഫയൽ തുറക്കാൻ കഴിയില്ല</string>
+    <string name="error_external_player_not_found">ബാഹ്യ ഓഡിയോ പ്ലെയർ ആപ്പൊന്നും കണ്ടെത്തിയില്ല</string>
+    <string name="error_sharing">പങ്കിടുന്നതിൽ പിശക്</string>
 </resources>

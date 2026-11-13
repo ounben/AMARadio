@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Davom eting</string>
 
     <string name="action_later">Keyinchalik</string>
+
+    <string name="action_open_file_location">Fayl joylashuvini oching</string>
+    <string name="action_record">Yozib olish</string>
+    <string name="tab_recordings">Yozuvlar</string>
+    <string name="chapters">Boblar</string>
+    <string name="error_cannot_open_file">Faylni ochib bo\'lmadi</string>
+    <string name="error_external_player_not_found">Hech qanday tashqi audio pleyer ilovasi topilmadi</string>
+    <string name="error_sharing">Ulashishda xatolik yuz berdi</string>
 </resources>

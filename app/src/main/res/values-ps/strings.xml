@@ -7,9 +7,9 @@
     <string name="detail_language">ژبه</string>
     <string name="detail_weblink">د ویب پاڼې لینک</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
-    <string name="detail_play">ਚلول (Play)</string>
-    <string name="detail_pause">ځنډول (Pause)</string>
-    <string name="detail_stop">נעول (Stop)</string>
+    <string name="detail_play">ږغول</string>
+    <string name="detail_pause">ځنډول</string>
+    <string name="detail_stop">درول</string>
     <string name="detail_share">شریکول</string>
     <string name="detail_play_in_AMARadio">په AMARadio کې یې وږغوئ</string>
 
@@ -25,17 +25,17 @@
 
     <string name="action_local">ځايي</string>
     <string name="action_skip_to_next">بل</string>
-    <string name="action_pause">ځنډول (Pause)</string>
+    <string name="action_pause">ځنډول</string>
     <string name="action_skip_to_previous">مخکینی</string>
     <string name="action_resume">بیا پیل کول</string>
-    <string name="action_stop">נעول (Stop)</string>
-    <string name="action_search">חיټل (Search)</string>
+    <string name="action_stop">درول</string>
+    <string name="action_search">لټون</string>
     <string name="action_delete">پاکول</string>
     <string name="action_delete_history">تاریخچه پاکول</string>
     <string name="action_delete_favorites">ټول خوښ شوي پاکول</string>
     <string name="action_delete_stream_history">د سندرو تاریخچه پاکول</string>
-    <string name="action_ok">ਸਮား (OK)</string>
-    <string name="action_cancel">بنسول (Cancel)</string>
+    <string name="action_ok">سمه ده</string>
+    <string name="action_cancel">لغوه کول</string>
     <string name="action_top_click">ډېر کلیک شوي</string>
     <string name="action_toggle_view">د ښودلو بڼه بدلول</string>
     <string name="action_top_vote">ډېرې رایې اخیستې</string>
@@ -56,7 +56,7 @@
     <string name="filter_empty_filter_desc">هېواد، د راډیو سټېشن نوم، ټاګونه يا ژبه</string>
     <string name="filter_empty_sort_by">ترتیب پر اساس:</string>
     <string name="filter_empty_sort_desc">کلیکونه، الفبا، رایې يا وروستي بدلونونه</string>
-    <string name="filter_empty_hint">د سينګار خوندي کولو لپاره پورتنۍ بکس کې نوم ولیکئ!</string>
+    <string name="filter_empty_hint">د دې دودیز لید خوندي کولو لپاره پورتني بکس کې نوم ولیکئ!</string>
 
     <string name="error_station_load">له راډیو سټېشن سره نښلول ناممکن شول</string>
     <string name="error_list_update">له Radio-Browser سرور سره نښلول ناممکن شول</string>
@@ -91,7 +91,7 @@
     <string name="dialog_hint_file_name">د فایل نوم داخل کړئ</string>
     <string name="error_empty_field">دا برخه حتمي ده</string>
     <string name="error_invalid_file_name">د فایل نوم ناسم دی</string>
-    <string name="label_button_cancel">بنسول</string>
+    <string name="label_button_cancel">لغوه کول</string>
     <string name="label_button_overwrite">بدلول</string>
     <string name="notify_load_playlist_nok">له %1$s&#47;%2$s څخه داخلول ناکام شول</string>
     <string name="notify_load_playlist_now">له %1$s&#47;%2$s څخه داخلېږي، مهرباني وکړئ انتظار وکړئ.</string>
@@ -103,7 +103,7 @@
 
     <string name="searchpreference_clear_history">تاریخچه پاکول</string>
     <string name="searchpreference_no_results">هیڅ پایله ونه موندل شوه</string>
-    <string name="searchpreference_search">חיټل (Search)…</string>
+    <string name="searchpreference_search">لټون…</string>
     <string name="settings_appearance">بڼه</string>
     <string name="settings_theme_selection_title">تيم</string>
     <string name="theme_light">روښانه</string>
@@ -113,7 +113,7 @@
     <string name="settings_compact_style_desc_off">د راډیو سټېشن جزیاتو سره لوی انځورن</string>
     <string name="settings_compact_style_desc_on">له جزیاتو پرته وړوکی انځورن</string>
     <string name="settings_bottom_navigation">لاندینۍ بار</string>
-    <string name="settings_ui_scale">د اندازه کولو شمیره</string>
+    <string name="settings_ui_scale">د کارن انٹرفیس اندازه</string>
     <string name="settings_language">ژبه</string>
     <string name="ui_scale_compact">وړوکی</string>
     <string name="ui_scale_standard">سیسټم معیار</string>
@@ -155,7 +155,7 @@
     <string name="settings_auto_off_on_startup">خپلکارې ودریدل</string>
     <string name="settings_auto_off_on_startup_on">له خپلکارې ږغولو سره د ټایمر کارول</string>
     <string name="settings_auto_off_on_startup_off">له خپلکارې ږغولو سره د ټایمر نه کارول</string>
-    <string name="settings_auto_off_sleep_timer">د خوب ټایمر</string>
+    <string name="settings_auto_off_sleep_timer">د خپلکاري درېدو ټایمر</string>
     <string name="settings_auto_off_sleep_timer_desc">له %1$s دقیقو وروسته ږغول ودروئ</string>
     <string name="settings_play_external">بهرنی پلیر فعالول</string>
     <string name="settings_play_external_desc_on">راډیو سټېشنونه له بهرني پلیر سره ږغول</string>
@@ -206,7 +206,7 @@
     <string name="notify_deleted_favorites">خوښ شوي پاک شول</string>
     <string name="notify_deleted_history">تاریخچه پاکه شوه</string>
 
-    <string name="notify_open_link_failure">د لینک پرانیستلو لپاره هیچا افلیکیشن ونه موندل شو</string>
+    <string name="notify_open_link_failure">د لینک پرانیستلو لپاره هیڅ اپلیکیشن ونه موندل شو</string>
 
     <string name="notify_station_removed_from_list">1 پاک شو</string>
     <string name="action_station_removed_from_list_undo">بېرته راوستل</string>
@@ -221,7 +221,7 @@
     <string name="hostname">د سرور ادرس</string>
     <string name="port">د شبکې پورټ</string>
 
-    <string name="alert_press_back_to_exit">د وتلو لپاره یو ځل بیا \"Aft\" کلیک کړئ</string>
+    <string name="alert_press_back_to_exit">د وتلو لپاره یو ځل بیا شاته تڼۍ کلیک کړئ</string>
 
     <string name="error_stream_url">د سټریم URL ستونزه</string>
     <string name="error_caching_stream">د سټریم ذخیره کولو ستونزه</string>
@@ -230,7 +230,7 @@
     <string name="warning_no_network_trying_resume">انټرنیټ نشته. کله چې اړیکه بیرته راشي نو بیا پیل کېږي.</string>
     <string name="giving_up_resume">د بیا پیل هڅه لغوه شوه</string>
 
-    <string name="error_grant_audiofocus">د آډیو فوکس زښت د سیسټم لخوا نه دی منل شوی</string>
+    <string name="error_grant_audiofocus">د آډیو فوکس غوښتنه د سیسټم لخوا نه ده منل شوې</string>
 
     <string name="error_no_equalizer_found">د ایکوالایزر اپلیکیشن ونه موندل شو</string>
 
@@ -343,8 +343,8 @@
     <string name="not_applicable">ن/ا</string>
     <string name="accessibility_station_description">سټېشن: %1$s, ژبه: %2$s, ټاګونه: %3$s</string>
 
-    <string name="error_no_file_manager">د فایل مینیجر ونه موندل شو.</string>
-    <string name="error_no_browser">ویب برائوزر ونه موندل شو.</string>
+    <string name="error_no_file_manager">د سیسټم فایل مینیجر ونه موندل شو. مهرباني وکړئ ډاډ ترلاسه کړئ چې فایل اکسپلورر نصب او فعال دی.</string>
+    <string name="error_no_browser">ویب براوزر ونه موندل شو. مهرباني وکړئ د دې لینک خلاصولو لپاره براوزر نصب کړئ.</string>
     <string name="error_no_homepage">د دې راډیو سټېشن لپاره هیڅ اصلي پاڼه شتون نلري</string>
     <string name="tab_custom_stations">ځانګړي</string>
     <string name="action_add_custom">ځانګړی راډیو سټېشن ورزیاتول</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">ادامه ورکړئ</string>
 
     <string name="action_later">وروسته</string>
+
+    <string name="action_open_file_location">د فایل ځای خلاص کړئ</string>
+    <string name="action_record">ریکارډ</string>
+    <string name="tab_recordings">ریکارډونه</string>
+    <string name="chapters">فصلونه</string>
+    <string name="error_cannot_open_file">فایل نشي خلاصولی</string>
+    <string name="error_external_player_not_found">هیڅ بهرنی آډیو پلیر ایپ ونه موندل شو</string>
+    <string name="error_sharing">په شریکولو کې تېروتنه</string>
 </resources>

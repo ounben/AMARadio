@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">अमान्य फ़ाइल नाम</string>
     <string name="label_button_cancel">रद्द करें</string>
     <string name="label_button_overwrite">ओवरराइट करें</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s से आयात नहीं किया जा सका</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s से आयात किया जा रहा है, कृपया प्रतीक्षा करें।</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s से %1$d स्टेशन आयात किए गए</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s पर निर्यात नहीं किया जा सका</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s पर निर्यात किया जा रहा है, कृपया प्रतीक्षा करें।</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s पर सफलतापूर्वक निर्यात किया गया</string>
+    <string name="notify_load_playlist_nok">प्लेलिस्ट आयात नहीं की जा सकी</string>
+    <string name="notify_load_playlist_now">प्लेलिस्ट आयात की जा रही है, कृपया प्रतीक्षा करें…</string>
+    <string name="notify_load_playlist_ok">%1$d स्टेशन आयात किए गए</string>
+    <string name="notify_save_playlist_nok">प्लेलिस्ट निर्यात नहीं की जा सकी</string>
+    <string name="notify_save_playlist_now">प्लेलिस्ट निर्यात की जा रही है, कृपया प्रतीक्षा करें…</string>
+    <string name="notify_save_playlist_ok">प्लेलिस्ट सफलतापूर्वक निर्यात की गई</string>
     <string name="notify_sync_list_deleted_entries">सूची में %2$d स्थानीय स्टेशनों में से %1$d को सर्वर पर गैर-मौजूद चिह्नित किया गया</string>
 
     <string name="searchpreference_clear_history">खोज इतिहास मिटाएं</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">अपने वाई-फाई पर कास्ट स्पीकर और टीवी को ढूंढने और कनेक्ट करने के लिए स्थानीय नेटवर्क एक्सेस की अनुमति दें। एक्सेस की अनुमति देने के बाद, डिवाइस चुनने के लिए फिर से कास्ट पर टैप करें।</string>
     <string name="cast_network_denied">स्थानीय नेटवर्क पहुंच अक्षम है. ऐप सेटिंग में आस-पास के डिवाइस को अनुमति दें, फिर कास्ट पर दोबारा टैप करें। इस फ़ोन पर रेडियो प्लेबैक उपलब्ध रहता है।</string>
     <string name="cast_network_settings">सेटिंग्स खोलें</string>
-    <string name="cast_network_continue">जारी रखना</string>
+    <string name="cast_network_continue">जारी रखें</string>
 
     <string name="action_later">बाद में</string>
+
+    <string name="action_open_file_location">फ़ाइल के स्थान को खोलें</string>
+    <string name="action_record">अभिलेख</string>
+    <string name="tab_recordings">रिकॉर्डिंग</string>
+    <string name="chapters">अध्याय</string>
+    <string name="error_cannot_open_file">फ़ाइल नहीं खुल रही</string>
+    <string name="error_external_player_not_found">कोई बाहरी ऑडियो प्लेयर ऐप नहीं मिला</string>
+    <string name="error_sharing">साझा करने में त्रुटि</string>
 </resources>

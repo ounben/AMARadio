@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Vigane faili nimi</string>
     <string name="label_button_cancel">Tühista</string>
     <string name="label_button_overwrite">Kirjuta üle</string>
-    <string name="notify_load_playlist_nok">Ei saanud importida kohast %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Imporditakse kohast %1$s&#47;%2$s, palun oodake.</string>
-    <string name="notify_load_playlist_ok">Imporditi %1$d jaama kohast %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Ei saanud eksportida kohta %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Eksporditakse kohta %1$s&#47;%2$s, palun oodake.</string>
-    <string name="notify_save_playlist_ok">Eksportimine kohta %1$s&#47;%2$s õnnestus</string>
+    <string name="notify_load_playlist_nok">Esitusloendi importimine ebaõnnestus</string>
+    <string name="notify_load_playlist_now">Esitusloendi importimine, palun oodake…</string>
+    <string name="notify_load_playlist_ok">%1$d jaama imporditud</string>
+    <string name="notify_save_playlist_nok">Esitusloendi eksportimine ebaõnnestus</string>
+    <string name="notify_save_playlist_now">Esitusloendi eksportimine, palun oodake…</string>
+    <string name="notify_save_playlist_ok">Esitusloend edukalt eksporditud</string>
     <string name="notify_sync_list_deleted_entries">%1$d %2$d-st kohalikust jaamast nimekirjas on serveris märgitud olematuks</string>
 
     <string name="searchpreference_clear_history">Tühjenda ajalugu</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Jätka</string>
 
     <string name="action_later">Hiljem</string>
+
+    <string name="action_open_file_location">Ava faili asukoht</string>
+    <string name="action_record">Salvestus</string>
+    <string name="tab_recordings">Salvestised</string>
+    <string name="chapters">Peatükid</string>
+    <string name="error_cannot_open_file">Faili ei saa avada</string>
+    <string name="error_external_player_not_found">Välist helipleieri rakendust ei leitud</string>
+    <string name="error_sharing">Viga jagamisel</string>
 </resources>

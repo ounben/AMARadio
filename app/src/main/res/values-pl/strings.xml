@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nieprawidłowa nazwa pliku</string>
     <string name="label_button_cancel">Anuluj</string>
     <string name="label_button_overwrite">Zastąp</string>
-    <string name="notify_load_playlist_nok">Nie można zaimportować z %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importowanie z %1$s&#47;%2$s, proszę czekać.</string>
-    <string name="notify_load_playlist_ok">Zaimportowano %1$d stacji z %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Nie można wyeksportować do %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Eksportowanie do %1$s&#47;%2$s, proszę czekać.</string>
-    <string name="notify_save_playlist_ok">Pomyślnie wyeksportowano do %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Nie można zaimportować listy odtwarzania</string>
+    <string name="notify_load_playlist_now">Importowanie listy odtwarzania, proszę czekać…</string>
+    <string name="notify_load_playlist_ok">Zaimportowano %1$d stacji</string>
+    <string name="notify_save_playlist_nok">Nie udało się wyeksportować listy odtwarzania</string>
+    <string name="notify_save_playlist_now">Eksportowanie listy odtwarzania, proszę czekać…</string>
+    <string name="notify_save_playlist_ok">Pomyślnie wyeksportowano listę odtwarzania</string>
     <string name="notify_sync_list_deleted_entries">%1$d z %2$d lokalnych stacji na liście oznaczonych jako nieistniejące na serwerze</string>
 
     <string name="searchpreference_clear_history">Wyczyść historię</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Dalej</string>
 
     <string name="action_later">Później</string>
+
+    <string name="action_open_file_location">Otwórz lokalizację pliku</string>
+    <string name="action_record">Nagrywać</string>
+    <string name="tab_recordings">Nagrania</string>
+    <string name="chapters">Rozdziały</string>
+    <string name="error_cannot_open_file">Nie można otworzyć pliku</string>
+    <string name="error_external_player_not_found">Nie znaleziono zewnętrznej aplikacji odtwarzacza audio</string>
+    <string name="error_sharing">Błąd udostępniania</string>
 </resources>

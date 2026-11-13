@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">檔案名稱無效</string>
     <string name="label_button_cancel">取消</string>
     <string name="label_button_overwrite">覆蓋</string>
-    <string name="notify_load_playlist_nok">無法從 %1$s&#47;%2$s 匯入</string>
-    <string name="notify_load_playlist_now">正在從 %1$s&#47;%2$s 匯入，請稍候。</string>
-    <string name="notify_load_playlist_ok">已從 %2$s&#47;%3$s 匯入 %1$d 個電台</string>
-    <string name="notify_save_playlist_nok">無法匯出至 %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">正在匯出至 %1$s&#47;%2$s，請稍候。</string>
-    <string name="notify_save_playlist_ok">已成功匯出至 %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">無法匯入播放清單</string>
+    <string name="notify_load_playlist_now">正在匯入播放清單，請稍候…</string>
+    <string name="notify_load_playlist_ok">已匯入 %1$d 個電台</string>
+    <string name="notify_save_playlist_nok">無法匯出播放清單</string>
+    <string name="notify_save_playlist_now">正在匯出播放清單，請稍候…</string>
+    <string name="notify_save_playlist_ok">已成功匯出播放清單</string>
     <string name="notify_sync_list_deleted_entries">清單中 %2$d 個本地電台中的 %1$d 個已被伺服器標記為不存在</string>
 
     <string name="searchpreference_clear_history">清除歷史記錄</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">繼續</string>
 
     <string name="action_later">之後</string>
+
+    <string name="action_open_file_location">開啟文件位置</string>
+    <string name="action_record">錄音</string>
+    <string name="tab_recordings">錄音</string>
+    <string name="chapters">章節</string>
+    <string name="error_cannot_open_file">無法開啟文件</string>
+    <string name="error_external_player_not_found">找不到外部音訊播放器應用程式</string>
+    <string name="error_sharing">分享時出錯</string>
 </resources>

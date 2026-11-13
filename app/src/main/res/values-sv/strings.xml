@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Fortsätt</string>
 
     <string name="action_later">Senare</string>
+
+    <string name="action_open_file_location">Öppna filplatsen</string>
+    <string name="action_record">Spela in</string>
+    <string name="tab_recordings">Inspelningar</string>
+    <string name="chapters">Kapitel</string>
+    <string name="error_cannot_open_file">Kan inte öppna filen</string>
+    <string name="error_external_player_not_found">Ingen extern ljudspelare-app hittades</string>
+    <string name="error_sharing">Fel vid delning</string>
 </resources>

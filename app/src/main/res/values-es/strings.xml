@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nombre de archivo no válido</string>
     <string name="label_button_cancel">Cancelar</string>
     <string name="label_button_overwrite">Sobrescribir</string>
-    <string name="notify_load_playlist_nok">No se pudo importar desde %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importando desde %1$s&#47;%2$s, por favor espere.</string>
-    <string name="notify_load_playlist_ok">Se han importado %1$d emisoras desde %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">No se pudo exportar a %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportando a %1$s&#47;%2$s, por favor espere.</string>
-    <string name="notify_save_playlist_ok">Exportado a %1$s&#47;%2$s correctamente</string>
+    <string name="notify_load_playlist_nok">No se pudo importar la lista de reproducción</string>
+    <string name="notify_load_playlist_now">Importando lista de reproducción, por favor espere…</string>
+    <string name="notify_load_playlist_ok">%1$d emisoras importadas</string>
+    <string name="notify_save_playlist_nok">No se pudo exportar la lista de reproducción</string>
+    <string name="notify_save_playlist_now">Exportando lista de reproducción, por favor espere…</string>
+    <string name="notify_save_playlist_ok">Lista de reproducción exportada correctamente</string>
     <string name="notify_sync_list_deleted_entries">%1$d de %2$d emisoras locales en la lista marcadas como no existentes en el servidor</string>
 
     <string name="searchpreference_clear_history">Borrar historial</string>
@@ -368,7 +368,7 @@
     <string name="settings_remove_notification_on_stop">Eliminar notificación al detener</string>
     <string name="settings_remove_notification_on_stop_desc">Descartar automáticamente la notificación de medios cuando se detiene la reproducción</string>
     <string name="settings_auto_resume_audio_focus">Reanudar después de la pérdida de enfoque de audio</string>
-    <string name="settings_auto_resume_audio_focus_desc">Reanuda automáticamente la reproducción después de llamadas telefónicas, alarmas u otras paradas de audio</string>
+    <string name="settings_auto_resume_audio_focus_desc">Reanudar automáticamente la reproducción después de llamadas telefónicas, alarmas u otras paradas de audio</string>
 
     <string name="settings_backup_restore">Copia de seguridad y restauración</string>
     <string name="settings_export_backup">Crear copia de seguridad completa (ZIP)</string>
@@ -401,4 +401,12 @@
     <string name="cast_network_continue">Continuar</string>
 
     <string name="action_later">Más tarde</string>
+
+    <string name="action_open_file_location">Abrir ubicación del archivo</string>
+    <string name="action_record">Grabar</string>
+    <string name="tab_recordings">Grabaciones</string>
+    <string name="chapters">Capítulos</string>
+    <string name="error_cannot_open_file">No se puede abrir el archivo</string>
+    <string name="error_external_player_not_found">No se encontró ninguna aplicación de reproductor de audio externo</string>
+    <string name="error_sharing">Error al compartir</string>
 </resources>

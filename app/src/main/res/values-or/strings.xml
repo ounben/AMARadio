@@ -8,7 +8,7 @@
     <string name="detail_weblink">ୱେବ୍ ଲିଙ୍କ୍</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">ଚଲାନ୍ତୁ</string>
-    <string name="detail_pause">ରଖନ୍ତୁ (Pause)</string>
+    <string name="detail_pause">ବିରାମ</string>
     <string name="detail_stop">ବନ୍ଦ କରନ୍ତୁ</string>
     <string name="detail_share">ସେୟାର କରନ୍ତୁ</string>
     <string name="detail_play_in_AMARadio">AMARadio ରେ ଚଲାନ୍ତୁ</string>
@@ -25,7 +25,7 @@
 
     <string name="action_local">ସ୍ଥାନୀୟ</string>
     <string name="action_skip_to_next">ପରବର୍ତ୍ତୀ</string>
-    <string name="action_pause">ରଖନ୍ତୁ (Pause)</string>
+    <string name="action_pause">ବିରାମ</string>
     <string name="action_skip_to_previous">ପୂର୍ବବର୍ତ୍ତୀ</string>
     <string name="action_resume">ପୁନରାରମ୍ଭ କରନ୍ତୁ</string>
     <string name="action_stop">ବନ୍ଦ କରନ୍ତୁ</string>
@@ -87,7 +87,7 @@
     <string name="nav_item_save_playlist">ପସନ୍ଦଗୁଡ଼ିକୁ ପ୍ଲେଲିଷ୍ଟ ଭାବରେ ଏକ୍ସପୋର୍ଟ କରନ୍ତୁ</string>
     <string name="nav_item_load_playlist">ପ୍ଲେଲିଷ୍ଟରୁ ପସନ୍ଦଗୁଡ଼ିକୁ ଆମଦାନୀ କରନ୍ତୁ</string>
     <string name="nav_item_save_history_playlist">ଇତିହାସକୁ ପ୍ଲେଲିଷ୍ଟ ଭାବରେ ଏକ୍ସପୋର୍ଟ କରନ୍ତୁ</string>
-    <string name="confirm_overwrite_file">ଫାଇଲ୍ ପୁନର୍ଲିଖନ (Overwrite) କରିବେ?</string>
+    <string name="confirm_overwrite_file">ଫାଇଲ୍ ପୁନର୍ଲିଖନ କରିବେ?</string>
     <string name="dialog_hint_file_name">ଫାଇଲ୍ ନାମ ପ୍ରବେଶ କରନ୍ତୁ</string>
     <string name="error_empty_field">ଏହି କ୍ଷେତ୍ରଟି ବାଧ୍ୟତାମୂଳକ ଅଟେ</string>
     <string name="error_invalid_file_name">ଅବୈଧ ଫାଇଲ୍ ନାମ</string>
@@ -179,7 +179,7 @@
     <string name="settings_seconds_format">%d ସେକେଣ୍ଡ</string>
     <string name="settings_milliseconds_format">%d ମିଲିସେକେଣ୍ଡ</string>
 
-    <string name="settings_pause_when_noisy">ହେଡସେଟ୍ ବିଚ୍ଛିନ୍ନ ହେଲେ ରଖନ୍ତୁ</string>
+    <string name="settings_pause_when_noisy">ହେଡସେଟ୍ ବିଚ୍ଛିନ୍ନ ହେଲେ ବିରାମ ଦିଅନ୍ତୁ</string>
 
     <string name="settings_auto_resume_do_not_resume">ପୁନରାରମ୍ଭ କରନ୍ତୁ ନାହିଁ</string>
 
@@ -197,7 +197,7 @@
 
     <string name="notify_pre_play">ସଂଯୋଗ ହେଉଛି</string>
     <string name="notify_play">ଚାଲୁଅଛି</string>
-    <string name="notify_paused">ରଖାଯାଇଛି (Paused)</string>
+    <string name="notify_paused">ବିରତି ଦିଆଯାଇଛି</string>
     <string name="notify_metered_connection">ମାପଯୁକ୍ତ ସଂଯୋଗ</string>
 
     <string name="notify_starred">ରେଡିଓ ଷ୍ଟେସନ୍‌କୁ ପସନ୍ଦରେ ଯୋଡ଼ାଗଲା</string>
@@ -346,7 +346,7 @@
     <string name="error_no_file_manager">ସିଷ୍ଟମ୍ ଫାଇଲ୍ ମ୍ୟାନେଜର୍ ମିଳିଲା ନାହିଁ। ଦୟାକରି ଫାଇଲ୍ ଏକ୍ସପ୍ଲୋରର୍ ସଂସ୍ଥାପିତ ଏବଂ ସକ୍ଷମ ଅଛି ବୋଲି ନିଶ୍ଚିତ କରନ୍ତୁ।</string>
     <string name="error_no_browser">ୱେବ୍ ବ୍ରାଉଜର୍ ମିଳିଲା ନାହିଁ। ଏହି ଲିଙ୍କ୍ ଖୋଲିବା ପାଇଁ ବ୍ରାଉଜର୍ ସଂସ୍ଥାପନ କରନ୍ତୁ।</string>
     <string name="error_no_homepage">ଏହି ରେଡିଓ ଷ୍ଟେସନ୍ ପାଇଁ କୌଣସି ମୁଖ୍ୟପୃଷ୍ଠା ଉପଲବ୍ଧ ନାହିଁ</string>
-    <string name="tab_custom_stations">ପସନ୍ଦଯୋଗ୍ୟ</string>
+    <string name="tab_custom_stations">ନିଜସ୍ୱ</string>
     <string name="action_add_custom">ନିଜସ୍ୱ ରେଡିଓ ଷ୍ଟେସନ୍ ଯୋଡ଼ନ୍ତୁ</string>
     <string name="station_name">ରେଡିଓ ଷ୍ଟେସନ୍ ନାମ</string>
     <string name="stream_url">ଷ୍ଟ୍ରିମ୍ URL</string>
@@ -397,11 +397,19 @@
     <string name="battery_opt_open_settings">ସେଟିଂସ ଖୋଲନ୍ତୁ</string>
     <string name="battery_opt_later">ପରେ</string>
 
-    <string name="cast_network_title">କାଷ୍ଟ ଉପକରଣ ଖୋଜ |</string>
+    <string name="cast_network_title">Cast ଉପକରଣଗୁଡ଼ିକ ଖୋଜନ୍ତୁ</string>
     <string name="cast_network_reason">ଆପଣଙ୍କର ୱାଇ-ଫାଇରେ କାଷ୍ଟ ସ୍ପିକର ଏବଂ ଟିଭିଗୁଡ଼ିକୁ ଖୋଜିବା ଏବଂ ସଂଯୋଗ କରିବାକୁ ସ୍ଥାନୀୟ ନେଟୱାର୍କ ପ୍ରବେଶକୁ ଅନୁମତି ଦିଅନ୍ତୁ | ପ୍ରବେଶ ଅନୁମତି ଦେବା ପରେ, ଏକ ଉପକରଣ ବାଛିବା ପାଇଁ ପୁନର୍ବାର କାଷ୍ଟ ଟ୍ୟାପ୍ କରନ୍ତୁ |</string>
-    <string name="cast_network_denied">ସ୍ଥାନୀୟ ନେଟୱର୍କ ପ୍ରବେଶ ଅକ୍ଷମ ହୋଇଛି | ଆପ୍ ସେଟିଂସମୂହରେ ନିକଟସ୍ଥ ଉପକରଣଗୁଡ଼ିକୁ ଅନୁମତି ଦିଅନ୍ତୁ, ତାପରେ ପୁନର୍ବାର କାଷ୍ଟ ଟ୍ୟାପ୍ କରନ୍ତୁ | ଏହି ଫୋନରେ ରେଡିଓ ପ୍ଲେକ୍ ଉପଲବ୍ଧ ଅଛି |</string>
-    <string name="cast_network_settings">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ |</string>
-    <string name="cast_network_continue">ଜାରି ରଖ |</string>
+    <string name="cast_network_denied">ସ୍ଥାନୀୟ ନେଟୱର୍କ ପ୍ରବେଶ ଅକ୍ଷମ ହୋଇଛି। ଆପ୍ ସେଟିଂସମୂହରେ ନିକଟସ୍ଥ ଉପକରଣଗୁଡ଼ିକୁ ଅନୁମତି ଦିଅନ୍ତୁ, ତାପରେ ପୁନର୍ବାର Cast ଟ୍ୟାପ୍ କରନ୍ତୁ। ଏହି ଫୋନରେ ରେଡିଓ ପ୍ଲେବ୍ୟାକ୍ ଉପଲବ୍ଧ ଅଛି।</string>
+    <string name="cast_network_settings">ସେଟିଂସମୂହ ଖୋଲନ୍ତୁ</string>
+    <string name="cast_network_continue">ଜାରି ରଖନ୍ତୁ</string>
 
     <string name="action_later">ପରେ</string>
+
+    <string name="action_open_file_location">ଫାଇଲ୍ ଅବସ୍ଥାନ ଖୋଲନ୍ତୁ</string>
+    <string name="action_record">ରେକର୍ଡ କରନ୍ତୁ</string>
+    <string name="tab_recordings">ରେକର୍ଡିଂ</string>
+    <string name="chapters">ଅଧ୍ୟାୟଗୁଡ଼ିକ</string>
+    <string name="error_cannot_open_file">ଫାଇଲ୍ ଖୋଲିପାରିବ ନାହିଁ</string>
+    <string name="error_external_player_not_found">କୌଣସି ବାହ୍ୟ ଅଡିଓ ପ୍ଲେୟାର ଆପ୍ ମିଳିଲା ନାହିଁ</string>
+    <string name="error_sharing">ବାଣ୍ଟିବାରେ ତ୍ରୁଟି</string>
 </resources>

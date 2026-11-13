@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Geçersiz dosya adı</string>
     <string name="label_button_cancel">İptal</string>
     <string name="label_button_overwrite">Üzerine Yaz</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s adresinden içe aktarılamadı</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s adresinden içe aktarılıyor, lütfen bekleyin.</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s adresinden %1$d istasyon içe aktarıldı</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s adresine dışa aktarılamadı</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s adresine dışa aktarılıyor, lütfen bekleyin.</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s adresine başarıyla dışa aktarıldı</string>
+    <string name="notify_load_playlist_nok">Oynatma listesi içe aktarılamadı</string>
+    <string name="notify_load_playlist_now">Oynatma listesi içe aktarılıyor, lütfen bekleyin…</string>
+    <string name="notify_load_playlist_ok">%1$d istasyon içe aktarıldı</string>
+    <string name="notify_save_playlist_nok">Oynatma listesi dışa aktarılamadı</string>
+    <string name="notify_save_playlist_now">Oynatma listesi dışa aktarılıyor, lütfen bekleyin…</string>
+    <string name="notify_save_playlist_ok">Oynatma listesi başarıyla dışa aktarıldı</string>
     <string name="notify_sync_list_deleted_entries">Listedeki %2$d yerel istasyondan %1$d tanesi sunucuda mevcut değil olarak işaretlendi</string>
 
     <string name="searchpreference_clear_history">Geçmişi temizle</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Yerel ağ erişiminin Wi-Fi\'nizdeki Cast hoparlörlerini ve TV\'lerini bulmasına ve bunlara bağlanmasına izin verin. Erişime izin verdikten sonra bir cihaz seçmek için Yayınla\'ya tekrar dokunun.</string>
     <string name="cast_network_denied">Yerel ağ erişimi devre dışı bırakıldı. Uygulama ayarlarında Yakındaki cihazlara izin verin ve ardından tekrar Yayınla\'ya dokunun. Bu telefonda radyo çalma özelliği devam ediyor.</string>
     <string name="cast_network_settings">Ayarları aç</string>
-    <string name="cast_network_continue">Devam etmek</string>
+    <string name="cast_network_continue">Devam et</string>
 
     <string name="action_later">Daha sonra</string>
+
+    <string name="action_open_file_location">Dosya konumunu aç</string>
+    <string name="action_record">Kayıt</string>
+    <string name="tab_recordings">Kayıtlar</string>
+    <string name="chapters">Bölümler</string>
+    <string name="error_cannot_open_file">Dosya açılamıyor</string>
+    <string name="error_external_player_not_found">Harici ses oynatıcı uygulaması bulunamadı</string>
+    <string name="error_sharing">Paylaşım hatası</string>
 </resources>

@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nome do arquivo inválido</string>
     <string name="label_button_cancel">Cancelar</string>
     <string name="label_button_overwrite">Substituir</string>
-    <string name="notify_load_playlist_nok">Não pôde importar de %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importando de %1$s&#47;%2$s, aguarde.</string>
-    <string name="notify_load_playlist_ok">Importou %1$d rádios a partir de %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Não pôde exportar para %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportando para %1$s&#47;%2$s, aguarde.</string>
-    <string name="notify_save_playlist_ok">Exportou para %1$s&#47;%2$s com êxito</string>
+    <string name="notify_load_playlist_nok">Não foi possível importar a lista de reprodução</string>
+    <string name="notify_load_playlist_now">Importando lista de reprodução, aguarde…</string>
+    <string name="notify_load_playlist_ok">%1$d estações importadas</string>
+    <string name="notify_save_playlist_nok">Não foi possível exportar a lista de reprodução</string>
+    <string name="notify_save_playlist_now">Exportando lista de reprodução, aguarde…</string>
+    <string name="notify_save_playlist_ok">Lista de reprodução exportada com sucesso</string>
     <string name="notify_sync_list_deleted_entries">%1$d de %2$d rádios locais na lista marcados como inexistentes no servidor</string>
 
     <string name="searchpreference_clear_history">Excluir histórico</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Continuar</string>
 
     <string name="action_later">Mais tarde</string>
+
+    <string name="action_open_file_location">Abrir local do arquivo</string>
+    <string name="action_record">Gravar</string>
+    <string name="tab_recordings">Gravações</string>
+    <string name="chapters">Capítulos</string>
+    <string name="error_cannot_open_file">Não é possível abrir o arquivo</string>
+    <string name="error_external_player_not_found">Nenhum aplicativo reprodutor de áudio externo encontrado</string>
+    <string name="error_sharing">Erro ao compartilhar</string>
 </resources>

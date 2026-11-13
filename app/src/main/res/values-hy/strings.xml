@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Ֆայլի անվավեր անուն</string>
     <string name="label_button_cancel">Չեղարկել</string>
     <string name="label_button_overwrite">Վերագրել</string>
-    <string name="notify_load_playlist_nok">Չհաջողվեց ներմուծել %1$s&#47;%2$s-ից</string>
-    <string name="notify_load_playlist_now">Ներմուծվում է %1$s&#47;%2$s-ից, խնդրում ենք սպասել:</string>
-    <string name="notify_load_playlist_ok">Ներմուծվել է %1$d կայան %2$s&#47;%3$s-ից</string>
-    <string name="notify_save_playlist_nok">Չհաջողվեց արտահանել %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Արտահանվում է %1$s&#47;%2$s, խնդրում ենք սպասել:</string>
-    <string name="notify_save_playlist_ok">Հաջողությամբ արտահանվել է %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Չհաջողվեց ներմուծել երգացանկը</string>
+    <string name="notify_load_playlist_now">Ներմուծվում է երգացանկը, խնդրում ենք սպասել…</string>
+    <string name="notify_load_playlist_ok">Ներմուծվել է %1$d կայան</string>
+    <string name="notify_save_playlist_nok">Չհաջողվեց արտահանել երգացանկը</string>
+    <string name="notify_save_playlist_now">Արտահանվում է երգացանկը, խնդրում ենք սպասել…</string>
+    <string name="notify_save_playlist_ok">Երգացանկը հաջողությամբ արտահանվել է</string>
     <string name="notify_sync_list_deleted_entries">Ցուցակում առկա %2$d տեղական կայաններից %1$d-ը նշված են որպես սերվերում գոյություն չունեցող</string>
 
     <string name="searchpreference_clear_history">Մաքրել պատմությունը</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Շարունակեք</string>
 
     <string name="action_later">Ավելի ուշ</string>
+
+    <string name="action_open_file_location">Բացեք ֆայլի գտնվելու վայրը</string>
+    <string name="action_record">Ձայնագրեք</string>
+    <string name="tab_recordings">Ձայնագրություններ</string>
+    <string name="chapters">Գլուխներ</string>
+    <string name="error_cannot_open_file">Հնարավոր չէ բացել ֆայլը</string>
+    <string name="error_external_player_not_found">Արտաքին աուդիո նվագարկիչի հավելված չի գտնվել</string>
+    <string name="error_sharing">Համօգտագործման սխալ</string>
 </resources>

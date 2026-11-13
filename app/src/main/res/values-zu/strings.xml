@@ -403,4 +403,12 @@
     <string name="cast_network_continue">Qhubeka</string>
 
     <string name="action_later">Kamuva</string>
+
+    <string name="action_open_file_location">Vula indawo yefayela</string>
+    <string name="action_record">Qopha</string>
+    <string name="tab_recordings">Okurekhodiwe</string>
+    <string name="chapters">Izahluko</string>
+    <string name="error_cannot_open_file">Ayikwazi ukuvula ifayela</string>
+    <string name="error_external_player_not_found">Alukho uhlelo lokusebenza lwesidlali somsindo lwangaphandle olutholiwe</string>
+    <string name="error_sharing">Iphutha ukwabelana</string>
 </resources>

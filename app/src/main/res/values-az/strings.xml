@@ -88,12 +88,12 @@
     <string name="error_invalid_file_name">Yanlış fayl adı</string>
     <string name="label_button_cancel">Ləğv et</string>
     <string name="label_button_overwrite">Üzərinə yaz</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s ünvanından idxal etmək mümkün olmadı</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s ünvanından idxal edilir, zəhmət olmasa gözləyin.</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s ünvanından %1$d stansiya idxal edildi</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s ünvanına ixrac etmək mümkün olmadı</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s ünvanına ixrac edilir, zəhmət olmasa gözləyin.</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s ünvanına uğurla ixrac edildi</string>
+    <string name="notify_load_playlist_nok">Pleylisti idxal etmək mümkün olmadı</string>
+    <string name="notify_load_playlist_now">Pleylist idxal edilir, zəhmət olmasa gözləyin…</string>
+    <string name="notify_load_playlist_ok">%1$d stansiya idxal edildi</string>
+    <string name="notify_save_playlist_nok">Pleylisti ixrac etmək mümkün olmadı</string>
+    <string name="notify_save_playlist_now">Pleylist ixrac edilir, zəhmət olmasa gözləyin…</string>
+    <string name="notify_save_playlist_ok">Pleylist uğurla ixrac edildi</string>
     <string name="notify_sync_list_deleted_entries">Siyahıdakı %2$d yerli stansiyadan %1$d-i serverdə yoxdur kimi işarələnib</string>
 
     <string name="searchpreference_clear_history">Tarixçəni təmizlə</string>
@@ -274,7 +274,7 @@
     <string name="description_btn_skip_to_previous">Əvvəlkiyə keç</string>
 
     <string-array name="weekdays">
-        <item>B.e</item>
+        <item>B.</item>
         <item>B.e</item>
         <item>Ç.a</item>
         <item>Ç.</item>
@@ -353,15 +353,15 @@
     <string name="widget_description_small">Sürətli pleyer idarəetməsi</string>
     <string name="widget_description_full">Pleyer və radio stansiyaları siyahısı</string>
 
-    <string name="settings_auto_db_update">Background Data Sync</string>
+    <string name="settings_auto_db_update">Arxa fonda məlumat sinxronizasiyası</string>
     <string name="settings_auto_db_update_desc">Radio-Browser API vasitəsilə stansiya verilənlər bazasını avtomatik yeniləyin (tövsiyə olunur).</string>
     <string name="settings_station_click_counter">Radio stansiyası klik sayğacı</string>
     <string name="settings_station_click_counter_desc">Səs yayımı hadisələrini anonim şəkildə paylaşaraq Radio-Browser statistikasını dəstəkləyin.</string>
     <string name="settings_rate_app_github">AMARadio-dan zövq alırsınız?</string>
     <string name="settings_rate_app_github_summary">GitHub-da ulduz buraxın! Bu, başqalarına proqramı kəşf etməyə kömək edir və gələcək inkişafı dəstəkləyir.</string>
 
-    <string name="settings_remove_notification_on_stop">Proqram bağlandıqda bildirişi silin</string>
-    <string name="settings_remove_notification_on_stop_desc">Tətbiq son tətbiqlərdən bağlandıqda media bildirişini avtomatik rədd edin</string>
+    <string name="settings_remove_notification_on_stop">Dayandırıldıqda bildirişi silin</string>
+    <string name="settings_remove_notification_on_stop_desc">Oxutma dayandırıldıqda media bildirişini avtomatik rədd edin</string>
     <string name="settings_auto_resume_audio_focus">Audio fokus itkisindən sonra davam edin</string>
     <string name="settings_auto_resume_audio_focus_desc">Telefon zəngləri, həyəcan siqnalları və ya digər audio dayanacaqlardan sonra oxutmanı avtomatik davam etdirin</string>
 
@@ -403,4 +403,12 @@
     <string name="cast_network_continue">Davam et</string>
 
     <string name="action_later">Daha sonra</string>
+
+    <string name="action_open_file_location">Fayl yerini açın</string>
+    <string name="action_record">Yazdır</string>
+    <string name="tab_recordings">Səsyazmalar</string>
+    <string name="chapters">Fəsillər</string>
+    <string name="error_cannot_open_file">Faylı açmaq mümkün deyil</string>
+    <string name="error_external_player_not_found">Xarici audio pleyer proqramı tapılmadı</string>
+    <string name="error_sharing">Paylaşım xətası</string>
 </resources>

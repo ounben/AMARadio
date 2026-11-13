@@ -402,4 +402,12 @@
     <string name="cast_network_continue">ಮುಂದುವರಿಸಿ</string>
 
     <string name="action_later">ನಂತರ</string>
+
+    <string name="action_open_file_location">ಫೈಲ್ ಸ್ಥಳವನ್ನು ತೆರೆಯಿರಿ</string>
+    <string name="action_record">ರೆಕಾರ್ಡ್ ಮಾಡಿ</string>
+    <string name="tab_recordings">ರೆಕಾರ್ಡಿಂಗ್‌ಗಳು</string>
+    <string name="chapters">ಅಧ್ಯಾಯಗಳು</string>
+    <string name="error_cannot_open_file">ಫೈಲ್ ತೆರೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
+    <string name="error_external_player_not_found">ಯಾವುದೇ ಬಾಹ್ಯ ಆಡಿಯೊ ಪ್ಲೇಯರ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
+    <string name="error_sharing">ಹಂಚಿಕೆ ದೋಷ</string>
 </resources>

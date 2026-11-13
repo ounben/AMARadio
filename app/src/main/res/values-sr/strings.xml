@@ -395,11 +395,19 @@
     <string name="battery_opt_open_settings">Отвори подешавања</string>
     <string name="battery_opt_later">Касније</string>
 
-    <string name="cast_network_title">Пронађите Цаст уређаје</string>
-    <string name="cast_network_reason">Дозволите приступ локалној мрежи да бисте пронашли и повезали се са Цаст звучницима и телевизорима на вашој Ви-Фи мрежи. Након што дозволите приступ, поново додирните Пребаци да бисте изабрали уређај.</string>
+    <string name="cast_network_title">Пронађите Cast уређаје</string>
+    <string name="cast_network_reason">Дозволите приступ локалној мрежи да бисте пронашли и повезали се са Cast звучницима и телевизорима на вашој Wi-Fi мрежи. Након што дозволите приступ, поново додирните Пребаци да бисте изабрали уређај.</string>
     <string name="cast_network_denied">Приступ локалној мрежи је онемогућен. Дозволите уређаје у близини у подешавањима апликације, а затим поново додирните Пребаци. Радио репродукција на овом телефону остаје доступна.</string>
     <string name="cast_network_settings">Отворите подешавања</string>
     <string name="cast_network_continue">Настави</string>
 
-    <string name="action_later">касније</string>
+    <string name="action_later">Касније</string>
+
+    <string name="action_open_file_location">Отворите локацију датотеке</string>
+    <string name="action_record">Сними</string>
+    <string name="tab_recordings">Снимци</string>
+    <string name="chapters">Поглавља</string>
+    <string name="error_cannot_open_file">Није могуће отворити датотеку</string>
+    <string name="error_external_player_not_found">Није пронађена ниједна апликација за спољни аудио плејер</string>
+    <string name="error_sharing">Грешка при дељењу</string>
 </resources>

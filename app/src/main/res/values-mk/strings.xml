@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Продолжи</string>
 
     <string name="action_later">Подоцна</string>
+
+    <string name="action_open_file_location">Отворете ја локацијата на датотеката</string>
+    <string name="action_record">Снимајте</string>
+    <string name="tab_recordings">Снимки</string>
+    <string name="chapters">Поглавја</string>
+    <string name="error_cannot_open_file">Не може да се отвори датотека</string>
+    <string name="error_external_player_not_found">Не е пронајдена апликација за надворешен аудио плеер</string>
+    <string name="error_sharing">Грешка при споделување</string>
 </resources>

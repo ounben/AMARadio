@@ -8,7 +8,7 @@
     <string name="detail_weblink">Hanyar yanar gizo</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Kunna</string>
-    <string name="detail_pause">Aiki tsaikawu</string>
+    <string name="detail_pause">Tsaikawu</string>
     <string name="detail_stop">Atsayar</string>
     <string name="detail_share">Raba</string>
     <string name="detail_play_in_AMARadio">Kunna a AMARadio</string>
@@ -20,7 +20,7 @@
     <string name="action_starred_remove">Cire daga abubuwan da aka fi so</string>
 
     <string name="action_station_visit_website">Jayi ziyarar gidan yanar gizo</string>
-    <string name="action_station_copy_stream_url">Kwali haɗin sauti (Stream URL)</string>
+    <string name="action_station_copy_stream_url">Kwafi haɗin sauti (Stream URL)</string>
     <string name="action_station_share">Raba</string>
 
     <string name="action_local">Na gida</string>
@@ -46,7 +46,7 @@
     <string name="action_languages">Harsuna</string>
     <string name="action_edit">Gyara</string>
     <string name="action_copy_info">Kwafi bayani</string>
-    <string name="action_rename_tab">Manta sunan shafin</string>
+    <string name="action_rename_tab">Sake sunan shafin</string>
 
     <string name="error_filter_name_required">Da fatan za ku fara shigar da suna don wannan shafin scagewa</string>
     <string name="confirm_delete_filter_tab">Shin kun tabbata kuna son goge \"%1$s\"?</string>
@@ -61,8 +61,8 @@
     <string name="error_station_load">An kasa haɗawa da gidan rediyon</string>
     <string name="error_list_update">An kasa haɗawa da uwar garken Radio-Browser</string>
 
-    <string name="error_no_connection">Babu haɗin intanet na kusa</string>
-    <string name="warning_volume_zero">Sautin yana nialas. Za ku iya rashin jin komai.</string>
+    <string name="error_no_connection">Babu haɗin intanet da ake da shi</string>
+    <string name="warning_volume_zero">Sautin yana sifili. Za ku iya rashin jin komai.</string>
 
     <string name="share_action">Raba hanyar gidan rediyo da…</string>
 
@@ -93,12 +93,12 @@
     <string name="error_invalid_file_name">Sunan faifan bai dace ba</string>
     <string name="label_button_cancel">Soke</string>
     <string name="label_button_overwrite">Sake rubutawa</string>
-    <string name="notify_load_playlist_nok">Ba a iya shigarwa daga %1$s&#47;%2$s ba</string>
-    <string name="notify_load_playlist_now">Yana shigarwa daga %1$s&#47;%2$s, da fatan za a jira.</string>
-    <string name="notify_load_playlist_ok">An shigar da gidajen rediyo %1$d daga %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Ba a iya fitarwa zuwa %1$s&#47;%2$s ba</string>
-    <string name="notify_save_playlist_now">Yana fitarwa zuwa %1$s&#47;%2$s, da fatan za a jira.</string>
-    <string name="notify_save_playlist_ok">An fitar zuwa %1$s&#47;%2$s cikin nasara</string>
+    <string name="notify_load_playlist_nok">Ba a iya shigar da jerin waƙoƙi ba</string>
+    <string name="notify_load_playlist_now">Ana shigar da jerin waƙoƙi, da fatan za a jira…</string>
+    <string name="notify_load_playlist_ok">An shigar da gidajen rediyo %1$d</string>
+    <string name="notify_save_playlist_nok">Ba a iya fitar da jerin waƙoƙi ba</string>
+    <string name="notify_save_playlist_now">Ana fitar da jerin waƙoƙi, da fatan za a jira…</string>
+    <string name="notify_save_playlist_ok">An fitar da jerin waƙoƙi cikin nasara</string>
     <string name="notify_sync_list_deleted_entries">%1$d daga gidan rediyo %2$d na kusa a cikin jerin ba sa cikin uwar garken</string>
 
     <string name="searchpreference_clear_history">Goge tarihi</string>
@@ -216,14 +216,14 @@
     <string name="yes">E</string>
     <string name="no">A\'a</string>
 
-    <string name="alert_select_player">Da fatan za ku zaɓi na\'urar kunne</string>
+    <string name="alert_select_player">Da fatan za ku zaɓi manhajar kunnawa</string>
     <string name="alert_select_player_name">Suna</string>
-    <string name="hostname">Ireshin uwar garke (Hostname)</string>
-    <string name="port">Network Port</string>
+    <string name="hostname">Adireshin uwar garke</string>
+    <string name="port">Tashar sadarwa (Port)</string>
 
     <string name="alert_press_back_to_exit">Danna maɓallin baya sake guda ɗaya don fita</string>
 
-    <string name="error_stream_url">Matsalar haɗin sauti (Stream URL)</string>
+    <string name="error_stream_url">Matsalar haɗin sauti</string>
     <string name="error_caching_stream">Matsalar adana haɗin sauti</string>
     <string name="error_play_stream">Ba za a iya kunna sautin ba</string>
     <string name="error_stream_reconnect_timeout">Kasa sake haɗawa da sautin: lokaci ya ƙare</string>
@@ -256,9 +256,9 @@
     <string name="image_button_less">Mafi ƙaranta</string>
     <string name="image_button_repeat">Sake maimaitawa</string>
     <string name="image_button_dont_repeat">Kada a maimaita</string>
-    <string name="icon_click_trend_decreasing">Mabuɗin shahara yana raguwa</string>
-    <string name="icon_click_trend_increasing">Mabuɗin shahara yana ƙaruwa</string>
-    <string name="icon_click_trend_stable">Mabuɗin shahara yana da kyau</string>
+    <string name="icon_click_trend_decreasing">Shahara tana raguwa</string>
+    <string name="icon_click_trend_increasing">Shahara tana ƙaruwa</string>
+    <string name="icon_click_trend_stable">Shahara tana nan daram</string>
 
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">100% Kyauta daga Tallace-tallace &amp; Sirri</string>
@@ -272,7 +272,7 @@
     <string name="settings_rate_app">Ba AMARadio maki</string>
     <string name="settings_rate_app_summary">Idan kuna son manhajar, da fatan za ku bar ma\'auni a Play Store!</string>
     <string name="settings_rate_app_github">Kuna jin dadin AMARadio?</string>
-    <string name="settings_rate_app_github_summary">Bada tauraro a GitHub! Yana taimakawa sauran mutane su gano manhajar.</string>
+    <string name="settings_rate_app_github_summary">Bada tauraro a GitHub! Yana taimakawa sauran mutane su gano manhajar kuma yana tallafawa ci gaban gaba.</string>
     <string name="settings_statistics">Kididdiga</string>
     <string name="settings_about">Game da AMARadio</string>
 
@@ -349,7 +349,7 @@
     <string name="tab_custom_stations">Na kanku</string>
     <string name="action_add_custom">Ƙara gidan rediyo na kanku</string>
     <string name="station_name">Sunan gidan rediyo</string>
-    <string name="stream_url">Hanyar haɗin sauti (Stream URL)</string>
+    <string name="stream_url">Hanyar haɗin sauti</string>
     <string name="favicon_url">Hanyar alamar gidan rediyo (Favicon)</string>
     <string name="select_image">Zaɓi hoto</string>
     <string name="error_invalid_url">Da fatan za ku shigar da hanyar sadarwa mai kyau</string>
@@ -397,11 +397,19 @@
     <string name="battery_opt_open_settings">Buɗe saituna</string>
     <string name="battery_opt_later">Daga baya</string>
 
-    <string name="cast_network_title">Nemo Cast na\'urorin</string>
+    <string name="cast_network_title">Nemo na\'urorin Cast</string>
     <string name="cast_network_reason">Bada damar hanyar sadarwar gida don nemo da haɗi zuwa masu magana da Cast da TV akan Wi-Fi naka. Bayan ba da izinin shiga, matsa Cast sake don zaɓar na\'ura.</string>
     <string name="cast_network_denied">An kashe hanyar sadarwar gida. Bada na\'urorin Kusa a cikin saitunan app, sannan sake matsa Cast. Akwai sake kunna rediyo akan wannan wayar.</string>
     <string name="cast_network_settings">Buɗe saitunan</string>
     <string name="cast_network_continue">Ci gaba</string>
 
     <string name="action_later">Daga baya</string>
+
+    <string name="action_open_file_location">Buɗe wurin fayil</string>
+    <string name="action_record">Yi rikodin</string>
+    <string name="tab_recordings">Rikodi</string>
+    <string name="chapters">Babi</string>
+    <string name="error_cannot_open_file">Ba za a iya buɗe fayil ba</string>
+    <string name="error_external_player_not_found">Ba a sami app ɗin mai kunna sauti na waje ba</string>
+    <string name="error_sharing">Kuskuren rabawa</string>
 </resources>

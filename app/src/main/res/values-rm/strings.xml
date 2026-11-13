@@ -91,6 +91,13 @@
     <string name="dialog_hint_file_name">Endatescha il num da la datoteca</string>
     <string name="error_empty_field">Quest champ è obligatoric</string>
     <string name="error_invalid_file_name">Num da datoteca nunvalid</string>
+    <string name="action_open_file_location">Avrir il lieu da la datoteca</string>
+    <string name="action_record">Registrar</string>
+    <string name="tab_recordings">Registraziuns</string>
+    <string name="chapters">Chapitels</string>
+    <string name="error_cannot_open_file">Impussibel d\'avrir la datoteca</string>
+    <string name="error_external_player_not_found">Chattà nagina app externa per reproducir audio</string>
+    <string name="error_sharing">Errur cun cundivider</string>
     <string name="label_button_cancel">Interrumper</string>
     <string name="label_button_overwrite">Recuvrir</string>
     <string name="notify_load_playlist_nok">Betg pussaivel dad importar da %1$s&#47;%2$s</string>
@@ -272,7 +279,7 @@
     <string name="settings_rate_app">Evaluar AMARadio</string>
     <string name="settings_rate_app_summary">Sche l\'app ta plascha, scriva p.s.v. in\'evaluaziun sin Google Play!</string>
     <string name="settings_rate_app_github">Ta plascha AMARadio?</string>
-    <string name="settings_rate_app_github_summary">Dada ina staila sin GitHub! Quai gida auters ad utilisar l\'app.</string>
+    <string name="settings_rate_app_github_summary">Dada ina staila sin GitHub! Quai gida auters a chattar l\'app e sustegna il svilup futur.</string>
     <string name="settings_statistics">Statistica</string>
     <string name="settings_about">Davart AMARadio</string>
 
@@ -343,8 +350,8 @@
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Staziun: %1$s, Linguatg: %2$s, Tags: %3$s</string>
 
-    <string name="error_no_file_manager">Nagin administratur da datotecas chattà sin il sistem.</string>
-    <string name="error_no_browser">Nagin navigatur web chattà.</string>
+    <string name="error_no_file_manager">Nagin administratur da datotecas chattà sin il sistem. Controllescha p.s.v. sch\'in exploratur da datotecas è installà ed activà.</string>
+    <string name="error_no_browser">Nagin navigatur web chattà. Installescha p.s.v. in navigatur per avrir questa colliaziun.</string>
     <string name="error_no_homepage">Nagina pagina principala disponibla per questa staziun</string>
     <string name="tab_custom_stations">Persunalisadas</string>
     <string name="action_add_custom">Agiuntar ina staziun persunalisada</string>
@@ -384,7 +391,7 @@
     <string name="database_last_sync">Ultima actualisaziun</string>
     <string name="database_update_now">Actualisar la banca da datas ussa</string>
     <string name="database_full_update">Actualisar la banca da datas</string>
-    <string name="database_syncing">Sincronisar…</string>
+    <string name="database_syncing">Sincronisaziun…</string>
     <string name="database_downloading">Telechargiar…</string>
     <string name="database_stations_loaded">%1$s staziuns chargiadas</string>
     <string name="database_sync_channel_name">Sincronisaziun da la banca da datas da radio</string>

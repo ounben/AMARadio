@@ -158,7 +158,7 @@
     <string name="settings_play_external">Leisti išorinį grotuvą</string>
     <string name="settings_play_external_desc_on">Groti radijo stotis per išorinį grotuvą</string>
     <string name="settings_play_external_desc_off">Groti radijo stotis per AMARadio</string>
-    <string name="settings_equalizer">Glodintuvas (Equalizer)</string>
+    <string name="settings_equalizer">Glodintuvas</string>
 
     <string name="settings_connectivity">Ryšys</string>
     <string name="settings_connect_timeout">Prisijungimo laukimo laikas</string>
@@ -269,7 +269,7 @@
     <string name="settings_other">Kita</string>
     <string name="settings_rate_app">Įvertinti AMARadio</string>
     <string name="settings_rate_app_summary">Jei jums patinka programėlė, palikite atsiliepimą Play Store!</string>
-    <string name="settings_rate_app_github">Mėgaukitės AMARadio?</string>
+    <string name="settings_rate_app_github">Patinka AMARadio?</string>
     <string name="settings_rate_app_github_summary">Palikite žvaigždutę „GitHub“! Tai padeda kitiems atrasti programą ir palaiko būsimą plėtrą.</string>
     <string name="settings_statistics">Statistika</string>
     <string name="settings_about">Apie AMARadio</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Tęsti</string>
 
     <string name="action_later">Vėliau</string>
+
+    <string name="action_open_file_location">Atidaryti failo vietą</string>
+    <string name="action_record">Įrašas</string>
+    <string name="tab_recordings">Įrašai</string>
+    <string name="chapters">Skyriai</string>
+    <string name="error_cannot_open_file">Negalima atidaryti failo</string>
+    <string name="error_external_player_not_found">Nerasta jokios išorinės garso grotuvo programos</string>
+    <string name="error_sharing">Bendrinant klaida</string>
 </resources>

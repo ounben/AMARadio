@@ -82,7 +82,7 @@
     <string name="sleep_timer_clear">解除</string>
     <string name="nav_item_add_sleep">スリープタイマー</string>
 
-    <string name="nav_item_save_playlist">お気に入り、をプレイリストとして書き出し</string>
+    <string name="nav_item_save_playlist">お気に入りをプレイリストとして書き出し</string>
     <string name="nav_item_load_playlist">プレイリストからお気に入りを読み込み</string>
     <string name="nav_item_save_history_playlist">履歴をプレイリストとして書き出し</string>
     <string name="confirm_overwrite_file">ファイルを上書きしますか？</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">無効なファイル名です</string>
     <string name="label_button_cancel">キャンセル</string>
     <string name="label_button_overwrite">上書き</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s から読み込めませんでした</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s から読み込み中、しばらくお待ちください。</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s から %1$d 局を読み込みました</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s への書き出しに失敗しました</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s へ書き出し中、しばらくお待ちください。</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s への書き出しが成功しました</string>
+    <string name="notify_load_playlist_nok">プレイリストを読み込めませんでした</string>
+    <string name="notify_load_playlist_now">プレイリストを読み込み中、しばらくお待ちください…</string>
+    <string name="notify_load_playlist_ok">%1$d 局を読み込みました</string>
+    <string name="notify_save_playlist_nok">プレイリストの書き出しに失敗しました</string>
+    <string name="notify_save_playlist_now">プレイリストを書き出し中、しばらくお待ちください…</string>
+    <string name="notify_save_playlist_ok">プレイリストを書き出しました</string>
     <string name="notify_sync_list_deleted_entries">リスト内のローカル局 %2$d 局のうち %1$d 局がサーバー上に存在しないとマークされました</string>
 
     <string name="searchpreference_clear_history">履歴を消去</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">続行</string>
 
     <string name="action_later">後で</string>
+
+    <string name="action_open_file_location">ファイルの場所を開く</string>
+    <string name="action_record">録音</string>
+    <string name="tab_recordings">録音</string>
+    <string name="chapters">章</string>
+    <string name="error_cannot_open_file">ファイルを開けません</string>
+    <string name="error_external_player_not_found">外部オーディオプレーヤーアプリが見つかりません</string>
+    <string name="error_sharing">共有エラー</string>
 </resources>

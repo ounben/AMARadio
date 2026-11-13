@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Невалидно име на файл</string>
     <string name="label_button_cancel">Отказ</string>
     <string name="label_button_overwrite">Презапиши</string>
-    <string name="notify_load_playlist_nok">Неуспешно импортиране от %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Импортиране от %1$s&#47;%2$s, моля изчакайте.</string>
-    <string name="notify_load_playlist_ok">Импортирани са %1$d станции от %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Неуспешно експортиране в %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Експортиране в %1$s&#47;%2$s, моля изчакайте.</string>
-    <string name="notify_save_playlist_ok">Експортирането в %1$s&#47;%2$s е успешно</string>
+    <string name="notify_load_playlist_nok">Неуспешно импортиране на плейлиста</string>
+    <string name="notify_load_playlist_now">Импортиране на плейлиста, моля изчакайте…</string>
+    <string name="notify_load_playlist_ok">Импортирани са %1$d станции</string>
+    <string name="notify_save_playlist_nok">Неуспешно експортиране на плейлиста</string>
+    <string name="notify_save_playlist_now">Експортиране на плейлиста, моля изчакайте…</string>
+    <string name="notify_save_playlist_ok">Плейлистът е експортиран успешно</string>
     <string name="notify_sync_list_deleted_entries">%1$d от %2$d локални станции в списъка са маркирани като несъществуващи на сървъра</string>
 
     <string name="searchpreference_clear_history">Изчисти историята</string>
@@ -344,7 +344,7 @@
     <string name="error_no_file_manager">Не може да се намери системен файлов мениджър. Моля, уверете се, че File Explorer е инсталиран и активиран.</string>
     <string name="error_no_browser">Не можах да намеря уеб браузър. Моля, инсталирайте браузър, за да отворите тази връзка.</string>
     <string name="error_no_homepage">Няма налична начална страница за тази станция</string>
-    <string name="tab_custom_stations">По поръчка</string>
+    <string name="tab_custom_stations">Персонализирани</string>
     <string name="action_add_custom">Добавете персонализирана радиостанция</string>
     <string name="station_name">Име на радиостанцията</string>
     <string name="stream_url">URL адрес на потока</string>
@@ -395,12 +395,20 @@
 
     <string name="settings_disable_battery_optimization_desc">За да продължите възпроизвеждането при изключен екран, задайте използването на батерията на \'Неограничено\'.</string>
     <string name="battery_opt_open_settings">Отворете настройките</string>
-    <string name="battery_opt_later">по-късно</string>
+    <string name="battery_opt_later">По-късно</string>
     <string name="cast_network_title">Намерете Cast устройства</string>
     <string name="cast_network_reason">Разрешете достъп до локална мрежа за намиране и свързване с високоговорители и телевизори Cast във вашата Wi-Fi мрежа. След като разрешите достъп, докоснете Cast отново, за да изберете устройство.</string>
     <string name="cast_network_denied">Достъпът до локалната мрежа е деактивиран. Разрешете устройства наблизо в настройките на приложението, след което докоснете Cast отново. Възпроизвеждането на радио на този телефон остава налично.</string>
     <string name="cast_network_settings">Отворете настройките</string>
     <string name="cast_network_continue">Продължи</string>
 
-    <string name="action_later">по-късно</string>
+    <string name="action_later">По-късно</string>
+
+    <string name="action_open_file_location">Отворете местоположението на файла</string>
+    <string name="action_record">Запис</string>
+    <string name="tab_recordings">Записи</string>
+    <string name="chapters">Глави</string>
+    <string name="error_cannot_open_file">Не може да се отвори файл</string>
+    <string name="error_external_player_not_found">Не е намерено външно приложение за аудио плейър</string>
+    <string name="error_sharing">Грешка при споделяне</string>
 </resources>

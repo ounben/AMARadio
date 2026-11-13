@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Virheellinen tiedoston nimi</string>
     <string name="label_button_cancel">Peruuta</string>
     <string name="label_button_overwrite">Korvaa</string>
-    <string name="notify_load_playlist_nok">Tuonti kohteesta %1$s&#47;%2$s epäonnistui</string>
-    <string name="notify_load_playlist_now">Tuodaan kohteesta %1$s&#47;%2$s, odota hetki.</string>
-    <string name="notify_load_playlist_ok">Tuotu %1$d asemaa kohteesta %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Vienti kohteeseen %1$s&#47;%2$s epäonnistui</string>
-    <string name="notify_save_playlist_now">Viedään kohteeseen %1$s&#47;%2$s, odota hetki.</string>
-    <string name="notify_save_playlist_ok">Viety kohteeseen %1$s&#47;%2$s onnistuneesti</string>
+    <string name="notify_load_playlist_nok">Soittolistan tuonti epäonnistui</string>
+    <string name="notify_load_playlist_now">Tuodaan soittolistaa, odota hetki…</string>
+    <string name="notify_load_playlist_ok">%1$d asemaa tuotu</string>
+    <string name="notify_save_playlist_nok">Soittolistan vienti epäonnistui</string>
+    <string name="notify_save_playlist_now">Viedään soittolistaa, odota hetki…</string>
+    <string name="notify_save_playlist_ok">Soittolista viety onnistuneesti</string>
     <string name="notify_sync_list_deleted_entries">%1$d/%2$d paikallisesta asemasta luettelossa merkitty palvelimelta puuttuviksi</string>
 
     <string name="searchpreference_clear_history">Tyhjennä historia</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Salli pääsy paikalliseen verkkoon, jotta voit löytää Wi-Fisi Cast-kaiuttimia ja televisioita ja muodostaa niihin yhteyden. Kun olet sallinut pääsyn, valitse laite napauttamalla Cast uudelleen.</string>
     <string name="cast_network_denied">Paikallisverkkoyhteys on poistettu käytöstä. Salli Nearby-laitteet sovellusasetuksissa ja napauta sitten Cast uudelleen. Radion toisto tällä puhelimella on edelleen käytettävissä.</string>
     <string name="cast_network_settings">Avaa asetukset</string>
-    <string name="cast_network_continue">Jatkaa</string>
+    <string name="cast_network_continue">Jatka</string>
 
     <string name="action_later">Myöhemmin</string>
+
+    <string name="action_open_file_location">Avaa tiedoston sijainti</string>
+    <string name="action_record">Tallentaa</string>
+    <string name="tab_recordings">Tallenteet</string>
+    <string name="chapters">Luvut</string>
+    <string name="error_cannot_open_file">Tiedostoa ei voi avata</string>
+    <string name="error_external_player_not_found">Ulkoista äänisoitinsovellusta ei löytynyt</string>
+    <string name="error_sharing">Virhe jakamisessa</string>
 </resources>

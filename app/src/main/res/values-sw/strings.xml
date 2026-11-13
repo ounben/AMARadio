@@ -60,7 +60,7 @@
     <string name="error_list_update">Haikuweza kuunganishwa na seva ya Radio-Browser</string>
 
     <string name="error_no_connection">Hakuna muunganisho wa intaneti unaopatikana.</string>
-    <string name="warning_volume_zero">Ivolumu ikuziro. Ungase ungezwa lutho.</string>
+    <string name="warning_volume_zero">Sauti iko kwenye sifuri. Huenda usisikie chochote.</string>
 
     <string name="share_action">Shiriki kiungo cha kituo cha redio na…</string>
 
@@ -107,9 +107,9 @@
     <string name="theme_light">Nuru</string>
     <string name="theme_dark">Giza</string>
     <string name="theme_system">Fuata mfumo</string>
-    <string name="settings_compact_style">Njia ya mkato</string>
-    <string name="settings_compact_style_desc_off">Ikon kubwa iliyochukuliwa na maelezo ya kituo cha redio</string>
-    <string name="settings_compact_style_desc_on">Ikon ndogo iliyochukuliwa bila maelezo ya kituo cha redio</string>
+    <string name="settings_compact_style">Hali ya kompakt</string>
+    <string name="settings_compact_style_desc_off">Aikoni kubwa yenye maelezo ya kituo cha redio</string>
+    <string name="settings_compact_style_desc_on">Aikoni ndogo bila maelezo ya kituo cha redio</string>
     <string name="settings_bottom_navigation">Urambazaji wa chini</string>
     <string name="settings_ui_scale">Kiwango cha UI</string>
     <string name="settings_language">Lugha</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Endelea</string>
 
     <string name="action_later">Baadaye</string>
+
+    <string name="action_open_file_location">Fungua eneo la faili</string>
+    <string name="action_record">Rekodi</string>
+    <string name="tab_recordings">Rekodi</string>
+    <string name="chapters">Sura</string>
+    <string name="error_cannot_open_file">Haiwezi kufungua faili</string>
+    <string name="error_external_player_not_found">Hakuna programu ya kicheza sauti ya nje iliyopatikana</string>
+    <string name="error_sharing">Hitilafu kushiriki</string>
 </resources>

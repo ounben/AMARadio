@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Ainm comhaid neamhbhailí</string>
     <string name="label_button_cancel">Cealaigh</string>
     <string name="label_button_overwrite">Scríobh thairis</string>
-    <string name="notify_load_playlist_nok">Níorbh fhéidir iompórtáil ó %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Ag iompórtáil ó %1$s&#47;%2$s, fan le do thoil.</string>
-    <string name="notify_load_playlist_ok">Iompórtáladh %1$d stáisiún ó %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Níorbh fhéidir easpórtáil go %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Ag easpórtáil go %1$s&#47;%2$s, fan le do thoil.</string>
-    <string name="notify_save_playlist_ok">Easpórtáladh go %1$s&#47;%2$s go rathúil</string>
+    <string name="notify_load_playlist_nok">Níorbh fhéidir an seinmliosta a iompórtáil</string>
+    <string name="notify_load_playlist_now">Ag iompórtáil seinmliosta, fan le do thoil…</string>
+    <string name="notify_load_playlist_ok">Iompórtáladh %1$d stáisiún</string>
+    <string name="notify_save_playlist_nok">Níorbh fhéidir an seinmliosta a easpórtáil</string>
+    <string name="notify_save_playlist_now">Ag easpórtáil seinmliosta, fan le do thoil…</string>
+    <string name="notify_save_playlist_ok">Easpórtáladh an seinmliosta go rathúil</string>
     <string name="notify_sync_list_deleted_entries">Marcáladh %1$d as %2$d stáisiún áitiúil sa liosta mar stáisiúin nach bhfuil ann ar an bhfreastalaí</string>
 
     <string name="searchpreference_clear_history">Glan stair</string>
@@ -233,7 +233,7 @@
     <string name="error_no_equalizer_found">Ní bhfuarthas aon aip cothromóra</string>
 
     <string name="player_info_status">Stádas:&#160;</string>
-    <string name="player_info_status_stopped">stopptha</string>
+    <string name="player_info_status_stopped">stoptha</string>
     <string name="player_info_status_playing">ag seinm</string>
     <string name="player_info_transferred">Sonraí aistrithe: %1$s</string>
 
@@ -345,7 +345,7 @@
     <string name="tab_custom_stations">Saincheaptha</string>
     <string name="action_add_custom">Cuir stáisiún raidió saincheaptha leis</string>
     <string name="station_name">Ainm an stáisiúin raidió</string>
-    <string name="stream_url">Sruth URL</string>
+    <string name="stream_url">URL an tsrutha</string>
     <string name="favicon_url">URL lógó an stáisiúin (Favicon)</string>
     <string name="select_image">Roghnaigh Íomhá</string>
     <string name="error_invalid_url">Cuir isteach URL bailí</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Lean ort</string>
 
     <string name="action_later">Níos déanaí</string>
+
+    <string name="action_open_file_location">Oscail suíomh comhaid</string>
+    <string name="action_record">Taifead</string>
+    <string name="tab_recordings">Taifeadtaí</string>
+    <string name="chapters">Caibidlí</string>
+    <string name="error_cannot_open_file">Ní féidir an comhad a oscailt</string>
+    <string name="error_external_player_not_found">Níor aimsíodh aon aip sheachtrach fuaime</string>
+    <string name="error_sharing">Earráid á roinnt</string>
 </resources>

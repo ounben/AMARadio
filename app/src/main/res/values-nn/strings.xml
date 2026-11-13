@@ -213,7 +213,7 @@
   <string name="yes">Ja</string>
   <string name="no">Nei</string>
 
-  <string name="alert_select_player">Vel ein tenar</string>
+  <string name="alert_select_player">Vel ein spelar</string>
   <string name="alert_select_player_name">Namn</string>
   <string name="hostname">Tenaradresse</string>
   <string name="port">Nettverksport</string>
@@ -397,8 +397,16 @@
     <string name="cast_network_title">Finn Cast-enheter</string>
     <string name="cast_network_reason">Tillat lokal nettverkstilgang for å finne og koble til Cast-høyttalere og TV-er på Wi-Fi. Etter å ha gitt tilgang, trykk på Cast igjen for å velge en enhet.</string>
     <string name="cast_network_denied">Lokal nettverkstilgang er deaktivert. Tillat enheter i nærheten i appinnstillingene, og trykk deretter på Cast igjen. Radioavspilling på denne telefonen er fortsatt tilgjengelig.</string>
-    <string name="cast_network_settings">Åpne innstillinger</string>
+    <string name="cast_network_settings">Opna innstillingar</string>
     <string name="cast_network_continue">Fortsett</string>
 
     <string name="action_later">Seinere</string>
+
+    <string name="action_open_file_location">Opne filplassering</string>
+    <string name="action_record">Rekord</string>
+    <string name="tab_recordings">Opptak</string>
+    <string name="chapters">Kapitler</string>
+    <string name="error_cannot_open_file">Kan ikkje opna fila</string>
+    <string name="error_external_player_not_found">Ingen ekstern lydspillerapp funnet</string>
+    <string name="error_sharing">Feil under deling</string>
 </resources>

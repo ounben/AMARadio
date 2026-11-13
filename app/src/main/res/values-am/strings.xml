@@ -62,7 +62,7 @@
     <string name="error_no_connection">የኢንተርኔት ግንኙነት የለም</string>
     <string name="warning_volume_zero">ድምጹ ዜሮ ላይ ነው። ምንም ላይሰማዎት ይችላል።</string>
 
-    <string name="share_action">የሬዲዮ ጣቢያ አገናኝ አጋራ ከ...</string>
+    <string name="share_action">የሬዲዮ ጣቢያ አገናኝ አጋራ ከ…</string>
 
     <string name="nav_item_stations">የሬዲዮ ጣቢያዎች</string>
     <string name="nav_item_starred">ተወዳጆች</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">ልክ ያልሆነ የፋይል ስም</string>
     <string name="label_button_cancel">ሰርዝ</string>
     <string name="label_button_overwrite">ተካ</string>
-    <string name="notify_load_playlist_nok">ከ %1$s&#47;%2$s ማስገባት አልተቻለም</string>
-    <string name="notify_load_playlist_now">ከ %1$s&#47;%2$s በማስገባት ላይ፣ እባክዎ ይጠብቁ።</string>
-    <string name="notify_load_playlist_ok">%1$d ጣቢያዎች ከ %2$s&#47;%3$s ገብተዋል</string>
-    <string name="notify_save_playlist_nok">ወደ %1$s&#47;%2$s መላክ አልተቻለም</string>
-    <string name="notify_save_playlist_now">ወደ %1$s&#47;%2$s በመላክ ላይ፣ እባክዎ ይጠብቁ።</string>
-    <string name="notify_save_playlist_ok">ወደ %1$s&#47;%2$s በተሳካ ሁኔታ ተልኳል</string>
+    <string name="notify_load_playlist_nok">አጫዋች ዝርዝር ማስገባት አልተቻለም</string>
+    <string name="notify_load_playlist_now">አጫዋች ዝርዝር በማስገባት ላይ፣ እባክዎ ይጠብቁ…</string>
+    <string name="notify_load_playlist_ok">%1$d ጣቢያዎች ገብተዋል</string>
+    <string name="notify_save_playlist_nok">አጫዋች ዝርዝር መላክ አልተቻለም</string>
+    <string name="notify_save_playlist_now">አጫዋች ዝርዝር በመላክ ላይ፣ እባክዎ ይጠብቁ…</string>
+    <string name="notify_save_playlist_ok">አጫዋች ዝርዝር በተሳካ ሁኔታ ተልኳል</string>
     <string name="notify_sync_list_deleted_entries">በዝርዝሩ ውስጥ ካሉት %2$d የአካባቢ ጣቢያዎች %1$d በአገልጋዩ ላይ እንደሌሉ ተለይተዋል</string>
 
     <string name="searchpreference_clear_history">ታሪክ አጽዳ</string>
@@ -364,8 +364,8 @@
     <string name="settings_rate_app_github">በAMARadio እየተዝናኑ ነው?</string>
     <string name="settings_rate_app_github_summary">በ GitHub ላይ ኮከብ ይተው! ሌሎች መተግበሪያውን እንዲያገኙ ያግዛል እና የወደፊት እድገትን ይደግፋል።</string>
 
-    <string name="settings_remove_notification_on_stop">መተግበሪያ ሲዘጋ ማሳወቂያን ያስወግዱ</string>
-    <string name="settings_remove_notification_on_stop_desc">መተግበሪያው ከቅርብ ጊዜ መተግበሪያዎች ሲዘጋ የማህደረ መረጃ ማሳወቂያውን በራስ-ሰር ያሰናብቱት።</string>
+    <string name="settings_remove_notification_on_stop">ሲቆም ማሳወቂያን ያስወግዱ</string>
+    <string name="settings_remove_notification_on_stop_desc">መልሶ ማጫወት ሲቆም የማህደረ መረጃ ማሳወቂያውን በራስ-ሰር ያሰናብቱ።</string>
     <string name="settings_auto_resume_audio_focus">የኦዲዮ ትኩረት ከጠፋ በኋላ ከቆመበት ቀጥል</string>
     <string name="settings_auto_resume_audio_focus_desc">ከስልክ ጥሪዎች፣ ማንቂያዎች ወይም ሌላ የድምጽ ማቆሚያዎች በኋላ መልሶ ማጫወትን በራስ-ሰር ይቀጥሉ</string>
 
@@ -397,10 +397,18 @@
     <string name="battery_opt_open_settings">ቅንብሮችን ይክፈቱ</string>
     <string name="battery_opt_later">በኋላ</string>
     <string name="cast_network_title">የCast መሣሪያዎችን ያግኙ</string>
-    <string name="cast_network_reason">በእርስዎ ዋይ ፋይ ላይ የCast ድምጽ ማጉያዎችን እና ቲቪዎችን እንዲያገኝ እና እንዲገናኝ የአካባቢ አውታረ መረብ መዳረሻ ፍቀድ። መዳረሻን ከፈቀዱ በኋላ መሣሪያን ለመምረጥ እንደገና ውሰድን ነካ ያድርጉ።</string>
+    <string name="cast_network_reason">በእርስዎ ዋይ ፋይ ላይ የCast ድምጽ ማጉያዎችን እና ቲቪዎችን እንዲያገኝ እና እንዲገናኝ የአካባቢ አውታረ መረብ መዳረሻ ፍቀድ። መዳረሻን ከፈቀዱ በኋላ መሣሪያን ለመምረጥ እንደገና Castን ነካ ያድርጉ።</string>
     <string name="cast_network_denied">የአካባቢ አውታረ መረብ መዳረሻ ተሰናክሏል። በአቅራቢያ ያሉ መሣሪያዎችን በመተግበሪያ ቅንብሮች ውስጥ ይፍቀዱ፣ ከዚያ Castን እንደገና ይንኩ። በዚህ ስልክ ላይ የሬዲዮ መልሶ ማጫወት እንዳለ ይቆያል።</string>
     <string name="cast_network_settings">ቅንብሮችን ይክፈቱ</string>
     <string name="cast_network_continue">ቀጥል</string>
 
     <string name="action_later">በኋላ</string>
+
+    <string name="action_open_file_location">የፋይል ቦታን ክፈት</string>
+    <string name="action_record">ቅዳ</string>
+    <string name="tab_recordings">ቅጂዎች</string>
+    <string name="chapters">ምዕራፎች</string>
+    <string name="error_cannot_open_file">ፋይል መክፈት አልተቻለም</string>
+    <string name="error_external_player_not_found">ምንም ውጫዊ የድምጽ ማጫወቻ መተግበሪያ አልተገኘም</string>
+    <string name="error_sharing">ማጋራት ላይ ስህተት</string>
 </resources>

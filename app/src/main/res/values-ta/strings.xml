@@ -402,4 +402,12 @@
     <string name="cast_network_continue">தொடரவும்</string>
 
     <string name="action_later">பின்னர்</string>
+
+    <string name="action_open_file_location">கோப்பு இருப்பிடத்தைத் திறக்கவும்</string>
+    <string name="action_record">பதிவு</string>
+    <string name="tab_recordings">பதிவுகள்</string>
+    <string name="chapters">அத்தியாயங்கள்</string>
+    <string name="error_cannot_open_file">கோப்பை திறக்க முடியவில்லை</string>
+    <string name="error_external_player_not_found">வெளிப்புற ஆடியோ பிளேயர் பயன்பாடு எதுவும் இல்லை</string>
+    <string name="error_sharing">பகிர்வதில் பிழை</string>
 </resources>

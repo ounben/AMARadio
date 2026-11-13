@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Benarkan akses rangkaian setempat untuk mencari dan menyambung ke Cast pembesar suara dan TV pada Wi-Fi anda. Selepas membenarkan akses, ketik Hantar sekali lagi untuk memilih peranti.</string>
     <string name="cast_network_denied">Akses rangkaian tempatan dilumpuhkan. Benarkan peranti Berdekatan dalam tetapan apl, kemudian ketik Hantar sekali lagi. Main balik radio pada telefon ini masih tersedia.</string>
     <string name="cast_network_settings">Buka tetapan</string>
-    <string name="cast_network_continue">teruskan</string>
+    <string name="cast_network_continue">Teruskan</string>
 
     <string name="action_later">Nanti</string>
+
+    <string name="action_open_file_location">Buka lokasi fail</string>
+    <string name="action_record">Rekod</string>
+    <string name="tab_recordings">Rakaman</string>
+    <string name="chapters">Bab</string>
+    <string name="error_cannot_open_file">Tidak boleh membuka fail</string>
+    <string name="error_external_player_not_found">Tiada apl pemain audio luaran ditemui</string>
+    <string name="error_sharing">Ralat berkongsi</string>
 </resources>

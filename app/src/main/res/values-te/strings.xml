@@ -402,4 +402,12 @@
     <string name="cast_network_continue">కొనసాగించు</string>
 
     <string name="action_later">తరువాత</string>
+
+    <string name="action_open_file_location">ఫైల్ స్థానాన్ని తెరవండి</string>
+    <string name="action_record">రికార్డ్ చేయండి</string>
+    <string name="tab_recordings">రికార్డింగ్‌లు</string>
+    <string name="chapters">అధ్యాయాలు</string>
+    <string name="error_cannot_open_file">ఫైల్‌ని తెరవడం సాధ్యం కాదు</string>
+    <string name="error_external_player_not_found">బాహ్య ఆడియో ప్లేయర్ యాప్ ఏదీ కనుగొనబడలేదు</string>
+    <string name="error_sharing">భాగస్వామ్యం చేయడంలో లోపం</string>
 </resources>

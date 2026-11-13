@@ -62,7 +62,7 @@
     <string name="error_no_connection">لا يتوفر اتصال بالإنترنت</string>
     <string name="warning_volume_zero">مستوى الصوت صفر. قد لا تتمكن من سماع أي شيء.</string>
 
-    <string name="share_action">مشاركة رابط محطة الراديو مع..</string>
+    <string name="share_action">مشاركة رابط محطة الراديو مع…</string>
 
     <string name="nav_item_stations">محطات الراديو</string>
     <string name="nav_item_starred">المفضلة</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">اسم ملف غير صالح</string>
     <string name="label_button_cancel">إلغاء</string>
     <string name="label_button_overwrite">استبدال</string>
-    <string name="notify_load_playlist_nok">تعذر الاستيراد من %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">جاري الاستيراد من %1$s&#47;%2$s، يرجى الانتظار.</string>
-    <string name="notify_load_playlist_ok">تم استيراد %1$d محطة من %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">تعذر التصدير إلى %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">جاري التصدير إلى %1$s&#47;%2$s، يرجى الانتظار.</string>
-    <string name="notify_save_playlist_ok">تم التصدير إلى %1$s&#47;%2$s بنجاح</string>
+    <string name="notify_load_playlist_nok">تعذر استيراد قائمة التشغيل</string>
+    <string name="notify_load_playlist_now">جاري استيراد قائمة التشغيل، يرجى الانتظار…</string>
+    <string name="notify_load_playlist_ok">تم استيراد %1$d محطة</string>
+    <string name="notify_save_playlist_nok">تعذر تصدير قائمة التشغيل</string>
+    <string name="notify_save_playlist_now">جاري تصدير قائمة التشغيل، يرجى الانتظار…</string>
+    <string name="notify_save_playlist_ok">تم تصدير قائمة التشغيل بنجاح</string>
     <string name="notify_sync_list_deleted_entries">تم تحديد %1$d من أصل %2$d محطة محلية في القائمة على أنها غير موجودة في الخادم</string>
 
     <string name="searchpreference_clear_history">مسح سجل البحث</string>
@@ -158,7 +158,7 @@
     <string name="settings_play_external">تمكين المشغل الخارجي</string>
     <string name="settings_play_external_desc_on">تشغيل محطات الراديو باستخدام مشغل خارجي</string>
     <string name="settings_play_external_desc_off">تشغيل محطات الراديو باستخدام AMARadio</string>
-    <string name="settings_equalizer">معدل الصوت (Equalizer)</string>
+    <string name="settings_equalizer">معدل الصوت</string>
 
     <string name="settings_connectivity">الاتصال</string>
     <string name="settings_connect_timeout">مهلة الاتصال</string>
@@ -363,8 +363,8 @@
     <string name="settings_rate_app_github">تتمتع AMARadio؟</string>
     <string name="settings_rate_app_github_summary">اترك نجمة على GitHub! يساعد الآخرين على اكتشاف التطبيق ويدعم التطوير المستقبلي.</string>
 
-    <string name="settings_remove_notification_on_stop">إزالة الإشعارات عند إغلاق التطبيق</string>
-    <string name="settings_remove_notification_on_stop_desc">تجاهل إشعارات الوسائط تلقائيًا عند إغلاق التطبيق من التطبيقات الحديثة</string>
+    <string name="settings_remove_notification_on_stop">إزالة الإشعار عند الإيقاف</string>
+    <string name="settings_remove_notification_on_stop_desc">تجاهل إشعار الوسائط تلقائيًا عند إيقاف التشغيل</string>
     <string name="settings_auto_resume_audio_focus">استئناف بعد فقدان التركيز الصوتي</string>
     <string name="settings_auto_resume_audio_focus_desc">استئناف التشغيل تلقائيًا بعد المكالمات الهاتفية أو الإنذارات أو توقف الصوت الآخر</string>
 
@@ -401,7 +401,15 @@
     <string name="cast_network_reason">اسمح بالوصول إلى الشبكة المحلية للعثور على مكبرات الصوت وأجهزة التلفاز والاتصال بها على شبكة Wi-Fi لديك. بعد السماح بالوصول، انقر فوق Cast مرة أخرى لاختيار جهاز.</string>
     <string name="cast_network_denied">تم تعطيل الوصول إلى الشبكة المحلية. اسمح للأجهزة القريبة في إعدادات التطبيق، ثم اضغط على \"إرسال\" مرة أخرى. يظل تشغيل الراديو على هذا الهاتف متاحًا.</string>
     <string name="cast_network_settings">افتح الإعدادات</string>
-    <string name="cast_network_continue">يكمل</string>
+    <string name="cast_network_continue">متابعة</string>
 
     <string name="action_later">لاحقاً</string>
+
+    <string name="action_open_file_location">فتح موقع الملف</string>
+    <string name="action_record">تسجيل</string>
+    <string name="tab_recordings">التسجيلات</string>
+    <string name="chapters">فصول</string>
+    <string name="error_cannot_open_file">لا يمكن فتح الملف</string>
+    <string name="error_external_player_not_found">لم يتم العثور على تطبيق مشغل صوت خارجي</string>
+    <string name="error_sharing">خطأ في المشاركة</string>
 </resources>

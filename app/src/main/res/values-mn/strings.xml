@@ -272,7 +272,7 @@
     <string name="settings_rate_app">AMARadio-г үнэлэх</string>
     <string name="settings_rate_app_summary">Хэрэв апп танд таалагдсан бол Play Store дээр сэтгэгдэл үлдээнэ үү!</string>
     <string name="settings_rate_app_github">AMARadio таалагдаж байна уу?</string>
-    <string name="settings_rate_app_github_summary">GitHub дээр одон тэмдэг үлдээнэ үү! Энэ нь бусдад апп-ыг олоход тусалдаг.</string>
+    <string name="settings_rate_app_github_summary">GitHub дээр одон тэмдэг үлдээнэ үү! Энэ нь бусдад апп-ыг олоход тусалж, цаашдын хөгжүүлэлтийг дэмжинэ.</string>
     <string name="settings_statistics">Статистик</string>
     <string name="settings_about">AMARadio-н тухай</string>
 
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">Үргэлжлүүлэх</string>
 
     <string name="action_later">Дараа нь</string>
+
+    <string name="action_open_file_location">Файлын байршлыг нээх</string>
+    <string name="action_record">Бичлэг</string>
+    <string name="tab_recordings">Бичлэгүүд</string>
+    <string name="chapters">Бүлгүүд</string>
+    <string name="error_cannot_open_file">Файлыг нээх боломжгүй</string>
+    <string name="error_external_player_not_found">Гадаад аудио тоглуулагчийн програм олдсонгүй</string>
+    <string name="error_sharing">Хуваалцахад алдаа гарлаа</string>
 </resources>

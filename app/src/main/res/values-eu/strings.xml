@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Fitxategi-izen baliogabea</string>
     <string name="label_button_cancel">Utzi</string>
     <string name="label_button_overwrite">Gainidatzi</string>
-    <string name="notify_load_playlist_nok">Ezin izan da inportatu hemendik: %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Inportatzen hemendik: %1$s&#47;%2$s, mesedez, itxaron.</string>
-    <string name="notify_load_playlist_ok">%1$d irrati-etxe inportatu dira hemendik: %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Ezin izan da esportatu hona: %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Esportatzen hona %1$s&#47;%2$s, mesedez, itxaron.</string>
-    <string name="notify_save_playlist_ok">Behar bezala esportatu da hona: %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Ezin izan da erreprodukzio-zerrenda inportatu</string>
+    <string name="notify_load_playlist_now">Erreprodukzio-zerrenda inportatzen, mesedez itxaron…</string>
+    <string name="notify_load_playlist_ok">%1$d irrati-etxe inportatu dira</string>
+    <string name="notify_save_playlist_nok">Ezin izan da erreprodukzio-zerrenda esportatu</string>
+    <string name="notify_save_playlist_now">Erreprodukzio-zerrenda esportatzen, mesedez itxaron…</string>
+    <string name="notify_save_playlist_ok">Erreprodukzio-zerrenda ondo esportatu da</string>
     <string name="notify_sync_list_deleted_entries">Zerrendako %2$d tokiko irrati-etxeetatik %1$d zerbitzarian ez daudela markatu da</string>
 
     <string name="searchpreference_clear_history">Garbitu historiala</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Jarraitu</string>
 
     <string name="action_later">Geroago</string>
+
+    <string name="action_open_file_location">Ireki fitxategiaren kokapena</string>
+    <string name="action_record">Grabatu</string>
+    <string name="tab_recordings">Grabaketak</string>
+    <string name="chapters">Kapituluak</string>
+    <string name="error_cannot_open_file">Ezin da fitxategia ireki</string>
+    <string name="error_external_player_not_found">Ez da aurkitu kanpoko audio erreproduzitzailearen aplikaziorik</string>
+    <string name="error_sharing">Errore bat gertatu da partekatzean</string>
 </resources>

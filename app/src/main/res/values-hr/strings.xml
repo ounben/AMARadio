@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nevažeći naziv datoteke</string>
     <string name="label_button_cancel">Odustani</string>
     <string name="label_button_overwrite">Prebriši</string>
-    <string name="notify_load_playlist_nok">Nije moguće uvesti iz %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Uvozi se iz %1$s&#47;%2$s, molimo pričekajte.</string>
-    <string name="notify_load_playlist_ok">Uvezeno %1$d stanica iz %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Nije mogoče izvesti u %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Izvozi se u %1$s&#47;%2$s, molimo pričekajte.</string>
-    <string name="notify_save_playlist_ok">Uspješno izvezeno u %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Nije moguće uvesti popis pjesama</string>
+    <string name="notify_load_playlist_now">Uvozi se popis pjesama, molimo pričekajte…</string>
+    <string name="notify_load_playlist_ok">Uvezeno %1$d stanica</string>
+    <string name="notify_save_playlist_nok">Nije moguće izvesti popis pjesama</string>
+    <string name="notify_save_playlist_now">Izvozi se popis pjesama, molimo pričekajte…</string>
+    <string name="notify_save_playlist_ok">Popis pjesama uspješno izvezen</string>
     <string name="notify_sync_list_deleted_entries">%1$d od %2$d lokalnih stanica na popisu označeno je kao nepostojeće na poslužitelju</string>
 
     <string name="searchpreference_clear_history">Očisti povijest</string>
@@ -340,7 +340,7 @@
     <string name="accessibility_station_description">Postaja: %1$s, Jezik: %2$s, Oznake: %3$s</string>
 
     <string name="error_no_file_manager">Nije moguće pronaći upravitelja sistemskih datoteka. Provjerite je li file explorer instaliran i omogućen.</string>
-    <string name="error_no_browser">Nije mogoče pronaći web preglednik. Molimo instalirajte preglednik kako biste otvorili ovu vezu.</string>
+    <string name="error_no_browser">Nije moguće pronaći web preglednik. Molimo instalirajte preglednik kako biste otvorili ovu vezu.</string>
     <string name="error_no_homepage">Nema dostupne početne stranice za ovu radio stanicu</string>
     <string name="tab_custom_stations">Prilagođeno</string>
     <string name="action_add_custom">Dodaj prilagođenu radio stanicu</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Dopustite pristup lokalnoj mreži za pronalaženje i povezivanje s Cast zvučnicima i televizorima na vašem Wi-Fiju. Nakon dopuštanja pristupa ponovno dodirnite Cast za odabir uređaja.</string>
     <string name="cast_network_denied">Pristup lokalnoj mreži je onemogućen. Dopustite uređaje u blizini u postavkama aplikacije, zatim ponovno dodirnite Cast. Radio reprodukcija na ovom telefonu ostaje dostupna.</string>
     <string name="cast_network_settings">Otvori postavke</string>
-    <string name="cast_network_continue">Nastaviti</string>
+    <string name="cast_network_continue">Nastavi</string>
 
     <string name="action_later">Kasnije</string>
+
+    <string name="action_open_file_location">Otvori lokaciju datoteke</string>
+    <string name="action_record">Snimiti</string>
+    <string name="tab_recordings">Snimke</string>
+    <string name="chapters">Poglavlja</string>
+    <string name="error_cannot_open_file">Nije moguće otvoriti datoteku</string>
+    <string name="error_external_player_not_found">Nije pronađena nijedna vanjska aplikacija za reprodukciju zvuka</string>
+    <string name="error_sharing">Pogreška u dijeljenju</string>
 </resources>

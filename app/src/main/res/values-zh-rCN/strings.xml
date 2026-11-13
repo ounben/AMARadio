@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">文件名无效</string>
     <string name="label_button_cancel">取消</string>
     <string name="label_button_overwrite">覆盖</string>
-    <string name="notify_load_playlist_nok">无法从 %1$s&#47;%2$s 导入</string>
-    <string name="notify_load_playlist_now">正在从 %1$s&#47;%2$s 导入，请稍候。</string>
-    <string name="notify_load_playlist_ok">已从 %2$s&#47;%3$s 导入 %1$d 个电台</string>
-    <string name="notify_save_playlist_nok">无法导出到 %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">正在导出到 %1$s&#47;%2$s，请稍候。</string>
-    <string name="notify_save_playlist_ok">成功导出到 %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">无法导入播放列表</string>
+    <string name="notify_load_playlist_now">正在导入播放列表，请稍候…</string>
+    <string name="notify_load_playlist_ok">已导入 %1$d 个电台</string>
+    <string name="notify_save_playlist_nok">无法导出播放列表</string>
+    <string name="notify_save_playlist_now">正在导出播放列表，请稍候…</string>
+    <string name="notify_save_playlist_ok">成功导出播放列表</string>
     <string name="notify_sync_list_deleted_entries">列表中 %2$d 个本地电台中的 %1$d 个在服务器标记为不存在</string>
 
     <string name="searchpreference_clear_history">清除历史</string>
@@ -211,7 +211,7 @@
 
     <string name="alert_delete_history">您真要删除历史吗？</string>
     <string name="alert_delete_favorites">您真要删除全部收藏吗？</string>
-    <string name="yes">确认</string>
+    <string name="yes">是</string>
     <string name="no">取消</string>
 
     <string name="alert_select_player">请选择一个播放器</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">继续</string>
 
     <string name="action_later">之后</string>
+
+    <string name="action_open_file_location">打开文件位置</string>
+    <string name="action_record">录音</string>
+    <string name="tab_recordings">录音</string>
+    <string name="chapters">章节</string>
+    <string name="error_cannot_open_file">无法打开文件</string>
+    <string name="error_external_player_not_found">找不到外部音频播放器应用程序</string>
+    <string name="error_sharing">分享时出错</string>
 </resources>

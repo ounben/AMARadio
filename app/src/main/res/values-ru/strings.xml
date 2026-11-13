@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Недопустимое имя файла</string>
     <string name="label_button_cancel">Отмена</string>
     <string name="label_button_overwrite">Перезаписать</string>
-    <string name="notify_load_playlist_nok">Не удалось импортировать из %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Импорт из %1$s&#47;%2$s, пожалуйста, подождите.</string>
-    <string name="notify_load_playlist_ok">Импортировано %1$d станций из %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Не удалось экспортировать в %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Экспорт в %1$s&#47;%2$s, пожалуйста, подождите.</string>
-    <string name="notify_save_playlist_ok">Успешно экспортировано в %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Не удалось импортировать плейлист</string>
+    <string name="notify_load_playlist_now">Импорт плейлиста, пожалуйста, подождите…</string>
+    <string name="notify_load_playlist_ok">Импортировано %1$d станций</string>
+    <string name="notify_save_playlist_nok">Не удалось экспортировать плейлист</string>
+    <string name="notify_save_playlist_now">Экспорт плейлиста, пожалуйста, подождите…</string>
+    <string name="notify_save_playlist_ok">Плейлист успешно экспортирован</string>
     <string name="notify_sync_list_deleted_entries">%1$d из %2$d локальных станций в списке отмечены как несуществующие на сервере</string>
 
     <string name="searchpreference_clear_history">Очистить историю</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Продолжить</string>
 
     <string name="action_later">Позже</string>
+
+    <string name="action_open_file_location">Открыть местоположение файла</string>
+    <string name="action_record">Записывать</string>
+    <string name="tab_recordings">Записи</string>
+    <string name="chapters">Главы</string>
+    <string name="error_cannot_open_file">Не могу открыть файл</string>
+    <string name="error_external_player_not_found">Приложение внешнего аудиоплеера не найдено</string>
+    <string name="error_sharing">Ошибка обмена</string>
 </resources>

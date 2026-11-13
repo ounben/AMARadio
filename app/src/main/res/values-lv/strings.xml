@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Turpināt</string>
 
     <string name="action_later">Vēlāk</string>
+
+    <string name="action_open_file_location">Atveriet faila atrašanās vietu</string>
+    <string name="action_record">Ieraksts</string>
+    <string name="tab_recordings">Ieraksti</string>
+    <string name="chapters">Nodaļas</string>
+    <string name="error_cannot_open_file">Nevar atvērt failu</string>
+    <string name="error_external_player_not_found">Nav atrasta ārēja audio atskaņotāja lietotne</string>
+    <string name="error_sharing">Kopīgošanas kļūda</string>
 </resources>

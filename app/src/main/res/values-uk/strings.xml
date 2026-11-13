@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Невірна назва файлу</string>
     <string name="label_button_cancel">Скасувати</string>
     <string name="label_button_overwrite">Перезаписати</string>
-    <string name="notify_load_playlist_nok">Не вдалося імпортувати з %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Імпорт з %1$s&#47;%2$s, зачекайте.</string>
-    <string name="notify_load_playlist_ok">Імпортовано %1$d станцій з %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Не вдалося експортувати до %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Експорт до %1$s&#47;%2$s, зачекайте.</string>
-    <string name="notify_save_playlist_ok">Експорт до %1$s&#47;%2$s пройшов успішно</string>
+    <string name="notify_load_playlist_nok">Не вдалося імпортувати плейлист</string>
+    <string name="notify_load_playlist_now">Імпорт плейлиста, зачекайте…</string>
+    <string name="notify_load_playlist_ok">Імпортовано %1$d станцій</string>
+    <string name="notify_save_playlist_nok">Не вдалося експортувати плейлист</string>
+    <string name="notify_save_playlist_now">Експорт плейлиста, зачекайте…</string>
+    <string name="notify_save_playlist_ok">Плейлист успішно експортовано</string>
     <string name="notify_sync_list_deleted_entries">%1$d з %2$d локальних станцій у списку позначені як неіснуючі на сервері</string>
 
     <string name="searchpreference_clear_history">Очистити історію</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Продовжити</string>
 
     <string name="action_later">Пізніше</string>
+
+    <string name="action_open_file_location">Відкрити розташування файлу</string>
+    <string name="action_record">запис</string>
+    <string name="tab_recordings">Записи</string>
+    <string name="chapters">Розділи</string>
+    <string name="error_cannot_open_file">Неможливо відкрити файл</string>
+    <string name="error_external_player_not_found">Не знайдено програми зовнішнього аудіопрогравача</string>
+    <string name="error_sharing">Помилка спільного доступу</string>
 </resources>

@@ -50,7 +50,7 @@
     <string name="error_filter_name_required">Harap masukkan nama untuk tab filter ini terlebih dahulu</string>
     <string name="confirm_delete_filter_tab">Apakah Anda yakin ingin menghapus filter \"%1$s\"?</string>
     <string name="filter_empty_title">Bangun feed stasiun radio kustom Anda</string>
-    <string name="filter_empty_desc">Buat tampilan personal dengan menggabungkan beberapa kriteia. Anda dapat mempersempit pencarian menggunakan:</string>
+    <string name="filter_empty_desc">Buat tampilan personal dengan menggabungkan beberapa kriteria. Anda dapat mempersempit pencarian menggunakan:</string>
     <string name="filter_empty_filter_by">Filter berdasarkan</string>
     <string name="filter_empty_filter_desc">Negara, Nama Stasiun Radio, Tag, atau Bahasa</string>
     <string name="filter_empty_sort_by">Urutkan berdasarkan</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nama berkas tidak valid</string>
     <string name="label_button_cancel">Batal</string>
     <string name="label_button_overwrite">Timpa</string>
-    <string name="notify_load_playlist_nok">Tidak bisa mengimpor dari %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Mengimpor dari %1$s&#47;%2$s, silakan tunggu.</string>
-    <string name="notify_load_playlist_ok">Mengimpor %1$d stasiun dari %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Tidak bisa mengekspor ke %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Mengekspor ke %1$s&#47;%2$s, silakan tunggu.</string>
-    <string name="notify_save_playlist_ok">Berhasil mengekspor ke %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Tidak dapat mengimpor daftar putar</string>
+    <string name="notify_load_playlist_now">Mengimpor daftar putar, silakan tunggu…</string>
+    <string name="notify_load_playlist_ok">%1$d stasiun diimpor</string>
+    <string name="notify_save_playlist_nok">Tidak dapat mengekspor daftar putar</string>
+    <string name="notify_save_playlist_now">Mengekspor daftar putar, silakan tunggu…</string>
+    <string name="notify_save_playlist_ok">Daftar putar berhasil diekspor</string>
     <string name="notify_sync_list_deleted_entries">%1$d dari %2$d stasiun lokal di daftar ditandai tidak ada di server</string>
 
     <string name="searchpreference_clear_history">Hapus riwayat</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Izinkan akses jaringan lokal untuk menemukan dan terhubung ke speaker Cast dan TV di Wi-Fi Anda. Setelah mengizinkan akses, ketuk Transmisi lagi untuk memilih perangkat.</string>
     <string name="cast_network_denied">Akses jaringan lokal dinonaktifkan. Izinkan perangkat di sekitar di setelan aplikasi, lalu ketuk Transmisikan lagi. Pemutaran radio di ponsel ini tetap tersedia.</string>
     <string name="cast_network_settings">Buka pengaturan</string>
-    <string name="cast_network_continue">Melanjutkan</string>
+    <string name="cast_network_continue">Lanjutkan</string>
 
     <string name="action_later">Nanti</string>
+
+    <string name="action_open_file_location">Buka lokasi file</string>
+    <string name="action_record">Catatan</string>
+    <string name="tab_recordings">Rekaman</string>
+    <string name="chapters">Bab</string>
+    <string name="error_cannot_open_file">Tidak dapat membuka file</string>
+    <string name="error_external_player_not_found">Tidak ditemukan aplikasi pemutar audio eksternal</string>
+    <string name="error_sharing">Kesalahan berbagi</string>
 </resources>

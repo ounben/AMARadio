@@ -33,13 +33,13 @@
     <string name="action_delete">Eliminar</string>
     <string name="action_delete_history">Eliminar historial</string>
     <string name="action_delete_favorites">Eliminar favoritas</string>
-    <string name="action_delete_stream_history">Limpar historial reprodución</string>
+    <string name="action_delete_stream_history">Limpar historial de reprodución</string>
     <string name="action_ok">OK</string>
     <string name="action_cancel">Cancelar</string>
     <string name="action_top_click">Máis clicks</string>
-    <string name="action_toggle_view">Activar vista</string>
+    <string name="action_toggle_view">Alternar vista</string>
     <string name="action_top_vote">Máis votos</string>
-    <string name="action_changed_lately">Cambiou recentemente</string>
+    <string name="action_changed_lately">Cambiadas recentemente</string>
     <string name="action_currently_playing">Reproducindo</string>
     <string name="action_tags">Etiquetas</string>
     <string name="action_countries">Países/Rexións</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nome de ficheiro non válido</string>
     <string name="label_button_cancel">Cancelar</string>
     <string name="label_button_overwrite">Sobrescribir</string>
-    <string name="notify_load_playlist_nok">Non se importou desde %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importando desde %1$s&#47;%2$s, agarda.</string>
-    <string name="notify_load_playlist_ok">Importadas %1$d emisoras desde %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Non se exportou a %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportando a %1$s&#47;%2$s, agarda.</string>
-    <string name="notify_save_playlist_ok">Exportadas a %1$s&#47;%2$s correctamente</string>
+    <string name="notify_load_playlist_nok">Non se puido importar a lista de reprodución</string>
+    <string name="notify_load_playlist_now">Importando lista de reprodución, agarda…</string>
+    <string name="notify_load_playlist_ok">%1$d emisoras importadas</string>
+    <string name="notify_save_playlist_nok">Non se puido exportar a lista de reprodución</string>
+    <string name="notify_save_playlist_now">Exportando lista de reprodución, agarda…</string>
+    <string name="notify_save_playlist_ok">Lista de reprodución exportada correctamente</string>
     <string name="notify_sync_list_deleted_entries">%1$d de %2$d emisoras locales na lista marcadas como non existentes no servidor</string>
 
     <string name="searchpreference_clear_history">Limpar historial</string>
@@ -136,7 +136,7 @@
     <string name="startup_show_all_stations">Mostrar tódalas emisoras de radio</string>
     <string name="startup_show_favorites">Mostrar favoritas</string>
     <string name="startup_show_history">Mostrar historial</string>
-    <string name="startup_show_last_view">Última reproducida</string>
+    <string name="startup_show_last_view">Última vista</string>
 
     <string name="settings_load_icons">Mostrar iconas da emisora de radio</string>
     <string name="settings_load_icons_on">Descargaranse as iconas</string>
@@ -154,7 +154,7 @@
     <string name="settings_auto_off_on_startup_on">Usar temporizador de auto-apagado con auto-play</string>
     <string name="settings_auto_off_on_startup_off">Non usar temporizador de auto-apagado con auto-play</string>
     <string name="settings_auto_off_sleep_timer">Temporizador de auto-apagado</string>
-    <string name="settings_auto_off_sleep_timer_desc">Deixar de reproducir após %1$s minitos</string>
+    <string name="settings_auto_off_sleep_timer_desc">Deixar de reproducir após %1$s minutos</string>
     <string name="settings_play_external">Activar reprodutor externo</string>
     <string name="settings_play_external_desc_on">Reproducir emisoras de radio cun reprodutor externo</string>
     <string name="settings_play_external_desc_off">Reproducir emisoras de radio con AMARadio</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Continuar</string>
 
     <string name="action_later">Máis tarde</string>
+
+    <string name="action_open_file_location">Abrir a localización do ficheiro</string>
+    <string name="action_record">Gravar</string>
+    <string name="tab_recordings">Gravacións</string>
+    <string name="chapters">Capítulos</string>
+    <string name="error_cannot_open_file">Non se pode abrir o ficheiro</string>
+    <string name="error_external_player_not_found">Non se atopou ningunha aplicación de reprodutor de audio externo</string>
+    <string name="error_sharing">Erro ao compartir</string>
 </resources>

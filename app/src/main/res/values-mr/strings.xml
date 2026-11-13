@@ -402,4 +402,12 @@
     <string name="cast_network_continue">चालू ठेवा</string>
 
     <string name="action_later">नंतर</string>
+
+    <string name="action_open_file_location">फाइल स्थान उघडा</string>
+    <string name="action_record">रेकॉर्ड</string>
+    <string name="tab_recordings">रेकॉर्डिंग</string>
+    <string name="chapters">अध्याय</string>
+    <string name="error_cannot_open_file">फाइल उघडू शकत नाही</string>
+    <string name="error_external_player_not_found">कोणतेही बाह्य ऑडिओ प्लेयर ॲप आढळले नाही</string>
+    <string name="error_sharing">सामायिकरण त्रुटी</string>
 </resources>

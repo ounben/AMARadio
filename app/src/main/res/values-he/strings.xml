@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">שם קובץ לא תקין</string>
     <string name="label_button_cancel">ביטול</string>
     <string name="label_button_overwrite">דרוס</string>
-    <string name="notify_load_playlist_nok">לא ניתן לייבא מ-%1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">מייבא מ-%1$s&#47;%2$s, אנא המתן.</string>
-    <string name="notify_load_playlist_ok">יובאו %1$d תחנות מ-%2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">לא ניתן לייצא ל-%1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">מייצא ל-%1$s&#47;%2$s, אנא המתן.</string>
-    <string name="notify_save_playlist_ok">יוצא ל-%1$s&#47;%2$s בהצלحة</string>
+    <string name="notify_load_playlist_nok">ייבוא רשימת ההשמעה נכשל</string>
+    <string name="notify_load_playlist_now">מייבא רשימת השמעה, אנא המתן…</string>
+    <string name="notify_load_playlist_ok">יובאו %1$d תחנות</string>
+    <string name="notify_save_playlist_nok">ייצוא רשימת ההשמעה נכשל</string>
+    <string name="notify_save_playlist_now">מייצא רשימת השמעה, אנא המתן…</string>
+    <string name="notify_save_playlist_ok">רשימת ההשמעה יוצאה בהצלחה</string>
     <string name="notify_sync_list_deleted_entries">%1$d מתוך %2$d תחנות מקומיות ברשימה סומנו כלא קיימות בשרת</string>
 
     <string name="searchpreference_clear_history">ניקוי היסטוריה</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">לְהַמשִׁיך</string>
 
     <string name="action_later">מְאוּחָר יוֹתֵר</string>
+
+    <string name="action_open_file_location">פתח את מיקום הקובץ</string>
+    <string name="action_record">רְשׁוּמָה</string>
+    <string name="tab_recordings">הקלטות</string>
+    <string name="chapters">פרקים</string>
+    <string name="error_cannot_open_file">לא ניתן לפתוח קובץ</string>
+    <string name="error_external_player_not_found">לא נמצאה אפליקציית נגן שמע חיצוני</string>
+    <string name="error_sharing">שגיאה בשיתוף</string>
 </resources>

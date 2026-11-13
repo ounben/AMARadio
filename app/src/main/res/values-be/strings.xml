@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Няправільная назва файла</string>
     <string name="label_button_cancel">Адмена</string>
     <string name="label_button_overwrite">Перазапісаць</string>
-    <string name="notify_load_playlist_nok">Не ўдалося імпартаваць з %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Імпарт з %1$s&#47;%2$s, пачакайце.</string>
-    <string name="notify_load_playlist_ok">Імпартавана %1$d станцый з %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Не ўдалося экспартаваць у %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Экспарт у %1$s&#47;%2$s, пачакайце.</string>
-    <string name="notify_save_playlist_ok">Экспарт у %1$s&#47;%2$s прайшоў паспяхова</string>
+    <string name="notify_load_playlist_nok">Не ўдалося імпартаваць плэйліст</string>
+    <string name="notify_load_playlist_now">Імпарт плэйліста, пачакайце…</string>
+    <string name="notify_load_playlist_ok">Імпартавана %1$d станцый</string>
+    <string name="notify_save_playlist_nok">Не ўдалося экспартаваць плэйліст</string>
+    <string name="notify_save_playlist_now">Экспарт плэйліста, пачакайце…</string>
+    <string name="notify_save_playlist_ok">Плэйліст паспяхова экспартаваны</string>
     <string name="notify_sync_list_deleted_entries">%1$d з %2$d лакальных станцый у спісе пазначаныя як неіснуючыя на серверы</string>
 
     <string name="searchpreference_clear_history">Ачысціць гісторыю</string>
@@ -204,7 +204,7 @@
     <string name="notify_deleted_favorites">Выбранае выдаленае</string>
     <string name="notify_deleted_history">Гісторыя выдаленая</string>
 
-    <string name="notify_open_link_failure">Не знойдзена дадатак для адкрыцця спасылкі</string>
+    <string name="notify_open_link_failure">Не знойдзены дадатак для адкрыцця спасылкі</string>
 
     <string name="notify_station_removed_from_list">1 выдалена</string>
     <string name="action_station_removed_from_list_undo">АДМЯНІЦЬ</string>
@@ -264,7 +264,7 @@
     <string name="action_play_in_external">Прайграць у знешнім плэеры</string>
     <string name="action_choose_external_player">Выбраць знешні плэер</string>
 
-    <string name="settings_disable_battery_optimization">Аптымізацыя батарэі</string>
+    <string name="settings_disable_battery_optimization">Фонавае прайграванне</string>
     <string name="settings_ignore_battery_optimization_summary_on">Аптымізацыя батарэі ігнаруецца, AMARadio заўсёды зможа вярнуць фокус.</string>
     <string name="settings_ignore_battery_optimization_summary_off">Аптымізацыя батарэі актываваная, AMARadio не зможа вярнуць фокус у фонавым рэжыме.</string>
     <string name="key_ignore_battery_optimization">ignore_battery_optimization</string>
@@ -360,12 +360,12 @@
     <string name="settings_auto_db_update">Фонавая сінхранізацыя дадзеных</string>
     <string name="settings_auto_db_update_desc">Аўтаматычнае абнаўленне базы дадзеных станцый праз Radio-Browser API (рэкамендуецца).</string>
     <string name="settings_station_click_counter">Лічыльнік клікаў станцыі</string>
-    <string name="settings_station_click_counter_desc">Падтрымлівайце статыстыку Radio-Browser, ананімна абагульваючы гульнявыя падзеі.</string>
+    <string name="settings_station_click_counter_desc">Падтрымлівайце статыстыку Radio-Browser, ананімна абагульваючы падзеі прайгравання.</string>
     <string name="settings_rate_app_github">Падабаецца AMARadio?</string>
     <string name="settings_rate_app_github_summary">Пакіньце зорку на GitHub! Гэта дапамагае іншым знайсці праграму і падтрымлівае будучую распрацоўку.</string>
 
-    <string name="settings_remove_notification_on_stop">Выдаліць апавяшчэнне, калі праграма закрыта</string>
-    <string name="settings_remove_notification_on_stop_desc">Аўтаматычна адхіляць мультымедыйнае апавяшчэнне пры закрыцці праграмы з апошніх праграм</string>
+    <string name="settings_remove_notification_on_stop">Выдаліць апавяшчэнне пры спыненні</string>
+    <string name="settings_remove_notification_on_stop_desc">Аўтаматычна адхіляць мультымедыйнае апавяшчэнне пры спыненні прайгравання</string>
     <string name="settings_auto_resume_audio_focus">Аднавіць пасля страты фокусу гуку</string>
     <string name="settings_auto_resume_audio_focus_desc">Аўтаматычнае аднаўленне прайгравання пасля тэлефонных званкоў, будзільнікаў або іншых прыпынкаў гуку</string>
 
@@ -401,4 +401,13 @@
     <string name="cast_network_continue">Працягнуць</string>
 
     <string name="action_later">Пазней</string>
+
+    <string name="action_open_file_location">Адкрыць месцазнаходжанне файла</string>
+    <string name="action_record">Запісаць</string>
+    <string name="tab_recordings">Запісы</string>
+    <string name="chapters">Раздзелы</string>
+    <string name="error_cannot_open_file">Немагчыма адкрыць файл</string>
+    <string name="error_sharing">Памылка абагульвання</string>
+
+    <string name="error_external_player_not_found">Не знойдзена праграма знешняга аўдыяпрайгравальніка</string>
 </resources>

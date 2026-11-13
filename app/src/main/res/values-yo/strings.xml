@@ -7,11 +7,11 @@
     <string name="detail_language">Èdè</string>
     <string name="detail_weblink">Ìhon yẹ́bù</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
-    <string name="detail_play">Agbára Ọ̀rọ̀ (Play)</string>
-    <string name="detail_pause">Gbé Dúró (Pause)</string>
-    <string name="detail_stop">Mú Dúró (Stop)</string>
+    <string name="detail_play">Ṣiṣẹ́</string>
+    <string name="detail_pause">Dúró díẹ̀</string>
+    <string name="detail_stop">Dúró</string>
     <string name="detail_share">Pín</string>
-    <string name="detail_play_in_AMARadio">Gbé ránṣẹ́ ní AMARadio</string>
+    <string name="detail_play_in_AMARadio">Gbé jáde nínú AMARadio</string>
 
     <string name="action_links">Àwọn Ìhon</string>
     <string name="action_homepage">Ojú-ewé Ilé</string>
@@ -25,17 +25,17 @@
 
     <string name="action_local">Ti agbègbè</string>
     <string name="action_skip_to_next">Eleyi to tẹ̀lé e</string>
-    <string name="action_pause">Gbé Dúró (Pause)</string>
+    <string name="action_pause">Dúró díẹ̀</string>
     <string name="action_skip_to_previous">Tẹ́lẹ̀ ri</string>
     <string name="action_resume">Tẹ̀síwájú</string>
-    <string name="action_stop">Mú Dúró (Stop)</string>
+    <string name="action_stop">Dúró</string>
     <string name="action_search">Ṣàwárí</string>
     <string name="action_delete">Parẹ́</string>
     <string name="action_delete_history">Parẹ́ ìtàn</string>
     <string name="action_delete_favorites">Parẹ́ gbogbo àwọn ààyò</string>
     <string name="action_delete_stream_history">Rẹ́ ìtàn àwọn orin</string>
-    <string name="action_ok">Ó dára (OK)</string>
-    <string name="action_cancel">Mú kúrò (Cancel)</string>
+    <string name="action_ok">Ó dára</string>
+    <string name="action_cancel">Fagilee</string>
     <string name="action_top_click">Àwọn ti a tẹ̀ jù lọ</string>
     <string name="action_toggle_view">Pààrọ̀ ojú-àwòrán</string>
     <string name="action_top_vote">Àwọn ti a dibò fún jù lọ</string>
@@ -105,7 +105,7 @@
     <string name="searchpreference_no_results">Kò sí àwọn èsì</string>
     <string name="searchpreference_search">Ṣàwárí…</string>
     <string name="settings_appearance">Àwòrán</string>
-    <string name="settings_theme_selection_title">Aṣọ áńpù (Theme)</string>
+    <string name="settings_theme_selection_title">Àwọ̀ àti ìrísí</string>
     <string name="theme_light">Aṣọ mọ́lẹ̀</string>
     <string name="theme_dark">Aṣọ òkùnkùn</string>
     <string name="theme_system">Tẹ̀lé e-sistẹ́mù</string>
@@ -148,7 +148,7 @@
     <string name="settings_auto_favorite_on">Fi ilé-iṣẹ́ rédíò kún àwọn ààyò lọ́gán nígbà ti o ba ń gbé jáde</string>
     <string name="settings_auto_favorite_off">Mā fi ilé-iṣẹ́ rédíò kún àwọn ààyò lọ́gán nígbà ti o ba ń gbé jáde</string>
 
-    <string name="settings_play">Mọ̀ṣín gbéjáde (Player)</string>
+    <string name="settings_play">Mọ̀ṣín gbéjáde</string>
     <string name="settings_auto_play_on_startup">Gbé jáde ní ara ẹni</string>
     <string name="settings_auto_play_on_startup_on">Gbé ilé-iṣẹ́ rédíò ti o gbéjàde kẹhin jáde ní ìbẹ̀rẹ̀</string>
     <string name="settings_auto_play_on_startup_off">Mā gbé ilé-iṣẹ́ rédíò ti o gbéjàde kẹhin jáde ní ìbẹ̀rẹ̀</string>
@@ -209,7 +209,7 @@
     <string name="notify_open_link_failure">Kò sí áńpù ti a rí láti sí ìhon yìí</string>
 
     <string name="notify_station_removed_from_list">1 a yọ kúrò</string>
-    <string name="action_station_removed_from_list_undo">TÚN SE (UNDO)</string>
+    <string name="action_station_removed_from_list_undo">DÁ PADA</string>
 
     <string name="alert_delete_history">Ṣé o dá ẹ lójú pé o fẹ́ rẹ́ ìtàn kúrò?</string>
     <string name="alert_delete_favorites">Ṣé o dá ẹ lójú pé o fẹ́ parẹ́ gbogbo àwọn ààyò?</string>
@@ -224,7 +224,7 @@
     <string name="alert_press_back_to_exit">Tẹ bọtini emi sẹ́yìn lẹ́ẹ̀kan sí i láti bó sí wò</string>
 
     <string name="error_stream_url">Ìṣòro URL streamu</string>
-    <string name="error_caching_stream">Ìṣòro fi streamu sí kashè (cache)</string>
+    <string name="error_caching_stream">Ìṣòro fi streamu sí kashè</string>
     <string name="error_play_stream">Kò le gbé streamu yìí jáde</string>
     <string name="error_stream_reconnect_timeout">Kò le so pọ̀ mọ́ streamu yìí gẹ́gẹ́ bí àsìkò ti kọjá</string>
     <string name="warning_no_network_trying_resume">Kò sí netwọọki. Ń gbìyànjú láti tẹ̀síwájú nígbà ti netwọọki ba padà bọ̀.</string>
@@ -264,15 +264,15 @@
     <string name="ad_free_promise">100% Láláìsí Ìpolówó &amp; Ti Ara Ẹni</string>
 
     <string name="action_play_in_external">Gbé jáde nínú mọ̀ṣín ode</string>
-    <string name="action_choose_external_player">Yàn mọ̀ṣín ode</string>
+    <string name="action_choose_external_player">Yàn mọ̀ṣín gbéjáde ti ode</string>
 
     <string name="settings_disable_battery_optimization">Gbé jáde ní abẹ́lé</string>
     <string name="key_ignore_battery_optimization" translatable="false">ignore_battery_optimization</string>
     <string name="settings_other">Àwọn mìíràn</string>
     <string name="settings_rate_app">Fi àmì gíga fún AMARadio</string>
-    <string name="settings_rate_app_summary">Ti o ba fẹ́ràn áńpù yìí, jọ̀wọ́ fi àwòrán rẹ sí Play Store!</string>
+    <string name="settings_rate_app_summary">Ti o ba fẹ́ràn áńpù yìí, jọ̀wọ́ fi àtúnyẹ̀wò sí Play Store!</string>
     <string name="settings_rate_app_github">Ṣé o ń gbádùn AMARadio?</string>
-    <string name="settings_rate_app_github_summary">Fi ìràwọ̀ sí GitHub! Ó ń giúp àwọn mìíràn rí áńpù yìí.</string>
+    <string name="settings_rate_app_github_summary">Fi ìràwọ̀ sí GitHub! Ó ń ran àwọn mìíràn lọ́wọ́ láti rí áńpù yìí ó sì ń ṣe àtìlẹ́yìn fún ìdàgbàsókè ọjọ́ iwájú.</string>
     <string name="settings_statistics">Àwọn Àtòjọ Òǹka</string>
     <string name="settings_about">Nípa AMARadio</string>
 
@@ -390,7 +390,7 @@
     <string name="database_sync_channel_name">Ìsọdọ̀kan àtòjọ data ilé-iṣẹ́ rédíò</string>
     <string name="database_sync_success">A tún àtòjọ data ilé-iṣẹ́ ṣe pẹ̀lú àseyọrí</string>
     <string name="database_error_no_connection">Kò sí ìsopọ̀ intanẹ́ẹ̀tì</string>
-    <string name="database_error_no_space">Ààyè fayìlì kò tó nínú áńpù</string>
+    <string name="database_error_no_space">Ààyè disiki kò tó</string>
     <string name="database_error_failed">Àtúnṣe àtòjọ data kò fẹsẹ̀ múlẹ̀</string>
 
     <string name="settings_disable_battery_optimization_desc">Láti tẹ̀síwájú gbéjáde nígbà tí ojú-àwòrán ba wa ní oókan, yàn àtúnṣe bạtirí sí \'Unrestricted\'.</string>
@@ -398,10 +398,18 @@
     <string name="battery_opt_later">Nígbà mìíràn</string>
 
     <string name="cast_network_title">Wa awọn ẹrọ Cast</string>
-    <string name="cast_network_reason">Gba iraye si nẹtiwọọki agbegbe lati wa ati sopọ si Awọn agbohunsoke Simẹnti ati awọn TV lori Wi-Fi rẹ. Lẹhin gbigba wiwọle, tẹ Simẹnti ni kia kia lẹẹkansi lati yan ẹrọ kan.</string>
-    <string name="cast_network_denied">Wiwọle nẹtiwọọki agbegbe jẹ alaabo. Gba awọn ẹrọ nitosi laaye ni awọn eto app, lẹhinna tẹ Simẹnti lẹẹkansi ni kia kia. Sisisẹsẹhin Redio lori foonu yii wa.</string>
+    <string name="cast_network_reason">Gba iraye si nẹtiwọọki agbegbe lati wa ati sopọ si awọn agbohunsoke Cast ati awọn TV lori Wi-Fi rẹ. Lẹhin gbigba wiwọle, tẹ Cast lẹẹkansi lati yan ẹrọ kan.</string>
+    <string name="cast_network_denied">Wiwọle nẹtiwọọki agbegbe jẹ alaabo. Gba awọn ẹrọ nitosi laaye ni awọn eto app, lẹhinna tẹ Cast lẹẹkansi. Sisisẹsẹhin redio lori foonu yii wa.</string>
     <string name="cast_network_settings">Ṣii awọn eto</string>
     <string name="cast_network_continue">Tesiwaju</string>
 
     <string name="action_later">Nigbamii</string>
+
+    <string name="action_open_file_location">Ṣii ipo faili</string>
+    <string name="action_record">Gba silẹ</string>
+    <string name="tab_recordings">Awọn igbasilẹ</string>
+    <string name="chapters">Awọn ipin</string>
+    <string name="error_cannot_open_file">Ko le ṣi faili</string>
+    <string name="error_external_player_not_found">Ko si ohun elo ẹrọ ohun ita ti a rii</string>
+    <string name="error_sharing">Aṣiṣe pinpin</string>
 </resources>

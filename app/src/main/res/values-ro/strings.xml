@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Continuă</string>
 
     <string name="action_later">Mai târziu</string>
+
+    <string name="action_open_file_location">Deschideți locația fișierului</string>
+    <string name="action_record">Înregistra</string>
+    <string name="tab_recordings">Înregistrări</string>
+    <string name="chapters">Capitole</string>
+    <string name="error_cannot_open_file">Nu se poate deschide fișierul</string>
+    <string name="error_external_player_not_found">Nu a fost găsită nicio aplicație de player audio extern</string>
+    <string name="error_sharing">Eroare la partajare</string>
 </resources>

@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">ფაილის არასწორი სახელი</string>
     <string name="label_button_cancel">გაუქმება</string>
     <string name="label_button_overwrite">გადაწერა</string>
-    <string name="notify_load_playlist_nok">ვერ მოხერხდა იმპორტი აქედან: %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">მიმდინარეობს იმპორტი აქედან: %1$s&#47;%2$s, გთხოვთ დაელოდოთ.</string>
-    <string name="notify_load_playlist_ok">იმპორტირებულია %1$d სადგური აქედან: %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">ვერ მოხერხდა ექსპორტი აქ: %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">მიმდინარეობს ექსპორტი აქ: %1$s&#47;%2$s, გთხოვთ დაელოდოთ.</string>
-    <string name="notify_save_playlist_ok">ექსპორტი აქ: %1$s&#47;%2$s წარმატებით დასრულდა</string>
+    <string name="notify_load_playlist_nok">პლეილისტის იმპორტი ვერ მოხერხდა</string>
+    <string name="notify_load_playlist_now">მიმდინარეობს პლეილისტის იმპორტი, გთხოვთ დაელოდოთ…</string>
+    <string name="notify_load_playlist_ok">იმპორტირებულია %1$d სადგური</string>
+    <string name="notify_save_playlist_nok">პლეილისტის ექსპორტი ვერ მოხერხდა</string>
+    <string name="notify_save_playlist_now">მიმდინარეობს პლეილისტის ექსპორტი, გთხოვთ დაელოდოთ…</string>
+    <string name="notify_save_playlist_ok">პლეილისტი წარმატებით ექსპორტირዳ</string>
     <string name="notify_sync_list_deleted_entries">სიიდან %2$d ლოკალური სადგურიდან %1$d მონიშნულია როგორც სერვერზე არარსებული</string>
 
     <string name="searchpreference_clear_history">ისტორიის გასუფთავება</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">განაგრძეთ</string>
 
     <string name="action_later">მოგვიანებით</string>
+
+    <string name="action_open_file_location">გახსენით ფაილის ადგილმდებარეობა</string>
+    <string name="action_record">ჩანაწერი</string>
+    <string name="tab_recordings">ჩანაწერები</string>
+    <string name="chapters">თავები</string>
+    <string name="error_cannot_open_file">ფაილის გახსნა შეუძლებელია</string>
+    <string name="error_external_player_not_found">გარე აუდიო დამკვრელის აპი ვერ მოიძებნა</string>
+    <string name="error_sharing">შეცდომის გაზიარება</string>
 </resources>

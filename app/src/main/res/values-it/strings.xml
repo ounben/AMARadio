@@ -82,7 +82,7 @@
     <string name="sleep_timer_clear">Annulla</string>
     <string name="nav_item_add_sleep">Tempo di sonno</string>
 
-    <string name="nav_item_save_playlist">Esporta preferiti nella playlist</string>
+    <string name="nav_item_save_playlist">Esporta preferiti come playlist</string>
     <string name="nav_item_load_playlist">Importa preferiti dalla playlist</string>
     <string name="nav_item_save_history_playlist">Esporta cronologia come playlist</string>
     <string name="confirm_overwrite_file">Sovrascrivere il documento?</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nome del documento non valido</string>
     <string name="label_button_cancel">Annulla</string>
     <string name="label_button_overwrite">Sovrascrivi</string>
-    <string name="notify_load_playlist_nok">Impossibile importare da %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importando da %1$s&#47;%2$s, attendere prego.</string>
-    <string name="notify_load_playlist_ok">Importate %1$d stazioni da %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Impossibile esportare a %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Esportando a %1$s&#47;%2$s, attendere prego.</string>
-    <string name="notify_save_playlist_ok">Esportato a %1$s&#47;%2$s correttamente</string>
+    <string name="notify_load_playlist_nok">Impossibile importare la playlist</string>
+    <string name="notify_load_playlist_now">Importazione playlist in corso, attendere…</string>
+    <string name="notify_load_playlist_ok">%1$d stazioni importate</string>
+    <string name="notify_save_playlist_nok">Impossibile esportare la playlist</string>
+    <string name="notify_save_playlist_now">Esportazione playlist in corso, attendere…</string>
+    <string name="notify_save_playlist_ok">Playlist esportata con successo</string>
     <string name="notify_sync_list_deleted_entries">%1$d su %2$d stazioni locali nella lista marcate come non esistenti sul server</string>
 
     <string name="searchpreference_clear_history">Svuota cronologia</string>
@@ -108,8 +108,8 @@
     <string name="theme_dark">Scuro</string>
     <string name="theme_system">Segui il sistema</string>
     <string name="settings_compact_style">Modalità compatta</string>
-    <string name="settings_compact_style_desc_off">Icone grandi per i dettagli della stazione radio</string>
-    <string name="settings_compact_style_desc_on">Icone piccole per i dettagli della stazione radio</string>
+    <string name="settings_compact_style_desc_off">Icona grande con i dettagli della stazione radio</string>
+    <string name="settings_compact_style_desc_on">Icona piccola senza i dettagli della stazione radio</string>
     <string name="settings_bottom_navigation">Navigazione in basso</string>
     <string name="settings_ui_scale">Scala UI</string>
     <string name="settings_language">Lingua</string>
@@ -399,7 +399,15 @@
     <string name="cast_network_reason">Consenti l\'accesso alla rete locale per trovare e connetterti ad altoparlanti e TV Cast sulla tua rete Wi-Fi. Dopo aver consentito l\'accesso, tocca di nuovo Trasmetti per scegliere un dispositivo.</string>
     <string name="cast_network_denied">L\'accesso alla rete locale è disabilitato. Consenti i dispositivi nelle vicinanze nelle impostazioni dell\'app, quindi tocca di nuovo Trasmetti. La riproduzione della radio su questo telefono rimane disponibile.</string>
     <string name="cast_network_settings">Apri le impostazioni</string>
-    <string name="cast_network_continue">Continuare</string>
+    <string name="cast_network_continue">Continua</string>
 
     <string name="action_later">Dopo</string>
+
+    <string name="action_open_file_location">Apri il percorso del file</string>
+    <string name="action_record">Registra</string>
+    <string name="tab_recordings">Registrazioni</string>
+    <string name="chapters">Capitoli</string>
+    <string name="error_cannot_open_file">Impossibile aprire il file</string>
+    <string name="error_external_player_not_found">Nessuna app per lettore audio esterno trovata</string>
+    <string name="error_sharing">Errore di condivisione</string>
 </resources>

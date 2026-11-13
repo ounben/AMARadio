@@ -8,7 +8,7 @@
     <string name="detail_weblink">ਵੇਬ ਲਿੰਕ</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">ਚਲਾਓ</string>
-    <string name="detail_pause">ਰੋਕੋ (Pause)</string>
+    <string name="detail_pause">ਰੋਕੋ</string>
     <string name="detail_stop">ਬੰਦ ਕਰੋ</string>
     <string name="detail_share">ਸਾਂਝਾ ਕਰੋ</string>
     <string name="detail_play_in_AMARadio">AMARadio ਵਿੱਚ ਚਲਾਓ</string>
@@ -25,7 +25,7 @@
 
     <string name="action_local">ਸਥਾਨਕ</string>
     <string name="action_skip_to_next">ਅਗਲਾ</string>
-    <string name="action_pause">ਰੋਕੋ (Pause)</string>
+    <string name="action_pause">ਰੋਕੋ</string>
     <string name="action_skip_to_previous">ਪਿਛਲਾ</string>
     <string name="action_resume">ਮੁੜ ਸ਼ੁਰੂ ਕਰੋ</string>
     <string name="action_stop">ਬੰਦ ਕਰੋ</string>
@@ -120,7 +120,7 @@
     <string name="ui_scale_large">ਵੱਡਾ</string>
     <string name="ui_scale_extra_large">ਬਹੁਤ ਵੱਡਾ</string>
 
-    <string name="settings_interaction">ਗੱਲਬਾਤ (Interaction)</string>
+    <string name="settings_interaction">ਇੰਟਰਐਕਸ਼ਨ</string>
     <string name="settings_single_use_tags">ਘੱਟ ਵਰਤੇ ਜਾਣ ਵਾਲੇ ਟੈਗ ਦਿਖਾਓ</string>
     <string name="settings_single_use_tags_desc_off">ਘੱਟ ਵਰਤੇ ਜਾਣ ਵਾਲੇ ਟੈਗ ਨਹੀਂ ਦਿਖਾਏ ਜਾਣਗੇ</string>
     <string name="settings_single_use_tags_desc_on">ਘੱਟ ਵਰਤੇ ਜਾਣ ਵਾਲੇ ਟੈਗ ਦਿਖਾਏ ਜਾਣਗੇ</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">ਜਾਰੀ ਰੱਖੋ</string>
 
     <string name="action_later">ਬਾਅਦ ਵਿੱਚ</string>
+
+    <string name="action_open_file_location">ਫਾਈਲ ਟਿਕਾਣਾ ਖੋਲ੍ਹੋ</string>
+    <string name="action_record">ਰਿਕਾਰਡ</string>
+    <string name="tab_recordings">ਰਿਕਾਰਡਿੰਗਜ਼</string>
+    <string name="chapters">ਅਧਿਆਏ</string>
+    <string name="error_cannot_open_file">ਫ਼ਾਈਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ</string>
+    <string name="error_external_player_not_found">ਕੋਈ ਬਾਹਰੀ ਆਡੀਓ ਪਲੇਅਰ ਐਪ ਨਹੀਂ ਮਿਲਿਆ</string>
+    <string name="error_sharing">ਸਾਂਝਾਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
 </resources>

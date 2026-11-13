@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Érvénytelen fájlnév</string>
     <string name="label_button_cancel">Mégse</string>
     <string name="label_button_overwrite">Felülírás</string>
-    <string name="notify_load_playlist_nok">Nem sikerült az importálás innen: %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importálás innen: %1$s&#47;%2$s, várjon egy pillanatot.</string>
-    <string name="notify_load_playlist_ok">%1$d állomás importálva innen: %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Nem sikerült az exportálás ide: %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportálás ide: %1$s&#47;%2$s, várjon egy pillanatot.</string>
-    <string name="notify_save_playlist_ok">Sikeresen exportálva ide: %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Nem sikerült a lejátszási lista importálása</string>
+    <string name="notify_load_playlist_now">Lejátszási lista importálása, kérem várjon…</string>
+    <string name="notify_load_playlist_ok">%1$d állomás importálva</string>
+    <string name="notify_save_playlist_nok">Nem sikerült a lejátszási lista exportálása</string>
+    <string name="notify_save_playlist_now">Lejátszási lista exportálása, kérem várjon…</string>
+    <string name="notify_save_playlist_ok">Lejátszási lista sikeresen exportálva</string>
     <string name="notify_sync_list_deleted_entries">%1$d/%2$d helyi állomás a listában nem létezőként megjelölve a szerveren</string>
 
     <string name="searchpreference_clear_history">Előzmények törlése</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Folytatás</string>
 
     <string name="action_later">Később</string>
+
+    <string name="action_open_file_location">Nyissa meg a fájl helyét</string>
+    <string name="action_record">Rekord</string>
+    <string name="tab_recordings">Felvételek</string>
+    <string name="chapters">Fejezetek</string>
+    <string name="error_cannot_open_file">A fájl nem nyitható meg</string>
+    <string name="error_external_player_not_found">Nem található külső audiolejátszó alkalmazás</string>
+    <string name="error_sharing">Megosztási hiba</string>
 </resources>

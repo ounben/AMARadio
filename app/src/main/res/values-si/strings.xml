@@ -85,7 +85,7 @@
     <string name="nav_item_save_playlist">ප්‍රියතමයන් ප්ලේලිස්ට් එකක් ලෙස අපනයනය කරන්න</string>
     <string name="nav_item_load_playlist">ප්ලේලිස්ට් එකකින් ප්‍රියතමයන් ආනයනය කරන්න</string>
     <string name="nav_item_save_history_playlist">ඉතිහාසය ප්ලේලිස්ට් එකක් ලෙස අපනයනය කරන්න</string>
-    <string name="confirm_overwrite_file">ගොනුව යටපත් කරන්නද (Overwrite)?</string>
+    <string name="confirm_overwrite_file">ගොනුව උඩින් ලියන්නද?</string>
     <string name="dialog_hint_file_name">ගොනු නාමය ඇතුළත් කරන්න</string>
     <string name="error_empty_field">මෙම කොටස පිරවීම අත්‍යවශ්‍ය වේ</string>
     <string name="error_invalid_file_name">වලංගු නොවන ගොනු නාමයක්</string>
@@ -107,7 +107,7 @@
     <string name="theme_light">ආලෝකවත්</string>
     <string name="theme_dark">අඳුරු</string>
     <string name="theme_system">පද්ධතිය අනුගමනය කරන්න</string>
-    <string name="settings_compact_style">සංයුක්ත ප්‍රකාරය (Compact mode)</string>
+    <string name="settings_compact_style">සංයුක්ත ප්‍රකාරය</string>
     <string name="settings_compact_style_desc_off">ගුවන් විදුලි නාලිකා විස්තර සහිත විශාල අයිකන</string>
     <string name="settings_compact_style_desc_on">විස්තර ରහිත කුඩා අයිකන</string>
     <string name="settings_bottom_navigation">පහළ සංචලනය</string>
@@ -255,7 +255,7 @@
     <string name="image_button_repeat">නැවත ධාවනය</string>
     <string name="image_button_dont_repeat">නැවත ධාවනය එපා</string>
     <string name="icon_click_trend_decreasing">ජනප්‍රියත්වය අඩුවේ</string>
-    <string name="icon_click_trend_increasing">ජනප්‍රියත්වය වැඩුවේ</string>
+    <string name="icon_click_trend_increasing">ජනප්‍රියත්වය වැඩිවේ</string>
     <string name="icon_click_trend_stable">ජනප්‍රියත්වය ස්ථාවරයි</string>
 
     <string name="app_name">AMARadio</string>
@@ -295,7 +295,7 @@
         <item>Stream URL එක පිටපත් කරන්න</item>
     </string-array>
 
-    <string name="alert_metered_connection_title">සීමිත සම්බන්ධතාවයක් (Metered connection) හඳුනා ගන්නා ලදී</string>
+    <string name="alert_metered_connection_title">සීමිත සම්බන්ධතාවයක් හඳුනා ගන්නා ලදී</string>
     <string name="alert_metered_connection_message">මෙම සම්බන්ධතාවය සඳහා අමතර ගාස්තු අය විය හැක, දිගටම කරගෙන යාමට \'හරි\' ඔබන්න.</string>
     <string name="nav_item_statistics">සංඛ්‍යාලේඛන</string>
     <string name="nav_item_about">ගැන</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">දිගටම කරගෙන යන්න</string>
 
     <string name="action_later">පසුව</string>
+
+    <string name="action_open_file_location">ගොනු ස්ථානය විවෘත කරන්න</string>
+    <string name="action_record">වාර්තා කරන්න</string>
+    <string name="tab_recordings">පටිගත කිරීම්</string>
+    <string name="chapters">පරිච්ඡේද</string>
+    <string name="error_cannot_open_file">ගොනුව විවෘත කළ නොහැක</string>
+    <string name="error_external_player_not_found">බාහිර ශ්‍රව්‍ය වාදක යෙදුමක් හමු නොවීය</string>
+    <string name="error_sharing">බෙදාගැනීමේ දෝෂයකි</string>
 </resources>

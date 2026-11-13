@@ -5,7 +5,7 @@
     <string name="detail_country">Land</string>
     <string name="detail_create_shortcut">Tilføj til startskærm</string>
     <string name="detail_language">Sprog</string>
-    <string name="detail_weblink">Net henvisning</string>
+    <string name="detail_weblink">Weblink</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Afspil</string>
     <string name="detail_pause">Pause</string>
@@ -20,24 +20,24 @@
     <string name="action_starred_remove">Fjern fra favoritter</string>
 
     <string name="action_station_visit_website">Besøg netsted</string>
-    <string name="action_station_copy_stream_url">Kopiere strøm URL</string>
+    <string name="action_station_copy_stream_url">Kopiér strøm-URL</string>
     <string name="action_station_share">Del</string>
 
     <string name="action_local">Lokal</string>
     <string name="action_skip_to_next">Næste</string>
     <string name="action_pause">Pause</string>
     <string name="action_skip_to_previous">Forrige</string>
-    <string name="action_resume">Genoptage</string>
+    <string name="action_resume">Genoptag</string>
     <string name="action_stop">Stop</string>
     <string name="action_search">Søg</string>
     <string name="action_delete">Slet</string>
     <string name="action_delete_history">Slet historik</string>
     <string name="action_delete_favorites">Slet favoritter</string>
-    <string name="action_delete_stream_history">Ryd spor historik</string>
+    <string name="action_delete_stream_history">Ryd sporhistorik</string>
     <string name="action_ok">OK</string>
-    <string name="action_cancel">Annullere</string>
+    <string name="action_cancel">Annuller</string>
     <string name="action_top_click">Top klik</string>
-    <string name="action_toggle_view">Skifte visning</string>
+    <string name="action_toggle_view">Skift visning</string>
     <string name="action_top_vote">Top stemt</string>
     <string name="action_changed_lately">Senest ændret</string>
     <string name="action_currently_playing">Afspiller</string>
@@ -54,7 +54,7 @@
     <string name="filter_empty_filter_by">Filtrer efter</string>
     <string name="filter_empty_filter_desc">Land, Radiostationsnavn, mærker eller sprog</string>
     <string name="filter_empty_sort_by">Sorter efter</string>
-    <string name="filter_empty_sort_desc">Klik, Alfabet, Stemmer oder Sidste ændring</string>
+    <string name="filter_empty_sort_desc">Klik, Alfabet, Stemmer eller Sidste ændring</string>
     <string name="filter_empty_hint">Skriv et navn i feltet ovenfor for at gemme denne brugerdefinerede visning!</string>
     <string name="error_station_load">Kunne ikke forbinde til radiostationen</string>
     <string name="error_list_update">Kunne ikke forbinde til Radio-Browser-serveren</string>
@@ -69,18 +69,18 @@
     <string name="nav_item_history">Historik</string>
     <string name="nav_item_settings">Opsætning</string>
 
-    <string name="about_text">AMARadio er 100% reklamefri og privatlivsfokuseret.\n\nJeg udviklede oprindeligt diese app til min mor for at give hende en enkel, ærlig radiooplevelse uden irriterende reklamer eller sporing. Derfor vil AMARadio altid forblive reklamefri – det er et løfte til hende, delt med jer alle.\n\nDette projekt er en fork af den fremragende RadioDroid. Hele kildekoden er migreret fra Java til Kotlin for at sikre, at appen forbliver moderne og kompatibel med fremtidige Android-versioner.\n\nDenne app bruger det gratis radiostationskatalog på https://www.radio-browser.info .\nAlle kan tilføje stationer. Det fungerer som en wiki for online radiostationer.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nHvis du kan lide softwaren og vil hjælpe, er du velkommen til at sende mig en e-mail.\nIdéer til nye funktioner er også altid velkomne!\n\nDenne app er gratis software licenseret under GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
+    <string name="about_text">AMARadio er 100% reklamefri og privatlivsfokuseret.\n\nJeg udviklede oprindeligt denne app til min mor for at give hende en enkel, ærlig radiooplevelse uden irriterende reklamer eller sporing. Derfor vil AMARadio altid forblive reklamefri – det er et løfte til hende, delt med jer alle.\n\nDette projekt er en fork af den fremragende RadioDroid. Hele kildekoden er migreret fra Java til Kotlin for at sikre, at appen forbliver moderne og kompatibel med fremtidige Android-versioner.\n\nDenne app bruger det gratis radiostationskatalog på https://www.radio-browser.info .\nAlle kan tilføje stationer. Det fungerer som en wiki for online radiostationer.\n\nKontakt: ben@ounben.com\n\nBugtracker: https://github.com/ounben/AMARadio/issues\n\nHvis du kan lide softwaren og vil hjælpe, er du velkommen til at sende mig en e-mail.\nIdéer til nye funktioner er også altid velkomne!\n\nDenne app er gratis software licenseret under GPLv3. https://www.gnu.org/licenses/gpl-3.0.html</string>
     <string name="about_version">Version: %1$s</string>
     <string name="detail_star">Tilføj til favoritter</string>
     <string name="detail_unstar">Slet fra favoritter</string>
     <string name="detail_play_in_external_player">@string/action_play_in_external</string>
     <string name="progress_loading">Indlæser&#8230;</string>
 
-    <string name="sleep_timer" formatted="true">Sove tidsforsinkelse: %1$02d:%2$02d</string>
-    <string name="sleep_timer_title">Stop afspilning efter det valgte minut</string>
+    <string name="sleep_timer" formatted="true">Søvntimer: %1$02d:%2$02d</string>
+    <string name="sleep_timer_title">Stop afspilning efter det valgte antal minutter</string>
     <string name="sleep_timer_apply">Anvend</string>
     <string name="sleep_timer_clear">Ryd</string>
-    <string name="nav_item_add_sleep">Sove tidsforsinkelse</string>
+    <string name="nav_item_add_sleep">Søvntimer</string>
 
     <string name="nav_item_save_playlist">Eksporter favoritter som afspilningsliste</string>
     <string name="nav_item_load_playlist">Importer favoritter fra afspilningsliste</string>
@@ -89,15 +89,15 @@
     <string name="dialog_hint_file_name">Indtast filnavn</string>
     <string name="error_empty_field">Dette felt er påkrævet</string>
     <string name="error_invalid_file_name">Ugyldigt filnavn</string>
-    <string name="label_button_cancel">Annullere</string>
+    <string name="label_button_cancel">Annuller</string>
     <string name="label_button_overwrite">Overskriv</string>
-    <string name="notify_load_playlist_nok">Kunne ikke importere fra %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importerer fra %1$s&#47;%2$s, vent.</string>
-    <string name="notify_load_playlist_ok">Importerede %1$d stationer fra %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Kunne ikke eksportere til %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Eksporterer til %1$s&#47;%2$s, vent.</string>
-    <string name="notify_save_playlist_ok">Eksporteret til %1$s&#47;%2$s</string>
-    <string name="notify_sync_list_deleted_entries">%1$d of %2$d lokale stationer i listen markeret ikke-eksisterende på serveren</string>
+    <string name="notify_load_playlist_nok">Kunne ikke importere afspilningsliste</string>
+    <string name="notify_load_playlist_now">Importerer afspilningsliste, vent venligst…</string>
+    <string name="notify_load_playlist_ok">%1$d stationer importeret</string>
+    <string name="notify_save_playlist_nok">Kunne ikke eksportere afspilningsliste</string>
+    <string name="notify_save_playlist_now">Eksporterer afspilningsliste, vent venligst…</string>
+    <string name="notify_save_playlist_ok">Afspilningsliste eksporteret</string>
+    <string name="notify_sync_list_deleted_entries">%1$d af %2$d lokale stationer i listen er markeret som ikke-eksisterende på serveren</string>
 
     <string name="searchpreference_clear_history">Ryd historik</string>
     <string name="searchpreference_no_results">Intet resultat</string>
@@ -108,8 +108,8 @@
     <string name="theme_dark">Mørk</string>
     <string name="theme_system">Følg systemet</string>
     <string name="settings_compact_style">Tæt tilstand</string>
-    <string name="settings_compact_style_desc_off">Stort ikon tilføjet med radiostationsdetaljer</string>
-    <string name="settings_compact_style_desc_on">Lille ikon tilføjet uden radiostationsdetaljer</string>
+    <string name="settings_compact_style_desc_off">Stort ikon med radiostationsdetaljer</string>
+    <string name="settings_compact_style_desc_on">Lille ikon uden radiostationsdetaljer</string>
     <string name="settings_bottom_navigation">Bundnavigation</string>
     <string name="settings_ui_scale">UI-skalering</string>
     <string name="settings_language">Sprog</string>
@@ -119,15 +119,15 @@
     <string name="ui_scale_extra_large">Meget stor</string>
 
     <string name="settings_interaction">Interaktion</string>
-    <string name="settings_single_use_tags">Vis sjældne brugte mærker</string>
-    <string name="settings_single_use_tags_desc_off">Sjældne brugte mærker vises ikke</string>
-    <string name="settings_single_use_tags_desc_on">Sjældne brugte mærker vises</string>
+    <string name="settings_single_use_tags">Vis sjældent brugte mærker</string>
+    <string name="settings_single_use_tags_desc_off">Sjældent brugte mærker vises ikke</string>
+    <string name="settings_single_use_tags_desc_on">Sjældent brugte mærker vises</string>
 
     <string name="settings_show_broken">Defekte radiostationer</string>
     <string name="settings_show_broken_on">Vis defekte radiostationer i lister</string>
     <string name="settings_show_broken_off">Vis ikke defekte radiostationer i lister</string>
 
-    <string name="settings_startup_behaviour">Start opførsel</string>
+    <string name="settings_startup_behaviour">Startadfærd</string>
     <string name="action_grid_view">Gittervisning</string>
     <string name="action_list_view">Listevisning</string>
 
@@ -152,28 +152,28 @@
     <string name="settings_auto_play_on_startup_off">Afspil ikke seneste radiostation ved opstart</string>
     <string name="settings_auto_off_on_startup">Auto-stop</string>
     <string name="settings_auto_off_on_startup_on">Brug auto-stop timer med auto-play</string>
-    <string name="settings_auto_off_on_startup_off">Brug ikke auto-stop timer mit auto-play</string>
+    <string name="settings_auto_off_on_startup_off">Brug ikke auto-stop-timer med auto-play</string>
     <string name="settings_auto_off_sleep_timer">Auto-stop timer</string>
     <string name="settings_auto_off_sleep_timer_desc">Stop afspilning efter %1$s minutter</string>
-    <string name="settings_play_external">Aktivere ekstern afspiller</string>
+    <string name="settings_play_external">Aktiver ekstern afspiller</string>
     <string name="settings_play_external_desc_on">Afspil radiostationer med ekstern afspiller</string>
     <string name="settings_play_external_desc_off">Afspil radiostationer med AMARadio</string>
     <string name="settings_equalizer">Equalizer</string>
 
     <string name="settings_connectivity">Tilslutningsmuligheder</string>
-    <string name="settings_connect_timeout">Tilslutning tidsudløb</string>
-    <string name="settings_read_timeout">Læs tidsudløb</string>
-    <string name="settings_resume_timeout">Genoptag tidsudløb</string>
+    <string name="settings_connect_timeout">Forbindelsestimeout</string>
+    <string name="settings_read_timeout">Læsetimeout</string>
+    <string name="settings_resume_timeout">Genoptagelsestimeout</string>
     <string name="settings_retry_timeout">Prøv igen tidsudløb</string>
-    <string name="settings_retry_delay">Gentilslutning forsinkelse</string>
+    <string name="settings_retry_delay">Gentilslutningsforsinkelse</string>
     <string name="settings_proxy">Mellemvært</string>
     <string name="settings_proxy_login">Brugernavn</string>
     <string name="settings_proxy_password">Adgangskode</string>
     <string name="settings_proxy_action_test">Test</string>
     <string name="settings_proxy_working">Forbundet til %s</string>
     <string name="settings_proxy_not_working">Kunne ikke forbinde til %1$s\n%2$s</string>
-    <string name="settings_proxy_invalid">Mellemvært værdier er ugyldige</string>
-    <string name="ignore_proxy_settings_invalid">Ignorere ugyldig mellemvært opsætning</string>
+    <string name="settings_proxy_invalid">Proxy-værdier er ugyldige</string>
+    <string name="ignore_proxy_settings_invalid">Ignorerede ugyldige proxy-indstillinger</string>
     <string name="settings_seconds_format">%d sekunder</string>
     <string name="settings_milliseconds_format">%d millisekunder</string>
 
@@ -182,16 +182,16 @@
     <string name="settings_auto_resume_do_not_resume">Genoptag ikke</string>
 
     <string name="settings_auto_resume_on_wired_headset_connected">Genoptag ved trådet forbindelse</string>
-    <string name="settings_auto_resume_on_wired_headset_connected_on">Genoptag afspilning ved trådet hovedtelefon tisluttet</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Genoptag afspilning ved tilslutning af kablet hovedtelefon</string>
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Genoptag ved Bluetooth forbindelse</string>
-    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Genoptag afspilning ved Bluetooth A2DP enhed forbindelse</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Genoptag afspilning ved forbindelse til Bluetooth A2DP-enhed</string>
 
     <string name="settings_auto_resume_on_any_connected">Genoptag ved enhver forbindelse</string>
 
-    <string name="settings_warn_no_wifi">Trådløst slukke advarsel</string>
-    <string name="settings_warn_no_wifi_on">Advare når der afspilles uden trådløst tilslutning</string>
-    <string name="settings_warn_no_wifi_off">Ingen advarsel når ikke på trådløst tislutning</string>
+    <string name="settings_warn_no_wifi">Advarsel ved manglende Wi-Fi</string>
+    <string name="settings_warn_no_wifi_on">Advar ved afspilning uden Wi-Fi-forbindelse</string>
+    <string name="settings_warn_no_wifi_off">Ingen advarsel uden Wi-Fi-forbindelse</string>
 
     <string name="notify_pre_play">Forbinder</string>
     <string name="notify_play">Afspiller</string>
@@ -207,7 +207,7 @@
     <string name="notify_open_link_failure">Intet program fundet til at åbne henvisning</string>
 
     <string name="notify_station_removed_from_list">1 fjernet</string>
-    <string name="action_station_removed_from_list_undo">Genskab</string>
+    <string name="action_station_removed_from_list_undo">GENSKAB</string>
 
     <string name="alert_delete_history">Slet historik?</string>
     <string name="alert_delete_favorites">Slet alle favoritter?</string>
@@ -221,14 +221,14 @@
 
     <string name="alert_press_back_to_exit">Tryk tilbage én gang mere for at afslutte</string>
 
-    <string name="error_stream_url">Strøm URL problem</string>
-    <string name="error_caching_stream">Strøm mellemlager problem</string>
+    <string name="error_stream_url">Strøm-URL-problem</string>
+    <string name="error_caching_stream">Strømbufferproblem</string>
     <string name="error_play_stream">Kan ikke afspille strøm</string>
     <string name="error_stream_reconnect_timeout">Kan ikke forbinde til strøm: tidsudløb</string>
-    <string name="warning_no_network_trying_resume">Ingen netværk forbindelse. Genoptager når forbindelse er tilbage.</string>
-    <string name="giving_up_resume">Forsøg på genoptage afspilning afvist</string>
+    <string name="warning_no_network_trying_resume">Ingen netværksforbindelse. Genoptager når forbindelsen er tilbage.</string>
+    <string name="giving_up_resume">Forsøg på at genoptage afspilning opgivet</string>
 
-    <string name="error_grant_audiofocus">Anmode om lyd fokus blev ikke tildelt af systemet</string>
+    <string name="error_grant_audiofocus">Anmodning om lydfokus blev ikke tildelt af systemet</string>
 
     <string name="error_no_equalizer_found">Intet equalizer program fundet</string>
 
@@ -248,8 +248,8 @@
     <string name="station_details_clicks">%1$d klik</string>
     <string name="station_details_votes">%1$d stemmer</string>
 
-    <string name="image_button_disable">Deaktivere</string>
-    <string name="image_button_delete">Slette</string>
+    <string name="image_button_disable">Deaktiver</string>
+    <string name="image_button_delete">Slet</string>
     <string name="image_button_more">Mere</string>
     <string name="image_button_less">Minder</string>
     <string name="image_button_repeat">Gentag</string>
@@ -290,7 +290,7 @@
 
     <string-array name="actions_station_link">
         <item>Besøg netsted</item>
-        <item>Kopiere strøm URL</item>
+        <item>Kopiér strøm-URL</item>
     </string-array>
 
     <string name="alert_metered_connection_title">Forbrugsafregnet forbindelse registreret</string>
@@ -347,7 +347,7 @@
     <string name="station_name">Radiostationsnavn</string>
     <string name="stream_url">Stream URL</string>
     <string name="favicon_url">Stationslogo-URL (Favicon)</string>
-    <string name="select_image">Vælg Billede</string>
+    <string name="select_image">Vælg billede</string>
     <string name="error_invalid_url">Indtast venligst en gyldig URL</string>
     <string name="action_save">Gem</string>
     <string name="widget_name_small">AMARadio Compact</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Fortsæt</string>
 
     <string name="action_later">Senere</string>
+
+    <string name="action_open_file_location">Åbn filplacering</string>
+    <string name="action_record">Optag</string>
+    <string name="tab_recordings">Optagelser</string>
+    <string name="chapters">Kapitler</string>
+    <string name="error_cannot_open_file">Kan ikke åbne filen</string>
+    <string name="error_external_player_not_found">Der blev ikke fundet nogen ekstern lydafspiller-app</string>
+    <string name="error_sharing">Fejl ved deling</string>
 </resources>

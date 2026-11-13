@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Nadaljuj</string>
 
     <string name="action_later">Kasneje</string>
+
+    <string name="action_open_file_location">Odpri lokacijo datoteke</string>
+    <string name="action_record">Zapis</string>
+    <string name="tab_recordings">Posnetki</string>
+    <string name="chapters">Poglavja</string>
+    <string name="error_cannot_open_file">Datoteke ni mogoče odpreti</string>
+    <string name="error_external_player_not_found">Najdena ni bila nobena aplikacija za zunanji predvajalnik zvoka</string>
+    <string name="error_sharing">Napaka pri skupni rabi</string>
 </resources>

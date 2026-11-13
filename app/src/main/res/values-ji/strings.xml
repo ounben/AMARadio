@@ -34,7 +34,7 @@
     <string name="action_delete_history">מעקן היסטאָריע</string>
     <string name="action_delete_favorites">מעקן אַלע פאַוואָריטן</string>
     <string name="action_delete_stream_history">רייניקן לידער היסטאָריע</string>
-    <string name="action_ok">איבערגעבן</string>
+    <string name="action_ok">אָקיי</string>
     <string name="action_cancel">ביטול</string>
     <string name="action_top_click">מערסט געקליקט</string>
     <string name="action_toggle_view">טוישן אויסזען</string>
@@ -93,12 +93,12 @@
     <string name="error_invalid_file_name">אומגילטיקער פאַיל נאָמען</string>
     <string name="label_button_cancel">ביטול</string>
     <string name="label_button_overwrite">איבערשרייבן</string>
-    <string name="notify_load_playlist_nok">קען ניט אימפּאָרטירן פון %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">אימפּאָרטירט פון %1$s&#47;%2$s, ביטע וואַרט.</string>
-    <string name="notify_load_playlist_ok">אימפּאָרטירט %1$d סטאנציעס פון %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">קען ניט עקספּאָרטירן צו %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">עקספּאָרטירט צו %1$s&#47;%2$s, ביטע וואַרט.</string>
-    <string name="notify_save_playlist_ok">עקספּאָרטירט צו %1$s&#47;%2$s מיט הצלחה</string>
+    <string name="notify_load_playlist_nok">קען ניט אימפּאָרטירן פּלייליסט</string>
+    <string name="notify_load_playlist_now">אימפּאָרטירט פּלייליסט, ביטע וואַרט…</string>
+    <string name="notify_load_playlist_ok">אימפּאָרטירט %1$d סטאנציעס</string>
+    <string name="notify_save_playlist_nok">קען ניט עקספּאָרטירן פּלייליסט</string>
+    <string name="notify_save_playlist_now">עקספּאָרטירט פּלייליסט, ביטע וואַרט…</string>
+    <string name="notify_save_playlist_ok">פּלייליסט עקספּאָרטירט מיט הצלחה</string>
     <string name="notify_sync_list_deleted_entries">%1$d פון %2$d לאָקאַלע סטאנציעס אין דער ליסטע זענען ניט פאַראַן אויפֿן סערווער</string>
 
     <string name="searchpreference_clear_history">רייניקן היסטאָריע</string>
@@ -216,7 +216,7 @@
     <string name="yes">יאָ</string>
     <string name="no">ניין</string>
 
-    <string name="alert_select_player">ביטע קלייבט א אויסגאבע שפּילער</string>
+    <string name="alert_select_player">ביטע קלייבט אויס אַ שפּילער</string>
     <string name="alert_select_player_name">נאָמען</string>
     <string name="hostname">סערווער אַדרעס</string>
     <string name="port">נעצווערק פּאָרט</string>
@@ -272,7 +272,7 @@
     <string name="settings_rate_app">שאַצן AMARadio</string>
     <string name="settings_rate_app_summary">אויב איר האָט ליב די אַפּ, ביטע לאָזט אַ רעוויאָוו אויפֿן Play Store!</string>
     <string name="settings_rate_app_github">האָט איר פאַרגעניגן פון AMARadio?</string>
-    <string name="settings_rate_app_github_summary">לאָזט א שטערן אויף GitHub! עס העלפט אַנדערע געפֿינען די אַפּ.</string>
+    <string name="settings_rate_app_github_summary">לאָזט אַ שטערן אויף GitHub! דאָס העلפֿט אַנדערע צו געפֿינען די אַפּ און שטיצט צוקונפֿטיקע אַנטוויקלונג.</string>
     <string name="settings_statistics">סטאַטיסטיק</string>
     <string name="settings_about">וועגן AMARadio</string>
 
@@ -298,7 +298,7 @@
     </string-array>
 
     <string name="alert_metered_connection_title">געפונען געמאַסטענע פאַרבינדונג</string>
-    <string name="alert_metered_connection_message">געמאַסטענע פאַרבינדונג קען אָנקאָסטן נאָך געלט, דריקט \'איבערגעבן\' צו פאָרזעצן.</string>
+    <string name="alert_metered_connection_message">געמאַסטענע פאַרבינדונג קען אָנקאָסטן נאָך געלט, דריקט \'OK\' צו פאָרזעצן.</string>
     <string name="nav_item_statistics">סטאַטיסטיק</string>
     <string name="nav_item_about">וועגן</string>
     <string name="refresh">פאַרנײַען</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">פאָרזעצן</string>
 
     <string name="action_later">שפּעטער</string>
+
+    <string name="action_open_file_location">עפענען טעקע אָרט</string>
+    <string name="action_record">רעקאָרד</string>
+    <string name="tab_recordings">רעקאָרדינגס</string>
+    <string name="chapters">קאפיטלען</string>
+    <string name="error_cannot_open_file">קענען ניט עפענען טעקע</string>
+    <string name="error_external_player_not_found">קיין פונדרויסנדיק אַודיאָ שפּילער אַפּ געפֿונען</string>
+    <string name="error_sharing">טעות ייַנטיילונג</string>
 </resources>

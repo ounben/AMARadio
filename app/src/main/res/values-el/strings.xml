@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="detail_name">Όνομα</string>
-    <string name="detail_tags">Καρτέλες</string>
+    <string name="detail_tags">Ετικέτες</string>
     <string name="detail_country">Χώρα</string>
     <string name="detail_create_shortcut">Προσθήκη στην αρχική οθόνη</string>
     <string name="detail_language">Γλώσσα</string>
@@ -20,7 +20,7 @@
     <string name="action_starred_remove">Αφαίρεση από τα αγαπημένα</string>
 
     <string name="action_station_visit_website">Επίσκεψη στον Ιστότοπο</string>
-    <string name="action_station_copy_stream_url">Αντιγραφή της Διεύθυνσης Url της Ροής</string>
+    <string name="action_station_copy_stream_url">Αντιγραφή της Διεύθυνσης URL της Ροής</string>
     <string name="action_station_share">Κοινή Χρήση</string>
 
     <string name="action_local">Τοπικοί</string>
@@ -41,7 +41,7 @@
     <string name="action_top_vote">Καλύτερη Βαθμολογία</string>
     <string name="action_changed_lately">Πρόσφατα Αλλαγμένα</string>
     <string name="action_currently_playing">Παίζουν</string>
-    <string name="action_tags">Καρτέλες</string>
+    <string name="action_tags">Ετικέτες</string>
     <string name="action_countries">Χώρες/Περιοχές</string>
     <string name="action_languages">Γλώσσες</string>
     <string name="action_edit">Επεξεργασία</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Μη έγκυρο όνομα αρχείου</string>
     <string name="label_button_cancel">Ακύρωση</string>
     <string name="label_button_overwrite">Αντικατάσταση</string>
-    <string name="notify_load_playlist_nok">Αδυναμία εισαγωγής από %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Εισαγωγή από %1$s&#47;%2$s, παρακαλώ περιμένετε.</string>
-    <string name="notify_load_playlist_ok">Εισήχθησαν %1$d σταθμοί από %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Αδυναμία εξαγωγής σε %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Εξαγωγή σε %1$s&#47;%2$s, παρακαλώ περιμένετε.</string>
-    <string name="notify_save_playlist_ok">Επιτυχής εξαγωγή σε %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Αδυναμία εισαγωγής λίστας αναπαραγωγής</string>
+    <string name="notify_load_playlist_now">Εισαγωγή λίστας αναπαραγωγής, παρακαλώ περιμένετε…</string>
+    <string name="notify_load_playlist_ok">Εισήχθησαν %1$d σταθμοί</string>
+    <string name="notify_save_playlist_nok">Αδυναμία εξαγωγής λίστας αναπαραγωγής</string>
+    <string name="notify_save_playlist_now">Εξαγωγή λίστας αναπαραγωγής, παρακαλώ περιμένετε…</string>
+    <string name="notify_save_playlist_ok">Η λίστα αναπαραγωγής εξήχθη με επιτυχία</string>
     <string name="notify_sync_list_deleted_entries">%1$d από %2$d τοπικούς σταθμούς στη λίστα σημειώθηκαν ως ανύπαρκτοι στον διακομιστή</string>
 
     <string name="searchpreference_clear_history">Εκκαθάριση ιστορικού</string>
@@ -355,7 +355,7 @@
     <string name="widget_name_small">AMARadio Compact</string>
     <string name="widget_name_full">AMARadio Player</string>
     <string name="widget_description_small">Γρήγορα χειριστήρια αναπαραγωγής</string>
-    <string name="widget_description_full">Λίστα αναπαραγωγής και ραδιοφωνικών σταθμών</string>
+    <string name="widget_description_full">Αναπαραγωγή και λίστα ραδιοφωνικών σταθμών</string>
 
     <string name="settings_auto_db_update">Συγχρονισμός δεδομένων παρασκηνίου</string>
     <string name="settings_auto_db_update_desc">Αυτόματη ενημέρωση βάσης δεδομένων σταθμών μέσω Radio-Browser API (συνιστάται).</string>
@@ -401,7 +401,15 @@
     <string name="cast_network_reason">Επιτρέψτε την πρόσβαση στο τοπικό δίκτυο για εύρεση και σύνδεση με ηχεία και τηλεοράσεις Cast στο Wi-Fi σας. Αφού επιτρέψετε την πρόσβαση, πατήστε ξανά Μετάδοση για να επιλέξετε μια συσκευή.</string>
     <string name="cast_network_denied">Η πρόσβαση στο τοπικό δίκτυο είναι απενεργοποιημένη. Επιτρέψτε τις συσκευές Nearby στις ρυθμίσεις της εφαρμογής και, στη συνέχεια, πατήστε ξανά Μετάδοση. Η αναπαραγωγή ραδιοφώνου σε αυτό το τηλέφωνο παραμένει διαθέσιμη.</string>
     <string name="cast_network_settings">Ανοίξτε τις ρυθμίσεις</string>
-    <string name="cast_network_continue">Συνεχίζω</string>
+    <string name="cast_network_continue">Συνέχεια</string>
 
     <string name="action_later">Αργότερα</string>
+
+    <string name="action_open_file_location">Ανοίξτε τη θέση του αρχείου</string>
+    <string name="action_record">Εγγραφή</string>
+    <string name="tab_recordings">Ηχογραφήσεις</string>
+    <string name="chapters">Κεφάλαια</string>
+    <string name="error_cannot_open_file">Δεν είναι δυνατό το άνοιγμα του αρχείου</string>
+    <string name="error_external_player_not_found">Δεν βρέθηκε εφαρμογή εξωτερικής αναπαραγωγής ήχου</string>
+    <string name="error_sharing">Σφάλμα κοινοποίησης</string>
 </resources>

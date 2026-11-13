@@ -5,7 +5,7 @@
     <string name="detail_country">Өлкө</string>
     <string name="detail_create_shortcut">Башкы экранга кошуу</string>
     <string name="detail_language">Тিল</string>
-    <string name="detail_weblink">Веբ-шилтеме</string>
+    <string name="detail_weblink">Веб-шилтеме</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Ойнотуу</string>
     <string name="detail_pause">Тыныгуу</string>
@@ -179,12 +179,12 @@
     <string name="settings_seconds_format">%d секунд</string>
     <string name="settings_milliseconds_format">%d миллисекунд</string>
 
-    <string name="settings_pause_when_noisy">Cимдүү кулакчыნ ажыратылганда тыныгуу</string>
+    <string name="settings_pause_when_noisy">Кулакчын ажыратылганда тыныгуу</string>
 
     <string name="settings_auto_resume_do_not_resume">Улантпоо</string>
 
     <string name="settings_auto_resume_on_wired_headset_connected">Симдүү байланышта улантуу</string>
-    <string name="settings_auto_resume_on_wired_headset_connected_on">Симдүү кулакчыნ туташтырылганда ойнотууну улантуу</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Симдүү кулакчын туташтырылганда ойнотууну улантуу</string>
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Bluetooth байланышында улантуу</string>
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Bluetooth A2DP түзмөгү туташтырылганда ойнотууну улантуу</string>
@@ -234,10 +234,10 @@
 
     <string name="error_no_equalizer_found">Эквалайзер тиркемеси табылбады</string>
 
-    <string name="player_info_status">Aбалы:&#160;</string>
+    <string name="player_info_status">Абалы:&#160;</string>
     <string name="player_info_status_stopped">токтотулду</string>
     <string name="player_info_status_playing">ойноп жатат</string>
-    <string name="player_info_transferred">БЕРИЛГЕН ДЕРЕКТЕР: %1$s</string>
+    <string name="player_info_transferred">Берилген деректер: %1$s</string>
 
     <string name="tab_player_art">Альбом мукабасы</string>
     <string name="tab_player_info">Маалымат</string>
@@ -272,7 +272,7 @@
     <string name="settings_rate_app">AMARadio\'го баа берүү</string>
     <string name="settings_rate_app_summary">Эгер тиркеме сизге жакса, Play Store\'до пикир калтырыңыз!</string>
     <string name="settings_rate_app_github">AMARadio жагып жатабы?</string>
-    <string name="settings_rate_app_github_summary">GitHub\'до жылдызча калтырыңыз! Бул башкаларга тиркемени табууга жардам берет.</string>
+    <string name="settings_rate_app_github_summary">GitHub\'до жылдызча калтырыңыз! Бул башкаларга тиркемени табууга жардам берет жана келечектеги өнүгүүнү колдойт.</string>
     <string name="settings_statistics">Статистика</string>
     <string name="settings_about">AMARadio жөнүндө</string>
 
@@ -282,14 +282,14 @@
     <string-array name="weekdays">
         <item>Жш</item>
         <item>Дш</item>
-        <item>Шש</item>
-        <item>Шר</item>
+        <item>Шш</item>
+        <item>Шр</item>
         <item>Бш</item>
         <item>Жм</item>
-        <item>Иש</item>
+        <item>Иш</item>
     </string-array>
 
-    <string name="notify_stream_url_copied">Агым URL дареги сsequence ийгиликтүү көчүрүлдү</string>
+    <string name="notify_stream_url_copied">Агым URL дареги ийгиликтүү көчүрүлдү</string>
     <string name="notify_track_info_copied">Ыр маалыматы сәтті көчүрүлдү</string>
 
     <string-array name="actions_station_link">
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">Улантуу</string>
 
     <string name="action_later">Кийинчерээк</string>
+
+    <string name="action_open_file_location">Файлдын жайгашкан жерин ачуу</string>
+    <string name="action_record">Жаздыруу</string>
+    <string name="tab_recordings">Жазуулар</string>
+    <string name="chapters">Бөлүмдөр</string>
+    <string name="error_cannot_open_file">Файлды ачуу мүмкүн эмес</string>
+    <string name="error_external_player_not_found">Тышкы аудио ойноткуч колдонмо табылган жок</string>
+    <string name="error_sharing">Бөлүшүү катасы</string>
 </resources>

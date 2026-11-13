@@ -103,7 +103,7 @@
     <string name="searchpreference_no_results">ရှာမတွေ့ပါ</string>
     <string name="searchpreference_search">ရှာဖွေရန်…</string>
     <string name="settings_appearance">မြင်ကွင်း</string>
-    <string name="settings_theme_selection_title">သီးမ် (Theme)</string>
+    <string name="settings_theme_selection_title">အပြင်အဆင်</string>
     <string name="theme_light">အလင်း</string>
     <string name="theme_dark">အမှောင်</string>
     <string name="theme_system">စနစ်အတိုင်း</string>
@@ -256,7 +256,7 @@
     <string name="image_button_dont_repeat">ထပ်ခါထပ်ခါ မဟုတ်</string>
     <string name="icon_click_trend_decreasing">လူကြိုက်နည်းလာသည်</string>
     <string name="icon_click_trend_increasing">လူကြိုက်များလာသည်</string>
-    <string name="icon_click_trend_stable">ပုံမှန်ရှိသည်</string>
+    <string name="icon_click_trend_stable">လူကြိုက်များမှု ပုံမှန်ရှိသည်</string>
 
     <string name="app_name">AMARadio</string>
     <string name="ad_free_promise">၁၀၀% ကြော်ငြာမပါ ကိုယ်ရေးလုံခြုံမှု အလေးထားသည်</string>
@@ -350,7 +350,7 @@
     <string name="stream_url">တိုက်ရိုက်လွှင့် URL</string>
     <string name="favicon_url">ရေဒီယိုလိုင်း လိုဂို URL (Favicon)</string>
     <string name="select_image">ဓာတ်ပုံ ရွေးပါ</string>
-    <string name="error_invalid_url">ကျေးဇူးပြု၍ တရားဝင် URL ကိုထည့်ပါ။</string>
+    <string name="error_invalid_url">ကျေးဇူးပြု၍ တရားဝင် URL ကိုထည့်ပါ</string>
     <string name="action_save">သိမ်းဆည်းရန်</string>
     <string name="widget_name_small">AMARadio Compact</string>
     <string name="widget_name_full">AMARadio Player</string>
@@ -395,11 +395,19 @@
     <string name="battery_opt_open_settings">ဆက်တင်များ ဖွင့်ရန်</string>
     <string name="battery_opt_later">နောက်မှ</string>
 
-    <string name="cast_network_title">Cast စက်ပစ္စည်းများကို ရှာပါ။</string>
+    <string name="cast_network_title">Cast စက်ပစ္စည်းများကို ရှာပါ</string>
     <string name="cast_network_reason">သင်၏ Wi-Fi ရှိ Cast စပီကာများနှင့် TV များသို့ ရှာဖွေပြီး ချိတ်ဆက်ရန် ဒေသတွင်းကွန်ရက်ဝင်ရောက်ခွင့်ကို ခွင့်ပြုပါ။ အသုံးပြုခွင့်ကို ခွင့်ပြုပြီးနောက်၊ စက်ပစ္စည်းတစ်ခုကို ရွေးချယ်ရန် ကာစ်စ်ကို ထပ်မံနှိပ်ပါ။</string>
     <string name="cast_network_denied">ဒေသတွင်းကွန်ရက်ဝင်ရောက်ခွင့်ကို ပိတ်ထားသည်။ အက်ပ်ဆက်တင်များတွင် အနီးနားရှိ စက်များကို ခွင့်ပြုပါ၊ ထို့နောက် ကာစ်စ်ကို ထပ်မံနှိပ်ပါ။ ဤဖုန်းတွင် ရေဒီယိုကို ဖွင့်နိုင်သေးသည်။</string>
-    <string name="cast_network_settings">ဆက်တင်များကိုဖွင့်ပါ။</string>
+    <string name="cast_network_settings">ဆက်တင်များကိုဖွင့်ပါ</string>
     <string name="cast_network_continue">ဆက်ရန်</string>
 
     <string name="action_later">နောက်တော့</string>
+
+    <string name="action_open_file_location">ဖိုင်တည်နေရာကိုဖွင့်ပါ</string>
+    <string name="action_record">မှတ်တမ်း</string>
+    <string name="tab_recordings">အသံသွင်းခြင်း</string>
+    <string name="chapters">အခန်းများ</string>
+    <string name="error_cannot_open_file">ဖိုင်ကိုဖွင့်၍မရပါ</string>
+    <string name="error_external_player_not_found">ပြင်ပအသံဖွင့်စက်အက်ပ်ကို မတွေ့ပါ</string>
+    <string name="error_sharing">မျှဝေမှုအမှား</string>
 </resources>

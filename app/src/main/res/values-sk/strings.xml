@@ -5,7 +5,7 @@
     <string name="detail_country">Krajina</string>
     <string name="detail_create_shortcut">Pridať na domovskú obrazovku</string>
     <string name="detail_language">Jazyk</string>
-    <string name="detail_weblink">URL Adresa</string>
+    <string name="detail_weblink">Webový odkaz</string>
     <string name="detail_visit_website">@string/action_station_visit_website</string>
     <string name="detail_play">Prehrať</string>
     <string name="detail_pause">Pozastaviť</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Pokračovať</string>
 
     <string name="action_later">Neskôr</string>
+
+    <string name="action_open_file_location">Otvorte umiestnenie súboru</string>
+    <string name="action_record">Záznam</string>
+    <string name="tab_recordings">Nahrávky</string>
+    <string name="chapters">Kapitoly</string>
+    <string name="error_cannot_open_file">Nie je možné otvoriť súbor</string>
+    <string name="error_external_player_not_found">Nenašla sa žiadna aplikácia externého prehrávača zvuku</string>
+    <string name="error_sharing">Chyba pri zdieľaní</string>
 </resources>

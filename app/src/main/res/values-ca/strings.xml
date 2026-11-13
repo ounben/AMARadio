@@ -33,7 +33,7 @@
     <string name="action_delete">Suprimeix</string>
     <string name="action_delete_history">Suprimeix l\'historial</string>
     <string name="action_delete_favorites">Suprimeix les preferides</string>
-    <string name="action_delete_stream_history">Tornar l\'historial de les pistes</string>
+    <string name="action_delete_stream_history">Esborra l\'historial de pistes</string>
     <string name="action_ok">D\'acord</string>
     <string name="action_cancel">Cancel·la</string>
     <string name="action_top_click">Les més clicades</string>
@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Nom de fitxer no vàlid</string>
     <string name="label_button_cancel">Cancel·lar</string>
     <string name="label_button_overwrite">Sobreescriure</string>
-    <string name="notify_load_playlist_nok">No s\'ha pogut importar de %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">S\'està important de %1$s&#47;%2$s, espereu un moment.</string>
-    <string name="notify_load_playlist_ok">S\'han importat %1$d emissores de %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">No s\'ha pogut exportar a %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">S\'està exportant a %1$s&#47;%2$s, espereu un moment.</string>
-    <string name="notify_save_playlist_ok">S\'ha exportat a %1$s&#47;%2$s correctament</string>
+    <string name="notify_load_playlist_nok">No s\'ha pogut importar la llista de reproducció</string>
+    <string name="notify_load_playlist_now">S\'està important la llista de reproducció, espereu…</string>
+    <string name="notify_load_playlist_ok">S\'han importat %1$d emissores</string>
+    <string name="notify_save_playlist_nok">No s\'ha pogut exportar la llista de reproducció</string>
+    <string name="notify_save_playlist_now">S\'està exportant la llista de reproducció, espereu…</string>
+    <string name="notify_save_playlist_ok">Llista de reproducció exportada correctament</string>
     <string name="notify_sync_list_deleted_entries">%1$d de %2$d emissores locals a la llista marcades com a no existents al servidor</string>
 
     <string name="searchpreference_clear_history">Esborra historial</string>
@@ -108,8 +108,8 @@
     <string name="theme_dark">Fosc</string>
     <string name="theme_system">Seguir el sistema</string>
     <string name="settings_compact_style">Mode compacte</string>
-    <string name="settings_compact_style_desc_off">Icona gran adoptada amb els detalls de l\'emissora de ràdio</string>
-    <string name="settings_compact_style_desc_on">Icona petita adoptada sense detalls d\'emissora de ràdio</string>
+    <string name="settings_compact_style_desc_off">Icona gran amb els detalls de l\'emissora de ràdio</string>
+    <string name="settings_compact_style_desc_on">Icona petita sense detalls de l\'emissora de ràdio</string>
     <string name="settings_bottom_navigation">Navegació inferior</string>
     <string name="settings_ui_scale">Escala d\'UI</string>
     <string name="settings_language">Idioma</string>
@@ -201,7 +201,7 @@
     <string name="notify_starred">S\'ha afegit l\'emissora de ràdio a les preferides</string>
     <string name="notify_autostarred">L\'emissora de ràdio s\'ha afegit automàticament a les preferides</string>
     <string name="notify_unstarred">L\'emissora de ràdio s\'ha eliminat de les preferides</string>
-    <string name="notify_deleted_favorites">S\'han suprimit de les preferides</string>
+    <string name="notify_deleted_favorites">S\'han suprimit les preferides</string>
     <string name="notify_deleted_history">S\'ha suprimit l\'historial</string>
 
     <string name="notify_open_link_failure">No s\'ha trobat cap aplicació per obrir l\'enllaç</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">Continua</string>
 
     <string name="action_later">Més tard</string>
+
+    <string name="action_open_file_location">Obre la ubicació del fitxer</string>
+    <string name="action_record">Enregistra</string>
+    <string name="tab_recordings">Enregistraments</string>
+    <string name="chapters">Capítols</string>
+    <string name="error_cannot_open_file">No es pot obrir el fitxer</string>
+    <string name="error_external_player_not_found">No s\'ha trobat cap aplicació de reproductor d\'àudio extern</string>
+    <string name="error_sharing">S\'ha produït un error en compartir</string>
 </resources>

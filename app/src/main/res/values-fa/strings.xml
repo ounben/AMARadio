@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">نام فایل نامعتبر است</string>
     <string name="label_button_cancel">لغو</string>
     <string name="label_button_overwrite">جایگزینی</string>
-    <string name="notify_load_playlist_nok">بارگذاری از %1$s&#47;%2$s انجام نشد</string>
-    <string name="notify_load_playlist_now">در حال بارگذاری از %1$s&#47;%2$s، لطفاً منتظر بمانید.</string>
-    <string name="notify_load_playlist_ok">%1$d ایستگاه از %2$s&#47;%3$s وارد شد</string>
-    <string name="notify_save_playlist_nok">خروجی به %1$s&#47;%2$s انجام نشد</string>
-    <string name="notify_save_playlist_now">در حال خروجی به %1$s&#47;%2$s، لطفاً منتظر بمانید.</string>
-    <string name="notify_save_playlist_ok">خروجی به %1$s&#47;%2$s با موفقیت انجام شد</string>
+    <string name="notify_load_playlist_nok">ورود لیست پخش انجام نشد</string>
+    <string name="notify_load_playlist_now">در حال ورود لیست پخش، لطفاً منتظر بمانید…</string>
+    <string name="notify_load_playlist_ok">%1$d ایستگاه وارد شد</string>
+    <string name="notify_save_playlist_nok">خروجی لیست پخش انجام نشد</string>
+    <string name="notify_save_playlist_now">در حال خروجی گرفتن از لیست پخش، لطفاً منتظر بمانید…</string>
+    <string name="notify_save_playlist_ok">لیست پخش با موفقیت صادر شد</string>
     <string name="notify_sync_list_deleted_entries">%1$d از %2$d ایستگاه محلی در لیست، در سرور موجود نیستند</string>
 
     <string name="searchpreference_clear_history">پاکسازی تاریخچه</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">ادامه دهید</string>
 
     <string name="action_later">بعدا</string>
+
+    <string name="action_open_file_location">باز کردن مکان فایل</string>
+    <string name="action_record">ضبط کنید</string>
+    <string name="tab_recordings">ضبط‌ها</string>
+    <string name="chapters">فصل‌ها</string>
+    <string name="error_cannot_open_file">فایل باز نمیشه</string>
+    <string name="error_external_player_not_found">هیچ برنامه پخش کننده صوتی خارجی پیدا نشد</string>
+    <string name="error_sharing">خطا در اشتراک گذاری</string>
 </resources>

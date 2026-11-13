@@ -138,7 +138,7 @@
     <string name="startup_show_history">इतिहास देखाउनुहोस्</string>
     <string name="startup_show_last_view">अन्तिम दृश्य</string>
 
-    <string name="settings_load_icons">ਰੇഡിയോ स्टेशन आइकनहरू देखाउनुहोस्</string>
+    <string name="settings_load_icons">रेडियो स्टेशन आइकनहरू देखाउनुहोस्</string>
     <string name="settings_load_icons_on">आइकनहरू डाउनलोड गरिनेछ</string>
     <string name="settings_load_icons_off">आइकनहरू डाउनलोड गरिने छैन</string>
 
@@ -362,8 +362,8 @@
     <string name="settings_station_click_counter">रेडियो स्टेशन क्लिक काउन्टर</string>
     <string name="settings_station_click_counter_desc">प्लेബ्याክ घटनाहरू अज्ञात रूपमा साझेदारी गरेर Radio-Browser तथ्याङ्कहरूलाई समर्थन गर्नुहोस्।</string>
 
-    <string name="settings_remove_notification_on_stop">एप बन्द हुँदा सूचना हटाउनुहोस्</string>
-    <string name="settings_remove_notification_on_stop_desc">भर्खरका एपहरूबाट एप बन्द हुँदा मिडिया सूचना स्वतः खारेज गर्नुहोस्</string>
+    <string name="settings_remove_notification_on_stop">बन्द हुँदा सूचना हटाउनुहोस्</string>
+    <string name="settings_remove_notification_on_stop_desc">प्लेब्याक बन्द हुँदा मिडिया सूचना स्वतः खारेज गर्नुहोस्</string>
     <string name="settings_auto_resume_audio_focus">अडियो फोकस हानि पछि पुन: सुरु गर्नुहोस्</string>
     <string name="settings_auto_resume_audio_focus_desc">फोन कल, अलार्म वा अन्य अडियो बन्द भएपछि स्वचालित रूपमा प्लेಬ्याክ पुन: सुरु गर्नुहोस्</string>
 
@@ -391,7 +391,7 @@
     <string name="database_error_no_space">पर्याप्त डिस्क ठाउँ छैन</string>
     <string name="database_error_failed">डाटाबेस अद्यावधिक गर्न असफल भयो</string>
 
-    <string name="settings_disable_battery_optimization_desc">स्क्रिन बन्द हुँदा पनि बजाउन जारी राख्न ब्याટ्री प्रयोगलाई \'Unrestricted\' मा सेट गर्नुहोस्।</string>
+    <string name="settings_disable_battery_optimization_desc">स्क्रिन बन्द हुँदा पनि बजाउन जारी राख्न ब्याट्री प्रयोगलाई \'Unrestricted\' मा सेट गर्नुहोस्।</string>
     <string name="battery_opt_open_settings">सेटिङहरू खोल्नुहोस्</string>
     <string name="battery_opt_later">पछि</string>
 
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">जारी राख्नुहोस्</string>
 
     <string name="action_later">पछि</string>
+
+    <string name="action_open_file_location">फाइल स्थान खोल्नुहोस्</string>
+    <string name="action_record">रेकर्ड</string>
+    <string name="tab_recordings">रेकर्डिङहरू</string>
+    <string name="chapters">अध्यायहरू</string>
+    <string name="error_cannot_open_file">फाइल खोल्न सकिँदैन</string>
+    <string name="error_external_player_not_found">कुनै बाह्य अडियो प्लेयर एप फेला परेन</string>
+    <string name="error_sharing">त्रुटि साझेदारी</string>
 </resources>

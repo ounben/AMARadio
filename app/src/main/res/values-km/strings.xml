@@ -91,19 +91,19 @@
     <string name="error_invalid_file_name">ឈ្មោះឯកសារមិនត្រឹមត្រូវ</string>
     <string name="label_button_cancel">បោះបង់</string>
     <string name="label_button_overwrite">សរសេរជាន់លើ</string>
-    <string name="notify_load_playlist_nok">មិនអាចនាំចូលពី %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">មិនអាចនាំចូលបញ្ជីចាក់បានទេ</string>
     <string name="notify_load_playlist_now">កំពុងនាំចូលពី %1$s&#47;%2$s សូមរង់ចាំ។</string>
-    <string name="notify_load_playlist_ok">បាននាំចូល %1$d ស្ថានីយ៍ពី %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">មិនអាចនាំចេញទៅ %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_ok">បាននាំចូល %1$d ស្ថានីយ៍</string>
+    <string name="notify_save_playlist_nok">មិនអាចនាំចេញបញ្ជីចាក់បានទេ</string>
     <string name="notify_save_playlist_now">កំពុងនាំចេញទៅ %1$s&#47;%2$s សូមរង់ចាំ។</string>
-    <string name="notify_save_playlist_ok">បាននាំចេញទៅ %1$s&#47;%2$s ដោយជោគជ័យ</string>
+    <string name="notify_save_playlist_ok">បាននាំចេញបញ្ជីចាក់ដោយជោគជ័យ</string>
     <string name="notify_sync_list_deleted_entries">%1$d ក្នុងចំណោម %2$d ស្ថានីយ៍ក្នុងម៉ាស៊ីនត្រូវបានសម្គាល់ថាមិនមាននៅលើម៉ាស៊ីនមេ</string>
 
     <string name="searchpreference_clear_history">សម្អាតប្រវត្តិ</string>
     <string name="searchpreference_no_results">គ្មានលទ្ធផល</string>
     <string name="searchpreference_search">ស្វែងរក…</string>
     <string name="settings_appearance">រូបរាង</string>
-    <string name="settings_theme_selection_title">ស្បែក (Theme)</string>
+    <string name="settings_theme_selection_title">រូបរាង</string>
     <string name="theme_light">ភ្លឺ</string>
     <string name="theme_dark">ងងឹត</string>
     <string name="theme_system">តាមប្រព័ន្ធ</string>
@@ -350,7 +350,7 @@
     <string name="stream_url">URL ស្ទ្រីម</string>
     <string name="favicon_url">URL ឡូហ្គោស្ថានីយ (Favicon)</string>
     <string name="select_image">ជ្រើសរើសរូបភាព</string>
-    <string name="error_invalid_url">សូមបញ្ចូល URL ត្រឹមត្រូវ។</string>
+    <string name="error_invalid_url">សូមបញ្ចូល URL ត្រឹមត្រូវ</string>
     <string name="action_save">រក្សាទុក</string>
     <string name="widget_name_small">AMARadio Compact</string>
     <string name="widget_name_full">AMARadio Player</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">បន្ត</string>
 
     <string name="action_later">ពេលក្រោយ</string>
+
+    <string name="action_open_file_location">បើកទីតាំងឯកសារ</string>
+    <string name="action_record">កត់ត្រា</string>
+    <string name="tab_recordings">ការកត់ត្រា</string>
+    <string name="chapters">ជំពូក</string>
+    <string name="error_cannot_open_file">មិនអាចបើកឯកសារបានទេ</string>
+    <string name="error_external_player_not_found">រកមិនឃើញកម្មវិធីចាក់អូឌីយ៉ូខាងក្រៅទេ</string>
+    <string name="error_sharing">កំហុសក្នុងការចែករំលែក</string>
 </resources>

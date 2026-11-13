@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Invalid na pangalan ng file</string>
     <string name="label_button_cancel">I-cancel</string>
     <string name="label_button_overwrite">I-overwrite</string>
-    <string name="notify_load_playlist_nok">Hindi ma-import mula sa %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Nag-i-import mula sa %1$s&#47;%2$s, mangyaring maghintay.</string>
-    <string name="notify_load_playlist_ok">Nag-import ng %1$d station mula sa %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Hindi ma-export sa %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Nag-e-export sa %1$s&#47;%2$s, mangyaring maghintay.</string>
-    <string name="notify_save_playlist_ok">Matagumpay na na-export sa %1$s&#47;%2$s</string>
+    <string name="notify_load_playlist_nok">Hindi ma-import ang playlist</string>
+    <string name="notify_load_playlist_now">Ini-import ang playlist, mangyaring maghintay…</string>
+    <string name="notify_load_playlist_ok">%1$d na istasyon ang na-import</string>
+    <string name="notify_save_playlist_nok">Hindi ma-export ang playlist</string>
+    <string name="notify_save_playlist_now">Ine-export ang playlist, mangyaring maghintay…</string>
+    <string name="notify_save_playlist_ok">Matagumpay na na-export ang playlist</string>
     <string name="notify_sync_list_deleted_entries">%1$d sa %2$d lokal na station sa listahan ay minarkahang hindi umiiral sa server</string>
 
     <string name="searchpreference_clear_history">I-clear ang history</string>
@@ -175,7 +175,7 @@
     <string name="settings_proxy_invalid">Ang mga value na ibinigay mo para sa proxy ay invalid</string>
     <string name="ignore_proxy_settings_invalid">In-ignore ang invalid na mga setting ng proxy</string>
     <string name="settings_seconds_format">%d segundo</string>
-    <string name="settings_milliseconds_format">%d milliseundo</string>
+    <string name="settings_milliseconds_format">%d milisegundo</string>
 
     <string name="settings_pause_when_noisy">I-pause kapag nadiskonekta ang headset</string>
 
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Magpatuloy</string>
 
     <string name="action_later">Mamaya</string>
+
+    <string name="action_open_file_location">Buksan ang lokasyon ng file</string>
+    <string name="action_record">Itala</string>
+    <string name="tab_recordings">Mga recording</string>
+    <string name="chapters">Mga kabanata</string>
+    <string name="error_cannot_open_file">Hindi mabuksan ang file</string>
+    <string name="error_external_player_not_found">Walang nakitang external na audio player app</string>
+    <string name="error_sharing">Error sa pagbabahagi</string>
 </resources>

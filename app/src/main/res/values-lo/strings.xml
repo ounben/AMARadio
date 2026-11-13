@@ -34,7 +34,7 @@
     <string name="action_delete_history">ລົບປະຫວັດ</string>
     <string name="action_delete_favorites">ລົບລາຍການໂປດທັງໝົດ</string>
     <string name="action_delete_stream_history">ລ້າງປະຫວັດเพลง</string>
-    <string name="action_ok">ຕົกลົງ</string>
+    <string name="action_ok">ຕົກລົງ</string>
     <string name="action_cancel">ຍົກເລີກ</string>
     <string name="action_top_click">ກົດຫຼາຍທີ່ສຸດ</string>
     <string name="action_toggle_view">ປ່ຽນມຸມມອງ</string>
@@ -53,9 +53,9 @@
     <string name="filter_empty_title">ສ້າງຟີດສະຖານີວິທະຍຸສ່ວນຕົວຂອງທ່ານ</string>
     <string name="filter_empty_desc">ສ້າງມຸມມອງສ່ວນຕົວໂດຍການຮວມຫຼາຍເງື່ອນໄຂ. ທ່ານສາມາດຈຳກັດການຄົ້ນຫາໂດຍໃຊ້:</string>
     <string name="filter_empty_filter_by">ຕອງຕາມ:</string>
-    <string name="filter_empty_filter_desc">ປະເທດ, ຊື່ສະຖານີວິທະຍຸ, แทັກ ຫຼື ພາສາ</string>
+    <string name="filter_empty_filter_desc">ປະເທດ, ຊື່ສະຖານີວິທະຍຸ, ແທັກ ຫຼື ພາສາ</string>
     <string name="filter_empty_sort_by">ຈັດຮຽງຕາມ:</string>
-    <string name="filter_empty_sort_desc">ການກົດ, ຕາມຕົວອັກສອນ, ຄະແນນໂหวດ ຫຼື ການປ່ຽນແປງຫຼ້າສຸດ</string>
+    <string name="filter_empty_sort_desc">ການກົດ, ຕາມຕົວອັກສອນ, ຄະແນນໂຫວດ ຫຼື ການປ່ຽນແປງຫຼ້າສຸດ</string>
     <string name="filter_empty_hint">ພິມຊື່ໃນຊ່ອງດ່ານເທິງເພື່ອບັນທຶກມຸມມອງນີ້!</string>
 
     <string name="error_station_load">ບໍ່ສາມາດເຊື່ອມຕໍ່ຫາສະຖານີວິທະຍຸໄດ້</string>
@@ -239,7 +239,7 @@
     <string name="player_info_status_playing">ກຳລັງຫຼິ້ນ</string>
     <string name="player_info_transferred">ຂໍ້ມູນທີ່ສົ່ງ: %1$s</string>
 
-    <string name="tab_player_art">ຮູບປົກอัลบั້ມ</string>
+    <string name="tab_player_art">ຮູບປົກອາລະບ້ຳ</string>
     <string name="tab_player_info">ຂໍ້ມູນ</string>
     <string name="tab_player_history">ປະຫວັດເພງ</string>
 
@@ -315,7 +315,7 @@
     <string name="sort_lastchange">ການປ່ຽນແປງຫຼ້າສຸດ</string>
     <string name="filter_select_country">ເລືອກປະເທດ</string>
     <string name="filter_select_language">ເລືອກພາສາ</string>
-    <string name="filter_type_tag">ພິມแทັກ…</string>
+    <string name="filter_type_tag">ພິມແທັກ…</string>
     <string name="filter_tap_to_configure">ແຕະເພື່ອຕັ້ງຄ່າ</string>
 
     <string name="context_menu_share">@string/detail_share</string>
@@ -359,7 +359,7 @@
     <string name="widget_description_small">ປຸ່ມຄວບຄຸມເຄື່ອງຫຼິ້ນແບບໄວ</string>
     <string name="widget_description_full">ເຄື່ອງຫຼິ້ນ ແລະ ລາຍການສະຖານີວິທະຍຸ</string>
 
-    <string name="settings_auto_db_update">ສຳຄັນຂໍ້ມູນພື້ນຫຼັງ</string>
+    <string name="settings_auto_db_update">ຊິ້ງຂໍ້ມູນພື້ນຫຼັງ</string>
     <string name="settings_auto_db_update_desc">ອັບເດດຖານຂໍ້ມູນສະຖານີວິທະຍຸອັດໂນມັດຜ່ານ Radio-Browser API (ແນະນຳ).</string>
     <string name="settings_station_click_counter">ຕົວນັບການກົດສະຖານີວິທະຍຸ</string>
     <string name="settings_station_click_counter_desc">ສະໜັບສະໜູນສະຖິຕິຂອງ Radio-Browser ໂດຍການແບ່ງປັນເຫດການການຫຼິ້ນແບບບໍ່ລະບຸຕົວຕົນ.</string>
@@ -384,10 +384,10 @@
     <string name="database_last_sync">ອັບເດດຫຼ້າສຸດ</string>
     <string name="database_update_now">ອັບເດດຖານຂໍ້ມູນດຽວນີ້</string>
     <string name="database_full_update">ອັບເດດຖານຂໍ້ມູນ</string>
-    <string name="database_syncing">ກຳລັງສຳຄັນຂໍ້ມູນ…</string>
+    <string name="database_syncing">ກຳລັງຊິ້ງຂໍ້ມູນ…</string>
     <string name="database_downloading">ກຳລັງດາວໂຫຼດ…</string>
     <string name="database_stations_loaded">%1$s ສະຖານີວິທະຍຸ</string>
-    <string name="database_sync_channel_name">ການສຳຄັນຖານຂໍ້ມູນສະຖານີວິທະຍຸ</string>
+    <string name="database_sync_channel_name">ການຊິ້ງຖານຂໍ້ມູນສະຖານີວິທະຍຸ</string>
     <string name="database_sync_success">ອັບເດດຖານຂໍ້ມູນສະຖານີສຳເລັດແລ້ວ</string>
     <string name="database_error_no_connection">ບໍ່ມີການເຊື່ອມຕໍ່ອິນເຕີເນັດ</string>
     <string name="database_error_no_space">ພື້ນທີ່ຈັດເກັບບໍ່ພຽງພໍ</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">ສືບຕໍ່</string>
 
     <string name="action_later">ຕໍ່ມາ</string>
+
+    <string name="action_open_file_location">ເປີດສະຖານທີ່ໄຟລ໌</string>
+    <string name="action_record">ບັນທຶກ</string>
+    <string name="tab_recordings">ການບັນທຶກ</string>
+    <string name="chapters">ບົດ</string>
+    <string name="error_cannot_open_file">ບໍ່ສາມາດເປີດໄຟລ໌ໄດ້</string>
+    <string name="error_external_player_not_found">ບໍ່ພົບແອັບເຄື່ອງຫຼິ້ນສຽງພາຍນອກ</string>
+    <string name="error_sharing">ເກີດຄວາມຜິດພາດໃນການແບ່ງປັນ</string>
 </resources>

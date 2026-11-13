@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">અમાન્ય ફાઇલ નામ</string>
     <string name="label_button_cancel">રદ કરો</string>
     <string name="label_button_overwrite">ઓવરરાઇટ</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s માંથી ઇમ્પોર્ટ થઈ શક્યું નથી</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s માંથી ઇમ્પોર્ટ થઈ રહ્યું છે, કૃપા કરીને રાહ જુઓ.</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s માંથી %1$d સ્ટેશનો ઇમ્પોર્ટ કરવામાં આવ્યા</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s માં એક્સપોર્ટ થઈ શક્યું નથી</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s માં એક્સપોર્ટ થઈ રહ્યું છે, કૃપા કરીને રાહ જુઓ.</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s માં સફળતાપૂર્વક એક્સપોર્ટ થયું</string>
+    <string name="notify_load_playlist_nok">પ્લેલિસ્ટ ઇમ્પોર્ટ થઈ શક્યું નથી</string>
+    <string name="notify_load_playlist_now">પ્લેલિસ્ટ ઇમ્પોર્ટ થઈ રહ્યું છે, કૃપા કરીને રાહ જુઓ…</string>
+    <string name="notify_load_playlist_ok">%1$d સ્ટેશનો ઇમ્પોર્ટ કરવામાં આવ્યા</string>
+    <string name="notify_save_playlist_nok">પ્લેલિસ્ટ એક્સપોર્ટ થઈ શક્યું નથી</string>
+    <string name="notify_save_playlist_now">પ્લેલિસ્ટ એક્સપોર્ટ થઈ રહ્યું છે, કૃપા કરીને રાહ જુઓ…</string>
+    <string name="notify_save_playlist_ok">પ્લેલિસ્ટ સફળતાપૂર્વક એક્સપોર્ટ થયું</string>
     <string name="notify_sync_list_deleted_entries">સૂચિમાંના %2$d સ્થાનિક સ્ટેશનોમાંથી %1$d સર્વર પર અસ્તિત્વમાં નથી તેવું ચિહ્નિત થયેલ છે</string>
 
     <string name="searchpreference_clear_history">ઇતિહાસ સાફ કરો</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">ચાલુ રાખો</string>
 
     <string name="action_later">બાદમાં</string>
+
+    <string name="action_open_file_location">ફાઇલ સ્થાન ખોલો</string>
+    <string name="action_record">રેકોર્ડ</string>
+    <string name="tab_recordings">રેકોર્ડિંગ્સ</string>
+    <string name="chapters">પ્રકરણો</string>
+    <string name="error_cannot_open_file">ફાઇલ ખોલી શકાતી નથી</string>
+    <string name="error_external_player_not_found">કોઈ બાહ્ય ઑડિઓ પ્લેયર ઍપ મળી નથી</string>
+    <string name="error_sharing">શેર કરવામાં ભૂલ</string>
 </resources>

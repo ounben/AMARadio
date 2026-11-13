@@ -91,12 +91,12 @@
     <string name="error_invalid_file_name">Файл атауы жарамсыз</string>
     <string name="label_button_cancel">Бас тарту</string>
     <string name="label_button_overwrite">Қайта жазу</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s ішінен импорттау мүмкін болмады</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s ішінен импортталуда, күте тұрыңыз.</string>
-    <string name="notify_load_playlist_ok">%2$s&#47;%3$s ішінен %1$d станция импортталды</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s ішіне экспорттау мүмкін болмады</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s ішіне экспортталуда, күте тұрыңыз.</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s ішіне сәтті экспортталды</string>
+    <string name="notify_load_playlist_nok">Плейлистті импорттау мүмкін болмады</string>
+    <string name="notify_load_playlist_now">Плейлист импортталуда, күте тұрыңыз…</string>
+    <string name="notify_load_playlist_ok">%1$d станция импортталды</string>
+    <string name="notify_save_playlist_nok">Плейлистті экспорттау мүмкін болмады</string>
+    <string name="notify_save_playlist_now">Плейлист экспортталуда, күте тұрыңыз…</string>
+    <string name="notify_save_playlist_ok">Плейлист сәтті экспортталды</string>
     <string name="notify_sync_list_deleted_entries">Тізімдегі %2$d жергілікті станцияның %1$d серверде жоқ деп белгіленген</string>
 
     <string name="searchpreference_clear_history">Тарихты тазалау</string>
@@ -369,7 +369,7 @@
 
     <string name="settings_backup_restore">Резервтік көшірме жасау және калпына келтіру</string>
     <string name="settings_export_backup">Толық резервтік көшірме жасау (ZIP)</string>
-    <string name="settings_export_backup_desc">Барлық таңдаулыларды, пайдаланушы станцияларын және белгішелерді ZIP файла сақтайды</string>
+    <string name="settings_export_backup_desc">Барлық таңдаулыларды, пайдаланушы станцияларын және белгішелерді ZIP файлында сақтайды</string>
     <string name="settings_import_backup">Резервтік көшірмені қалпына келтіру (ZIP)</string>
     <string name="settings_import_backup_desc">ZIP резервтік көшірме файлынан таңдаулылар мен пайдаланушы станцияларын қалпына келтіреді</string>
     <string name="backup_export_success">Резервтік көшірме сәтті сақталды</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Жалғастыру</string>
 
     <string name="action_later">Кейінірек</string>
+
+    <string name="action_open_file_location">Файл орнын ашу</string>
+    <string name="action_record">Жазба</string>
+    <string name="tab_recordings">Жазбалар</string>
+    <string name="chapters">Тараулар</string>
+    <string name="error_cannot_open_file">Файлды ашу мүмкін емес</string>
+    <string name="error_external_player_not_found">Сыртқы аудио ойнатқыш қолданбасы табылмады</string>
+    <string name="error_sharing">Бөлісу қатесі</string>
 </resources>

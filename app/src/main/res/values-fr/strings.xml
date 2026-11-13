@@ -77,29 +77,29 @@
     <string name="progress_loading">Chargement&#8230;</string>
 
     <string name="sleep_timer" formatted="true">Minuterie de sommeil : %1$02d:%2$02d</string>
-    <string name="sleep_timer_title">Combien de minutes avant l\'arrêt?</string>
+    <string name="sleep_timer_title">Arrêter la lecture après la minute sélectionnée</string>
     <string name="sleep_timer_apply">Appliquer</string>
     <string name="sleep_timer_clear">Effacer</string>
     <string name="nav_item_add_sleep">Minuterie de sommeil</string>
 
     <string name="nav_item_save_playlist">Exporter les favoris comme liste de lecture</string>
-    <string name="nav_item_load_playlist">Importer les favoris en tant que liste de lecture</string>
+    <string name="nav_item_load_playlist">Importer les favoris depuis une liste de lecture</string>
     <string name="nav_item_save_history_playlist">Exporter l\'historique comme liste de lecture</string>
     <string name="confirm_overwrite_file">Écraser le fichier ?</string>
     <string name="dialog_hint_file_name">Entrer le nom du fichier</string>
-    <string name="error_empty_field">Ce champs est requis</string>
+    <string name="error_empty_field">Ce champ est requis</string>
     <string name="error_invalid_file_name">Nom de fichier invalide</string>
     <string name="label_button_cancel">Annuler</string>
     <string name="label_button_overwrite">Écraser</string>
-    <string name="notify_load_playlist_nok">Impossible d\'importer depuis %1$s&#47;%2$s</string>
-    <string name="notify_load_playlist_now">Importation depuis %1$s&#47;%2$s, veuillez patienter.</string>
-    <string name="notify_load_playlist_ok">%1$d stations importées depuis %2$s&#47;%3$s</string>
-    <string name="notify_save_playlist_nok">Impossible d\'exporter vers %1$s&#47;%2$s</string>
-    <string name="notify_save_playlist_now">Exportation vers %1$s&#47;%2$s, veuillez patienter.</string>
-    <string name="notify_save_playlist_ok">Exportation vers %1$s&#47;%2$s réussie</string>
+    <string name="notify_load_playlist_nok">Impossible d\'importer la liste de lecture</string>
+    <string name="notify_load_playlist_now">Importation de la liste de lecture, veuillez patienter…</string>
+    <string name="notify_load_playlist_ok">%1$d stations importées</string>
+    <string name="notify_save_playlist_nok">Impossible d\'exporter la liste de lecture</string>
+    <string name="notify_save_playlist_now">Exportation de la liste de lecture, veuillez patienter…</string>
+    <string name="notify_save_playlist_ok">Liste de lecture exportée avec succès</string>
     <string name="notify_sync_list_deleted_entries">%1$d sur %2$d stations locales dans la liste marquées comme inexistantes sur le serveur</string>
 
-    <string name="searchpreference_clear_history">Vider l\'histoire</string>
+    <string name="searchpreference_clear_history">Effacer l\'historique</string>
     <string name="searchpreference_no_results">Pas de résultats</string>
     <string name="searchpreference_search">Rechercher&#8230;</string>
     <string name="settings_appearance">Apparence</string>
@@ -108,8 +108,8 @@
     <string name="theme_dark">Noir</string>
     <string name="theme_system">Suivre le système</string>
     <string name="settings_compact_style">Mode compact</string>
-    <string name="settings_compact_style_desc_off">Grande icône adoptée avec les détails de la station de radio</string>
-    <string name="settings_compact_style_desc_on">Petite icône adoptée sans les détails de la station de radio</string>
+    <string name="settings_compact_style_desc_off">Grande icône avec les détails de la station de radio</string>
+    <string name="settings_compact_style_desc_on">Petite icône sans les détails de la station de radio</string>
     <string name="settings_bottom_navigation">Navigation inférieure</string>
     <string name="settings_ui_scale">Échelle de l\'interface</string>
     <string name="settings_language">Langue</string>
@@ -119,9 +119,9 @@
     <string name="ui_scale_extra_large">Très grand</string>
 
     <string name="settings_interaction">Interaction</string>
-    <string name="settings_single_use_tags">Montrer les tags uniques</string>
-    <string name="settings_single_use_tags_desc_off">Les tags uniques ne seront pas affichés</string>
-    <string name="settings_single_use_tags_desc_on">Les tags uniques seront affichés</string>
+    <string name="settings_single_use_tags">Afficher les étiquettes rarement utilisées</string>
+    <string name="settings_single_use_tags_desc_off">Les étiquettes rarement utilisées ne seront pas affichées</string>
+    <string name="settings_single_use_tags_desc_on">Les étiquettes rarement utilisées seront affichées</string>
 
     <string name="settings_show_broken">Stations de radio défectueuses</string>
     <string name="settings_show_broken_on">Afficher les stations de radio défectueuses dans les listes</string>
@@ -155,7 +155,7 @@
     <string name="settings_auto_off_on_startup_off">Ne pas utiliser la minuterie d\'arrêt automatique avec la lecture automatique</string>
     <string name="settings_auto_off_sleep_timer">Minuterie d\'arrêt automatique</string>
     <string name="settings_auto_off_sleep_timer_desc">Stopper la lecture après %1$s minutes</string>
-    <string name="settings_play_external">Ouverture avec une application externe</string>
+    <string name="settings_play_external">Activer le lecteur externe</string>
     <string name="settings_play_external_desc_on">Lire les stations de radio avec un lecteur externe</string>
     <string name="settings_play_external_desc_off">Lire les stations de radio avec AMARadio</string>
     <string name="settings_equalizer">Égaliseur</string>
@@ -172,20 +172,20 @@
     <string name="settings_proxy_action_test">Test</string>
     <string name="settings_proxy_working">Connecté avec succès à %s</string>
     <string name="settings_proxy_not_working">Impossible de se connecter à %1$s\n%2$s</string>
-    <string name="settings_proxy_invalid">Les valeurs que vous avez fournies dans le proxy sont invalides</string>
+    <string name="settings_proxy_invalid">Les valeurs que vous avez fournies pour le proxy sont invalides</string>
     <string name="ignore_proxy_settings_invalid">Réglages invalides du proxy ignorés</string>
     <string name="settings_seconds_format">%d secondes</string>
     <string name="settings_milliseconds_format">%d millisecondes</string>
 
     <string name="settings_pause_when_noisy">Pause à la déconnexion du casque</string>
 
-    <string name="settings_auto_resume_do_not_resume">De pas reprendre</string>
+    <string name="settings_auto_resume_do_not_resume">Ne pas reprendre</string>
 
     <string name="settings_auto_resume_on_wired_headset_connected">Reprise sur la connexion filaire</string>
-    <string name="settings_auto_resume_on_wired_headset_connected_on">Reprise de la lecture sur le plug-in du casque filaire</string>
+    <string name="settings_auto_resume_on_wired_headset_connected_on">Reprendre la lecture au branchement d\'un casque filaire</string>
 
     <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Reprendre à la connexion Bluetooth</string>
-    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Reprise de la lecture sur la connexion du périphérique Bluetooth A2DP</string>
+    <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Reprendre la lecture à la connexion d\'un périphérique Bluetooth A2DP</string>
 
     <string name="settings_auto_resume_on_any_connected">Reprendre lors de n\'importe quelle connexion</string>
 
@@ -219,7 +219,7 @@
     <string name="hostname">Adresse du serveur</string>
     <string name="port">Port réseau</string>
 
-    <string name="alert_press_back_to_exit">Appuyer une fois de plus sur retour pour quitter</string>
+    <string name="alert_press_back_to_exit">Appuyez une fois de plus sur retour pour quitter</string>
 
     <string name="error_stream_url">Problème avec le lien internet</string>
     <string name="error_caching_stream">Problème avec le cache du stream</string>
@@ -232,7 +232,7 @@
 
     <string name="error_no_equalizer_found">Aucun égaliseur trouvé !</string>
 
-    <string name="player_info_status">Status :&#160;</string>
+    <string name="player_info_status">Statut : </string>
     <string name="player_info_status_stopped">Arrêté</string>
     <string name="player_info_status_playing">en lecture</string>
     <string name="player_info_transferred">Données transmises : %1$s</string>
@@ -294,7 +294,7 @@
     </string-array>
 
     <string name="alert_metered_connection_title">Connexion monitorée détectée</string>
-    <string name="alert_metered_connection_message">Une connexion monitorée peut entrainer des frais supplémentaires, appuyez sur \'OK\' pour continuer</string>
+    <string name="alert_metered_connection_message">Une connexion monitorée peut entraîner des frais supplémentaires, appuyez sur \'OK\' pour continuer.</string>
     <string name="nav_item_statistics">Statistiques</string>
     <string name="nav_item_about">À propos</string>
     <string name="refresh">Rafraîchir</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Continuer</string>
 
     <string name="action_later">Plus tard</string>
+
+    <string name="action_open_file_location">Ouvrir l\'emplacement du fichier</string>
+    <string name="action_record">Enregistrer</string>
+    <string name="tab_recordings">Enregistrements</string>
+    <string name="chapters">Chapitres</string>
+    <string name="error_cannot_open_file">Impossible d\'ouvrir le fichier</string>
+    <string name="error_external_player_not_found">Aucune application de lecteur audio externe trouvée</string>
+    <string name="error_sharing">Erreur lors du partage</string>
 </resources>

@@ -182,7 +182,7 @@
   <string name="settings_auto_resume_do_not_resume">Ikke gjenoppta</string>
 
   <string name="settings_auto_resume_on_wired_headset_connected">Gjenoppta ved trådet tilkobling</string>
-  <string name="settings_auto_resume_on_wired_headset_connected_on">Gjenoppta avspilling ved trådet hodetelefontilkobling plug-in</string>
+  <string name="settings_auto_resume_on_wired_headset_connected_on">Gjenoppta avspilling ved tilkobling av kablet hodesett</string>
 
   <string name="settings_auto_resume_on_bluetooth_a2dp_connected">Gjenoppta ved Bluetooth tilkobling</string>
   <string name="settings_auto_resume_on_bluetooth_a2dp_connected_on">Gjenoppta avspilling ved tilkobling av Bluetooth A2DP enheter</string>
@@ -190,8 +190,8 @@
   <string name="settings_auto_resume_on_any_connected">Gjenoppta ved enhver tilkobling</string>
 
   <string name="settings_warn_no_wifi">Vis advarsel når ikke tilkoblet wifi</string>
-  <string name="settings_warn_no_wifi_on">Vis advarsel ved avspilling uten wifi tilkobling</string>
-  <string name="settings_warn_no_wifi_off">Vis ikke advarsel ved avspilling uten wifi tilkobling</string>
+  <string name="settings_warn_no_wifi_on">Vis advarsel ved avspilling uten wifi-tilkobling</string>
+  <string name="settings_warn_no_wifi_off">Ikke vis advarsel ved avspilling uten wifi-tilkobling</string>
 
   <string name="notify_pre_play">Kobler til</string>
   <string name="notify_play">Spiller av</string>
@@ -347,7 +347,7 @@
     <string name="tab_custom_stations">Egendefinert</string>
     <string name="action_add_custom">Legg til egendefinert radiokanal</string>
     <string name="station_name">Radiokanalnavn</string>
-    <string name="stream_url">Strøm URL</string>
+    <string name="stream_url">Strøm-URL</string>
     <string name="favicon_url">Kanallogo-URL (Favicon)</string>
     <string name="select_image">Velg Bilde</string>
     <string name="error_invalid_url">Vennligst skriv inn en gyldig URL</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Fortsett</string>
 
     <string name="action_later">Seinere</string>
+
+    <string name="action_open_file_location">Åpne filplassering</string>
+    <string name="action_record">Rekord</string>
+    <string name="tab_recordings">Opptak</string>
+    <string name="chapters">Kapitler</string>
+    <string name="error_cannot_open_file">Kan ikke åpne filen</string>
+    <string name="error_external_player_not_found">Ingen ekstern lydspillerapp funnet</string>
+    <string name="error_sharing">Feil under deling</string>
 </resources>

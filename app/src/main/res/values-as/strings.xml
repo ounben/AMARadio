@@ -39,7 +39,7 @@
     <string name="action_top_click">শীৰ্ষ ক্লিক</string>
     <string name="action_toggle_view">ভিউ সলনি কৰক</string>
     <string name="action_top_vote">শীৰ্ষ ভোট</string>
-    <string name="action_changed_lately">অনুগামী সলনি</string>
+    <string name="action_changed_lately">শেহতীয়াকৈ সলনি হোৱা</string>
     <string name="action_currently_playing">প্লে হৈ আছে</string>
     <string name="action_tags">টেগসমূহ</string>
     <string name="action_countries">দেশ/অঞ্চল</string>
@@ -51,7 +51,7 @@
     <string name="error_filter_name_required">প্ৰথমে এই ফিল্টাৰৰ বাবে এটা নাম দিয়ক</string>
     <string name="confirm_delete_filter_tab">আপুনি সঁচাকৈয়ে \"%1$s\" ফিল্টাৰটো মচিব বিচাৰেনে?</string>
     <string name="filter_empty_title">আপোনাৰ নিজা ৰেডিঅ\' ষ্টেচন তালিকা বনাক</string>
-    <string name="filter_empty_desc">বিভিন্ন চৰ্ত মিলাই নিজৰ পছন্দৰ ভিউ বনাক:</string>
+    <string name="filter_empty_desc">একাধিক চৰ্ত মিলাই নিজৰ পছন্দৰ ভিউ বনাওক। আপুনি তলত দিয়াবোৰ ব্যৱহাৰ কৰি আপোনাৰ সন্ধান সীমিত কৰিব পাৰে:</string>
     <string name="filter_empty_filter_by">ফিল্টাৰ কৰক</string>
     <string name="filter_empty_filter_desc">দেশ, ৰেডিঅ\' ষ্টেচনৰ নাম, টেগ বা ভাষা</string>
     <string name="filter_empty_sort_by">সজাওক</string>
@@ -84,21 +84,21 @@
     <string name="sleep_timer_clear">পৰিষ্কাৰ কৰক</string>
     <string name="nav_item_add_sleep">টোপনিৰ টাইমাৰ</string>
 
-    <string name="nav_item_save_playlist">প্ৰিয় তালিকা এক্সপোৰ্ট কৰক</string>
-    <string name="nav_item_load_playlist">প্লে-লিষ্ট ইম্পোৰ্ট কৰক</string>
-    <string name="nav_item_save_history_playlist">ইতিহাস এক্সপোৰ্ট কৰক</string>
+    <string name="nav_item_save_playlist">প্ৰিয় তালিকা প্লে-লিষ্ট হিচাপে এক্সপোৰ্ট কৰক</string>
+    <string name="nav_item_load_playlist">প্লে-লিষ্টৰ পৰা প্ৰিয় তালিকা ইম্পোৰ্ট কৰক</string>
+    <string name="nav_item_save_history_playlist">ইতিহাস প্লে-লিষ্ট হিচাপে এক্সপোৰ্ট কৰক</string>
     <string name="confirm_overwrite_file">ফাইলোভাৰৰাইট কৰিবনে?</string>
     <string name="dialog_hint_file_name">ফাইলৰ নাম লিখক</string>
     <string name="error_empty_field">এই ঘৰটো পূৰণ কৰা বাধ্যতামূলক</string>
     <string name="error_invalid_file_name">অসিদ্ধ ফাইলৰ নাম</string>
     <string name="label_button_cancel">বাতিল কৰক</string>
     <string name="label_button_overwrite">ওভাৰৰাইট</string>
-    <string name="notify_load_playlist_nok">%1$s&#47;%2$s ৰ পৰা ইম্পোৰ্ট কৰিব পৰা নগ\'ল</string>
-    <string name="notify_load_playlist_now">%1$s&#47;%2$s ৰ পৰা ইম্পোৰ্ট হৈ আছে, অনুগ্রহ কৰি অপেক্ষা কৰক।</string>
-    <string name="notify_load_playlist_ok">%1$d টা ষ্টেচন %2$s&#47;%3$s ৰ পৰা ইম্পোৰ্ট হ\'ল</string>
-    <string name="notify_save_playlist_nok">%1$s&#47;%2$s লৈ এক্সপোৰ্ট কৰিব পৰা নগ\'ল</string>
-    <string name="notify_save_playlist_now">%1$s&#47;%2$s লৈ এক্সপোৰ্ট হৈ আছে, অপেক্ষা কৰক।</string>
-    <string name="notify_save_playlist_ok">%1$s&#47;%2$s লৈ সফলতাৰে এক্সপোৰ্ট হ\'ল</string>
+    <string name="notify_load_playlist_nok">প্লে-লিষ্ট ইম্পোৰ্ট কৰিব পৰা নগ\'ল</string>
+    <string name="notify_load_playlist_now">প্লে-লিষ্ট ইম্পোৰ্ট হৈ আছে, অনুগ্ৰহ কৰি অপেক্ষা কৰক…</string>
+    <string name="notify_load_playlist_ok">%1$d টা ষ্টেচন ইম্পোৰ্ট হ\'ল</string>
+    <string name="notify_save_playlist_nok">প্লে-লিষ্ট এক্সপোৰ্ট কৰিব পৰা নগ\'ল</string>
+    <string name="notify_save_playlist_now">প্লে-লিষ্ট এক্সপোৰ্ট হৈ আছে, অপেক্ষা কৰক…</string>
+    <string name="notify_save_playlist_ok">প্লে-লিষ্ট সফলতাৰে এক্সপোৰ্ট হ\'ল</string>
     <string name="notify_sync_list_deleted_entries">তালিকাৰ %2$d ৰ ভিতৰত %1$d টা স্থানীয় ষ্টেচন ছাৰ্ভাৰত নাই</string>
 
     <string name="searchpreference_clear_history">সন্ধান ইতিহাস মচক</string>
@@ -146,7 +146,7 @@
 
     <string name="settings_auto_favorite">অটো-ফেভাৰিট</string>
     <string name="settings_auto_favorite_on">প্লে হোৱাৰ সময়ত স্বয়ংক্ৰিয়ভাৱে প্ৰিয় তালিকাত যোগ কৰক</string>
-    <string name="settings_auto_favorite_off">স্বয়ংক্ৰিয়ভাৱে প্ৰিয় তালিকাত যোগ নকৰিব</string>
+    <string name="settings_auto_favorite_off">প্লে হোৱাৰ সময়ত স্বয়ংক্ৰিয়ভাৱে প্ৰিয় তালিকাত যোগ নকৰিব</string>
 
     <string name="settings_play">প্লেয়াৰ</string>
     <string name="settings_auto_play_on_startup">অটো-প্লে</string>
@@ -154,13 +154,13 @@
     <string name="settings_auto_play_on_startup_off">আৰম্ভণিতে শেষৰ ৰেডিঅ\' ষ্টেচন প্লে নকৰিব</string>
     <string name="settings_auto_off_on_startup">অটো-ষ্টপ</string>
     <string name="settings_auto_off_on_startup_on">অটো-প্লেৰ সৈতে অটো-ষ্টপ টাইমাৰ ব্যৱহাৰ কৰক</string>
-    <string name="settings_auto_off_on_startup_off">অটো-ষ্টপ টাইমাৰ ব্যৱহাৰ নকৰিব</string>
+    <string name="settings_auto_off_on_startup_off">অটো-প্লেৰ সৈতে অটো-ষ্টপ টাইমাৰ ব্যৱহাৰ নকৰিব</string>
     <string name="settings_auto_off_sleep_timer">অটো-ষ্টপ টাইমাৰ</string>
     <string name="settings_auto_off_sleep_timer_desc">%1$s মিনিটৰ পিছত প্লে বন্ধ কৰক</string>
     <string name="settings_play_external">বহিৰাগত প্লেয়াৰ সক্ৰিয় কৰক</string>
     <string name="settings_play_external_desc_on">বহিৰাগত প্লেয়াৰৰ সৈতে ৰেডিঅ\' ষ্টেচন প্লে কৰক</string>
     <string name="settings_play_external_desc_off">AMARadio ৰ সৈতে ৰেডিঅ\' ষ্টেচন প্লে কৰক</string>
-    <string name="settings_equalizer">ইকুৱেলিজাৰ (Equalizer)</string>
+    <string name="settings_equalizer">ইকুৱেলিজাৰ</string>
 
     <string name="settings_connectivity">সংযোজকসমূহ</string>
     <string name="settings_connect_timeout">সংযোগ টাইমআউট</string>
@@ -191,7 +191,7 @@
 
     <string name="settings_auto_resume_on_any_connected">যিকোনো সংযোগত পুনৰ আৰম্ভ কৰক</string>
 
-    <string name="settings_warn_no_wifi">Wi-Fi নথকাৰ সীয়ানী</string>
+    <string name="settings_warn_no_wifi">Wi-Fi নথকাৰ সতৰ্কবাণী</string>
     <string name="settings_warn_no_wifi_on">Wi-Fi অবিহনে প্লে হ\'লে সতৰ্ক কৰক</string>
     <string name="settings_warn_no_wifi_off">Wi-Fi নহ\'লেও সতৰ্ক নকৰিব</string>
 
@@ -218,7 +218,7 @@
 
     <string name="alert_select_player">অনুগ্ৰহ কৰি এটা প্লেয়াৰ বাছক</string>
     <string name="alert_select_player_name">নাম</string>
-    <string name="hostname">ছাৰ্ভাৰ ঠিকনা (Hostname)</string>
+    <string name="hostname">ছাৰ্ভাৰ ঠিকনা</string>
     <string name="port">নেটৱৰ্ক পৰ্ট (Port)</string>
 
     <string name="alert_press_back_to_exit">ওলাই যাবলৈ আকৌ পিছলৈ টিপক</string>
@@ -358,7 +358,7 @@
     <string name="widget_description_full">প্লেয়াৰ আৰু ষ্টেচনৰ তালিকা</string>
 
     <string name="settings_auto_db_update">বেকগ্ৰাউণ্ড ডাটা ছিংক</string>
-    <string name="settings_auto_db_update_desc">Radio-Browser API ৰ মাধ্যমেৰে ৰেডিঅ\' ষ্টেচনৰ ডাটাবেছ স্বয়ংক্ৰিয়ভাৱে আপ hisob কৰক।</string>
+    <string name="settings_auto_db_update_desc">Radio-Browser API ৰ মাধ্যমেৰে ৰেডিঅ\' ষ্টেচনৰ ডাটাবেছ স্বয়ংক্ৰিয়ভাৱে আপডেত কৰক (পৰামৰ্শিত)।</string>
     <string name="settings_station_click_counter">ৰেডিঅ\' ষ্টেচনৰ ক্লিক কাউণ্টাৰ</string>
     <string name="settings_station_click_counter_desc">প্লে ইভেন্টসমূহ বেনামীভাৱে শ্বেয়াৰ কৰি Radio-Browser পৰিসংখ্যা সমৰ্থন কৰক।</string>
     <string name="settings_rate_app_github">AMARadio ব্যৱহাৰ কৰি ভাল পাইছেনে?</string>
@@ -404,4 +404,12 @@
     <string name="cast_network_continue">অব্যাহত ৰাখক</string>
 
     <string name="action_later">পাছত</string>
+
+    <string name="action_open_file_location">ফাইলৰ অৱস্থান খোলক</string>
+    <string name="action_record">ৰেকৰ্ড কৰক</string>
+    <string name="tab_recordings">ৰেকৰ্ডিং</string>
+    <string name="chapters">অধ্যায়সমূহ</string>
+    <string name="error_cannot_open_file">ফাইল খোলিব নোৱাৰি</string>
+    <string name="error_external_player_not_found">কোনো বাহ্যিক অডিঅ\' প্লেয়াৰ এপ পোৱা নগ\'ল</string>
+    <string name="error_sharing">ত্ৰুটি অংশীদাৰী কৰা</string>
 </resources>

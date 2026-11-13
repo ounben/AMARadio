@@ -158,7 +158,7 @@
     <string name="settings_play_external">Bật trình phát ngoài</string>
     <string name="settings_play_external_desc_on">Phát đài radio bằng trình phát bên ngoài</string>
     <string name="settings_play_external_desc_off">Phát đài radio bằng AMARadio</string>
-    <string name="settings_equalizer">Bộ cân bằng (Equalizer)</string>
+    <string name="settings_equalizer">Bộ cân bằng</string>
 
     <string name="settings_connectivity">Kết nối</string>
     <string name="settings_connect_timeout">Thời gian chờ kết nối</string>
@@ -402,4 +402,12 @@
     <string name="cast_network_continue">Tiếp tục</string>
 
     <string name="action_later">Sau đó</string>
+
+    <string name="action_open_file_location">Mở vị trí tệp</string>
+    <string name="action_record">Ghi</string>
+    <string name="tab_recordings">Bản ghi âm</string>
+    <string name="chapters">Chương</string>
+    <string name="error_cannot_open_file">Không thể mở tập tin</string>
+    <string name="error_external_player_not_found">Không tìm thấy ứng dụng trình phát âm thanh bên ngoài</string>
+    <string name="error_sharing">Lỗi chia sẻ</string>
 </resources>
