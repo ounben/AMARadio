@@ -20,6 +20,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
@@ -43,7 +44,7 @@ fun TabsScreen(
     val app = context.applicationContext as AMARadioApp
     val countryCode = Utils.getCountryCode(context) ?: "DE"
     val filterViewModel: FilterViewModel = viewModel()
-    val filterState by filterViewModel.uiState.collectAsState()
+    val filterState by filterViewModel.uiState.collectAsStateWithLifecycle()
     val coroutineScope = rememberCoroutineScope()
 
     // Build Dynamic Tab List (Guaranteed non-empty: at least Local tab exists)

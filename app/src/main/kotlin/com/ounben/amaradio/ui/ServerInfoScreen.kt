@@ -15,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 
@@ -27,7 +28,7 @@ fun ServerInfoScreen(
     currentPlayingUuid: String? = null,
     isPlaying: Boolean = false
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var selectedTabIndex by remember { mutableIntStateOf(0) }
 
     Column(modifier = Modifier.fillMaxSize()) {

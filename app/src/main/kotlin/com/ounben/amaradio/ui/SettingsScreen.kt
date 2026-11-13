@@ -28,6 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import com.ounben.amaradio.AMARadioApp
@@ -55,8 +56,8 @@ fun SettingsScreen(
     onExportBackup: () -> Unit,
     onImportBackup: () -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-    val serverInfoUiState by serverInfoViewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val serverInfoUiState by serverInfoViewModel.uiState.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
     val context = LocalContext.current

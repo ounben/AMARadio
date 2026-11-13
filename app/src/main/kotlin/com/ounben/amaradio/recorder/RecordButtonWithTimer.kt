@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
@@ -44,7 +45,7 @@ fun RecordButtonWithTimer(
     if (!showRecorder) return
 
     val recordManager = remember { RecordManager.getInstance(context) }
-    val recordState by recordManager.recordingState.collectAsState()
+    val recordState by recordManager.recordingState.collectAsStateWithLifecycle()
     var showTimerMenu by remember { mutableStateOf(false) }
     val noStationMsg = stringResource(R.string.error_station_load)
 

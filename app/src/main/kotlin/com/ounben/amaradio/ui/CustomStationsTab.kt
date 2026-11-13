@@ -24,6 +24,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
@@ -40,7 +41,7 @@ fun CustomStationsTab(
     onFavoriteClick: (DataRadioStation) -> Unit,
     isFavorite: (String) -> Boolean
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var showAddDialog by remember { mutableStateOf(false) }
     var stationToEdit by remember { mutableStateOf<DataRadioStation?>(null) }
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }

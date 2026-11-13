@@ -47,6 +47,7 @@ import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 
@@ -58,7 +59,7 @@ fun FilterScreen(
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val currentTab = uiState.tabs.getOrNull(tabIndex) ?: return
     
     var showFilterSheet by remember { mutableStateOf(false) }

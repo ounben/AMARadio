@@ -96,6 +96,7 @@ import androidx.compose.ui.layout.positionInWindow
 import androidx.compose.ui.layout.boundsInWindow
 import androidx.compose.ui.layout.boundsInParent
 import androidx.compose.ui.unit.toSize
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -253,7 +254,7 @@ fun StationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel()
 ) {
-    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
 
@@ -629,7 +630,7 @@ fun ReorderableStationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel()
 ) {
-    val playerUiState by playerViewModel.uiState.collectAsState()
+    val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }

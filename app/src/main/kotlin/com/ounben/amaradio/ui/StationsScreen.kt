@@ -2,6 +2,7 @@ package com.ounben.amaradio.ui
 
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.stringResource
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 
@@ -12,7 +13,7 @@ fun StationsScreen(
     onStationClick: (DataRadioStation) -> Unit,
     onFavoriteClick: (DataRadioStation) -> Unit
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
     LaunchedEffect(url) {
         url?.let { viewModel.loadStations(it) }

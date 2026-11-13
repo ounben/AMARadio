@@ -10,6 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
@@ -67,7 +68,7 @@ fun StarredScreen(
         ) { pageIndex ->
             Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                 if (pageIndex == 0) {
-                    val favUiState by viewModel.uiState.collectAsState()
+                    val favUiState by viewModel.uiState.collectAsStateWithLifecycle()
                     if (favUiState.filteredStations.isEmpty()) {
                         Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
                             Text(

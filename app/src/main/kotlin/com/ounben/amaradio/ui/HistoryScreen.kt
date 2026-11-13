@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.ounben.amaradio.R
 import com.ounben.amaradio.history.TrackHistoryEntry
@@ -46,7 +47,7 @@ fun HistoryScreen(
     val pageCount = if (showRecorder) 3 else 2
     val pagerState = rememberPagerState(pageCount = { pageCount })
     val coroutineScope = rememberCoroutineScope()
-    val uiState by localStationsViewModel.uiState.collectAsState()
+    val uiState by localStationsViewModel.uiState.collectAsStateWithLifecycle()
     val tracks = trackHistoryViewModel.allHistoryPaged.collectAsLazyPagingItems()
     var trackWithOptions by remember { mutableStateOf<TrackHistoryEntry?>(null) }
     var stationToDelete by remember { mutableStateOf<DataRadioStation?>(null) }

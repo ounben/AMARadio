@@ -27,6 +27,7 @@ import com.ounben.amaradio.Utils
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.coerceIn
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -66,10 +67,10 @@ fun MainScreen(
     val searchViewModel: SearchViewModel = viewModel()
     val serverInfoViewModel: ServerInfoViewModel = viewModel()
     
-    val mainUiState by mainViewModel.uiState.collectAsState()
-    val playerUiState by playerViewModel.uiState.collectAsState()
-    val searchUiState by searchViewModel.uiState.collectAsState()
-    val playerWarning by playerViewModel.warningMessage.collectAsState()
+    val mainUiState by mainViewModel.uiState.collectAsStateWithLifecycle()
+    val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
+    val searchUiState by searchViewModel.uiState.collectAsStateWithLifecycle()
+    val playerWarning by playerViewModel.warningMessage.collectAsStateWithLifecycle()
     
     // Observe player warnings
     LaunchedEffect(playerWarning) {
@@ -86,7 +87,7 @@ fun MainScreen(
     var isPlayerExpanded by remember { mutableStateOf(false) }
     
     val settingsViewModel: SettingsViewModel = viewModel()
-    val settingsUiState by settingsViewModel.uiState.collectAsState()
+    val settingsUiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
     
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
