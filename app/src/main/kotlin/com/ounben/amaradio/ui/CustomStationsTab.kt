@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -63,7 +64,8 @@ fun CustomStationsTab(
                 onFavoriteClick = onFavoriteClick,
                 isFavorite = isFavorite,
                 onReorder = { viewModel.updateAllOrder(it) },
-                onLongClick = { stationWithOptions = it }
+                onLongClick = { stationWithOptions = it },
+                showFavoriteIcon = true
             )
         }
 
@@ -153,6 +155,8 @@ fun CustomStationsTab(
     stationWithOptions?.let { station ->
         CustomStationOptionsDialog(
             station = station,
+            isFavorite = isFavorite(station.StationUuid),
+            onFavoriteClick = { onFavoriteClick(station) },
             onDismiss = { stationWithOptions = null },
             onEdit = { 
                 stationToEdit = station
@@ -169,6 +173,8 @@ fun CustomStationsTab(
 @Composable
 fun CustomStationOptionsDialog(
     station: DataRadioStation,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
     onDismiss: () -> Unit,
     onEdit: () -> Unit,
     onDelete: () -> Unit
@@ -198,6 +204,26 @@ fun CustomStationOptionsDialog(
                         Utils.playAndWarnIfMetered(context, station, PlayerType.EXTERNAL) {
                             PlayStationTask.playExternal(station, context).execute()
                         }
+                        onDismiss()
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                )
+                ListItem(
+                    headlineContent = { 
+                        Text(
+                            text = stringResource(if (isFavorite) R.string.action_starred_remove else R.string.action_starred_add),
+                            color = MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    leadingContent = { 
+                        Icon(
+                            imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline, 
+                            contentDescription = null, 
+                            tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
+                        ) 
+                    },
+                    modifier = Modifier.clickable {
+                        onFavoriteClick()
                         onDismiss()
                     },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)

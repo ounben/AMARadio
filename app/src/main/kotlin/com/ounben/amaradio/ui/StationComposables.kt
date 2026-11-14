@@ -415,7 +415,8 @@ fun StationListItem(
     modifier: Modifier = Modifier,
     useInternalClickable: Boolean = true,
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
-    isPlaying: Boolean = false
+    isPlaying: Boolean = false,
+    showFavoriteIcon: Boolean = true
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
@@ -494,26 +495,28 @@ fun StationListItem(
             dragHandle(Modifier.fillMaxHeight())
         }
 
-        Box(
-            modifier = Modifier
-                .minimumInteractiveComponentSize()
-                .size(48.dp)
-                .combinedClickable(
-                    onClick = { 
-                        if (!isFavorite) onFavoriteClick() 
-                    },
-                    onLongClick = onLongClick
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                contentDescription = stringResource(
-                    if (isFavorite) R.string.accessibility_favorite_selected 
-                    else R.string.accessibility_favorite_not_selected
-                ),
-                tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
-            )
+        if (showFavoriteIcon) {
+            Box(
+                modifier = Modifier
+                    .minimumInteractiveComponentSize()
+                    .size(48.dp)
+                    .combinedClickable(
+                        onClick = { 
+                            if (!isFavorite) onFavoriteClick() 
+                        },
+                        onLongClick = onLongClick
+                    ),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                    contentDescription = stringResource(
+                        if (isFavorite) R.string.accessibility_favorite_selected 
+                        else R.string.accessibility_favorite_not_selected
+                    ),
+                    tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
+                )
+            }
         }
     }
 }
@@ -529,7 +532,8 @@ fun StationGridItem(
     modifier: Modifier = Modifier,
     useInternalClickable: Boolean = true,
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
-    isPlaying: Boolean = false
+    isPlaying: Boolean = false,
+    showFavoriteIcon: Boolean = true
 ) {
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
@@ -590,27 +594,29 @@ fun StationGridItem(
                 }
             }
 
-            Box(
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .minimumInteractiveComponentSize()
-                    .size(48.dp)
-                    .combinedClickable(
-                        onClick = {
-                            if (!isFavorite) onFavoriteClick()
-                        },
-                        onLongClick = onLongClick
-                    ),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(
-                    imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                    contentDescription = stringResource(
-                        if (isFavorite) R.string.accessibility_favorite_selected 
-                        else R.string.accessibility_favorite_not_selected
-                    ),
-                    tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
-                )
+            if (showFavoriteIcon) {
+                Box(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .minimumInteractiveComponentSize()
+                        .size(48.dp)
+                        .combinedClickable(
+                            onClick = {
+                                if (!isFavorite) onFavoriteClick()
+                            },
+                            onLongClick = onLongClick
+                        ),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Icon(
+                        imageVector = if (isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
+                        contentDescription = stringResource(
+                            if (isFavorite) R.string.accessibility_favorite_selected 
+                            else R.string.accessibility_favorite_not_selected
+                        ),
+                        tint = if (isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
+                    )
+                }
             }
         }
     }
@@ -628,7 +634,8 @@ fun ReorderableStationList(
     onDeleteClick: ((DataRadioStation) -> Unit)? = null,
     onLongClick: ((DataRadioStation) -> Unit)? = null,
     modifier: Modifier = Modifier,
-    playerViewModel: PlayerViewModel = viewModel()
+    playerViewModel: PlayerViewModel = viewModel(),
+    showFavoriteIcon: Boolean = true
 ) {
     val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
@@ -681,6 +688,7 @@ fun ReorderableStationList(
                                 else stationWithOptions = station 
                             },
                             useInternalClickable = true,
+                            showFavoriteIcon = showFavoriteIcon,
                             dragHandle = { dragModifier ->
                                 with(itemScope) {
                                     Box(
@@ -741,6 +749,7 @@ fun ReorderableStationList(
                                     else stationWithOptions = station 
                                 },
                                 useInternalClickable = true,
+                                showFavoriteIcon = showFavoriteIcon,
                                 dragHandle = { dragModifier ->
                                     with(itemScope) {
                                         Box(

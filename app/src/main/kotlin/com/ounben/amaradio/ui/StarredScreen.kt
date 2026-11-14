@@ -83,7 +83,8 @@ fun StarredScreen(
                             onStationClick = onStationClick,
                             onFavoriteClick = onFavoriteClick,
                             isFavorite = isFavorite,
-                            onReorder = { viewModel.updateAllOrder(it) }
+                            onReorder = { viewModel.updateAllOrder(it) },
+                            showFavoriteIcon = false
                         )
                     }
                 } else {
