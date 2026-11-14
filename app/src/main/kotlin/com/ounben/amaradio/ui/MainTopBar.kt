@@ -21,10 +21,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.media3.common.util.UnstableApi
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
@@ -56,6 +58,15 @@ fun MainTopBar(
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
 
+    var textFieldValue by remember(isSearching) {
+        mutableStateOf(
+            TextFieldValue(
+                text = searchQuery,
+                selection = TextRange(searchQuery.length)
+            )
+        )
+    }
+
     LaunchedEffect(isSearching) {
         if (isSearching) {
             focusRequester.requestFocus()
@@ -67,8 +78,13 @@ fun MainTopBar(
             title = {
                 if (isSearching) {
                     TextField(
-                        value = searchQuery,
-                        onValueChange = onSearchQueryChange,
+                        value = textFieldValue,
+                        onValueChange = { newValue ->
+                            textFieldValue = newValue
+                            if (newValue.text != searchQuery) {
+                                onSearchQueryChange(newValue.text)
+                            }
+                        },
                         modifier = Modifier.fillMaxWidth().heightIn(min = 56.dp).focusRequester(focusRequester),
                         placeholder = { Text(stringResource(R.string.searchpreference_search), color = MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true,
@@ -127,7 +143,10 @@ fun MainTopBar(
                 if (isSearching) {
                     if (searchQuery.isNotEmpty()) {
                         IconButton(
-                            onClick = { onSearchQueryChange("") },
+                            onClick = {
+                                textFieldValue = TextFieldValue("", TextRange(0))
+                                onSearchQueryChange("")
+                            },
                             modifier = Modifier.size(38.dp)
                         ) {
                             Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text))
