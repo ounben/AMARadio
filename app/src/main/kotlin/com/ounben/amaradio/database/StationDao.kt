@@ -56,19 +56,19 @@ interface StationDao {
             CASE 
                 WHEN :tagOperator = 'OR' THEN (
                     (:tag1 IS NULL AND :tag2 IS NULL AND :tag3 IS NULL)
-                    OR (:tag1 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag1) || ',') > 0)
-                    OR (:tag2 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag2) || ',') > 0)
-                    OR (:tag3 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag3) || ',') > 0)
+                    OR (:tag1 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag1), ' ', '') || ',') > 0)
+                    OR (:tag2 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag2), ' ', '') || ',') > 0)
+                    OR (:tag3 IS NOT NULL AND instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag3), ' ', '') || ',') > 0)
                 )
                 WHEN :tagOperator = 'NOT' THEN (
-                    (:tag1 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag1) || ',') = 0)
-                    AND (:tag2 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag2) || ',') = 0)
-                    AND (:tag3 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag3) || ',') = 0)
+                    (:tag1 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag1), ' ', '') || ',') = 0)
+                    AND (:tag2 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag2), ' ', '') || ',') = 0)
+                    AND (:tag3 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag3), ' ', '') || ',') = 0)
                 )
                 ELSE (
-                    (:tag1 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag1) || ',') > 0)
-                    AND (:tag2 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag2) || ',') > 0)
-                    AND (:tag3 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || lower(:tag3) || ',') > 0)
+                    (:tag1 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag1), ' ', '') || ',') > 0)
+                    AND (:tag2 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag2), ' ', '') || ',') > 0)
+                    AND (:tag3 IS NULL OR instr(',' || REPLACE(lower(Tags), ' ', '') || ',', ',' || REPLACE(lower(:tag3), ' ', '') || ',') > 0)
                 )
             END
         )
