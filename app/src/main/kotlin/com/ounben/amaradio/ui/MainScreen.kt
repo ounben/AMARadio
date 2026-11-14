@@ -181,7 +181,12 @@ fun MainScreen(
                         searchViewModel.search(query)
                     },
                     onSearchToggle = { active -> 
-                        if (active) isPlayerExpanded = false
+                        if (active) {
+                            isPlayerExpanded = false
+                            if (mainUiState.searchQuery.isNotEmpty()) {
+                                searchViewModel.search(mainUiState.searchQuery)
+                            }
+                        }
                         mainViewModel.setSearchActive(active)
                         if (!active) searchViewModel.clearResults()
                     },

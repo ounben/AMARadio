@@ -44,7 +44,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun setSearchActive(active: Boolean) {
-        _uiState.update { it.copy(isSearching = active, searchQuery = if (active) it.searchQuery else "") }
+        _uiState.update { it.copy(isSearching = active) }
     }
 
     fun setSearchQuery(query: String) {
