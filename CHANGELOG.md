@@ -5,6 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.49] - 2026-11-16
+### Added
+- **Lossless Direct ADTS AAC Stream Recording**: Replaced fragile M4A container encapsulation with direct, lossless ADTS `.aac` file recording (`audio/aac`), eliminating 0-byte file corruptions and ensuring 100% full audio capture on all AAC/AAC+ streams.
+- **Search Query Retention & Smart Cursor Positioning**: Retains the user's typed search query when clicking on stations or temporarily closing search, automatically re-running the search and placing the text cursor at the end of the query (`TextRange(searchQuery.length)`) upon reopening search.
+- **Google Play Flavor Build Isolation**: Implemented `show_recorder_button` Gradle build flavor boolean resource (`play` = `false`, `foss` = `true`), hiding recording buttons and tabs in the Google Play Store build while keeping 100% of the recorder backend code intact in the project.
+- **Local Database Update**: Updated offline station cache database `radio_browser_database.db` to 2026-11-16.
+
+### Changed
+- **Lifecycle-Aware State Collection (#160)**: Refactored 15 UI screens and Composables to use `collectAsStateWithLifecycle()`, automatically pausing UI Flow collection when the app is backgrounded or the screen is off to save battery and CPU cycles.
+- **UI Streamlining in Favorites Tab (#163)**: Removed redundant yellow favorite star icons from list items in the Favorites tab to give clean, prominent space to the reordering drag handle (`Icons.Default.DragHandle`).
+- **Global Localization Audit**: Fully updated translations across 89 language resource folders with complete coverage for new UI strings and proper noun corrections.
+
+### Fixed
+- **Multi-Word Tag Filtering (#162)**: Fixed SQL query matching in `StationDao.kt` for tags containing spaces (e.g., `"public radio"`, `"classic rock"`), ensuring `REPLACE(lower(...), ' ', '')` is applied to both database tags and filter search parameters.
+- **Locale-Invariant Country Codes & Formats (#161)**: Updated country code and recording format string transformations to use `Locale.ROOT`, preventing Turkish/Azerbaijani Dotted-I bugs (`i` $\rightarrow$ `İ`) in flag emojis and audio format labels.
+- **Native AudioTrack Crash Prevention (#158)**: Configured `DefaultAudioSink` with `OFFLOAD_MODE_DISABLED` and enforced 16-bit PCM output (`setEnableFloatOutput(false)`), eliminating native `__memcpy_aarch64_simd` crashes on Android 17 / Pixel 8 Pro devices.
+- **External Player Exception Guard (#159)**: Wrapped external player launches in `PlayStationTask` with `try-catch (ActivityNotFoundException)`, displaying a clean notification (`R.string.error_external_player_not_found`) if no external audio player app is installed.
+
 ## [1.48] - 2026-11-10
 ### Added
 - **OGG Stream Recording & Synchronization**: Added live Ogg stream BOS (Beginning of Stream) page synchronization, zero-basing granulepos values, and recalculating 32-bit Ogg page CRC32 checksums (RFC 3533 polynomial `0x04C11DB7`) to ensure recorded `.ogg` files start at sample 0 and pass FFmpeg, VLC, and Musicolet validation without CRC mismatches.

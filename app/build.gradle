@@ -8,7 +8,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "1.48"
+def appVersion = "1.49"
 
 base {
     archivesName.set("AMARadio_${appVersion}")
@@ -92,7 +92,7 @@ android {
         minSdk 26
         targetSdk 37
 
-        versionCode 174
+        versionCode 179
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true
@@ -121,10 +121,12 @@ android {
         foss {
             dimension "dist"
             resValue 'bool', 'show_recorder_button', 'true'
+            resValue 'string', 'flavor_name', 'FOSS'
         }
         play {
             dimension "dist"
             resValue 'bool', 'show_recorder_button', 'false'
+            resValue 'string', 'flavor_name', 'PLAY'
         }
     }
 

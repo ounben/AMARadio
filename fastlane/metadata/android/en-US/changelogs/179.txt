@@ -1,0 +1,7 @@
+- Recording
+- Search query retention & cursor pos, cleaner Favorites UI, 89 langs.
+- Fixes: multi-word tag SQL, Locale.ROOT flags, AudioTrack 16-bit PCM crash,.
+- Android Auto history resume fix, 100% offline raw cache, GZIP sync throttle.
+- Multi-tag logic (AND/OR/NOT), codec/bitrate & multi-country filters, local country pref, Cast handoff, whole-word tag match, Predictive Back.
+- Cast discovery, on-demand Wi-Fi perm, MulticastLock.
+- Full ZIP backup/restore, fast GZIP snapshot sync, SHA-256 cache
