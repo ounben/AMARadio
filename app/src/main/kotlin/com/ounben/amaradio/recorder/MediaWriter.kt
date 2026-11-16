@@ -124,36 +124,6 @@ class MediaWriter(
             Log.e("MediaWriter", "Error closing output stream", e)
         }
 
-        // If AAC stream, encapsulate raw ADTS .part file into M4A container (0% re-encoding, 100% loss-less)
-        if (format == FormatParser.AudioFormat.AAC) {
-            try {
-                val tempPartFile = File(context.cacheDir, "temp_rec_${startTimeMs}.part")
-                context.contentResolver.openInputStream(uri)?.use { input ->
-                    tempPartFile.outputStream().use { output -> input.copyTo(output) }
-                }
-
-                val tempM4aFile = File(context.cacheDir, "temp_rec_${startTimeMs}.m4a")
-                if (AacMuxer.muxAdtsToM4a(tempPartFile, tempM4aFile)) {
-                    if (stationUuid.isNotEmpty()) {
-                        TagEmbedder.embedM4aCoverArt(tempM4aFile, context, stationUuid, stationName)
-                    }
-                    val pfd = context.contentResolver.openFileDescriptor(uri, "rwt")
-                    pfd?.use { descriptor ->
-                        java.io.FileOutputStream(descriptor.fileDescriptor).use { os ->
-                            os.channel.truncate(0)
-                            tempM4aFile.inputStream().use { input -> input.copyTo(os) }
-                            os.flush()
-                        }
-                    }
-                    totalBytesWritten = tempM4aFile.length()
-                }
-                try { tempPartFile.delete() } catch (_: Exception) {}
-                try { tempM4aFile.delete() } catch (_: Exception) {}
-            } catch (e: Exception) {
-                Log.e("MediaWriter", "Error converting AAC to M4A container", e)
-            }
-        }
-
         // If MP3 stream, sanitize Xing/Info header in-place so C++ MediaPlayerNative doesn't cap durationMs
         if (format == FormatParser.AudioFormat.MP3) {
             try {

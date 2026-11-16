@@ -7,7 +7,7 @@ object FormatParser {
 
     enum class AudioFormat(val extension: String, val mimeType: String) {
         MP3("mp3", "audio/mpeg"),
-        AAC("m4a", "audio/mp4"),
+        AAC("aac", "audio/aac"),
         AAC_PLUS("aac", "audio/aac"),
         OGG("ogg", "audio/ogg"),
         OGG_FLAC("oga", "audio/ogg"),

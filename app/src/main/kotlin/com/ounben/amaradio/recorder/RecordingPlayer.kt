@@ -77,6 +77,7 @@ fun RecordingPlayerDialog(
         }
 
         ExoPlayer.Builder(context, renderersFactory)
+            .setLooper(android.os.Looper.getMainLooper())
             .setMediaSourceFactory(mediaSourceFactory)
             .build().apply {
                 setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
@@ -114,9 +115,13 @@ fun RecordingPlayerDialog(
         }
         exoPlayer.addListener(listener)
         onDispose {
-            exoPlayer.removeListener(listener)
-            exoPlayer.stop()
-            exoPlayer.release()
+            try {
+                exoPlayer.removeListener(listener)
+                exoPlayer.playWhenReady = false
+                exoPlayer.stop()
+                exoPlayer.clearMediaItems()
+                exoPlayer.release()
+            } catch (_: Exception) {}
         }
     }
 
