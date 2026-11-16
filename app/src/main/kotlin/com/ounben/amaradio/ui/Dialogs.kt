@@ -328,11 +328,9 @@ fun StationOptionsDialog(
     val context = LocalContext.current
     val showRecorder = remember(context) {
         try {
-            context.resources.getBoolean(
-                context.resources.getIdentifier("show_recorder_button", "bool", context.packageName)
-            )
+            context.resources.getBoolean(R.bool.show_recorder_button)
         } catch (_: Exception) {
-            true
+            false
         }
     }
     var showRecordTimerDialog by remember { mutableStateOf(false) }

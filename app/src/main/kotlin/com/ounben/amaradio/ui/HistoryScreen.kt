@@ -37,11 +37,9 @@ fun HistoryScreen(
     val app = context.applicationContext as com.ounben.amaradio.AMARadioApp
     val showRecorder = remember(context) {
         try {
-            context.resources.getBoolean(
-                context.resources.getIdentifier("show_recorder_button", "bool", context.packageName)
-            )
+            context.resources.getBoolean(R.bool.show_recorder_button)
         } catch (_: Exception) {
-            true
+            false
         }
     }
     val pageCount = if (showRecorder) 3 else 2
