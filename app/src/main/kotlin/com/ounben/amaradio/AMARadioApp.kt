@@ -132,8 +132,7 @@ class AMARadioApp : Application(), ImageLoaderFactory {
     }
 
     fun rebuildHttpClient(): OkHttpClient {
-        val versionName = getString(R.string.version_name)
-        val userAgent = "AMARadio/$versionName (Android; +https://github.com/ounben/AMARadio)"
+        val userAgent = Utils.getUserAgent(this)
         val builder = newHttpClient()
             .connectTimeout(10.seconds)
             .writeTimeout(10.seconds)

@@ -77,8 +77,7 @@ class PlayStationTask(
             if (PlaylistParser.isPlaylist(streamUrl)) {
                 val resolvedUrl = withContext(Dispatchers.IO) {
                     try {
-                        val versionName = ctx.getString(R.string.version_name)
-                        val userAgent = "AMARadio/$versionName (Android; +https://github.com/ounben/AMARadio)"
+                        val userAgent = Utils.getUserAgent(ctx)
                         val request = Request.Builder()
                             .url(streamUrl)
                             .header("User-Agent", userAgent)

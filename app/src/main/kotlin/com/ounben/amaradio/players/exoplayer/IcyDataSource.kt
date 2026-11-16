@@ -67,8 +67,7 @@ class IcyDataSource(
         val builder = Request.Builder().url(url)
         
         // 1. Mandatory Headers for Radio Stream Negotiation
-        val versionName = com.ounben.amaradio.AMARadioApp.instance.getString(com.ounben.amaradio.R.string.version_name)
-        val userAgent = "AMARadio/$versionName (Android; +https://github.com/ounben/AMARadio)"
+        val userAgent = com.ounben.amaradio.Utils.getUserAgent(com.ounben.amaradio.AMARadioApp.instance)
         builder.header("User-Agent", userAgent)
         builder.header("Accept-Encoding", "identity")
         builder.header("Accept", "*/*")

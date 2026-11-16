@@ -72,6 +72,28 @@ object Utils {
     }
 
     @JvmStatic
+    fun getUserAgent(context: Context): String {
+        val versionName = context.getString(R.string.version_name)
+        val versionCode = try {
+            val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                packageInfo.longVersionCode
+            } else {
+                @Suppress("DEPRECATION")
+                packageInfo.versionCode.toLong()
+            }
+        } catch (_: Exception) { 0L }
+
+        val flavor = try {
+            context.getString(context.resources.getIdentifier("flavor_name", "string", context.packageName))
+        } catch (_: Exception) { "" }
+
+        val codeSuffix = if (versionCode > 0) " ($versionCode)" else ""
+        val flavorSuffix = if (flavor.isNotEmpty()) "/$flavor" else ""
+        return "AMARadio/$versionName$codeSuffix$flavorSuffix (Android; +https://github.com/ounben/AMARadio)"
+    }
+
+    @JvmStatic
     fun getAttributedContext(context: Context): Context {
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
             try {

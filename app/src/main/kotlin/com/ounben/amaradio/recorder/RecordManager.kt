@@ -91,8 +91,7 @@ class RecordManager private constructor(private val context: Context) {
             .readTimeout(0, TimeUnit.MILLISECONDS)
             .build()
 
-        val versionName = context.getString(com.ounben.amaradio.R.string.version_name)
-        val userAgent = "AMARadio/$versionName (Android; +https://github.com/ounben/AMARadio)"
+        val userAgent = com.ounben.amaradio.Utils.getUserAgent(context)
 
         if (station.StreamUrl.lowercase().contains(".m3u8") || station.Hls == 1) {
             HlsResolver.recordHlsStream(

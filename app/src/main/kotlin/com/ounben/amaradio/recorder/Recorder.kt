@@ -53,8 +53,7 @@ class Recorder(
                 .readTimeout(0, TimeUnit.MILLISECONDS)
                 .build()
 
-            val versionName = context.getString(com.ounben.amaradio.R.string.version_name)
-            val userAgent = "AMARadio/$versionName (Android; +https://github.com/ounben/AMARadio)"
+            val userAgent = com.ounben.amaradio.Utils.getUserAgent(context)
 
             val streamUrl = station.StreamUrl
             val request = Request.Builder()
