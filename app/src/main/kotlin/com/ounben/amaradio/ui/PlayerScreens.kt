@@ -198,13 +198,13 @@ fun FullPlayer(
                 .padding(16.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            // Header Layout: Row with Icon Left and Text Right
+            // Header Layout: Row with Icon Left (Top Aligned) and Text Right
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top
             ) {
-                // Station Icon (same size as in station list: 52.dp)
-                Box(modifier = Modifier.size(52.dp), contentAlignment = Alignment.Center) {
+                // Station Icon (top-aligned, same size as in station list: 52.dp)
+                Box(modifier = Modifier.size(52.dp).padding(top = 2.dp), contentAlignment = Alignment.TopCenter) {
                     StationIcon(
                         stationName = station?.Name ?: "",
                         stationUuid = station?.StationUuid ?: "",

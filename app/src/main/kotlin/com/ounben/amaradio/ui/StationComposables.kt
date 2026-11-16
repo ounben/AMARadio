@@ -161,6 +161,7 @@ fun StationIcon(
 
     Box(
         modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
             .background(if (isError || isLoading) placeholderColor else Color.White),
         contentAlignment = Alignment.Center
     ) {
@@ -177,7 +178,7 @@ fun StationIcon(
             model = imageRequest,
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
-            contentScale = ContentScale.Fit,
+            contentScale = ContentScale.Crop,
             onState = { state ->
                 isLoading = state is AsyncImagePainter.State.Loading
                 isError = state is AsyncImagePainter.State.Error
