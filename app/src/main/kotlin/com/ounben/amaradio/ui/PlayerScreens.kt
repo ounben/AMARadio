@@ -203,8 +203,8 @@ fun FullPlayer(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Large Station Icon
-                Box(modifier = Modifier.size(100.dp), contentAlignment = Alignment.Center) {
+                // Station Icon (same size as in station list: 52.dp)
+                Box(modifier = Modifier.size(52.dp), contentAlignment = Alignment.Center) {
                     StationIcon(
                         stationName = station?.Name ?: "",
                         stationUuid = station?.StationUuid ?: "",
@@ -215,39 +215,40 @@ fun FullPlayer(
 
                 Spacer(modifier = Modifier.width(16.dp))
 
-                // Left-aligned Text Info (STRICT 4-ROW LAYOUT)
-                // IMPORTANT: We always render exactly 4 lines to ensure constant height regardless of metadata availability.
-                // If a value is missing, we use " " as a placeholder so the line still takes up space in the system font.
+                // Left-aligned Text Info with identical titleLarge typography across all lines
                 Column(modifier = Modifier.weight(1f)) {
                     // Row 1: Station Name
                     Text(
                         text = (station?.Name ?: "").ifEmpty { " " },
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                         color = AmaradioAmber,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 22.dp)
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
                     // Row 2: Song Title
                     Text(
                         text = songTitle.ifEmpty { " " },
-                        style = MaterialTheme.typography.bodySmall,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurface,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 18.dp)
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
                     // Row 3: Artist
                     Text(
                         text = artistName.ifEmpty { " " },
-                        style = MaterialTheme.typography.labelSmall,
+                        style = MaterialTheme.typography.titleLarge,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.heightIn(min = 16.dp)
+                        textAlign = TextAlign.Start,
+                        modifier = Modifier.fillMaxWidth()
                     )
 
                     // Row 4: Status / Metadata
@@ -471,7 +472,7 @@ fun SidePanelPlayer(
 
     BoxWithConstraints(modifier = modifier.background(MaterialTheme.colorScheme.surfaceVariant)) {
         val showTrackList = maxHeight >= 480.dp
-        val iconSize = (maxHeight * 0.26f).coerceIn(64.dp, 140.dp)
+        val iconSize = 52.dp
 
         Column(modifier = Modifier.fillMaxSize()) {
             Column(
@@ -479,21 +480,26 @@ fun SidePanelPlayer(
                     .weight(1f)
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp, vertical = 12.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.Start,
                 verticalArrangement = if (showTrackList) Arrangement.Top else Arrangement.Center
             ) {
-                Box(modifier = Modifier.size(iconSize), contentAlignment = Alignment.Center) {
-                    StationIcon(
-                        stationName = station?.Name ?: "",
-                        stationUuid = station?.StationUuid ?: "",
-                        iconUrl = station?.IconUrl,
-                        modifier = Modifier.fillMaxSize()
-                    )
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterStart
+                ) {
+                    Box(modifier = Modifier.size(iconSize), contentAlignment = Alignment.Center) {
+                        StationIcon(
+                            stationName = station?.Name ?: "",
+                            stationUuid = station?.StationUuid ?: "",
+                            iconUrl = station?.IconUrl,
+                            modifier = Modifier.fillMaxSize()
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // Fixed number of lines (" " placeholders) so the layout does not jump with metadata
+                // Left-aligned text with titleLarge typography across all lines in landscape side player
                 Text(
                     text = (station?.Name ?: "").ifEmpty { " " },
                     style = MaterialTheme.typography.titleLarge,
@@ -501,29 +507,29 @@ fun SidePanelPlayer(
                     color = AmaradioAmber,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = songTitle.ifEmpty { " " },
-                    style = MaterialTheme.typography.titleMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurface,
                     minLines = if (showTrackList) 2 else 1,
                     maxLines = if (showTrackList) 2 else 1,
                     overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth()
                 )
                 Text(
                     text = artistName.ifEmpty { " " },
-                    style = MaterialTheme.typography.bodyMedium,
+                    style = MaterialTheme.typography.titleLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     modifier = Modifier.fillMaxWidth()
                 )
-                Box(modifier = Modifier.padding(top = 4.dp), contentAlignment = Alignment.Center) {
+                Box(modifier = Modifier.padding(top = 4.dp), contentAlignment = Alignment.CenterStart) {
                     PlayerStatusRow(
                         playState = uiState.playState,
                         bandwidthFlow = playerViewModel.bandwidth,

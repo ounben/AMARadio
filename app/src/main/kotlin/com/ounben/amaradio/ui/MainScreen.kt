@@ -240,7 +240,7 @@ fun MainScreen(
         ) { innerPadding ->
             Row(modifier = Modifier.fillMaxSize().padding(innerPadding)) {
                 if (useWideLayout) {
-                    // Landscape: vertical navigation with labelled targets (standard Material sizes)
+                    // Landscape: vertical navigation rail with icons only (no text labels)
                     NavigationRail(
                         containerColor = MaterialTheme.colorScheme.surface,
                         contentColor = MaterialTheme.colorScheme.onSurface,
@@ -249,8 +249,7 @@ fun MainScreen(
                         Spacer(modifier = Modifier.weight(1f))
                         navItems.forEach { screen ->
                             NavigationRailItem(
-                                icon = { Icon(screen.icon, contentDescription = null) },
-                                label = { Text(stringResource(screen.titleRes), maxLines = 1) },
+                                icon = { Icon(screen.icon, contentDescription = stringResource(screen.titleRes)) },
                                 selected = isNavItemSelected(screen),
                                 onClick = {
                                     // The rail stays visible while searching: leave search before navigating
@@ -260,12 +259,11 @@ fun MainScreen(
                                     }
                                     onNavItemClick(screen)
                                 },
+                                alwaysShowLabel = false,
                                 colors = NavigationRailItemDefaults.colors(
                                     selectedIconColor = AmaradioAmber,
-                                    selectedTextColor = AmaradioAmber,
                                     indicatorColor = Color.Transparent,
-                                    unselectedIconColor = MaterialTheme.colorScheme.onSurface,
-                                    unselectedTextColor = MaterialTheme.colorScheme.onSurface
+                                    unselectedIconColor = MaterialTheme.colorScheme.onSurface
                                 )
                             )
                         }
