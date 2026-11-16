@@ -85,7 +85,7 @@ object Utils {
         } catch (_: Exception) { 0L }
 
         val flavor = try {
-            context.getString(context.resources.getIdentifier("flavor_name", "string", context.packageName))
+            context.getString(R.string.flavor_name)
         } catch (_: Exception) { "" }
 
         val codeSuffix = if (versionCode > 0) " ($versionCode)" else ""
