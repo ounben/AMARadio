@@ -25,6 +25,8 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -152,15 +154,18 @@ fun MiniPlayer(
                 }
 
                 // Right: Play/Pause
+                val playPauseDesc = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play)
                 IconButton(
                     onClick = { viewModel.togglePlayPause() },
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier
+                        .size(64.dp)
+                        .semantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
-                        contentDescription = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play),
+                        contentDescription = playPauseDesc,
                         modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -337,10 +342,18 @@ fun FullPlayer(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { playerViewModel.skipToPrevious() }) {
+                val prevDesc = stringResource(R.string.description_btn_skip_to_previous)
+                val playPauseDesc = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play)
+                val nextDesc = stringResource(R.string.description_btn_skip_to_next)
+                val favDesc = stringResource(if (uiState.isFavorite) R.string.accessibility_favorite_selected else R.string.accessibility_favorite_not_selected)
+
+                IconButton(
+                    onClick = { playerViewModel.skipToPrevious() },
+                    modifier = Modifier.semantics { contentDescription = prevDesc }
+                ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = stringResource(R.string.description_btn_skip_to_previous),
+                        contentDescription = prevDesc,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -348,22 +361,27 @@ fun FullPlayer(
 
                 IconButton(
                     onClick = { playerViewModel.togglePlayPause() },
-                    modifier = Modifier.size(64.dp)
+                    modifier = Modifier
+                        .size(64.dp)
+                        .semantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
-                        contentDescription = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play),
+                        contentDescription = playPauseDesc,
                         modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
 
-                IconButton(onClick = { playerViewModel.skipToNext() }) {
+                IconButton(
+                    onClick = { playerViewModel.skipToNext() },
+                    modifier = Modifier.semantics { contentDescription = nextDesc }
+                ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = stringResource(R.string.description_btn_skip_to_next),
+                        contentDescription = nextDesc,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -382,14 +400,12 @@ fun FullPlayer(
                         } else {
                             playerViewModel.toggleFavorite()
                         }
-                    }
+                    },
+                    modifier = Modifier.semantics { contentDescription = favDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = stringResource(
-                            if (uiState.isFavorite) R.string.accessibility_favorite_selected 
-                            else R.string.accessibility_favorite_not_selected
-                        ),
+                        contentDescription = favDesc,
                         modifier = Modifier.size(28.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -567,13 +583,20 @@ fun SidePanelPlayer(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                val prevDesc = stringResource(R.string.description_btn_skip_to_previous)
+                val playPauseDesc = stringResource(if (isPlaying) R.string.detail_pause else R.string.detail_play)
+                val nextDesc = stringResource(R.string.description_btn_skip_to_next)
+                val favDesc = stringResource(if (uiState.isFavorite) R.string.accessibility_favorite_selected else R.string.accessibility_favorite_not_selected)
+
                 IconButton(
                     onClick = { playerViewModel.skipToPrevious() },
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier
+                        .size(48.dp)
+                        .semantics { contentDescription = prevDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = stringResource(R.string.description_btn_skip_to_previous),
+                        contentDescription = prevDesc,
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -581,11 +604,13 @@ fun SidePanelPlayer(
 
                 IconButton(
                     onClick = { playerViewModel.togglePlayPause() },
-                    modifier = Modifier.size(72.dp)
+                    modifier = Modifier
+                        .size(72.dp)
+                        .semantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = stringResource(if (isPlaying) R.string.detail_pause else R.string.detail_play),
+                        contentDescription = playPauseDesc,
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -593,11 +618,13 @@ fun SidePanelPlayer(
 
                 IconButton(
                     onClick = { playerViewModel.skipToNext() },
-                    modifier = Modifier.size(48.dp)
+                    modifier = Modifier
+                        .size(48.dp)
+                        .semantics { contentDescription = nextDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = stringResource(R.string.description_btn_skip_to_next),
+                        contentDescription = nextDesc,
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -618,14 +645,13 @@ fun SidePanelPlayer(
                             playerViewModel.toggleFavorite()
                         }
                     },
-                    modifier = Modifier.size(44.dp)
+                    modifier = Modifier
+                        .size(44.dp)
+                        .semantics { contentDescription = favDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = stringResource(
-                            if (uiState.isFavorite) R.string.accessibility_favorite_selected 
-                            else R.string.accessibility_favorite_not_selected
-                        ),
+                        contentDescription = favDesc,
                         modifier = Modifier.size(26.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
