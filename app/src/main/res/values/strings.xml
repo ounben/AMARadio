@@ -403,6 +403,7 @@
     <string name="accessibility_close">Close</string>
     <string name="accessibility_add_filter">Add filter</string>
     <string name="accessibility_station_options">Station options</string>
+    <string name="accessibility_reorder">Reorder station</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Station: %1$s, Language: %2$s, Tags: %3$s</string>
     <string name="alarm_back_desc" translatable="false">alarm back desc</string>

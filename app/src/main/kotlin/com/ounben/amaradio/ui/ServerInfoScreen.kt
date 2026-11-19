@@ -130,7 +130,7 @@ fun GlobalStatsTab(uiState: ServerInfoViewModel.ServerInfoUiState, onRefresh: ()
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
                         colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
                     ) {
-                        Icon(Icons.Default.Refresh, contentDescription = null)
+                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
                         Spacer(Modifier.width(8.dp))
                         Text("Refresh API Stats")
                     }

@@ -190,7 +190,7 @@ fun SettingsScreen(
                                 strokeWidth = 2.dp
                             )
                         } else {
-                            Icon(Icons.Default.Refresh, contentDescription = null)
+                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
                         }
                         Spacer(Modifier.width(8.dp))
                         Text(if (serverInfoUiState.isSyncing) stringResource(R.string.database_syncing) else stringResource(R.string.database_full_update))

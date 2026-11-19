@@ -570,7 +570,7 @@ fun SidePanelPlayer(
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.description_btn_skip_to_previous),
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -582,7 +582,7 @@ fun SidePanelPlayer(
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = null,
+                        contentDescription = stringResource(if (isPlaying) R.string.detail_pause else R.string.detail_play),
                         modifier = Modifier.size(64.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -594,7 +594,7 @@ fun SidePanelPlayer(
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.description_btn_skip_to_next),
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -619,7 +619,10 @@ fun SidePanelPlayer(
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = null,
+                        contentDescription = stringResource(
+                            if (uiState.isFavorite) R.string.accessibility_favorite_selected 
+                            else R.string.accessibility_favorite_not_selected
+                        ),
                         modifier = Modifier.size(26.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )

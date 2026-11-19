@@ -177,7 +177,7 @@ fun RecordingPlayerDialog(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.accessibility_close),
                             tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -279,7 +279,7 @@ fun RecordingPlayerDialog(
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = "Play/Pause",
+                        contentDescription = stringResource(if (isPlaying) R.string.detail_pause else R.string.detail_play),
                         modifier = Modifier.size(56.dp),
                         tint = AmaradioAmber
                     )

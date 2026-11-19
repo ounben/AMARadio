@@ -700,7 +700,7 @@ fun ReorderableStationList(
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.DragHandle,
-                                            contentDescription = null,
+                                            contentDescription = stringResource(R.string.accessibility_reorder),
                                             tint = MaterialTheme.colorScheme.onSurface,
                                             modifier = Modifier.size(24.dp)
                                         )
@@ -761,7 +761,7 @@ fun ReorderableStationList(
                                         ) {
                                             Icon(
                                                 imageVector = Icons.Default.DragHandle,
-                                                contentDescription = null,
+                                                contentDescription = stringResource(R.string.accessibility_reorder),
                                                 tint = MaterialTheme.colorScheme.onSurface,
                                                 modifier = Modifier.size(24.dp)
                                             )
