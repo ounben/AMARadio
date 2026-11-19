@@ -160,7 +160,7 @@ fun MiniPlayer(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
-                        contentDescription = null,
+                        contentDescription = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play),
                         modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -340,7 +340,7 @@ fun FullPlayer(
                 IconButton(onClick = { playerViewModel.skipToPrevious() }) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.description_btn_skip_to_previous),
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -354,7 +354,7 @@ fun FullPlayer(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
                             Icons.Default.PauseCircle 
                         else Icons.Default.PlayCircle,
-                        contentDescription = null,
+                        contentDescription = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play),
                         modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -363,7 +363,7 @@ fun FullPlayer(
                 IconButton(onClick = { playerViewModel.skipToNext() }) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.description_btn_skip_to_next),
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -386,7 +386,10 @@ fun FullPlayer(
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = null,
+                        contentDescription = stringResource(
+                            if (uiState.isFavorite) R.string.accessibility_favorite_selected 
+                            else R.string.accessibility_favorite_not_selected
+                        ),
                         modifier = Modifier.size(28.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )

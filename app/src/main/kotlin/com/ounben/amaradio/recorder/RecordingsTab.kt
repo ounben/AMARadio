@@ -452,7 +452,7 @@ fun RecordingListItem(
             IconButton(onClick = onPlay) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
-                    contentDescription = "Play",
+                    contentDescription = stringResource(R.string.detail_play),
                     tint = AmaradioAmber,
                     modifier = Modifier.size(28.dp)
                 )

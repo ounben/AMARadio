@@ -741,7 +741,7 @@ fun MultiSearchableSelectionDialog(
                     trailingIcon = if (searchQuery.isNotEmpty()) {
                         {
                             IconButton(onClick = { searchQuery = "" }) {
-                                Icon(Icons.Default.Clear, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     } else null,
@@ -902,7 +902,7 @@ fun SearchableSelectionDialog(
                     trailingIcon = if (searchQuery.isNotEmpty()) {
                         {
                             IconButton(onClick = { searchQuery = "" }) {
-                                Icon(Icons.Default.Clear, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                                Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text), tint = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
                     } else null,
@@ -1010,7 +1010,7 @@ fun DropdownFilterField(
                 if (value.isNotEmpty()) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        contentDescription = null,
+                        contentDescription = stringResource(R.string.accessibility_clear_text),
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onClear() },
