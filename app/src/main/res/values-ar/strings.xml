@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">لا يمكن فتح الملف</string>
     <string name="error_external_player_not_found">لم يتم العثور على تطبيق مشغل صوت خارجي</string>
     <string name="error_sharing">خطأ في المشاركة</string>
+
+    <string name="accessibility_reorder">نقل المحطة</string>
 </resources>

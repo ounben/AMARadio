@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Файлды ачуу мүмкүн эмес</string>
     <string name="error_external_player_not_found">Тышкы аудио ойноткуч колдонмо табылган жок</string>
     <string name="error_sharing">Бөлүшүү катасы</string>
+
+    <string name="accessibility_reorder">Станцияны жылдыруу</string>
 </resources>

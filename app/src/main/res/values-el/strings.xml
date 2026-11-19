@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Δεν είναι δυνατό το άνοιγμα του αρχείου</string>
     <string name="error_external_player_not_found">Δεν βρέθηκε εφαρμογή εξωτερικής αναπαραγωγής ήχου</string>
     <string name="error_sharing">Σφάλμα κοινοποίησης</string>
+
+    <string name="accessibility_reorder">Μετακίνηση σταθμού</string>
 </resources>

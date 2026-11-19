@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Файлыг нээх боломжгүй</string>
     <string name="error_external_player_not_found">Гадаад аудио тоглуулагчийн програм олдсонгүй</string>
     <string name="error_sharing">Хуваалцахад алдаа гарлаа</string>
+
+    <string name="accessibility_reorder">Станцыг шилжүүлэх</string>
 </resources>

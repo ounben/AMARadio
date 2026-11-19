@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ফাইল খুলতে পারে না</string>
     <string name="error_external_player_not_found">কোনো বাহ্যিক অডিও প্লেয়ার অ্যাপ পাওয়া যায়নি</string>
     <string name="error_sharing">শেয়ার করতে ত্রুটি</string>
+
+    <string name="accessibility_reorder">স্টেশন সরান</string>
 </resources>

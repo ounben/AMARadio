@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ဖိုင်ကိုဖွင့်၍မရပါ</string>
     <string name="error_external_player_not_found">ပြင်ပအသံဖွင့်စက်အက်ပ်ကို မတွေ့ပါ</string>
     <string name="error_sharing">မျှဝေမှုအမှား</string>
+
+    <string name="accessibility_reorder">ရေဒီယိုလိုင်း ရွှေ့ရန်</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ගොනුව විවෘත කළ නොහැක</string>
     <string name="error_external_player_not_found">බාහිර ශ්‍රව්‍ය වාදක යෙදුමක් හමු නොවීය</string>
     <string name="error_sharing">බෙදාගැනීමේ දෝෂයකි</string>
+
+    <string name="accessibility_reorder">ස්ථානය මාරු කරන්න</string>
 </resources>

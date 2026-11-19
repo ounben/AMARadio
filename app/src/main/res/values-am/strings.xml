@@ -411,4 +411,6 @@
     <string name="error_cannot_open_file">ፋይል መክፈት አልተቻለም</string>
     <string name="error_external_player_not_found">ምንም ውጫዊ የድምጽ ማጫወቻ መተግበሪያ አልተገኘም</string>
     <string name="error_sharing">ማጋራት ላይ ስህተት</string>
+
+    <string name="accessibility_reorder">ጣቢያ አንቀሳቅስ</string>
 </resources>

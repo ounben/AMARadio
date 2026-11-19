@@ -414,4 +414,6 @@
     <string name="error_cannot_open_file">Kan nie lêer oopmaak nie</string>
     <string name="error_external_player_not_found">Geen eksterne oudiospeler-toepassing gevind nie</string>
     <string name="error_sharing">Kon nie deel nie</string>
+
+    <string name="accessibility_reorder">Skuif stasie</string>
 </resources>

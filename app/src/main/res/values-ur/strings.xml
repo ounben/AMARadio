@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">فائل نہیں کھول سکتا</string>
     <string name="error_external_player_not_found">کوئی بیرونی آڈیو پلیئر ایپ نہیں ملی</string>
     <string name="error_sharing">اشتراک میں خرابی</string>
+
+    <string name="accessibility_reorder">اسٹیشن منتقل کریں</string>
 </resources>

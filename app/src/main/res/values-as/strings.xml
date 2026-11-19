@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">ফাইল খোলিব নোৱাৰি</string>
     <string name="error_external_player_not_found">কোনো বাহ্যিক অডিঅ\' প্লেয়াৰ এপ পোৱা নগ\'ল</string>
     <string name="error_sharing">ত্ৰুটি অংশীদাৰী কৰা</string>
+
+    <string name="accessibility_reorder">ষ্টেচন স্থানান্তৰ কৰক</string>
 </resources>

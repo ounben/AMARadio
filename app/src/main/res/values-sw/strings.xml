@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Haiwezi kufungua faili</string>
     <string name="error_external_player_not_found">Hakuna programu ya kicheza sauti ya nje iliyopatikana</string>
     <string name="error_sharing">Hitilafu kushiriki</string>
+
+    <string name="accessibility_reorder">Hamisha kituo</string>
 </resources>

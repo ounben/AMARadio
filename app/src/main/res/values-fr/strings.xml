@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Impossible d\'ouvrir le fichier</string>
     <string name="error_external_player_not_found">Aucune application de lecteur audio externe trouvée</string>
     <string name="error_sharing">Erreur lors du partage</string>
+
+    <string name="accessibility_reorder">Déplacer la station</string>
 </resources>

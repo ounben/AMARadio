@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">फ़ाइल नहीं खुल रही</string>
     <string name="error_external_player_not_found">कोई बाहरी ऑडियो प्लेयर ऐप नहीं मिला</string>
     <string name="error_sharing">साझा करने में त्रुटि</string>
+
+    <string name="accessibility_reorder">स्टेशन ले जाएँ</string>
 </resources>

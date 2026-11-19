@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">ଫାଇଲ୍ ଖୋଲିପାରିବ ନାହିଁ</string>
     <string name="error_external_player_not_found">କୌଣସି ବାହ୍ୟ ଅଡିଓ ପ୍ଲେୟାର ଆପ୍ ମିଳିଲା ନାହିଁ</string>
     <string name="error_sharing">ବାଣ୍ଟିବାରେ ତ୍ରୁଟି</string>
+
+    <string name="accessibility_reorder">ଷ୍ଟେସନ୍ ଘୁଞ୍ଚାନ୍ତୁ</string>
 </resources>

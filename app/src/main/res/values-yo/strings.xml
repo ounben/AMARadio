@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Ko le ṣi faili</string>
     <string name="error_external_player_not_found">Ko si ohun elo ẹrọ ohun ita ti a rii</string>
     <string name="error_sharing">Aṣiṣe pinpin</string>
+
+    <string name="accessibility_reorder">Gbe ilé-iṣẹ́ rédíò</string>
 </resources>

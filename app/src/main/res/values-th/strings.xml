@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ไม่สามารถเปิดไฟล์ได้</string>
     <string name="error_external_player_not_found">ไม่พบแอปเครื่องเล่นเสียงภายนอก</string>
     <string name="error_sharing">เกิดข้อผิดพลาดในการแชร์</string>
+
+    <string name="accessibility_reorder">ย้ายสถานี</string>
 </resources>

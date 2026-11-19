@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ફાઇલ ખોલી શકાતી નથી</string>
     <string name="error_external_player_not_found">કોઈ બાહ્ય ઑડિઓ પ્લેયર ઍપ મળી નથી</string>
     <string name="error_sharing">શેર કરવામાં ભૂલ</string>
+
+    <string name="accessibility_reorder">સ્ટેશન ખસેડો</string>
 </resources>

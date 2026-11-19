@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ఫైల్‌ని తెరవడం సాధ్యం కాదు</string>
     <string name="error_external_player_not_found">బాహ్య ఆడియో ప్లేయర్ యాప్ ఏదీ కనుగొనబడలేదు</string>
     <string name="error_sharing">భాగస్వామ్యం చేయడంలో లోపం</string>
+
+    <string name="accessibility_reorder">స్టేషన్‌ను తరలించండి</string>
 </resources>

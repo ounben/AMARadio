@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">No es pot obrir el fitxer</string>
     <string name="error_external_player_not_found">No s\'ha trobat cap aplicació de reproductor d\'àudio extern</string>
     <string name="error_sharing">S\'ha produït un error en compartir</string>
+
+    <string name="accessibility_reorder">Mou l\'estació</string>
 </resources>

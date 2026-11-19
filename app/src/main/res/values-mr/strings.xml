@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">फाइल उघडू शकत नाही</string>
     <string name="error_external_player_not_found">कोणतेही बाह्य ऑडिओ प्लेयर ॲप आढळले नाही</string>
     <string name="error_sharing">सामायिकरण त्रुटी</string>
+
+    <string name="accessibility_reorder">स्टेशन हलवा</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">無法開啟文件</string>
     <string name="error_external_player_not_found">找不到外部音訊播放器應用程式</string>
     <string name="error_sharing">分享時出錯</string>
+
+    <string name="accessibility_reorder">移動電台</string>
 </resources>

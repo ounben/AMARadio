@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Не могу открыть файл</string>
     <string name="error_external_player_not_found">Приложение внешнего аудиоплеера не найдено</string>
     <string name="error_sharing">Ошибка обмена</string>
+
+    <string name="accessibility_reorder">Переместить станцию</string>
 </resources>

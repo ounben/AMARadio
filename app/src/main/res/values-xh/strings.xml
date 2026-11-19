@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Ayinakuvula ifayile</string>
     <string name="error_external_player_not_found">Akukho app yangaphandle yomdlali wesandi efunyenweyo</string>
     <string name="error_sharing">Ukwabelana ngempazamo</string>
+
+    <string name="accessibility_reorder">Hambisa isikhululo</string>
 </resources>

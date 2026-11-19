@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Hindi mabuksan ang file</string>
     <string name="error_external_player_not_found">Walang nakitang external na audio player app</string>
     <string name="error_sharing">Error sa pagbabahagi</string>
+
+    <string name="accessibility_reorder">Ilipat ang istasyon</string>
 </resources>

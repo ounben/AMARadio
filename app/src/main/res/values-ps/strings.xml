@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">فایل نشي خلاصولی</string>
     <string name="error_external_player_not_found">هیڅ بهرنی آډیو پلیر ایپ ونه موندل شو</string>
     <string name="error_sharing">په شریکولو کې تېروتنه</string>
+
+    <string name="accessibility_reorder">سټېشن خوځول</string>
 </resources>

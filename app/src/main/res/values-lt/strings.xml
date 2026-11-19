@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Negalima atidaryti failo</string>
     <string name="error_external_player_not_found">Nerasta jokios išorinės garso grotuvo programos</string>
     <string name="error_sharing">Bendrinant klaida</string>
+
+    <string name="accessibility_reorder">Perkelti stotį</string>
 </resources>

@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Enweghị ike imepe faịlụ</string>
     <string name="error_external_player_not_found">Ọnweghị ngwa ọkpụkpọ ọdịyo dị na mpụga ahụrụ</string>
     <string name="error_sharing">Ịkekọrịta mperi</string>
+
+    <string name="accessibility_reorder">Bugharịa ụlọ redio</string>
 </resources>

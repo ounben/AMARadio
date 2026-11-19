@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Kan ikke åpne filen</string>
     <string name="error_external_player_not_found">Ingen ekstern lydspillerapp funnet</string>
     <string name="error_sharing">Feil under deling</string>
+
+    <string name="accessibility_reorder">Flytt radiokanal</string>
 </resources>

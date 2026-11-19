@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ფაილის გახსნა შეუძლებელია</string>
     <string name="error_external_player_not_found">გარე აუდიო დამკვრელის აპი ვერ მოიძებნა</string>
     <string name="error_sharing">შეცდომის გაზიარება</string>
+
+    <string name="accessibility_reorder">სადგურის გადატანა</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Không thể mở tập tin</string>
     <string name="error_external_player_not_found">Không tìm thấy ứng dụng trình phát âm thanh bên ngoài</string>
     <string name="error_sharing">Lỗi chia sẻ</string>
+
+    <string name="accessibility_reorder">Di chuyển đài</string>
 </resources>

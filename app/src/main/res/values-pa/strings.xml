@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">ਫ਼ਾਈਲ ਖੋਲ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ</string>
     <string name="error_external_player_not_found">ਕੋਈ ਬਾਹਰੀ ਆਡੀਓ ਪਲੇਅਰ ਐਪ ਨਹੀਂ ਮਿਲਿਆ</string>
     <string name="error_sharing">ਸਾਂਝਾਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
+
+    <string name="accessibility_reorder">ਸਟੇਸ਼ਨ ਨੂੰ ਮੂਵ ਕਰੋ</string>
 </resources>

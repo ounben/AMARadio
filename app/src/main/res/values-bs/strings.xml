@@ -411,4 +411,6 @@
     <string name="error_cannot_open_file">Nije moguće otvoriti fajl</string>
     <string name="error_external_player_not_found">Nije pronađena nijedna aplikacija za vanjski audio player</string>
     <string name="error_sharing">Greška pri dijeljenju</string>
+
+    <string name="accessibility_reorder">Pomeri stanicu</string>
 </resources>

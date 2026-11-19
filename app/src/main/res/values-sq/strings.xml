@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Skedari nuk mund të hapet</string>
     <string name="error_external_player_not_found">Nuk u gjet asnjë aplikacion i jashtëm i riprodhuesit audio</string>
     <string name="error_sharing">Gabim në ndarjen</string>
+
+    <string name="accessibility_reorder">Zhvendos stacionin</string>
 </resources>

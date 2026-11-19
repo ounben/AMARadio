@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Не може да се отвори датотека</string>
     <string name="error_external_player_not_found">Не е пронајдена апликација за надворешен аудио плеер</string>
     <string name="error_sharing">Грешка при споделување</string>
+
+    <string name="accessibility_reorder">Премести станица</string>
 </resources>

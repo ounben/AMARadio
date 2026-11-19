@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Kan inte öppna filen</string>
     <string name="error_external_player_not_found">Ingen extern ljudspelare-app hittades</string>
     <string name="error_sharing">Fel vid delning</string>
+
+    <string name="accessibility_reorder">Flytta station</string>
 </resources>

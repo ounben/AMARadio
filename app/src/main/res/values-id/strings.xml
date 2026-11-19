@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Tidak dapat membuka file</string>
     <string name="error_external_player_not_found">Tidak ditemukan aplikasi pemutar audio eksternal</string>
     <string name="error_sharing">Kesalahan berbagi</string>
+
+    <string name="accessibility_reorder">Pindahkan stasiun</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Get ekki opnað skrá</string>
     <string name="error_external_player_not_found">Ekkert ytri hljóðspilaraforrit fannst</string>
     <string name="error_sharing">Villa við að deila</string>
+
+    <string name="accessibility_reorder">Færa stöð</string>
 </resources>

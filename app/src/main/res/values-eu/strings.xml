@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Ezin da fitxategia ireki</string>
     <string name="error_external_player_not_found">Ez da aurkitu kanpoko audio erreproduzitzailearen aplikaziorik</string>
     <string name="error_sharing">Errore bat gertatu da partekatzean</string>
+
+    <string name="accessibility_reorder">Geltokia mugitu</string>
 </resources>

@@ -347,6 +347,7 @@
     <string name="accessibility_close">Serrar</string>
     <string name="accessibility_add_filter">Agiuntar in filter</string>
     <string name="accessibility_station_options">Opziuns da la staziun</string>
+    <string name="accessibility_reorder">Spustar la staziun</string>
     <string name="not_applicable">N/A</string>
     <string name="accessibility_station_description">Staziun: %1$s, Linguatg: %2$s, Tags: %3$s</string>
 

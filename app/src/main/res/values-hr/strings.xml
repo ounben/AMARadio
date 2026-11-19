@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Nije moguće otvoriti datoteku</string>
     <string name="error_external_player_not_found">Nije pronađena nijedna vanjska aplikacija za reprodukciju zvuka</string>
     <string name="error_sharing">Pogreška u dijeljenju</string>
+
+    <string name="accessibility_reorder">Pomakni stanicu</string>
 </resources>

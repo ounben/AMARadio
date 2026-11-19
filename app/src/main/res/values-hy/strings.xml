@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Հնարավոր չէ բացել ֆայլը</string>
     <string name="error_external_player_not_found">Արտաքին աուդիո նվագարկիչի հավելված չի գտնվել</string>
     <string name="error_sharing">Համօգտագործման սխալ</string>
+
+    <string name="accessibility_reorder">Տեղափոխել կայանը</string>
 </resources>

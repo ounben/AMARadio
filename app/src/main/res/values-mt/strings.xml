@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Ma jistax jiftaħ il-fajl</string>
     <string name="error_external_player_not_found">Ma nstabet l-ebda app tal-awdjo player estern</string>
     <string name="error_sharing">Qsim ta\' żbalji</string>
+
+    <string name="accessibility_reorder">Ċaqlaq stazzjon</string>
 </resources>

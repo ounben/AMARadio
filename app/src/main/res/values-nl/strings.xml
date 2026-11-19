@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Kan bestand niet openen</string>
     <string name="error_external_player_not_found">Geen externe audiospeler-app gevonden</string>
     <string name="error_sharing">Fout bij delen</string>
+
+    <string name="accessibility_reorder">Verplaats station</string>
 </resources>

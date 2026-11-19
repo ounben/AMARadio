@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">לא ניתן לפתוח קובץ</string>
     <string name="error_external_player_not_found">לא נמצאה אפליקציית נגן שמע חיצוני</string>
     <string name="error_sharing">שגיאה בשיתוף</string>
+
+    <string name="accessibility_reorder">העבר תחנה</string>
 </resources>

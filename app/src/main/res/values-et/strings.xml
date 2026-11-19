@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Faili ei saa avada</string>
     <string name="error_external_player_not_found">Välist helipleieri rakendust ei leitud</string>
     <string name="error_sharing">Viga jagamisel</string>
+
+    <string name="accessibility_reorder">Liiguta jaam</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">មិនអាចបើកឯកសារបានទេ</string>
     <string name="error_external_player_not_found">រកមិនឃើញកម្មវិធីចាក់អូឌីយ៉ូខាងក្រៅទេ</string>
     <string name="error_sharing">កំហុសក្នុងការចែករំលែក</string>
+
+    <string name="accessibility_reorder">ផ្លាស់ទីស្ថានីយ៍</string>
 </resources>

@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Неможливо відкрити файл</string>
     <string name="error_external_player_not_found">Не знайдено програми зовнішнього аудіопрогравача</string>
     <string name="error_sharing">Помилка спільного доступу</string>
+
+    <string name="accessibility_reorder">Перемістити станцію</string>
 </resources>

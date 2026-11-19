@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Ní féidir an comhad a oscailt</string>
     <string name="error_external_player_not_found">Níor aimsíodh aon aip sheachtrach fuaime</string>
     <string name="error_sharing">Earráid á roinnt</string>
+
+    <string name="accessibility_reorder">Bog stáisiún</string>
 </resources>

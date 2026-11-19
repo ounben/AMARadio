@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Nu se poate deschide fișierul</string>
     <string name="error_external_player_not_found">Nu a fost găsită nicio aplicație de player audio extern</string>
     <string name="error_sharing">Eroare la partajare</string>
+
+    <string name="accessibility_reorder">Mutați stația</string>
 </resources>

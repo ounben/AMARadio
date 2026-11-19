@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Datoteke ni mogoče odpreti</string>
     <string name="error_external_player_not_found">Najdena ni bila nobena aplikacija za zunanji predvajalnik zvoka</string>
     <string name="error_sharing">Napaka pri skupni rabi</string>
+
+    <string name="accessibility_reorder">Premakni postajo</string>
 </resources>

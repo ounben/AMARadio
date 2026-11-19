@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ファイルを開けません</string>
     <string name="error_external_player_not_found">外部オーディオプレーヤーアプリが見つかりません</string>
     <string name="error_sharing">共有エラー</string>
+
+    <string name="accessibility_reorder">ラジオ局を移動</string>
 </resources>

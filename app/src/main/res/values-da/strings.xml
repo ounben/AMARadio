@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Kan ikke åbne filen</string>
     <string name="error_external_player_not_found">Der blev ikke fundet nogen ekstern lydafspiller-app</string>
     <string name="error_sharing">Fejl ved deling</string>
+
+    <string name="accessibility_reorder">Flyt station</string>
 </resources>

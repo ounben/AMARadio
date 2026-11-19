@@ -411,4 +411,6 @@
     <string name="error_cannot_open_file">Faylı açmaq mümkün deyil</string>
     <string name="error_external_player_not_found">Xarici audio pleyer proqramı tapılmadı</string>
     <string name="error_sharing">Paylaşım xətası</string>
+
+    <string name="accessibility_reorder">Stansiyanı köçürün</string>
 </resources>

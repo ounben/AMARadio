@@ -410,4 +410,6 @@
     <string name="error_sharing">Памылка абагульвання</string>
 
     <string name="error_external_player_not_found">Не знойдзена праграма знешняга аўдыяпрайгравальніка</string>
+
+    <string name="accessibility_reorder">Перамясціць станцыю</string>
 </resources>

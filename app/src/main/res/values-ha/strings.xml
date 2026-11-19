@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">Ba za a iya buɗe fayil ba</string>
     <string name="error_external_player_not_found">Ba a sami app ɗin mai kunna sauti na waje ba</string>
     <string name="error_sharing">Kuskuren rabawa</string>
+
+    <string name="accessibility_reorder">Matsar da gidan rediyo</string>
 </resources>

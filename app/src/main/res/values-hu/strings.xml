@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">A fájl nem nyitható meg</string>
     <string name="error_external_player_not_found">Nem található külső audiolejátszó alkalmazás</string>
     <string name="error_sharing">Megosztási hiba</string>
+
+    <string name="accessibility_reorder">Állomás áthelyezése</string>
 </resources>

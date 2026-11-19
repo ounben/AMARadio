@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Nevar atvērt failu</string>
     <string name="error_external_player_not_found">Nav atrasta ārēja audio atskaņotāja lietotne</string>
     <string name="error_sharing">Kopīgošanas kļūda</string>
+
+    <string name="accessibility_reorder">Pārvietot staciju</string>
 </resources>

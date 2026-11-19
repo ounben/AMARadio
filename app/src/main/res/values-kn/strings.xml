@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ಫೈಲ್ ತೆರೆಯಲು ಸಾಧ್ಯವಿಲ್ಲ</string>
     <string name="error_external_player_not_found">ಯಾವುದೇ ಬಾಹ್ಯ ಆಡಿಯೊ ಪ್ಲೇಯರ್ ಅಪ್ಲಿಕೇಶನ್ ಕಂಡುಬಂದಿಲ್ಲ</string>
     <string name="error_sharing">ಹಂಚಿಕೆ ದೋಷ</string>
+
+    <string name="accessibility_reorder">ರೇಡಿಯೋ ಸ್ಟೇಷನ್ ಸರಿಸಿ</string>
 </resources>

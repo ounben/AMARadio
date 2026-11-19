@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">ഫയൽ തുറക്കാൻ കഴിയില്ല</string>
     <string name="error_external_player_not_found">ബാഹ്യ ഓഡിയോ പ്ലെയർ ആപ്പൊന്നും കണ്ടെത്തിയില്ല</string>
     <string name="error_sharing">പങ്കിടുന്നതിൽ പിശക്</string>
+
+    <string name="accessibility_reorder">സ്റ്റേഷൻ മാറ്റുക</string>
 </resources>

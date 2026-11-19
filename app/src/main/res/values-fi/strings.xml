@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Tiedostoa ei voi avata</string>
     <string name="error_external_player_not_found">Ulkoista äänisoitinsovellusta ei löytynyt</string>
     <string name="error_sharing">Virhe jakamisessa</string>
+
+    <string name="accessibility_reorder">Siirrä asemaa</string>
 </resources>

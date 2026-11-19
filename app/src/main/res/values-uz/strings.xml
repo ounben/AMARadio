@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Faylni ochib bo\'lmadi</string>
     <string name="error_external_player_not_found">Hech qanday tashqi audio pleyer ilovasi topilmadi</string>
     <string name="error_sharing">Ulashishda xatolik yuz berdi</string>
+
+    <string name="accessibility_reorder">Stantsiyani ko\'chirish</string>
 </resources>

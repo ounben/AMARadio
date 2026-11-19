@@ -410,4 +410,6 @@
     <string name="error_cannot_open_file">Nelze otevřít soubor</string>
     <string name="error_external_player_not_found">Nebyla nalezena žádná aplikace pro externí audio přehrávač</string>
     <string name="error_sharing">Chyba při sdílení</string>
+
+    <string name="accessibility_reorder">Přesunout stanici</string>
 </resources>

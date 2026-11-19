@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">קענען ניט עפענען טעקע</string>
     <string name="error_external_player_not_found">קיין פונדרויסנדיק אַודיאָ שפּילער אַפּ געפֿונען</string>
     <string name="error_sharing">טעות ייַנטיילונג</string>
+
+    <string name="accessibility_reorder">רוקן סטאַנציע</string>
 </resources>

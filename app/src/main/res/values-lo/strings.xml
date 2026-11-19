@@ -412,4 +412,6 @@
     <string name="error_cannot_open_file">ບໍ່ສາມາດເປີດໄຟລ໌ໄດ້</string>
     <string name="error_external_player_not_found">ບໍ່ພົບແອັບເຄື່ອງຫຼິ້ນສຽງພາຍນອກ</string>
     <string name="error_sharing">ເກີດຄວາມຜິດພາດໃນການແບ່ງປັນ</string>
+
+    <string name="accessibility_reorder">ຍ້າຍສະຖານີ</string>
 </resources>
