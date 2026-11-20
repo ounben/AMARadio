@@ -5,6 +5,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.50] - 2026-11-20
+### Added
+- **Complete Accessibility Audit (#168)
+- **: Added explicit Compose `.semantics { contentDescription = ... }` labels to all interactive UI components, player controls, reorder drag handles across 23 languages, and recording filter chips for full screen reader (TalkBack) and Google Play Console Accessibility Scanner compliance.
+
 ## [1.49] - 2026-11-16
 ### Added
 - **Lossless Direct ADTS AAC Stream Recording**: Replaced fragile M4A container encapsulation with direct, lossless ADTS `.aac` file recording (`audio/aac`), eliminating 0-byte file corruptions and ensuring 100% full audio capture on all AAC/AAC+ streams.
