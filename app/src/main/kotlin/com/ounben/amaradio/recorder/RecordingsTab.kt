@@ -26,6 +26,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -211,6 +213,9 @@ fun RecordingFilterHeader(
     var showStationDropdown by remember { mutableStateOf(false) }
     var showDateRangePicker by remember { mutableStateOf(false) }
 
+    val stationFilterTitle = stringResource(R.string.station_name)
+    val dateFilterTitle = stringResource(R.string.filter_empty_filter_by)
+
     val dateRangeLabel = remember(startDateMs, endDateMs) {
         if (startDateMs > 0L && endDateMs > 0L) {
             val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
@@ -222,6 +227,9 @@ fun RecordingFilterHeader(
             "All"
         }
     }
+
+    val stationSemanticsDesc = "$stationFilterTitle: ${selectedStation.ifEmpty { "All" }}"
+    val dateSemanticsDesc = "$dateFilterTitle: $dateRangeLabel"
 
     Surface(
         tonalElevation = 0.dp,
@@ -240,7 +248,7 @@ fun RecordingFilterHeader(
                 FilterChip(
                     selected = selectedStation.isNotEmpty(),
                     onClick = { showStationDropdown = true },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = stationSemanticsDesc },
                     label = {
                         Text(
                             text = selectedStation.ifEmpty { "All" },
@@ -293,7 +301,7 @@ fun RecordingFilterHeader(
                 FilterChip(
                     selected = startDateMs > 0L,
                     onClick = { showDateRangePicker = true },
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = dateSemanticsDesc },
                     label = {
                         Text(
                             text = dateRangeLabel,
