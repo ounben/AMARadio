@@ -114,14 +114,20 @@ object BackupManager {
             }
 
             backupData?.let { data ->
-                // 1. Restore Custom Stations (into CustomStationManager -> Custom Stations tab)
-                data.customStations.forEach { station ->
-                    app.customStationManager.add(station)
+                // 1. Restore Custom Stations sequentially to maintain exact backup order
+                if (data.customStations.isNotEmpty()) {
+                    val newCustom = data.customStations.filter { !app.customStationManager.has(it.StationUuid) }
+                    if (newCustom.isNotEmpty()) {
+                        app.customStationManager.addMultiple(newCustom)
+                    }
                 }
 
-                // 2. Restore Favorites (into FavouriteManager -> Favorites tab)
-                data.favorites.forEach { station ->
-                    app.favouriteManager.add(station)
+                // 2. Restore Favorites sequentially to maintain exact backup order
+                if (data.favorites.isNotEmpty()) {
+                    val newFavs = data.favorites.filter { !app.favouriteManager.has(it.StationUuid) }
+                    if (newFavs.isNotEmpty()) {
+                        app.favouriteManager.addMultiple(newFavs)
+                    }
                 }
                 true
             } ?: false
