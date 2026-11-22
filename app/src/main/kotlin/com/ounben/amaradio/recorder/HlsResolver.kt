@@ -31,7 +31,7 @@ object HlsResolver {
                 val response = httpClient.newCall(request).execute()
                 if (!response.isSuccessful) {
                     response.close()
-                    try { Thread.sleep(3000) } catch (_: Exception) {}
+                    try { Thread.sleep(3000) } catch (e: Exception) { Log.w("HlsResolver", "Interrupted during retry sleep", e) }
                     continue
                 }
 
@@ -73,11 +73,11 @@ object HlsResolver {
                     downloadSegment(httpClient, segmentUrl, userAgent, onAudioData)
                 }
 
-                try { Thread.sleep(3500) } catch (_: Exception) {}
+                try { Thread.sleep(3500) } catch (e: Exception) { Log.w("HlsResolver", "Interrupted during segment sleep", e) }
             } catch (e: Exception) {
                 if (!isRecording()) break
-                Log.w("HlsResolver", "HLS poll error: ${e.message}")
-                try { Thread.sleep(3000) } catch (_: Exception) {}
+                Log.w("HlsResolver", "HLS poll error", e)
+                try { Thread.sleep(3000) } catch (e2: Exception) { Log.w("HlsResolver", "Interrupted during error sleep", e2) }
             }
         }
     }

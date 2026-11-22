@@ -271,7 +271,9 @@ open class StationSaveManager(protected val context: Context) {
                                         // Try online API for RadioBrowser UUIDs
                                         try {
                                             station = Utils.getStationByUuid(app.httpClient, context, uuid)
-                                        } catch (_: Exception) {}
+                                        } catch (e: Exception) {
+                                            Log.w("StationSaveManager", "Failed to fetch station by UUID: $uuid", e)
+                                        }
                                     }
                                 }
                             }

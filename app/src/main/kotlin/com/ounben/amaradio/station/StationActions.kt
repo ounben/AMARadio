@@ -33,11 +33,7 @@ object StationActions {
             val newIntent = Intent(Intent.ACTION_VIEW, stationUrl)
             Utils.safeStartActivity(activity, newIntent, R.string.error_no_browser)
         } else {
-            if (activity is android.app.Activity) {
-                Utils.showModernToast(activity, R.string.error_no_homepage)
-            } else {
-                android.widget.Toast.makeText(activity, R.string.error_no_homepage, android.widget.Toast.LENGTH_SHORT).show()
-            }
+            Utils.showToast(activity, R.string.error_no_homepage)
         }
     }
 
@@ -47,7 +43,7 @@ object StationActions {
             if (clipboard != null) {
                 val clip = ClipData.newPlainText("Stream Url", station.StreamUrl)
                 clipboard.setPrimaryClip(clip)
-                (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_stream_url_copied) }
+                Utils.showToast(context, R.string.notify_stream_url_copied)
             }
             return
         }
@@ -71,12 +67,12 @@ object StationActions {
                 if (clipboard != null) {
                     val clip = ClipData.newPlainText("Stream Url", result)
                     clipboard.setPrimaryClip(clip)
-                    (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.notify_stream_url_copied) }
+                    Utils.showToast(ctx, R.string.notify_stream_url_copied)
                 } else {
                     Log.e(TAG, "Clipboard is NULL!")
                 }
             } else {
-                (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.error_station_load) }
+                Utils.showToast(ctx, R.string.error_station_load)
             }
         }
     }
@@ -85,7 +81,7 @@ object StationActions {
     fun markAsFavourite(context: Context, station: DataRadioStation) {
         val app = context.applicationContext as AMARadioApp
         app.favouriteManager.add(station)
-        (context as? Activity)?.let { Utils.showModernToast(it, R.string.notify_starred) }
+        Utils.showToast(context, R.string.notify_starred)
     }
 
     @JvmStatic
@@ -135,7 +131,7 @@ object StationActions {
                 val chooser = Intent.createChooser(share, title)
                 ctx.startActivity(chooser)
             } else {
-                (ctx as? Activity)?.let { Utils.showModernToast(it, R.string.error_station_load) }
+                Utils.showToast(ctx, R.string.error_station_load)
             }
         }
     }

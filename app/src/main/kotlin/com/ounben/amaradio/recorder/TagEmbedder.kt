@@ -188,7 +188,10 @@ object TagEmbedder {
         if (iconFile.exists()) {
             return try {
                 iconFile.readBytes()
-            } catch (_: Exception) { null }
+            } catch (e: Exception) {
+                Log.w("TagEmbedder", "Failed to read icon bytes for $stationUuid", e)
+                null
+            }
         }
 
         return try {
@@ -196,7 +199,10 @@ object TagEmbedder {
             val baos = ByteArrayOutputStream()
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, baos)
             baos.toByteArray()
-        } catch (_: Exception) { null }
+        } catch (e: Exception) {
+            Log.w("TagEmbedder", "Failed to create placeholder bitmap for $stationUuid", e)
+            null
+        }
     }
 
     private fun createId3v2Tag(jpegBytes: ByteArray, stationName: String): ByteArray {

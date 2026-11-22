@@ -335,7 +335,9 @@ object Utils {
             try {
                 val list = withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
                 if (list?.size == 1) return list[0]
-            } catch (_: Exception) {}
+            } catch (e: Exception) {
+                Log.w("Utils", "Error decoding station by UUID: $stationUuid", e)
+            }
         }
         return null
     }
@@ -354,7 +356,9 @@ object Utils {
                 try {
                     val decoded = withContext(Dispatchers.Default) { DataRadioStation.DecodeJson(result) }
                     if (decoded != null) allResults.addAll(decoded)
-                } catch (_: Exception) {}
+                } catch (e: Exception) {
+                    Log.w("Utils", "Error decoding stations by UUID batch", e)
+                }
             }
         }
         return if (allResults.isEmpty() && listUUids.isNotEmpty()) null else allResults
@@ -495,23 +499,23 @@ object Utils {
     fun getAccentColor(context: Context): Int = themeAttributeToColor(androidx.appcompat.R.attr.colorAccent, context, Color.LTGRAY)
 
     @JvmStatic
-    fun showSnackbar(view: View, message: String) {
-        val snackbar = com.google.android.material.snackbar.Snackbar.make(view, message, com.google.android.material.snackbar.Snackbar.LENGTH_SHORT)
-        snackbar.setBackgroundTint(getAccentColor(view.context))
-        snackbar.setTextColor(Color.WHITE)
-        snackbar.show()
+    fun showToast(context: Context, resId: Int) {
+        Toast.makeText(context, resId, Toast.LENGTH_SHORT).show()
     }
 
     @JvmStatic
-    fun showModernToast(activity: Activity, resId: Int) {
-        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
-        showSnackbar(view, activity.getString(resId))
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 
     @JvmStatic
-    fun showModernToast(activity: Activity, message: String) {
-        val view = activity.findViewById<View>(android.R.id.content) ?: activity.window.decorView
-        showSnackbar(view, message)
+    fun showModernToast(context: Context, resId: Int) {
+        showToast(context, resId)
+    }
+
+    @JvmStatic
+    fun showModernToast(context: Context, message: String) {
+        showToast(context, message)
     }
 
     @JvmStatic

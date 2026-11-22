@@ -46,7 +46,7 @@ class ReviewManager(context: Context) {
             activity.startActivity(intent)
         } catch (e: Exception) {
             Log.e(TAG, "Failed to open GitHub in browser", e)
-            Utils.showModernToast(activity, R.string.error_no_browser)
+            Utils.showToast(activity, R.string.error_no_browser)
         }
     }
 }

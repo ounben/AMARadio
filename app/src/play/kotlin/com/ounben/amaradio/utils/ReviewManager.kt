@@ -99,7 +99,7 @@ class ReviewManager(private val context: Context) {
                     android.net.Uri.parse("https://play.google.com/store/apps/details?id=$packageName")))
             } catch (e2: Exception) {
                 Log.e(TAG, "Failed to open Play Store or Browser", e2)
-                Utils.showModernToast(activity, R.string.error_no_browser)
+                Utils.showToast(activity, R.string.error_no_browser)
             }
         }
     }

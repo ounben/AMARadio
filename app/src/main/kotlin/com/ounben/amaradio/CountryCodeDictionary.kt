@@ -25,6 +25,7 @@ class CountryCodeDictionary private constructor() {
         val countries = try {
             Json.decodeFromString<List<Country>>(jsonContent)
         } catch (e: Exception) {
+            android.util.Log.e("CountryCodeDict", "Failed to decode countries.json", e)
             emptyList()
         }
 
@@ -42,7 +43,8 @@ class CountryCodeDictionary private constructor() {
 
         val locale = try {
             Locale.Builder().setRegion(code).build()
-        } catch (_: Exception) {
+        } catch (e: Exception) {
+            android.util.Log.w("CountryCodeDict", "Fallback region locale for code $code", e)
             Locale.Builder().setLanguage("").setRegion(code).build()
         }
         

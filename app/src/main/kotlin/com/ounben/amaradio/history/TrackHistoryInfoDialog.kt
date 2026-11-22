@@ -106,7 +106,7 @@ class TrackHistoryInfoDialog(private val historyEntry: TrackHistoryEntry) : Bott
             val info = "${historyEntry.artist} - ${historyEntry.track}"
             val clip = ClipData.newPlainText("Track info", info)
             clipboard.setPrimaryClip(clip)
-            Utils.showModernToast(requireActivity(), R.string.notify_track_info_copied)
+            Utils.showToast(context, R.string.notify_track_info_copied)
         }
         dismiss()
     }

@@ -47,7 +47,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                             false
                         }
                     }
-                    if (success) Utils.showModernToast(this@ActivityMain, R.string.notify_save_playlist_ok)
+                    if (success) Utils.showToast(this@ActivityMain, R.string.notify_save_playlist_ok)
                 }
             }
         }
@@ -70,12 +70,12 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                     }
                     if (loadedStations != null && loadedStations.isNotEmpty()) {
                         app.favouriteManager.addMultiple(loadedStations)
-                        Utils.showModernToast(
+                        Utils.showToast(
                             this@ActivityMain,
                             getString(R.string.notify_load_playlist_ok, loadedStations.size)
                         )
                     } else {
-                        Utils.showModernToast(this@ActivityMain, R.string.notify_load_playlist_nok)
+                        Utils.showToast(this@ActivityMain, R.string.notify_load_playlist_nok)
                     }
                 }
             }
@@ -96,8 +96,8 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                             false
                         }
                     }
-                    if (success) Utils.showModernToast(this@ActivityMain, R.string.backup_export_success)
-                    else Utils.showModernToast(this@ActivityMain, R.string.backup_export_error)
+                    if (success) Utils.showToast(this@ActivityMain, R.string.backup_export_success)
+                    else Utils.showToast(this@ActivityMain, R.string.backup_export_error)
                 }
             }
         }
@@ -117,8 +117,8 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
                             false
                         }
                     }
-                    if (success) Utils.showModernToast(this@ActivityMain, R.string.backup_import_success)
-                    else Utils.showModernToast(this@ActivityMain, R.string.backup_import_error)
+                    if (success) Utils.showToast(this@ActivityMain, R.string.backup_import_success)
+                    else Utils.showToast(this@ActivityMain, R.string.backup_import_error)
                 }
             }
         }
@@ -199,7 +199,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             saveM3ULauncher.launch(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "Failed to launch document creator", e)
-            Utils.showModernToast(this, R.string.error_no_file_manager)
+            Utils.showToast(this, R.string.error_no_file_manager)
         }
     }
 
@@ -212,7 +212,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             loadM3ULauncher.launch(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "Failed to launch document picker", e)
-            Utils.showModernToast(this, R.string.error_no_file_manager)
+            Utils.showToast(this, R.string.error_no_file_manager)
         }
     }
 
@@ -227,7 +227,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             exportBackupLauncher.launch(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "Failed to launch backup creator", e)
-            Utils.showModernToast(this, R.string.error_no_file_manager)
+            Utils.showToast(this, R.string.error_no_file_manager)
         }
     }
 
@@ -240,7 +240,7 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
             importBackupLauncher.launch(intent)
         } catch (e: Exception) {
             Log.e("MAIN", "Failed to launch backup picker", e)
-            Utils.showModernToast(this, R.string.error_no_file_manager)
+            Utils.showToast(this, R.string.error_no_file_manager)
         }
     }
 
