@@ -34,6 +34,7 @@ import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
 import java.net.Proxy
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SleepTimerDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
@@ -45,6 +46,8 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                        else (if (cur < 60) 1f else (cur / 60).toFloat())) 
     }
 
+    val totalMinutes = sliderValue.toInt()
+
     AlertDialog(
         onDismissRequest = onDismiss,
         containerColor = MaterialTheme.colorScheme.surface,
@@ -52,13 +55,13 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
         title = { Text(stringResource(R.string.sleep_timer_title), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                val totalMinutes = sliderValue.toInt()
                 Text(
-                    text = stringResource(R.string.sleep_timer, totalMinutes / 60, totalMinutes % 60),
+                    text = "$totalMinutes min",
                     style = MaterialTheme.typography.headlineMedium,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
+                    fontWeight = FontWeight.Bold
                 )
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.height(12.dp))
                 Slider(
                     value = sliderValue,
                     onValueChange = { sliderValue = it },
@@ -70,6 +73,65 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                         inactiveTrackColor = MaterialTheme.colorScheme.outline.copy(alpha = 0.3f)
                     )
                 )
+                Spacer(modifier = Modifier.height(12.dp))
+
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    val row1 = remember { listOf("5 min" to 5f, "15 min" to 15f, "30 min" to 30f) }
+                    val row2 = remember { listOf("45 min" to 45f, "1 h" to 60f, "2 h" to 120f) }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        row1.forEach { (label, minutes) ->
+                            val isSelected = totalMinutes == minutes.toInt()
+                            FilterChip(
+                                selected = isSelected,
+                                onClick = { sliderValue = minutes },
+                                label = {
+                                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                        Text(label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                                    }
+                                },
+                                modifier = Modifier.weight(1f).height(38.dp),
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    labelColor = MaterialTheme.colorScheme.onSurface,
+                                    selectedContainerColor = AmaradioAmber,
+                                    selectedLabelColor = Color.Black
+                                )
+                            )
+                        }
+                    }
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        row2.forEach { (label, minutes) ->
+                            val isSelected = totalMinutes == minutes.toInt()
+                            FilterChip(
+                                selected = isSelected,
+                                onClick = { sliderValue = minutes },
+                                label = {
+                                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                        Text(label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
+                                    }
+                                },
+                                modifier = Modifier.weight(1f).height(38.dp),
+                                colors = FilterChipDefaults.filterChipColors(
+                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                    labelColor = MaterialTheme.colorScheme.onSurface,
+                                    selectedContainerColor = AmaradioAmber,
+                                    selectedLabelColor = Color.Black
+                                )
+                            )
+                        }
+                    }
+                }
             }
         },
         confirmButton = {
