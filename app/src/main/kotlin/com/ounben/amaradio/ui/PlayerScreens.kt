@@ -25,6 +25,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -159,14 +160,14 @@ fun MiniPlayer(
                     onClick = { viewModel.togglePlayPause() },
                     modifier = Modifier
                         .size(64.dp)
-                        .semantics { contentDescription = playPauseDesc }
+                        .clearAndSetSemantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                            Icons.Default.PauseCircle 
-                        else Icons.Default.PlayCircle,
-                        contentDescription = playPauseDesc,
-                        modifier = Modifier.size(56.dp),
+                            Icons.Default.Pause 
+                        else Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(44.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -349,11 +350,11 @@ fun FullPlayer(
 
                 IconButton(
                     onClick = { playerViewModel.skipToPrevious() },
-                    modifier = Modifier.semantics { contentDescription = prevDesc }
+                    modifier = Modifier.clearAndSetSemantics { contentDescription = prevDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = prevDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -363,25 +364,25 @@ fun FullPlayer(
                     onClick = { playerViewModel.togglePlayPause() },
                     modifier = Modifier
                         .size(64.dp)
-                        .semantics { contentDescription = playPauseDesc }
+                        .clearAndSetSemantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                            Icons.Default.PauseCircle 
-                        else Icons.Default.PlayCircle,
-                        contentDescription = playPauseDesc,
-                        modifier = Modifier.size(56.dp),
+                            Icons.Default.Pause 
+                        else Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(48.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
 
                 IconButton(
                     onClick = { playerViewModel.skipToNext() },
-                    modifier = Modifier.semantics { contentDescription = nextDesc }
+                    modifier = Modifier.clearAndSetSemantics { contentDescription = nextDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = nextDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(32.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -401,11 +402,11 @@ fun FullPlayer(
                             playerViewModel.toggleFavorite()
                         }
                     },
-                    modifier = Modifier.semantics { contentDescription = favDesc }
+                    modifier = Modifier.clearAndSetSemantics { contentDescription = favDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = favDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(28.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -592,11 +593,11 @@ fun SidePanelPlayer(
                     onClick = { playerViewModel.skipToPrevious() },
                     modifier = Modifier
                         .size(48.dp)
-                        .semantics { contentDescription = prevDesc }
+                        .clearAndSetSemantics { contentDescription = prevDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipPrevious,
-                        contentDescription = prevDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -606,12 +607,12 @@ fun SidePanelPlayer(
                     onClick = { playerViewModel.togglePlayPause() },
                     modifier = Modifier
                         .size(72.dp)
-                        .semantics { contentDescription = playPauseDesc }
+                        .clearAndSetSemantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
-                        imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = playPauseDesc,
-                        modifier = Modifier.size(64.dp),
+                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                        contentDescription = null,
+                        modifier = Modifier.size(52.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -620,11 +621,11 @@ fun SidePanelPlayer(
                     onClick = { playerViewModel.skipToNext() },
                     modifier = Modifier
                         .size(48.dp)
-                        .semantics { contentDescription = nextDesc }
+                        .clearAndSetSemantics { contentDescription = nextDesc }
                 ) {
                     Icon(
                         imageVector = Icons.Default.SkipNext,
-                        contentDescription = nextDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(36.dp),
                         tint = MaterialTheme.colorScheme.onSurface
                     )
@@ -647,11 +648,11 @@ fun SidePanelPlayer(
                     },
                     modifier = Modifier
                         .size(44.dp)
-                        .semantics { contentDescription = favDesc }
+                        .clearAndSetSemantics { contentDescription = favDesc }
                 ) {
                     Icon(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
-                        contentDescription = favDesc,
+                        contentDescription = null,
                         modifier = Modifier.size(26.dp),
                         tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                     )
