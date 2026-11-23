@@ -85,7 +85,7 @@ fun AMARadioTheme(
         // STRICT OPAQUE LIGHT (All containers & indicators forced to Amber / Neutral Grays / Solid Red)
         lightColorScheme(
             primary = AmaradioAmber,
-            onPrimary = Color.White,
+            onPrimary = Color.Black,
             primaryContainer = Color(0xFFFFECB3),
             onPrimaryContainer = Color(0xFF3E2723),
             secondary = LightSurfaceVariant,
@@ -93,7 +93,7 @@ fun AMARadioTheme(
             secondaryContainer = Color(0xFFE0E0E0),
             onSecondaryContainer = Color.Black,
             tertiary = AmaradioAmber,
-            onTertiary = Color.White,
+            onTertiary = Color.Black,
             tertiaryContainer = Color(0xFFFFECB3),
             onTertiaryContainer = Color(0xFF3E2723),
             error = SolidRedErrorLight,

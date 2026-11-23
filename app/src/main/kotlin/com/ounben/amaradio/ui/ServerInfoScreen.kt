@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
@@ -53,26 +54,39 @@ fun ServerInfoScreen(
 
         SecondaryTabRow(
             selectedTabIndex = safeSelectedIndex,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = AmaradioAmber,
+            containerColor = MaterialTheme.colorScheme.secondary,
+            contentColor = MaterialTheme.colorScheme.onSecondary,
             indicator = {
                 if (safeSelectedIndex in 0..1) {
                     TabRowDefaults.SecondaryIndicator(
                         Modifier.tabIndicatorOffset(safeSelectedIndex),
-                        color = AmaradioAmber
+                        color = MaterialTheme.colorScheme.primary
                     )
                 }
-            }
+            },
+            divider = {}
         ) {
             Tab(
                 selected = selectedTabIndex == 0,
                 onClick = { selectedTabIndex = 0 },
-                text = { Text("Global API") }
+                text = { 
+                    Text(
+                        text = "Global API", 
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    ) 
+                }
             )
             Tab(
                 selected = selectedTabIndex == 1,
                 onClick = { selectedTabIndex = 1 },
-                text = { Text(stringResource(R.string.database_summary_title)) }
+                text = { 
+                    Text(
+                        text = stringResource(R.string.database_summary_title), 
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    ) 
+                }
             )
         }
 
@@ -128,7 +142,7 @@ fun GlobalStatsTab(uiState: ServerInfoViewModel.ServerInfoUiState, onRefresh: ()
                     Button(
                         onClick = onRefresh,
                         modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber, contentColor = Color.Black)
                     ) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh))
                         Spacer(Modifier.width(8.dp))

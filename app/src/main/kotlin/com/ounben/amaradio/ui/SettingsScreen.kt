@@ -185,7 +185,7 @@ fun SettingsScreen(
                         onClick = { serverInfoViewModel.triggerFullUpdate() },
                         modifier = Modifier.fillMaxWidth(),
                         enabled = !serverInfoUiState.isSyncing,
-                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber)
+                        colors = ButtonDefaults.buttonColors(containerColor = AmaradioAmber, contentColor = Color.Black)
                     ) {
                         if (serverInfoUiState.isSyncing) {
                             CircularProgressIndicator(
