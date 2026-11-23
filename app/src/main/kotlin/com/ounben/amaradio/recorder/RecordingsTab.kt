@@ -26,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -214,21 +215,22 @@ fun RecordingFilterHeader(
     var showDateRangePicker by remember { mutableStateOf(false) }
 
     val stationFilterTitle = stringResource(R.string.station_name)
-    val dateFilterTitle = stringResource(R.string.filter_empty_filter_by)
+    val dateFilterTitle = stringResource(R.string.filter_date)
+    val allLabel = stringResource(R.string.filter_all)
 
-    val dateRangeLabel = remember(startDateMs, endDateMs) {
+    val dateRangeLabel = remember(startDateMs, endDateMs, allLabel) {
         if (startDateMs > 0L && endDateMs > 0L) {
             val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
             "${fmt.format(Date(startDateMs))} - ${fmt.format(Date(endDateMs))}"
         } else if (startDateMs > 0L) {
             val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-            "From ${fmt.format(Date(startDateMs))}"
+            fmt.format(Date(startDateMs))
         } else {
-            "All"
+            allLabel
         }
     }
 
-    val stationSemanticsDesc = "$stationFilterTitle: ${selectedStation.ifEmpty { "All" }}"
+    val stationSemanticsDesc = "$stationFilterTitle: ${selectedStation.ifEmpty { allLabel }}"
     val dateSemanticsDesc = "$dateFilterTitle: $dateRangeLabel"
 
     Surface(
@@ -248,10 +250,10 @@ fun RecordingFilterHeader(
                 FilterChip(
                     selected = selectedStation.isNotEmpty(),
                     onClick = { showStationDropdown = true },
-                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = stationSemanticsDesc },
+                    modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = stationSemanticsDesc },
                     label = {
                         Text(
-                            text = selectedStation.ifEmpty { "All" },
+                            text = selectedStation.ifEmpty { allLabel },
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
@@ -275,7 +277,7 @@ fun RecordingFilterHeader(
                     modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                 ) {
                     DropdownMenuItem(
-                        text = { Text("All", fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                        text = { Text(allLabel, fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
                         onClick = {
                             onStationSelected("")
                             showStationDropdown = false
@@ -301,7 +303,7 @@ fun RecordingFilterHeader(
                 FilterChip(
                     selected = startDateMs > 0L,
                     onClick = { showDateRangePicker = true },
-                    modifier = Modifier.fillMaxWidth().semantics { contentDescription = dateSemanticsDesc },
+                    modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = dateSemanticsDesc },
                     label = {
                         Text(
                             text = dateRangeLabel,
