@@ -40,6 +40,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.window.DialogProperties
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
@@ -770,7 +771,7 @@ fun MultiSearchableSelectionDialog(
                         ListItem(
                             headlineContent = { Text(item.label, style = MaterialTheme.typography.bodyLarge) },
                             leadingContent = if (item.emoji.isNotEmpty()) {
-                                { Text(item.emoji, style = MaterialTheme.typography.titleLarge) }
+                                { Text(item.emoji, style = MaterialTheme.typography.titleLarge, modifier = Modifier.clearAndSetSemantics {}) }
                             } else null,
                             trailingContent = {
                                 Checkbox(
@@ -933,7 +934,7 @@ fun SearchableSelectionDialog(
                                 { Text("${item.count} stations", style = MaterialTheme.typography.labelSmall) }
                             } else null,
                             leadingContent = if (item.emoji.isNotEmpty()) {
-                                { Text(item.emoji, style = MaterialTheme.typography.titleLarge) }
+                                { Text(item.emoji, style = MaterialTheme.typography.titleLarge, modifier = Modifier.clearAndSetSemantics {}) }
                             } else null,
                             modifier = Modifier.clickable { onSelect(item) },
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
