@@ -95,7 +95,7 @@
     <string name="action_record">Record</string>
     <string name="tab_recordings">Recordings</string>
     <string name="chapters">Chapters</string>
-    <string name="timer_infinite" translatable="false">∞</string>
+    <string name="timer_infinite">Unlimited</string>
     <string name="error_cannot_open_file">Cannot open file</string>
     <string name="error_external_player_not_found">No external audio player app found</string>
     <string name="error_sharing">Error sharing</string>
