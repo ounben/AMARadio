@@ -211,6 +211,7 @@ fun FilterScreen(
                 CustomFilterField(
                     label = stringResource(R.string.filter_country),
                     value = if (currentTab.countryEmoji.isNotEmpty()) "${currentTab.countryEmoji} ${currentTab.countryLabel}" else currentTab.countryLabel,
+                    spokenValue = currentTab.countryLabel,
                     icon = Icons.Default.Public,
                     isReadOnly = true,
                     onClear = { viewModel.clearCountry(tabIndex) },
@@ -582,6 +583,7 @@ fun FilterEmptyState() {
 fun CustomFilterField(
     label: String,
     value: String,
+    spokenValue: String? = null,
     icon: ImageVector,
     modifier: Modifier = Modifier,
     isReadOnly: Boolean = false,
@@ -591,8 +593,9 @@ fun CustomFilterField(
 ) {
     var showDialog by remember { mutableStateOf(false) }
     val clearDescription = stringResource(R.string.accessibility_clear_text) + " " + label
-
     val isFilled = value.isNotEmpty()
+    val textForTalkBack = spokenValue ?: value
+    val semanticsDesc = "$label: ${textForTalkBack.ifEmpty { "None" }}"
 
     Column(modifier = modifier) {
         Text(
@@ -617,6 +620,7 @@ fun CustomFilterField(
                     if (isReadOnly) {
                         role = Role.Button
                     }
+                    contentDescription = semanticsDesc
                 }
         ) {
             Row(
@@ -640,6 +644,7 @@ fun CustomFilterField(
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.fillMaxSize()
+                                .clearAndSetSemantics {}
                                 .clickable(
                                     interactionSource = remember { MutableInteractionSource() },
                                     indication = null,
