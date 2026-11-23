@@ -438,14 +438,14 @@ fun StationListItem(
         }
         station.Country
     }
-    val notApplicable = stringResource(R.string.not_applicable)
-    val accessibilityDesc = stringResource(
-        R.string.accessibility_station_description,
-        station.Name,
-        countryName.ifEmpty { notApplicable },
-        station.Language.ifEmpty { notApplicable },
-        station.TagsAll.ifEmpty { notApplicable }
-    )
+    val accessibilityDesc = remember(station, countryName, details) {
+        val parts = mutableListOf<String>()
+        if (station.Name.isNotBlank()) parts.add(station.Name.trim())
+        if (countryName.isNotBlank()) parts.add(countryName.trim())
+        if (details.isNotBlank()) parts.add(details.trim())
+        if (station.TagsAll.isNotBlank()) parts.add(station.TagsAll.trim())
+        parts.joinToString(", ")
+    }
     
     Row(
         modifier = modifier
@@ -564,14 +564,18 @@ fun StationGridItem(
         }
         station.Country
     }
-    val notApplicable = stringResource(R.string.not_applicable)
-    val accessibilityDesc = stringResource(
-        R.string.accessibility_station_description,
-        station.Name,
-        countryName.ifEmpty { notApplicable },
-        station.Language.ifEmpty { notApplicable },
-        station.TagsAll.ifEmpty { notApplicable }
-    )
+    val context = LocalContext.current
+    val details = remember(station.ClickCount, station.Votes, station.Language, station.Bitrate, station.Codec) { 
+        station.getShortDetails(context) 
+    }
+    val accessibilityDesc = remember(station, countryName, details) {
+        val parts = mutableListOf<String>()
+        if (station.Name.isNotBlank()) parts.add(station.Name.trim())
+        if (countryName.isNotBlank()) parts.add(countryName.trim())
+        if (details.isNotBlank()) parts.add(details.trim())
+        if (station.TagsAll.isNotBlank()) parts.add(station.TagsAll.trim())
+        parts.joinToString(", ")
+    }
 
     Card(
         modifier = modifier
