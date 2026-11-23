@@ -2,6 +2,8 @@ package com.ounben.amaradio.recorder
 
 import android.content.Context
 import android.util.Log
+import com.ounben.amaradio.R
+import com.ounben.amaradio.Utils
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.database.user.RecordTrackEntity
@@ -13,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.util.concurrent.TimeUnit
 
@@ -333,6 +336,10 @@ class RecordManager private constructor(private val context: Context) {
                     }
                     if (trackEntities.isNotEmpty()) {
                         recordDao.insertTracks(trackEntities)
+                    }
+                    withContext(Dispatchers.Main) {
+                        Utils.showToast(context, com.ounben.amaradio.R.string.notify_recording_saved)
+                        Unit
                     }
                 }
             } catch (e: Exception) {
