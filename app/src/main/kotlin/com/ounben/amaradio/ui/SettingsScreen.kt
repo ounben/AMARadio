@@ -3,6 +3,10 @@ package com.ounben.amaradio.ui
 import android.content.Context
 import android.os.PowerManager
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -228,17 +232,23 @@ fun SettingsScreen(
                 // Local Country Preference
                 var showCountryDialog by remember { mutableStateOf(false) }
                 val currentCountryCode = uiState.localCountry
+                val currentCountryName = if (currentCountryCode == "SYSTEM") {
+                    stringResource(R.string.theme_system)
+                } else {
+                    val countryName = com.ounben.amaradio.CountryCodeDictionary.instance.getCountryByCode(currentCountryCode) ?: currentCountryCode
+                    "$countryName ($currentCountryCode)"
+                }
                 val currentCountryDisplay = if (currentCountryCode == "SYSTEM") {
                     stringResource(R.string.theme_system)
                 } else {
                     val flag = com.ounben.amaradio.utils.EmojiUtils.getFlagEmoji(currentCountryCode) ?: ""
-                    val countryName = com.ounben.amaradio.CountryCodeDictionary.instance.getCountryByCode(currentCountryCode) ?: currentCountryCode
-                    if (flag.isNotEmpty()) "$flag $countryName ($currentCountryCode)" else "$countryName ($currentCountryCode)"
+                    if (flag.isNotEmpty()) "$flag $currentCountryName" else currentCountryName
                 }
 
                 SettingsClickable(
                     title = stringResource(R.string.filter_country),
                     summary = currentCountryDisplay,
+                    summaryContentDescription = currentCountryName,
                     icon = Icons.Default.Public,
                     onClick = { showCountryDialog = true }
                 )
@@ -394,7 +404,11 @@ fun SettingsSwitch(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable { onCheckedChange(!checked) }
+            .toggleable(
+                value = checked,
+                role = Role.Switch,
+                onValueChange = onCheckedChange
+            )
             .padding(vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -411,7 +425,7 @@ fun SettingsSwitch(
                 Text(text = summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
-        Switch(checked = checked, onCheckedChange = onCheckedChange)
+        Switch(checked = checked, onCheckedChange = null)
     }
 }
 
@@ -419,6 +433,7 @@ fun SettingsSwitch(
 fun SettingsClickable(
     title: String,
     summary: String? = null,
+    summaryContentDescription: String? = null,
     icon: ImageVector,
     iconTint: Color = MaterialTheme.colorScheme.onSurfaceVariant,
     iconSize: Dp = 24.dp,
@@ -447,7 +462,14 @@ fun SettingsClickable(
         Column(modifier = Modifier.weight(1f)) {
             Text(text = title, style = MaterialTheme.typography.bodyLarge)
             if (!summary.isNullOrBlank()) {
-                Text(text = summary, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(
+                    text = summary,
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = if (summaryContentDescription != null) {
+                        Modifier.clearAndSetSemantics { contentDescription = summaryContentDescription }
+                    } else Modifier
+                )
             }
         }
     }
