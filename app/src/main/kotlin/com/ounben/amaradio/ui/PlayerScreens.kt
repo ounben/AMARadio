@@ -268,12 +268,30 @@ fun FullPlayer(
                         } else if (station != null) {
                             val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
                             val details = remember(station) { station.getShortDetails(context) }
+                            val countryName = remember(station.CountryCode, station.Country) {
+                                val code = station.CountryCode.trim().uppercase(java.util.Locale.ROOT)
+                                val normalizedCode = if (code == "UK") "GB" else code
+                                if (normalizedCode.length == 2 && normalizedCode[0] in 'A'..'Z' && normalizedCode[1] in 'A'..'Z') {
+                                    val loc = try { java.util.Locale.Builder().setRegion(normalizedCode).build() } catch (_: Exception) { null }
+                                    val displayCountry = loc?.getDisplayCountry(java.util.Locale.getDefault()) ?: ""
+                                    if (displayCountry.isNotEmpty() && !displayCountry.equals(normalizedCode, ignoreCase = true)) {
+                                        return@remember displayCountry
+                                    }
+                                }
+                                station.Country
+                            }
+                            val spokenText = remember(countryName, details) {
+                                if (countryName.isNotEmpty()) "$countryName, $details" else details
+                            }
                             Text(
                                 text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
                                 style = MaterialTheme.typography.labelSmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.clearAndSetSemantics {
+                                    contentDescription = spokenText
+                                }
                             )
                         }
                     }

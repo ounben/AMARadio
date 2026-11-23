@@ -61,6 +61,7 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.semantics.semantics
@@ -425,20 +426,31 @@ fun StationListItem(
         station.getShortDetails(context) 
     }
 
+    val countryName = remember(station.CountryCode, station.Country) {
+        val code = station.CountryCode.trim().uppercase(java.util.Locale.ROOT)
+        val normalizedCode = if (code == "UK") "GB" else code
+        if (normalizedCode.length == 2 && normalizedCode[0] in 'A'..'Z' && normalizedCode[1] in 'A'..'Z') {
+            val loc = try { java.util.Locale.Builder().setRegion(normalizedCode).build() } catch (_: Exception) { null }
+            val displayCountry = loc?.getDisplayCountry(java.util.Locale.getDefault()) ?: ""
+            if (displayCountry.isNotEmpty() && !displayCountry.equals(normalizedCode, ignoreCase = true)) {
+                return@remember displayCountry
+            }
+        }
+        station.Country
+    }
+    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { stringResource(R.string.not_applicable) },
-        station.TagsAll.ifEmpty { stringResource(R.string.not_applicable) }
+        countryName.ifEmpty { notApplicable },
+        station.Language.ifEmpty { notApplicable },
+        station.TagsAll.ifEmpty { notApplicable }
     )
     
     Row(
         modifier = modifier
             .fillMaxWidth()
             .height(IntrinsicSize.Min)
-            .semantics(mergeDescendants = true) {
-                contentDescription = accessibilityDesc
-            }
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -453,7 +465,10 @@ fun StationListItem(
                             onLongClick = onLongClick
                         )
                     } else Modifier
-                ),
+                )
+                .clearAndSetSemantics {
+                    contentDescription = accessibilityDesc
+                },
             verticalAlignment = Alignment.CenterVertically
         ) {
             Box(modifier = Modifier.size(52.dp), contentAlignment = Alignment.Center) {
@@ -478,7 +493,8 @@ fun StationListItem(
                     text = if (flagEmoji.isNotEmpty()) "$flagEmoji $details" else details,
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurface,
-                    maxLines = 1
+                    maxLines = 1,
+                    modifier = Modifier.clearAndSetSemantics {}
                 )
                 if (station.TagsAll.isNotEmpty()) {
                     Text(
@@ -536,20 +552,31 @@ fun StationGridItem(
     isPlaying: Boolean = false,
     showFavoriteIcon: Boolean = true
 ) {
+    val countryName = remember(station.CountryCode, station.Country) {
+        val code = station.CountryCode.trim().uppercase(java.util.Locale.ROOT)
+        val normalizedCode = if (code == "UK") "GB" else code
+        if (normalizedCode.length == 2 && normalizedCode[0] in 'A'..'Z' && normalizedCode[1] in 'A'..'Z') {
+            val loc = try { java.util.Locale.Builder().setRegion(normalizedCode).build() } catch (_: Exception) { null }
+            val displayCountry = loc?.getDisplayCountry(java.util.Locale.getDefault()) ?: ""
+            if (displayCountry.isNotEmpty() && !displayCountry.equals(normalizedCode, ignoreCase = true)) {
+                return@remember displayCountry
+            }
+        }
+        station.Country
+    }
+    val notApplicable = stringResource(R.string.not_applicable)
     val accessibilityDesc = stringResource(
         R.string.accessibility_station_description,
         station.Name,
-        station.Language.ifEmpty { stringResource(R.string.not_applicable) },
-        station.TagsAll.ifEmpty { stringResource(R.string.not_applicable) }
+        countryName.ifEmpty { notApplicable },
+        station.Language.ifEmpty { notApplicable },
+        station.TagsAll.ifEmpty { notApplicable }
     )
 
     Card(
         modifier = modifier
             .padding(4.dp)
-            .height(IntrinsicSize.Min)
-            .semantics(mergeDescendants = true) {
-                contentDescription = accessibilityDesc
-            },
+            .height(IntrinsicSize.Min),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(12.dp)
@@ -566,6 +593,9 @@ fun StationGridItem(
                             )
                         } else Modifier
                     )
+                    .clearAndSetSemantics {
+                        contentDescription = accessibilityDesc
+                    }
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

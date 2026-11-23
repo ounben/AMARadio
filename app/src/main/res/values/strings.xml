@@ -405,7 +405,7 @@
     <string name="accessibility_station_options">Station options</string>
     <string name="accessibility_reorder">Move station</string>
     <string name="not_applicable">N/A</string>
-    <string name="accessibility_station_description">Station: %1$s, Language: %2$s, Tags: %3$s</string>
+    <string name="accessibility_station_description">%1$s, %2$s, %3$s, %4$s</string>
     <string name="alarm_back_desc" translatable="false">alarm back desc</string>
     <string name="alert_select_mpd_server" translatable="false">mpd server</string>
     <string name="alert_select_mpd_server_name" translatable="false">mpd server name</string>
