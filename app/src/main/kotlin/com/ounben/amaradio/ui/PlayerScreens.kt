@@ -65,7 +65,6 @@ fun MiniPlayer(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight()
-            .clickable { onToggleBottomSheet() }
             .background(MaterialTheme.colorScheme.surfaceVariant)
     ) {
         HorizontalDivider(
@@ -96,66 +95,70 @@ fun MiniPlayer(
                     .padding(horizontal = 12.dp, vertical = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                // Left: Station Icon
-                Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
-                    StationIcon(
-                        stationName = stationName,
-                        stationUuid = station?.StationUuid ?: "",
-                        iconUrl = station?.IconUrl,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(16.dp))
-
-                // Middle: Text Info (STRICT 4-ROW LAYOUT)
-                // IMPORTANT: We always render exactly 4 lines to ensure constant height regardless of metadata availability.
-                // If a value is missing, we use " " as a placeholder so the line still takes up space in the system font.
-                Column(
+                // Left & Middle Area: Clickable to expand player
+                Row(
                     modifier = Modifier
                         .weight(1f)
-                        .wrapContentHeight(),
-                    verticalArrangement = Arrangement.Center
+                        .clickable { onToggleBottomSheet() },
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Row 1: Station Name
-                    Text(
-                        text = stationName.ifEmpty { " " },
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Bold,
-                        color = AmaradioAmber,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    
-                    // Row 2: Song Title
-                    Text(
-                        text = songTitle.ifEmpty { " " },
-                        style = MaterialTheme.typography.bodySmall,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.onSurface,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    
-                    // Row 3: Artist
-                    Text(
-                        text = artistName.ifEmpty { " " },
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
-                    )
-                    
-                    // Row 4: Status Indicator
-                    Box(modifier = Modifier.wrapContentHeight().padding(top = 2.dp), contentAlignment = Alignment.CenterStart) {
-                        PlayerStatusRow(
-                            playState = uiState.playState,
-                            bandwidthFlow = viewModel.bandwidth
+                    Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
+                        StationIcon(
+                            stationName = stationName,
+                            stationUuid = station?.StationUuid ?: "",
+                            iconUrl = station?.IconUrl,
+                            modifier = Modifier.fillMaxSize()
                         )
+                    }
+
+                    Spacer(modifier = Modifier.width(16.dp))
+
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .wrapContentHeight(),
+                        verticalArrangement = Arrangement.Center
+                    ) {
+                        // Row 1: Station Name
+                        Text(
+                            text = stationName.ifEmpty { " " },
+                            style = MaterialTheme.typography.bodyLarge,
+                            fontWeight = FontWeight.Bold,
+                            color = AmaradioAmber,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        
+                        // Row 2: Song Title
+                        Text(
+                            text = songTitle.ifEmpty { " " },
+                            style = MaterialTheme.typography.bodySmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        
+                        // Row 3: Artist
+                        Text(
+                            text = artistName.ifEmpty { " " },
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                        
+                        // Row 4: Status Indicator
+                        Box(modifier = Modifier.wrapContentHeight().padding(top = 2.dp), contentAlignment = Alignment.CenterStart) {
+                            PlayerStatusRow(
+                                playState = uiState.playState,
+                                bandwidthFlow = viewModel.bandwidth
+                            )
+                        }
                     }
                 }
 
-                // Right: Play/Pause
+                // Right: Separate Focusable Play/Pause Button
                 val playPauseDesc = stringResource(if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) R.string.detail_pause else R.string.detail_play)
                 IconButton(
                     onClick = { viewModel.togglePlayPause() },
@@ -165,10 +168,10 @@ fun MiniPlayer(
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                            Icons.Default.Pause 
-                        else Icons.Default.PlayArrow,
+                            Icons.Default.PauseCircle 
+                        else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(44.dp),
+                        modifier = Modifier.size(52.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -387,10 +390,10 @@ fun FullPlayer(
                 ) {
                     Icon(
                         imageVector = if (uiState.playState == PlayState.Playing || uiState.playState == PlayState.PrePlaying) 
-                            Icons.Default.Pause 
-                        else Icons.Default.PlayArrow,
+                            Icons.Default.PauseCircle 
+                        else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(48.dp),
+                        modifier = Modifier.size(56.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
@@ -629,9 +632,9 @@ fun SidePanelPlayer(
                         .clearAndSetSemantics { contentDescription = playPauseDesc }
                 ) {
                     Icon(
-                        imageVector = if (isPlaying) Icons.Default.Pause else Icons.Default.PlayArrow,
+                        imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
                         contentDescription = null,
-                        modifier = Modifier.size(52.dp),
+                        modifier = Modifier.size(60.dp),
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
