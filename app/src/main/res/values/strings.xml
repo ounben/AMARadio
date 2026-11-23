@@ -354,6 +354,8 @@
     <string name="action_filter">Filter</string>
     <string name="filter_all">All</string>
     <string name="filter_date">Date</string>
+    <string name="filter_date_from">From</string>
+    <string name="filter_date_to">To</string>
     <string name="filter_country">Country</string>
     <string name="filter_tag">Tag</string>
     <string name="filter_language">Language</string>

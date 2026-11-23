@@ -8,6 +8,7 @@ import android.provider.DocumentsContract
 import android.text.format.Formatter
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,6 +16,7 @@ import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
 import androidx.compose.material.icons.filled.*
@@ -202,6 +204,9 @@ fun RecordingsTab() {
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
+private enum class DatePickerType { START, END }
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecordingFilterHeader(
     recordedStations: List<String>,
@@ -212,169 +217,287 @@ fun RecordingFilterHeader(
     onDateRangeSelected: (Long, Long) -> Unit
 ) {
     var showStationDropdown by remember { mutableStateOf(false) }
-    var showDateRangePicker by remember { mutableStateOf(false) }
+    var activeDatePicker by remember { mutableStateOf<DatePickerType?>(null) }
 
     val stationFilterTitle = stringResource(R.string.station_name)
-    val dateFilterTitle = stringResource(R.string.filter_date)
     val allLabel = stringResource(R.string.filter_all)
+    val fromLabel = stringResource(R.string.filter_date_from)
+    val toLabel = stringResource(R.string.filter_date_to)
 
-    val dateRangeLabel = remember(startDateMs, endDateMs, allLabel) {
-        if (startDateMs > 0L && endDateMs > 0L) {
+    fun formatShortDate(millis: Long): String {
+        if (millis <= 0L) return ""
+        return try {
+            val instant = java.time.Instant.ofEpochMilli(millis)
+            val localDate = instant.atZone(java.time.ZoneOffset.UTC).toLocalDate()
+            localDate.format(java.time.format.DateTimeFormatter.ofPattern("dd.MM.yy"))
+        } catch (_: Exception) {
             val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-            "${fmt.format(Date(startDateMs))} - ${fmt.format(Date(endDateMs))}"
-        } else if (startDateMs > 0L) {
-            val fmt = SimpleDateFormat("dd.MM.yy", Locale.getDefault())
-            fmt.format(Date(startDateMs))
-        } else {
-            allLabel
+            fmt.format(Date(millis))
         }
     }
 
+    val startChipText = remember(startDateMs, fromLabel) {
+        if (startDateMs > 0L) formatShortDate(startDateMs) else fromLabel
+    }
+    val endChipText = remember(endDateMs, toLabel) {
+        if (endDateMs > 0L) formatShortDate(endDateMs) else toLabel
+    }
+
+    val startSemanticsDesc = "$fromLabel: ${if (startDateMs > 0L) startChipText else allLabel}"
+    val endSemanticsDesc = "$toLabel: ${if (endDateMs > 0L) endChipText else allLabel}"
+
     val stationSemanticsDesc = "$stationFilterTitle: ${selectedStation.ifEmpty { allLabel }}"
-    val dateSemanticsDesc = "$dateFilterTitle: $dateRangeLabel"
 
     Surface(
         tonalElevation = 0.dp,
         modifier = Modifier.fillMaxWidth(),
         color = MaterialTheme.colorScheme.secondary
     ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp, vertical = 6.dp),
-            horizontalArrangement = Arrangement.spacedBy(8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            // Station Dropdown Filter (Links, exakt 50% der Zeilenbreite)
-            Box(modifier = Modifier.weight(1f)) {
-                FilterChip(
-                    selected = selectedStation.isNotEmpty(),
-                    onClick = { showStationDropdown = true },
-                    modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = stationSemanticsDesc },
-                    label = {
-                        Text(
-                            text = selectedStation.ifEmpty { allLabel },
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+            // Zeile 1: Sender Dropdown Filter & Immer sichtbarer X-Button
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Box(modifier = Modifier.weight(1f)) {
+                    FilterChip(
+                        selected = selectedStation.isNotEmpty(),
+                        onClick = { showStationDropdown = true },
+                        modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = stationSemanticsDesc },
+                        label = {
+                            Text(
+                                text = selectedStation.ifEmpty { allLabel },
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis
+                            )
+                        },
+                        leadingIcon = { Icon(Icons.Default.Radio, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        colors = FilterChipDefaults.filterChipColors(
+                            containerColor = MaterialTheme.colorScheme.surface,
+                            labelColor = MaterialTheme.colorScheme.onSurface,
+                            iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                            selectedContainerColor = AmaradioAmber,
+                            selectedLabelColor = Color.Black,
+                            selectedLeadingIconColor = Color.Black,
+                            selectedTrailingIconColor = Color.Black
                         )
-                    },
-                    leadingIcon = { Icon(Icons.Default.Radio, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                    trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                    colors = FilterChipDefaults.filterChipColors(
-                        containerColor = MaterialTheme.colorScheme.surface,
-                        labelColor = MaterialTheme.colorScheme.onSurface,
-                        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        selectedContainerColor = AmaradioAmber,
-                        selectedLabelColor = Color.Black,
-                        selectedLeadingIconColor = Color.Black,
-                        selectedTrailingIconColor = Color.Black
                     )
-                )
 
-                DropdownMenu(
-                    expanded = showStationDropdown,
-                    onDismissRequest = { showStationDropdown = false },
-                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-                ) {
-                    DropdownMenuItem(
-                        text = { Text(allLabel, fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
-                        onClick = {
-                            onStationSelected("")
-                            showStationDropdown = false
-                        }
-                    )
-                    if (recordedStations.isNotEmpty()) {
-                        HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
-                    }
-                    recordedStations.forEach { stationName ->
+                    DropdownMenu(
+                        expanded = showStationDropdown,
+                        onDismissRequest = { showStationDropdown = false },
+                        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                    ) {
                         DropdownMenuItem(
-                            text = { Text(stationName, fontWeight = if (selectedStation == stationName) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                            text = { Text(allLabel, fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
                             onClick = {
-                                onStationSelected(stationName)
+                                onStationSelected("")
                                 showStationDropdown = false
                             }
                         )
+                        if (recordedStations.isNotEmpty()) {
+                            HorizontalDivider(color = MaterialTheme.colorScheme.outline, thickness = 0.5.dp)
+                        }
+                        recordedStations.forEach { stationName ->
+                            DropdownMenuItem(
+                                text = { Text(stationName, fontWeight = if (selectedStation == stationName) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                                onClick = {
+                                    onStationSelected(stationName)
+                                    showStationDropdown = false
+                                }
+                            )
+                        }
                     }
+                }
+
+                IconButton(
+                    onClick = { onStationSelected("") },
+                    modifier = Modifier.size(28.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.sleep_timer_clear),
+                        modifier = Modifier.size(18.dp),
+                        tint = if (selectedStation.isNotEmpty()) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                    )
                 }
             }
 
-            // Von - Bis Date Range Filter Chip (Rechts, exakt 50% der Zeilenbreite)
-            Box(modifier = Modifier.weight(1f)) {
+            // Zeile 2: Datumsbereich Filter (Von & Bis + Immer sichtbarer X-Button)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 FilterChip(
                     selected = startDateMs > 0L,
-                    onClick = { showDateRangePicker = true },
-                    modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = dateSemanticsDesc },
+                    onClick = { activeDatePicker = DatePickerType.START },
+                    modifier = Modifier
+                        .weight(1f)
+                        .clearAndSetSemantics { contentDescription = startSemanticsDesc },
                     label = {
                         Text(
-                            text = dateRangeLabel,
+                            text = startChipText,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
                         )
                     },
-                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(18.dp)) },
-                    trailingIcon = {
-                        if (startDateMs > 0L) {
-                            IconButton(
-                                onClick = { onDateRangeSelected(0L, 0L) },
-                                modifier = Modifier.size(18.dp)
-                            ) {
-                                Icon(Icons.Default.Close, contentDescription = stringResource(R.string.sleep_timer_clear), modifier = Modifier.size(14.dp), tint = Color.Black)
-                            }
-                        } else {
-                            Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp))
-                        }
-                    },
+                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = MaterialTheme.colorScheme.surface,
                         labelColor = MaterialTheme.colorScheme.onSurface,
                         iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                         selectedContainerColor = AmaradioAmber,
                         selectedLabelColor = Color.Black,
-                        selectedLeadingIconColor = Color.Black,
-                        selectedTrailingIconColor = Color.Black
+                        selectedLeadingIconColor = Color.Black
                     )
                 )
+
+                FilterChip(
+                    selected = endDateMs > 0L,
+                    onClick = { activeDatePicker = DatePickerType.END },
+                    modifier = Modifier
+                        .weight(1f)
+                        .clearAndSetSemantics { contentDescription = endSemanticsDesc },
+                    label = {
+                        Text(
+                            text = endChipText,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    },
+                    leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                    colors = FilterChipDefaults.filterChipColors(
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        labelColor = MaterialTheme.colorScheme.onSurface,
+                        iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                        selectedContainerColor = AmaradioAmber,
+                        selectedLabelColor = Color.Black,
+                        selectedLeadingIconColor = Color.Black
+                    )
+                )
+
+                IconButton(
+                    onClick = { onDateRangeSelected(0L, 0L) },
+                    modifier = Modifier.size(28.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Close,
+                        contentDescription = stringResource(R.string.sleep_timer_clear),
+                        modifier = Modifier.size(18.dp),
+                        tint = if (startDateMs > 0L || endDateMs > 0L) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                    )
+                }
             }
         }
     }
 
-    if (showDateRangePicker) {
-        val dateRangePickerState = rememberDateRangePickerState(
-            initialSelectedStartDateMillis = if (startDateMs > 0L) startDateMs else null,
-            initialSelectedEndDateMillis = if (endDateMs > 0L) endDateMs else null
+    if (activeDatePicker != null) {
+        val isStart = activeDatePicker == DatePickerType.START
+        val currentMillis = if (isStart) {
+            if (startDateMs > 0L) startDateMs else System.currentTimeMillis()
+        } else {
+            if (endDateMs > 0L) endDateMs else System.currentTimeMillis()
+        }
+
+        val selectableDates = remember(isStart, startDateMs, endDateMs) {
+            object : SelectableDates {
+                override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                    return if (isStart) {
+                        if (endDateMs > 0L) utcTimeMillis <= endDateMs else true
+                    } else {
+                        if (startDateMs > 0L) utcTimeMillis >= startDateMs else true
+                    }
+                }
+                override fun isSelectableYear(year: Int): Boolean = year in 2000..2100
+            }
+        }
+
+        val datePickerState = rememberDatePickerState(
+            initialSelectedDateMillis = currentMillis,
+            initialDisplayMode = DisplayMode.Picker,
+            yearRange = 2000..2100,
+            selectableDates = selectableDates
+        )
+
+        val customDatePickerColors = DatePickerDefaults.colors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            selectedDayContainerColor = AmaradioAmber,
+            selectedDayContentColor = Color.Black,
+            todayDateBorderColor = AmaradioAmber,
+            todayContentColor = AmaradioAmber,
+            currentYearContentColor = AmaradioAmber,
+            selectedYearContainerColor = AmaradioAmber,
+            selectedYearContentColor = Color.Black,
+            dayContentColor = MaterialTheme.colorScheme.onSurface,
+            headlineContentColor = MaterialTheme.colorScheme.onSurface,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            weekdayContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
+            yearContentColor = MaterialTheme.colorScheme.onSurface,
+            dateTextFieldColors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = AmaradioAmber,
+                unfocusedBorderColor = MaterialTheme.colorScheme.outline,
+                focusedLabelColor = AmaradioAmber,
+                cursorColor = AmaradioAmber,
+                focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                focusedTextColor = MaterialTheme.colorScheme.onSurface,
+                unfocusedTextColor = MaterialTheme.colorScheme.onSurface
+            )
         )
 
         DatePickerDialog(
-            onDismissRequest = { showDateRangePicker = false },
+            onDismissRequest = { activeDatePicker = null },
             confirmButton = {
                 TextButton(
                     onClick = {
-                        val start = dateRangePickerState.selectedStartDateMillis ?: 0L
-                        val rawEnd = dateRangePickerState.selectedEndDateMillis ?: start
-                        val end = if (rawEnd > 0L) rawEnd + (24 * 60 * 60 * 1000L - 1) else 0L
-                        onDateRangeSelected(start, end)
-                        showDateRangePicker = false
-                    }
+                        val selected = datePickerState.selectedDateMillis
+                        if (selected != null) {
+                            val localDate = java.time.Instant.ofEpochMilli(selected)
+                                .atZone(java.time.ZoneOffset.UTC)
+                                .toLocalDate()
+                            val startOfDayMs = localDate.atStartOfDay(java.time.ZoneId.systemDefault())
+                                .toInstant().toEpochMilli()
+                            val endOfDayMs = localDate.atTime(java.time.LocalTime.MAX)
+                                .atZone(java.time.ZoneId.systemDefault())
+                                .toInstant().toEpochMilli()
+
+                            if (isStart) {
+                                val newEnd = if (endDateMs > 0L && endDateMs < startOfDayMs) endOfDayMs else endDateMs
+                                onDateRangeSelected(startOfDayMs, newEnd)
+                            } else {
+                                val newStart = if (startDateMs > 0L && startDateMs > endOfDayMs) startOfDayMs else startDateMs
+                                onDateRangeSelected(newStart, endOfDayMs)
+                            }
+                        }
+                        activeDatePicker = null
+                    },
+                    colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
                 ) {
                     Text(stringResource(R.string.filter_apply), fontWeight = FontWeight.Bold, color = AmaradioAmber)
                 }
             },
             dismissButton = {
-                TextButton(onClick = { showDateRangePicker = false }) {
+                TextButton(
+                    onClick = { activeDatePicker = null },
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
+                ) {
                     Text(stringResource(R.string.label_button_cancel), color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
-            }
+            },
+            colors = DatePickerDefaults.colors(containerColor = MaterialTheme.colorScheme.surface),
+            tonalElevation = 0.dp
         ) {
-            DateRangePicker(
-                state = dateRangePickerState,
-                title = null,
-                headline = null,
-                showModeToggle = false,
-                colors = DatePickerDefaults.colors(
-                    selectedDayContainerColor = AmaradioAmber,
-                    selectedDayContentColor = Color.Black,
-                    dayInSelectionRangeContainerColor = AmaradioAmber.copy(alpha = 0.2f)
-                )
+            DatePicker(
+                state = datePickerState,
+                colors = customDatePickerColors
             )
         }
     }
