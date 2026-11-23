@@ -80,12 +80,13 @@ fun MiniPlayer(
                 .wrapContentHeight(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Drag Handle
+            // Drag Handle (Visual indicator for opening the player)
             Box(
                 modifier = Modifier
                     .padding(top = 8.dp)
                     .size(40.dp, 4.dp)
                     .background(MaterialTheme.colorScheme.onSurfaceVariant, shape = MaterialTheme.shapes.small)
+                    .clearAndSetSemantics {}
             )
 
             Row(
