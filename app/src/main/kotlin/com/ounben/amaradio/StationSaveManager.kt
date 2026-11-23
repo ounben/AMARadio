@@ -361,3 +361,21 @@ open class StationSaveManager(protected val context: Context) {
         lastPlayedAt = Date()
     )
 }
+
+class InMemoryStationQueue(context: Context, stations: List<DataRadioStation>) : StationSaveManager(context) {
+    init {
+        updateInMem(stations)
+    }
+
+    fun updateInMem(stations: List<DataRadioStation>) = synchronized(this) {
+        listStations.clear()
+        stationsSet.clear()
+        stations.forEach {
+            it.queue = this
+            listStations.add(it)
+            stationsSet.add(it.StationUuid)
+        }
+    }
+
+    override fun getSaveId(): String = "in_memory"
+}

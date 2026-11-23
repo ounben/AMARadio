@@ -595,7 +595,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     private suspend fun ensureFullStation(station: DataRadioStation): DataRadioStation {
         val app = application as AMARadioApp
-        return app.favouriteManager.getById(station.StationUuid)
+        val originalQueue = station.queue
+        val fullStation = app.favouriteManager.getById(station.StationUuid)
             ?: app.historyManager.getById(station.StationUuid)
             ?: app.customStationManager.getById(station.StationUuid)
             ?: withContext(Dispatchers.IO) {
@@ -603,6 +604,28 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     .stationDao().getStationByUuid(station.StationUuid)?.toDataStation()
             }
             ?: station
+
+        val finalStation = fullStation.getLightweightCopy()
+        finalStation.HomePageUrl = fullStation.HomePageUrl
+        finalStation.Country = fullStation.Country
+        finalStation.State = fullStation.State
+        finalStation.TagsAll = fullStation.TagsAll
+        finalStation.Language = fullStation.Language
+        finalStation.Codec = fullStation.Codec
+        finalStation.Bitrate = fullStation.Bitrate
+        finalStation.Votes = fullStation.Votes
+        finalStation.ClickCount = fullStation.ClickCount
+        finalStation.ClickTrend = fullStation.ClickTrend
+        finalStation.Hls = fullStation.Hls
+        finalStation.LastChangeTime = fullStation.LastChangeTime
+        finalStation.Creation = fullStation.Creation
+        finalStation.ChangeUuid = fullStation.ChangeUuid
+        finalStation.LastCheckOkTime = fullStation.LastCheckOkTime
+
+        if (originalQueue != null) {
+            finalStation.queue = originalQueue
+        }
+        return finalStation
     }
 
     fun playCurrentStation() {

@@ -150,13 +150,15 @@ data class DataRadioStation(
      * Prevents TransactionTooLargeException with large metadata or Chinese characters.
      */
     fun getLightweightCopy(): DataRadioStation {
-        return DataRadioStation(
+        val copy = DataRadioStation(
             Name = this.Name,
             StationUuid = this.StationUuid,
             StreamUrl = this.StreamUrl,
             IconUrl = this.IconUrl,
             CountryCode = this.CountryCode
         )
+        copy.queue = this.queue
+        return copy
     }
 
     fun copyPropertiesFrom(other: DataRadioStation) {

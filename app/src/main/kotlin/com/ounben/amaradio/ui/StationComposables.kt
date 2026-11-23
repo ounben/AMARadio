@@ -256,9 +256,14 @@ fun StationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel()
 ) {
+    val context = LocalContext.current
     val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+
+    val activeQueue = remember(stations) {
+        com.ounben.amaradio.InMemoryStationQueue(context, stations)
+    }
 
     if (isGrid) {
         LazyVerticalGrid(
@@ -275,7 +280,10 @@ fun StationList(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
                     isPlaying = station.StationUuid == playingStationUuid,
-                    onClick = { onStationClick(station) },
+                    onClick = {
+                        station.queue = activeQueue
+                        onStationClick(station)
+                    },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station }
                 )
@@ -292,7 +300,10 @@ fun StationList(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
                     isPlaying = station.StationUuid == playingStationUuid,
-                    onClick = { onStationClick(station) },
+                    onClick = {
+                        station.queue = activeQueue
+                        onStationClick(station)
+                    },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station }
                 )
