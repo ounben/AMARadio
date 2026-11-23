@@ -592,11 +592,14 @@ fun CustomFilterField(
     var showDialog by remember { mutableStateOf(false) }
     val clearDescription = stringResource(R.string.accessibility_clear_text) + " " + label
 
+    val isFilled = value.isNotEmpty()
+
     Column(modifier = modifier) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
+            fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
         )
         
@@ -605,7 +608,11 @@ fun CustomFilterField(
                 .fillMaxWidth()
                 .height(44.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                .border(
+                    width = if (isFilled) 1.5.dp else 1.dp,
+                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(8.dp)
+                )
                 .semantics(mergeDescendants = true) {
                     if (isReadOnly) {
                         role = Role.Button
@@ -616,13 +623,20 @@ fun CustomFilterField(
                 modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(icon, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                Icon(
+                    imageVector = icon,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp),
+                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                )
                 
                 Box(modifier = Modifier.weight(1f).padding(horizontal = 8.dp).fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
                     if (isReadOnly) {
                         Text(
                             text = if (value.isEmpty()) label else value,
                             style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
+                            color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.fillMaxSize()
@@ -640,9 +654,12 @@ fun CustomFilterField(
                             modifier = Modifier.fillMaxWidth().semantics {
                                 contentDescription = label
                             },
-                            textStyle = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurface),
+                            textStyle = MaterialTheme.typography.bodyMedium.copy(
+                                color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                                fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal
+                            ),
                             singleLine = true,
-                            cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                            cursorBrush = SolidColor(AmaradioAmber),
                             keyboardOptions = KeyboardOptions(hintLocales = LocaleUtils.getLatinHintLocales())
                         )
                     }
@@ -655,7 +672,7 @@ fun CustomFilterField(
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onClear() },
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = AmaradioAmber
                     )
                 }
             }
@@ -967,12 +984,14 @@ fun DropdownFilterField(
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
+    val isFilled = value.isNotEmpty()
 
     Column(modifier = modifier) {
         Text(
             text = label,
             style = MaterialTheme.typography.labelSmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant,
+            color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
+            fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
         )
 
@@ -981,7 +1000,11 @@ fun DropdownFilterField(
                 .fillMaxWidth()
                 .height(44.dp)
                 .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-                .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                .border(
+                    width = if (isFilled) 1.5.dp else 1.dp,
+                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
+                    shape = RoundedCornerShape(8.dp)
+                )
                 .clickable { expanded = true }
                 .padding(horizontal = 8.dp)
                 .semantics(mergeDescendants = true) {
@@ -998,12 +1021,13 @@ fun DropdownFilterField(
                     imageVector = icon,
                     contentDescription = null,
                     modifier = Modifier.size(16.dp),
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
                     text = value.ifEmpty { label },
                     style = MaterialTheme.typography.bodyMedium,
-                    color = if (value.isNotEmpty()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant,
+                    fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
+                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(start = 6.dp).weight(1f),
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
@@ -1015,7 +1039,7 @@ fun DropdownFilterField(
                         modifier = Modifier
                             .size(18.dp)
                             .clickable { onClear() },
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = AmaradioAmber
                     )
                 } else {
                     Icon(
