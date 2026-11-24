@@ -520,9 +520,11 @@ fun MainScreen(
                     onClick = {
                         if (msgRes == R.string.alert_delete_favorites) {
                             app.favouriteManager.clear()
+                            Utils.showToast(context, R.string.notify_deleted_favorites)
                         } else {
                             app.historyManager.clear()
                             app.trackHistoryRepository.deleteHistory()
+                            Utils.showToast(context, R.string.notify_deleted_history)
                         }
                         showDeleteConfirmDialog = null
                     },
