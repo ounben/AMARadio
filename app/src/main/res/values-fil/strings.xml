@@ -412,4 +412,11 @@
     <string name="error_sharing">Error sa pagbabahagi</string>
 
     <string name="accessibility_reorder">Ilipat ang istasyon</string>
+    <string name="action_stop_recording">Itigil ang pagre-record</string>
+    <string name="filter_all">Lahat</string>
+    <string name="filter_date">Petsa</string>
+    <string name="filter_date_from">Mula</string>
+    <string name="filter_date_to">Hanggang</string>
+    <string name="notify_recording_saved">Nai-save ang pagre-record</string>
+    <string name="timer_infinite">Walang limitasyon</string>
 </resources>

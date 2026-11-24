@@ -414,4 +414,11 @@
     <string name="error_sharing">Ịkekọrịta mperi</string>
 
     <string name="accessibility_reorder">Bugharịa ụlọ redio</string>
+    <string name="action_stop_recording">Kwụsị ịdekọ</string>
+    <string name="filter_all">Niile</string>
+    <string name="filter_date">Ụbọchị</string>
+    <string name="filter_date_from">Site na</string>
+    <string name="filter_date_to">Ruo</string>
+    <string name="notify_recording_saved">Echekwara ndekọ</string>
+    <string name="timer_infinite">Enweghị oke</string>
 </resources>

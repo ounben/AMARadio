@@ -412,4 +412,11 @@
     <string name="error_sharing">Kesalahan berbagi</string>
 
     <string name="accessibility_reorder">Pindahkan stasiun</string>
+    <string name="action_stop_recording">Hentikan perekaman</string>
+    <string name="filter_all">Semua</string>
+    <string name="filter_date">Tanggal</string>
+    <string name="filter_date_from">Dari</string>
+    <string name="filter_date_to">Sampai</string>
+    <string name="notify_recording_saved">Rekaman disimpan</string>
+    <string name="timer_infinite">Tak terbatas</string>
 </resources>

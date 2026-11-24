@@ -412,4 +412,11 @@
     <string name="error_sharing">Ошибка обмена</string>
 
     <string name="accessibility_reorder">Переместить станцию</string>
+    <string name="action_stop_recording">Остановить запись</string>
+    <string name="filter_all">Все</string>
+    <string name="filter_date">Дата</string>
+    <string name="filter_date_from">С</string>
+    <string name="filter_date_to">По</string>
+    <string name="notify_recording_saved">Запись сохранена</string>
+    <string name="timer_infinite">Без ограничений</string>
 </resources>

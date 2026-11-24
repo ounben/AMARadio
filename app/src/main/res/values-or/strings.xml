@@ -414,4 +414,11 @@
     <string name="error_sharing">ବାଣ୍ଟିବାରେ ତ୍ରୁଟି</string>
 
     <string name="accessibility_reorder">ଷ୍ଟେସନ୍ ଘୁଞ୍ଚାନ୍ତୁ</string>
+    <string name="action_stop_recording">ରେକର୍ଡିଂ ବନ୍ଦ କରନ୍ତୁ</string>
+    <string name="filter_all">ସମସ୍ତ</string>
+    <string name="filter_date">ତାରିଖ</string>
+    <string name="filter_date_from">ଠାରୁ</string>
+    <string name="filter_date_to">ପର୍ଯ୍ୟନ୍ତ</string>
+    <string name="notify_recording_saved">ରେକର୍ଡିଂ ସେଭ୍ ହୋଇଛି</string>
+    <string name="timer_infinite">ଅସୀମିତ</string>
 </resources>

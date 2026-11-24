@@ -414,4 +414,11 @@
     <string name="error_sharing">خطأ في المشاركة</string>
 
     <string name="accessibility_reorder">نقل المحطة</string>
+    <string name="action_stop_recording">إيقاف التسجيل</string>
+    <string name="filter_all">الكل</string>
+    <string name="filter_date">التاريخ</string>
+    <string name="filter_date_from">من</string>
+    <string name="filter_date_to">إلى</string>
+    <string name="notify_recording_saved">تم حفظ التسجيل</string>
+    <string name="timer_infinite">غير محدود</string>
 </resources>

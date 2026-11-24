@@ -412,4 +412,11 @@
     <string name="error_sharing">Kopīgošanas kļūda</string>
 
     <string name="accessibility_reorder">Pārvietot staciju</string>
+    <string name="action_stop_recording">Apturēt ierakstīšanu</string>
+    <string name="filter_all">Visi</string>
+    <string name="filter_date">Datums</string>
+    <string name="filter_date_from">No</string>
+    <string name="filter_date_to">Līdz</string>
+    <string name="notify_recording_saved">Ieraksts saglabāts</string>
+    <string name="timer_infinite">Neierobežots</string>
 </resources>

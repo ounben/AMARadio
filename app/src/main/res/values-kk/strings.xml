@@ -412,4 +412,11 @@
     <string name="error_sharing">Бөлісу қатесі</string>
 
     <string name="accessibility_reorder">Станцияны жылжыту</string>
+    <string name="action_stop_recording">Жазуды тоқтату</string>
+    <string name="filter_all">Барлығы</string>
+    <string name="filter_date">Күні</string>
+    <string name="filter_date_from">Бастап</string>
+    <string name="filter_date_to">Дейін</string>
+    <string name="notify_recording_saved">Жазба сақталды</string>
+    <string name="timer_infinite">Шексіз</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Грешка при споделување</string>
 
     <string name="accessibility_reorder">Премести станица</string>
+    <string name="action_stop_recording">Запри снимање</string>
+    <string name="filter_all">Сите</string>
+    <string name="filter_date">Датум</string>
+    <string name="filter_date_from">Од</string>
+    <string name="filter_date_to">До</string>
+    <string name="notify_recording_saved">Снимката е зачувана</string>
+    <string name="timer_infinite">Неограничено</string>
 </resources>

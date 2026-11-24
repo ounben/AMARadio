@@ -412,4 +412,11 @@
     <string name="error_sharing">Fejl ved deling</string>
 
     <string name="accessibility_reorder">Flyt station</string>
+    <string name="action_stop_recording">Stop optagelsen</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_date">Dato</string>
+    <string name="filter_date_from">Fra</string>
+    <string name="filter_date_to">Til</string>
+    <string name="notify_recording_saved">Optagelsen er gemt</string>
+    <string name="timer_infinite">Ubegrænset</string>
 </resources>

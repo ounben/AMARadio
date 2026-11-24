@@ -412,4 +412,11 @@
     <string name="error_sharing">බෙදාගැනීමේ දෝෂයකි</string>
 
     <string name="accessibility_reorder">ස්ථානය මාරු කරන්න</string>
+    <string name="action_stop_recording">පටිගත කිරීම නවත්වන්න</string>
+    <string name="filter_all">සියල්ල</string>
+    <string name="filter_date">දිනය</string>
+    <string name="filter_date_from">සිට</string>
+    <string name="filter_date_to">දක්වා</string>
+    <string name="notify_recording_saved">පටිගත කිරීම සුරකින ලදී</string>
+    <string name="timer_infinite">අසීමිත</string>
 </resources>

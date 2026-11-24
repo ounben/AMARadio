@@ -414,4 +414,11 @@
     <string name="error_sharing">په شریکولو کې تېروتنه</string>
 
     <string name="accessibility_reorder">سټېشن خوځول</string>
+    <string name="action_stop_recording">ثبتول بند کړئ</string>
+    <string name="filter_all">ټول</string>
+    <string name="filter_date">نېټه</string>
+    <string name="filter_date_from">له</string>
+    <string name="filter_date_to">تر</string>
+    <string name="notify_recording_saved">ثبت خوندي شو</string>
+    <string name="timer_infinite">لامحدود</string>
 </resources>

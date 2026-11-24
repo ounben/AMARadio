@@ -412,4 +412,11 @@
     <string name="error_sharing">შეცდომის გაზიარება</string>
 
     <string name="accessibility_reorder">სადგურის გადატანა</string>
+    <string name="action_stop_recording">ჩაწერის შეჩერება</string>
+    <string name="filter_all">ყველა</string>
+    <string name="filter_date">თარიღი</string>
+    <string name="filter_date_from">დან</string>
+    <string name="filter_date_to">მდე</string>
+    <string name="notify_recording_saved">ჩანაწერი შენახულია</string>
+    <string name="timer_infinite">შეუზღუდავი</string>
 </resources>

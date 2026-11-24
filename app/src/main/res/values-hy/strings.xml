@@ -412,4 +412,11 @@
     <string name="error_sharing">Համօգտագործման սխալ</string>
 
     <string name="accessibility_reorder">Տեղափոխել կայանը</string>
+    <string name="action_stop_recording">Դադարեցնել ձայնագրությունը</string>
+    <string name="filter_all">Բոլորը</string>
+    <string name="filter_date">Ամսաթիվ</string>
+    <string name="filter_date_from">Սկսած</string>
+    <string name="filter_date_to">Մինչև</string>
+    <string name="notify_recording_saved">Ձայնագրությունը պահվեց</string>
+    <string name="timer_infinite">Անսահմանափակ</string>
 </resources>

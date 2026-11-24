@@ -412,4 +412,11 @@
     <string name="error_sharing">កំហុសក្នុងការចែករំលែក</string>
 
     <string name="accessibility_reorder">ផ្លាស់ទីស្ថានីយ៍</string>
+    <string name="action_stop_recording">បញ្ឈប់ការថត</string>
+    <string name="filter_all">ទាំងអស់</string>
+    <string name="filter_date">កាលបរិច្ឆេទ</string>
+    <string name="filter_date_from">ចាប់ពី</string>
+    <string name="filter_date_to">ដល់</string>
+    <string name="notify_recording_saved">បានរក្សាទុកការថត</string>
+    <string name="timer_infinite">គ្មានដែនកំណត់</string>
 </resources>

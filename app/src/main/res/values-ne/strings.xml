@@ -412,4 +412,11 @@
     <string name="error_sharing">त्रुटि साझेदारी</string>
 
     <string name="accessibility_reorder">स्टेशन सार्नुहोस्</string>
+    <string name="action_stop_recording">रेकर्डिङ रोक्नुहोस्</string>
+    <string name="filter_all">सबै</string>
+    <string name="filter_date">मिति</string>
+    <string name="filter_date_from">देखि</string>
+    <string name="filter_date_to">सम्म</string>
+    <string name="notify_recording_saved">रेकर्डिङ सुरक्षित गरियो</string>
+    <string name="timer_infinite">असीमित</string>
 </resources>

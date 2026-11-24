@@ -413,4 +413,11 @@
     <string name="error_sharing">Paylaşım xətası</string>
 
     <string name="accessibility_reorder">Stansiyanı köçürün</string>
+    <string name="action_stop_recording">Yazmanı dayandır</string>
+    <string name="filter_all">Hamısı</string>
+    <string name="filter_date">Tarix</string>
+    <string name="filter_date_from">Başlanğıc</string>
+    <string name="filter_date_to">Son</string>
+    <string name="notify_recording_saved">Səsyazma yadda saxlanıldı</string>
+    <string name="timer_infinite">Limitsiz</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Fout bij delen</string>
 
     <string name="accessibility_reorder">Verplaats station</string>
+    <string name="action_stop_recording">Opname stoppen</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Van</string>
+    <string name="filter_date_to">Tot</string>
+    <string name="notify_recording_saved">Opname opgeslagen</string>
+    <string name="timer_infinite">Onbeperkt</string>
 </resources>

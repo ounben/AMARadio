@@ -412,4 +412,11 @@
     <string name="error_sharing">പങ്കിടുന്നതിൽ പിശക്</string>
 
     <string name="accessibility_reorder">സ്റ്റേഷൻ മാറ്റുക</string>
+    <string name="action_stop_recording">റെക്കോർഡിംഗ് നിർത്തുക</string>
+    <string name="filter_all">എല്ലാം</string>
+    <string name="filter_date">തീയതി</string>
+    <string name="filter_date_from">മുതൽ</string>
+    <string name="filter_date_to">വരെ</string>
+    <string name="notify_recording_saved">റെക്കോർഡിംഗ് സംരക്ഷിച്ചു</string>
+    <string name="timer_infinite">പരിധിയില്ലാത്തത്</string>
 </resources>

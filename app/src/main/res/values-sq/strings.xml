@@ -412,4 +412,11 @@
     <string name="error_sharing">Gabim në ndarjen</string>
 
     <string name="accessibility_reorder">Zhvendos stacionin</string>
+    <string name="action_stop_recording">Ndalo regjistrimin</string>
+    <string name="filter_all">Të gjitha</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Nga</string>
+    <string name="filter_date_to">Deri më</string>
+    <string name="notify_recording_saved">Regjistrimi u ruajt</string>
+    <string name="timer_infinite">E pakufizuar</string>
 </resources>

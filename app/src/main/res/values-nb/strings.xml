@@ -412,4 +412,11 @@
     <string name="error_sharing">Feil under deling</string>
 
     <string name="accessibility_reorder">Flytt radiokanal</string>
+    <string name="action_stop_recording">Stopp opptak</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_date">Dato</string>
+    <string name="filter_date_from">Fra</string>
+    <string name="filter_date_to">Til</string>
+    <string name="notify_recording_saved">Opptaket er lagret</string>
+    <string name="timer_infinite">Ubegrenset</string>
 </resources>

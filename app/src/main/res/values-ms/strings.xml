@@ -412,4 +412,11 @@
     <string name="error_sharing">Ralat berkongsi</string>
 
     <string name="accessibility_reorder">Pindah stesen</string>
+    <string name="action_stop_recording">Hentikan rakaman</string>
+    <string name="filter_all">Semua</string>
+    <string name="filter_date">Tarikh</string>
+    <string name="filter_date_from">Dari</string>
+    <string name="filter_date_to">Hingga</string>
+    <string name="notify_recording_saved">Rakaman disimpan</string>
+    <string name="timer_infinite">Tanpa had</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Errore bat gertatu da partekatzean</string>
 
     <string name="accessibility_reorder">Geltokia mugitu</string>
+    <string name="action_stop_recording">Gelditu grabazioa</string>
+    <string name="filter_all">Denak</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Noiztik</string>
+    <string name="filter_date_to">Noiz arte</string>
+    <string name="notify_recording_saved">Grabaketa gordeta</string>
+    <string name="timer_infinite">Mugagabea</string>
 </resources>

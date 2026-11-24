@@ -412,4 +412,11 @@
     <string name="error_sharing">Chyba pri zdieľaní</string>
 
     <string name="accessibility_reorder">Presunúť stanicu</string>
+    <string name="action_stop_recording">Zastaviť nahrávanie</string>
+    <string name="filter_all">Všetky</string>
+    <string name="filter_date">Dátum</string>
+    <string name="filter_date_from">Od</string>
+    <string name="filter_date_to">Do</string>
+    <string name="notify_recording_saved">Záznam bol uložený</string>
+    <string name="timer_infinite">Neobmedzene</string>
 </resources>

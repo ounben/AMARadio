@@ -412,4 +412,11 @@
     <string name="error_sharing">பகிர்வதில் பிழை</string>
 
     <string name="accessibility_reorder">நிலையத்தை நகர்த்தவும்</string>
+    <string name="action_stop_recording">பதிவு செய்வதை நிறுத்து</string>
+    <string name="filter_all">அனைத்தும்</string>
+    <string name="filter_date">தேதி</string>
+    <string name="filter_date_from">முதல்</string>
+    <string name="filter_date_to">வரை</string>
+    <string name="notify_recording_saved">பதிவு சேமிக்கப்பட்டது</string>
+    <string name="timer_infinite">வரம்பற்றது</string>
 </resources>

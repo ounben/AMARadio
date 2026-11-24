@@ -412,4 +412,11 @@
     <string name="error_sharing">భాగస్వామ్యం చేయడంలో లోపం</string>
 
     <string name="accessibility_reorder">స్టేషన్‌ను తరలించండి</string>
+    <string name="action_stop_recording">రికార్డింగ్ ఆపివేయండి</string>
+    <string name="filter_all">అన్నీ</string>
+    <string name="filter_date">తేదీ</string>
+    <string name="filter_date_from">నుండి</string>
+    <string name="filter_date_to">వరకు</string>
+    <string name="notify_recording_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
+    <string name="timer_infinite">అపరిమిత</string>
 </resources>

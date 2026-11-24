@@ -412,4 +412,11 @@
     <string name="error_sharing">ಹಂಚಿಕೆ ದೋಷ</string>
 
     <string name="accessibility_reorder">ರೇಡಿಯೋ ಸ್ಟೇಷನ್ ಸರಿಸಿ</string>
+    <string name="action_stop_recording">ರೆಕಾರ್ಡಿಂಗ್ ನಿಲ್ಲಿಸಿ</string>
+    <string name="filter_all">ಎಲ್ಲಾ</string>
+    <string name="filter_date">ದಿನಾಂಕ</string>
+    <string name="filter_date_from">ಇಂದ</string>
+    <string name="filter_date_to">ವರೆಗೆ</string>
+    <string name="notify_recording_saved">ರೆಕಾರ್ಡಿಂಗ್ ಉಳಿಸಲಾಗಿದೆ</string>
+    <string name="timer_infinite">ಅನಿಯಮಿತ</string>
 </resources>

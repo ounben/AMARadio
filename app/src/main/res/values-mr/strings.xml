@@ -412,4 +412,11 @@
     <string name="error_sharing">सामायिकरण त्रुटी</string>
 
     <string name="accessibility_reorder">स्टेशन हलवा</string>
+    <string name="action_stop_recording">रेकॉर्डिंग थांबवा</string>
+    <string name="filter_all">सर्व</string>
+    <string name="filter_date">तारीख</string>
+    <string name="filter_date_from">पासून</string>
+    <string name="filter_date_to">पर्यंत</string>
+    <string name="notify_recording_saved">रेकॉर्डिंग सेव्ह केले</string>
+    <string name="timer_infinite">अमर्यादित</string>
 </resources>

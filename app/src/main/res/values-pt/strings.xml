@@ -412,4 +412,11 @@
     <string name="error_sharing">Erro ao compartilhar</string>
 
     <string name="accessibility_reorder">Mover estação</string>
+    <string name="action_stop_recording">Parar gravação</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">De</string>
+    <string name="filter_date_to">Até</string>
+    <string name="notify_recording_saved">Gravação guardada</string>
+    <string name="timer_infinite">Ilimitado</string>
 </resources>

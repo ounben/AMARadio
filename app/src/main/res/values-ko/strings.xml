@@ -412,4 +412,11 @@
     <string name="error_sharing">공유 오류</string>
 
     <string name="accessibility_reorder">방송국 이동</string>
+    <string name="action_stop_recording">녹음 중지</string>
+    <string name="filter_all">전체</string>
+    <string name="filter_date">날짜</string>
+    <string name="filter_date_from">시작일</string>
+    <string name="filter_date_to">종료일</string>
+    <string name="notify_recording_saved">녹음이 저장되었습니다</string>
+    <string name="timer_infinite">무제한</string>
 </resources>

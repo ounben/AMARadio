@@ -412,4 +412,11 @@
     <string name="error_sharing">Помилка спільного доступу</string>
 
     <string name="accessibility_reorder">Перемістити станцію</string>
+    <string name="action_stop_recording">Зупинити запис</string>
+    <string name="filter_all">Усі</string>
+    <string name="filter_date">Дата</string>
+    <string name="filter_date_from">Від</string>
+    <string name="filter_date_to">До</string>
+    <string name="notify_recording_saved">Запис збережено</string>
+    <string name="timer_infinite">Необмежено</string>
 </resources>

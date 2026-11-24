@@ -412,4 +412,11 @@
     <string name="error_sharing">Qsim ta\' żbalji</string>
 
     <string name="accessibility_reorder">Ċaqlaq stazzjon</string>
+    <string name="action_stop_recording">Waqqaf ir-reġistrazzjoni</string>
+    <string name="filter_all">Kollha</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Minn</string>
+    <string name="filter_date_to">Sa</string>
+    <string name="notify_recording_saved">Ir-reġistrazzjoni ġiet salvata</string>
+    <string name="timer_infinite">Illimitat</string>
 </resources>

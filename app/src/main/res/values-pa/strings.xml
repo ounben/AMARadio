@@ -414,4 +414,11 @@
     <string name="error_sharing">ਸਾਂਝਾਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ</string>
 
     <string name="accessibility_reorder">ਸਟੇਸ਼ਨ ਨੂੰ ਮੂਵ ਕਰੋ</string>
+    <string name="action_stop_recording">ਰਿਕਾਰਡਿੰਗ ਬੰਦ ਕਰੋ</string>
+    <string name="filter_all">ਸਾਰੇ</string>
+    <string name="filter_date">ਮਿਤੀ</string>
+    <string name="filter_date_from">ਤੋਂ</string>
+    <string name="filter_date_to">ਤੱਕ</string>
+    <string name="notify_recording_saved">ਰਿਕਾਰਡਿੰਗ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
+    <string name="timer_infinite">ਅਸੀਮਤ</string>
 </resources>

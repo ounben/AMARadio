@@ -412,4 +412,11 @@
     <string name="error_sharing">Viga jagamisel</string>
 
     <string name="accessibility_reorder">Liiguta jaam</string>
+    <string name="action_stop_recording">Peata salvestamine</string>
+    <string name="filter_all">Kõik</string>
+    <string name="filter_date">Kuupäev</string>
+    <string name="filter_date_from">Alates</string>
+    <string name="filter_date_to">Kuni</string>
+    <string name="notify_recording_saved">Salvestus salvestatud</string>
+    <string name="timer_infinite">Piiramatu</string>
 </resources>

@@ -414,4 +414,11 @@
     <string name="error_sharing">Бөлүшүү катасы</string>
 
     <string name="accessibility_reorder">Станцияны жылдыруу</string>
+    <string name="action_stop_recording">Жаздырууну токтотуу</string>
+    <string name="filter_all">Баары</string>
+    <string name="filter_date">Күнү</string>
+    <string name="filter_date_from">Баштап</string>
+    <string name="filter_date_to">Чейин</string>
+    <string name="notify_recording_saved">Жаздыруу сакталды</string>
+    <string name="timer_infinite">Чексиз</string>
 </resources>

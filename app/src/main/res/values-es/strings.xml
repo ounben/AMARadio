@@ -411,4 +411,11 @@
     <string name="error_sharing">Error al compartir</string>
 
     <string name="accessibility_reorder">Mover emisora</string>
+    <string name="action_stop_recording">Detener grabación</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_date">Fecha</string>
+    <string name="filter_date_from">Desde</string>
+    <string name="filter_date_to">Hasta</string>
+    <string name="notify_recording_saved">Grabación guardada</string>
+    <string name="timer_infinite">Ilimitado</string>
 </resources>

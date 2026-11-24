@@ -412,4 +412,11 @@
     <string name="error_sharing">Napaka pri skupni rabi</string>
 
     <string name="accessibility_reorder">Premakni postajo</string>
+    <string name="action_stop_recording">Ustavi snemanje</string>
+    <string name="filter_all">Vse</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Od</string>
+    <string name="filter_date_to">Do</string>
+    <string name="notify_recording_saved">Posnetek shranjen</string>
+    <string name="timer_infinite">Neomejeno</string>
 </resources>

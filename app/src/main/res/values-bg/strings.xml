@@ -413,4 +413,11 @@
     <string name="error_sharing">Грешка при споделяне</string>
 
     <string name="accessibility_reorder">Преместете станцията</string>
+    <string name="action_stop_recording">Спри записа</string>
+    <string name="filter_all">Всички</string>
+    <string name="filter_date">Дата</string>
+    <string name="filter_date_from">От</string>
+    <string name="filter_date_to">До</string>
+    <string name="notify_recording_saved">Записът е запазен</string>
+    <string name="timer_infinite">Неограничено</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">શેર કરવામાં ભૂલ</string>
 
     <string name="accessibility_reorder">સ્ટેશન ખસેડો</string>
+    <string name="action_stop_recording">રેકોર્ડિંગ બંધ કરો</string>
+    <string name="filter_all">બધા</string>
+    <string name="filter_date">તારીખ</string>
+    <string name="filter_date_from">થી</string>
+    <string name="filter_date_to">સુધી</string>
+    <string name="notify_recording_saved">રેકોર્ડિંગ સાચવ્યું</string>
+    <string name="timer_infinite">અમર્યાદિત</string>
 </resources>

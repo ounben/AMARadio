@@ -414,4 +414,11 @@
     <string name="error_sharing">טעות ייַנטיילונג</string>
 
     <string name="accessibility_reorder">רוקן סטאַנציע</string>
+    <string name="action_stop_recording">שטעלן רעקאָרדירונג</string>
+    <string name="filter_all">אַלע</string>
+    <string name="filter_date">דאַטע</string>
+    <string name="filter_date_from">פֿון</string>
+    <string name="filter_date_to">ביז</string>
+    <string name="notify_recording_saved">רעקאָרדירונג געראַטעוועט</string>
+    <string name="timer_infinite">אומבאַגרענעצט</string>
 </resources>

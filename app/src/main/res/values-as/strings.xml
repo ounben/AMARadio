@@ -414,4 +414,11 @@
     <string name="error_sharing">ত্ৰুটি অংশীদাৰী কৰা</string>
 
     <string name="accessibility_reorder">ষ্টেচন স্থানান্তৰ কৰক</string>
+    <string name="action_stop_recording">ৰেকৰ্ডিং বন্ধ কৰক</string>
+    <string name="filter_all">সকলো</string>
+    <string name="filter_date">তাৰিখ</string>
+    <string name="filter_date_from">পৰা</string>
+    <string name="filter_date_to">লৈ</string>
+    <string name="notify_recording_saved">ৰেকৰ্ডিং সংৰক্ষণ কৰা হৈছে</string>
+    <string name="timer_infinite">সীমাহীন</string>
 </resources>

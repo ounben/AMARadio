@@ -412,4 +412,11 @@
     <string name="error_sharing">မျှဝေမှုအမှား</string>
 
     <string name="accessibility_reorder">ရေဒီယိုလိုင်း ရွှေ့ရန်</string>
+    <string name="action_stop_recording">အသံဖမ်းခြင်း ရပ်ရန်</string>
+    <string name="filter_all">အားလုံး</string>
+    <string name="filter_date">ရက်စွဲ</string>
+    <string name="filter_date_from">မှ</string>
+    <string name="filter_date_to">အထိ</string>
+    <string name="notify_recording_saved">အသံဖမ်းမှုကို သိမ်းဆည်းပြီးပါပြီ</string>
+    <string name="timer_infinite">အကန့်အသတ်မရှိ</string>
 </resources>

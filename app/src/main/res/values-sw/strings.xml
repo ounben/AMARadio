@@ -412,4 +412,11 @@
     <string name="error_sharing">Hitilafu kushiriki</string>
 
     <string name="accessibility_reorder">Hamisha kituo</string>
+    <string name="action_stop_recording">Simamisha kurekodi</string>
+    <string name="filter_all">Zote</string>
+    <string name="filter_date">Tarehe</string>
+    <string name="filter_date_from">Kuanzia</string>
+    <string name="filter_date_to">Hadi</string>
+    <string name="notify_recording_saved">Rekodi imehifadhiwa</string>
+    <string name="timer_infinite">Bila kikomo</string>
 </resources>

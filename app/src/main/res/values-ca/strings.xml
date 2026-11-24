@@ -414,4 +414,11 @@
     <string name="error_sharing">S\'ha produït un error en compartir</string>
 
     <string name="accessibility_reorder">Mou l\'estació</string>
+    <string name="action_stop_recording">Atura la gravació</string>
+    <string name="filter_all">Tots</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Des de</string>
+    <string name="filter_date_to">Fins a</string>
+    <string name="notify_recording_saved">Enregistrament guardat</string>
+    <string name="timer_infinite">Il·limitat</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Fel vid delning</string>
 
     <string name="accessibility_reorder">Flytta station</string>
+    <string name="action_stop_recording">Stoppa inspelning</string>
+    <string name="filter_all">Alla</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Från</string>
+    <string name="filter_date_to">Till</string>
+    <string name="notify_recording_saved">Inspelningen har sparats</string>
+    <string name="timer_infinite">Obegränsat</string>
 </resources>

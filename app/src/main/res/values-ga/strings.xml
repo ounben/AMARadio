@@ -412,4 +412,11 @@
     <string name="error_sharing">Earráid á roinnt</string>
 
     <string name="accessibility_reorder">Bog stáisiún</string>
+    <string name="action_stop_recording">Stop taifeadadh</string>
+    <string name="filter_all">Gach ceann</string>
+    <string name="filter_date">Dáta</string>
+    <string name="filter_date_from">Ó</string>
+    <string name="filter_date_to">Go</string>
+    <string name="notify_recording_saved">Taifeadadh sábháilte</string>
+    <string name="timer_infinite">Gan teorainn</string>
 </resources>

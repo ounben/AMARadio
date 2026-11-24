@@ -412,4 +412,11 @@
     <string name="error_sharing">เกิดข้อผิดพลาดในการแชร์</string>
 
     <string name="accessibility_reorder">ย้ายสถานี</string>
+    <string name="action_stop_recording">หยุดการบันทึก</string>
+    <string name="filter_all">ทั้งหมด</string>
+    <string name="filter_date">วันที่</string>
+    <string name="filter_date_from">จาก</string>
+    <string name="filter_date_to">ถึง</string>
+    <string name="notify_recording_saved">บันทึกเสียงแล้ว</string>
+    <string name="timer_infinite">ไม่จำกัด</string>
 </resources>

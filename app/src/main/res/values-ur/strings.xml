@@ -412,4 +412,11 @@
     <string name="error_sharing">اشتراک میں خرابی</string>
 
     <string name="accessibility_reorder">اسٹیشن منتقل کریں</string>
+    <string name="action_stop_recording">ریکارڈنگ بند کریں</string>
+    <string name="filter_all">تمام</string>
+    <string name="filter_date">تاریخ</string>
+    <string name="filter_date_from">سے</string>
+    <string name="filter_date_to">تک</string>
+    <string name="notify_recording_saved">ریکارڈنگ محفوظ ہو گئی</string>
+    <string name="timer_infinite">لامحدود</string>
 </resources>

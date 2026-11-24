@@ -414,4 +414,11 @@
     <string name="error_sharing">Хуваалцахад алдаа гарлаа</string>
 
     <string name="accessibility_reorder">Станцыг шилжүүлэх</string>
+    <string name="action_stop_recording">Бичлэг зогсоох</string>
+    <string name="filter_all">Бүгд</string>
+    <string name="filter_date">Огноо</string>
+    <string name="filter_date_from">Эхлэх</string>
+    <string name="filter_date_to">Дуусах</string>
+    <string name="notify_recording_saved">Бичлэг хадгалагдсан</string>
+    <string name="timer_infinite">Хязгааргүй</string>
 </resources>

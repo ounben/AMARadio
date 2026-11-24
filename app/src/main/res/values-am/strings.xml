@@ -413,4 +413,11 @@
     <string name="error_sharing">ማጋራት ላይ ስህተት</string>
 
     <string name="accessibility_reorder">ጣቢያ አንቀሳቅስ</string>
+    <string name="action_stop_recording">ቀረጻ አቁም</string>
+    <string name="filter_all">ሁሉም</string>
+    <string name="filter_date">ቀን</string>
+    <string name="filter_date_from">ከ</string>
+    <string name="filter_date_to">እስከ</string>
+    <string name="notify_recording_saved">ቀረጻ ተቀምጧል</string>
+    <string name="timer_infinite">ያልተገደበ</string>
 </resources>

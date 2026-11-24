@@ -412,4 +412,11 @@
     <string name="error_sharing">共有エラー</string>
 
     <string name="accessibility_reorder">ラジオ局を移動</string>
+    <string name="action_stop_recording">録音を停止</string>
+    <string name="filter_all">すべて</string>
+    <string name="filter_date">日付</string>
+    <string name="filter_date_from">開始日</string>
+    <string name="filter_date_to">終了日</string>
+    <string name="notify_recording_saved">録音を保存しました</string>
+    <string name="timer_infinite">無制限</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Megosztási hiba</string>
 
     <string name="accessibility_reorder">Állomás áthelyezése</string>
+    <string name="action_stop_recording">Felvétel leállítása</string>
+    <string name="filter_all">Összes</string>
+    <string name="filter_date">Dátum</string>
+    <string name="filter_date_from">Ettől</string>
+    <string name="filter_date_to">Eddig</string>
+    <string name="notify_recording_saved">A felvétel mentve</string>
+    <string name="timer_infinite">Korlátlan</string>
 </resources>

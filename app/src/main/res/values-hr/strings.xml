@@ -412,4 +412,11 @@
     <string name="error_sharing">Pogreška u dijeljenju</string>
 
     <string name="accessibility_reorder">Pomakni stanicu</string>
+    <string name="action_stop_recording">Zaustavi snimanje</string>
+    <string name="filter_all">Sve</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Od</string>
+    <string name="filter_date_to">Do</string>
+    <string name="notify_recording_saved">Snimka je spremljena</string>
+    <string name="timer_infinite">Neograničeno</string>
 </resources>

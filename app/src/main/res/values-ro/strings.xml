@@ -412,4 +412,11 @@
     <string name="error_sharing">Eroare la partajare</string>
 
     <string name="accessibility_reorder">Mutați stația</string>
+    <string name="action_stop_recording">Oprește înregistrarea</string>
+    <string name="filter_all">Toate</string>
+    <string name="filter_date">Dată</string>
+    <string name="filter_date_from">De la</string>
+    <string name="filter_date_to">Până la</string>
+    <string name="notify_recording_saved">Înregistrare salvată</string>
+    <string name="timer_infinite">Nelimitat</string>
 </resources>

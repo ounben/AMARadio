@@ -414,4 +414,11 @@
     <string name="error_sharing">Σφάλμα κοινοποίησης</string>
 
     <string name="accessibility_reorder">Μετακίνηση σταθμού</string>
+    <string name="action_stop_recording">Διακοπή εγγραφής</string>
+    <string name="filter_all">Όλα</string>
+    <string name="filter_date">Ημερομηνία</string>
+    <string name="filter_date_from">Από</string>
+    <string name="filter_date_to">Έως</string>
+    <string name="notify_recording_saved">Η εγγραφή αποθηκεύτηκε</string>
+    <string name="timer_infinite">Απεριόριστο</string>
 </resources>

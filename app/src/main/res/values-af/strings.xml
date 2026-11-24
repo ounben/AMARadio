@@ -416,4 +416,11 @@
     <string name="error_sharing">Kon nie deel nie</string>
 
     <string name="accessibility_reorder">Skuif stasie</string>
+    <string name="action_stop_recording">Stop opname</string>
+    <string name="filter_all">Almal</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Van</string>
+    <string name="filter_date_to">Tot</string>
+    <string name="notify_recording_saved">Opname gestoor</string>
+    <string name="timer_infinite">Onbeperk</string>
 </resources>

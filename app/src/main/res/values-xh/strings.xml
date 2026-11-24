@@ -414,4 +414,11 @@
     <string name="error_sharing">Ukwabelana ngempazamo</string>
 
     <string name="accessibility_reorder">Hambisa isikhululo</string>
+    <string name="action_stop_recording">Misa ukurekhoda</string>
+    <string name="filter_all">Zonke</string>
+    <string name="filter_date">Umhla</string>
+    <string name="filter_date_from">Ukusuka</string>
+    <string name="filter_date_to">Ukuya</string>
+    <string name="notify_recording_saved">Ukurekhoda kugciniwe</string>
+    <string name="timer_infinite">Akukho mda</string>
 </resources>

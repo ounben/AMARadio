@@ -412,4 +412,11 @@
     <string name="error_sharing">خطا در اشتراک گذاری</string>
 
     <string name="accessibility_reorder">جابجایی ایستگاه</string>
+    <string name="action_stop_recording">توقف ضبط</string>
+    <string name="filter_all">همه</string>
+    <string name="filter_date">تاریخ</string>
+    <string name="filter_date_from">از</string>
+    <string name="filter_date_to">تا</string>
+    <string name="notify_recording_saved">ضبط ذخیره شد</string>
+    <string name="timer_infinite">نامحدود</string>
 </resources>

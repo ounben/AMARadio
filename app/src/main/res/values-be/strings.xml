@@ -412,4 +412,11 @@
     <string name="error_external_player_not_found">Не знойдзена праграма знешняга аўдыяпрайгравальніка</string>
 
     <string name="accessibility_reorder">Перамясціць станцыю</string>
+    <string name="action_stop_recording">Спыніць запіс</string>
+    <string name="filter_all">Усе</string>
+    <string name="filter_date">Дата</string>
+    <string name="filter_date_from">З</string>
+    <string name="filter_date_to">Па</string>
+    <string name="notify_recording_saved">Запіс захаваны</string>
+    <string name="timer_infinite">Неабмежавана</string>
 </resources>

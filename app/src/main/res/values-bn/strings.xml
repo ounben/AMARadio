@@ -412,4 +412,11 @@
     <string name="error_sharing">শেয়ার করতে ত্রুটি</string>
 
     <string name="accessibility_reorder">স্টেশন সরান</string>
+    <string name="action_stop_recording">রেকর্ডিং বন্ধ করুন</string>
+    <string name="filter_all">সব</string>
+    <string name="filter_date">তারিখ</string>
+    <string name="filter_date_from">থেকে</string>
+    <string name="filter_date_to">পর্যন্ত</string>
+    <string name="notify_recording_saved">রেকর্ডিং সংরক্ষিত</string>
+    <string name="timer_infinite">সীমাহীন</string>
 </resources>

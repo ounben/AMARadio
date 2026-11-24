@@ -412,4 +412,11 @@
     <string name="error_sharing">साझा करने में त्रुटि</string>
 
     <string name="accessibility_reorder">स्टेशन ले जाएँ</string>
+    <string name="action_stop_recording">रिकॉर्डिंग रोकें</string>
+    <string name="filter_all">सभी</string>
+    <string name="filter_date">तारीख</string>
+    <string name="filter_date_from">से</string>
+    <string name="filter_date_to">तक</string>
+    <string name="notify_recording_saved">रिकॉर्डिंग सहेजी गई</string>
+    <string name="timer_infinite">असीमित</string>
 </resources>

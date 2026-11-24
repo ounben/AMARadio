@@ -412,4 +412,11 @@
     <string name="error_sharing">Paylaşım hatası</string>
 
     <string name="accessibility_reorder">İstasyonu taşı</string>
+    <string name="action_stop_recording">Kaydı durdur</string>
+    <string name="filter_all">Tümü</string>
+    <string name="filter_date">Tarih</string>
+    <string name="filter_date_from">Başlangıç</string>
+    <string name="filter_date_to">Bitiş</string>
+    <string name="notify_recording_saved">Kayıt kaydedildi</string>
+    <string name="timer_infinite">Sınırsız</string>
 </resources>

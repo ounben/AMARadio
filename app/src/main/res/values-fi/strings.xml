@@ -412,4 +412,11 @@
     <string name="error_sharing">Virhe jakamisessa</string>
 
     <string name="accessibility_reorder">Siirrä asemaa</string>
+    <string name="action_stop_recording">Lopeta tallennus</string>
+    <string name="filter_all">Kaikki</string>
+    <string name="filter_date">Päivämäärä</string>
+    <string name="filter_date_from">Alkaen</string>
+    <string name="filter_date_to">Asti</string>
+    <string name="notify_recording_saved">Tallenne tallennettu</string>
+    <string name="timer_infinite">Rajoittamaton</string>
 </resources>

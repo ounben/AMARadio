@@ -412,4 +412,11 @@
     <string name="error_sharing">Грешка при дељењу</string>
 
     <string name="accessibility_reorder">Помери станицу</string>
+    <string name="action_stop_recording">Заустави снимање</string>
+    <string name="filter_all">Све</string>
+    <string name="filter_date">Датум</string>
+    <string name="filter_date_from">Од</string>
+    <string name="filter_date_to">До</string>
+    <string name="notify_recording_saved">Снимак је сачуван</string>
+    <string name="timer_infinite">Неограничено</string>
 </resources>

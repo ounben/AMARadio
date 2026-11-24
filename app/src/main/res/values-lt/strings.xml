@@ -412,4 +412,11 @@
     <string name="error_sharing">Bendrinant klaida</string>
 
     <string name="accessibility_reorder">Perkelti stotį</string>
+    <string name="action_stop_recording">Stabdyti įrašymą</string>
+    <string name="filter_all">Visi</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Nuo</string>
+    <string name="filter_date_to">Iki</string>
+    <string name="notify_recording_saved">Įrašas išsaugotas</string>
+    <string name="timer_infinite">Neribotai</string>
 </resources>

@@ -411,4 +411,11 @@
     <string name="cast_network_denied">L\'access a la rait locala è deactivà. Permetta ils apparats en la vischinanza en las preferenzas da l\'applicaziun, lura smatga puspè sin Cast. La reproducziun dal radio sin quest telefon resta pussaivla.</string>
     <string name="cast_network_settings">Avrir las preferenzas</string>
     <string name="cast_network_continue">Cuntinuar</string>
+    <string name="action_stop_recording">Fermar la registraziun</string>
+    <string name="filter_all">Tut</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Da</string>
+    <string name="filter_date_to">Enfin</string>
+    <string name="notify_recording_saved">Registraziun memorisada</string>
+    <string name="timer_infinite">Illimità</string>
 </resources>

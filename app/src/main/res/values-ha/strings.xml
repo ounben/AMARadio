@@ -414,4 +414,11 @@
     <string name="error_sharing">Kuskuren rabawa</string>
 
     <string name="accessibility_reorder">Matsar da gidan rediyo</string>
+    <string name="action_stop_recording">Dakatar da rikodi</string>
+    <string name="filter_all">Duka</string>
+    <string name="filter_date">Kwanan wata</string>
+    <string name="filter_date_from">Daga</string>
+    <string name="filter_date_to">Zuwa</string>
+    <string name="notify_recording_saved">An ajiye rikodin</string>
+    <string name="timer_infinite">Ba iyaka</string>
 </resources>

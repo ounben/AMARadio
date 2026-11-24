@@ -412,4 +412,11 @@
     <string name="error_sharing">Lỗi chia sẻ</string>
 
     <string name="accessibility_reorder">Di chuyển đài</string>
+    <string name="action_stop_recording">Dừng ghi</string>
+    <string name="filter_all">Tất cả</string>
+    <string name="filter_date">Ngày</string>
+    <string name="filter_date_from">Từ</string>
+    <string name="filter_date_to">Đến</string>
+    <string name="notify_recording_saved">Đã lưu bản ghi</string>
+    <string name="timer_infinite">Không giới hạn</string>
 </resources>

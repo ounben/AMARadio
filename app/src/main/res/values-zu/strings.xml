@@ -413,4 +413,11 @@
     <string name="error_sharing">Iphutha ukwabelana</string>
 
     <string name="accessibility_reorder">Hambisa isiteshi</string>
+    <string name="action_stop_recording">Misa ukurekhoda</string>
+    <string name="filter_all">Konke</string>
+    <string name="filter_date">Usuku</string>
+    <string name="filter_date_from">Kusuka</string>
+    <string name="filter_date_to">Kuze kube</string>
+    <string name="notify_recording_saved">Ukurekhoda kulondoloziwe</string>
+    <string name="timer_infinite">Akunamkhawulo</string>
 </resources>

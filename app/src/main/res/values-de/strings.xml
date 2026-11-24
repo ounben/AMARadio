@@ -414,4 +414,11 @@
     <string name="error_sharing">Fehler beim Teilen</string>
 
     <string name="accessibility_reorder">Radiosender verschieben</string>
+    <string name="action_stop_recording">Aufnahme stoppen</string>
+    <string name="filter_all">Alle</string>
+    <string name="filter_date">Datum</string>
+    <string name="filter_date_from">Von</string>
+    <string name="filter_date_to">Bis</string>
+    <string name="notify_recording_saved">Aufnahme gespeichert</string>
+    <string name="timer_infinite">Unbegrenzt</string>
 </resources>

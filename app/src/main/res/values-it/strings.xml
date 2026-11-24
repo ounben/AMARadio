@@ -412,4 +412,11 @@
     <string name="error_sharing">Errore di condivisione</string>
 
     <string name="accessibility_reorder">Sposta stazione</string>
+    <string name="action_stop_recording">Interrompi registrazione</string>
+    <string name="filter_all">Tutti</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Dal</string>
+    <string name="filter_date_to">Al</string>
+    <string name="notify_recording_saved">Registrazione salvata</string>
+    <string name="timer_infinite">Illimitato</string>
 </resources>

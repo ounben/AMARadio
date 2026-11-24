@@ -414,4 +414,11 @@
     <string name="error_sharing">Aṣiṣe pinpin</string>
 
     <string name="accessibility_reorder">Gbe ilé-iṣẹ́ rédíò</string>
+    <string name="action_stop_recording">Dá gbigbasilẹ duro</string>
+    <string name="filter_all">Gbogbo</string>
+    <string name="filter_date">Ọjọ</string>
+    <string name="filter_date_from">Lati</string>
+    <string name="filter_date_to">Titi di</string>
+    <string name="notify_recording_saved">Ti fi gbigbasilẹ pamọ</string>
+    <string name="timer_infinite">Ailopin</string>
 </resources>

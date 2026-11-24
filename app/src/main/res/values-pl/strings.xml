@@ -412,4 +412,11 @@
     <string name="error_sharing">Błąd udostępniania</string>
 
     <string name="accessibility_reorder">Przesuń stację</string>
+    <string name="action_stop_recording">Zatrzymaj nagrywanie</string>
+    <string name="filter_all">Wszystkie</string>
+    <string name="filter_date">Data</string>
+    <string name="filter_date_from">Od</string>
+    <string name="filter_date_to">Do</string>
+    <string name="notify_recording_saved">Nagranie zapisane</string>
+    <string name="timer_infinite">Bez limitu</string>
 </resources>

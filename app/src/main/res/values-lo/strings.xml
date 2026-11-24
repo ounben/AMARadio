@@ -414,4 +414,11 @@
     <string name="error_sharing">ເກີດຄວາມຜິດພາດໃນການແບ່ງປັນ</string>
 
     <string name="accessibility_reorder">ຍ້າຍສະຖານີ</string>
+    <string name="action_stop_recording">ຢຸດການບັນທຶກ</string>
+    <string name="filter_all">ທັງໝົດ</string>
+    <string name="filter_date">ວັນທີ</string>
+    <string name="filter_date_from">ຈາກ</string>
+    <string name="filter_date_to">ເຖິງ</string>
+    <string name="notify_recording_saved">ບັນທຶກສຽງແລ້ວ</string>
+    <string name="timer_infinite">ບໍ່ຈຳກັດ</string>
 </resources>

@@ -412,4 +412,11 @@
     <string name="error_sharing">Ulashishda xatolik yuz berdi</string>
 
     <string name="accessibility_reorder">Stantsiyani ko\'chirish</string>
+    <string name="action_stop_recording">Yozishni to‘xtatish</string>
+    <string name="filter_all">Barchasi</string>
+    <string name="filter_date">Sana</string>
+    <string name="filter_date_from">Dan</string>
+    <string name="filter_date_to">Gacha</string>
+    <string name="notify_recording_saved">Yozuv saqlandi</string>
+    <string name="timer_infinite">Cheksiz</string>
 </resources>

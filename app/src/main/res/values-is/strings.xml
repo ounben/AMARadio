@@ -412,4 +412,11 @@
     <string name="error_sharing">Villa við að deila</string>
 
     <string name="accessibility_reorder">Færa stöð</string>
+    <string name="action_stop_recording">Stöðva upptöku</string>
+    <string name="filter_all">Allt</string>
+    <string name="filter_date">Dagsetning</string>
+    <string name="filter_date_from">Frá</string>
+    <string name="filter_date_to">Til</string>
+    <string name="notify_recording_saved">Upptaka vistuð</string>
+    <string name="timer_infinite">Ótakmarkað</string>
 </resources>

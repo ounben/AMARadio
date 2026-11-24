@@ -412,4 +412,11 @@
     <string name="error_sharing">Erreur lors du partage</string>
 
     <string name="accessibility_reorder">Déplacer la station</string>
+    <string name="action_stop_recording">Arrêter l\'enregistrement</string>
+    <string name="filter_all">Tous</string>
+    <string name="filter_date">Date</string>
+    <string name="filter_date_from">Du</string>
+    <string name="filter_date_to">Au</string>
+    <string name="notify_recording_saved">Enregistrement sauvegardé</string>
+    <string name="timer_infinite">Illimité</string>
 </resources>

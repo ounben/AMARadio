@@ -412,4 +412,11 @@
     <string name="error_sharing">שגיאה בשיתוף</string>
 
     <string name="accessibility_reorder">העבר תחנה</string>
+    <string name="action_stop_recording">עצור הקלטה</string>
+    <string name="filter_all">הכל</string>
+    <string name="filter_date">תאריך</string>
+    <string name="filter_date_from">מ-</string>
+    <string name="filter_date_to">עד</string>
+    <string name="notify_recording_saved">ההקלטה נשמרה</string>
+    <string name="timer_infinite">ללא הגבלה</string>
 </resources>
