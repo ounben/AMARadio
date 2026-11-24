@@ -110,35 +110,60 @@ object Utils {
     fun isTesting(): Boolean = testing.get()
 
     @JvmStatic
-    fun getCountryCode(context: Context): String? {
+    fun getCountryCode(context: Context): String {
         val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
         val manualCountry = sharedPref.getString("settings_manual_country_code", "SYSTEM")
         if (!manualCountry.isNullOrEmpty() && manualCountry != "SYSTEM") {
-            return manualCountry.uppercase()
+            return manualCountry.trim().uppercase(java.util.Locale.ROOT)
         }
 
+        // 1. App Locale
         val defaultLocale = java.util.Locale.getDefault()
-        if (defaultLocale.country.length == 2) {
-            return defaultLocale.country.uppercase()
+        val defaultCountry = defaultLocale.country.trim().uppercase(java.util.Locale.ROOT)
+        if (defaultCountry.length == 2 && defaultCountry[0] in 'A'..'Z' && defaultCountry[1] in 'A'..'Z') {
+            return defaultCountry
         }
 
-        val locales = context.resources.configuration.locales
-        for (i in 0 until locales.size()) {
-            val country = locales.get(i).country
-            if (country.length == 2) {
-                return country.uppercase()
+        // 2. System LocaleList
+        try {
+            val systemLocales = android.content.res.Resources.getSystem().configuration.locales
+            for (i in 0 until systemLocales.size()) {
+                val country = systemLocales.get(i).country.trim().uppercase(java.util.Locale.ROOT)
+                if (country.length == 2 && country[0] in 'A'..'Z' && country[1] in 'A'..'Z') {
+                    return country
+                }
             }
+        } catch (e: Exception) {
+            Log.w("Utils", "System locales country lookup skipped", e)
         }
 
-        val systemLocales = android.content.res.Resources.getSystem().configuration.locales
-        for (i in 0 until systemLocales.size()) {
-            val country = systemLocales.get(i).country
-            if (country.length == 2) {
-                return country.uppercase()
+        // 3. System TimeZone (Xiaomi MIUI / HyperOS)
+        try {
+            val tzRegion = android.icu.util.TimeZone.getRegion(java.util.TimeZone.getDefault().id)?.trim()?.uppercase(java.util.Locale.ROOT)
+            if (!tzRegion.isNullOrBlank() && tzRegion.length == 2 && tzRegion != "ZZ" && tzRegion[0] in 'A'..'Z' && tzRegion[1] in 'A'..'Z') {
+                return tzRegion
             }
+        } catch (e: Exception) {
+            Log.w("Utils", "TimeZone region lookup skipped", e)
         }
 
-        return when (defaultLocale.language.lowercase()) {
+        // 4. SIM Card & Cellular Network (TelephonyManager)
+        try {
+            val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as? android.telephony.TelephonyManager
+            val simCountry = tm?.simCountryIso?.trim()?.uppercase(java.util.Locale.ROOT)
+            if (!simCountry.isNullOrBlank() && simCountry.length == 2 && simCountry[0] in 'A'..'Z' && simCountry[1] in 'A'..'Z') {
+                return simCountry
+            }
+            val netCountry = tm?.networkCountryIso?.trim()?.uppercase(java.util.Locale.ROOT)
+            if (!netCountry.isNullOrBlank() && netCountry.length == 2 && netCountry[0] in 'A'..'Z' && netCountry[1] in 'A'..'Z') {
+                return netCountry
+            }
+        } catch (e: Exception) {
+            Log.w("Utils", "TelephonyManager country lookup skipped", e)
+        }
+
+        // 5. Emergency Language Fallback
+        return when (defaultLocale.language.trim().lowercase(java.util.Locale.ROOT)) {
             "de" -> "DE"
             "fr" -> "FR"
             "it" -> "IT"
