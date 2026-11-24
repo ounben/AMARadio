@@ -2,6 +2,7 @@ package com.ounben.amaradio.database.user
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.Serializable
 import java.util.Date
 
 @Entity(tableName = "station_favourite")
@@ -53,6 +54,7 @@ data class HistoryEntity(
     val lastPlayedAt: Date = Date()
 )
 
+@Serializable
 @Entity(tableName = "filter_tab")
 data class FilterTabEntity(
     @PrimaryKey val id: String,

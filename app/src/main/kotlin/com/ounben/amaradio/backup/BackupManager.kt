@@ -2,7 +2,11 @@ package com.ounben.amaradio.backup
 
 import android.content.Context
 import android.util.Log
+import androidx.core.content.edit
+import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.database.user.FilterTabEntity
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -21,10 +25,12 @@ import java.util.zip.ZipOutputStream
 
 @Serializable
 data class BackupData(
-    @SerialName("version") val version: Int = 1,
+    @SerialName("version") val version: Int = 2,
     @SerialName("createdAt") val createdAt: Long = System.currentTimeMillis(),
     @SerialName("favorites") val favorites: List<DataRadioStation> = emptyList(),
-    @SerialName("customStations") val customStations: List<DataRadioStation> = emptyList()
+    @SerialName("customStations") val customStations: List<DataRadioStation> = emptyList(),
+    @SerialName("filterTabs") val filterTabs: List<FilterTabEntity> = emptyList(),
+    @SerialName("settings") val settings: Map<String, String> = emptyMap()
 )
 
 object BackupManager {
@@ -38,14 +44,27 @@ object BackupManager {
     suspend fun exportBackup(context: Context, outputStream: OutputStream): Boolean = withContext(Dispatchers.IO) {
         try {
             val app = context.applicationContext as AMARadioApp
+            val userDb = AMARadioUserDatabase.getDatabase(context)
+            val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+
             val favorites = app.favouriteManager.getList()
             val customStations = app.customStationManager.getList()
+            val filterTabs = userDb.filterTabDao().getAllTabs()
+
+            // Filter out temporary runtime keys
+            val exportedSettings = sharedPref.all
+                .filterKeys { key ->
+                    !key.startsWith("last_") && key != "filter_selected_index"
+                }
+                .mapValues { it.value?.toString() ?: "" }
 
             val backupData = BackupData(
-                version = 1,
+                version = 2,
                 createdAt = System.currentTimeMillis(),
                 favorites = favorites,
-                customStations = customStations
+                customStations = customStations,
+                filterTabs = filterTabs,
+                settings = exportedSettings
             )
 
             val jsonString = json.encodeToString(backupData)
@@ -114,7 +133,7 @@ object BackupManager {
             }
 
             backupData?.let { data ->
-                // 1. Restore Custom Stations sequentially to maintain exact backup order
+                // 1. Restore Custom Stations sequentially
                 if (data.customStations.isNotEmpty()) {
                     val newCustom = data.customStations.filter { !app.customStationManager.has(it.StationUuid) }
                     if (newCustom.isNotEmpty()) {
@@ -122,13 +141,34 @@ object BackupManager {
                     }
                 }
 
-                // 2. Restore Favorites sequentially to maintain exact backup order
+                // 2. Restore Favorites sequentially
                 if (data.favorites.isNotEmpty()) {
                     val newFavs = data.favorites.filter { !app.favouriteManager.has(it.StationUuid) }
                     if (newFavs.isNotEmpty()) {
                         app.favouriteManager.addMultiple(newFavs)
                     }
                 }
+
+                // 3. Restore Custom Filter Tabs
+                if (data.filterTabs.isNotEmpty()) {
+                    val userDb = AMARadioUserDatabase.getDatabase(context)
+                    userDb.filterTabDao().updateAllTabs(data.filterTabs)
+                }
+
+                // 4. Restore App Settings
+                if (data.settings.isNotEmpty()) {
+                    val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
+                    sharedPref.edit {
+                        data.settings.forEach { (key, strValue) ->
+                            when {
+                                strValue == "true" || strValue == "false" -> putBoolean(key, strValue.toBoolean())
+                                strValue.toIntOrNull() != null -> putInt(key, strValue.toInt())
+                                else -> putString(key, strValue)
+                            }
+                        }
+                    }
+                }
+
                 true
             } ?: false
         } catch (e: Exception) {
