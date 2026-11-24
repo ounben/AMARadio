@@ -502,8 +502,12 @@ fun MainScreen(
             confirmButton = {
                 TextButton(
                     onClick = {
-                        if (msgRes == R.string.alert_delete_favorites) app.favouriteManager.clear()
-                        else app.historyManager.clear()
+                        if (msgRes == R.string.alert_delete_favorites) {
+                            app.favouriteManager.clear()
+                        } else {
+                            app.historyManager.clear()
+                            app.trackHistoryRepository.deleteHistory()
+                        }
                         showDeleteConfirmDialog = null
                     },
                     colors = ButtonDefaults.textButtonColors(contentColor = deleteRedColor)
