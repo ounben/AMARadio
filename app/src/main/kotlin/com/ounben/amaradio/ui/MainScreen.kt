@@ -9,8 +9,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.isTraversalGroup
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -315,7 +320,15 @@ fun MainScreen(
                         NavHost(
                             navController = navController,
                             startDestination = startRoute,
-                            modifier = Modifier.fillMaxSize().padding(bottom = contentBottomPadding)
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(bottom = contentBottomPadding)
+                                .then(
+                                    if (isPlayerExpanded && playerUiState.currentStation != null)
+                                        Modifier.clearAndSetSemantics { }
+                                    else
+                                        Modifier
+                                )
                         ) {
                             composable(Screen.Stations.route) {
                                 TabsScreen(
@@ -417,7 +430,10 @@ fun MainScreen(
                             .fillMaxWidth()
                             .then(
                                 if (isPlayerExpanded && playerUiState.currentStation != null) 
-                                    Modifier.fillMaxHeight()
+                                    Modifier
+                                        .fillMaxHeight()
+                                        .pointerInput(Unit) { detectTapGestures { } }
+                                        .semantics { isTraversalGroup = true }
                                 else 
                                     Modifier.wrapContentHeight()
                             )
