@@ -5,10 +5,27 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
-## [1.50] - 2026-11-20
+## [1.51] - 2026-11-21
 ### Added
-- **Complete Accessibility Audit (#168)
-- **: Added explicit Compose `.semantics { contentDescription = ... }` labels to all interactive UI components, player controls, reorder drag handles across 23 languages, and recording filter chips for full screen reader (TalkBack) and Google Play Console Accessibility Scanner compliance.
+- **Backup & Restore Includes Settings & Custom Filters (#172)**: Extended ZIP backup and restore format to include all App Settings (`SharedPreferences`) and Custom Filter Tabs (`filter_tab` SQLite table) with full backward compatibility for older backup files.
+- **Enhanced Accessibility & TalkBack Announcements (#168)**:
+  - Fixed country flag emoji reading in station lists, filter dialogs, and players by passing localized country names instead of raw Unicode character codes ("1f1e9 1f1ea").
+  - Fixed double-reading on player controls using `clearAndSetSemantics` and updated player buttons to clean `PlayCircle` / `PauseCircle` icons.
+  - Added native `Role.Switch` and `ToggleableState` semantics to Settings switches for automatic localized On/Off state announcements.
+  - Emitted system-level `TYPE_ANNOUNCEMENT` accessibility events for Toasts ("Recording saved", "Favorites deleted", "History deleted").
+  - Isolated Accessibility traversal when Fullscreen Player is open to prevent TalkBack focus leakage to background station lists.
+  - Separated immediate recording start/stop from a dedicated 48dp x 48dp timer button with localized "Stop recording" (`action_stop_recording`) and "Unlimited" (`timer_infinite`) strings.
+
+### Changed
+- **Playback Navigation & Queue Management (#174)**:
+  - Attached `InMemoryStationQueue` snapshots to active station lists so Next (`>|`) and Previous (`|<`) buttons cycle through the current tab's stations without switching to Favorites.
+  - Standardized Statistics / Server Info screen tabs to match the exact AMARadio tab bar background (`secondary`) and Amber indicator style.
+
+### Fixed
+- **History Ping-Pong Navigation Loop (#174)**: Fixed a bug where playing a station from history updated its timestamp and moved it to Index 0, causing Next (`>|`) and Previous (`|<`) to loop endlessly between two stations.
+- **History Deletion Synchronization**: Deleting history now clears both station history (`station_history`) and track history (`song_history`).
+- **Sequential ZIP Restore (#173)**: Fixed a thread race condition during ZIP import that caused random favorite station order by enforcing sequential `addMultiple` processing.
+- **Active Filter Field Highlighting**: Active/filled filter fields in `FilterScreen` highlight with an Amber border, Amber icon, and Amber bold text.
 
 ## [1.49] - 2026-11-16
 ### Added
