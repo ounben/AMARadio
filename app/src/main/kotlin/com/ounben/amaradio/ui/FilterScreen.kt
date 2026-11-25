@@ -48,6 +48,7 @@ import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import kotlinx.coroutines.launch
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
@@ -131,6 +132,10 @@ fun FilterScreen(
     }
 
     if (showFilterSheet) {
+        val renameTabFocusRequester = remember { FocusRequester() }
+        val sheetScrollState = rememberScrollState()
+        val coroutineScope = rememberCoroutineScope()
+
         ModalBottomSheet(
             onDismissRequest = { showFilterSheet = false },
             sheetState = rememberModalBottomSheetState(
@@ -144,7 +149,7 @@ fun FilterScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(sheetScrollState)
                     .padding(start = 20.dp, end = 20.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
@@ -176,6 +181,10 @@ fun FilterScreen(
                         onClick = { 
                             if (currentTab.label.isBlank()) {
                                 Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
+                                coroutineScope.launch {
+                                    sheetScrollState.animateScrollTo(0)
+                                    renameTabFocusRequester.requestFocus()
+                                }
                             } else {
                                 showFilterSheet = false
                                 viewModel.performSearch(tabIndex) 
@@ -199,6 +208,7 @@ fun FilterScreen(
                     label = stringResource(R.string.action_rename_tab),
                     value = currentTab.label,
                     icon = Icons.AutoMirrored.Filled.Label,
+                    focusRequester = renameTabFocusRequester,
                     onValueChange = { viewModel.updateTabLabel(tabIndex, it) },
                     onClear = { viewModel.updateTabLabel(tabIndex, "") }
                 )
@@ -592,6 +602,7 @@ fun CustomFilterField(
     value: String,
     spokenValue: String? = null,
     icon: ImageVector,
+    focusRequester: FocusRequester? = null,
     modifier: Modifier = Modifier,
     isReadOnly: Boolean = false,
     onValueChange: (String) -> Unit = {},
@@ -668,9 +679,12 @@ fun CustomFilterField(
                             BasicTextField(
                                 value = value,
                                 onValueChange = onValueChange,
-                                modifier = Modifier.fillMaxWidth().semantics {
-                                    contentDescription = label
-                                },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
+                                    .semantics {
+                                        contentDescription = label
+                                    },
                                 textStyle = MaterialTheme.typography.bodyMedium.copy(
                                     color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
                                     fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal
