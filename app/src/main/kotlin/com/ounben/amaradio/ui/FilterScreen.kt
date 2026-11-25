@@ -135,11 +135,11 @@ fun FilterScreen(
             onDismissRequest = { showFilterSheet = false },
             sheetState = rememberModalBottomSheetState(
                 skipPartiallyExpanded = true,
-                confirmValueChange = { newValue -> newValue != SheetValue.Hidden }
+                confirmValueChange = { targetValue -> targetValue != SheetValue.Hidden }
             ),
             containerColor = MaterialTheme.colorScheme.surface,
             tonalElevation = 0.dp,
-            dragHandle = { BottomSheetDefaults.DragHandle() }
+            dragHandle = null
         ) {
             Column(
                 modifier = Modifier
@@ -613,80 +613,95 @@ fun CustomFilterField(
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).clearAndSetSemantics {}
         )
         
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp)
-                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-                .border(
-                    width = if (isFilled) 1.5.dp else 1.dp,
-                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .then(
-                    if (isReadOnly) {
-                        Modifier
-                            .clearAndSetSemantics {
-                                role = Role.Button
-                                contentDescription = semanticsDesc
-                            }
-                            .clickable { showDialog = true }
-                    } else Modifier
-                )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(44.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+                    .border(
+                        width = if (isFilled) 1.5.dp else 1.dp,
+                        color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .then(
+                        if (isReadOnly) {
+                            Modifier
+                                .clearAndSetSemantics {
+                                    role = Role.Button
+                                    contentDescription = semanticsDesc
+                                }
+                                .clickable { showDialog = true }
+                        } else Modifier
+                    )
             ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp),
-                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                
-                Box(modifier = Modifier.weight(1f).padding(horizontal = 8.dp).fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
-                    if (isReadOnly) {
-                        Text(
-                            text = if (value.isEmpty()) label else value,
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
-                            color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
-                            maxLines = 1,
-                            overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clearAndSetSemantics {}
-                                .wrapContentHeight(Alignment.CenterVertically)
-                        )
-                    } else {
-                        BasicTextField(
-                            value = value,
-                            onValueChange = onValueChange,
-                            modifier = Modifier.fillMaxWidth().semantics {
-                                contentDescription = label
-                            },
-                            textStyle = MaterialTheme.typography.bodyMedium.copy(
-                                color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
-                                fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal
-                            ),
-                            singleLine = true,
-                            cursorBrush = SolidColor(AmaradioAmber),
-                            keyboardOptions = KeyboardOptions(hintLocales = LocaleUtils.getLatinHintLocales())
+                Row(
+                    modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    
+                    Box(modifier = Modifier.weight(1f).padding(horizontal = 8.dp).fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
+                        if (isReadOnly) {
+                            Text(
+                                text = if (value.isEmpty()) label else value,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
+                                color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
+                                maxLines = 1,
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier
+                                    .fillMaxSize()
+                                    .clearAndSetSemantics {}
+                                    .wrapContentHeight(Alignment.CenterVertically)
+                            )
+                        } else {
+                            BasicTextField(
+                                value = value,
+                                onValueChange = onValueChange,
+                                modifier = Modifier.fillMaxWidth().semantics {
+                                    contentDescription = label
+                                },
+                                textStyle = MaterialTheme.typography.bodyMedium.copy(
+                                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                                    fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal
+                                ),
+                                singleLine = true,
+                                cursorBrush = SolidColor(AmaradioAmber),
+                                keyboardOptions = KeyboardOptions(hintLocales = LocaleUtils.getLatinHintLocales())
+                            )
+                        }
+                    }
+
+                    if (isReadOnly && value.isEmpty()) {
+                        Icon(
+                            imageVector = Icons.Default.ArrowDropDown,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
+            }
 
-                if (value.isNotEmpty()) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = clearDescription,
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { onClear() },
-                        tint = AmaradioAmber
-                    )
-                }
+            IconButton(
+                onClick = { onClear() },
+                modifier = Modifier.size(28.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = clearDescription,
+                    modifier = Modifier.size(18.dp),
+                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
             }
         }
     }
@@ -997,6 +1012,7 @@ fun DropdownFilterField(
 ) {
     var expanded by remember { mutableStateOf(false) }
     val isFilled = value.isNotEmpty()
+    val clearDescription = stringResource(R.string.accessibility_clear_text) + " " + label
 
     Column(modifier = modifier) {
         Text(
@@ -1007,82 +1023,89 @@ fun DropdownFilterField(
             modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).clearAndSetSemantics {}
         )
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(44.dp)
-                .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
-                .border(
-                    width = if (isFilled) 1.5.dp else 1.dp,
-                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
-                    shape = RoundedCornerShape(8.dp)
-                )
-                .clickable { expanded = true }
-                .padding(horizontal = 8.dp)
-                .semantics(mergeDescendants = true) {
-                    role = Role.Button
-                    contentDescription = "$label: ${value.ifEmpty { "None" }}"
-                },
-            contentAlignment = Alignment.CenterStart
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    imageVector = icon,
-                    contentDescription = null,
-                    modifier = Modifier.size(16.dp),
-                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
-                )
-                Text(
-                    text = value.ifEmpty { label },
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
-                    color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(start = 6.dp).weight(1f),
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                if (value.isNotEmpty()) {
-                    Icon(
-                        imageVector = Icons.Default.Clear,
-                        contentDescription = stringResource(R.string.accessibility_clear_text),
-                        modifier = Modifier
-                            .size(18.dp)
-                            .clickable { onClear() },
-                        tint = AmaradioAmber
+            Box(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(44.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
+                    .border(
+                        width = if (isFilled) 1.5.dp else 1.dp,
+                        color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
+                        shape = RoundedCornerShape(8.dp)
                     )
-                } else {
+                    .clickable { expanded = true }
+                    .padding(horizontal = 8.dp)
+                    .semantics(mergeDescendants = true) {
+                        role = Role.Button
+                        contentDescription = "$label: ${value.ifEmpty { "None" }}"
+                    },
+                contentAlignment = Alignment.CenterStart
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = icon,
+                        contentDescription = null,
+                        modifier = Modifier.size(16.dp),
+                        tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    Text(
+                        text = value.ifEmpty { label },
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
+                        color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.padding(start = 6.dp).weight(1f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
                     Icon(
                         imageVector = Icons.Default.ArrowDropDown,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                ) {
+                    options.forEach { option ->
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    text = option,
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    fontWeight = if (option == value) FontWeight.Bold else FontWeight.Normal,
+                                    color = if (option == value) AmaradioAmber else MaterialTheme.colorScheme.onSurface
+                                )
+                            },
+                            onClick = {
+                                onSelect(option)
+                                expanded = false
+                            }
+                        )
+                    }
+                }
             }
 
-            DropdownMenu(
-                expanded = expanded,
-                onDismissRequest = { expanded = false },
-                modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+            IconButton(
+                onClick = { onClear() },
+                modifier = Modifier.size(28.dp)
             ) {
-                options.forEach { option ->
-                    DropdownMenuItem(
-                        text = {
-                            Text(
-                                text = option,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = if (option == value) FontWeight.Bold else FontWeight.Normal,
-                                color = if (option == value) AmaradioAmber else MaterialTheme.colorScheme.onSurface
-                            )
-                        },
-                        onClick = {
-                            onSelect(option)
-                            expanded = false
-                        }
-                    )
-                }
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = clearDescription,
+                    modifier = Modifier.size(18.dp),
+                    tint = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
             }
         }
     }
