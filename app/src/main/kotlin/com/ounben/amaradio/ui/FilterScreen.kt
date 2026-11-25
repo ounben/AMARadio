@@ -133,7 +133,10 @@ fun FilterScreen(
     if (showFilterSheet) {
         ModalBottomSheet(
             onDismissRequest = { showFilterSheet = false },
-            sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
+            sheetState = rememberModalBottomSheetState(
+                skipPartiallyExpanded = true,
+                confirmValueChange = { newValue -> newValue != SheetValue.Hidden }
+            ),
             containerColor = MaterialTheme.colorScheme.surface,
             tonalElevation = 0.dp,
             dragHandle = { BottomSheetDefaults.DragHandle() }
@@ -151,39 +154,43 @@ fun FilterScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text(
-                        text = stringResource(R.string.action_filter),
-                        style = MaterialTheme.typography.headlineSmall,
-                        fontWeight = FontWeight.Bold
-                    )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.spacedBy(4.dp)
                     ) {
-                        Button(
-                            onClick = { 
-                                if (currentTab.label.isBlank()) {
-                                    Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
-                                } else {
-                                    showFilterSheet = false
-                                    viewModel.performSearch(tabIndex) 
-                                }
-                            },
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = AmaradioAmber,
-                                contentColor = Color.Black
-                            ),
-                            shape = RoundedCornerShape(8.dp),
-                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
-                        ) {
-                            Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
-                            Spacer(Modifier.width(4.dp))
-                            Text(stringResource(R.string.filter_apply), fontWeight = FontWeight.Bold)
-                        }
-
                         IconButton(onClick = { showFilterSheet = false }) {
-                            Icon(Icons.Default.Close, contentDescription = stringResource(R.string.accessibility_close), tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(
+                                imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                contentDescription = stringResource(R.string.accessibility_back),
+                                tint = MaterialTheme.colorScheme.onSurface
+                            )
                         }
+                        Text(
+                            text = stringResource(R.string.action_filter),
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    Button(
+                        onClick = { 
+                            if (currentTab.label.isBlank()) {
+                                Toast.makeText(context, R.string.error_filter_name_required, Toast.LENGTH_SHORT).show()
+                            } else {
+                                showFilterSheet = false
+                                viewModel.performSearch(tabIndex) 
+                            }
+                        },
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = AmaradioAmber,
+                            contentColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(8.dp),
+                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                    ) {
+                        Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Spacer(Modifier.width(4.dp))
+                        Text(stringResource(R.string.filter_apply), fontWeight = FontWeight.Bold)
                     }
                 }
 
@@ -616,12 +623,16 @@ fun CustomFilterField(
                     color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.outline,
                     shape = RoundedCornerShape(8.dp)
                 )
-                .semantics(mergeDescendants = true) {
+                .then(
                     if (isReadOnly) {
-                        role = Role.Button
-                    }
-                    contentDescription = semanticsDesc
-                }
+                        Modifier
+                            .clearAndSetSemantics {
+                                role = Role.Button
+                                contentDescription = semanticsDesc
+                            }
+                            .clickable { showDialog = true }
+                    } else Modifier
+                )
         ) {
             Row(
                 modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
@@ -643,13 +654,9 @@ fun CustomFilterField(
                             color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier
+                                .fillMaxSize()
                                 .clearAndSetSemantics {}
-                                .clickable(
-                                    interactionSource = remember { MutableInteractionSource() },
-                                    indication = null,
-                                    onClick = { showDialog = true }
-                                )
                                 .wrapContentHeight(Alignment.CenterVertically)
                         )
                     } else {
