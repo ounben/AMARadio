@@ -200,7 +200,7 @@ fun FilterScreen(
 
                 // SEARCH NAME
                 CustomFilterField(
-                    label = stringResource(R.string.detail_name),
+                    label = stringResource(R.string.station_name),
                     value = currentTab.name,
                     icon = Icons.Default.Search,
                     onValueChange = { viewModel.onNameChange(tabIndex, it) },
@@ -603,7 +603,7 @@ fun CustomFilterField(
             style = MaterialTheme.typography.labelSmall,
             color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
-            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
+            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).clearAndSetSemantics {}
         )
         
         Box(
@@ -997,7 +997,7 @@ fun DropdownFilterField(
             style = MaterialTheme.typography.labelSmall,
             color = if (isFilled) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant,
             fontWeight = if (isFilled) FontWeight.Bold else FontWeight.Normal,
-            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
+            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).clearAndSetSemantics {}
         )
 
         Box(
@@ -1164,7 +1164,7 @@ fun SortField(
             text = label,
             style = MaterialTheme.typography.labelSmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
-            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp)
+            modifier = Modifier.padding(start = 4.dp, bottom = 2.dp).clearAndSetSemantics {}
         )
         
         Box(
