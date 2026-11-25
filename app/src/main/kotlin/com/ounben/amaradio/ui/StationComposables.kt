@@ -48,6 +48,7 @@ import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -268,8 +269,11 @@ fun StationList(
     if (isGrid) {
         LazyVerticalGrid(
             columns = GridCells.Adaptive(140.dp),
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
-            contentPadding = PaddingValues(8.dp)
+            modifier = modifier
+                .fillMaxSize()
+                .clipToBounds()
+                .background(MaterialTheme.colorScheme.background),
+            contentPadding = PaddingValues(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
         ) {
             itemsIndexed(
                 items = stations, 
@@ -290,7 +294,13 @@ fun StationList(
             }
         }
     } else {
-        LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .clipToBounds()
+                .background(MaterialTheme.colorScheme.background),
+            contentPadding = PaddingValues(bottom = 16.dp)
+        ) {
             itemsIndexed(
                 items = stations, 
                 key = { _, station -> station.StationUuid },
@@ -338,7 +348,12 @@ fun TrackList(
         onRefresh = { tracks.refresh() },
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .clipToBounds(),
+            contentPadding = PaddingValues(bottom = 16.dp)
+        ) {
             items(
                 count = tracks.itemCount,
                 key = { index -> 
