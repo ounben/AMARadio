@@ -14,11 +14,13 @@ import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.isTraversalGroup
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -449,9 +451,38 @@ fun MainScreen(
                             )
                     ) {
                         if (isPlayerExpanded && playerUiState.currentStation != null) {
+                            val minimizeDesc = stringResource(R.string.accessibility_minimize_player)
                             Column {
-                                Box(modifier = Modifier.fillMaxWidth().height(32.dp).clickable { isPlayerExpanded = false }, contentAlignment = Alignment.Center) {
-                                    Box(modifier = Modifier.size(40.dp, 4.dp).background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp)))
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .height(48.dp)
+                                ) {
+                                    // 1. Left-aligned Minimize IconButton (48dp x 48dp) for TalkBack
+                                    IconButton(
+                                        onClick = { isPlayerExpanded = false },
+                                        modifier = Modifier
+                                            .size(48.dp)
+                                            .align(Alignment.CenterStart)
+                                            .clearAndSetSemantics {
+                                                contentDescription = minimizeDesc
+                                            }
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                            contentDescription = null,
+                                            tint = MaterialTheme.colorScheme.onSurface
+                                        )
+                                    }
+
+                                    // 2. Centered Drag Handle Pill (decorative for TalkBack)
+                                    Box(
+                                        modifier = Modifier
+                                            .align(Alignment.Center)
+                                            .size(40.dp, 4.dp)
+                                            .background(MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(2.dp))
+                                            .clearAndSetSemantics {}
+                                    )
                                 }
                                 FullPlayer(
                                     playerViewModel = playerViewModel,

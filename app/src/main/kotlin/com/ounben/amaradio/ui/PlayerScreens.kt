@@ -96,10 +96,14 @@ fun MiniPlayer(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 // Left & Middle Area: Clickable to expand player
+                val maximizeLabel = stringResource(R.string.accessibility_maximize_player)
                 Row(
                     modifier = Modifier
                         .weight(1f)
-                        .clickable { onToggleBottomSheet() },
+                        .clickable(
+                            onClickLabel = maximizeLabel,
+                            onClick = { onToggleBottomSheet() }
+                        ),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Box(modifier = Modifier.size(60.dp), contentAlignment = Alignment.Center) {
