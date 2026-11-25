@@ -279,7 +279,7 @@ fun RecordingPlayerDialog(
                 ) {
                     Icon(
                         imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = stringResource(if (isPlaying) R.string.detail_pause else R.string.detail_play),
+                        contentDescription = stringResource(if (isPlaying) R.string.action_pause_recording else R.string.action_play_recording),
                         modifier = Modifier.size(56.dp),
                         tint = AmaradioAmber
                     )

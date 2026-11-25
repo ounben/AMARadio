@@ -585,7 +585,7 @@ fun RecordingListItem(
             IconButton(onClick = onPlay) {
                 Icon(
                     imageVector = Icons.Default.PlayArrow,
-                    contentDescription = stringResource(R.string.detail_play),
+                    contentDescription = stringResource(R.string.action_play_recording),
                     tint = AmaradioAmber,
                     modifier = Modifier.size(28.dp)
                 )
@@ -653,7 +653,7 @@ fun RecordingOptionsDialog(
         text = {
             Column {
                 ListItem(
-                    headlineContent = { Text(stringResource(R.string.detail_play), color = MaterialTheme.colorScheme.onSurface) },
+                    headlineContent = { Text(stringResource(R.string.action_play_recording), color = MaterialTheme.colorScheme.onSurface) },
                     leadingContent = { Icon(Icons.Default.PlayCircle, contentDescription = null, tint = AmaradioAmber) },
                     modifier = Modifier.clickable {
                         onPlay()

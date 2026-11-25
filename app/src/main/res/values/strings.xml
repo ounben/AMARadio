@@ -407,6 +407,8 @@
     <string name="accessibility_back">Back</string>
     <string name="accessibility_minimize_player">Minimize player</string>
     <string name="accessibility_maximize_player">Maximize player</string>
+    <string name="action_play_recording">Play recording</string>
+    <string name="action_pause_recording">Pause recording</string>
     <string name="accessibility_configure">Configure</string>
     <string name="accessibility_close">Close</string>
     <string name="accessibility_add_filter">Add filter</string>
