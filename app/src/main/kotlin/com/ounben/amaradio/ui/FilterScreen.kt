@@ -5,6 +5,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.selection.toggleable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -42,6 +43,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
@@ -834,15 +836,17 @@ fun MultiSearchableSelectionDialog(
                             trailingContent = {
                                 Checkbox(
                                     checked = isChecked,
-                                    onCheckedChange = { checked ->
-                                        if (checked) selectedCodes.add(item.code) else selectedCodes.remove(item.code)
-                                    },
+                                    onCheckedChange = null,
                                     colors = CheckboxDefaults.colors(checkedColor = AmaradioAmber)
                                 )
                             },
-                            modifier = Modifier.clickable {
-                                if (isChecked) selectedCodes.remove(item.code) else selectedCodes.add(item.code)
-                            },
+                            modifier = Modifier.toggleable(
+                                value = isChecked,
+                                role = Role.Checkbox,
+                                onValueChange = { checked ->
+                                    if (checked) selectedCodes.add(item.code) else selectedCodes.remove(item.code)
+                                }
+                            ),
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outline)
@@ -994,7 +998,12 @@ fun SearchableSelectionDialog(
                             leadingContent = if (item.emoji.isNotEmpty()) {
                                 { Text(item.emoji, style = MaterialTheme.typography.titleLarge, modifier = Modifier.clearAndSetSemantics {}) }
                             } else null,
-                            modifier = Modifier.clickable { onSelect(item) },
+                            modifier = Modifier
+                                .clearAndSetSemantics {
+                                    role = Role.Button
+                                    contentDescription = item.label
+                                }
+                                .clickable { onSelect(item) },
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outline)
