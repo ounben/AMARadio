@@ -53,35 +53,191 @@ object TagEmbedder {
         val jpegBytes = getStationJpegBytes(context, stationUuid, stationName) ?: return false
         return try {
             val fileBytes = m4aFile.readBytes()
-
-            // Find 'moov' and 'mdat' atoms. Only append 'udta' if 'moov' comes after 'mdat'
-            // (standard MediaMuxer layout) so stco/co64 chunk offsets remain 100% valid.
-            val moovOffset = findAtomOffset(fileBytes, "moov")
-            val mdatOffset = findAtomOffset(fileBytes, "mdat")
-            if (moovOffset < 0 || (mdatOffset >= 0 && moovOffset < mdatOffset)) return false
-
-            val oldMoovSize = readInt32(fileBytes, moovOffset)
-            if (oldMoovSize <= 8 || moovOffset + oldMoovSize > fileBytes.size) return false
-
-            val udtaAtom = createUdtaAtom(jpegBytes, stationName)
-
-            // Build new file: [0 .. moovEnd-1] + udtaAtom + [moovEnd .. EOF]
-            val moovEnd = moovOffset + oldMoovSize
-            val newMoovSize = oldMoovSize + udtaAtom.size
-
-            val baos = ByteArrayOutputStream(fileBytes.size + udtaAtom.size)
-            baos.write(fileBytes, 0, moovOffset)
-            baos.write(writeInt32(newMoovSize))
-            baos.write(fileBytes, moovOffset + 4, oldMoovSize - 4)
-            baos.write(udtaAtom)
-            baos.write(fileBytes, moovEnd, fileBytes.size - moovEnd)
-
-            m4aFile.writeBytes(baos.toByteArray())
+            val updatedBytes = embedM4aMetadataBytes(fileBytes, jpegBytes, stationName) ?: return false
+            m4aFile.writeBytes(updatedBytes)
             true
         } catch (e: Exception) {
             Log.e("TagEmbedder", "Error embedding M4A cover art & album metadata", e)
             false
         }
+    }
+
+    private data class Mp4Box(
+        val type: String,
+        val offset: Int,
+        val size: Int,
+        val headerSize: Int
+    )
+
+    /**
+     * Appends an iTunes `udta/meta/ilst` metadata atom (cover art, album, artist, title) into the
+     * MP4 `moov` box. Handles both 32-bit and 64-bit (`size == 1`) `mdat` boxes and properly shifts
+     * all `stco`/`co64` chunk offsets when `moov` precedes `mdat` (streamable / fast-start MP4).
+     */
+    internal fun embedM4aMetadataBytes(
+        fileBytes: ByteArray,
+        jpegBytes: ByteArray,
+        stationName: String
+    ): ByteArray? {
+        val topBoxes = parseTopLevelBoxes(fileBytes)
+        val moovBox = topBoxes.firstOrNull { it.type == "moov" } ?: return null
+        val mdatBox = topBoxes.firstOrNull { it.type == "mdat" } ?: return null
+
+        // Only modify standard 32-bit header `moov` boxes
+        if (moovBox.headerSize != 8 || moovBox.size <= 8 || moovBox.offset + moovBox.size > fileBytes.size) {
+            return null
+        }
+
+        val udtaAtom = createUdtaAtom(jpegBytes, stationName)
+        val newMoovSizeLong = moovBox.size.toLong() + udtaAtom.size.toLong()
+        if (newMoovSizeLong > Int.MAX_VALUE) return null
+        val newMoovSize = newMoovSizeLong.toInt()
+
+        val moovEnd = moovBox.offset + moovBox.size
+        val moovBytes = fileBytes.copyOfRange(moovBox.offset, moovEnd)
+        writeInt32(moovBytes, 0, newMoovSize)
+
+        // If `moov` comes before `mdat`, inserting `udta` at `moovEnd` shifts `mdat` forward by
+        // `udtaAtom.size` bytes — every `stco`/`co64` chunk offset >= moovEnd MUST be shifted too,
+        // otherwise players read the embedded JPEG bytes as audio data!
+        if (moovBox.offset < mdatBox.offset) {
+            val shiftedOk = shiftChunkOffsetsInMoov(
+                moovBytes = moovBytes,
+                delta = udtaAtom.size,
+                minOffsetToShift = moovEnd.toLong()
+            )
+            if (!shiftedOk) return null
+        }
+
+        val baos = ByteArrayOutputStream(fileBytes.size + udtaAtom.size)
+        baos.write(fileBytes, 0, moovBox.offset)
+        baos.write(moovBytes)
+        baos.write(udtaAtom)
+        baos.write(fileBytes, moovEnd, fileBytes.size - moovEnd)
+        return baos.toByteArray()
+    }
+
+    private fun parseTopLevelBoxes(data: ByteArray): List<Mp4Box> {
+        val boxes = mutableListOf<Mp4Box>()
+        var offset = 0L
+        val total = data.size.toLong()
+        while (offset + 8L <= total) {
+            val off = offset.toInt()
+            val size32 = readUInt32(data, off)
+            val type = String(data, off + 4, 4, Charsets.ISO_8859_1)
+            val headerSize: Int
+            val boxSize: Long
+            when (size32) {
+                0L -> {
+                    headerSize = 8
+                    boxSize = total - offset
+                }
+                1L -> {
+                    if (offset + 16L > total) break
+                    headerSize = 16
+                    boxSize = readUInt64(data, off + 8)
+                }
+                else -> {
+                    headerSize = 8
+                    boxSize = size32
+                }
+            }
+            if (boxSize < headerSize || offset + boxSize > total || boxSize > Int.MAX_VALUE) {
+                break
+            }
+            boxes.add(Mp4Box(type = type, offset = off, size = boxSize.toInt(), headerSize = headerSize))
+            offset += boxSize
+        }
+        return boxes
+    }
+
+    private val mp4ContainerTypes = setOf("moov", "trak", "mdia", "minf", "stbl")
+
+    private fun shiftChunkOffsetsInMoov(
+        moovBytes: ByteArray,
+        delta: Int,
+        minOffsetToShift: Long
+    ): Boolean {
+        return shiftChunkOffsetsRecursive(
+            data = moovBytes,
+            start = 8,
+            end = moovBytes.size,
+            delta = delta,
+            minOffsetToShift = minOffsetToShift
+        )
+    }
+
+    private fun shiftChunkOffsetsRecursive(
+        data: ByteArray,
+        start: Int,
+        end: Int,
+        delta: Int,
+        minOffsetToShift: Long
+    ): Boolean {
+        var pos = start
+        while (pos + 8 <= end) {
+            val size32 = readUInt32(data, pos)
+            val type = String(data, pos + 4, 4, Charsets.ISO_8859_1)
+            val headerSize: Int
+            val boxSize: Long
+            when (size32) {
+                0L -> {
+                    headerSize = 8
+                    boxSize = (end - pos).toLong()
+                }
+                1L -> {
+                    if (pos + 16 > end) return false
+                    headerSize = 16
+                    boxSize = readUInt64(data, pos + 8)
+                }
+                else -> {
+                    headerSize = 8
+                    boxSize = size32
+                }
+            }
+            if (boxSize < headerSize || pos + boxSize > end) return false
+            val boxEnd = (pos + boxSize).toInt()
+            val payloadStart = pos + headerSize
+
+            when {
+                type in mp4ContainerTypes -> {
+                    if (!shiftChunkOffsetsRecursive(data, payloadStart, boxEnd, delta, minOffsetToShift)) {
+                        return false
+                    }
+                }
+                type == "stco" -> {
+                    if (payloadStart + 8 > boxEnd) return false
+                    val entryCount = readUInt32(data, payloadStart + 4)
+                    val entriesStart = payloadStart + 8
+                    if (entriesStart + entryCount * 4L > boxEnd) return false
+                    for (i in 0 until entryCount.toInt()) {
+                        val entryOff = entriesStart + i * 4
+                        val oldChunkOffset = readUInt32(data, entryOff)
+                        if (oldChunkOffset >= minOffsetToShift) {
+                            val newChunkOffset = oldChunkOffset + delta.toLong()
+                            if (newChunkOffset > 0xFFFFFFFFL) return false
+                            writeInt32(data, entryOff, newChunkOffset.toInt())
+                        }
+                    }
+                }
+                type == "co64" -> {
+                    if (payloadStart + 8 > boxEnd) return false
+                    val entryCount = readUInt32(data, payloadStart + 4)
+                    val entriesStart = payloadStart + 8
+                    if (entriesStart + entryCount * 8L > boxEnd) return false
+                    for (i in 0 until entryCount.toInt()) {
+                        val entryOff = entriesStart + i * 8
+                        val oldChunkOffset = readUInt64(data, entryOff)
+                        if (oldChunkOffset >= minOffsetToShift) {
+                            val newChunkOffset = oldChunkOffset + delta.toLong()
+                            writeInt64(data, entryOff, newChunkOffset)
+                        }
+                    }
+                }
+            }
+            pos = boxEnd
+        }
+        return true
     }
 
     private fun createUdtaAtom(jpegBytes: ByteArray, stationName: String): ByteArray {
@@ -146,38 +302,19 @@ object TagEmbedder {
         return atom
     }
 
-    private fun findAtomOffset(data: ByteArray, atomType: String): Int {
-        val typeBytes = atomType.toByteArray(Charsets.ISO_8859_1)
-        var i = 0
-        while (i <= data.size - 8) {
-            val size = readInt32(data, i)
-            if (size < 8) {
-                i++
-                continue
-            }
-            if (data[i + 4] == typeBytes[0] &&
-                data[i + 5] == typeBytes[1] &&
-                data[i + 6] == typeBytes[2] &&
-                data[i + 7] == typeBytes[3]
-            ) {
-                return i
-            }
-            i += size
+    private fun readUInt32(data: ByteArray, offset: Int): Long {
+        return ((data[offset].toLong() and 0xFFL) shl 24) or
+                ((data[offset + 1].toLong() and 0xFFL) shl 16) or
+                ((data[offset + 2].toLong() and 0xFFL) shl 8) or
+                (data[offset + 3].toLong() and 0xFFL)
+    }
+
+    private fun readUInt64(data: ByteArray, offset: Int): Long {
+        var value = 0L
+        for (i in 0 until 8) {
+            value = (value shl 8) or (data[offset + i].toLong() and 0xFFL)
         }
-        return -1
-    }
-
-    private fun readInt32(data: ByteArray, offset: Int): Int {
-        return ((data[offset].toInt() and 0xFF) shl 24) or
-                ((data[offset + 1].toInt() and 0xFF) shl 16) or
-                ((data[offset + 2].toInt() and 0xFF) shl 8) or
-                (data[offset + 3].toInt() and 0xFF)
-    }
-
-    private fun writeInt32(value: Int): ByteArray {
-        val arr = ByteArray(4)
-        writeInt32(arr, 0, value)
-        return arr
+        return value
     }
 
     private fun writeInt32(data: ByteArray, offset: Int, value: Int) {
@@ -185,6 +322,12 @@ object TagEmbedder {
         data[offset + 1] = (value shr 16).toByte()
         data[offset + 2] = (value shr 8).toByte()
         data[offset + 3] = value.toByte()
+    }
+
+    private fun writeInt64(data: ByteArray, offset: Int, value: Long) {
+        for (i in 0 until 8) {
+            data[offset + i] = ((value ushr ((7 - i) * 8)) and 0xFFL).toByte()
+        }
     }
 
     private fun getStationJpegBytes(context: Context, stationUuid: String, stationName: String): ByteArray? {
