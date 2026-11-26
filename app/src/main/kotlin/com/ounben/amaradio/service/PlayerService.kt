@@ -289,21 +289,35 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             .setSessionExtras(Bundle().apply { putString("android.media.metadata.ATTRIBUTION_TAG", "player_service") })
             .build()
         
-        // 4. Load initial station to ensure non-empty state
+        // 4. Load initial station to ensure non-empty state (wait for migration & user DB load before SQL fallback)
         val app = application as AMARadioApp
-        val initialStation = app.historyManager.first ?: app.favouriteManager.first
+        val initialStation = app.historyManager.first
+            ?: app.favouriteManager.first
+            ?: app.customStationManager.first
         if (initialStation != null) {
             setStation(initialStation)
         } else {
-            // SQL Fallback: Load top station from local region if history is empty
-            serviceScope.launch(Dispatchers.IO) {
-                val countryCode = com.ounben.amaradio.Utils.getCountryCode(this@PlayerService) ?: "DE"
-                val db = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(this@PlayerService)
-                val topStation = db.stationDao().getStationsByCountryCode(countryCode.uppercase()).firstOrNull()
-                
-                topStation?.let { entity ->
+            serviceScope.launch {
+                app.userDbMigrationJob?.join()
+                app.historyManager.awaitLoaded()
+                app.favouriteManager.awaitLoaded()
+                app.customStationManager.awaitLoaded()
+
+                val restoredStation = app.historyManager.first
+                    ?: app.favouriteManager.first
+                    ?: app.customStationManager.first
+
+                val stationToSet = restoredStation ?: withContext(Dispatchers.IO) {
+                    val countryCode = com.ounben.amaradio.Utils.getCountryCode(this@PlayerService)
+                    val db = com.ounben.amaradio.database.AMARadioDatabase.getDatabase(this@PlayerService)
+                    db.stationDao().getStationsByCountryCode(countryCode.uppercase()).firstOrNull()?.toDataStation()
+                }
+
+                stationToSet?.let { station ->
                     withContext(Dispatchers.Main) {
-                        setStation(entity.toDataStation())
+                        if (itsCurrentStation == null) {
+                            setStation(station)
+                        }
                     }
                 }
             }

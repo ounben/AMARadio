@@ -36,6 +36,8 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         private set
     lateinit var customStationManager: CustomStationManager
         private set
+    var userDbMigrationJob: kotlinx.coroutines.Job? = null
+        private set
     lateinit var reviewManager: com.ounben.amaradio.utils.ReviewManager
         private set
     var tvChannelManager: TvChannelManager? = null
@@ -95,9 +97,9 @@ class AMARadioApp : Application(), ImageLoaderFactory {
 
             CountryCodeDictionary.instance.load(this)
 
-            // TRRIGGER USER DB MIGRATION BEFORE INITIALIZING MANAGERS
+            // TRIGGER USER DB MIGRATION BEFORE INITIALIZING MANAGERS
             val scope = kotlinx.coroutines.CoroutineScope(kotlinx.coroutines.Dispatchers.Main + kotlinx.coroutines.SupervisorJob())
-            scope.launch {
+            userDbMigrationJob = scope.launch {
                 com.ounben.amaradio.database.user.UserDatabaseMigration.migrateIfNeeded(this@AMARadioApp)
             }
 

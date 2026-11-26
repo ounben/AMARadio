@@ -30,6 +30,8 @@ open class StationSaveManager(protected val context: Context) {
     private val _stationsFlow = MutableStateFlow<List<DataRadioStation>>(emptyList())
     val stationsFlow: StateFlow<List<DataRadioStation>> = _stationsFlow.asStateFlow()
 
+    private val initialLoadDone = CompletableDeferred<Unit>()
+
     protected val scope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     init {
@@ -37,25 +39,45 @@ open class StationSaveManager(protected val context: Context) {
         loadFromDb()
     }
 
+    suspend fun awaitLoaded() {
+        initialLoadDone.await()
+    }
+
     protected open fun getSaveId(): String = "default"
 
     protected fun loadFromDb() {
         scope.launch {
-            if (getSaveId() == "favourites") {
-                userDb.favoriteDao().getAllFavoritesFlow().collect { entities ->
-                    val stations = entities.map { it.toDataStation() }
-                    updateInMem(stations)
+            try {
+                val saveId = getSaveId()
+                if (saveId != "favourites" && saveId != "history" && saveId != "custom") {
+                    initialLoadDone.complete(Unit)
+                    return@launch
                 }
-            } else if (getSaveId() == "history") {
-                userDb.historyDao().getAllHistoryFlow().collect { entities ->
-                    val stations = entities.map { it.toDataStation() }
-                    updateInMem(stations)
+
+                (context.applicationContext as? AMARadioApp)?.userDbMigrationJob?.join()
+
+                when (saveId) {
+                    "favourites" -> {
+                        userDb.favoriteDao().getAllFavoritesFlow().collect { entities ->
+                            val stations = entities.map { it.toDataStation() }
+                            updateInMem(stations)
+                        }
+                    }
+                    "history" -> {
+                        userDb.historyDao().getAllHistoryFlow().collect { entities ->
+                            val stations = entities.map { it.toDataStation() }
+                            updateInMem(stations)
+                        }
+                    }
+                    "custom" -> {
+                        userDb.customStationDao().getAllCustomStationsFlow().collect { entities ->
+                            val stations = entities.map { it.toDataStation() }
+                            updateInMem(stations)
+                        }
+                    }
                 }
-            } else if (getSaveId() == "custom") {
-                userDb.customStationDao().getAllCustomStationsFlow().collect { entities ->
-                    val stations = entities.map { it.toDataStation() }
-                    updateInMem(stations)
-                }
+            } finally {
+                initialLoadDone.complete(Unit)
             }
         }
     }
@@ -69,6 +91,7 @@ open class StationSaveManager(protected val context: Context) {
             stationsSet.add(it.StationUuid)
         }
         _stationsFlow.value = listStations.toList()
+        initialLoadDone.complete(Unit)
         onDataChanged()
     }
 
