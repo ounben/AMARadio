@@ -5,7 +5,11 @@ import android.icu.util.Measure
 import android.icu.util.MeasureUnit
 import android.net.Uri
 import android.util.Log
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.FastForward
@@ -16,10 +20,12 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
@@ -43,14 +49,17 @@ import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import kotlinx.coroutines.delay
 import java.util.Locale
+import kotlin.math.abs
 
 private const val SEEK_JUMP_MS = 15_000L
+internal val PLAYBACK_SPEEDS = listOf(1.0f, 1.25f, 1.5f, 2.0f, 2.5f, 3.0f)
 
 /**
  * Lean, minimalist floating player dialog using AndroidX Media3 (ExoPlayer).
  * Decodes OggFLAC, OggVorbis, OggOpus, MP3, AAC, M4A, and FLAC containers cleanly
  * without C++ Stagefright status=0x1 native crashes.
  */
+@OptIn(ExperimentalFoundationApi::class)
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
 fun RecordingPlayerDialog(
@@ -63,6 +72,7 @@ fun RecordingPlayerDialog(
     var durationMs by remember { mutableLongStateOf(record.durationMs.coerceAtLeast(0L)) }
     var isSeeking by remember { mutableStateOf(false) }
     var sliderPositionMs by remember { mutableFloatStateOf(0f) }
+    var playbackSpeed by remember(record.fileUri) { mutableFloatStateOf(1.0f) }
     var playerErrorRes by remember { mutableStateOf<Int?>(null) }
 
     val exoPlayer = remember(record.fileUri) {
@@ -103,9 +113,19 @@ fun RecordingPlayerDialog(
             .setMediaSourceFactory(mediaSourceFactory)
             .build().apply {
                 setMediaItem(MediaItem.fromUri(Uri.parse(record.fileUri)))
+                setPlaybackSpeed(1.0f)
                 prepare()
                 playWhenReady = true
             }
+    }
+
+    fun applyPlaybackSpeed(newSpeed: Float) {
+        playbackSpeed = newSpeed
+        try {
+            exoPlayer.setPlaybackSpeed(newSpeed)
+        } catch (e: Exception) {
+            Log.e("RecordingPlayer", "Failed to set playback speed $newSpeed", e)
+        }
     }
 
     fun syncDurationFromPlayer() {
@@ -287,6 +307,11 @@ fun RecordingPlayerDialog(
                 val seekSliderLabel = stringResource(R.string.accessibility_seek_slider)
                 val rewind15Label = stringResource(R.string.action_rewind_15s)
                 val forward15Label = stringResource(R.string.action_forward_15s)
+                val speedLabel = formatPlaybackSpeed(playbackSpeed)
+                val speedContentDesc = stringResource(R.string.accessibility_playback_speed, speedLabel)
+                val changeSpeedLabel = stringResource(R.string.action_change_playback_speed)
+                val resetSpeedLabel = stringResource(R.string.action_reset_playback_speed)
+                val isCustomSpeed = abs(playbackSpeed - 1.0f) > 0.01f
                 val accessibleTimeState = stringResource(
                     R.string.accessibility_time_position,
                     formatAccessibleDuration(displayPosition),
@@ -319,28 +344,46 @@ fun RecordingPlayerDialog(
                                     true
                                 }
                             }
-                            customActions = listOf(
-                                CustomAccessibilityAction(rewind15Label) {
-                                    val target = (displayPosition - SEEK_JUMP_MS).coerceAtLeast(0L)
-                                    if (target == displayPosition) {
-                                        false
-                                    } else {
-                                        isSeeking = false
-                                        seekToClamped(target, maxDuration)
+                            customActions = buildList {
+                                add(
+                                    CustomAccessibilityAction(rewind15Label) {
+                                        val target = (displayPosition - SEEK_JUMP_MS).coerceAtLeast(0L)
+                                        if (target == displayPosition) {
+                                            false
+                                        } else {
+                                            isSeeking = false
+                                            seekToClamped(target, maxDuration)
+                                            true
+                                        }
+                                    }
+                                )
+                                add(
+                                    CustomAccessibilityAction(forward15Label) {
+                                        val target = (displayPosition + SEEK_JUMP_MS).coerceAtMost(maxDuration)
+                                        if (target == displayPosition) {
+                                            false
+                                        } else {
+                                            isSeeking = false
+                                            seekToClamped(target, maxDuration)
+                                            true
+                                        }
+                                    }
+                                )
+                                add(
+                                    CustomAccessibilityAction(changeSpeedLabel) {
+                                        applyPlaybackSpeed(nextPlaybackSpeed(playbackSpeed))
                                         true
                                     }
-                                },
-                                CustomAccessibilityAction(forward15Label) {
-                                    val target = (displayPosition + SEEK_JUMP_MS).coerceAtMost(maxDuration)
-                                    if (target == displayPosition) {
-                                        false
-                                    } else {
-                                        isSeeking = false
-                                        seekToClamped(target, maxDuration)
-                                        true
-                                    }
+                                )
+                                if (isCustomSpeed) {
+                                    add(
+                                        CustomAccessibilityAction(resetSpeedLabel) {
+                                            applyPlaybackSpeed(1.0f)
+                                            true
+                                        }
+                                    )
                                 }
-                            )
+                            }
                         }
                 ) {
                     Slider(
@@ -387,10 +430,10 @@ fun RecordingPlayerDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Playback Controls: Rewind 15s | Play/Pause | Forward 15s
+                // Playback Controls: Rewind 15s | Play/Pause | Forward 15s | Speed (1x..3x)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterHorizontally),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     IconButton(
@@ -451,11 +494,69 @@ fun RecordingPlayerDialog(
                             tint = MaterialTheme.colorScheme.onSurface
                         )
                     }
+
+                    Box(
+                        modifier = Modifier
+                            .size(width = 60.dp, height = 48.dp)
+                            .clip(RoundedCornerShape(12.dp))
+                            .background(
+                                if (isCustomSpeed) AmaradioAmber.copy(alpha = 0.16f)
+                                else MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.4f)
+                            )
+                            .semantics {
+                                contentDescription = speedContentDesc
+                                if (isCustomSpeed) {
+                                    customActions = listOf(
+                                        CustomAccessibilityAction(resetSpeedLabel) {
+                                            applyPlaybackSpeed(1.0f)
+                                            true
+                                        }
+                                    )
+                                }
+                            }
+                            .combinedClickable(
+                                role = Role.Button,
+                                onClickLabel = changeSpeedLabel,
+                                onLongClickLabel = if (isCustomSpeed) resetSpeedLabel else null,
+                                onClick = { applyPlaybackSpeed(nextPlaybackSpeed(playbackSpeed)) },
+                                onLongClick = {
+                                    if (isCustomSpeed) {
+                                        applyPlaybackSpeed(1.0f)
+                                    }
+                                }
+                            )
+                            .padding(horizontal = 2.dp),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Text(
+                            text = speedLabel,
+                            style = MaterialTheme.typography.labelLarge.copy(fontFeatureSettings = "tnum"),
+                            fontWeight = FontWeight.Bold,
+                            color = if (isCustomSpeed) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            softWrap = false,
+                            modifier = Modifier.clearAndSetSemantics { }
+                        )
+                    }
                 }
             }
         },
         confirmButton = {}
     )
+}
+
+internal fun nextPlaybackSpeed(currentSpeed: Float): Float {
+    val idx = PLAYBACK_SPEEDS.indexOfFirst { abs(it - currentSpeed) < 0.01f }
+    return if (idx < 0) PLAYBACK_SPEEDS.first() else PLAYBACK_SPEEDS[(idx + 1) % PLAYBACK_SPEEDS.size]
+}
+
+internal fun formatPlaybackSpeed(speed: Float): String {
+    val formatted = when {
+        speed % 1f == 0f -> speed.toInt().toString()
+        (speed * 10f) % 1f == 0f -> String.format(Locale.US, "%.1f", speed)
+        else -> String.format(Locale.US, "%.2f", speed).trimEnd('0').trimEnd('.')
+    }
+    return "${formatted}x"
 }
 
 internal fun calculateAdaptiveSeekStepMs(durationMs: Long): Long = when {
