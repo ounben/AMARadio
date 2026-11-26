@@ -1,10 +1,15 @@
 package com.ounben.amaradio.recorder
 
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.FastForward
+import androidx.compose.material.icons.filled.FastRewind
 import androidx.compose.material.icons.filled.PauseCircle
 import androidx.compose.material.icons.filled.PlayCircle
 import androidx.compose.material3.*
@@ -13,6 +18,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.ProgressBarRangeInfo
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
+import androidx.compose.ui.semantics.progressBarRangeInfo
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.setProgress
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -29,6 +43,8 @@ import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import kotlinx.coroutines.delay
 import java.util.Locale
+
+private const val SEEK_JUMP_MS = 15_000L
 
 /**
  * Lean, minimalist floating player dialog using AndroidX Media3 (ExoPlayer).
@@ -109,6 +125,15 @@ fun RecordingPlayerDialog(
         } else if (durationMs <= 0L) {
             durationMs = record.durationMs
         }
+    }
+
+    fun seekToClamped(targetMs: Long, maxDuration: Long) {
+        try {
+            val clamped = targetMs.coerceIn(0L, maxDuration)
+            currentPositionMs = clamped
+            sliderPositionMs = clamped.toFloat()
+            exoPlayer.seekTo(clamped)
+        } catch (_: Exception) {}
     }
 
     DisposableEffect(exoPlayer) {
@@ -257,83 +282,211 @@ fun RecordingPlayerDialog(
                 // Slider & Time Display
                 val maxDuration = maxOf(durationMs, currentPositionMs, 1L)
                 val displayPosition = (if (isSeeking) sliderPositionMs.toLong() else currentPositionMs).coerceIn(0L, maxDuration)
+                val adaptiveStepMs = calculateAdaptiveSeekStepMs(maxDuration)
 
-                Slider(
-                    value = displayPosition.toFloat(),
-                    onValueChange = {
-                        isSeeking = true
-                        sliderPositionMs = it
-                    },
-                    onValueChangeFinished = {
-                        try {
-                            val targetMs = sliderPositionMs.toLong().coerceIn(0L, maxDuration)
-                            currentPositionMs = targetMs
-                            exoPlayer.seekTo(targetMs)
-                        } catch (_: Exception) {}
-                        isSeeking = false
-                    },
-                    valueRange = 0f..maxDuration.toFloat(),
-                    colors = SliderDefaults.colors(
-                        thumbColor = AmaradioAmber,
-                        activeTrackColor = AmaradioAmber,
-                        inactiveTrackColor = MaterialTheme.colorScheme.outline
-                    ),
-                    modifier = Modifier.fillMaxWidth()
+                val seekSliderLabel = stringResource(R.string.accessibility_seek_slider)
+                val rewind15Label = stringResource(R.string.action_rewind_15s)
+                val forward15Label = stringResource(R.string.action_forward_15s)
+                val accessibleTimeState = stringResource(
+                    R.string.accessibility_time_position,
+                    formatAccessibleDuration(displayPosition),
+                    formatAccessibleDuration(maxDuration)
                 )
 
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .semantics {
+                            contentDescription = seekSliderLabel
+                            stateDescription = accessibleTimeState
+                            progressBarRangeInfo = ProgressBarRangeInfo(
+                                current = displayPosition.toFloat(),
+                                range = 0f..maxDuration.toFloat()
+                            )
+                            setProgress { targetValue ->
+                                val newTargetMs = when {
+                                    targetValue > displayPosition.toFloat() ->
+                                        (displayPosition + adaptiveStepMs).coerceAtMost(maxDuration)
+                                    targetValue < displayPosition.toFloat() ->
+                                        (displayPosition - adaptiveStepMs).coerceAtLeast(0L)
+                                    else -> displayPosition
+                                }
+                                if (newTargetMs == displayPosition) {
+                                    false
+                                } else {
+                                    isSeeking = false
+                                    seekToClamped(newTargetMs, maxDuration)
+                                    true
+                                }
+                            }
+                            customActions = listOf(
+                                CustomAccessibilityAction(rewind15Label) {
+                                    val target = (displayPosition - SEEK_JUMP_MS).coerceAtLeast(0L)
+                                    if (target == displayPosition) {
+                                        false
+                                    } else {
+                                        isSeeking = false
+                                        seekToClamped(target, maxDuration)
+                                        true
+                                    }
+                                },
+                                CustomAccessibilityAction(forward15Label) {
+                                    val target = (displayPosition + SEEK_JUMP_MS).coerceAtMost(maxDuration)
+                                    if (target == displayPosition) {
+                                        false
+                                    } else {
+                                        isSeeking = false
+                                        seekToClamped(target, maxDuration)
+                                        true
+                                    }
+                                }
+                            )
+                        }
+                ) {
+                    Slider(
+                        value = displayPosition.toFloat(),
+                        onValueChange = {
+                            isSeeking = true
+                            sliderPositionMs = it
+                        },
+                        onValueChangeFinished = {
+                            seekToClamped(sliderPositionMs.toLong(), maxDuration)
+                            isSeeking = false
+                        },
+                        valueRange = 0f..maxDuration.toFloat(),
+                        colors = SliderDefaults.colors(
+                            thumbColor = AmaradioAmber,
+                            activeTrackColor = AmaradioAmber,
+                            inactiveTrackColor = MaterialTheme.colorScheme.outline
+                        ),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .clearAndSetSemantics { }
+                    )
+                }
+
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clearAndSetSemantics { },
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
                         text = formatDuration(displayPosition),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.clearAndSetSemantics { }
                     )
                     Text(
                         text = formatDuration(maxDuration),
                         style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        modifier = Modifier.clearAndSetSemantics { }
                     )
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Central Play/Pause Button
-                IconButton(
-                    onClick = {
-                        try {
-                            if (exoPlayer.playbackState == Player.STATE_ENDED ||
-                                (durationMs > 0L && currentPositionMs >= durationMs)
-                            ) {
-                                isSeeking = false
-                                currentPositionMs = 0L
-                                sliderPositionMs = 0f
-                                exoPlayer.seekTo(0L)
-                                exoPlayer.play()
-                            } else if (isPlaying) {
-                                exoPlayer.pause()
-                            } else {
-                                exoPlayer.play()
-                            }
-                        } catch (e: Exception) {
-                            e.printStackTrace()
-                            isSeeking = false
-                        }
-                    },
-                    modifier = Modifier.size(64.dp)
+                // Playback Controls: Rewind 15s | Play/Pause | Forward 15s
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(20.dp, Alignment.CenterHorizontally),
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
-                        contentDescription = stringResource(if (isPlaying) R.string.action_pause_recording else R.string.action_play_recording),
-                        modifier = Modifier.size(56.dp),
-                        tint = AmaradioAmber
-                    )
+                    IconButton(
+                        onClick = {
+                            isSeeking = false
+                            seekToClamped(displayPosition - SEEK_JUMP_MS, maxDuration)
+                        },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FastRewind,
+                            contentDescription = rewind15Label,
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            try {
+                                if (exoPlayer.playbackState == Player.STATE_ENDED ||
+                                    (durationMs > 0L && currentPositionMs >= durationMs)
+                                ) {
+                                    isSeeking = false
+                                    seekToClamped(0L, maxDuration)
+                                    exoPlayer.play()
+                                } else if (isPlaying) {
+                                    exoPlayer.pause()
+                                } else {
+                                    exoPlayer.play()
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                isSeeking = false
+                            }
+                        },
+                        modifier = Modifier.size(64.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (isPlaying) Icons.Default.PauseCircle else Icons.Default.PlayCircle,
+                            contentDescription = stringResource(if (isPlaying) R.string.action_pause_recording else R.string.action_play_recording),
+                            modifier = Modifier.size(56.dp),
+                            tint = AmaradioAmber
+                        )
+                    }
+
+                    IconButton(
+                        onClick = {
+                            isSeeking = false
+                            seekToClamped(displayPosition + SEEK_JUMP_MS, maxDuration)
+                        },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FastForward,
+                            contentDescription = forward15Label,
+                            modifier = Modifier.size(32.dp),
+                            tint = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
             }
         },
         confirmButton = {}
     )
+}
+
+internal fun calculateAdaptiveSeekStepMs(durationMs: Long): Long = when {
+    durationMs < 2L * 60_000L -> 5_000L
+    durationMs <= 30L * 60_000L -> 15_000L
+    durationMs <= 120L * 60_000L -> 60_000L
+    else -> 300_000L
+}
+
+internal fun formatAccessibleDuration(ms: Long, locale: Locale = Locale.getDefault()): String {
+    val totalSeconds = ms.coerceAtLeast(0L) / 1000L
+    val hours = totalSeconds / 3600L
+    val minutes = (totalSeconds % 3600L) / 60L
+    val seconds = totalSeconds % 60L
+
+    val measures = buildList {
+        if (hours > 0L) add(Measure(hours, MeasureUnit.HOUR))
+        if (minutes > 0L) add(Measure(minutes, MeasureUnit.MINUTE))
+        if (seconds > 0L || (hours == 0L && minutes == 0L)) add(Measure(seconds, MeasureUnit.SECOND))
+    }
+
+    return try {
+        MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.WIDE)
+            .formatMeasures(*measures.toTypedArray())
+    } catch (_: Exception) {
+        buildString {
+            if (hours > 0L) append("$hours h ")
+            if (minutes > 0L) append("$minutes min ")
+            if (seconds > 0L || isEmpty()) append("$seconds s")
+        }.trim()
+    }
 }
 
 private fun formatDuration(ms: Long): String {

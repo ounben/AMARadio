@@ -409,6 +409,10 @@
     <string name="accessibility_maximize_player">Maximize player</string>
     <string name="action_play_recording">Play recording</string>
     <string name="action_pause_recording">Pause recording</string>
+    <string name="action_rewind_15s">Rewind 15 seconds</string>
+    <string name="action_forward_15s">Forward 15 seconds</string>
+    <string name="accessibility_seek_slider">Playback position</string>
+    <string name="accessibility_time_position">%1$s of %2$s</string>
     <string name="accessibility_configure">Configure</string>
     <string name="accessibility_close">Close</string>
     <string name="accessibility_add_filter">Add filter</string>
