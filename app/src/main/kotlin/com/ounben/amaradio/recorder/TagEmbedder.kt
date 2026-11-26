@@ -46,13 +46,19 @@ object TagEmbedder {
     }
 
     fun embedM4aCoverArt(m4aFile: File, context: Context, stationUuid: String, stationName: String): Boolean {
+        if (!m4aFile.exists() || m4aFile.length() > 64L * 1024L * 1024L) {
+            // Skip in-memory rewrite for very large files to avoid OOM
+            return false
+        }
         val jpegBytes = getStationJpegBytes(context, stationUuid, stationName) ?: return false
         return try {
             val fileBytes = m4aFile.readBytes()
 
-            // Find 'moov' atom
+            // Find 'moov' and 'mdat' atoms. Only append 'udta' if 'moov' comes after 'mdat'
+            // (standard MediaMuxer layout) so stco/co64 chunk offsets remain 100% valid.
             val moovOffset = findAtomOffset(fileBytes, "moov")
-            if (moovOffset < 0) return false
+            val mdatOffset = findAtomOffset(fileBytes, "mdat")
+            if (moovOffset < 0 || (mdatOffset >= 0 && moovOffset < mdatOffset)) return false
 
             val oldMoovSize = readInt32(fileBytes, moovOffset)
             if (oldMoovSize <= 8 || moovOffset + oldMoovSize > fileBytes.size) return false

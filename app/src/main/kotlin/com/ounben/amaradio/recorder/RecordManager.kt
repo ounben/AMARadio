@@ -105,10 +105,10 @@ class RecordManager private constructor(private val context: Context) {
                 onAudioData = { data, len ->
                     if (!initialFormatDetected) {
                         val detectedFormat = FormatParser.detectFormat(station.Codec, "audio/aac", data.copyOf(minOf(len, 16384)))
-                        mediaWriter = MediaWriter(context, station.Name, detectedFormat)
+                        mediaWriter = MediaWriter(context, station.Name, detectedFormat, isHls = true)
                         if (mediaWriter?.openStream(station.StationUuid) == true) {
                             initialFormatDetected = true
-                            _recordingState.value = _recordingState.value.copy(formatExtension = detectedFormat.extension)
+                            _recordingState.value = _recordingState.value.copy(formatExtension = FormatParser.AudioFormat.M4A.extension)
                         }
                     }
                     mediaWriter?.write(data, len)

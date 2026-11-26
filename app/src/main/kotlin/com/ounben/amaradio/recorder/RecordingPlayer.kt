@@ -16,9 +16,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.Player
+import androidx.media3.common.Timeline
 import androidx.media3.exoplayer.ExoPlayer
 import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.RecordEntity
@@ -33,6 +35,7 @@ import java.util.Locale
  * Decodes OggFLAC, OggVorbis, OggOpus, MP3, AAC, M4A, and FLAC containers cleanly
  * without C++ Stagefright status=0x1 native crashes.
  */
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
 fun RecordingPlayerDialog(
     record: RecordEntity,
@@ -41,15 +44,18 @@ fun RecordingPlayerDialog(
     val context = LocalContext.current
     var isPlaying by remember { mutableStateOf(false) }
     var currentPositionMs by remember { mutableLongStateOf(0L) }
-    var durationMs by remember { mutableLongStateOf(record.durationMs) }
+    var durationMs by remember { mutableLongStateOf(record.durationMs.coerceAtLeast(0L)) }
     var isSeeking by remember { mutableStateOf(false) }
     var sliderPositionMs by remember { mutableFloatStateOf(0f) }
-    var playerError by remember { mutableStateOf<String?>(null) }
+    var playerErrorRes by remember { mutableStateOf<Int?>(null) }
 
     val exoPlayer = remember(record.fileUri) {
         val extractorsFactory = androidx.media3.extractor.DefaultExtractorsFactory().apply {
+            // Xing/Info/VBRI headers are automatically prioritized by Mp3Extractor;
+            // FLAG_ENABLE_CONSTANT_BITRATE_SEEKING provides instant duration & seeking
+            // fallback for legacy MP3 recordings without a Xing header.
             setMp3ExtractorFlags(
-                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_INDEX_SEEKING or
+                androidx.media3.extractor.mp3.Mp3Extractor.FLAG_ENABLE_CONSTANT_BITRATE_SEEKING or
                 androidx.media3.extractor.mp3.Mp3Extractor.FLAG_DISABLE_ID3_METADATA
             )
             setAdtsExtractorFlags(
@@ -86,31 +92,67 @@ fun RecordingPlayerDialog(
             }
     }
 
+    fun syncDurationFromPlayer() {
+        val exDuration = exoPlayer.duration
+        if (exDuration == C.TIME_UNSET || exDuration <= 0L) return
+
+        // Protect against legacy OGG files recorded before full page-buffered granulepos normalization
+        // (which can report multi-hour live server timestamps instead of the clip's duration).
+        val isOggFormat = record.format.equals("ogg", ignoreCase = true) ||
+            record.format.equals("oga", ignoreCase = true)
+        val isSuspiciousLegacyOggDuration = isOggFormat &&
+            record.durationMs > 0L &&
+            exDuration > maxOf(record.durationMs * 3L, record.durationMs + 60_000L)
+
+        if (!isSuspiciousLegacyOggDuration) {
+            durationMs = exDuration
+        } else if (durationMs <= 0L) {
+            durationMs = record.durationMs
+        }
+    }
+
     DisposableEffect(exoPlayer) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(playing: Boolean) {
                 isPlaying = playing
             }
 
-            override fun onPlaybackStateChanged(state: Int) {
-                if (state == Player.STATE_READY && exoPlayer.duration > 0) {
-                    val exDuration = exoPlayer.duration
-                    if (record.format.equals("ogg", ignoreCase = true) || exDuration > record.durationMs * 3 || exDuration <= 0L) {
-                        durationMs = record.durationMs
-                    } else {
-                        durationMs = exDuration
+            override fun onTimelineChanged(timeline: Timeline, reason: Int) {
+                syncDurationFromPlayer()
+            }
+
+            override fun onPositionDiscontinuity(
+                oldPosition: Player.PositionInfo,
+                newPosition: Player.PositionInfo,
+                reason: Int
+            ) {
+                if (!isSeeking) {
+                    val pos = newPosition.positionMs.coerceAtLeast(0L)
+                    currentPositionMs = pos
+                    if (pos > durationMs) {
+                        durationMs = pos
                     }
+                }
+            }
+
+            override fun onPlaybackStateChanged(state: Int) {
+                if (state == Player.STATE_READY) {
+                    syncDurationFromPlayer()
                 } else if (state == Player.STATE_ENDED) {
                     isPlaying = false
+                    isSeeking = false
+                    exoPlayer.playWhenReady = false
                     exoPlayer.seekTo(0L)
                     currentPositionMs = 0L
+                    sliderPositionMs = 0f
                 }
             }
 
             override fun onPlayerError(error: PlaybackException) {
                 Log.e("RecordingPlayer", "ExoPlayer playback error for ${record.fileUri}", error)
-                playerError = context.getString(R.string.error_cannot_open_file)
+                playerErrorRes = R.string.error_cannot_open_file
                 isPlaying = false
+                isSeeking = false
             }
         }
         exoPlayer.addListener(listener)
@@ -127,11 +169,15 @@ fun RecordingPlayerDialog(
 
     LaunchedEffect(isPlaying) {
         while (isPlaying) {
+            syncDurationFromPlayer()
             if (!isSeeking) {
                 val pos = exoPlayer.currentPosition.coerceAtLeast(0L)
-                currentPositionMs = pos.coerceIn(0L, durationMs)
+                currentPositionMs = pos
+                if (pos > durationMs) {
+                    durationMs = pos
+                }
             }
-            delay(200)
+            delay(100)
         }
     }
 
@@ -197,10 +243,10 @@ fun RecordingPlayerDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Error Message Display if playerError != null
-                if (playerError != null) {
+                // Error Message Display if playerErrorRes != null
+                playerErrorRes?.let { errorRes ->
                     Text(
-                        text = playerError!!,
+                        text = stringResource(errorRes),
                         style = MaterialTheme.typography.bodyMedium,
                         color = SolidRedError,
                         fontWeight = FontWeight.Bold
@@ -209,11 +255,11 @@ fun RecordingPlayerDialog(
                 }
 
                 // Slider & Time Display
-                val maxDuration = maxOf(durationMs, 1L)
+                val maxDuration = maxOf(durationMs, currentPositionMs, 1L)
                 val displayPosition = (if (isSeeking) sliderPositionMs.toLong() else currentPositionMs).coerceIn(0L, maxDuration)
 
                 Slider(
-                    value = displayPosition.coerceIn(0L, maxDuration).toFloat(),
+                    value = displayPosition.toFloat(),
                     onValueChange = {
                         isSeeking = true
                         sliderPositionMs = it
@@ -257,18 +303,18 @@ fun RecordingPlayerDialog(
                 IconButton(
                     onClick = {
                         try {
-                            if (exoPlayer.playbackState == Player.STATE_ENDED || currentPositionMs >= durationMs) {
-                                isSeeking = true
+                            if (exoPlayer.playbackState == Player.STATE_ENDED ||
+                                (durationMs > 0L && currentPositionMs >= durationMs)
+                            ) {
+                                isSeeking = false
                                 currentPositionMs = 0L
+                                sliderPositionMs = 0f
                                 exoPlayer.seekTo(0L)
                                 exoPlayer.play()
-                                isPlaying = true
                             } else if (isPlaying) {
                                 exoPlayer.pause()
-                                isPlaying = false
                             } else {
                                 exoPlayer.play()
-                                isPlaying = true
                             }
                         } catch (e: Exception) {
                             e.printStackTrace()

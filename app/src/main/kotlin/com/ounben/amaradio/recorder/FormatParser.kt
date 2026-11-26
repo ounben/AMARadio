@@ -9,6 +9,7 @@ object FormatParser {
         MP3("mp3", "audio/mpeg"),
         AAC("aac", "audio/aac"),
         AAC_PLUS("aac", "audio/aac"),
+        M4A("m4a", "audio/mp4"),
         OGG("ogg", "audio/ogg"),
         OGG_FLAC("oga", "audio/ogg"),
         FLAC("flac", "audio/flac"),
