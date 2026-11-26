@@ -3,7 +3,6 @@ package com.ounben.amaradio.recorder
 import android.os.Build
 import android.widget.Toast
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
@@ -22,8 +21,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
-import com.ounben.amaradio.ui.SolidRedError
-import com.ounben.amaradio.ui.SolidRedErrorLight
 
 @Composable
 fun RecordButtonWithTimer(
@@ -61,13 +58,11 @@ fun RecordButtonWithTimer(
                 }
             }
         ) {
-            val isDark = isSystemInDarkTheme()
-            val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
             Icon(
                 imageVector = if (recordState.isRecording) Icons.Filled.Stop else Icons.Filled.RadioButtonChecked,
                 contentDescription = stringResource(if (recordState.isRecording) R.string.action_stop_recording else R.string.action_record),
                 modifier = Modifier.size(if (recordState.isRecording) iconSize * 1.22f else iconSize),
-                tint = if (recordState.isRecording) recordRedColor else MaterialTheme.colorScheme.onSurfaceVariant
+                tint = if (recordState.isRecording) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
             )
         }
 

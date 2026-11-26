@@ -434,7 +434,7 @@ fun FullPlayer(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
                         modifier = Modifier.size(28.dp),
-                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
@@ -680,7 +680,7 @@ fun SidePanelPlayer(
                         imageVector = if (uiState.isFavorite) Icons.Filled.Star else Icons.Outlined.StarOutline,
                         contentDescription = null,
                         modifier = Modifier.size(26.dp),
-                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                        tint = if (uiState.isFavorite) AmaradioAmber else MaterialTheme.colorScheme.onSurface
                     )
                 }
             }
