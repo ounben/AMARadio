@@ -97,28 +97,7 @@ class RecordManager private constructor(private val context: Context) {
         val userAgent = com.ounben.amaradio.Utils.getUserAgent(context)
 
         if (station.StreamUrl.lowercase().contains(".m3u8") || station.Hls == 1) {
-            HlsResolver.recordHlsStream(
-                httpClient = isolatedClient,
-                m3u8Url = station.StreamUrl,
-                userAgent = userAgent,
-                isRecording = { _recordingState.value.isRecording },
-                onAudioData = { data, len ->
-                    if (!initialFormatDetected) {
-                        val detectedFormat = FormatParser.detectFormat(station.Codec, "audio/aac", data.copyOf(minOf(len, 16384)))
-                        mediaWriter = MediaWriter(context, station.Name, detectedFormat, isHls = true)
-                        if (mediaWriter?.openStream(station.StationUuid) == true) {
-                            initialFormatDetected = true
-                            _recordingState.value = _recordingState.value.copy(formatExtension = FormatParser.AudioFormat.M4A.extension)
-                        }
-                    }
-                    mediaWriter?.write(data, len)
-                    val elapsed = System.currentTimeMillis() - startTimeMs
-                    _recordingState.value = _recordingState.value.copy(
-                        durationMs = elapsed,
-                        fileSizeBytes = _recordingState.value.fileSizeBytes + len
-                    )
-                }
-            )
+            recordViaHls(isolatedClient, station.StreamUrl, userAgent, station)
             return
         }
 
@@ -130,6 +109,8 @@ class RecordManager private constructor(private val context: Context) {
                 .url(currentStreamUrl)
                 .header("User-Agent", userAgent)
                 .build()
+
+            var detectedHlsUrl: String? = null
 
             try {
                 isolatedClient.newCall(request).execute().use { response ->
@@ -145,9 +126,10 @@ class RecordManager private constructor(private val context: Context) {
                     }
 
                     reconnectAttempts = 0
+                    val finalUrl = response.request.url.toString()
                     val contentType = response.header("Content-Type")
-                    Log.i("RecordManager", "Connected to ${station.Name}. HTTP ${response.code}, Content-Type: $contentType")
-                    val rawStream: InputStream = response.body?.byteStream() ?: return@use
+                    Log.i("RecordManager", "Connected to ${station.Name}. HTTP ${response.code}, Content-Type: $contentType, URL: $finalUrl")
+                    val rawStream: InputStream = response.body.byteStream()
 
                     if (!initialFormatDetected) {
                         val peekBuffer = ByteArray(16384)
@@ -157,16 +139,29 @@ class RecordManager private constructor(private val context: Context) {
                             if (r == -1) break
                             bytesRead += r
                         }
+                        val sampleBytes = peekBuffer.copyOf(bytesRead)
 
-                        // Check if response is a PLS/M3U playlist instead of audio
-                        val resolvedUrl = resolvePlaylistStreamUrl(isolatedClient, userAgent, currentStreamUrl, contentType, peekBuffer.copyOf(bytesRead))
+                        // Dynamic HLS detection: many TV / AAC streams serve an HLS playlist without
+                        // `Hls == 1` in the DB or `.m3u8` in the initial URL (e.g. after HTTP redirects).
+                        if (HlsResolver.isHlsPlaylistResponse(finalUrl, contentType, sampleBytes)) {
+                            Log.i("RecordManager", "Dynamically detected HLS playlist for ${station.Name} at $finalUrl")
+                            detectedHlsUrl = finalUrl
+                            return@use
+                        }
+
+                        // Check if response is a PLS/M3U playlist instead of raw audio
+                        val resolvedUrl = resolvePlaylistStreamUrl(isolatedClient, userAgent, finalUrl, contentType, sampleBytes)
                         if (resolvedUrl != null && resolvedUrl != currentStreamUrl) {
                             Log.i("RecordManager", "Resolved playlist for ${station.Name}: $currentStreamUrl -> $resolvedUrl")
+                            if (resolvedUrl.lowercase().contains(".m3u8")) {
+                                detectedHlsUrl = resolvedUrl
+                                return@use
+                            }
                             currentStreamUrl = resolvedUrl
                             return@use
                         }
 
-                        val detectedFormat = FormatParser.detectFormat(station.Codec, contentType, peekBuffer.copyOf(bytesRead))
+                        val detectedFormat = FormatParser.detectFormat(station.Codec, contentType, sampleBytes)
                         Log.i("RecordManager", "Detected format for ${station.Name}: ${detectedFormat.extension} (${detectedFormat.mimeType})")
                         mediaWriter = MediaWriter(context, station.Name, detectedFormat)
 
@@ -177,7 +172,13 @@ class RecordManager private constructor(private val context: Context) {
                         }
 
                         initialFormatDetected = true
-                        _recordingState.value = _recordingState.value.copy(formatExtension = detectedFormat.extension)
+                        val uiExt = when (detectedFormat) {
+                            FormatParser.AudioFormat.AAC,
+                            FormatParser.AudioFormat.AAC_PLUS,
+                            FormatParser.AudioFormat.MPEG_TS -> FormatParser.AudioFormat.M4A.extension
+                            else -> detectedFormat.extension
+                        }
+                        _recordingState.value = _recordingState.value.copy(formatExtension = uiExt)
 
                         if (bytesRead > 0) {
                             mediaWriter?.write(peekBuffer, bytesRead)
@@ -207,6 +208,11 @@ class RecordManager private constructor(private val context: Context) {
                     activeDecoupledRecorder = decoupledRecorder
                     decoupledRecorder.start()
                 }
+
+                detectedHlsUrl?.let { hlsUrl ->
+                    recordViaHls(isolatedClient, hlsUrl, userAgent, station)
+                    return
+                }
             } catch (e: Exception) {
                 if (!_recordingState.value.isRecording) break
                 Log.w("RecordManager", "Recording stream disconnected: ${e.message}. Reconnecting in 2s...")
@@ -221,6 +227,36 @@ class RecordManager private constructor(private val context: Context) {
         }
     }
 
+    private fun recordViaHls(
+        httpClient: okhttp3.OkHttpClient,
+        hlsUrl: String,
+        userAgent: String,
+        station: DataRadioStation
+    ) {
+        HlsResolver.recordHlsStream(
+            httpClient = httpClient,
+            m3u8Url = hlsUrl,
+            userAgent = userAgent,
+            isRecording = { _recordingState.value.isRecording },
+            onAudioData = { data, len ->
+                if (!initialFormatDetected) {
+                    val detectedFormat = FormatParser.detectFormat(station.Codec, "audio/aac", data.copyOf(minOf(len, 16384)))
+                    mediaWriter = MediaWriter(context, station.Name, detectedFormat, isHls = true)
+                    if (mediaWriter?.openStream(station.StationUuid) == true) {
+                        initialFormatDetected = true
+                        _recordingState.value = _recordingState.value.copy(formatExtension = FormatParser.AudioFormat.M4A.extension)
+                    }
+                }
+                mediaWriter?.write(data, len)
+                val elapsed = System.currentTimeMillis() - startTimeMs
+                _recordingState.value = _recordingState.value.copy(
+                    durationMs = elapsed,
+                    fileSizeBytes = _recordingState.value.fileSizeBytes + len
+                )
+            }
+        )
+    }
+
     private fun resolvePlaylistStreamUrl(
         client: okhttp3.OkHttpClient,
         userAgent: String,
@@ -228,11 +264,14 @@ class RecordManager private constructor(private val context: Context) {
         contentType: String?,
         sampleBytes: ByteArray
     ): String? {
-        val isPlsOrM3u = url.lowercase().endsWith(".pls") || 
-                         url.lowercase().endsWith(".m3u") || 
-                         (contentType != null && (contentType.contains("scpls") || contentType.contains("mpegurl") || contentType.contains("playlist")))
-        
+        val isPlsOrM3u = url.lowercase().endsWith(".pls") ||
+            url.lowercase().endsWith(".m3u") ||
+            (contentType != null && (contentType.contains("scpls") || contentType.contains("mpegurl") || contentType.contains("playlist")))
+
         val text = String(sampleBytes, Charsets.UTF_8)
+        // Do not treat HLS playlists as simple M3U redirect lists
+        if (text.contains("#EXT-X-", ignoreCase = true)) return null
+
         if (text.contains("[playlist]") || text.contains("File1=", ignoreCase = true)) {
             val fileMatch = Regex("""File1\s*=\s*(https?://[^\s\r\n]+)""", RegexOption.IGNORE_CASE).find(text)
             if (fileMatch != null) return fileMatch.groupValues[1].trim()

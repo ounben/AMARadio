@@ -20,12 +20,13 @@ import java.util.Locale
 
 /**
  * Handles lossless radio stream recording and finalization into Scoped Storage (Android MediaStore).
- * Records into a temporary .part file first, then finalizes per format so duration and seeking
- * work accurately in RecordingPlayerDialog and external players:
+ * Records into a temporary .part file first, then finalizes per format so duration, seeking,
+ * and TV-stream audio extraction work accurately in RecordingPlayerDialog and external players:
  *  - MP3: synchronizes to first valid MPEG frame, scans frames for exact duration, and prepends a
  *         valid ID3v2 cover tag + fresh Xing/Info seek-table header.
- *  - AAC / AAC+ / HLS: losslessly muxes raw ADTS or MPEG-TS audio via AacMuxer into an M4A container
- *         with zero-based timestamps and embedded cover art.
+ *  - AAC / AAC+ / HLS / MPEG-TS / fMP4 (TV streams): losslessly strips any video tracks and muxes
+ *         the audio track via AacMuxer into an M4A container (or clean MP3 if the TV stream carries
+ *         MPEG Audio) with zero-based timestamps and embedded cover art.
  *  - OGG / OggFLAC: buffers complete Ogg pages, zero-bases live granulepos across chunk boundaries
  *         and chained streams, recalculates CRC32, and computes exact duration from granulepos.
  */
@@ -47,6 +48,7 @@ class MediaWriter(
 
     private val oggStreamHandler = OggStreamHandler()
     private var mp3Synced = false
+    private var tsSynced = false
 
     fun openStream(stationUuid: String = ""): Boolean {
         val now = System.currentTimeMillis()
@@ -56,13 +58,14 @@ class MediaWriter(
         firstAudioWriteTimeMs = 0L
         totalAudioBytesWritten = 0L
         mp3Synced = false
+        tsSynced = false
 
         return try {
             val tmpDir = File(context.cacheDir, "recordings_tmp")
             if (!tmpDir.exists()) tmpDir.mkdirs()
 
             val partExt = if (isHls) "hls.part" else "${format.extension}.part"
-            val tmpFile = File(tmpDir, "${baseFileName}.$partExt")
+            val tmpFile = File(tmpDir, "$baseFileName.$partExt")
             tempPartFile = tmpFile
             outputStream = BufferedOutputStream(FileOutputStream(tmpFile), 64 * 1024)
             Log.i(TAG, "Opened temp recording stream: ${tmpFile.absolutePath} (format=$format, isHls=$isHls)")
@@ -86,6 +89,24 @@ class MediaWriter(
                 }
                 os.write(processed, 0, processed.size)
                 totalAudioBytesWritten += processed.size
+                return
+            }
+
+            if (format == FormatParser.AudioFormat.MPEG_TS && !isHls && !tsSynced) {
+                val syncOffset = FormatParser.findMpegTsSyncOffset(data, length)
+                if (syncOffset < 0) {
+                    // Wait for a valid 188-byte TS packet alignment
+                    return
+                }
+                tsSynced = true
+                val validLen = length - syncOffset
+                if (validLen > 0) {
+                    if (firstAudioWriteTimeMs == 0L) {
+                        firstAudioWriteTimeMs = System.currentTimeMillis()
+                    }
+                    os.write(data, syncOffset, validLen)
+                    totalAudioBytesWritten += validLen
+                }
                 return
             }
 
@@ -147,16 +168,27 @@ class MediaWriter(
             0L
         }
 
-        var muxedTempFile: File? = null
+        var muxedM4aFile: File? = null
+        var extractedMp3File: File? = null
         try {
             return when {
-                // 1. AAC / AAC+ / HLS -> losslessly mux into M4A container with zero-based timestamps
-                isHls || format == FormatParser.AudioFormat.AAC || format == FormatParser.AudioFormat.AAC_PLUS -> {
+                // 1. AAC / AAC+ / HLS / MPEG-TS / fMP4 (including TV streams with video+audio)
+                isHls ||
+                    format == FormatParser.AudioFormat.AAC ||
+                    format == FormatParser.AudioFormat.AAC_PLUS ||
+                    format == FormatParser.AudioFormat.MPEG_TS ||
+                    format == FormatParser.AudioFormat.M4A -> {
                     val m4aFile = File(partFile.parentFile, "$baseFileName.m4a")
-                    muxedTempFile = m4aFile
-                    val muxResult = AacMuxer.muxToM4a(partFile, m4aFile)
+                    val mp3File = File(partFile.parentFile, "$baseFileName.extracted.mp3")
+                    muxedM4aFile = m4aFile
+                    extractedMp3File = mp3File
 
-                    if (muxResult.success && m4aFile.exists() && m4aFile.length() > 0L) {
+                    val muxResult = AacMuxer.extractAudioFromContainer(partFile, m4aFile, mp3File)
+
+                    if (muxResult.success &&
+                        muxResult.outputFormat == FormatParser.AudioFormat.M4A &&
+                        m4aFile.exists() && m4aFile.length() > 0L
+                    ) {
                         if (stationUuid.isNotEmpty()) {
                             TagEmbedder.embedM4aCoverArt(m4aFile, context, stationUuid, stationName)
                         }
@@ -170,9 +202,35 @@ class MediaWriter(
                             finalFormat = FormatParser.AudioFormat.M4A,
                             durationMs = exactDuration
                         )
+                    } else if (muxResult.success &&
+                        muxResult.outputFormat == FormatParser.AudioFormat.MP3 &&
+                        mp3File.exists() && mp3File.length() > 0L
+                    ) {
+                        val analysis = Mp3FrameHelper.analyzeMp3File(mp3File)
+                        val id3Tag = if (stationUuid.isNotEmpty()) {
+                            TagEmbedder.createId3v2CoverArtTag(context, stationUuid, stationName)
+                        } else {
+                            null
+                        }
+                        val exactDuration = if (analysis.durationMs > 0L) {
+                            analysis.durationMs
+                        } else {
+                            resolveBestDurationMs(0L, mp3File, wallClockDurationMs)
+                        }
+                        publishMp3ToMediaStore(
+                            rawPartFile = mp3File,
+                            analysis = analysis,
+                            id3Tag = id3Tag,
+                            durationMs = exactDuration
+                        )
                     } else {
-                        // Graceful fallback if an exotic stream cannot be muxed by MediaMuxer
-                        Log.w(TAG, "M4A muxing failed for $baseFileName; falling back to raw ${format.extension}")
+                        // Graceful fallback if an exotic stream cannot be demuxed by MediaExtractor/MediaMuxer
+                        Log.w(TAG, "Audio extraction/muxing failed for $baseFileName; falling back to raw ${format.extension}")
+                        val fallbackFormat = if (format == FormatParser.AudioFormat.MPEG_TS) {
+                            FormatParser.AudioFormat.MPEG_TS
+                        } else {
+                            format
+                        }
                         val fallbackDuration = resolveBestDurationMs(
                             computedMs = 0L,
                             file = partFile,
@@ -180,7 +238,7 @@ class MediaWriter(
                         )
                         publishFileToMediaStore(
                             sourceFile = partFile,
-                            finalFormat = format,
+                            finalFormat = fallbackFormat,
                             durationMs = fallbackDuration
                         )
                     }
@@ -194,9 +252,10 @@ class MediaWriter(
                     } else {
                         null
                     }
-                    val exactDuration = when {
-                        analysis.durationMs > 0L -> analysis.durationMs
-                        else -> resolveBestDurationMs(0L, partFile, wallClockDurationMs)
+                    val exactDuration = if (analysis.durationMs > 0L) {
+                        analysis.durationMs
+                    } else {
+                        resolveBestDurationMs(0L, partFile, wallClockDurationMs)
                     }
                     publishMp3ToMediaStore(
                         rawPartFile = partFile,
@@ -241,7 +300,8 @@ class MediaWriter(
             return null
         } finally {
             try { partFile.delete() } catch (_: Exception) {}
-            try { muxedTempFile?.delete() } catch (_: Exception) {}
+            try { muxedM4aFile?.delete() } catch (_: Exception) {}
+            try { extractedMp3File?.delete() } catch (_: Exception) {}
             tempPartFile = null
         }
     }
