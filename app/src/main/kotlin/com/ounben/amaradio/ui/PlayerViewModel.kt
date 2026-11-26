@@ -29,7 +29,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         val currentStation: DataRadioStation? = null,
         val playState: PlayState = PlayState.Idle,
         val liveInfo: StreamLiveInfo = StreamLiveInfo(null),
-        val isFavorite: Boolean = false
+        val isFavorite: Boolean = false,
+        val sleepTimerRemainingMinutes: Int = 0
     )
 
     private val _uiState = MutableStateFlow(PlayerUiState())
@@ -52,6 +53,7 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                     PlayerService.PLAYER_SERVICE_STATE_CHANGE,
                     PlayerService.PLAYER_SERVICE_META_UPDATE,
                     PlayerService.PLAYER_SERVICE_BOUND -> updateState()
+                    PlayerService.PLAYER_SERVICE_TIMER_UPDATE -> updateSleepTimerState()
                 }
             }
         }
@@ -87,7 +89,8 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
                 currentStation = station,
                 playState = state,
                 liveInfo = PlayerServiceUtil.getMetadataLive(),
-                isFavorite = station?.let { s -> (getApplication<AMARadioApp>()).favouriteManager.has(s.StationUuid) } ?: false
+                isFavorite = station?.let { s -> (getApplication<AMARadioApp>()).favouriteManager.has(s.StationUuid) } ?: false,
+                sleepTimerRemainingMinutes = getSleepTimerRemainingMinutes()
             )
         }
         
@@ -126,6 +129,16 @@ class PlayerViewModel(application: Application) : AndroidViewModel(application) 
         val station = _uiState.value.currentStation
         val fav = station?.let { s -> (getApplication<AMARadioApp>()).favouriteManager.has(s.StationUuid) } ?: false
         _uiState.update { it.copy(isFavorite = fav) }
+    }
+
+    private fun getSleepTimerRemainingMinutes(): Int {
+        val seconds = PlayerServiceUtil.getTimerSeconds()
+        return if (seconds > 0) ((seconds + 59) / 60).toInt() else 0
+    }
+
+    private fun updateSleepTimerState() {
+        val minutes = getSleepTimerRemainingMinutes()
+        _uiState.update { it.copy(sleepTimerRemainingMinutes = minutes) }
     }
 
     fun togglePlayPause() {

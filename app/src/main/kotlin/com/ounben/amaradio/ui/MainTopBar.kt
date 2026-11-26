@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.outlined.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,7 +21,10 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -49,6 +53,7 @@ fun MainTopBar(
     onDeleteClick: () -> Unit,
     onViewToggleClick: () -> Unit,
     isGridView: Boolean,
+    sleepTimerRemainingMinutes: Int = 0,
     isDeleteVisible: Boolean,
     deleteTitleRes: Int,
     currentStation: DataRadioStation? = null,
@@ -134,8 +139,15 @@ fun MainTopBar(
             },
             navigationIcon = {
                 if (isSearching) {
-                    IconButton(onClick = { onSearchToggle(false) }) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.accessibility_search_back))
+                    IconButton(
+                        onClick = { onSearchToggle(false) },
+                        modifier = Modifier.size(48.dp)
+                    ) {
+                        Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            contentDescription = stringResource(R.string.accessibility_search_back),
+                            modifier = Modifier.size(24.dp)
+                        )
                     }
                 }
             },
@@ -147,47 +159,95 @@ fun MainTopBar(
                                 textFieldValue = TextFieldValue("", TextRange(0))
                                 onSearchQueryChange("")
                             },
-                            modifier = Modifier.size(38.dp)
+                            modifier = Modifier.size(48.dp)
                         ) {
-                            Icon(Icons.Default.Clear, contentDescription = stringResource(R.string.accessibility_clear_text))
+                            Icon(
+                                Icons.Default.Clear,
+                                contentDescription = stringResource(R.string.accessibility_clear_text),
+                                modifier = Modifier.size(24.dp)
+                            )
                         }
                     }
                 } else {
-                    CastButton()
+                    Row(
+                        horizontalArrangement = Arrangement.End,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CastButton(modifier = Modifier.size(48.dp))
 
-                    // Record Button with Timer
-                    com.ounben.amaradio.recorder.RecordButtonWithTimer(
-                        currentStation = currentStation,
-                        iconSize = 22.dp,
-                        modifier = Modifier.size(38.dp)
-                    )
+                        // Record Button with Timer
+                        com.ounben.amaradio.recorder.RecordButtonWithTimer(
+                            currentStation = currentStation,
+                            iconSize = 24.dp,
+                            modifier = Modifier.size(48.dp)
+                        )
 
-                    IconButton(
-                        onClick = { onSearchToggle(true) },
-                        modifier = Modifier.size(38.dp)
-                    ) {
-                        Icon(Icons.Default.Search, contentDescription = stringResource(R.string.action_search), modifier = Modifier.size(22.dp))
-                    }
-                    IconButton(
-                        onClick = onFilterClick,
-                        modifier = Modifier.size(38.dp)
-                    ) {
-                        Icon(Icons.Default.FilterList, contentDescription = stringResource(R.string.action_filter), modifier = Modifier.size(22.dp))
-                    }
-                    
-                    var showMenu by remember { mutableStateOf(false) }
-                    IconButton(
-                        onClick = { showMenu = true },
-                        modifier = Modifier.size(38.dp)
-                    ) {
-                        Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.accessibility_menu), modifier = Modifier.size(22.dp))
-                    }
+                        IconButton(
+                            onClick = { onSearchToggle(true) },
+                            modifier = Modifier.size(48.dp)
+                        ) {
+                            Icon(
+                                Icons.Default.Search,
+                                contentDescription = stringResource(R.string.action_search),
+                                modifier = Modifier.size(24.dp)
+                            )
+                        }
 
-                    DropdownMenu(
-                        expanded = showMenu,
-                        onDismissRequest = { showMenu = false },
-                        modifier = Modifier.background(MaterialTheme.colorScheme.surface)
-                    ) {
+                        val isSleepTimerActive = sleepTimerRemainingMinutes > 0
+                        val sleepTimerStateDescription = if (isSleepTimerActive) {
+                            pluralStringResource(
+                                R.plurals.accessibility_sleep_timer_active,
+                                sleepTimerRemainingMinutes,
+                                sleepTimerRemainingMinutes
+                            )
+                        } else {
+                            null
+                        }
+                        IconButton(
+                            onClick = onSleepTimerClick,
+                            modifier = Modifier
+                                .size(48.dp)
+                                .semantics {
+                                    if (sleepTimerStateDescription != null) {
+                                        stateDescription = sleepTimerStateDescription
+                                    }
+                                }
+                        ) {
+                            if (isSleepTimerActive) {
+                                Icon(
+                                    painter = painterResource(R.drawable.ic_timer_play_24dp),
+                                    contentDescription = stringResource(R.string.nav_item_add_sleep),
+                                    tint = AmaradioAmber,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            } else {
+                                Icon(
+                                    imageVector = Icons.Outlined.Timer,
+                                    contentDescription = stringResource(R.string.nav_item_add_sleep),
+                                    tint = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+                        }
+
+                        var showMenu by remember { mutableStateOf(false) }
+                        Box {
+                            IconButton(
+                                onClick = { showMenu = true },
+                                modifier = Modifier.size(48.dp)
+                            ) {
+                                Icon(
+                                    Icons.Default.MoreVert,
+                                    contentDescription = stringResource(R.string.accessibility_menu),
+                                    modifier = Modifier.size(24.dp)
+                                )
+                            }
+
+                            DropdownMenu(
+                                expanded = showMenu,
+                                onDismissRequest = { showMenu = false },
+                                modifier = Modifier.background(MaterialTheme.colorScheme.surface)
+                            ) {
                         DropdownMenuItem(
                             text = { Text(stringResource(if (isGridView) R.string.action_list_view else R.string.action_grid_view)) },
                             leadingIcon = { Icon(if (isGridView) Icons.AutoMirrored.Filled.List else Icons.Default.GridView, contentDescription = null) },
@@ -197,10 +257,10 @@ fun MainTopBar(
                             }
                         )
                         DropdownMenuItem(
-                            text = { Text(stringResource(R.string.nav_item_add_sleep)) },
-                            leadingIcon = { Icon(Icons.Default.Timer, contentDescription = null) },
+                            text = { Text(stringResource(R.string.action_filter)) },
+                            leadingIcon = { Icon(Icons.Default.FilterList, contentDescription = null) },
                             onClick = {
-                                onSleepTimerClick()
+                                onFilterClick()
                                 showMenu = false
                             }
                         )
@@ -248,6 +308,8 @@ fun MainTopBar(
                                     showMenu = false
                                 }
                             )
+                        }
+                            }
                         }
                     }
                 }

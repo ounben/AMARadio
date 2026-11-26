@@ -216,6 +216,7 @@ fun MainScreen(
                     },
                     onViewToggleClick = { mainViewModel.toggleGridView() },
                     isGridView = mainUiState.isGridView,
+                    sleepTimerRemainingMinutes = playerUiState.sleepTimerRemainingMinutes,
                     isDeleteVisible = currentRoute == Screen.Favourites.route || currentRoute == Screen.History.route,
                     deleteTitleRes = R.string.action_delete,
                     currentStation = playerUiState.currentStation,

@@ -232,6 +232,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private fun addTimer(secondsAdd: Int) {
         timer?.cancel()
         seconds += secondsAdd.toLong()
+        if (seconds <= 0) {
+            clearTimer()
+            return
+        }
+        sendBroadCast(PLAYER_SERVICE_TIMER_UPDATE)
         timer = object : CountDownTimer(seconds * 1000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 seconds = millisUntilFinished / 1000
@@ -239,8 +244,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 sendBroadCast(PLAYER_SERVICE_TIMER_UPDATE)
             }
             override fun onFinish() {
-                stop()
+                seconds = 0
                 timer = null
+                sendBroadCast(PLAYER_SERVICE_TIMER_UPDATE)
+                stop()
             }
         }.start()
     }
