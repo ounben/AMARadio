@@ -307,8 +307,6 @@ fun MainScreen(
                                     onStationClick = { station ->
                                         if (sharedPrefHasExternalPlayer(context)) showPlayerSelectorDialog = station
                                         else playerViewModel.play(station)
-                                        mainViewModel.setSearchActive(false)
-                                        searchViewModel.clearResults()
                                     },
                                     onFavoriteClick = { station ->
                                         if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
