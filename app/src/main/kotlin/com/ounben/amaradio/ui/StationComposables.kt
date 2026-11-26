@@ -35,11 +35,15 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Radio
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.filled.VerticalAlignTop
 import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.*
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
@@ -62,8 +66,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -702,6 +709,7 @@ fun ReorderableStationList(
     val playingStationUuid = playerUiState.currentStation?.StationUuid
     val stationsLocal = remember { mutableStateListOf<DataRadioStation>() }
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+    var stationToMove by remember { mutableStateOf<Pair<Int, DataRadioStation>?>(null) }
     
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
@@ -728,6 +736,7 @@ fun ReorderableStationList(
             itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { index, station ->
                 ReorderableItem(reorderableState, key = station.StationUuid) { isDragging ->
                     val itemScope = this
+                    val reorderLabel = stringResource(R.string.accessibility_reorder_station, station.Name)
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -755,12 +764,16 @@ fun ReorderableStationList(
                                     Box(
                                         modifier = dragModifier
                                             .size(48.dp)
+                                            .clearAndSetSemantics {
+                                                contentDescription = reorderLabel
+                                            }
+                                            .clickable { stationToMove = index to station }
                                             .draggableHandle(),
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Icon(
                                             imageVector = Icons.Default.DragHandle,
-                                            contentDescription = stringResource(R.string.accessibility_reorder),
+                                            contentDescription = null,
                                             tint = MaterialTheme.colorScheme.onSurface,
                                             modifier = Modifier.size(24.dp)
                                         )
@@ -778,6 +791,10 @@ fun ReorderableStationList(
             onReorder(stationsLocal.toList())
         }
 
+        val moveToTopLabel = stringResource(R.string.action_move_to_top)
+        val moveUpLabel = stringResource(R.string.action_move_up)
+        val moveDownLabel = stringResource(R.string.action_move_down)
+
         LazyColumn(
             state = listState,
             modifier = modifier.fillMaxSize(),
@@ -787,7 +804,32 @@ fun ReorderableStationList(
                 ReorderableItem(reorderableState, key = station.StationUuid) { isDragging ->
                     val itemScope = this
                     val elevation by animateDpAsState(if (isDragging) 8.dp else 0.dp)
-                    
+                    val reorderLabel = stringResource(R.string.accessibility_reorder_station, station.Name)
+
+                    val customActionsList = remember(index, stationsLocal.size, moveToTopLabel, moveUpLabel, moveDownLabel) {
+                        val list = mutableListOf<CustomAccessibilityAction>()
+                        if (index > 0) {
+                            list.add(CustomAccessibilityAction(label = moveToTopLabel) {
+                                stationsLocal.add(0, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                            list.add(CustomAccessibilityAction(label = moveUpLabel) {
+                                stationsLocal.add(index - 1, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                        }
+                        if (index < stationsLocal.lastIndex) {
+                            list.add(CustomAccessibilityAction(label = moveDownLabel) {
+                                stationsLocal.add(index + 1, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                        }
+                        list
+                    }
+
                     Surface(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -814,17 +856,31 @@ fun ReorderableStationList(
                                 dragHandle = { dragModifier ->
                                     with(itemScope) {
                                         Box(
-                                            modifier = dragModifier
+                                            modifier = Modifier
                                                 .width(56.dp)
-                                                .draggableHandle(),
+                                                .fillMaxHeight()
+                                                .semantics {
+                                                    customActions = customActionsList
+                                                },
                                             contentAlignment = Alignment.Center
                                         ) {
-                                            Icon(
-                                                imageVector = Icons.Default.DragHandle,
-                                                contentDescription = stringResource(R.string.accessibility_reorder),
-                                                tint = MaterialTheme.colorScheme.onSurface,
-                                                modifier = Modifier.size(24.dp)
-                                            )
+                                            Box(
+                                                modifier = dragModifier
+                                                    .size(48.dp)
+                                                    .clearAndSetSemantics {
+                                                        contentDescription = reorderLabel
+                                                    }
+                                                    .clickable { stationToMove = index to station }
+                                                    .draggableHandle(),
+                                                contentAlignment = Alignment.Center
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.DragHandle,
+                                                    contentDescription = null,
+                                                    tint = MaterialTheme.colorScheme.onSurface,
+                                                    modifier = Modifier.size(24.dp)
+                                                )
+                                            }
                                         }
                                     }
                                 }
@@ -841,6 +897,20 @@ fun ReorderableStationList(
         }
     }
 
+    stationToMove?.let { (currentIndex, station) ->
+        PositionPickerDialog(
+            station = station,
+            currentIndex = currentIndex,
+            allStations = stationsLocal.toList(),
+            onPositionSelected = { targetIndex ->
+                stationsLocal.add(targetIndex, stationsLocal.removeAt(currentIndex))
+                onReorder(stationsLocal.toList())
+                stationToMove = null
+            },
+            onDismiss = { stationToMove = null }
+        )
+    }
+
     stationWithOptions?.let { station ->
         StationOptionsDialog(
             station = station,
@@ -850,6 +920,92 @@ fun ReorderableStationList(
             onDismiss = { stationWithOptions = null }
         )
     }
+}
+
+@Composable
+fun PositionPickerDialog(
+    station: DataRadioStation,
+    currentIndex: Int,
+    allStations: List<DataRadioStation>,
+    onPositionSelected: (targetIndex: Int) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val currentLabel = stringResource(R.string.label_current_position)
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = (currentIndex - 2).coerceAtLeast(0))
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp,
+        title = {
+            Text(
+                text = stringResource(R.string.dialog_move_to_position_title, station.Name),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
+        text = {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 360.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                itemsIndexed(allStations) { idx, targetStation ->
+                    val isCurrent = idx == currentIndex
+                    val itemText = "${idx + 1}. ${targetStation.Name}${if (isCurrent) " $currentLabel" else ""}"
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .selectable(
+                                selected = isCurrent,
+                                role = Role.RadioButton,
+                                onClick = {
+                                    if (idx != currentIndex) {
+                                        onPositionSelected(idx)
+                                    } else {
+                                        onDismiss()
+                                    }
+                                }
+                            )
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = isCurrent,
+                            onClick = null,
+                            colors = RadioButtonDefaults.colors(selectedColor = AmaradioAmber)
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = itemText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Normal,
+                            color = if (isCurrent) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = {
+            TextButton(
+                onClick = onDismiss,
+                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
+            ) {
+                Text(
+                    text = stringResource(R.string.label_button_cancel),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+        }
+    )
 }
 
 @Composable
