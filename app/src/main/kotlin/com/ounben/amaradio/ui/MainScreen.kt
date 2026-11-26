@@ -433,29 +433,33 @@ fun MainScreen(
                         }
                     }
 
-                    // Bottom-right Scroll-to-Top button positioned cleanly above the MiniPlayer
-                    if (!isPlayerExpanded && scrollToTopController.showScrollToTop) {
-                        val baseBottomPadding = if (useWideLayout) {
-                            16.dp
-                        } else if (miniPlayerHeightDp > 0.dp) {
-                            miniPlayerHeightDp + 12.dp
-                        } else {
-                            contentBottomPadding + 12.dp
-                        }
-                        ScrollToTopButton(
-                            onClick = {
-                                coroutineScope.launch {
-                                    scrollToTopController.scrollToTop()
-                                }
-                            },
-                            modifier = Modifier
-                                .align(Alignment.BottomEnd)
-                                .padding(
-                                    end = 16.dp,
-                                    bottom = baseBottomPadding + scrollToTopController.extraBottomOffset,
-                                )
-                        )
+                    // Permanently visible bottom-right Scroll-to-Top button positioned above the MiniPlayer
+                    val baseBottomPadding = if (useWideLayout) {
+                        16.dp
+                    } else if (miniPlayerHeightDp > 0.dp) {
+                        miniPlayerHeightDp + 12.dp
+                    } else {
+                        contentBottomPadding + 12.dp
                     }
+                    ScrollToTopButton(
+                        onClick = {
+                            coroutineScope.launch {
+                                scrollToTopController.scrollToTop()
+                            }
+                        },
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(
+                                end = 16.dp,
+                                bottom = baseBottomPadding + scrollToTopController.extraBottomOffset,
+                            )
+                            .then(
+                                if (isPlayerExpanded && playerUiState.currentStation != null)
+                                    Modifier.clearAndSetSemantics { }
+                                else
+                                    Modifier
+                            )
+                    )
 
                     // MiniPlayer / FullPlayer Container (portrait and narrow screens only)
                     if (!useWideLayout) Box(

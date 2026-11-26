@@ -1,6 +1,7 @@
 package com.ounben.amaradio.ui
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -17,7 +18,6 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,32 +35,22 @@ import androidx.compose.ui.unit.dp
 import com.ounben.amaradio.R
 
 /**
- * Coordinates the bottom-right "Scroll to top" button with whichever scrollable list/grid
- * is currently active on screen. Keeps the button alive while the scroll-to-top
- * animation and TalkBack focus transfer complete so accessibility focus is never dropped.
+ * Coordinates the permanently visible bottom-right "Scroll to top" button with
+ * whichever scrollable list, grid, or column is currently active on screen.
  */
 @Stable
 class ScrollToTopController {
     private var activeOwner: Any? = null
-    private var listCanScrollToTop by mutableStateOf(false)
-    private var isScrollingToTop by mutableStateOf(false)
     var extraBottomOffset by mutableStateOf(0.dp)
         private set
     private var scrollAction: (suspend () -> Unit)? = null
 
-    val showScrollToTop: Boolean
-        get() = listCanScrollToTop || isScrollingToTop
-
     fun register(
         owner: Any,
-        canScrollToTop: Boolean,
         extraBottomOffset: Dp = 0.dp,
         onScrollToTop: suspend () -> Unit,
     ) {
         activeOwner = owner
-        if (listCanScrollToTop != canScrollToTop) {
-            listCanScrollToTop = canScrollToTop
-        }
         if (this.extraBottomOffset != extraBottomOffset) {
             this.extraBottomOffset = extraBottomOffset
         }
@@ -70,21 +60,13 @@ class ScrollToTopController {
     fun unregister(owner: Any) {
         if (activeOwner === owner) {
             activeOwner = null
-            listCanScrollToTop = false
-            isScrollingToTop = false
             extraBottomOffset = 0.dp
             scrollAction = null
         }
     }
 
     suspend fun scrollToTop() {
-        val action = scrollAction ?: return
-        isScrollingToTop = true
-        try {
-            action()
-        } finally {
-            isScrollingToTop = false
-        }
+        scrollAction?.invoke()
     }
 }
 
@@ -92,7 +74,7 @@ val LocalScrollToTopController = compositionLocalOf<ScrollToTopController?> { nu
 
 /**
  * Allows HorizontalPager containers to mark only the currently selected page as active
- * so off-screen / settling pages cannot override the scroll-to-top state.
+ * so off-screen / settling pages cannot override the scroll-to-top target.
  */
 val LocalScrollToTopActive = compositionLocalOf { true }
 
@@ -137,9 +119,6 @@ fun BindScrollToTop(
     val controller = LocalScrollToTopController.current ?: return
     val isActive = LocalScrollToTopActive.current && enabled
     val owner = remember { Any() }
-    val canScroll by remember(listState) {
-        derivedStateOf { listState.firstVisibleItemIndex > 3 }
-    }
 
     DisposableEffect(controller, isActive, owner) {
         if (!isActive) {
@@ -150,17 +129,15 @@ fun BindScrollToTop(
         }
     }
 
-    LaunchedEffect(controller, isActive, owner, canScroll, extraBottomOffset, listState, firstItemFocusRequester) {
+    LaunchedEffect(controller, isActive, owner, extraBottomOffset, listState, firstItemFocusRequester) {
         if (isActive) {
             controller.register(
                 owner = owner,
-                canScrollToTop = canScroll,
                 extraBottomOffset = extraBottomOffset,
             ) {
                 listState.animateScrollToItem(0)
                 withFrameNanos { }
                 runCatching { firstItemFocusRequester.requestFocus() }
-                withFrameNanos { }
             }
         }
     }
@@ -176,9 +153,6 @@ fun BindScrollToTop(
     val controller = LocalScrollToTopController.current ?: return
     val isActive = LocalScrollToTopActive.current && enabled
     val owner = remember { Any() }
-    val canScroll by remember(gridState) {
-        derivedStateOf { gridState.firstVisibleItemIndex > 3 }
-    }
 
     DisposableEffect(controller, isActive, owner) {
         if (!isActive) {
@@ -189,17 +163,46 @@ fun BindScrollToTop(
         }
     }
 
-    LaunchedEffect(controller, isActive, owner, canScroll, extraBottomOffset, gridState, firstItemFocusRequester) {
+    LaunchedEffect(controller, isActive, owner, extraBottomOffset, gridState, firstItemFocusRequester) {
         if (isActive) {
             controller.register(
                 owner = owner,
-                canScrollToTop = canScroll,
                 extraBottomOffset = extraBottomOffset,
             ) {
                 gridState.animateScrollToItem(0)
                 withFrameNanos { }
                 runCatching { firstItemFocusRequester.requestFocus() }
-                withFrameNanos { }
+            }
+        }
+    }
+}
+
+@Composable
+fun BindScrollToTop(
+    scrollState: ScrollState,
+    enabled: Boolean = true,
+    extraBottomOffset: Dp = 0.dp,
+) {
+    val controller = LocalScrollToTopController.current ?: return
+    val isActive = LocalScrollToTopActive.current && enabled
+    val owner = remember { Any() }
+
+    DisposableEffect(controller, isActive, owner) {
+        if (!isActive) {
+            controller.unregister(owner)
+        }
+        onDispose {
+            controller.unregister(owner)
+        }
+    }
+
+    LaunchedEffect(controller, isActive, owner, extraBottomOffset, scrollState) {
+        if (isActive) {
+            controller.register(
+                owner = owner,
+                extraBottomOffset = extraBottomOffset,
+            ) {
+                scrollState.animateScrollTo(0)
             }
         }
     }

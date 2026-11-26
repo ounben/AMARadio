@@ -64,6 +64,8 @@ fun SettingsScreen(
     val serverInfoUiState by serverInfoViewModel.uiState.collectAsStateWithLifecycle()
     val scrollState = rememberScrollState()
 
+    BindScrollToTop(scrollState = scrollState)
+
     val context = LocalContext.current
     fun checkBatteryIgnoring(): Boolean {
         val pm = context.applicationContext.getSystemService(Context.POWER_SERVICE) as? PowerManager
