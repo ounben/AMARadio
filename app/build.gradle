@@ -8,7 +8,7 @@ plugins {
 
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-def appVersion = "1.51"
+def appVersion = "1.52"
 
 base {
     archivesName.set("AMARadio_${appVersion}")
@@ -59,6 +59,7 @@ def getGitCommitDate() {
 android {
     namespace = 'com.ounben.amaradio'
     compileSdk 37
+    compileSdkMinor 2
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_21
@@ -92,7 +93,7 @@ android {
         minSdk 26
         targetSdk 37
 
-        versionCode 181
+        versionCode 182
         versionName appVersion
 
         vectorDrawables.useSupportLibrary = true

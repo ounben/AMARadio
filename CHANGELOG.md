@@ -5,6 +5,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.52] - 2026-11-21
+### Added
+- **TalkBack Position-Picker Dialog for Favorites Reordering (#168)**: Tapping or double-tapping the reorder drag handle in the Favorites tab opens a direct `PositionPickerDialog` (`1` to `N`) with explicit position announcements (*"2. Radio Paradiso (current), Radio button, selected"*). Long-press & drag remains fully functional for sighted users.
+- **Dedicated Clear Buttons in Filter Form (#168)**: Added dedicated, always-visible 'X' clear buttons next to every form field in `FilterScreen`.
+- **TalkBack Single-Swipe Form Field Focus (#168)**: Refactored `CustomFilterField` and `DropdownFilterField` semantics so TalkBack navigates directly into form text fields in a single swipe without duplicate "None" node announcements.
+- **Smart Focus on Blank Filter Tab Name (#168)**: Tapping "Filter anwenden" with a blank tab name automatically scrolls to the top of the form, opens the soft keyboard, and places focus directly into the "Tab umbenennen" field.
+- **Recording Playback TalkBack Labels (#168)**: Added dedicated TalkBack action labels for recording playback (`action_play_recording` / `action_pause_recording`) to prevent confusion with the main radio player.
+- **Global Localization Update**: Synchronized all 7 new string keys across 88 language resource folders.
+
+### Changed
+- **Top Menu Search Query Retention (#164, #168)**: Search query and search results list remain active on screen when starting a radio station, allowing users to sample multiple stations without re-typing their search.
+- **Non-Draggable Filter BottomSheet**: Locked `ModalBottomSheet` from being accidentally dismissed on swipe-down gestures (`confirmValueChange = { targetValue -> targetValue != SheetValue.Hidden }`, `dragHandle = null`), using an explicit Navigation Back Arrow button instead.
+- **TalkBack Single-Flow Selection Lists**: Refactored country selection rows in `MultiSearchableSelectionDialog` and `SearchableSelectionDialog` to use native `Modifier.toggleable(role = Role.Checkbox)` for seamless announcement without artificial delays (*"Andorra, Checkbox, unchecked"*).
+- **Dependency Updates**: Updated Gradle (`9.5.3`), Jetpack Compose BOM (`2026.11.01`), Lifecycle (`2.11.1`), Lifecycle Compose (`2.11.1`), and Kotlinx Serialization JSON (`1.13.0`).
+
+### Fixed
+- **Lazy List Boundary Clipping (#168)**: Applied `clipToBounds()` and bottom `contentPadding` to `LazyColumn` and `LazyVerticalGrid` so TalkBack swiping cleanly scrolls through all list items above the MiniPlayer.
+
 ## [1.51] - 2026-11-21
 ### Added
 - **Backup & Restore Includes Settings & Custom Filters (#172)**: Extended ZIP backup and restore format to include all App Settings (`SharedPreferences`) and Custom Filter Tabs (`filter_tab` SQLite table) with full backward compatibility for older backup files.
