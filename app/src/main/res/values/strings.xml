@@ -411,6 +411,8 @@
     <string name="accessibility_maximize_player">Maximize player</string>
     <string name="action_play_recording">Play recording</string>
     <string name="action_pause_recording">Pause recording</string>
+    <string name="dialog_replace_recording_title">Recording in progress</string>
+    <string name="dialog_replace_recording_message">\"%1$s\" is currently being recorded. Do you want to stop and save the current recording and start recording \"%2$s\"?</string>
     <string name="action_rewind_15s">Rewind 15 seconds</string>
     <string name="action_forward_15s">Forward 15 seconds</string>
     <string name="accessibility_seek_slider">Playback position</string>

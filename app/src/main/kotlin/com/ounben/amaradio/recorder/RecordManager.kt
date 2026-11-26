@@ -17,7 +17,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
+import java.util.Collections
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.atomic.AtomicLong
 
 /**
  * Singleton RecordManager. Runs an independent background recording stream via OkHttp + RecordIcyStream + MediaWriter.
@@ -36,25 +38,58 @@ class RecordManager private constructor(private val context: Context) {
         val error: String? = null
     )
 
+    private class RecordingSession(
+        val id: Long,
+        val station: DataRadioStation,
+        val startTimeMs: Long
+    ) {
+        @Volatile var isActive: Boolean = true
+        @Volatile var initialFormatDetected: Boolean = false
+        @Volatile var mediaWriter: MediaWriter? = null
+        @Volatile var activeDecoupledRecorder: ThreadDecoupledRecorder? = null
+        @Volatile var httpClient: okhttp3.OkHttpClient? = null
+        @Volatile var recordingThread: Thread? = null
+        @Volatile var autoStopJob: Job? = null
+        val trackChapters: MutableList<Pair<String, Long>> = Collections.synchronizedList(mutableListOf())
+    }
+
     private val _recordingState = MutableStateFlow(RecordingState())
     val recordingState: StateFlow<RecordingState> = _recordingState.asStateFlow()
 
-    private var currentStation: DataRadioStation? = null
-    private var mediaWriter: MediaWriter? = null
-    private var startTimeMs: Long = 0L
-    private var initialFormatDetected = false
-    private var recordingThread: Thread? = null
-    private var autoStopJob: Job? = null
-    private var activeDecoupledRecorder: ThreadDecoupledRecorder? = null
-    private val trackChapters = mutableListOf<Pair<String, Long>>()
+    private val sessionLock = Any()
+    private val sessionIdGenerator = AtomicLong(0L)
+    @Volatile
+    private var activeSession: RecordingSession? = null
 
     fun startRecording(station: DataRadioStation, timerDurationMs: Long = 0L) {
-        if (_recordingState.value.isRecording) return
+        synchronized(sessionLock) {
+            if (activeSession != null) return
+            startSessionLocked(station, timerDurationMs)
+        }
+    }
 
-        currentStation = station
-        startTimeMs = System.currentTimeMillis()
-        initialFormatDetected = false
-        trackChapters.clear()
+    /**
+     * Stops and saves any currently active recording (if one is running) and immediately starts
+     * recording [station] without tearing down the foreground service in between.
+     */
+    fun replaceRecording(station: DataRadioStation, timerDurationMs: Long = 0L) {
+        val previousSession = synchronized(sessionLock) {
+            val detached = detachActiveSessionLocked(stopForegroundService = false)
+            startSessionLocked(station, timerDurationMs)
+            detached
+        }
+        if (previousSession != null) {
+            finalizeDetachedSessionAsync(previousSession)
+        }
+    }
+
+    private fun startSessionLocked(station: DataRadioStation, timerDurationMs: Long) {
+        val session = RecordingSession(
+            id = sessionIdGenerator.incrementAndGet(),
+            station = station,
+            startTimeMs = System.currentTimeMillis()
+        )
+        activeSession = session
 
         _recordingState.value = RecordingState(
             isRecording = true,
@@ -65,46 +100,57 @@ class RecordManager private constructor(private val context: Context) {
         RecordService.startService(context, station.Name)
 
         // Schedule auto-stop timer if duration is specified (> 0)
-        autoStopJob?.cancel()
         if (timerDurationMs > 0) {
-            autoStopJob = CoroutineScope(Dispatchers.IO).launch {
+            session.autoStopJob = CoroutineScope(Dispatchers.IO).launch {
                 kotlinx.coroutines.delay(timerDurationMs)
-                if (_recordingState.value.isRecording) {
-                    Log.d("RecordManager", "Auto-stop recording timer expired")
-                    stopRecording()
+                if (session.isActive) {
+                    Log.d("RecordManager", "Auto-stop recording timer expired for ${station.Name}")
+                    stopSession(session)
                 }
             }
         }
 
         // Start independent background recording stream on dedicated MAX_PRIORITY thread
-        recordingThread?.interrupt()
-        recordingThread = Thread({
-            startIndependentRecordingStream(station)
-        }, "AMARadio-Recorder-Thread").apply {
+        session.recordingThread = Thread({
+            startIndependentRecordingStream(session)
+        }, "AMARadio-Recorder-Thread-${session.id}").apply {
             priority = Thread.MAX_PRIORITY
             start()
         }
     }
 
-    private fun startIndependentRecordingStream(station: DataRadioStation) {
+    private inline fun updateStateIfActive(
+        session: RecordingSession,
+        transform: (RecordingState) -> RecordingState
+    ) {
+        synchronized(sessionLock) {
+            if (activeSession === session && session.isActive) {
+                _recordingState.value = transform(_recordingState.value)
+            }
+        }
+    }
+
+    private fun startIndependentRecordingStream(session: RecordingSession) {
+        val station = session.station
         val isolatedClient = okhttp3.OkHttpClient.Builder()
             .connectionPool(okhttp3.ConnectionPool(2, 5, TimeUnit.MINUTES))
             .dispatcher(okhttp3.Dispatcher().apply { maxRequestsPerHost = 2 })
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(0, TimeUnit.MILLISECONDS)
             .build()
+        session.httpClient = isolatedClient
 
         val userAgent = com.ounben.amaradio.Utils.getUserAgent(context)
 
         if (station.StreamUrl.lowercase().contains(".m3u8") || station.Hls == 1) {
-            recordViaHls(isolatedClient, station.StreamUrl, userAgent, station)
+            recordViaHls(session, isolatedClient, station.StreamUrl, userAgent)
             return
         }
 
         var currentStreamUrl = station.StreamUrl
         var reconnectAttempts = 0
 
-        while (_recordingState.value.isRecording) {
+        while (session.isActive) {
             val request = okhttp3.Request.Builder()
                 .url(currentStreamUrl)
                 .header("User-Agent", userAgent)
@@ -114,11 +160,12 @@ class RecordManager private constructor(private val context: Context) {
 
             try {
                 isolatedClient.newCall(request).execute().use { response ->
+                    if (!session.isActive) return
                     if (!response.isSuccessful) {
                         Log.w("RecordManager", "Recording connection attempt returned HTTP ${response.code}")
                         reconnectAttempts++
                         if (reconnectAttempts > 5) {
-                            stopRecording()
+                            stopSession(session)
                             return
                         }
                         try { Thread.sleep(2000) } catch (_: Exception) {}
@@ -131,14 +178,15 @@ class RecordManager private constructor(private val context: Context) {
                     Log.i("RecordManager", "Connected to ${station.Name}. HTTP ${response.code}, Content-Type: $contentType, URL: $finalUrl")
                     val rawStream: InputStream = response.body.byteStream()
 
-                    if (!initialFormatDetected) {
+                    if (!session.initialFormatDetected) {
                         val peekBuffer = ByteArray(16384)
                         var bytesRead = 0
-                        while (bytesRead < peekBuffer.size) {
+                        while (bytesRead < peekBuffer.size && session.isActive) {
                             val r = rawStream.read(peekBuffer, bytesRead, peekBuffer.size - bytesRead)
                             if (r == -1) break
                             bytesRead += r
                         }
+                        if (!session.isActive) return@use
                         val sampleBytes = peekBuffer.copyOf(bytesRead)
 
                         // Dynamic HLS detection: many TV / AAC streams serve an HLS playlist without
@@ -163,63 +211,76 @@ class RecordManager private constructor(private val context: Context) {
 
                         val detectedFormat = FormatParser.detectFormat(station.Codec, contentType, sampleBytes)
                         Log.i("RecordManager", "Detected format for ${station.Name}: ${detectedFormat.extension} (${detectedFormat.mimeType})")
-                        mediaWriter = MediaWriter(context, station.Name, detectedFormat)
+                        val writer = MediaWriter(context, station.Name, detectedFormat)
 
-                        if (mediaWriter?.openStream(station.StationUuid) != true) {
+                        if (!writer.openStream(station.StationUuid)) {
                             Log.e("RecordManager", "Failed to open MediaWriter stream for ${station.Name}")
-                            stopRecording()
+                            stopSession(session)
                             return
                         }
 
-                        initialFormatDetected = true
+                        session.mediaWriter = writer
+                        session.initialFormatDetected = true
                         val uiExt = when (detectedFormat) {
                             FormatParser.AudioFormat.AAC,
                             FormatParser.AudioFormat.AAC_PLUS,
                             FormatParser.AudioFormat.MPEG_TS -> FormatParser.AudioFormat.M4A.extension
                             else -> detectedFormat.extension
                         }
-                        _recordingState.value = _recordingState.value.copy(formatExtension = uiExt)
+                        updateStateIfActive(session) { it.copy(formatExtension = uiExt) }
 
                         if (bytesRead > 0) {
-                            mediaWriter?.write(peekBuffer, bytesRead)
+                            writer.write(peekBuffer, bytesRead)
                         }
                     }
 
-                    val writer = mediaWriter ?: return@use
+                    if (!session.isActive) return@use
+                    val writer = session.mediaWriter ?: return@use
                     val decoupledRecorder = ThreadDecoupledRecorder(
                         inputStream = rawStream,
                         mediaWriter = writer,
                         onBytesWritten = { addedBytes ->
-                            val elapsed = System.currentTimeMillis() - startTimeMs
-                            _recordingState.value = _recordingState.value.copy(
-                                durationMs = elapsed,
-                                fileSizeBytes = _recordingState.value.fileSizeBytes + addedBytes
-                            )
+                            val elapsed = System.currentTimeMillis() - session.startTimeMs
+                            updateStateIfActive(session) {
+                                it.copy(
+                                    durationMs = elapsed,
+                                    fileSizeBytes = it.fileSizeBytes + addedBytes
+                                )
+                            }
                         },
                         onDiskError = { e ->
                             Log.e("RecordManager", "Storage full or disk write failed", e)
-                            _recordingState.value = _recordingState.value.copy(
-                                error = context.getString(com.ounben.amaradio.R.string.database_error_no_space)
-                            )
-                            stopRecording()
+                            updateStateIfActive(session) {
+                                it.copy(
+                                    error = context.getString(com.ounben.amaradio.R.string.database_error_no_space)
+                                )
+                            }
+                            stopSession(session)
                         }
                     )
 
-                    activeDecoupledRecorder = decoupledRecorder
-                    decoupledRecorder.start()
+                    session.activeDecoupledRecorder = decoupledRecorder
+                    if (session.isActive) {
+                        try {
+                            decoupledRecorder.start()
+                        } finally {
+                            session.activeDecoupledRecorder = null
+                        }
+                    }
                 }
 
+                if (!session.isActive) break
                 detectedHlsUrl?.let { hlsUrl ->
-                    recordViaHls(isolatedClient, hlsUrl, userAgent, station)
+                    recordViaHls(session, isolatedClient, hlsUrl, userAgent)
                     return
                 }
             } catch (e: Exception) {
-                if (!_recordingState.value.isRecording) break
+                if (!session.isActive) break
                 Log.w("RecordManager", "Recording stream disconnected: ${e.message}. Reconnecting in 2s...")
                 reconnectAttempts++
                 if (reconnectAttempts > 5) {
                     Log.e("RecordManager", "Max reconnect attempts reached")
-                    stopRecording()
+                    stopSession(session)
                     break
                 }
                 try { Thread.sleep(2000) } catch (_: Exception) {}
@@ -228,31 +289,38 @@ class RecordManager private constructor(private val context: Context) {
     }
 
     private fun recordViaHls(
+        session: RecordingSession,
         httpClient: okhttp3.OkHttpClient,
         hlsUrl: String,
-        userAgent: String,
-        station: DataRadioStation
+        userAgent: String
     ) {
+        val station = session.station
         HlsResolver.recordHlsStream(
             httpClient = httpClient,
             m3u8Url = hlsUrl,
             userAgent = userAgent,
-            isRecording = { _recordingState.value.isRecording },
+            isRecording = { session.isActive },
             onAudioData = { data, len ->
-                if (!initialFormatDetected) {
+                if (!session.isActive) return@recordHlsStream
+                if (!session.initialFormatDetected) {
                     val detectedFormat = FormatParser.detectFormat(station.Codec, "audio/aac", data.copyOf(minOf(len, 16384)))
-                    mediaWriter = MediaWriter(context, station.Name, detectedFormat, isHls = true)
-                    if (mediaWriter?.openStream(station.StationUuid) == true) {
-                        initialFormatDetected = true
-                        _recordingState.value = _recordingState.value.copy(formatExtension = FormatParser.AudioFormat.M4A.extension)
+                    val writer = MediaWriter(context, station.Name, detectedFormat, isHls = true)
+                    if (writer.openStream(station.StationUuid)) {
+                        session.mediaWriter = writer
+                        session.initialFormatDetected = true
+                        updateStateIfActive(session) {
+                            it.copy(formatExtension = FormatParser.AudioFormat.M4A.extension)
+                        }
                     }
                 }
-                mediaWriter?.write(data, len)
-                val elapsed = System.currentTimeMillis() - startTimeMs
-                _recordingState.value = _recordingState.value.copy(
-                    durationMs = elapsed,
-                    fileSizeBytes = _recordingState.value.fileSizeBytes + len
-                )
+                session.mediaWriter?.write(data, len)
+                val elapsed = System.currentTimeMillis() - session.startTimeMs
+                updateStateIfActive(session) {
+                    it.copy(
+                        durationMs = elapsed,
+                        fileSizeBytes = it.fileSizeBytes + len
+                    )
+                }
             }
         )
     }
@@ -297,28 +365,52 @@ class RecordManager private constructor(private val context: Context) {
     }
 
     fun stopRecording() {
-        autoStopJob?.cancel()
-        autoStopJob = null
-        activeDecoupledRecorder?.stop()
-        activeDecoupledRecorder = null
-        recordingThread?.interrupt()
-        recordingThread = null
+        val sessionToStop = synchronized(sessionLock) {
+            detachActiveSessionLocked(stopForegroundService = true)
+        } ?: return
+        finalizeDetachedSessionAsync(sessionToStop)
+    }
 
-        if (!_recordingState.value.isRecording) return
+    private fun stopSession(session: RecordingSession) {
+        val sessionToStop = synchronized(sessionLock) {
+            if (activeSession !== session) return
+            detachActiveSessionLocked(stopForegroundService = true)
+        } ?: return
+        finalizeDetachedSessionAsync(sessionToStop)
+    }
 
-        val station = currentStation
-        val writer = mediaWriter
-        val chapters = trackChapters.toList()
-        mediaWriter = null
+    private fun detachActiveSessionLocked(stopForegroundService: Boolean): RecordingSession? {
+        val session = activeSession ?: return null
+        activeSession = null
+        session.isActive = false
+        session.autoStopJob?.cancel()
+        session.autoStopJob = null
+        session.activeDecoupledRecorder?.stop()
+        session.httpClient?.dispatcher?.cancelAll()
+        session.recordingThread?.interrupt()
 
-        _recordingState.value = RecordingState(isRecording = false)
-        RecordService.stopService(context)
+        if (stopForegroundService) {
+            _recordingState.value = RecordingState(isRecording = false)
+            RecordService.stopService(context)
+        }
+        return session
+    }
 
-        if (station != null && writer != null) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val result = writer.finalizeFile(station.StationUuid)
+    private fun finalizeDetachedSessionAsync(session: RecordingSession) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val thread = session.recordingThread
+            if (thread != null && thread !== Thread.currentThread()) {
+                try {
+                    thread.join(3000L)
+                } catch (_: InterruptedException) {}
+            }
+            val writer = session.mediaWriter
+            val chapters = synchronized(session.trackChapters) { session.trackChapters.toList() }
+            session.mediaWriter = null
+            if (writer != null) {
+                val result = writer.finalizeFile(session.station.StationUuid)
                 if (result != null) {
-                    saveRecordingToDatabase(station, result, chapters)
+                    saveRecordingToDatabase(session.station, session.startTimeMs, result, chapters)
                 }
             }
         }
@@ -326,6 +418,7 @@ class RecordManager private constructor(private val context: Context) {
 
     private fun saveRecordingToDatabase(
         station: DataRadioStation,
+        recordingStartTimeMs: Long,
         result: MediaWriter.RecordingResult,
         chapters: List<Pair<String, Long>>
     ) {
@@ -357,7 +450,7 @@ class RecordManager private constructor(private val context: Context) {
                         ChangeUuid = station.ChangeUuid,
                         LastCheckOkTime = station.LastCheckOkTime,
                         fileUri = result.uri.toString(),
-                        timestamp = startTimeMs,
+                        timestamp = recordingStartTimeMs,
                         durationMs = result.durationMs,
                         fileSizeBytes = result.fileSizeBytes,
                         format = result.format.extension
@@ -370,7 +463,7 @@ class RecordManager private constructor(private val context: Context) {
                             recordId = recordId,
                             trackTitle = title,
                             offsetMs = offset,
-                            timestamp = startTimeMs + offset
+                            timestamp = recordingStartTimeMs + offset
                         )
                     }
                     if (trackEntities.isNotEmpty()) {

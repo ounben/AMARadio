@@ -396,6 +396,7 @@ fun StationOptionsDialog(
         }
     }
     var showRecordTimerDialog by remember { mutableStateOf(false) }
+    var pendingReplaceRequest by remember { mutableStateOf<Pair<Long, String>?>(null) }
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
     val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
@@ -542,7 +543,6 @@ fun StationOptionsDialog(
     )
 
     if (showRecordTimerDialog) {
-        val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
         val infiniteLabel = stringResource(R.string.timer_infinite)
         val timerOptions = listOf(
             " 5 min" to 5 * 60 * 1000L,
@@ -566,15 +566,16 @@ fun StationOptionsDialog(
                             leadingContent = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
                             modifier = Modifier.clickable {
                                 showRecordTimerDialog = false
-                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-                                    if (androidx.core.content.ContextCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
-                                        (context as? android.app.Activity)?.let { activity ->
-                                            androidx.core.app.ActivityCompat.requestPermissions(activity, arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
-                                        }
-                                    }
+                                val liveState = recordManager.recordingState.value
+                                if (liveState.isRecording && liveState.stationUuid != station.StationUuid) {
+                                    pendingReplaceRequest = Pair(durationMs, liveState.stationName)
+                                } else if (!liveState.isRecording) {
+                                    com.ounben.amaradio.recorder.requestRecordingNotificationPermissionIfNeeded(context)
+                                    recordManager.startRecording(station, durationMs)
+                                    onDismiss()
+                                } else {
+                                    onDismiss()
                                 }
-                                recordManager.startRecording(station, durationMs)
-                                onDismiss()
                             },
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
@@ -585,6 +586,22 @@ fun StationOptionsDialog(
                 TextButton(onClick = { showRecordTimerDialog = false }) {
                     Text(stringResource(R.string.label_button_cancel), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
+            }
+        )
+    }
+
+    pendingReplaceRequest?.let { (durationMs, activeStationName) ->
+        com.ounben.amaradio.recorder.ReplaceRecordingWarningDialog(
+            currentStationName = activeStationName,
+            newStationName = station.Name,
+            onConfirm = {
+                pendingReplaceRequest = null
+                com.ounben.amaradio.recorder.requestRecordingNotificationPermissionIfNeeded(context)
+                recordManager.replaceRecording(station, durationMs)
+                onDismiss()
+            },
+            onDismiss = {
+                pendingReplaceRequest = null
             }
         )
     }

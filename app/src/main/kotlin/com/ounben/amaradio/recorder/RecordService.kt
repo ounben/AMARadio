@@ -67,7 +67,8 @@ class RecordService : Service() {
                     lastNotificationTime = now
                     val durationStr = formatDuration(state.durationMs)
                     val sizeStr = formatFileSize(state.fileSizeBytes)
-                    val notification = buildNotification(stationName, durationStr, sizeStr)
+                    val activeStationName = state.stationName.ifBlank { stationName }
+                    val notification = buildNotification(activeStationName, durationStr, sizeStr)
                     val nm = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
                     nm.notify(NOTIFICATION_ID, notification)
                 }

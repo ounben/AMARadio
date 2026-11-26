@@ -43,6 +43,7 @@ class MediaWriter(
     private var tempPartFile: File? = null
     private var outputStream: OutputStream? = null
     private var baseFileName: String = ""
+    private var tempFilePrefix: String = ""
     private var firstAudioWriteTimeMs: Long = 0L
     private var totalAudioBytesWritten: Long = 0L
 
@@ -55,6 +56,7 @@ class MediaWriter(
         val timeStr = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date(now))
         val sanitizedStation = sanitizeFileName(stationName)
         baseFileName = "${sanitizedStation}_$timeStr"
+        tempFilePrefix = "${baseFileName}_${System.nanoTime()}"
         firstAudioWriteTimeMs = 0L
         totalAudioBytesWritten = 0L
         mp3Synced = false
@@ -65,7 +67,7 @@ class MediaWriter(
             if (!tmpDir.exists()) tmpDir.mkdirs()
 
             val partExt = if (isHls) "hls.part" else "${format.extension}.part"
-            val tmpFile = File(tmpDir, "$baseFileName.$partExt")
+            val tmpFile = File(tmpDir, "$tempFilePrefix.$partExt")
             tempPartFile = tmpFile
             outputStream = BufferedOutputStream(FileOutputStream(tmpFile), 64 * 1024)
             Log.i(TAG, "Opened temp recording stream: ${tmpFile.absolutePath} (format=$format, isHls=$isHls)")
@@ -178,8 +180,8 @@ class MediaWriter(
                     format == FormatParser.AudioFormat.AAC_PLUS ||
                     format == FormatParser.AudioFormat.MPEG_TS ||
                     format == FormatParser.AudioFormat.M4A -> {
-                    val m4aFile = File(partFile.parentFile, "$baseFileName.m4a")
-                    val mp3File = File(partFile.parentFile, "$baseFileName.extracted.mp3")
+                    val m4aFile = File(partFile.parentFile, "$tempFilePrefix.m4a")
+                    val mp3File = File(partFile.parentFile, "$tempFilePrefix.extracted.mp3")
                     muxedM4aFile = m4aFile
                     extractedMp3File = mp3File
 
