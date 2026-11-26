@@ -176,31 +176,33 @@ fun TabsScreen(
             }
         ) { pageIndex ->
             if (pageIndex >= tabs.size) return@HorizontalPager
-            
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                when (val tab = tabs[pageIndex]) {
-                    is MainTab.Local -> {
-                        val stationsViewModel: StationsViewModel = viewModel(key = "local_stations")
-                        StationsScreen(
-                            viewModel = stationsViewModel,
-                            url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true",
-                            onStationClick = onStationClick,
-                            onFavoriteClick = { station ->
-                                if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                else app.favouriteManager.add(station)
-                            }
-                        )
-                    }
-                    is MainTab.Filter -> {
-                        FilterScreen(
-                            viewModel = filterViewModel,
-                            tabIndex = tab.index,
-                            onStationClick = onStationClick,
-                            onFavoriteClick = { station ->
-                                if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
-                                else app.favouriteManager.add(station)
-                            }
-                        )
+
+            CompositionLocalProvider(LocalScrollToTopActive provides (pagerState.currentPage == pageIndex)) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    when (val tab = tabs[pageIndex]) {
+                        is MainTab.Local -> {
+                            val stationsViewModel: StationsViewModel = viewModel(key = "local_stations")
+                            StationsScreen(
+                                viewModel = stationsViewModel,
+                                url = "json/stations/bycountrycodeexact/$countryCode?order=clickcount&reverse=true",
+                                onStationClick = onStationClick,
+                                onFavoriteClick = { station ->
+                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                    else app.favouriteManager.add(station)
+                                }
+                            )
+                        }
+                        is MainTab.Filter -> {
+                            FilterScreen(
+                                viewModel = filterViewModel,
+                                tabIndex = tab.index,
+                                onStationClick = onStationClick,
+                                onFavoriteClick = { station ->
+                                    if (app.favouriteManager.has(station.StationUuid)) app.favouriteManager.remove(station.StationUuid)
+                                    else app.favouriteManager.add(station)
+                                }
+                            )
+                        }
                     }
                 }
             }

@@ -65,7 +65,8 @@ fun CustomStationsTab(
                 isFavorite = isFavorite,
                 onReorder = { viewModel.updateAllOrder(it) },
                 onLongClick = { stationWithOptions = it },
-                showFavoriteIcon = true
+                showFavoriteIcon = true,
+                scrollToTopBottomOffset = 72.dp
             )
         }
 

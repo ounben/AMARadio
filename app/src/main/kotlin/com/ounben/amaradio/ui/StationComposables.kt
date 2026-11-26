@@ -6,6 +6,7 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.draganddrop.dragAndDropSource
 import androidx.compose.foundation.draganddrop.dragAndDropTarget
@@ -53,6 +54,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.clipToBounds
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -273,8 +276,24 @@ fun StationList(
         com.ounben.amaradio.InMemoryStationQueue(context, stations)
     }
 
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+    val firstItemFocusRequester = remember { FocusRequester() }
+
+    BindScrollToTop(
+        gridState = gridState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = isGrid && stations.isNotEmpty()
+    )
+    BindScrollToTop(
+        listState = listState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = !isGrid && stations.isNotEmpty()
+    )
+
     if (isGrid) {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Adaptive(140.dp),
             modifier = modifier
                 .fillMaxSize()
@@ -286,7 +305,7 @@ fun StationList(
                 items = stations, 
                 key = { _, station -> station.StationUuid },
                 contentType = { _, _ -> "station" }
-            ) { _, station ->
+            ) { index, station ->
                 StationGridItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
@@ -296,12 +315,14 @@ fun StationList(
                         onStationClick(station)
                     },
                     onFavoriteClick = { onFavoriteClick(station) },
-                    onLongClick = { stationWithOptions = station }
+                    onLongClick = { stationWithOptions = station },
+                    focusRequester = if (index == 0) firstItemFocusRequester else null
                 )
             }
         }
     } else {
         LazyColumn(
+            state = listState,
             modifier = modifier
                 .fillMaxSize()
                 .clipToBounds()
@@ -312,7 +333,7 @@ fun StationList(
                 items = stations, 
                 key = { _, station -> station.StationUuid },
                 contentType = { _, _ -> "station" }
-            ) { _, station ->
+            ) { index, station ->
                 StationListItem(
                     station = station,
                     isFavorite = isFavorite(station.StationUuid),
@@ -322,7 +343,8 @@ fun StationList(
                         onStationClick(station)
                     },
                     onFavoriteClick = { onFavoriteClick(station) },
-                    onLongClick = { stationWithOptions = station }
+                    onLongClick = { stationWithOptions = station },
+                    focusRequester = if (index == 0) firstItemFocusRequester else null
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
@@ -349,13 +371,22 @@ fun TrackList(
     modifier: Modifier = Modifier
 ) {
     val isRefreshing = tracks.loadState.refresh is androidx.paging.LoadState.Loading
-    
+    val listState = rememberLazyListState()
+    val firstItemFocusRequester = remember { FocusRequester() }
+
+    BindScrollToTop(
+        listState = listState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = tracks.itemCount > 0
+    )
+
     PullToRefreshBox(
         isRefreshing = isRefreshing,
         onRefresh = { tracks.refresh() },
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
     ) {
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .fillMaxSize()
                 .clipToBounds(),
@@ -373,7 +404,8 @@ fun TrackList(
                     TrackListItem(
                         track = track, 
                         onClick = { onTrackClick(track) },
-                        onLongClick = { onTrackLongClick(track) }
+                        onLongClick = { onTrackLongClick(track) },
+                        focusRequester = if (index == 0) firstItemFocusRequester else null
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                 }
@@ -387,12 +419,14 @@ fun TrackList(
 fun TrackListItem(
     track: TrackHistoryEntry,
     onClick: () -> Unit,
-    onLongClick: () -> Unit
+    onLongClick: () -> Unit,
+    focusRequester: FocusRequester? = null
 ) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
@@ -451,7 +485,8 @@ fun StationListItem(
     useInternalClickable: Boolean = true,
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
     isPlaying: Boolean = false,
-    showFavoriteIcon: Boolean = true
+    showFavoriteIcon: Boolean = true,
+    focusRequester: FocusRequester? = null
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
@@ -491,13 +526,14 @@ fun StationListItem(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxHeight()
+                .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
                 .then(
                     if (useInternalClickable) {
                         Modifier.combinedClickable(
                             onClick = onClick,
                             onLongClick = onLongClick
                         )
-                    } else Modifier
+                    } else Modifier.focusable()
                 )
                 .clearAndSetSemantics {
                     contentDescription = accessibilityDesc
@@ -583,7 +619,8 @@ fun StationGridItem(
     useInternalClickable: Boolean = true,
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
     isPlaying: Boolean = false,
-    showFavoriteIcon: Boolean = true
+    showFavoriteIcon: Boolean = true,
+    focusRequester: FocusRequester? = null
 ) {
     val countryName = remember(station.CountryCode, station.Country) {
         val code = station.CountryCode.trim().uppercase(java.util.Locale.ROOT)
@@ -622,13 +659,14 @@ fun StationGridItem(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
                     .then(
                         if (useInternalClickable) {
                             Modifier.combinedClickable(
                                 onClick = onClick,
                                 onLongClick = onLongClick
                             )
-                        } else Modifier
+                        } else Modifier.focusable()
                     )
                     .clearAndSetSemantics {
                         contentDescription = accessibilityDesc
@@ -703,7 +741,8 @@ fun ReorderableStationList(
     onLongClick: ((DataRadioStation) -> Unit)? = null,
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel(),
-    showFavoriteIcon: Boolean = true
+    showFavoriteIcon: Boolean = true,
+    scrollToTopBottomOffset: androidx.compose.ui.unit.Dp = 0.dp
 ) {
     val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
@@ -713,6 +752,7 @@ fun ReorderableStationList(
     
     val listState = rememberLazyListState()
     val gridState = rememberLazyGridState()
+    val firstItemFocusRequester = remember { FocusRequester() }
 
     LaunchedEffect(stations) {
         if (stationsLocal.toList() != stations) {
@@ -720,6 +760,19 @@ fun ReorderableStationList(
             stationsLocal.addAll(stations)
         }
     }
+
+    BindScrollToTop(
+        gridState = gridState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = isGrid && stationsLocal.isNotEmpty(),
+        extraBottomOffset = scrollToTopBottomOffset
+    )
+    BindScrollToTop(
+        listState = listState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = !isGrid && stationsLocal.isNotEmpty(),
+        extraBottomOffset = scrollToTopBottomOffset
+    )
 
     if (isGrid) {
         val reorderableState = rememberReorderableLazyGridState(gridState) { from, to ->
@@ -759,6 +812,7 @@ fun ReorderableStationList(
                             },
                             useInternalClickable = true,
                             showFavoriteIcon = showFavoriteIcon,
+                            focusRequester = if (index == 0) firstItemFocusRequester else null,
                             dragHandle = { dragModifier ->
                                 with(itemScope) {
                                     Box(
@@ -853,6 +907,7 @@ fun ReorderableStationList(
                                 },
                                 useInternalClickable = true,
                                 showFavoriteIcon = showFavoriteIcon,
+                                focusRequester = if (index == 0) firstItemFocusRequester else null,
                                 dragHandle = { dragModifier ->
                                     with(itemScope) {
                                         Box(
@@ -1015,8 +1070,24 @@ fun CategoryList(
     onCategoryClick: (DataCategory) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val listState = rememberLazyListState()
+    val gridState = rememberLazyGridState()
+    val firstItemFocusRequester = remember { FocusRequester() }
+
+    BindScrollToTop(
+        gridState = gridState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = isGrid && categories.isNotEmpty()
+    )
+    BindScrollToTop(
+        listState = listState,
+        firstItemFocusRequester = firstItemFocusRequester,
+        enabled = !isGrid && categories.isNotEmpty()
+    )
+
     if (isGrid) {
         LazyVerticalGrid(
+            state = gridState,
             columns = GridCells.Adaptive(100.dp),
             modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
             contentPadding = PaddingValues(8.dp)
@@ -1025,18 +1096,29 @@ fun CategoryList(
                 items = categories,
                 key = { index, category -> "${category.Name}_$index" },
                 contentType = { _, _ -> "category" }
-            ) { _, category ->
-                CategoryGridItem(category = category, onClick = { onCategoryClick(category) })
+            ) { index, category ->
+                CategoryGridItem(
+                    category = category,
+                    onClick = { onCategoryClick(category) },
+                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                )
             }
         }
     } else {
-        LazyColumn(modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
+        LazyColumn(
+            state = listState,
+            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        ) {
             itemsIndexed(
                 items = categories,
                 key = { index, category -> "${category.Name}_$index" },
                 contentType = { _, _ -> "category" }
-            ) { _, category ->
-                CategoryListItem(category = category, onClick = { onCategoryClick(category) })
+            ) { index, category ->
+                CategoryListItem(
+                    category = category,
+                    onClick = { onCategoryClick(category) },
+                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
         }
@@ -1046,11 +1128,13 @@ fun CategoryList(
 @Composable
 fun CategoryListItem(
     category: DataCategory,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    focusRequester: FocusRequester? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .clickable(onClick = onClick)
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -1075,11 +1159,13 @@ fun CategoryListItem(
 @Composable
 fun CategoryGridItem(
     category: DataCategory,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    focusRequester: FocusRequester? = null
 ) {
     Card(
         modifier = Modifier
             .padding(4.dp)
+            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),

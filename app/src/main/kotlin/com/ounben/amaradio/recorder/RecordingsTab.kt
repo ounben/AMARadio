@@ -15,7 +15,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Launch
@@ -25,6 +26,8 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -39,6 +42,7 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.ui.AmaradioAmber
+import com.ounben.amaradio.ui.BindScrollToTop
 import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import kotlinx.coroutines.Dispatchers
@@ -97,6 +101,15 @@ fun RecordingsTab() {
             }
         )
 
+        val listState = rememberLazyListState()
+        val firstItemFocusRequester = remember { FocusRequester() }
+
+        BindScrollToTop(
+            listState = listState,
+            firstItemFocusRequester = firstItemFocusRequester,
+            enabled = recordings.isNotEmpty()
+        )
+
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             if (recordings.isEmpty()) {
                 Box(
@@ -111,15 +124,17 @@ fun RecordingsTab() {
                 }
             } else {
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier.fillMaxSize(),
                     contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
-                    items(recordings, key = { it.id }) { record ->
+                    itemsIndexed(recordings, key = { _, it -> it.id }) { index, record ->
                         Column {
                             RecordingListItem(
                                 record = record,
                                 onPlay = { recordingToPlay = record },
-                                onLongClick = { recordingWithOptions = record }
+                                onLongClick = { recordingWithOptions = record },
+                                focusRequester = if (index == 0) firstItemFocusRequester else null
                             )
                             HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = 12.dp),
@@ -508,7 +523,8 @@ fun RecordingFilterHeader(
 fun RecordingListItem(
     record: RecordEntity,
     onPlay: () -> Unit,
-    onLongClick: () -> Unit
+    onLongClick: () -> Unit,
+    focusRequester: FocusRequester? = null
 ) {
     val context = LocalContext.current
     val db = remember { AMARadioUserDatabase.getDatabase(context) }
@@ -524,6 +540,7 @@ fun RecordingListItem(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .combinedClickable(
                 onClick = onPlay,
                 onLongClick = onLongClick

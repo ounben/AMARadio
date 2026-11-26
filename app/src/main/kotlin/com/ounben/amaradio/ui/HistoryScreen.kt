@@ -96,33 +96,35 @@ fun HistoryScreen(
             verticalAlignment = Alignment.Top,
             key = { page -> page }
         ) { pageIndex ->
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                when (pageIndex) {
-                    0 -> {
-                        StationListTemplate(
-                            stations = uiState.filteredStations,
-                            isGrid = uiState.isGrid,
-                            isLoading = false,
-                            error = null,
-                            emptyMessage = stringResource(R.string.searchpreference_no_results),
-                            onRefresh = { /* Local data, already reactive */ },
-                            onStationClick = onStationClick,
-                            onFavoriteClick = onFavoriteClick,
-                            isFavorite = isFavorite,
-                            onDeleteClick = { station ->
-                                stationToDelete = station
-                            }
-                        )
-                    }
-                    1 -> {
-                        TrackList(
-                            tracks = tracks,
-                            onTrackClick = onTrackClick,
-                            onTrackLongClick = { trackWithOptions = it }
-                        )
-                    }
-                    2 -> {
-                        RecordingsTab()
+            CompositionLocalProvider(LocalScrollToTopActive provides (pagerState.currentPage == pageIndex)) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    when (pageIndex) {
+                        0 -> {
+                            StationListTemplate(
+                                stations = uiState.filteredStations,
+                                isGrid = uiState.isGrid,
+                                isLoading = false,
+                                error = null,
+                                emptyMessage = stringResource(R.string.searchpreference_no_results),
+                                onRefresh = { /* Local data, already reactive */ },
+                                onStationClick = onStationClick,
+                                onFavoriteClick = onFavoriteClick,
+                                isFavorite = isFavorite,
+                                onDeleteClick = { station ->
+                                    stationToDelete = station
+                                }
+                            )
+                        }
+                        1 -> {
+                            TrackList(
+                                tracks = tracks,
+                                onTrackClick = onTrackClick,
+                                onTrackLongClick = { trackWithOptions = it }
+                            )
+                        }
+                        2 -> {
+                            RecordingsTab()
+                        }
                     }
                 }
             }

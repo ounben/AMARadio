@@ -27,7 +27,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.edit
 import com.ounben.amaradio.Utils
@@ -46,6 +48,7 @@ import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.history.TrackHistoryViewModel
+import kotlinx.coroutines.launch
 
 sealed class Screen(val route: String, val titleRes: Int, val icon: androidx.compose.ui.graphics.vector.ImageVector) {
     object Stations : Screen("stations", R.string.nav_item_stations, Icons.Default.Radio)
@@ -92,6 +95,8 @@ fun MainScreen(
     var showPlayerSelectorDialog by remember { mutableStateOf<DataRadioStation?>(null) }
     var showDeleteConfirmDialog by remember { mutableStateOf<Int?>(null) }
     var isPlayerExpanded by remember { mutableStateOf(false) }
+    val scrollToTopController = remember { ScrollToTopController() }
+    val coroutineScope = rememberCoroutineScope()
     
     val settingsViewModel: SettingsViewModel = viewModel()
     val settingsUiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
@@ -177,6 +182,7 @@ fun MainScreen(
             if (useWideLayout) isPlayerExpanded = false
         }
 
+        CompositionLocalProvider(LocalScrollToTopController provides scrollToTopController) {
         Scaffold(
             topBar = {
                 MainTopBar(
@@ -283,6 +289,9 @@ fun MainScreen(
                     // Fixed bottom padding to avoid measurement loops during scrolling.
                     // In the wide layout the player has its own column, so nothing overlaps the content.
                     val contentBottomPadding = if (useWideLayout) 0.dp else 110.dp
+                    val density = LocalDensity.current
+                    var miniPlayerHeightPx by remember { mutableIntStateOf(0) }
+                    val miniPlayerHeightDp = with(density) { miniPlayerHeightPx.toDp() }
                 
                     if (mainUiState.isSearching) {
                         Surface(
@@ -424,6 +433,30 @@ fun MainScreen(
                         }
                     }
 
+                    // Bottom-right Scroll-to-Top button positioned cleanly above the MiniPlayer
+                    if (!isPlayerExpanded && scrollToTopController.showScrollToTop) {
+                        val baseBottomPadding = if (useWideLayout) {
+                            16.dp
+                        } else if (miniPlayerHeightDp > 0.dp) {
+                            miniPlayerHeightDp + 12.dp
+                        } else {
+                            contentBottomPadding + 12.dp
+                        }
+                        ScrollToTopButton(
+                            onClick = {
+                                coroutineScope.launch {
+                                    scrollToTopController.scrollToTop()
+                                }
+                            },
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .padding(
+                                    end = 16.dp,
+                                    bottom = baseBottomPadding + scrollToTopController.extraBottomOffset,
+                                )
+                        )
+                    }
+
                     // MiniPlayer / FullPlayer Container (portrait and narrow screens only)
                     if (!useWideLayout) Box(
                         modifier = Modifier
@@ -435,7 +468,9 @@ fun MainScreen(
                                         .pointerInput(Unit) { detectTapGestures { } }
                                         .semantics { isTraversalGroup = true }
                                 else 
-                                    Modifier.wrapContentHeight()
+                                    Modifier
+                                        .wrapContentHeight()
+                                        .onSizeChanged { miniPlayerHeightPx = it.height }
                             )
                             .align(Alignment.BottomCenter)
                             .background(MaterialTheme.colorScheme.surfaceVariant)
@@ -511,6 +546,7 @@ fun MainScreen(
                     )
                 }
             }
+        }
         }
     }
 

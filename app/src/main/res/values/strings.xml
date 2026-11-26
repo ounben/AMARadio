@@ -416,6 +416,7 @@
     <string name="accessibility_playback_speed">Playback speed %1$s</string>
     <string name="action_change_playback_speed">Change playback speed</string>
     <string name="action_reset_playback_speed">Reset playback speed to 1x</string>
+    <string name="action_scroll_to_top">Scroll to top</string>
     <string name="accessibility_configure">Configure</string>
     <string name="accessibility_close">Close</string>
     <string name="accessibility_add_filter">Add filter</string>

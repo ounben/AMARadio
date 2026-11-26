@@ -66,34 +66,36 @@ fun StarredScreen(
             verticalAlignment = Alignment.Top,
             key = { page -> page }
         ) { pageIndex ->
-            Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                if (pageIndex == 0) {
-                    val favUiState by viewModel.uiState.collectAsStateWithLifecycle()
-                    if (favUiState.filteredStations.isEmpty()) {
-                        Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
-                            Text(
-                                text = stringResource(R.string.searchpreference_no_results),
-                                color = MaterialTheme.colorScheme.onSurface
+            CompositionLocalProvider(LocalScrollToTopActive provides (pagerState.currentPage == pageIndex)) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    if (pageIndex == 0) {
+                        val favUiState by viewModel.uiState.collectAsStateWithLifecycle()
+                        if (favUiState.filteredStations.isEmpty()) {
+                            Box(modifier = Modifier.fillMaxSize().padding(32.dp), contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = stringResource(R.string.searchpreference_no_results),
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        } else {
+                            ReorderableStationList(
+                                stations = favUiState.filteredStations,
+                                isGrid = favUiState.isGrid,
+                                onStationClick = onStationClick,
+                                onFavoriteClick = onFavoriteClick,
+                                isFavorite = isFavorite,
+                                onReorder = { viewModel.updateAllOrder(it) },
+                                showFavoriteIcon = false
                             )
                         }
                     } else {
-                        ReorderableStationList(
-                            stations = favUiState.filteredStations,
-                            isGrid = favUiState.isGrid,
+                        CustomStationsTab(
+                            viewModel = customViewModel,
                             onStationClick = onStationClick,
                             onFavoriteClick = onFavoriteClick,
-                            isFavorite = isFavorite,
-                            onReorder = { viewModel.updateAllOrder(it) },
-                            showFavoriteIcon = false
+                            isFavorite = isFavorite
                         )
                     }
-                } else {
-                    CustomStationsTab(
-                        viewModel = customViewModel,
-                        onStationClick = onStationClick,
-                        onFavoriteClick = onFavoriteClick,
-                        isFavorite = isFavorite
-                    )
                 }
             }
         }
