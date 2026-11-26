@@ -355,7 +355,9 @@
     <string name="refresh">Refresh</string>
     <string name="action_filter">Filter</string>
     <string name="filter_all">All</string>
+    <string name="filter_all_stations">All stations</string>
     <string name="filter_date">Date</string>
+    <string name="filter_date_any">Any date</string>
     <string name="filter_date_from">From</string>
     <string name="filter_date_to">To</string>
     <string name="filter_country">Country</string>
@@ -417,6 +419,11 @@
     <string name="action_change_playback_speed">Change playback speed</string>
     <string name="action_reset_playback_speed">Reset playback speed to 1x</string>
     <string name="action_scroll_to_top">Scroll to top</string>
+    <string name="accessibility_filter_station">Station filter: %1$s</string>
+    <string name="accessibility_filter_date_from">From date: %1$s</string>
+    <string name="accessibility_filter_date_to">To date: %1$s</string>
+    <string name="action_clear_station_filter">Clear station filter</string>
+    <string name="action_clear_date_filter">Clear date filter</string>
     <string name="accessibility_configure">Configure</string>
     <string name="accessibility_close">Close</string>
     <string name="accessibility_add_filter">Add filter</string>

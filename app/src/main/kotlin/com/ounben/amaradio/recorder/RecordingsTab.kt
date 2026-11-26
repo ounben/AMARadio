@@ -61,7 +61,7 @@ fun RecordingsTab() {
     val allRecordings by db.recordDao().getAllRecordingsFlow().collectAsStateWithLifecycle(initialValue = emptyList())
     val recordedStations by db.recordDao().getRecordedStationNamesFlow().collectAsStateWithLifecycle(initialValue = emptyList())
 
-    var selectedStation by rememberSaveable { mutableStateOf("") }
+    var selectedStation by rememberSaveable { mutableStateOf<String?>(null) }
     var startDateMs by rememberSaveable { mutableLongStateOf(0L) }
     var endDateMs by rememberSaveable { mutableLongStateOf(0L) }
 
@@ -225,8 +225,8 @@ private enum class DatePickerType { START, END }
 @Composable
 fun RecordingFilterHeader(
     recordedStations: List<String>,
-    selectedStation: String,
-    onStationSelected: (String) -> Unit,
+    selectedStation: String?,
+    onStationSelected: (String?) -> Unit,
     startDateMs: Long,
     endDateMs: Long,
     onDateRangeSelected: (Long, Long) -> Unit
@@ -234,8 +234,8 @@ fun RecordingFilterHeader(
     var showStationDropdown by remember { mutableStateOf(false) }
     var activeDatePicker by remember { mutableStateOf<DatePickerType?>(null) }
 
-    val stationFilterTitle = stringResource(R.string.station_name)
-    val allLabel = stringResource(R.string.filter_all)
+    val allStationsLabel = stringResource(R.string.filter_all_stations)
+    val anyDateLabel = stringResource(R.string.filter_date_any)
     val fromLabel = stringResource(R.string.filter_date_from)
     val toLabel = stringResource(R.string.filter_date_to)
 
@@ -251,17 +251,23 @@ fun RecordingFilterHeader(
         }
     }
 
-    val startChipText = remember(startDateMs, fromLabel) {
-        if (startDateMs > 0L) formatShortDate(startDateMs) else fromLabel
-    }
-    val endChipText = remember(endDateMs, toLabel) {
-        if (endDateMs > 0L) formatShortDate(endDateMs) else toLabel
-    }
+    val isStationFiltered = !selectedStation.isNullOrBlank()
+    val displayStationName = selectedStation?.takeIf { it.isNotBlank() } ?: allStationsLabel
+    val formattedStartDate = remember(startDateMs) { formatShortDate(startDateMs) }
+    val formattedEndDate = remember(endDateMs) { formatShortDate(endDateMs) }
 
-    val startSemanticsDesc = "$fromLabel: ${if (startDateMs > 0L) startChipText else allLabel}"
-    val endSemanticsDesc = "$toLabel: ${if (endDateMs > 0L) endChipText else allLabel}"
+    val startChipText = if (startDateMs > 0L) formattedStartDate else fromLabel
+    val endChipText = if (endDateMs > 0L) formattedEndDate else toLabel
 
-    val stationSemanticsDesc = "$stationFilterTitle: ${selectedStation.ifEmpty { allLabel }}"
+    val stationSemanticsDesc = stringResource(R.string.accessibility_filter_station, displayStationName)
+    val startSemanticsDesc = stringResource(
+        R.string.accessibility_filter_date_from,
+        if (startDateMs > 0L) formattedStartDate else anyDateLabel
+    )
+    val endSemanticsDesc = stringResource(
+        R.string.accessibility_filter_date_to,
+        if (endDateMs > 0L) formattedEndDate else anyDateLabel
+    )
 
     Surface(
         tonalElevation = 0.dp,
@@ -282,14 +288,19 @@ fun RecordingFilterHeader(
             ) {
                 Box(modifier = Modifier.weight(1f)) {
                     FilterChip(
-                        selected = selectedStation.isNotEmpty(),
+                        selected = isStationFiltered,
                         onClick = { showStationDropdown = true },
-                        modifier = Modifier.fillMaxWidth().clearAndSetSemantics { contentDescription = stationSemanticsDesc },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .semantics(mergeDescendants = true) {
+                                contentDescription = stationSemanticsDesc
+                            },
                         label = {
                             Text(
-                                text = selectedStation.ifEmpty { allLabel },
+                                text = displayStationName,
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
+                                modifier = Modifier.clearAndSetSemantics { }
                             )
                         },
                         leadingIcon = { Icon(Icons.Default.Radio, contentDescription = null, modifier = Modifier.size(18.dp)) },
@@ -311,9 +322,15 @@ fun RecordingFilterHeader(
                         modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                     ) {
                         DropdownMenuItem(
-                            text = { Text(allLabel, fontWeight = if (selectedStation.isEmpty()) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                            text = {
+                                Text(
+                                    text = allStationsLabel,
+                                    fontWeight = if (!isStationFiltered) FontWeight.Bold else FontWeight.Normal,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            },
                             onClick = {
-                                onStationSelected("")
+                                onStationSelected(null)
                                 showStationDropdown = false
                             }
                         )
@@ -322,7 +339,13 @@ fun RecordingFilterHeader(
                         }
                         recordedStations.forEach { stationName ->
                             DropdownMenuItem(
-                                text = { Text(stationName, fontWeight = if (selectedStation == stationName) FontWeight.Bold else FontWeight.Normal, color = MaterialTheme.colorScheme.onSurface) },
+                                text = {
+                                    Text(
+                                        text = stationName,
+                                        fontWeight = if (selectedStation == stationName) FontWeight.Bold else FontWeight.Normal,
+                                        color = MaterialTheme.colorScheme.onSurface
+                                    )
+                                },
                                 onClick = {
                                     onStationSelected(stationName)
                                     showStationDropdown = false
@@ -333,14 +356,14 @@ fun RecordingFilterHeader(
                 }
 
                 IconButton(
-                    onClick = { onStationSelected("") },
+                    onClick = { onStationSelected(null) },
                     modifier = Modifier.size(28.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.sleep_timer_clear),
+                        contentDescription = stringResource(R.string.action_clear_station_filter),
                         modifier = Modifier.size(18.dp),
-                        tint = if (selectedStation.isNotEmpty()) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                        tint = if (isStationFiltered) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
                     )
                 }
             }
@@ -356,12 +379,15 @@ fun RecordingFilterHeader(
                     onClick = { activeDatePicker = DatePickerType.START },
                     modifier = Modifier
                         .weight(1f)
-                        .clearAndSetSemantics { contentDescription = startSemanticsDesc },
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = startSemanticsDesc
+                        },
                     label = {
                         Text(
                             text = startChipText,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.clearAndSetSemantics { }
                         )
                     },
                     leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
@@ -380,12 +406,15 @@ fun RecordingFilterHeader(
                     onClick = { activeDatePicker = DatePickerType.END },
                     modifier = Modifier
                         .weight(1f)
-                        .clearAndSetSemantics { contentDescription = endSemanticsDesc },
+                        .semantics(mergeDescendants = true) {
+                            contentDescription = endSemanticsDesc
+                        },
                     label = {
                         Text(
                             text = endChipText,
                             maxLines = 1,
-                            overflow = TextOverflow.Ellipsis
+                            overflow = TextOverflow.Ellipsis,
+                            modifier = Modifier.clearAndSetSemantics { }
                         )
                     },
                     leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
@@ -405,7 +434,7 @@ fun RecordingFilterHeader(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Close,
-                        contentDescription = stringResource(R.string.sleep_timer_clear),
+                        contentDescription = stringResource(R.string.action_clear_date_filter),
                         modifier = Modifier.size(18.dp),
                         tint = if (startDateMs > 0L || endDateMs > 0L) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
                     )
