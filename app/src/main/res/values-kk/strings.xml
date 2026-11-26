@@ -419,4 +419,14 @@
     <string name="filter_date_to">Дейін</string>
     <string name="notify_recording_saved">Жазба сақталды</string>
     <string name="timer_infinite">Шексіз</string>
+    <string name="accessibility_maximize_player">Ойнатқышты жаю</string>
+    <string name="accessibility_minimize_player">Ойнатқышты жию</string>
+    <string name="accessibility_reorder_station">%1$s ретін өзгерту</string>
+    <string name="action_move_down">Төмен жылжыту</string>
+    <string name="action_move_to_top">Ең жоғарыға жылжыту</string>
+    <string name="action_move_up">Жоғары жылжыту</string>
+    <string name="action_pause_recording">Жазуды кідірту</string>
+    <string name="action_play_recording">Жазбаны ойнату</string>
+    <string name="dialog_move_to_position_title">"%1$s" орнына жылжыту</string>
+    <string name="label_current_position">(ағымдағы)</string>
 </resources>

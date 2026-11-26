@@ -419,4 +419,14 @@
     <string name="filter_date_to">終了日</string>
     <string name="notify_recording_saved">録音を保存しました</string>
     <string name="timer_infinite">無制限</string>
+    <string name="accessibility_maximize_player">プレーヤーを最大化</string>
+    <string name="accessibility_minimize_player">プレーヤーを最小化</string>
+    <string name="accessibility_reorder_station">%1$s を並べ替え</string>
+    <string name="action_move_down">下へ移動</string>
+    <string name="action_move_to_top">一番上へ移動</string>
+    <string name="action_move_up">上へ移動</string>
+    <string name="action_pause_recording">録音を一時停止</string>
+    <string name="action_play_recording">録音を再生</string>
+    <string name="dialog_move_to_position_title">「%1$s」を位置に移動</string>
+    <string name="label_current_position">(現在)</string>
 </resources>

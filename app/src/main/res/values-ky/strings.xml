@@ -421,4 +421,14 @@
     <string name="filter_date_to">Чейин</string>
     <string name="notify_recording_saved">Жаздыруу сакталды</string>
     <string name="timer_infinite">Чексиз</string>
+    <string name="accessibility_maximize_player">Ойноткучту чоңойтуу</string>
+    <string name="accessibility_minimize_player">Ойноткучту кичирейтүү</string>
+    <string name="accessibility_reorder_station">%1$s иретин өзгөртүү</string>
+    <string name="action_move_down">Төмөн жылдыруу</string>
+    <string name="action_move_to_top">Эң жогоруга жылдыруу</string>
+    <string name="action_move_up">Жогору жылдыруу</string>
+    <string name="action_pause_recording">Жаздырууну тындыруу</string>
+    <string name="action_play_recording">Жаздырууну ойнотуу</string>
+    <string name="dialog_move_to_position_title">"%1$s" абалына жылдыруу</string>
+    <string name="label_current_position">(учурдагы)</string>
 </resources>

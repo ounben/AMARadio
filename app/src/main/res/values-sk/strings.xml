@@ -419,4 +419,14 @@
     <string name="filter_date_to">Do</string>
     <string name="notify_recording_saved">Záznam bol uložený</string>
     <string name="timer_infinite">Neobmedzene</string>
+    <string name="accessibility_maximize_player">Maximalizovať prehrávač</string>
+    <string name="accessibility_minimize_player">Minimalizovať prehrávač</string>
+    <string name="accessibility_reorder_station">Zmeniť poradie %1$s</string>
+    <string name="action_move_down">Posunúť nadol</string>
+    <string name="action_move_to_top">Presunúť na začiatok</string>
+    <string name="action_move_up">Posunúť nahor</string>
+    <string name="action_pause_recording">Pozastaviť nahrávanie</string>
+    <string name="action_play_recording">Prehrať nahrávku</string>
+    <string name="dialog_move_to_position_title">Presunúť "%1$s" na pozíciu</string>
+    <string name="label_current_position">(aktuálna)</string>
 </resources>

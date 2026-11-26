@@ -419,4 +419,14 @@
     <string name="filter_date_to">വരെ</string>
     <string name="notify_recording_saved">റെക്കോർഡിംഗ് സംരക്ഷിച്ചു</string>
     <string name="timer_infinite">പരിധിയില്ലാത്തത്</string>
+    <string name="accessibility_maximize_player">പ്ലെയർ വലുതാക്കുക</string>
+    <string name="accessibility_minimize_player">പ്ലെയർ ചെറുതാക്കുക</string>
+    <string name="accessibility_reorder_station">%1$s പുനഃക്രമീകരിക്കുക</string>
+    <string name="action_move_down">താഴേക്ക് നീക്കുക</string>
+    <string name="action_move_to_top">ഏറ്റവും മുകളിലേക്ക് നീക്കുക</string>
+    <string name="action_move_up">മുകളിലേക്ക് നീക്കുക</string>
+    <string name="action_pause_recording">റെക്കോർഡിംഗ് താൽക്കാലികമായി നിർത്തുക</string>
+    <string name="action_play_recording">റെക്കോർഡിംഗ് പ്ലേ ചെയ്യുക</string>
+    <string name="dialog_move_to_position_title">"%1$s" സ്ഥാനത്തേക്ക് നീക്കുക</string>
+    <string name="label_current_position">(നിലവിലെ)</string>
 </resources>

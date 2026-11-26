@@ -419,4 +419,14 @@
     <string name="filter_date_to">ถึง</string>
     <string name="notify_recording_saved">บันทึกเสียงแล้ว</string>
     <string name="timer_infinite">ไม่จำกัด</string>
+    <string name="accessibility_maximize_player">ขยายเครื่องเล่น</string>
+    <string name="accessibility_minimize_player">ย่อเครื่องเล่น</string>
+    <string name="accessibility_reorder_station">จัดลำดับ %1$s ใหม่</string>
+    <string name="action_move_down">เลื่อนลง</string>
+    <string name="action_move_to_top">ย้ายไปบนสุด</string>
+    <string name="action_move_up">เลื่อนขึ้น</string>
+    <string name="action_pause_recording">หยุดการบันทึกชั่วคราว</string>
+    <string name="action_play_recording">เล่นการบันทึก</string>
+    <string name="dialog_move_to_position_title">ย้าย "%1$s" ไปยังตำแหน่ง</string>
+    <string name="label_current_position">(ปัจจุบัน)</string>
 </resources>

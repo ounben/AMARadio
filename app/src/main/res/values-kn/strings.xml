@@ -419,4 +419,14 @@
     <string name="filter_date_to">ವರೆಗೆ</string>
     <string name="notify_recording_saved">ರೆಕಾರ್ಡಿಂಗ್ ಉಳಿಸಲಾಗಿದೆ</string>
     <string name="timer_infinite">ಅನಿಯಮಿತ</string>
+    <string name="accessibility_maximize_player">ಪ್ಲೇಯರ್ ದೊಡ್ಡದಾಗಿಸಿ</string>
+    <string name="accessibility_minimize_player">ಪ್ಲೇಯರ್ ಚಿಕ್ಕದಾಗಿಸಿ</string>
+    <string name="accessibility_reorder_station">%1$s ಮರುಕ್ರಮಗೊಳಿಸಿ</string>
+    <string name="action_move_down">ಕೆಳಗೆ ಸರಿಸಿ</string>
+    <string name="action_move_to_top">ಮೇಲಕ್ಕೆ ಸರಿಸಿ</string>
+    <string name="action_move_up">ಮೇಲಕ್ಕೆ ಸರಿಸಿ</string>
+    <string name="action_pause_recording">ರೆಕಾರ್ಡಿಂಗ್ ವಿರಾಮಗೊಳಿಸಿ</string>
+    <string name="action_play_recording">ರೆಕಾರ್ಡಿಂಗ್ ಪ್ಲೇ ಮಾಡಿ</string>
+    <string name="dialog_move_to_position_title">"%1$s" ಅನ್ನು ಸ್ಥಾನಕ್ಕೆ ಸರಿಸಿ</string>
+    <string name="label_current_position">(ಪ್ರಸ್ತುತ)</string>
 </resources>

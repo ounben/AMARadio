@@ -419,4 +419,14 @@
     <string name="filter_date_to">পর্যন্ত</string>
     <string name="notify_recording_saved">রেকর্ডিং সংরক্ষিত</string>
     <string name="timer_infinite">সীমাহীন</string>
+    <string name="accessibility_maximize_player">প্লেয়ার বড় করুন</string>
+    <string name="accessibility_minimize_player">প্লেয়ার ছোট করুন</string>
+    <string name="accessibility_reorder_station">%1$s পুনরায় সাজান</string>
+    <string name="action_move_down">নিচে সরান</string>
+    <string name="action_move_to_top">সবার উপরে সরান</string>
+    <string name="action_move_up">উপরে সরান</string>
+    <string name="action_pause_recording">রেকর্ডিং বিরতি দিন</string>
+    <string name="action_play_recording">রেকর্ডিং চালান</string>
+    <string name="dialog_move_to_position_title">"%1$s" অবস্থানে সরান</string>
+    <string name="label_current_position">(বর্তমান)</string>
 </resources>

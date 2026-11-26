@@ -419,4 +419,14 @@
     <string name="filter_date_to">Noiz arte</string>
     <string name="notify_recording_saved">Grabaketa gordeta</string>
     <string name="timer_infinite">Mugagabea</string>
+    <string name="accessibility_maximize_player">Handitu erreproduzigailua</string>
+    <string name="accessibility_minimize_player">Txikitu erreproduzigailua</string>
+    <string name="accessibility_reorder_station">Berrantolatu %1$s</string>
+    <string name="action_move_down">Mugitu behera</string>
+    <string name="action_move_to_top">Mugitu goialdera</string>
+    <string name="action_move_up">Mugitu gora</string>
+    <string name="action_pause_recording">Pausatu grabazioa</string>
+    <string name="action_play_recording">Erreproduzitu grabazioa</string>
+    <string name="dialog_move_to_position_title">Mugitu "%1$s" posiziora</string>
+    <string name="label_current_position">(oraingoa)</string>
 </resources>

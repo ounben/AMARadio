@@ -418,4 +418,14 @@
     <string name="filter_date_to">Enfin</string>
     <string name="notify_recording_saved">Registraziun memorisada</string>
     <string name="timer_infinite">Illimità</string>
+    <string name="accessibility_maximize_player">Maximizar il player</string>
+    <string name="accessibility_minimize_player">Minimar il player</string>
+    <string name="accessibility_reorder_station">Midar la successiun da %1$s</string>
+    <string name="action_move_down">Spustar engiu</string>
+    <string name="action_move_to_top">Spustar tut ensi</string>
+    <string name="action_move_up">Spustar ensi</string>
+    <string name="action_pause_recording">Pausar la registraziun</string>
+    <string name="action_play_recording">Far ir la registraziun</string>
+    <string name="dialog_move_to_position_title">Spustar «%1$s» a la posiziun</string>
+    <string name="label_current_position">(actual)</string>
 </resources>

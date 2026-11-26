@@ -421,4 +421,14 @@
     <string name="filter_date_to">Titi di</string>
     <string name="notify_recording_saved">Ti fi gbigbasilẹ pamọ</string>
     <string name="timer_infinite">Ailopin</string>
+    <string name="accessibility_maximize_player">Fẹ ẹrọ orin</string>
+    <string name="accessibility_minimize_player">Din ẹrọ orin ku</string>
+    <string name="accessibility_reorder_station">Tun %1$s to</string>
+    <string name="action_move_down">Gbe si isalẹ</string>
+    <string name="action_move_to_top">Gbe si oke patapata</string>
+    <string name="action_move_up">Gbe soke</string>
+    <string name="action_pause_recording">Da gbigbasilẹ duro diẹ</string>
+    <string name="action_play_recording">Mu gbigbasilẹ ṣiṣẹ</string>
+    <string name="dialog_move_to_position_title">Gbe "%1$s" lọ si ipo</string>
+    <string name="label_current_position">(lọwọlọwọ)</string>
 </resources>

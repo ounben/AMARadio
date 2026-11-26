@@ -419,4 +419,14 @@
     <string name="filter_date_to">تک</string>
     <string name="notify_recording_saved">ریکارڈنگ محفوظ ہو گئی</string>
     <string name="timer_infinite">لامحدود</string>
+    <string name="accessibility_maximize_player">پلیئر کو بڑا کریں</string>
+    <string name="accessibility_minimize_player">پلیئر کو چھوٹا کریں</string>
+    <string name="accessibility_reorder_station">%1$s کی ترتیب تبدیل کریں</string>
+    <string name="action_move_down">نیچے منتقل کریں</string>
+    <string name="action_move_to_top">سب سے اوپر منتقل کریں</string>
+    <string name="action_move_up">اوپر منتقل کریں</string>
+    <string name="action_pause_recording">ریکارڈنگ روکیں</string>
+    <string name="action_play_recording">ریکارڈنگ چلائیں</string>
+    <string name="dialog_move_to_position_title">"%1$s" کو پوزیشن پر منتقل کریں</string>
+    <string name="label_current_position">(موجودہ)</string>
 </resources>

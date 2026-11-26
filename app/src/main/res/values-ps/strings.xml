@@ -421,4 +421,14 @@
     <string name="filter_date_to">تر</string>
     <string name="notify_recording_saved">ثبت خوندي شو</string>
     <string name="timer_infinite">لامحدود</string>
+    <string name="accessibility_maximize_player">غږوونکی لوی کړئ</string>
+    <string name="accessibility_minimize_player">غږوونکی کوچنی کړئ</string>
+    <string name="accessibility_reorder_station">د %1$s ترتیب بدل کړئ</string>
+    <string name="action_move_down">لاندې یوسئ</string>
+    <string name="action_move_to_top">تر ټولو پورته یوسئ</string>
+    <string name="action_move_up">پورته یوسئ</string>
+    <string name="action_pause_recording">ثبتول وځنډوئ</string>
+    <string name="action_play_recording">ثبت شوی غږ واورئ</string>
+    <string name="dialog_move_to_position_title">"%1$s" ځای ته یوسئ</string>
+    <string name="label_current_position">(اوسنی)</string>
 </resources>

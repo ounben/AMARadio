@@ -419,4 +419,14 @@
     <string name="filter_date_to">Па</string>
     <string name="notify_recording_saved">Запіс захаваны</string>
     <string name="timer_infinite">Неабмежавана</string>
+    <string name="accessibility_maximize_player">Разгарнуць плэер</string>
+    <string name="accessibility_minimize_player">Згарнуць плэер</string>
+    <string name="accessibility_reorder_station">Змяніць парадак %1$s</string>
+    <string name="action_move_down">Перамясціць уніз</string>
+    <string name="action_move_to_top">Перамясціць у пачатак</string>
+    <string name="action_move_up">Перамясціць уверх</string>
+    <string name="action_pause_recording">Прыпыніць запіс</string>
+    <string name="action_play_recording">Прайграць запіс</string>
+    <string name="dialog_move_to_position_title">Перамясціць "%1$s" на пазіцыю</string>
+    <string name="label_current_position">(бягучая)</string>
 </resources>

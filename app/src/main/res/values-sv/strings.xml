@@ -419,4 +419,14 @@
     <string name="filter_date_to">Till</string>
     <string name="notify_recording_saved">Inspelningen har sparats</string>
     <string name="timer_infinite">Obegränsat</string>
+    <string name="accessibility_maximize_player">Maximera spelare</string>
+    <string name="accessibility_minimize_player">Minimera spelare</string>
+    <string name="accessibility_reorder_station">Ändra ordning på %1$s</string>
+    <string name="action_move_down">Flytta ner</string>
+    <string name="action_move_to_top">Flytta överst</string>
+    <string name="action_move_up">Flytta upp</string>
+    <string name="action_pause_recording">Pausa inspelning</string>
+    <string name="action_play_recording">Spela upp inspelning</string>
+    <string name="dialog_move_to_position_title">Flytta "%1$s" till position</string>
+    <string name="label_current_position">(nuvarande)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">Bitiş</string>
     <string name="notify_recording_saved">Kayıt kaydedildi</string>
     <string name="timer_infinite">Sınırsız</string>
+    <string name="accessibility_maximize_player">Oynatıcıyı büyüt</string>
+    <string name="accessibility_minimize_player">Oynatıcıyı küçült</string>
+    <string name="accessibility_reorder_station">%1$s öğesini yeniden sırala</string>
+    <string name="action_move_down">Aşağı taşı</string>
+    <string name="action_move_to_top">En üste taşı</string>
+    <string name="action_move_up">Yukarı taşı</string>
+    <string name="action_pause_recording">Kaydı duraklat</string>
+    <string name="action_play_recording">Kaydı oynat</string>
+    <string name="dialog_move_to_position_title">"%1$s" öğesini konuma taşı</string>
+    <string name="label_current_position">(mevcut)</string>
 </resources>

@@ -420,4 +420,14 @@
     <string name="filter_date_to">እስከ</string>
     <string name="notify_recording_saved">ቀረጻ ተቀምጧል</string>
     <string name="timer_infinite">ያልተገደበ</string>
+    <string name="accessibility_maximize_player">ማጫወቻውን አሳድግ</string>
+    <string name="accessibility_minimize_player">ማጫወቻውን አሳንስ</string>
+    <string name="accessibility_reorder_station">%1$s እንደገና ደርድር</string>
+    <string name="action_move_down">ወደ ታች ውሰድ</string>
+    <string name="action_move_to_top">ወደ ላይ ውሰድ</string>
+    <string name="action_move_up">ወደ ላይ ውሰድ</string>
+    <string name="action_pause_recording">ቀረጻውን ለአፍታ አቁም</string>
+    <string name="action_play_recording">ቀረጻውን አጫውት</string>
+    <string name="dialog_move_to_position_title">"%1$s" ወደ ቦታው ውሰድ</string>
+    <string name="label_current_position">(የአሁኑ)</string>
 </resources>

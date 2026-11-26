@@ -419,4 +419,14 @@
     <string name="filter_date_to">Până la</string>
     <string name="notify_recording_saved">Înregistrare salvată</string>
     <string name="timer_infinite">Nelimitat</string>
+    <string name="accessibility_maximize_player">Maximizează playerul</string>
+    <string name="accessibility_minimize_player">Minimizează playerul</string>
+    <string name="accessibility_reorder_station">Reordonează %1$s</string>
+    <string name="action_move_down">Mută în jos</string>
+    <string name="action_move_to_top">Mută sus de tot</string>
+    <string name="action_move_up">Mută în sus</string>
+    <string name="action_pause_recording">Pune înregistrarea pe pauză</string>
+    <string name="action_play_recording">Redă înregistrarea</string>
+    <string name="dialog_move_to_position_title">Mută "%1$s" pe poziția</string>
+    <string name="label_current_position">(actuală)</string>
 </resources>

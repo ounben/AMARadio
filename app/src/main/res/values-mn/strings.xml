@@ -421,4 +421,14 @@
     <string name="filter_date_to">Дуусах</string>
     <string name="notify_recording_saved">Бичлэг хадгалагдсан</string>
     <string name="timer_infinite">Хязгааргүй</string>
+    <string name="accessibility_maximize_player">Тоглуулагчийг томруулах</string>
+    <string name="accessibility_minimize_player">Тоглуулагчийг жижигрүүлэх</string>
+    <string name="accessibility_reorder_station">%1$s дарааллыг өөрчлөх</string>
+    <string name="action_move_down">Доош зөөх</string>
+    <string name="action_move_to_top">Хамгийн дээр зөөх</string>
+    <string name="action_move_up">Дээш зөөх</string>
+    <string name="action_pause_recording">Бичлэгийг түр зогсоох</string>
+    <string name="action_play_recording">Бичлэг тоглуулах</string>
+    <string name="dialog_move_to_position_title">"%1$s"-г байрлал руу зөөх</string>
+    <string name="label_current_position">(одоогийн)</string>
 </resources>

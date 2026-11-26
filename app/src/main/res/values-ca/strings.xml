@@ -421,4 +421,14 @@
     <string name="filter_date_to">Fins a</string>
     <string name="notify_recording_saved">Enregistrament guardat</string>
     <string name="timer_infinite">Il·limitat</string>
+    <string name="accessibility_maximize_player">Maximitza el reproductor</string>
+    <string name="accessibility_minimize_player">Minimitza el reproductor</string>
+    <string name="accessibility_reorder_station">Reordena %1$s</string>
+    <string name="action_move_down">Mou avall</string>
+    <string name="action_move_to_top">Mou a dalt de tot</string>
+    <string name="action_move_up">Mou amunt</string>
+    <string name="action_pause_recording">Posa en pausa la gravació</string>
+    <string name="action_play_recording">Reprodueix la gravació</string>
+    <string name="dialog_move_to_position_title">Mou "%1$s" a la posició</string>
+    <string name="label_current_position">(actual)</string>
 </resources>

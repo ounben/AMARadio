@@ -419,4 +419,14 @@
     <string name="filter_date_to">အထိ</string>
     <string name="notify_recording_saved">အသံဖမ်းမှုကို သိမ်းဆည်းပြီးပါပြီ</string>
     <string name="timer_infinite">အကန့်အသတ်မရှိ</string>
+    <string name="accessibility_maximize_player">ပလေယာကို ချဲ့ရန်</string>
+    <string name="accessibility_minimize_player">ပလေယာကို ချုံ့ရန်</string>
+    <string name="accessibility_reorder_station">%1$s ကို ပြန်စီရန်</string>
+    <string name="action_move_down">အောက်သို့ရွှေ့ရန်</string>
+    <string name="action_move_to_top">ထိပ်ဆုံးသို့ရွှေ့ရန်</string>
+    <string name="action_move_up">အပေါ်သို့ရွှေ့ရန်</string>
+    <string name="action_pause_recording">အသံဖမ်းခြင်း ခဏရပ်ရန်</string>
+    <string name="action_play_recording">အသံဖမ်းမှု ဖွင့်ရန်</string>
+    <string name="dialog_move_to_position_title">"%1$s" ကို နေရာသို့ ရွှေ့ရန်</string>
+    <string name="label_current_position">(လက်ရှိ)</string>
 </resources>

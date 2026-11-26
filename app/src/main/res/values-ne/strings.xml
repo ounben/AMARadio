@@ -419,4 +419,14 @@
     <string name="filter_date_to">सम्म</string>
     <string name="notify_recording_saved">रेकर्डिङ सुरक्षित गरियो</string>
     <string name="timer_infinite">असीमित</string>
+    <string name="accessibility_maximize_player">प्लेयर ठूलो बनाउनुहोस्</string>
+    <string name="accessibility_minimize_player">प्लेयर सानो बनाउनुहोस्</string>
+    <string name="accessibility_reorder_station">%1$s को क्रम मिलाउनुहोस्</string>
+    <string name="action_move_down">तल सार्नुहोस्</string>
+    <string name="action_move_to_top">सबैभन्दा माथि सार्नुहोस्</string>
+    <string name="action_move_up">माथि सार्नुहोस्</string>
+    <string name="action_pause_recording">रेकर्डिङ पज गर्नुहोस्</string>
+    <string name="action_play_recording">रेकर्डिङ प्ले गर्नुहोस्</string>
+    <string name="dialog_move_to_position_title">"%1$s" लाई स्थानमा सार्नुहोस्</string>
+    <string name="label_current_position">(हालको)</string>
 </resources>

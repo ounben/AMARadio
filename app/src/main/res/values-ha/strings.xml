@@ -421,4 +421,14 @@
     <string name="filter_date_to">Zuwa</string>
     <string name="notify_recording_saved">An ajiye rikodin</string>
     <string name="timer_infinite">Ba iyaka</string>
+    <string name="accessibility_maximize_player">Faɗaɗa mai kunnawa</string>
+    <string name="accessibility_minimize_player">Rage mai kunnawa</string>
+    <string name="accessibility_reorder_station">Sake tsara %1$s</string>
+    <string name="action_move_down">Matsa ƙasa</string>
+    <string name="action_move_to_top">Matsa zuwa sama</string>
+    <string name="action_move_up">Matsa sama</string>
+    <string name="action_pause_recording">Dakatar da rikodi</string>
+    <string name="action_play_recording">Kunna rikodi</string>
+    <string name="dialog_move_to_position_title">Matsar da "%1$s" zuwa matsayi</string>
+    <string name="label_current_position">(na yanzu)</string>
 </resources>

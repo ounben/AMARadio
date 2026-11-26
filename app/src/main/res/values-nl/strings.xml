@@ -419,4 +419,14 @@
     <string name="filter_date_to">Tot</string>
     <string name="notify_recording_saved">Opname opgeslagen</string>
     <string name="timer_infinite">Onbeperkt</string>
+    <string name="accessibility_maximize_player">Speler maximaliseren</string>
+    <string name="accessibility_minimize_player">Speler minimaliseren</string>
+    <string name="accessibility_reorder_station">Volgorde van %1$s wijzigen</string>
+    <string name="action_move_down">Omlaag verplaatsen</string>
+    <string name="action_move_to_top">Naar boven verplaatsen</string>
+    <string name="action_move_up">Omhoog verplaatsen</string>
+    <string name="action_pause_recording">Opname pauzeren</string>
+    <string name="action_play_recording">Opname afspelen</string>
+    <string name="dialog_move_to_position_title">"%1$s" naar positie verplaatsen</string>
+    <string name="label_current_position">(huidig)</string>
 </resources>

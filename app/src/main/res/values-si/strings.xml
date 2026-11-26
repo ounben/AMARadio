@@ -419,4 +419,14 @@
     <string name="filter_date_to">දක්වා</string>
     <string name="notify_recording_saved">පටිගත කිරීම සුරකින ලදී</string>
     <string name="timer_infinite">අසීමිත</string>
+    <string name="accessibility_maximize_player">ප්ලේයරය විශාල කරන්න</string>
+    <string name="accessibility_minimize_player">ප්ලේයරය කුඩා කරන්න</string>
+    <string name="accessibility_reorder_station">%1$s නැවත පෙළගස්වන්න</string>
+    <string name="action_move_down">පහළට ගෙන යන්න</string>
+    <string name="action_move_to_top">ඉහළටම ගෙන යන්න</string>
+    <string name="action_move_up">ඉහළට ගෙන යන්න</string>
+    <string name="action_pause_recording">පටිගත කිරීම විරාම කරන්න</string>
+    <string name="action_play_recording">පටිගත කිරීම වාදනය කරන්න</string>
+    <string name="dialog_move_to_position_title">"%1$s" ස්ථානයට ගෙන යන්න</string>
+    <string name="label_current_position">(වත්මන්)</string>
 </resources>

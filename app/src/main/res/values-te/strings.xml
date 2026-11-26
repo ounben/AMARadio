@@ -419,4 +419,14 @@
     <string name="filter_date_to">వరకు</string>
     <string name="notify_recording_saved">రికార్డింగ్ సేవ్ చేయబడింది</string>
     <string name="timer_infinite">అపరిమిత</string>
+    <string name="accessibility_maximize_player">ప్లేయర్‌ను పెద్దది చేయండి</string>
+    <string name="accessibility_minimize_player">ప్లేయర్‌ను చిన్నది చేయండి</string>
+    <string name="accessibility_reorder_station">%1$s క్రమాన్ని మార్చండి</string>
+    <string name="action_move_down">క్రిందికి జరపండి</string>
+    <string name="action_move_to_top">అగ్రభాగానికి జరపండి</string>
+    <string name="action_move_up">పైకి జరపండి</string>
+    <string name="action_pause_recording">రికార్డింగ్‌ను పాజ్ చేయండి</string>
+    <string name="action_play_recording">రికార్డింగ్ ప్లే చేయండి</string>
+    <string name="dialog_move_to_position_title">"%1$s" ని స్థానానికి జరపండి</string>
+    <string name="label_current_position">(ప్రస్తుత)</string>
 </resources>

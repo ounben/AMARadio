@@ -419,4 +419,14 @@
     <string name="filter_date_to">Iki</string>
     <string name="notify_recording_saved">Įrašas išsaugotas</string>
     <string name="timer_infinite">Neribotai</string>
+    <string name="accessibility_maximize_player">Išskleisti grotuvą</string>
+    <string name="accessibility_minimize_player">Suskleisti grotuvą</string>
+    <string name="accessibility_reorder_station">Pertvarkyti %1$s</string>
+    <string name="action_move_down">Perkelti žemyn</string>
+    <string name="action_move_to_top">Perkelti į viršų</string>
+    <string name="action_move_up">Perkelti aukštyn</string>
+    <string name="action_pause_recording">Pristabdyti įrašymą</string>
+    <string name="action_play_recording">Leisti įrašą</string>
+    <string name="dialog_move_to_position_title">Perkelti "%1$s" į poziciją</string>
+    <string name="label_current_position">(dabartinė)</string>
 </resources>

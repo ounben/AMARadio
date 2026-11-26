@@ -419,4 +419,14 @@
     <string name="filter_date_to">Au</string>
     <string name="notify_recording_saved">Enregistrement sauvegardé</string>
     <string name="timer_infinite">Illimité</string>
+    <string name="accessibility_maximize_player">Agrandir le lecteur</string>
+    <string name="accessibility_minimize_player">Réduire le lecteur</string>
+    <string name="accessibility_reorder_station">Réorganiser %1$s</string>
+    <string name="action_move_down">Descendre</string>
+    <string name="action_move_to_top">Déplacer tout en haut</string>
+    <string name="action_move_up">Monter</string>
+    <string name="action_pause_recording">Mettre l\'enregistrement en pause</string>
+    <string name="action_play_recording">Lire l\'enregistrement</string>
+    <string name="dialog_move_to_position_title">Déplacer "%1$s" à la position</string>
+    <string name="label_current_position">(actuelle)</string>
 </resources>

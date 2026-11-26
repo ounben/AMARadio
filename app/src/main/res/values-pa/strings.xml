@@ -421,4 +421,14 @@
     <string name="filter_date_to">ਤੱਕ</string>
     <string name="notify_recording_saved">ਰਿਕਾਰਡਿੰਗ ਸੁਰੱਖਿਅਤ ਕੀਤੀ ਗਈ</string>
     <string name="timer_infinite">ਅਸੀਮਤ</string>
+    <string name="accessibility_maximize_player">ਪਲੇਅਰ ਵੱਡਾ ਕਰੋ</string>
+    <string name="accessibility_minimize_player">ਪਲੇਅਰ ਛੋਟਾ ਕਰੋ</string>
+    <string name="accessibility_reorder_station">%1$s ਦਾ ਕ੍ਰਮ ਬਦਲੋ</string>
+    <string name="action_move_down">ਹੇਠਾਂ ਭੇਜੋ</string>
+    <string name="action_move_to_top">ਸਭ ਤੋਂ ਉੱਪਰ ਭੇਜੋ</string>
+    <string name="action_move_up">ਉੱਪਰ ਭੇਜੋ</string>
+    <string name="action_pause_recording">ਰਿਕਾਰਡਿੰਗ ਰੋਕੋ</string>
+    <string name="action_play_recording">ਰਿਕਾਰਡਿੰਗ ਚਲਾਓ</string>
+    <string name="dialog_move_to_position_title">"%1$s" ਨੂੰ ਸਥਿਤੀ \'ਤੇ ਭੇਜੋ</string>
+    <string name="label_current_position">(ਮੌਜੂਦਾ)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">მდე</string>
     <string name="notify_recording_saved">ჩანაწერი შენახულია</string>
     <string name="timer_infinite">შეუზღუდავი</string>
+    <string name="accessibility_maximize_player">დამკვრელის გაშლა</string>
+    <string name="accessibility_minimize_player">დამკვრელის ჩაკეცვა</string>
+    <string name="accessibility_reorder_station">%1$s-ის გადალაგება</string>
+    <string name="action_move_down">ქვემოთ გადატანა</string>
+    <string name="action_move_to_top">თავში გადატანა</string>
+    <string name="action_move_up">ზემოთ გადატანა</string>
+    <string name="action_pause_recording">ჩაწერის დაპაუზება</string>
+    <string name="action_play_recording">ჩანაწერის დაკვრა</string>
+    <string name="dialog_move_to_position_title">"%1$s"-ის გადატანა პოზიციაზე</string>
+    <string name="label_current_position">(მიმდინარე)</string>
 </resources>

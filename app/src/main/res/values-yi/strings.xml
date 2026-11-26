@@ -421,4 +421,14 @@
     <string name="filter_date_to">ביז</string>
     <string name="notify_recording_saved">רעקאָרדירונג געראַטעוועט</string>
     <string name="timer_infinite">אומבאַגרענעצט</string>
+    <string name="accessibility_maximize_player">פֿאַרגרעסערן שפּילער</string>
+    <string name="accessibility_minimize_player">פֿאַרקלענערן שפּילער</string>
+    <string name="accessibility_reorder_station">איבערסאָרטירן %1$s</string>
+    <string name="action_move_down">רוקן אַראָפּ</string>
+    <string name="action_move_to_top">רוקן צום שפּיץ</string>
+    <string name="action_move_up">רוקן אַרויף</string>
+    <string name="action_pause_recording">פּויזירן רעקאָרדירונג</string>
+    <string name="action_play_recording">שפּילן רעקאָרדירונג</string>
+    <string name="dialog_move_to_position_title">רוקן "%1$s" צו פּאָזיציע</string>
+    <string name="label_current_position">(איצטיק)</string>
 </resources>

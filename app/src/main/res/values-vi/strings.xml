@@ -419,4 +419,14 @@
     <string name="filter_date_to">Đến</string>
     <string name="notify_recording_saved">Đã lưu bản ghi</string>
     <string name="timer_infinite">Không giới hạn</string>
+    <string name="accessibility_maximize_player">Phóng to trình phát</string>
+    <string name="accessibility_minimize_player">Thu nhỏ trình phát</string>
+    <string name="accessibility_reorder_station">Sắp xếp lại %1$s</string>
+    <string name="action_move_down">Di chuyển xuống</string>
+    <string name="action_move_to_top">Di chuyển lên đầu</string>
+    <string name="action_move_up">Di chuyển lên</string>
+    <string name="action_pause_recording">Tạm dừng ghi</string>
+    <string name="action_play_recording">Phát bản ghi</string>
+    <string name="dialog_move_to_position_title">Di chuyển "%1$s" đến vị trí</string>
+    <string name="label_current_position">(hiện tại)</string>
 </resources>

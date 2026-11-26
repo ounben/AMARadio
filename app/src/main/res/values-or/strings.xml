@@ -421,4 +421,14 @@
     <string name="filter_date_to">ପର୍ଯ୍ୟନ୍ତ</string>
     <string name="notify_recording_saved">ରେକର୍ଡିଂ ସେଭ୍ ହୋଇଛି</string>
     <string name="timer_infinite">ଅସୀମିତ</string>
+    <string name="accessibility_maximize_player">ପ୍ଲେୟାର ବଡ଼ କରନ୍ତୁ</string>
+    <string name="accessibility_minimize_player">ପ୍ଲେୟାର ଛୋଟ କରନ୍ତୁ</string>
+    <string name="accessibility_reorder_station">%1$s ପୁନଃସଜାନ୍ତୁ</string>
+    <string name="action_move_down">ତଳକୁ ନିଅନ୍ତୁ</string>
+    <string name="action_move_to_top">ସବୁଠାରୁ ଉପରକୁ ନିଅନ୍ତୁ</string>
+    <string name="action_move_up">ଉପରକୁ ନିଅନ୍ତୁ</string>
+    <string name="action_pause_recording">ରେକର୍ଡିଂ ବିରତି ଦିଅନ୍ତୁ</string>
+    <string name="action_play_recording">ରେକର୍ଡିଂ ଚଲାନ୍ତୁ</string>
+    <string name="dialog_move_to_position_title">"%1$s" କୁ ସ୍ଥାନକୁ ନିଅନ୍ତୁ</string>
+    <string name="label_current_position">(ବର୍ତ୍ତମାନ)</string>
 </resources>

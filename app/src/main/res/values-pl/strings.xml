@@ -419,4 +419,14 @@
     <string name="filter_date_to">Do</string>
     <string name="notify_recording_saved">Nagranie zapisane</string>
     <string name="timer_infinite">Bez limitu</string>
+    <string name="accessibility_maximize_player">Maksymalizuj odtwarzacz</string>
+    <string name="accessibility_minimize_player">Minimalizuj odtwarzacz</string>
+    <string name="accessibility_reorder_station">Zmień kolejność %1$s</string>
+    <string name="action_move_down">Przenieś w dół</string>
+    <string name="action_move_to_top">Przenieś na górę</string>
+    <string name="action_move_up">Przenieś w górę</string>
+    <string name="action_pause_recording">Wstrzymaj nagrywanie</string>
+    <string name="action_play_recording">Odtwórz nagranie</string>
+    <string name="dialog_move_to_position_title">Przenieś „%1$s” na pozycję</string>
+    <string name="label_current_position">(aktualna)</string>
 </resources>

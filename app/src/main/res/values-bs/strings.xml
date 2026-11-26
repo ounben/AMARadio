@@ -420,4 +420,14 @@
     <string name="filter_date_to">Do</string>
     <string name="notify_recording_saved">Snimak je sačuvan</string>
     <string name="timer_infinite">Neograničeno</string>
+    <string name="accessibility_maximize_player">Maksimiziraj plejer</string>
+    <string name="accessibility_minimize_player">Minimiziraj plejer</string>
+    <string name="accessibility_reorder_station">Promijeni redoslijed %1$s</string>
+    <string name="action_move_down">Pomjeri dolje</string>
+    <string name="action_move_to_top">Pomjeri na vrh</string>
+    <string name="action_move_up">Pomjeri gore</string>
+    <string name="action_pause_recording">Pauziraj snimanje</string>
+    <string name="action_play_recording">Pusti snimak</string>
+    <string name="dialog_move_to_position_title">Premjesti "%1$s" na poziciju</string>
+    <string name="label_current_position">(trenutna)</string>
 </resources>

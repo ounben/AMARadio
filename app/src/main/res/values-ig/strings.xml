@@ -421,4 +421,14 @@
     <string name="filter_date_to">Ruo</string>
     <string name="notify_recording_saved">Echekwara ndekọ</string>
     <string name="timer_infinite">Enweghị oke</string>
+    <string name="accessibility_maximize_player">Mee ka ọkpụkpọ buru ibu</string>
+    <string name="accessibility_minimize_player">Mee ka ọkpụkpọ dị ntakịrị</string>
+    <string name="accessibility_reorder_station">Hazigharịa %1$s</string>
+    <string name="action_move_down">Bugharịa ala</string>
+    <string name="action_move_to_top">Bugharịa n\'elu</string>
+    <string name="action_move_up">Bugharịa elu</string>
+    <string name="action_pause_recording">Kwụsịtụ ndekọ</string>
+    <string name="action_play_recording">Kpọọ ndekọ</string>
+    <string name="dialog_move_to_position_title">Bugharịa "%1$s" n\'ọkwa</string>
+    <string name="label_current_position">(ugbu a)</string>
 </resources>

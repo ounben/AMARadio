@@ -419,4 +419,14 @@
     <string name="filter_date_to">Eddig</string>
     <string name="notify_recording_saved">A felvétel mentve</string>
     <string name="timer_infinite">Korlátlan</string>
+    <string name="accessibility_maximize_player">Lejátszó maximalizálása</string>
+    <string name="accessibility_minimize_player">Lejátszó minimalizálása</string>
+    <string name="accessibility_reorder_station">%1$s átrendezése</string>
+    <string name="action_move_down">Mozgatás lefelé</string>
+    <string name="action_move_to_top">Mozgatás legfelülre</string>
+    <string name="action_move_up">Mozgatás felfelé</string>
+    <string name="action_pause_recording">Felvétel szüneteltetése</string>
+    <string name="action_play_recording">Felvétel lejátszása</string>
+    <string name="dialog_move_to_position_title">"%1$s" áthelyezése pozícióra</string>
+    <string name="label_current_position">(jelenlegi)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">સુધી</string>
     <string name="notify_recording_saved">રેકોર્ડિંગ સાચવ્યું</string>
     <string name="timer_infinite">અમર્યાદિત</string>
+    <string name="accessibility_maximize_player">પ્લેયર મોટું કરો</string>
+    <string name="accessibility_minimize_player">પ્લેયર નાનું કરો</string>
+    <string name="accessibility_reorder_station">%1$s નો ક્રમ બદલો</string>
+    <string name="action_move_down">નીચે ખસેડો</string>
+    <string name="action_move_to_top">સૌથી ઉપર ખસેડો</string>
+    <string name="action_move_up">ઉપર ખસેડો</string>
+    <string name="action_pause_recording">રેકોર્ડિંગ થોભાવો</string>
+    <string name="action_play_recording">રેકોર્ડિંગ ચલાવો</string>
+    <string name="dialog_move_to_position_title">"%1$s" ને સ્થાન પર ખસેડો</string>
+    <string name="label_current_position">(વર્તમાન)</string>
 </resources>

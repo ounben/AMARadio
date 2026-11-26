@@ -421,4 +421,14 @@
     <string name="filter_date_to">Έως</string>
     <string name="notify_recording_saved">Η εγγραφή αποθηκεύτηκε</string>
     <string name="timer_infinite">Απεριόριστο</string>
+    <string name="accessibility_maximize_player">Μεγιστοποίηση προγράμματος αναπαραγωγής</string>
+    <string name="accessibility_minimize_player">Ελαχιστοποίηση προγράμματος αναπαραγωγής</string>
+    <string name="accessibility_reorder_station">Αναδιάταξη %1$s</string>
+    <string name="action_move_down">Μετακίνηση προς τα κάτω</string>
+    <string name="action_move_to_top">Μετακίνηση στην κορυφή</string>
+    <string name="action_move_up">Μετακίνηση προς τα πάνω</string>
+    <string name="action_pause_recording">Παύση εγγραφής</string>
+    <string name="action_play_recording">Αναπαραγωγή εγγραφής</string>
+    <string name="dialog_move_to_position_title">Μετακίνηση "%1$s" στη θέση</string>
+    <string name="label_current_position">(τρέχουσα)</string>
 </resources>

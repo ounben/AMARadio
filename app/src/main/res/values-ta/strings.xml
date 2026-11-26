@@ -419,4 +419,14 @@
     <string name="filter_date_to">வரை</string>
     <string name="notify_recording_saved">பதிவு சேமிக்கப்பட்டது</string>
     <string name="timer_infinite">வரம்பற்றது</string>
+    <string name="accessibility_maximize_player">பிளேயரைப் பெரிதாக்கு</string>
+    <string name="accessibility_minimize_player">பிளேயரைச் சிறிதாக்கு</string>
+    <string name="accessibility_reorder_station">%1$s வரிசையை மாற்று</string>
+    <string name="action_move_down">கீழே நகர்த்து</string>
+    <string name="action_move_to_top">மேலே நகர்த்து</string>
+    <string name="action_move_up">மேல்நோக்கி நகர்த்து</string>
+    <string name="action_pause_recording">பதிவை இடைநிறுத்து</string>
+    <string name="action_play_recording">பதிவை இயக்கு</string>
+    <string name="dialog_move_to_position_title">"%1$s" ஐ நிலைக்கு நகர்த்து</string>
+    <string name="label_current_position">(தற்போதைய)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">종료일</string>
     <string name="notify_recording_saved">녹음이 저장되었습니다</string>
     <string name="timer_infinite">무제한</string>
+    <string name="accessibility_maximize_player">플레이어 최대화</string>
+    <string name="accessibility_minimize_player">플레이어 최소화</string>
+    <string name="accessibility_reorder_station">%1$s 순서 변경</string>
+    <string name="action_move_down">아래로 이동</string>
+    <string name="action_move_to_top">맨 위로 이동</string>
+    <string name="action_move_up">위로 이동</string>
+    <string name="action_pause_recording">녹음 일시정지</string>
+    <string name="action_play_recording">녹음 재생</string>
+    <string name="dialog_move_to_position_title">"%1$s" 위치 이동</string>
+    <string name="label_current_position">(현재)</string>
 </resources>

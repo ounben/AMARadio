@@ -421,4 +421,14 @@
     <string name="filter_date_to">Ukuya</string>
     <string name="notify_recording_saved">Ukurekhoda kugciniwe</string>
     <string name="timer_infinite">Akukho mda</string>
+    <string name="accessibility_maximize_player">Yandisa isidlali</string>
+    <string name="accessibility_minimize_player">Nciphisa isidlali</string>
+    <string name="accessibility_reorder_station">Hlela kwakhona i-%1$s</string>
+    <string name="action_move_down">Hambisa ezantsi</string>
+    <string name="action_move_to_top">Hambisa phezulu</string>
+    <string name="action_move_up">Nyusela phezulu</string>
+    <string name="action_pause_recording">Misa okwethutyana ukurekhoda</string>
+    <string name="action_play_recording">Dlala ukurekhoda</string>
+    <string name="dialog_move_to_position_title">Hambisa "%1$s" kwindawo</string>
+    <string name="label_current_position">(yangoku)</string>
 </resources>

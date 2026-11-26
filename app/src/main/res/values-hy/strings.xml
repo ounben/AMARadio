@@ -419,4 +419,14 @@
     <string name="filter_date_to">Մինչև</string>
     <string name="notify_recording_saved">Ձայնագրությունը պահվեց</string>
     <string name="timer_infinite">Անսահմանափակ</string>
+    <string name="accessibility_maximize_player">Մեծացնել նվագարկիչը</string>
+    <string name="accessibility_minimize_player">Փոքրացնել նվագարկիչը</string>
+    <string name="accessibility_reorder_station">Վերադասավորել %1$s-ը</string>
+    <string name="action_move_down">Տեղափոխել ներքև</string>
+    <string name="action_move_to_top">Տեղափոխել վերև</string>
+    <string name="action_move_up">Բարձրացնել վերև</string>
+    <string name="action_pause_recording">Դադարեցնել ձայնագրությունը</string>
+    <string name="action_play_recording">Նվագարկել ձայնագրությունը</string>
+    <string name="dialog_move_to_position_title">Տեղափոխել "%1$s" դիրք</string>
+    <string name="label_current_position">(ընթացիկ)</string>
 </resources>

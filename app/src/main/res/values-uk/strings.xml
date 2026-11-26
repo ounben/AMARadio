@@ -419,4 +419,14 @@
     <string name="filter_date_to">До</string>
     <string name="notify_recording_saved">Запис збережено</string>
     <string name="timer_infinite">Необмежено</string>
+    <string name="accessibility_maximize_player">Розгорнути плеєр</string>
+    <string name="accessibility_minimize_player">Згорнути плеєр</string>
+    <string name="accessibility_reorder_station">Змінити порядок %1$s</string>
+    <string name="action_move_down">Перемістити вниз</string>
+    <string name="action_move_to_top">Перемістити на початок</string>
+    <string name="action_move_up">Перемістити вгору</string>
+    <string name="action_pause_recording">Призупинити запис</string>
+    <string name="action_play_recording">Відтворити запис</string>
+    <string name="dialog_move_to_position_title">Перемістити "%1$s" на позицію</string>
+    <string name="label_current_position">(поточна)</string>
 </resources>

@@ -421,4 +421,14 @@
     <string name="filter_date_to">লৈ</string>
     <string name="notify_recording_saved">ৰেকৰ্ডিং সংৰক্ষণ কৰা হৈছে</string>
     <string name="timer_infinite">সীমাহীন</string>
+    <string name="accessibility_maximize_player">প্লেয়াৰ ডাঙৰ কৰক</string>
+    <string name="accessibility_minimize_player">প্লেয়াৰ সৰু কৰক</string>
+    <string name="accessibility_reorder_station">%1$s পুনৰ সজাওক</string>
+    <string name="action_move_down">তললৈ নিয়াওক</string>
+    <string name="action_move_to_top">সৰ্বোচ্চ স্থানলৈ নিয়াওক</string>
+    <string name="action_move_up">ওপৰলৈ নিয়াওক</string>
+    <string name="action_pause_recording">ৰেকৰ্ডিং বিৰতি দিয়ক</string>
+    <string name="action_play_recording">ৰেকৰ্ডিং চলাওক</string>
+    <string name="dialog_move_to_position_title">"%1$s" স্থানলৈ নিয়াওক</string>
+    <string name="label_current_position">(বৰ্তমান)</string>
 </resources>

@@ -420,4 +420,14 @@
     <string name="filter_date_to">Son</string>
     <string name="notify_recording_saved">Səsyazma yadda saxlanıldı</string>
     <string name="timer_infinite">Limitsiz</string>
+    <string name="accessibility_maximize_player">Pleyeri böyüt</string>
+    <string name="accessibility_minimize_player">Pleyeri kiçilt</string>
+    <string name="accessibility_reorder_station">%1$s yenidən sırala</string>
+    <string name="action_move_down">Aşağı daşı</string>
+    <string name="action_move_to_top">Ən yuxarı daşı</string>
+    <string name="action_move_up">Yuxarı daşı</string>
+    <string name="action_pause_recording">Yazmanı fasiləyə qoy</string>
+    <string name="action_play_recording">Səsyazmanı oxut</string>
+    <string name="dialog_move_to_position_title">"%1$s" mövqeyinə köçür</string>
+    <string name="label_current_position">(cari)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">تا</string>
     <string name="notify_recording_saved">ضبط ذخیره شد</string>
     <string name="timer_infinite">نامحدود</string>
+    <string name="accessibility_maximize_player">بزرگ کردن پخش‌کننده</string>
+    <string name="accessibility_minimize_player">کوچک کردن پخش‌کننده</string>
+    <string name="accessibility_reorder_station">تغییر ترتیب %1$s</string>
+    <string name="action_move_down">انتقال به پایین</string>
+    <string name="action_move_to_top">انتقال به بالا</string>
+    <string name="action_move_up">انتقال به سمت بالا</string>
+    <string name="action_pause_recording">مکث ضبط</string>
+    <string name="action_play_recording">پخش ضبط</string>
+    <string name="dialog_move_to_position_title">انتقال "%1$s" به موقعیت</string>
+    <string name="label_current_position">(فعلی)</string>
 </resources>

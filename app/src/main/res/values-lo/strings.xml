@@ -421,4 +421,14 @@
     <string name="filter_date_to">ເຖິງ</string>
     <string name="notify_recording_saved">ບັນທຶກສຽງແລ້ວ</string>
     <string name="timer_infinite">ບໍ່ຈຳກັດ</string>
+    <string name="accessibility_maximize_player">ຂະຫຍາຍຕົວຫຼິ້ນ</string>
+    <string name="accessibility_minimize_player">ຫຍໍ້ຕົວຫຼິ້ນ</string>
+    <string name="accessibility_reorder_station">ຈັດລຽງ %1$s ໃໝ່</string>
+    <string name="action_move_down">ຍ້າຍລົງ</string>
+    <string name="action_move_to_top">ຍ້າຍໄປເທິງສຸດ</string>
+    <string name="action_move_up">ຍ້າຍຂຶ້ນ</string>
+    <string name="action_pause_recording">ຢຸດການບັນທຶກຊົ່ວຄາວ</string>
+    <string name="action_play_recording">ຫຼິ້ນການບັນທຶກ</string>
+    <string name="dialog_move_to_position_title">ຍ້າຍ "%1$s" ໄປຕຳແໜ່ງ</string>
+    <string name="label_current_position">(ປັດຈຸບັນ)</string>
 </resources>

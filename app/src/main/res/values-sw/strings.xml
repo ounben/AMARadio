@@ -419,4 +419,14 @@
     <string name="filter_date_to">Hadi</string>
     <string name="notify_recording_saved">Rekodi imehifadhiwa</string>
     <string name="timer_infinite">Bila kikomo</string>
+    <string name="accessibility_maximize_player">Kuza kichezaji</string>
+    <string name="accessibility_minimize_player">Punguza kichezaji</string>
+    <string name="accessibility_reorder_station">Panga upya %1$s</string>
+    <string name="action_move_down">Sogeza chini</string>
+    <string name="action_move_to_top">Sogeza juu kabisa</string>
+    <string name="action_move_up">Sogeza juu</string>
+    <string name="action_pause_recording">Sitisha kurekodi</string>
+    <string name="action_play_recording">Cheza rekodi</string>
+    <string name="dialog_move_to_position_title">Sogeza "%1$s" kwenye nafasi</string>
+    <string name="label_current_position">(ya sasa)</string>
 </resources>

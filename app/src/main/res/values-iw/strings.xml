@@ -419,4 +419,14 @@
     <string name="filter_date_to">עד</string>
     <string name="notify_recording_saved">ההקלטה נשמרה</string>
     <string name="timer_infinite">ללא הגבלה</string>
+    <string name="accessibility_maximize_player">הגדל נגן</string>
+    <string name="accessibility_minimize_player">מזער נגן</string>
+    <string name="accessibility_reorder_station">שנה סדר של %1$s</string>
+    <string name="action_move_down">הזז למטה</string>
+    <string name="action_move_to_top">העבר לראש הרשימה</string>
+    <string name="action_move_up">הזז למעלה</string>
+    <string name="action_pause_recording">השהה הקלטה</string>
+    <string name="action_play_recording">הפעל הקלטה</string>
+    <string name="dialog_move_to_position_title">הזז את "%1$s" למיקום</string>
+    <string name="label_current_position">(נוכחי)</string>
 </resources>

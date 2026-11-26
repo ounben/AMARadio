@@ -419,4 +419,14 @@
     <string name="filter_date_to">Asti</string>
     <string name="notify_recording_saved">Tallenne tallennettu</string>
     <string name="timer_infinite">Rajoittamaton</string>
+    <string name="accessibility_maximize_player">Suurenna soitin</string>
+    <string name="accessibility_minimize_player">Pienennä soitin</string>
+    <string name="accessibility_reorder_station">Järjestä %1$s uudelleen</string>
+    <string name="action_move_down">Siirrä alas</string>
+    <string name="action_move_to_top">Siirrä ylimmäksi</string>
+    <string name="action_move_up">Siirrä ylös</string>
+    <string name="action_pause_recording">Keskeytä tallennus</string>
+    <string name="action_play_recording">Toista tallenne</string>
+    <string name="dialog_move_to_position_title">Siirrä "%1$s" sijaintiin</string>
+    <string name="label_current_position">(nykyinen)</string>
 </resources>

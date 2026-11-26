@@ -419,4 +419,14 @@
     <string name="filter_date_to">Hingga</string>
     <string name="notify_recording_saved">Rakaman disimpan</string>
     <string name="timer_infinite">Tanpa had</string>
+    <string name="accessibility_maximize_player">Maksimumkan pemain media</string>
+    <string name="accessibility_minimize_player">Minimumkan pemain media</string>
+    <string name="accessibility_reorder_station">Susun semula %1$s</string>
+    <string name="action_move_down">Alih ke bawah</string>
+    <string name="action_move_to_top">Alih ke paling atas</string>
+    <string name="action_move_up">Alih ke atas</string>
+    <string name="action_pause_recording">Jeda rakaman</string>
+    <string name="action_play_recording">Mainkan rakaman</string>
+    <string name="dialog_move_to_position_title">Alihkan "%1$s" ke kedudukan</string>
+    <string name="label_current_position">(semasa)</string>
 </resources>

@@ -419,4 +419,14 @@
     <string name="filter_date_to">Gacha</string>
     <string name="notify_recording_saved">Yozuv saqlandi</string>
     <string name="timer_infinite">Cheksiz</string>
+    <string name="accessibility_maximize_player">Pleyerni kattalashtirish</string>
+    <string name="accessibility_minimize_player">Pleyerni kichraytirish</string>
+    <string name="accessibility_reorder_station">%1$s tartibini o‘zgartirish</string>
+    <string name="action_move_down">Pastga siljitish</string>
+    <string name="action_move_to_top">Eng yuqoriga o‘tkazish</string>
+    <string name="action_move_up">Yuqoriga siljitish</string>
+    <string name="action_pause_recording">Yozishni pauza qilish</string>
+    <string name="action_play_recording">Yozuvni ijro etish</string>
+    <string name="dialog_move_to_position_title">"%1$s" ni pozitsiyaga o‘tkazish</string>
+    <string name="label_current_position">(joriy)</string>
 </resources>

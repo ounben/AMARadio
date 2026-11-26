@@ -419,4 +419,14 @@
     <string name="filter_date_to">ដល់</string>
     <string name="notify_recording_saved">បានរក្សាទុកការថត</string>
     <string name="timer_infinite">គ្មានដែនកំណត់</string>
+    <string name="accessibility_maximize_player">ពង្រីកកម្មវិធីចាក់</string>
+    <string name="accessibility_minimize_player">បង្រួមកម្មវិធីចាក់</string>
+    <string name="accessibility_reorder_station">រៀបចំលំដាប់ %1$s ឡើងវិញ</string>
+    <string name="action_move_down">ផ្លាស់ទីចុះក្រោម</string>
+    <string name="action_move_to_top">ផ្លាស់ទីទៅកំពូល</string>
+    <string name="action_move_up">ផ្លាស់ទីឡើងលើ</string>
+    <string name="action_pause_recording">ផ្អាកការថត</string>
+    <string name="action_play_recording">ចាក់ការថត</string>
+    <string name="dialog_move_to_position_title">ផ្លាស់ទី "%1$s" ទៅទីតាំង</string>
+    <string name="label_current_position">(បច្ចុប្បន្ន)</string>
 </resources>

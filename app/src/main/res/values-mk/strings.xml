@@ -419,4 +419,14 @@
     <string name="filter_date_to">До</string>
     <string name="notify_recording_saved">Снимката е зачувана</string>
     <string name="timer_infinite">Неограничено</string>
+    <string name="accessibility_maximize_player">Зголеми го плеерот</string>
+    <string name="accessibility_minimize_player">Намали го плеерот</string>
+    <string name="accessibility_reorder_station">Промени редослед на %1$s</string>
+    <string name="action_move_down">Премести надолу</string>
+    <string name="action_move_to_top">Премести на врв</string>
+    <string name="action_move_up">Премести нагоре</string>
+    <string name="action_pause_recording">Паузирај снимање</string>
+    <string name="action_play_recording">Пушти снимање</string>
+    <string name="dialog_move_to_position_title">Премести "%1$s" на позиција</string>
+    <string name="label_current_position">(тековна)</string>
 </resources>

@@ -421,4 +421,14 @@
     <string name="filter_date_to">إلى</string>
     <string name="notify_recording_saved">تم حفظ التسجيل</string>
     <string name="timer_infinite">غير محدود</string>
+    <string name="accessibility_maximize_player">تكبير المشغل</string>
+    <string name="accessibility_minimize_player">تصغير المشغل</string>
+    <string name="accessibility_reorder_station">إعادة ترتيب %1$s</string>
+    <string name="action_move_down">تحريك لأسفل</string>
+    <string name="action_move_to_top">نقل إلى الأعلى</string>
+    <string name="action_move_up">تحريك لأعلى</string>
+    <string name="action_pause_recording">إيقاف التسجيل مؤقتًا</string>
+    <string name="action_play_recording">تشغيل التسجيل</string>
+    <string name="dialog_move_to_position_title">نقل "%1$s" إلى الموضع</string>
+    <string name="label_current_position">(الحالي)</string>
 </resources>

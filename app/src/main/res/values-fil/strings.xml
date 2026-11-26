@@ -419,4 +419,14 @@
     <string name="filter_date_to">Hanggang</string>
     <string name="notify_recording_saved">Nai-save ang pagre-record</string>
     <string name="timer_infinite">Walang limitasyon</string>
+    <string name="accessibility_maximize_player">I-maximize ang player</string>
+    <string name="accessibility_minimize_player">I-minimize ang player</string>
+    <string name="accessibility_reorder_station">Muling ayusin ang %1$s</string>
+    <string name="action_move_down">Ilipat pababa</string>
+    <string name="action_move_to_top">Ilipat sa itaas</string>
+    <string name="action_move_up">Ilipat pataas</string>
+    <string name="action_pause_recording">I-pause ang pagre-record</string>
+    <string name="action_play_recording">I-play ang recording</string>
+    <string name="dialog_move_to_position_title">Ilipat ang "%1$s" sa posisyon</string>
+    <string name="label_current_position">(kasalukuyan)</string>
 </resources>

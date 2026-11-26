@@ -423,4 +423,14 @@
     <string name="filter_date_to">Tot</string>
     <string name="notify_recording_saved">Opname gestoor</string>
     <string name="timer_infinite">Onbeperk</string>
+    <string name="accessibility_maximize_player">Maksimeer speler</string>
+    <string name="accessibility_minimize_player">Minimaliseer speler</string>
+    <string name="accessibility_reorder_station">Herrangskik %1$s</string>
+    <string name="action_move_down">Skuif af</string>
+    <string name="action_move_to_top">Skuif na bo</string>
+    <string name="action_move_up">Skuif op</string>
+    <string name="action_pause_recording">Onderbreek opname</string>
+    <string name="action_play_recording">Speel opname</string>
+    <string name="dialog_move_to_position_title">Skuif "%1$s" na posisie</string>
+    <string name="label_current_position">(huidige)</string>
 </resources>

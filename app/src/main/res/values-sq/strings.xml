@@ -419,4 +419,14 @@
     <string name="filter_date_to">Deri më</string>
     <string name="notify_recording_saved">Regjistrimi u ruajt</string>
     <string name="timer_infinite">E pakufizuar</string>
+    <string name="accessibility_maximize_player">Maksimizo luajtësin</string>
+    <string name="accessibility_minimize_player">Minimizo luajtësin</string>
+    <string name="accessibility_reorder_station">Rirendit %1$s</string>
+    <string name="action_move_down">Lëviz poshtë</string>
+    <string name="action_move_to_top">Lëviz në krye</string>
+    <string name="action_move_up">Lëviz lart</string>
+    <string name="action_pause_recording">Vendos regjistrimin në pauzë</string>
+    <string name="action_play_recording">Luaj regjistrimin</string>
+    <string name="dialog_move_to_position_title">Zhvendos "%1$s" në pozicion</string>
+    <string name="label_current_position">(aktual)</string>
 </resources>

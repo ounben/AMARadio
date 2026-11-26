@@ -419,4 +419,14 @@
     <string name="filter_date_to">Sampai</string>
     <string name="notify_recording_saved">Rekaman disimpan</string>
     <string name="timer_infinite">Tak terbatas</string>
+    <string name="accessibility_maximize_player">Maksimalkan pemutar</string>
+    <string name="accessibility_minimize_player">Minimalkan pemutar</string>
+    <string name="accessibility_reorder_station">Urutkan ulang %1$s</string>
+    <string name="action_move_down">Pindah ke bawah</string>
+    <string name="action_move_to_top">Pindah ke paling atas</string>
+    <string name="action_move_up">Pindah ke atas</string>
+    <string name="action_pause_recording">Jeda rekaman</string>
+    <string name="action_play_recording">Putar rekaman</string>
+    <string name="dialog_move_to_position_title">Pindahkan "%1$s" ke posisi</string>
+    <string name="label_current_position">(saat ini)</string>
 </resources>

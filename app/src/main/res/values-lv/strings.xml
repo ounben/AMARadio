@@ -419,4 +419,14 @@
     <string name="filter_date_to">Līdz</string>
     <string name="notify_recording_saved">Ieraksts saglabāts</string>
     <string name="timer_infinite">Neierobežots</string>
+    <string name="accessibility_maximize_player">Maksimizēt atskaņotāju</string>
+    <string name="accessibility_minimize_player">Minimizēt atskaņotāju</string>
+    <string name="accessibility_reorder_station">Pārkārtot %1$s</string>
+    <string name="action_move_down">Pārvietot uz leju</string>
+    <string name="action_move_to_top">Pārvietot uz augšu</string>
+    <string name="action_move_up">Pārvietot augšup</string>
+    <string name="action_pause_recording">Pauzēt ierakstīšanu</string>
+    <string name="action_play_recording">Atskaņot ierakstu</string>
+    <string name="dialog_move_to_position_title">Pārvietot "%1$s" uz pozīciju</string>
+    <string name="label_current_position">(pašreizējā)</string>
 </resources>

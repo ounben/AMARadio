@@ -419,4 +419,14 @@
     <string name="filter_date_to">结束日期</string>
     <string name="notify_recording_saved">录音已保存</string>
     <string name="timer_infinite">无限制</string>
+    <string name="accessibility_maximize_player">最大化播放器</string>
+    <string name="accessibility_minimize_player">最小化播放器</string>
+    <string name="accessibility_reorder_station">重新排列 %1$s</string>
+    <string name="action_move_down">下移</string>
+    <string name="action_move_to_top">移至顶部</string>
+    <string name="action_move_up">上移</string>
+    <string name="action_pause_recording">暂停录音</string>
+    <string name="action_play_recording">播放录音</string>
+    <string name="dialog_move_to_position_title">将“%1$s”移至位置</string>
+    <string name="label_current_position">（当前）</string>
 </resources>

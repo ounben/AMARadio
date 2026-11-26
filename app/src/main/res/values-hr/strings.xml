@@ -419,4 +419,14 @@
     <string name="filter_date_to">Do</string>
     <string name="notify_recording_saved">Snimka je spremljena</string>
     <string name="timer_infinite">Neograničeno</string>
+    <string name="accessibility_maximize_player">Maksimiziraj reproduktor</string>
+    <string name="accessibility_minimize_player">Minimiziraj reproduktor</string>
+    <string name="accessibility_reorder_station">Promijeni redoslijed %1$s</string>
+    <string name="action_move_down">Pomakni dolje</string>
+    <string name="action_move_to_top">Premjesti na vrh</string>
+    <string name="action_move_up">Pomakni gore</string>
+    <string name="action_pause_recording">Pauziraj snimanje</string>
+    <string name="action_play_recording">Reproduciraj snimku</string>
+    <string name="dialog_move_to_position_title">Premjesti "%1$s" na mjesto</string>
+    <string name="label_current_position">(trenutno)</string>
 </resources>

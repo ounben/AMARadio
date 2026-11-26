@@ -419,4 +419,14 @@
     <string name="filter_date_to">Kuni</string>
     <string name="notify_recording_saved">Salvestus salvestatud</string>
     <string name="timer_infinite">Piiramatu</string>
+    <string name="accessibility_maximize_player">Maksimeeri pleier</string>
+    <string name="accessibility_minimize_player">Minimeeri pleier</string>
+    <string name="accessibility_reorder_station">Muuda %1$s järjekorda</string>
+    <string name="action_move_down">Liiguta alla</string>
+    <string name="action_move_to_top">Liiguta üles</string>
+    <string name="action_move_up">Liiguta ülespoole</string>
+    <string name="action_pause_recording">Peata salvestamine</string>
+    <string name="action_play_recording">Esita salvestus</string>
+    <string name="dialog_move_to_position_title">Teisalda "%1$s" asukohta</string>
+    <string name="label_current_position">(praegune)</string>
 </resources>
