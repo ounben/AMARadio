@@ -41,7 +41,6 @@ class GetRealLinkAndPlayTask(context: Context, private val station: DataRadioSta
                 try {
                     station.playableUrl = result
                     playerService.SetStation(station)
-                    playerService.Play()
                 } catch (e: RemoteException) {
                     e.printStackTrace()
                 }

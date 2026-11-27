@@ -113,7 +113,11 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     private var toneGeneratorStopRunnable: Runnable? = null
     private var timer: CountDownTimer? = null
     private var seconds: Long = 0
+    @Volatile
     private var audioFocusRequest: AudioFocusRequest? = null
+    private val playbackGeneration = java.util.concurrent.atomic.AtomicLong(0L)
+    private val audioFocusDispatcher = Dispatchers.IO.limitedParallelism(1)
+    private var playJob: Job? = null
     private var liveInfo = StreamLiveInfo(null)
     private var streamInfo: ShoutcastInfo? = null
     private var isHls = false
@@ -545,16 +549,27 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     private fun playWithoutWarnings(station: DataRadioStation) {
-        serviceScope.launch {
+        val generation = playbackGeneration.incrementAndGet()
+        playJob?.cancel()
+        playJob = serviceScope.launch {
             val fullStation = ensureFullStation(station)
-            withContext(Dispatchers.Main) {
-                this@PlayerService.itsCurrentStation = fullStation
-                playCurrentStation()
-            }
+            if (playbackGeneration.get() != generation) return@launch
+            this@PlayerService.itsCurrentStation = fullStation
+            startPlaybackForGeneration(generation)
         }
     }
 
     private fun playAndWarnIfMetered(station: DataRadioStation) {
+        val delta = System.currentTimeMillis() - lastMeteredConnectionWarningTime
+        val bypass = pauseReason == PauseReason.METERED_CONNECTION &&
+            delta in (1 until METERED_CONNECTION_WARNING_COOLDOWN)
+        if (bypass) {
+            pauseReason = PauseReason.NONE
+            lastMeteredConnectionWarningTime = 0
+            startMeteredConnectionListener()
+            playWithoutWarnings(station)
+            return
+        }
         Utils.playAndWarnIfMetered(
             application as AMARadioApp,
             station,
@@ -650,6 +665,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
     }
 
     fun playCurrentStation() {
+        val generation = playbackGeneration.incrementAndGet()
+        playJob?.cancel()
+        playJob = serviceScope.launch {
+            startPlaybackForGeneration(generation)
+        }
+    }
+
+    private suspend fun startPlaybackForGeneration(generation: Long) {
         val station = itsCurrentStation
         if (station != null) {
             // ALWAYS reset metadata & bitmap for a fresh start. NO "old" data.
@@ -659,8 +682,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
             serviceScope.launch {
                 val bitmap = withContext(Dispatchers.IO) { fetchStationBitmap(station) }
-                currentStationBitmap = bitmap
-                withContext(Dispatchers.Main) {
+                if (itsCurrentStation?.StationUuid == station.StationUuid) {
+                    currentStationBitmap = bitmap
                     updateNotification(if (radioPlayer?.isPlaying() == true) PlayState.Playing else PlayState.PrePlaying)
                 }
             }
@@ -680,20 +703,31 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         lastErrorFromPlayer = -1
         lastPlayStartTime = 0 // Reset timer for new playback
         this.pauseReason = PauseReason.NONE
-        
-        if (acquireAudioFocus() == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
-            streamInfo = null
+        streamInfo = null
+        updateNotification(PlayState.PrePlaying)
+
+        val focusResult = acquireAudioFocusAsync(generation)
+        if (playbackGeneration.get() != generation || pauseReason != PauseReason.NONE) {
+            return
+        }
+
+        if (focusResult == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
             acquireWakeLockAndWifiLock()
             radioPlayer?.setVolume(FULL_VOLUME)
-            
-            updateNotification(PlayState.PrePlaying)
-            
             station?.let { radioPlayer?.play(it) }
+        } else if (focusResult == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
+            Log.e(tag, "acquiring audio focus failed!")
+            toastOnUi(R.string.error_grant_audiofocus)
+            updateNotification(PlayState.Paused)
+        } else {
+            updateNotification(PlayState.Paused)
         }
     }
 
     fun pause(reason: PauseReason) {
         if (Utils.isDebug) Log.d(tag, "pausing playback, reason $reason")
+        playbackGeneration.incrementAndGet()
+        playJob?.cancel()
         this.pauseReason = reason
         this.isTransitioning = false
         forceStopAudioWarning()
@@ -776,6 +810,8 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
 
     fun stop() {
         if (Utils.isDebug) Log.d(tag, "stopping playback.")
+        playbackGeneration.incrementAndGet()
+        playJob?.cancel()
         isTransitioning = false
         // User pause reason keeps the Play button in system UI
         pauseReason = PauseReason.USER 
@@ -796,30 +832,61 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         WidgetUpdateHelper.updateAllWidgets(this, itsCurrentStation, false, null)
     }
 
-    private fun acquireAudioFocus(): Int {
+    private suspend fun acquireAudioFocusAsync(generation: Long): Int = withContext(audioFocusDispatcher) {
+        if (playbackGeneration.get() != generation) {
+            return@withContext AudioManager.AUDIOFOCUS_REQUEST_FAILED
+        }
         if (Utils.isDebug) Log.d(tag, "acquiring audio focus.")
-        val am = audioManager ?: return AudioManager.AUDIOFOCUS_REQUEST_FAILED
+        val am = audioManager ?: return@withContext AudioManager.AUDIOFOCUS_REQUEST_FAILED
         val playbackAttributes = android.media.AudioAttributes.Builder()
             .setUsage(android.media.AudioAttributes.USAGE_MEDIA)
             .setContentType(android.media.AudioAttributes.CONTENT_TYPE_MUSIC)
             .build()
-        audioFocusRequest = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
+        val builder = AudioFocusRequest.Builder(AudioManager.AUDIOFOCUS_GAIN)
             .setAudioAttributes(playbackAttributes)
             .setAcceptsDelayedFocusGain(true)
-            .setOnAudioFocusChangeListener(afChangeListener)
-            .build()
-        val result = am.requestAudioFocus(audioFocusRequest!!)
-        if (Utils.isDebug) Log.d(tag, "audio focus result: $result")
-        if (result == AudioManager.AUDIOFOCUS_REQUEST_FAILED) {
-            Log.e(tag, "acquiring audio focus failed!")
-            toastOnUi(R.string.error_grant_audiofocus)
+        val mainHandler = handler
+        if (mainHandler != null) {
+            builder.setOnAudioFocusChangeListener(afChangeListener, mainHandler)
+        } else {
+            builder.setOnAudioFocusChangeListener(afChangeListener)
         }
-        return result
+        val req = builder.build()
+        val result = try {
+            am.requestAudioFocus(req)
+        } catch (e: Exception) {
+            Log.e(tag, "requestAudioFocus threw exception", e)
+            AudioManager.AUDIOFOCUS_REQUEST_FAILED
+        }
+        if (Utils.isDebug) Log.d(tag, "audio focus result: $result")
+
+        if (playbackGeneration.get() != generation) {
+            if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED || result == AudioManager.AUDIOFOCUS_REQUEST_DELAYED) {
+                try {
+                    am.abandonAudioFocusRequest(req)
+                } catch (_: Exception) {}
+            }
+            return@withContext AudioManager.AUDIOFOCUS_REQUEST_FAILED
+        }
+
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED || result == AudioManager.AUDIOFOCUS_REQUEST_DELAYED) {
+            audioFocusRequest = req
+        }
+        result
     }
 
     private fun releaseAudioFocus() {
         if (Utils.isDebug) Log.d(tag, "releasing audio focus.")
-        audioFocusRequest?.let { audioManager?.abandonAudioFocusRequest(it) }
+        val am = audioManager ?: return
+        val req = audioFocusRequest ?: return
+        audioFocusRequest = null
+        CoroutineScope(audioFocusDispatcher).launch {
+            try {
+                am.abandonAudioFocusRequest(req)
+            } catch (e: Exception) {
+                if (Utils.isDebug) Log.w(tag, "Failed to abandon audio focus", e)
+            }
+        }
     }
 
     @Suppress("WakelockTimeout")

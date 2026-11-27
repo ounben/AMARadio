@@ -146,9 +146,10 @@ object PlayerServiceUtil {
             app?.reviewManager?.incrementActionCount()
 
             itsPlayerService?.let {
-                // Pre-strip heavy metadata to prevent TransactionTooLargeException
+                // Pre-strip heavy metadata to prevent TransactionTooLargeException.
+                // SetStation() already triggers playAndWarnIfMetered() -> playCurrentStation(),
+                // so calling it.Play() here would start playback twice and bypass metered warnings.
                 it.SetStation(station.getLightweightCopy())
-                it.Play()
             }
         } catch (e: RemoteException) {
             Log.e("PLAYER", "RemoteException during play: $e")
