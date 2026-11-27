@@ -3,6 +3,9 @@ package com.ounben.amaradio.ui
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.icu.text.MeasureFormat
+import android.icu.util.Measure
+import android.icu.util.MeasureUnit
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -16,8 +19,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.stateDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -29,10 +37,13 @@ import com.ounben.amaradio.Utils
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
+import com.ounben.amaradio.recorder.formatAccessibleDuration
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.StationActions
 import java.net.Proxy
+import java.util.Locale
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -41,12 +52,31 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
     val sharedPref = remember { PreferenceManager.getDefaultSharedPreferences(context) }
     val cur = PlayerServiceUtil.getTimerSeconds()
     
-    var sliderValue by remember { 
-        mutableStateOf(if (cur <= 0) sharedPref.getInt("sleep_timer_default_minutes", 10).toFloat() 
-                       else (if (cur < 60) 1f else (cur / 60).toFloat())) 
+    val minMinutes = 1
+    val maxMinutes = 120
+
+    var sliderValue by remember {
+        mutableStateOf(
+            (if (cur <= 0) sharedPref.getInt("sleep_timer_default_minutes", 10)
+            else if (cur < 60) minMinutes else (cur / 60).toInt())
+                .coerceIn(minMinutes, maxMinutes)
+                .toFloat()
+        )
     }
 
-    val totalMinutes = sliderValue.toInt()
+    val configuration = LocalConfiguration.current
+    val locale = remember(configuration) {
+        configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: Locale.getDefault()
+    }
+    val totalMinutes = sliderValue.roundToInt()
+    val spokenMinutes = remember(totalMinutes, locale) {
+        try {
+            MeasureFormat.getInstance(locale, MeasureFormat.FormatWidth.WIDE)
+                .format(Measure(totalMinutes, MeasureUnit.MINUTE))
+        } catch (_: Exception) {
+            "$totalMinutes min"
+        }
+    }
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -59,14 +89,20 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                     text = "$totalMinutes min",
                     style = MaterialTheme.typography.headlineMedium,
                     color = MaterialTheme.colorScheme.onSurface,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier.clearAndSetSemantics {
+                        contentDescription = spokenMinutes
+                    }
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Slider(
                     value = sliderValue,
-                    onValueChange = { sliderValue = it },
-                    valueRange = 1f..120f,
-                    steps = 119,
+                    onValueChange = { sliderValue = it.roundToInt().toFloat() },
+                    valueRange = minMinutes.toFloat()..maxMinutes.toFloat(),
+                    steps = (maxMinutes - minMinutes - 1).coerceAtLeast(0),
+                    modifier = Modifier.semantics {
+                        stateDescription = spokenMinutes
+                    },
                     colors = SliderDefaults.colors(
                         thumbColor = AmaradioAmber,
                         activeTrackColor = AmaradioAmber,
@@ -79,56 +115,47 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    val row1 = remember { listOf("5 min" to 5f, "15 min" to 15f, "30 min" to 30f) }
-                    val row2 = remember { listOf("45 min" to 45f, "1 h" to 60f, "2 h" to 120f) }
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        row1.forEach { (label, minutes) ->
-                            val isSelected = totalMinutes == minutes.toInt()
-                            FilterChip(
-                                selected = isSelected,
-                                onClick = { sliderValue = minutes },
-                                label = {
-                                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                                        Text(label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
-                                    }
-                                },
-                                modifier = Modifier.weight(1f).height(38.dp),
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                    labelColor = MaterialTheme.colorScheme.onSurface,
-                                    selectedContainerColor = AmaradioAmber,
-                                    selectedLabelColor = Color.Black
-                                )
-                            )
-                        }
+                    val rows = remember {
+                        listOf(
+                            listOf("5 min" to 5f, "15 min" to 15f, "30 min" to 30f),
+                            listOf("45 min" to 45f, "1 h" to 60f, "2 h" to 120f)
+                        )
                     }
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        row2.forEach { (label, minutes) ->
-                            val isSelected = totalMinutes == minutes.toInt()
-                            FilterChip(
-                                selected = isSelected,
-                                onClick = { sliderValue = minutes },
-                                label = {
-                                    Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                                        Text(label, style = MaterialTheme.typography.labelMedium, fontWeight = FontWeight.Bold)
-                                    }
-                                },
-                                modifier = Modifier.weight(1f).height(38.dp),
-                                colors = FilterChipDefaults.filterChipColors(
-                                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                                    labelColor = MaterialTheme.colorScheme.onSurface,
-                                    selectedContainerColor = AmaradioAmber,
-                                    selectedLabelColor = Color.Black
+                    rows.forEach { row ->
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ) {
+                            row.forEach { (label, minutes) ->
+                                val isSelected = totalMinutes == minutes.toInt()
+                                val spokenLabel = remember(minutes, locale) {
+                                    formatAccessibleDuration(minutes.toLong() * 60_000L, locale)
+                                }
+                                FilterChip(
+                                    selected = isSelected,
+                                    onClick = { sliderValue = minutes },
+                                    label = {
+                                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                                            Text(
+                                                text = label,
+                                                style = MaterialTheme.typography.labelMedium,
+                                                fontWeight = FontWeight.Bold,
+                                                modifier = Modifier.clearAndSetSemantics {
+                                                    contentDescription = spokenLabel
+                                                }
+                                            )
+                                        }
+                                    },
+                                    modifier = Modifier.weight(1f).heightIn(min = 48.dp),
+                                    colors = FilterChipDefaults.filterChipColors(
+                                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                                        labelColor = MaterialTheme.colorScheme.onSurface,
+                                        selectedContainerColor = AmaradioAmber,
+                                        selectedLabelColor = Color.Black
+                                    )
                                 )
-                            )
+                            }
                         }
                     }
                 }
@@ -138,10 +165,11 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
             TextButton(
                 onClick = {
                     PlayerServiceUtil.clearTimer()
-                    PlayerServiceUtil.addTimer(sliderValue.toInt() * 60)
-                    sharedPref.edit { putInt("sleep_timer_default_minutes", sliderValue.toInt()) }
+                    PlayerServiceUtil.addTimer(totalMinutes * 60)
+                    sharedPref.edit { putInt("sleep_timer_default_minutes", totalMinutes) }
                     onDismiss()
                 },
+                modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
             ) {
                 Text(stringResource(R.string.sleep_timer_apply), fontWeight = FontWeight.Bold, color = AmaradioAmber)
@@ -153,6 +181,7 @@ fun SleepTimerDialog(onDismiss: () -> Unit) {
                     PlayerServiceUtil.clearTimer()
                     onDismiss()
                 },
+                modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
                 Text(stringResource(R.string.sleep_timer_clear), color = MaterialTheme.colorScheme.onSurfaceVariant)
