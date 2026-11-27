@@ -1,6 +1,8 @@
 package com.ounben.amaradio.database.user
 
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 import java.util.Date
@@ -75,4 +77,37 @@ data class FilterTabEntity(
     val sortBy: String,
     val reverse: Boolean,
     val position: Int // To maintain user order
+)
+
+@Serializable
+@Entity(tableName = "favorite_list")
+data class FavoriteListEntity(
+    @PrimaryKey val id: String,
+    val name: String,
+    val displayOrder: Int = 0,
+    val createdAt: Long = System.currentTimeMillis()
+)
+
+@Serializable
+@Entity(
+    tableName = "favorite_list_item",
+    primaryKeys = ["listId", "stationUuid"],
+    foreignKeys = [
+        ForeignKey(
+            entity = FavoriteListEntity::class,
+            parentColumns = ["id"],
+            childColumns = ["listId"],
+            onDelete = ForeignKey.CASCADE
+        )
+    ],
+    indices = [
+        Index(value = ["listId"]),
+        Index(value = ["stationUuid"])
+    ]
+)
+data class FavoriteListItemEntity(
+    val listId: String,
+    val stationUuid: String,
+    val displayOrder: Int = 0,
+    val addedAt: Long = System.currentTimeMillis()
 )

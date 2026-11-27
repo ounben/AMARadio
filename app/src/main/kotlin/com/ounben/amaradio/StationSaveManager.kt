@@ -176,6 +176,7 @@ open class StationSaveManager(protected val context: Context) {
             scope.launch(Dispatchers.IO) {
                 if (getSaveId() == "favourites") {
                     userDb.favoriteDao().deleteByUuid(id)
+                    userDb.favoriteListDao().removeStationFromAllLists(id)
                 } else if (getSaveId() == "history") {
                     userDb.historyDao().deleteByUuid(id)
                 } else if (getSaveId() == "custom") {
@@ -207,6 +208,7 @@ open class StationSaveManager(protected val context: Context) {
             if (getSaveId() == "favourites") {
                 val list = userDb.favoriteDao().getAllFavorites()
                 list.forEach { userDb.favoriteDao().delete(it) }
+                userDb.favoriteListDao().deleteAllItems()
             } else if (getSaveId() == "history") {
                 userDb.historyDao().clearAll()
             } else if (getSaveId() == "custom") {

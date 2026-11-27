@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -34,6 +35,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.favorites.AssignFavoriteListsDialog
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.players.PlayStationTask
 import com.ounben.amaradio.players.selector.PlayerType
@@ -414,6 +416,8 @@ fun StationOptionsDialog(
     isFavorite: Boolean,
     onFavoriteClick: () -> Unit,
     onDeleteClick: (() -> Unit)? = null,
+    activePlaylistName: String? = null,
+    onRemoveFromPlaylistClick: (() -> Unit)? = null,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -425,6 +429,7 @@ fun StationOptionsDialog(
         }
     }
     var showRecordTimerDialog by remember { mutableStateOf(false) }
+    var showAssignPlaylistsDialog by remember { mutableStateOf(false) }
     var pendingReplaceRequest by remember { mutableStateOf<Pair<Long, String>?>(null) }
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
@@ -515,6 +520,47 @@ fun StationOptionsDialog(
                     },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
+                ListItem(
+                    headlineContent = {
+                        Text(
+                            text = stringResource(R.string.action_manage_station_playlists),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    modifier = Modifier.clickable {
+                        showAssignPlaylistsDialog = true
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                )
+                if (activePlaylistName != null && onRemoveFromPlaylistClick != null) {
+                    ListItem(
+                        headlineContent = {
+                            Text(
+                                text = stringResource(R.string.action_remove_from_playlist, activePlaylistName),
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                        },
+                        leadingContent = {
+                            Icon(
+                                imageVector = Icons.Default.PlaylistRemove,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        },
+                        modifier = Modifier.clickable {
+                            onRemoveFromPlaylistClick()
+                            onDismiss()
+                        },
+                        colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                    )
+                }
                 ListItem(
                     headlineContent = { 
                         Text(
@@ -631,6 +677,16 @@ fun StationOptionsDialog(
                 TextButton(onClick = { showRecordTimerDialog = false }) {
                     Text(stringResource(R.string.label_button_cancel), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
+            }
+        )
+    }
+
+    if (showAssignPlaylistsDialog) {
+        AssignFavoriteListsDialog(
+            station = station,
+            onDismiss = {
+                showAssignPlaylistsDialog = false
+                onDismiss()
             }
         )
     }

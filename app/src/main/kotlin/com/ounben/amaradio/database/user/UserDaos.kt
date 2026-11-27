@@ -144,3 +144,74 @@ interface CustomStationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(stations: List<CustomStationEntity>)
 }
+
+@Dao
+interface FavoriteListDao {
+    @Query("SELECT * FROM favorite_list ORDER BY displayOrder ASC, createdAt ASC")
+    fun getAllListsFlow(): Flow<List<FavoriteListEntity>>
+
+    @Query("SELECT * FROM favorite_list ORDER BY displayOrder ASC, createdAt ASC")
+    suspend fun getAllLists(): List<FavoriteListEntity>
+
+    @Query("SELECT MAX(displayOrder) FROM favorite_list")
+    suspend fun getMaxListOrder(): Int?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertList(list: FavoriteListEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertListsIgnore(lists: List<FavoriteListEntity>)
+
+    @Update
+    suspend fun updateLists(lists: List<FavoriteListEntity>)
+
+    @Query("UPDATE favorite_list SET name = :name WHERE id = :listId")
+    suspend fun renameList(listId: String, name: String)
+
+    @Query("DELETE FROM favorite_list WHERE id = :listId")
+    suspend fun deleteListById(listId: String)
+
+    @Query("SELECT * FROM favorite_list_item ORDER BY listId ASC, displayOrder ASC, addedAt ASC")
+    fun getAllItemsFlow(): Flow<List<FavoriteListItemEntity>>
+
+    @Query("SELECT * FROM favorite_list_item ORDER BY listId ASC, displayOrder ASC, addedAt ASC")
+    suspend fun getAllItems(): List<FavoriteListItemEntity>
+
+    @Query("SELECT * FROM favorite_list_item WHERE listId = :listId ORDER BY displayOrder ASC, addedAt ASC")
+    suspend fun getItemsForList(listId: String): List<FavoriteListItemEntity>
+
+    @Query("SELECT listId FROM favorite_list_item WHERE stationUuid = :stationUuid")
+    suspend fun getListIdsForStation(stationUuid: String): List<String>
+
+    @Query("SELECT MAX(displayOrder) FROM favorite_list_item WHERE listId = :listId")
+    suspend fun getMaxItemOrder(listId: String): Int?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItem(item: FavoriteListItemEntity)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertItems(items: List<FavoriteListItemEntity>)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertItemsIgnore(items: List<FavoriteListItemEntity>)
+
+    @Query("DELETE FROM favorite_list_item WHERE listId = :listId AND stationUuid = :stationUuid")
+    suspend fun removeStationFromList(listId: String, stationUuid: String)
+
+    @Query("DELETE FROM favorite_list_item WHERE stationUuid = :stationUuid")
+    suspend fun removeStationFromAllLists(stationUuid: String)
+
+    @Query("DELETE FROM favorite_list_item WHERE listId = :listId")
+    suspend fun deleteItemsForList(listId: String)
+
+    @Query("DELETE FROM favorite_list_item")
+    suspend fun deleteAllItems()
+
+    @Transaction
+    suspend fun replaceListItems(listId: String, items: List<FavoriteListItemEntity>) {
+        deleteItemsForList(listId)
+        if (items.isNotEmpty()) {
+            insertItems(items)
+        }
+    }
+}

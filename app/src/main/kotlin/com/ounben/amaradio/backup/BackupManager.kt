@@ -6,6 +6,8 @@ import androidx.core.content.edit
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.database.user.FavoriteListEntity
+import com.ounben.amaradio.database.user.FavoriteListItemEntity
 import com.ounben.amaradio.database.user.FilterTabEntity
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
@@ -25,11 +27,13 @@ import java.util.zip.ZipOutputStream
 
 @Serializable
 data class BackupData(
-    @SerialName("version") val version: Int = 2,
+    @SerialName("version") val version: Int = 3,
     @SerialName("createdAt") val createdAt: Long = System.currentTimeMillis(),
     @SerialName("favorites") val favorites: List<DataRadioStation> = emptyList(),
     @SerialName("customStations") val customStations: List<DataRadioStation> = emptyList(),
     @SerialName("filterTabs") val filterTabs: List<FilterTabEntity> = emptyList(),
+    @SerialName("favoriteLists") val favoriteLists: List<FavoriteListEntity> = emptyList(),
+    @SerialName("favoriteListItems") val favoriteListItems: List<FavoriteListItemEntity> = emptyList(),
     @SerialName("settings") val settings: Map<String, String> = emptyMap()
 )
 
@@ -50,6 +54,8 @@ object BackupManager {
             val favorites = app.favouriteManager.getList()
             val customStations = app.customStationManager.getList()
             val filterTabs = userDb.filterTabDao().getAllTabs()
+            val favoriteLists = userDb.favoriteListDao().getAllLists()
+            val favoriteListItems = userDb.favoriteListDao().getAllItems()
 
             // Filter out temporary runtime keys
             val exportedSettings = sharedPref.all
@@ -59,11 +65,13 @@ object BackupManager {
                 .mapValues { it.value?.toString() ?: "" }
 
             val backupData = BackupData(
-                version = 2,
+                version = 3,
                 createdAt = System.currentTimeMillis(),
                 favorites = favorites,
                 customStations = customStations,
                 filterTabs = filterTabs,
+                favoriteLists = favoriteLists,
+                favoriteListItems = favoriteListItems,
                 settings = exportedSettings
             )
 
@@ -150,9 +158,22 @@ object BackupManager {
                 }
 
                 // 3. Restore Custom Filter Tabs
+                val userDb = AMARadioUserDatabase.getDatabase(context)
                 if (data.filterTabs.isNotEmpty()) {
-                    val userDb = AMARadioUserDatabase.getDatabase(context)
                     userDb.filterTabDao().updateAllTabs(data.filterTabs)
+                }
+
+                // 3b. Restore Favorite Playlists (v3+, backward-compatible with v1/v2)
+                if (data.favoriteLists.isNotEmpty()) {
+                    val favoriteListDao = userDb.favoriteListDao()
+                    favoriteListDao.insertListsIgnore(data.favoriteLists)
+                    if (data.favoriteListItems.isNotEmpty()) {
+                        val validListIds = favoriteListDao.getAllLists().mapTo(HashSet()) { it.id }
+                        val validItems = data.favoriteListItems.filter { it.listId in validListIds }
+                        if (validItems.isNotEmpty()) {
+                            favoriteListDao.insertItemsIgnore(validItems)
+                        }
+                    }
                 }
 
                 // 4. Restore App Settings

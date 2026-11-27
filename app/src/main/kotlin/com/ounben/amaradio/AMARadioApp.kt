@@ -12,6 +12,7 @@ import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
+import com.ounben.amaradio.favorites.FavoriteListManager
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.proxy.ProxySettings
 import com.ounben.amaradio.utils.LocaleUtils
@@ -34,6 +35,8 @@ class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provide
     lateinit var historyManager: HistoryManager
         private set
     lateinit var favouriteManager: FavouriteManager
+        private set
+    lateinit var favoriteListManager: FavoriteListManager
         private set
     lateinit var customStationManager: CustomStationManager
         private set
@@ -106,6 +109,7 @@ class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provide
 
             historyManager = HistoryManager(this)
             favouriteManager = FavouriteManager(this)
+            favoriteListManager = FavoriteListManager(this)
             customStationManager = CustomStationManager(this)
             reviewManager = com.ounben.amaradio.utils.ReviewManager(this)
 

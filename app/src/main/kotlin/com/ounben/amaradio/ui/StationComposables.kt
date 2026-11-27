@@ -739,6 +739,8 @@ fun ReorderableStationList(
     onReorder: (List<DataRadioStation>) -> Unit,
     onDeleteClick: ((DataRadioStation) -> Unit)? = null,
     onLongClick: ((DataRadioStation) -> Unit)? = null,
+    activePlaylistName: String? = null,
+    onRemoveFromPlaylistClick: ((DataRadioStation) -> Unit)? = null,
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel(),
     showFavoriteIcon: Boolean = true,
@@ -972,6 +974,8 @@ fun ReorderableStationList(
             isFavorite = isFavorite(station.StationUuid),
             onFavoriteClick = { onFavoriteClick(station) },
             onDeleteClick = onDeleteClick?.let { { it(station) } },
+            activePlaylistName = activePlaylistName,
+            onRemoveFromPlaylistClick = onRemoveFromPlaylistClick?.let { { it(station) } },
             onDismiss = { stationWithOptions = null }
         )
     }
