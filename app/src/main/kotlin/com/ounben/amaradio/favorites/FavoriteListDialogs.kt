@@ -485,28 +485,20 @@ fun ManageFavoriteListsDialog(
                                                 Box(
                                                     modifier = Modifier
                                                         .size(48.dp)
-                                                        .semantics {
+                                                        .clickable(role = Role.Button) { listToMove = index to list }
+                                                        .draggableHandle()
+                                                        .semantics(mergeDescendants = true) {
+                                                            contentDescription = reorderLabel
                                                             customActions = customActionsList
                                                         },
                                                     contentAlignment = Alignment.Center
                                                 ) {
-                                                    Box(
-                                                        modifier = Modifier
-                                                            .size(48.dp)
-                                                            .clearAndSetSemantics {
-                                                                contentDescription = reorderLabel
-                                                            }
-                                                            .clickable { listToMove = index to list }
-                                                            .draggableHandle(),
-                                                        contentAlignment = Alignment.Center
-                                                    ) {
-                                                        Icon(
-                                                            imageVector = Icons.Default.DragHandle,
-                                                            contentDescription = null,
-                                                            tint = MaterialTheme.colorScheme.onSurface,
-                                                            modifier = Modifier.size(24.dp)
-                                                        )
-                                                    }
+                                                    Icon(
+                                                        imageVector = Icons.Default.DragHandle,
+                                                        contentDescription = null,
+                                                        tint = MaterialTheme.colorScheme.onSurface,
+                                                        modifier = Modifier.size(24.dp)
+                                                    )
                                                 }
                                             }
                                         }

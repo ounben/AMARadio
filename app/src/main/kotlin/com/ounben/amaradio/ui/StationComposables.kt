@@ -776,6 +776,10 @@ fun ReorderableStationList(
         extraBottomOffset = scrollToTopBottomOffset
     )
 
+    val moveToTopLabel = stringResource(R.string.action_move_to_top)
+    val moveUpLabel = stringResource(R.string.action_move_up)
+    val moveDownLabel = stringResource(R.string.action_move_down)
+
     if (isGrid) {
         val reorderableState = rememberReorderableLazyGridState(gridState) { from, to ->
             stationsLocal.add(to.index, stationsLocal.removeAt(from.index))
@@ -792,6 +796,29 @@ fun ReorderableStationList(
                 ReorderableItem(reorderableState, key = station.StationUuid) { isDragging ->
                     val itemScope = this
                     val reorderLabel = stringResource(R.string.accessibility_reorder_station, station.Name)
+                    val customActionsList = remember(index, stationsLocal.size, moveToTopLabel, moveUpLabel, moveDownLabel) {
+                        val list = mutableListOf<CustomAccessibilityAction>()
+                        if (index > 0) {
+                            list.add(CustomAccessibilityAction(label = moveToTopLabel) {
+                                stationsLocal.add(0, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                            list.add(CustomAccessibilityAction(label = moveUpLabel) {
+                                stationsLocal.add(index - 1, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                        }
+                        if (index < stationsLocal.lastIndex) {
+                            list.add(CustomAccessibilityAction(label = moveDownLabel) {
+                                stationsLocal.add(index + 1, stationsLocal.removeAt(index))
+                                onReorder(stationsLocal.toList())
+                                true
+                            })
+                        }
+                        list
+                    }
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -820,11 +847,12 @@ fun ReorderableStationList(
                                     Box(
                                         modifier = dragModifier
                                             .size(48.dp)
-                                            .clearAndSetSemantics {
+                                            .clickable(role = Role.Button) { stationToMove = index to station }
+                                            .draggableHandle()
+                                            .semantics(mergeDescendants = true) {
                                                 contentDescription = reorderLabel
-                                            }
-                                            .clickable { stationToMove = index to station }
-                                            .draggableHandle(),
+                                                customActions = customActionsList
+                                            },
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Icon(
@@ -846,10 +874,6 @@ fun ReorderableStationList(
             stationsLocal.add(to.index, stationsLocal.removeAt(from.index))
             onReorder(stationsLocal.toList())
         }
-
-        val moveToTopLabel = stringResource(R.string.action_move_to_top)
-        val moveUpLabel = stringResource(R.string.action_move_up)
-        val moveDownLabel = stringResource(R.string.action_move_down)
 
         LazyColumn(
             state = listState,
@@ -913,31 +937,23 @@ fun ReorderableStationList(
                                 dragHandle = { dragModifier ->
                                     with(itemScope) {
                                         Box(
-                                            modifier = Modifier
+                                            modifier = dragModifier
                                                 .width(56.dp)
-                                                .fillMaxHeight()
-                                                .semantics {
+                                                .heightIn(min = 48.dp)
+                                                .clickable(role = Role.Button) { stationToMove = index to station }
+                                                .draggableHandle()
+                                                .semantics(mergeDescendants = true) {
+                                                    contentDescription = reorderLabel
                                                     customActions = customActionsList
                                                 },
                                             contentAlignment = Alignment.Center
                                         ) {
-                                            Box(
-                                                modifier = dragModifier
-                                                    .size(48.dp)
-                                                    .clearAndSetSemantics {
-                                                        contentDescription = reorderLabel
-                                                    }
-                                                    .clickable { stationToMove = index to station }
-                                                    .draggableHandle(),
-                                                contentAlignment = Alignment.Center
-                                            ) {
-                                                Icon(
-                                                    imageVector = Icons.Default.DragHandle,
-                                                    contentDescription = null,
-                                                    tint = MaterialTheme.colorScheme.onSurface,
-                                                    modifier = Modifier.size(24.dp)
-                                                )
-                                            }
+                                            Icon(
+                                                imageVector = Icons.Default.DragHandle,
+                                                contentDescription = null,
+                                                tint = MaterialTheme.colorScheme.onSurface,
+                                                modifier = Modifier.size(24.dp)
+                                            )
                                         }
                                     }
                                 }
