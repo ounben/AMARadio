@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Снимање је у току</string>
     <string name="filter_all_stations">Све станице</string>
     <string name="filter_date_any">Било који датум</string>
+    <string name="accessibility_sleep_timer_active_remaining">Активан, преостало је %1$s</string>
 </resources>

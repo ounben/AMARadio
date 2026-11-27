@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">ההקלטה מתבצעת</string>
     <string name="filter_all_stations">כל התחנות</string>
     <string name="filter_date_any">כל תאריך</string>
+    <string name="accessibility_sleep_timer_active_remaining">פעיל, נותרו %1$s</string>
 </resources>

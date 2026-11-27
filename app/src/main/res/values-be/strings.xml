@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Ідзе запіс</string>
     <string name="filter_all_stations">Усе станцыі</string>
     <string name="filter_date_any">Любая дата</string>
+    <string name="accessibility_sleep_timer_active_remaining">Актыўны, засталося %1$s</string>
 </resources>

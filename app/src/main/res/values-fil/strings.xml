@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Kasalukuyang nagre-record</string>
     <string name="filter_all_stations">Lahat ng istasyon</string>
     <string name="filter_date_any">Kahit anong petsa</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktibo, %1$s ang natitira</string>
 </resources>

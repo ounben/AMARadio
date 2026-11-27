@@ -447,4 +447,5 @@
     <string name="dialog_replace_recording_title">ቀረጻ በሂደት ላይ</string>
     <string name="filter_all_stations">ሁሉም ጣቢያዎች</string>
     <string name="filter_date_any">ማንኛውም ቀን</string>
+    <string name="accessibility_sleep_timer_active_remaining">ንቁ፣ %1$s ይቀራል</string>
 </resources>

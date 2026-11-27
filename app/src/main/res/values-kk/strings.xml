@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Жазу жүріп жатыр</string>
     <string name="filter_all_stations">Барлық станциялар</string>
     <string name="filter_date_any">Кез келген күн</string>
+    <string name="accessibility_sleep_timer_active_remaining">Белсенді, %1$s қалды</string>
 </resources>

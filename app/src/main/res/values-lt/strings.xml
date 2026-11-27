@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Vyksta įrašymas</string>
     <string name="filter_all_stations">Visos stotys</string>
     <string name="filter_date_any">Bet kokia data</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktyvus, liko %1$s</string>
 </resources>

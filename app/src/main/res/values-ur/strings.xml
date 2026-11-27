@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">ریکارڈنگ جاری ہے</string>
     <string name="filter_all_stations">تمام اسٹیشنز</string>
     <string name="filter_date_any">کوئی بھی تاریخ</string>
+    <string name="accessibility_sleep_timer_active_remaining">فعال، %1$s باقی ہے</string>
 </resources>

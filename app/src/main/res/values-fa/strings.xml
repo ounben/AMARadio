@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">ضبط در حال انجام است</string>
     <string name="filter_all_stations">همه ایستگاه‌ها</string>
     <string name="filter_date_any">هر تاریخی</string>
+    <string name="accessibility_sleep_timer_active_remaining">فعال، %1$s باقی مانده است</string>
 </resources>

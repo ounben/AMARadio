@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">ກຳລັງບັນທຶກສຽງ</string>
     <string name="filter_all_stations">ທຸກສະຖານີ</string>
     <string name="filter_date_any">ວັນທີໃດກໍໄດ້</string>
+    <string name="accessibility_sleep_timer_active_remaining">ເປີດໃຊ້ງານຢູ່, ຍັງເຫຼືອ %1$s</string>
 </resources>

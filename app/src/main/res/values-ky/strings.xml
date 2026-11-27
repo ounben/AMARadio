@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Жаздыруу жүрүп жатат</string>
     <string name="filter_all_stations">Бардык станциялар</string>
     <string name="filter_date_any">Каалаган дата</string>
+    <string name="accessibility_sleep_timer_active_remaining">Активдүү, %1$s калды</string>
 </resources>

@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Tallennus käynnissä</string>
     <string name="filter_all_stations">Kaikki asemat</string>
     <string name="filter_date_any">Mikä tahansa päivämäärä</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiivinen, %1$s jäljellä</string>
 </resources>

@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Yozib olinmoqda</string>
     <string name="filter_all_stations">Barcha stansiyalar</string>
     <string name="filter_date_any">Istalgan sana</string>
+    <string name="accessibility_sleep_timer_active_remaining">Faol, %1$s qoldi</string>
 </resources>

@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Ìgbasílẹ̀ ń lọ lọ́wọ́</string>
     <string name="filter_all_stations">Gbogbo ibùdó</string>
     <string name="filter_date_any">Ọjọ́ èyíkéyìí</string>
+    <string name="accessibility_sleep_timer_active_remaining">Ń ṣiṣẹ́, %1$s kù</string>
 </resources>

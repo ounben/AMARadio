@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Taifeadadh ar siúl</string>
     <string name="filter_all_stations">Gach stáisiún</string>
     <string name="filter_date_any">Aon dáta</string>
+    <string name="accessibility_sleep_timer_active_remaining">Gníomhach, %1$s fágtha</string>
 </resources>

@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Registrazione in corso</string>
     <string name="filter_all_stations">Tutte le stazioni</string>
     <string name="filter_date_any">Qualsiasi data</string>
+    <string name="accessibility_sleep_timer_active_remaining">Attivo, %1$s rimanente</string>
 </resources>

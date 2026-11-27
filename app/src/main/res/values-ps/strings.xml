@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">ثبتول روان دي</string>
     <string name="filter_all_stations">ټول سټېشنونه</string>
     <string name="filter_date_any">هره نېټه</string>
+    <string name="accessibility_sleep_timer_active_remaining">فعال، %1$s پاتې دي</string>
 </resources>

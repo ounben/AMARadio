@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Gravació en curs</string>
     <string name="filter_all_stations">Totes les emissores</string>
     <string name="filter_date_any">Qualsevol data</string>
+    <string name="accessibility_sleep_timer_active_remaining">Actiu, queda %1$s</string>
 </resources>

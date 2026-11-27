@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">កំពុងថត</string>
     <string name="filter_all_stations">គ្រប់ស្ថានីយ</string>
     <string name="filter_date_any">កាលបរិច្ឆេទណាមួយ</string>
+    <string name="accessibility_sleep_timer_active_remaining">សកម្ម នៅសល់ %1$s</string>
 </resources>

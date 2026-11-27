@@ -447,4 +447,5 @@
     <string name="dialog_replace_recording_title">Snimanje u toku</string>
     <string name="filter_all_stations">Sve stanice</string>
     <string name="filter_date_any">Bilo koji datum</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktivan, preostalo %1$s</string>
 </resources>

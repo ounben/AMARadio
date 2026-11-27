@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">ರೆಕಾರ್ಡಿಂಗ್ ನಡೆಯುತ್ತಿದೆ</string>
     <string name="filter_all_stations">ಎಲ್ಲಾ ನಿಲ್ದಾಣಗಳು</string>
     <string name="filter_date_any">ಯಾವುದೇ ದಿನಾಂಕ</string>
+    <string name="accessibility_sleep_timer_active_remaining">ಸಕ್ರಿಯ, %1$s ಉಳಿದಿದೆ</string>
 </resources>

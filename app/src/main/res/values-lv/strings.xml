@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Notiek ierakstīšana</string>
     <string name="filter_all_stations">Visas stacijas</string>
     <string name="filter_date_any">Jebkurš datums</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktīvs, atlicis %1$s</string>
 </resources>

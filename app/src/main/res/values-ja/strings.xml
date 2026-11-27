@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">録音中</string>
     <string name="filter_all_stations">すべての放送局</string>
     <string name="filter_date_any">すべての日付</string>
+    <string name="accessibility_sleep_timer_active_remaining">有効、残り %1$s</string>
 </resources>

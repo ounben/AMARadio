@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Ana ci gaba da rikodi</string>
     <string name="filter_all_stations">Duk tashoshi</string>
     <string name="filter_date_any">Kowane kwanan wata</string>
+    <string name="accessibility_sleep_timer_active_remaining">Mai aiki, saura %1$s</string>
 </resources>

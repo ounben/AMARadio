@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">பதிவு நடைபெறுகிறது</string>
     <string name="filter_all_stations">அனைத்து நிலையங்களும்</string>
     <string name="filter_date_any">எந்தத் தேதியும்</string>
+    <string name="accessibility_sleep_timer_active_remaining">செயலில் உள்ளது, %1$s மீதமுள்ளது</string>
 </resources>

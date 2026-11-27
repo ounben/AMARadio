@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Opptak pågår</string>
     <string name="filter_all_stations">Alle stasjoner</string>
     <string name="filter_date_any">Enhver dato</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s gjenstår</string>
 </resources>

@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Felvétel folyamatban</string>
     <string name="filter_all_stations">Összes állomás</string>
     <string name="filter_date_any">Bármilyen dátum</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktív, %1$s van hátra</string>
 </resources>

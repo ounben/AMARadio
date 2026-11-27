@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Aufnahme läuft</string>
     <string name="filter_all_stations">Alle Sender</string>
     <string name="filter_date_any">Beliebiges Datum</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s verbleibend</string>
 </resources>

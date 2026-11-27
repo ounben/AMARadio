@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Inspelning pågår</string>
     <string name="filter_all_stations">Alla stationer</string>
     <string name="filter_date_any">Valfritt datum</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s kvar</string>
 </resources>

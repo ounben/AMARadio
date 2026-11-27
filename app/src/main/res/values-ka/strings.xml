@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">მიმდინარეობს ჩაწერა</string>
     <string name="filter_all_stations">ყველა სადგური</string>
     <string name="filter_date_any">ნებისმიერი თარიღი</string>
+    <string name="accessibility_sleep_timer_active_remaining">აქტიურია, დარჩენილია %1$s</string>
 </resources>

@@ -447,4 +447,5 @@
     <string name="dialog_replace_recording_title">Записът е в ход</string>
     <string name="filter_all_stations">Всички станции</string>
     <string name="filter_date_any">Всяка дата</string>
+    <string name="accessibility_sleep_timer_active_remaining">Активен, остава %1$s</string>
 </resources>

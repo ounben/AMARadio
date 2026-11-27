@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">ରେକର୍ଡିଂ ଚାଲିଛି</string>
     <string name="filter_all_stations">ସମସ୍ତ ଷ୍ଟେସନ୍</string>
     <string name="filter_date_any">ଯେକୌଣସି ତାରିଖ</string>
+    <string name="accessibility_sleep_timer_active_remaining">ସକ୍ରିୟ, %1$s ବାକି ଅଛି</string>
 </resources>

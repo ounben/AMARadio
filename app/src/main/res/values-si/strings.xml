@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">පටිගත කිරීම සිදු වෙමින් පවතී</string>
     <string name="filter_all_stations">සියලුම නාලිකා</string>
     <string name="filter_date_any">ඕනෑම දිනයක්</string>
+    <string name="accessibility_sleep_timer_active_remaining">සක්‍රියයි, %1$s ඉතිරිව ඇත</string>
 </resources>

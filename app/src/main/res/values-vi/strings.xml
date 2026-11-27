@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Đang ghi âm</string>
     <string name="filter_all_stations">Tất cả các đài</string>
     <string name="filter_date_any">Bất kỳ ngày nào</string>
+    <string name="accessibility_sleep_timer_active_remaining">Đang bật, còn lại %1$s</string>
 </resources>

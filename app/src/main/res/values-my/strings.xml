@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">အသံဖမ်းနေပါသည်</string>
     <string name="filter_all_stations">အသံလွှင့်ဌာနအားလုံး</string>
     <string name="filter_date_any">မည်သည့်ရက်စွဲမဆို</string>
+    <string name="accessibility_sleep_timer_active_remaining">ဖွင့်ထားသည်၊ %1$s ကျန်သေးသည်</string>
 </resources>

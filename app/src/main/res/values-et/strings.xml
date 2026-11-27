@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Salvestamine on pooleli</string>
     <string name="filter_all_stations">Kõik jaamad</string>
     <string name="filter_date_any">Mis tahes kuupäev</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiivne, %1$s jäänud</string>
 </resources>

@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">റെക്കോർഡിംഗ് നടക്കുന്നു</string>
     <string name="filter_all_stations">എല്ലാ സ്റ്റേഷനുകളും</string>
     <string name="filter_date_any">ഏത് തീയതിയും</string>
+    <string name="accessibility_sleep_timer_active_remaining">സജീവം, %1$s ശേഷിക്കുന്നു</string>
 </resources>

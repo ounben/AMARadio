@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Ukurekhoda kuyaqhubeka</string>
     <string name="filter_all_stations">Zonke izitishi</string>
     <string name="filter_date_any">Nawuphi na umhla</string>
+    <string name="accessibility_sleep_timer_active_remaining">Iyasebenza, %1$s eseleyo</string>
 </resources>

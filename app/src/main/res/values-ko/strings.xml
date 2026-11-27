@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">녹음 진행 중</string>
     <string name="filter_all_stations">모든 방송국</string>
     <string name="filter_date_any">모든 날짜</string>
+    <string name="accessibility_sleep_timer_active_remaining">활성, %1$s 남음</string>
 </resources>

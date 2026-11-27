@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Înregistrare în curs</string>
     <string name="filter_all_stations">Toate posturile</string>
     <string name="filter_date_any">Orice dată</string>
+    <string name="accessibility_sleep_timer_active_remaining">Activ, %1$s rămas</string>
 </resources>

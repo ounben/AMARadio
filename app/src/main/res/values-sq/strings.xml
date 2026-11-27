@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Regjistrimi në vazhdim</string>
     <string name="filter_all_stations">Të gjitha stacionet</string>
     <string name="filter_date_any">Çdo datë</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktiv, mbeten %1$s</string>
 </resources>

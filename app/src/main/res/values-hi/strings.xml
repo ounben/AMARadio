@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">रिकॉर्डिंग जारी है</string>
     <string name="filter_all_stations">सभी स्टेशन</string>
     <string name="filter_date_any">कोई भी तारीख</string>
+    <string name="accessibility_sleep_timer_active_remaining">सक्रिय, %1$s शेष</string>
 </resources>

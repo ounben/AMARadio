@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Upptaka í gangi</string>
     <string name="filter_all_stations">Allar stöðvar</string>
     <string name="filter_date_any">Hvaða dagsetning sem er</string>
+    <string name="accessibility_sleep_timer_active_remaining">Virkt, %1$s eftir</string>
 </resources>

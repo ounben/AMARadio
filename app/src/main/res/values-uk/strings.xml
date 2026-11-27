@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Триває запис</string>
     <string name="filter_all_stations">Усі станції</string>
     <string name="filter_date_any">Будь-яка дата</string>
+    <string name="accessibility_sleep_timer_active_remaining">Активно, залишилося %1$s</string>
 </resources>

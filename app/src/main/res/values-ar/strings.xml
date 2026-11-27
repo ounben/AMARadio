@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">التسجيل قيد التقدم</string>
     <string name="filter_all_stations">جميع المحطات</string>
     <string name="filter_date_any">أي تاريخ</string>
+    <string name="accessibility_sleep_timer_active_remaining">نشط، يتبقى %1$s</string>
 </resources>

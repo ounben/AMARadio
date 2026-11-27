@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">ਰਿਕਾਰਡਿੰਗ ਜਾਰੀ ਹੈ</string>
     <string name="filter_all_stations">ਸਾਰੇ ਸਟੇਸ਼ਨ</string>
     <string name="filter_date_any">ਕੋਈ ਵੀ ਮਿਤੀ</string>
+    <string name="accessibility_sleep_timer_active_remaining">ਕਿਰਿਆਸ਼ੀਲ, %1$s ਬਾਕੀ</string>
 </resources>

@@ -445,4 +445,5 @@
     <string name="dialog_replace_recording_title">Registraziun activa</string>
     <string name="filter_all_stations">Tut ils emetturs</string>
     <string name="filter_date_any">Mintga data</string>
+    <string name="accessibility_sleep_timer_active_remaining">Activ, anc %1$s</string>
 </resources>

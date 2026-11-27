@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">กำลังบันทึกเสียง</string>
     <string name="filter_all_stations">ทุกสถานี</string>
     <string name="filter_date_any">ทุกวันที่</string>
+    <string name="accessibility_sleep_timer_active_remaining">เปิดใช้งานอยู่ เหลือเวลา %1$s</string>
 </resources>

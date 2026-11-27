@@ -448,4 +448,5 @@
     <string name="dialog_replace_recording_title">Εγγραφή σε εξέλιξη</string>
     <string name="filter_all_stations">Όλοι οι σταθμοί</string>
     <string name="filter_date_any">Οποιαδήποτε ημερομηνία</string>
+    <string name="accessibility_sleep_timer_active_remaining">Ενεργό, απομένει %1$s</string>
 </resources>

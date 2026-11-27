@@ -450,4 +450,5 @@
     <string name="dialog_replace_recording_title">Opname aan die gang</string>
     <string name="filter_all_stations">Alle stasies</string>
     <string name="filter_date_any">Enige datum</string>
+    <string name="accessibility_sleep_timer_active_remaining">Aktief, %1$s oor</string>
 </resources>

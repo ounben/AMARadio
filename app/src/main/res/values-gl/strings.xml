@@ -446,4 +446,5 @@
     <string name="dialog_replace_recording_title">Gravación en curso</string>
     <string name="filter_all_stations">Todas as emisoras</string>
     <string name="filter_date_any">Calquera data</string>
+    <string name="accessibility_sleep_timer_active_remaining">Activo, queda %1$s</string>
 </resources>
