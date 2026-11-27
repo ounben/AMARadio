@@ -572,6 +572,10 @@ fun StationOptionsDialog(
     )
 
     if (showRecordTimerDialog) {
+        val configuration = LocalConfiguration.current
+        val locale = remember(configuration) {
+            configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: Locale.getDefault()
+        }
         val infiniteLabel = stringResource(R.string.timer_infinite)
         val timerOptions = listOf(
             " 5 min" to 5 * 60 * 1000L,
@@ -590,8 +594,20 @@ fun StationOptionsDialog(
             text = {
                 Column {
                     timerOptions.forEach { (label, durationMs) ->
+                        val spokenLabel = remember(durationMs, infiniteLabel, locale) {
+                            if (durationMs > 0L) formatAccessibleDuration(durationMs, locale) else infiniteLabel
+                        }
                         ListItem(
-                            headlineContent = { Text(label, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
+                            headlineContent = {
+                                Text(
+                                    text = label,
+                                    fontWeight = FontWeight.Bold,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    modifier = Modifier.clearAndSetSemantics {
+                                        contentDescription = spokenLabel
+                                    }
+                                )
+                            },
                             leadingContent = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
                             modifier = Modifier.clickable {
                                 showRecordTimerDialog = false

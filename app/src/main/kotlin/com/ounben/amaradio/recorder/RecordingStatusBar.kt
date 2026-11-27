@@ -25,10 +25,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
-import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -101,10 +102,15 @@ fun RecordingStatusBar(
         }
     }
 
+    val configuration = LocalConfiguration.current
+    val locale = remember(configuration) {
+        configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: Locale.getDefault()
+    }
     val durationText = formatRecordingDuration(elapsedMs)
+    val spokenDuration = formatAccessibleDuration(elapsedMs, locale)
     val recordLabel = stringResource(R.string.action_record)
     val stopLabel = stringResource(R.string.action_stop_recording)
-    val statusSummary = "$recordLabel: ${bannerState.stationName}, $durationText, ${bannerState.sizeText}"
+    val statusSummary = "$recordLabel: ${bannerState.stationName}, $spokenDuration, ${bannerState.sizeText}"
 
     Column(
         modifier = modifier
@@ -125,7 +131,7 @@ fun RecordingStatusBar(
             Row(
                 modifier = Modifier
                     .weight(1f)
-                    .semantics(mergeDescendants = true) {
+                    .clearAndSetSemantics {
                         contentDescription = statusSummary
                     },
                 verticalAlignment = Alignment.CenterVertically

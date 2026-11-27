@@ -14,8 +14,11 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
@@ -24,6 +27,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ounben.amaradio.R
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
+import java.util.Locale
 
 @Composable
 fun RecordButtonWithTimer(
@@ -111,6 +115,10 @@ fun RecordButtonWithTimer(
                 )
             }
 
+            val configuration = LocalConfiguration.current
+            val locale = remember(configuration) {
+                configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: Locale.getDefault()
+            }
             val infiniteLabel = stringResource(R.string.timer_infinite)
             val timerOptions = listOf(
                 " 5 min" to 5 * 60 * 1000L,
@@ -122,8 +130,20 @@ fun RecordButtonWithTimer(
             )
 
             timerOptions.forEach { (label, durationMs) ->
+                val spokenLabel = remember(durationMs, infiniteLabel, locale) {
+                    if (durationMs > 0L) formatAccessibleDuration(durationMs, locale) else infiniteLabel
+                }
                 DropdownMenuItem(
-                    text = { Text(label, fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
+                    text = {
+                        Text(
+                            text = label,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.clearAndSetSemantics {
+                                contentDescription = spokenLabel
+                            }
+                        )
+                    },
                     leadingIcon = { Icon(Icons.Default.Timer, contentDescription = null, tint = AmaradioAmber) },
                     onClick = {
                         showTimerMenu = false
