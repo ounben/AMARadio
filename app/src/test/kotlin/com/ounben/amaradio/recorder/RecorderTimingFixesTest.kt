@@ -1,15 +1,38 @@
 package com.ounben.amaradio.recorder
 
+import androidx.media3.common.util.ParsableByteArray
+import androidx.media3.common.util.UnstableApi
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.io.TempDir
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.nio.file.Path
+import java.util.concurrent.atomic.AtomicReference
 
+@UnstableApi
 internal class RecorderTimingFixesTest {
+
+    companion object {
+        @JvmStatic
+        @BeforeAll
+        fun configureMedia3ForJvmUnitTests() {
+            // Media3 1.11.1 ParsableByteArray.isRunningInTest() calls Ascii.equalsIgnoreCase("robolectric", Build.FINGERPRINT),
+            // which throws NPE in plain JVM unit tests where android.os.Build.FINGERPRINT is null.
+            // Pre-setting the override avoids loading IsRunningInTestHolder while enforcing bounds checks.
+            val field = ParsableByteArray::class.java.getDeclaredField("shouldEnforceLimitOnLegacyMethods")
+            field.isAccessible = true
+            @Suppress("UNCHECKED_CAST")
+            (field.get(null) as AtomicReference<Boolean?>).set(true)
+
+            // Media3's default Logger calls android.util.Log.getStackTraceString(), which returns null
+            // under returnDefaultValues = true on plain JVM tests.
+            androidx.media3.common.util.Log.setLogLevel(androidx.media3.common.util.Log.LOG_LEVEL_OFF)
+        }
+    }
 
     // -------------------------------------------------------------------------
     // MP3 frame sync, exact duration calculation & Xing/Info header tests
@@ -250,9 +273,346 @@ internal class RecorderTimingFixesTest {
         assertTrue(HlsResolver.isHlsPlaylistResponse("https://tv.example.com/live/aac", "application/octet-stream", body))
     }
 
+    @Test
+    fun recordingPlayer_adaptiveSeekStepScalesWithDuration() {
+        assertEquals(5_000L, calculateAdaptiveSeekStepMs(90_000L))          // < 2 min -> 5s
+        assertEquals(15_000L, calculateAdaptiveSeekStepMs(2L * 60_000L))  // 2 min -> 15s
+        assertEquals(15_000L, calculateAdaptiveSeekStepMs(30L * 60_000L)) // 30 min -> 15s
+        assertEquals(60_000L, calculateAdaptiveSeekStepMs(45L * 60_000L)) // 45 min -> 1m
+        assertEquals(60_000L, calculateAdaptiveSeekStepMs(120L * 60_000L))// 2 h -> 1m
+        assertEquals(300_000L, calculateAdaptiveSeekStepMs(150L * 60_000L))// > 2 h -> 5m
+    }
+
+    @Test
+    fun recordingPlayer_playbackSpeedCyclesAndFormatsCleanly() {
+        assertEquals("1x", formatPlaybackSpeed(1.0f))
+        assertEquals("1.25x", formatPlaybackSpeed(1.25f))
+        assertEquals("1.5x", formatPlaybackSpeed(1.5f))
+        assertEquals("2x", formatPlaybackSpeed(2.0f))
+        assertEquals("2.5x", formatPlaybackSpeed(2.5f))
+        assertEquals("3x", formatPlaybackSpeed(3.0f))
+
+        assertEquals(1.25f, nextPlaybackSpeed(1.0f))
+        assertEquals(1.5f, nextPlaybackSpeed(1.25f))
+        assertEquals(2.0f, nextPlaybackSpeed(1.5f))
+        assertEquals(2.5f, nextPlaybackSpeed(2.0f))
+        assertEquals(3.0f, nextPlaybackSpeed(2.5f))
+        assertEquals(1.0f, nextPlaybackSpeed(3.0f))
+    }
+
+    // -------------------------------------------------------------------------
+    // MPEG-TS multi-frame PES demuxing tests (BBC Radio / HLS AAC regression)
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun aacMuxer_demuxMpegTsSplitsMultiFramePesPacketsIntoIndividualAacFrames(@TempDir tempDir: Path) {
+        val tsFile = File(tempDir.toFile(), "bbc_hls_multiframe.ts")
+
+        // Build 2 PES packets where EACH PES packet bundles 10 ADTS AAC frames (48 kHz, stereo, AAC-LC)
+        // — reproducing BBC Radio 2 HLS where Android's MediaExtractor merged all frames of a PES
+        // packet into one broken ~3 KB sample.
+        val framesPerPes = 10
+        val pesCount = 2
+        val rawPayloadSize = 64
+        val frameDuration90k = 1920L // 1024 samples @ 48 kHz = 21.333... ms = 1920 ticks @ 90 kHz
+
+        val tsStream = ByteArrayOutputStream()
+        tsStream.write(createPatPacket(pmtPid = 0x1000))
+        tsStream.write(createPmtPacket(pmtPid = 0x1000, videoPid = 0x0101, audioPid = 0x0100))
+
+        var cc = 0
+        for (pesIdx in 0 until pesCount) {
+            val pesPayload = ByteArrayOutputStream()
+            for (f in 0 until framesPerPes) {
+                val marker = ((pesIdx * framesPerPes) + f + 1).toByte()
+                val rawAacPayload = ByteArray(rawPayloadSize) { marker }
+                pesPayload.write(createAdtsAacFrame48kStereo(rawAacPayload))
+            }
+            val pts90k = 90_000L + pesIdx * framesPerPes * frameDuration90k
+            val pesBytes = wrapInAudioPesPacket(pts90k, pesPayload.toByteArray())
+            cc = writePesAsTsPackets(tsStream, pid = 0x0100, pesBytes = pesBytes, startCc = cc)
+        }
+        tsFile.writeBytes(tsStream.toByteArray())
+
+        assertEquals(0, AacMuxer.detectMpegTsSyncOffset(tsFile))
+
+        val probed = AacMuxer.probeBestMpegTsAudioTrack(tsFile)
+        assertNotNull(probed)
+        assertEquals("audio/mp4a-latm", probed!!.mime)
+        assertEquals(48000, probed.format.sampleRate)
+        assertEquals(2, probed.format.channelCount)
+        assertEquals(1, probed.format.initializationData.size)
+        // 48 kHz stereo AAC-LC AudioSpecificConfig = 0x11 0x90
+        assertEquals(0x11.toByte(), probed.format.initializationData[0][0])
+        assertEquals(0x90.toByte(), probed.format.initializationData[0][1])
+
+        val extractedSizes = mutableListOf<Int>()
+        val extractedPts = mutableListOf<Long>()
+        val extractedMarkers = mutableListOf<Byte>()
+        val count = AacMuxer.demuxMpegTsAudioTrack(tsFile, 0L, probed.trackId) { data, size, ptsUs, _ ->
+            extractedSizes.add(size)
+            extractedPts.add(ptsUs)
+            extractedMarkers.add(data[0])
+        }
+
+        // Must emit ALL 20 individual AAC frames (NOT 2 merged multi-frame PES blobs!)
+        assertEquals(framesPerPes * pesCount, count)
+        assertTrue(extractedSizes.all { it == rawPayloadSize })
+        for (i in 0 until count) {
+            assertEquals((i + 1).toByte(), extractedMarkers[i])
+            if (i > 0) {
+                val deltaUs = extractedPts[i] - extractedPts[i - 1]
+                // Each 48 kHz AAC frame is 21333..21334 us
+                assertTrue(deltaUs in 21_330L..21_340L, "Unexpected PTS delta at frame $i: $deltaUs us")
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // TagEmbedder M4A 64-bit mdat + stco chunk offset shifting tests (BBC CWR fix)
+    // -------------------------------------------------------------------------
+
+    @Test
+    fun tagEmbedder_fastStartM4aWith64BitMdat_shiftsStcoOffsetsToPreserveAudioData() {
+        val ftyp = mp4Box("ftyp", ByteArray(16) { 0x01 })
+        val audioPayload = byteArrayOf(0xDE.toByte(), 0xAD.toByte(), 0xBE.toByte(), 0xEF.toByte(), 0x42, 0x43)
+
+        // Build placeholder moov to calculate exact initial mdat audio offset
+        fun buildFastStartMoov(chunkOffset: Int): ByteArray {
+            val stcoPayload = ByteArray(12).apply {
+                // version(0) + flags(0) = 4 zero bytes, entry_count = 1, chunk_offset
+                putBe32(this, 4, 1)
+                putBe32(this, 8, chunkOffset)
+            }
+            val stco = mp4Box("stco", stcoPayload)
+            val stbl = mp4Box("stbl", stco)
+            val minf = mp4Box("minf", stbl)
+            val mdia = mp4Box("mdia", minf)
+            val trak = mp4Box("trak", mdia)
+            return mp4Box("moov", trak)
+        }
+
+        val sampleMoov = buildFastStartMoov(0)
+        // 64-bit mdat header is 16 bytes (size=1 + "mdat" + uint64 largesize)
+        val initialAudioOffset = ftyp.size + sampleMoov.size + 16
+        val moov = buildFastStartMoov(initialAudioOffset)
+        val mdat64 = mp4Box64("mdat", audioPayload)
+        val originalM4a = ftyp + moov + mdat64
+
+        val fakeJpeg = ByteArray(512) { 0x77 }
+        val updated = TagEmbedder.embedM4aMetadataBytes(originalM4a, fakeJpeg, "BBC CWR")
+        assertNotNull(updated)
+        val out = updated!!
+        assertTrue(out.size > originalM4a.size)
+
+        // Locate updated stco chunk offset inside moov and verify it STILL points to exact audioPayload!
+        val stcoIdx = findAscii(out, "stco")
+        assertTrue(stcoIdx >= 4)
+        val newChunkOffset = readBe32(out, stcoIdx + 12)
+        assertEquals(initialAudioOffset + (out.size - originalM4a.size), newChunkOffset)
+        for (i in audioPayload.indices) {
+            assertEquals(audioPayload[i], out[newChunkOffset + i])
+        }
+    }
+
+    @Test
+    fun tagEmbedder_nonStreamableM4aWith64BitMdat_embedsMetadataWithoutShiftingStco() {
+        val ftyp = mp4Box("ftyp", ByteArray(16) { 0x01 })
+        val audioPayload = byteArrayOf(0x11, 0x22, 0x33, 0x44, 0x55, 0x66)
+        val mdat64 = mp4Box64("mdat", audioPayload)
+        val initialAudioOffset = ftyp.size + 16
+
+        val stcoPayload = ByteArray(12).apply {
+            putBe32(this, 4, 1)
+            putBe32(this, 8, initialAudioOffset)
+        }
+        val moov = mp4Box("moov", mp4Box("trak", mp4Box("mdia", mp4Box("minf", mp4Box("stbl", mp4Box("stco", stcoPayload))))))
+        val originalM4a = ftyp + mdat64 + moov
+
+        val fakeJpeg = ByteArray(256) { 0x55 }
+        val updated = TagEmbedder.embedM4aMetadataBytes(originalM4a, fakeJpeg, "BBC Radio 2")
+        assertNotNull(updated)
+        val out = updated!!
+        assertTrue(out.size > originalM4a.size)
+
+        val stcoIdx = findAscii(out, "stco")
+        assertTrue(stcoIdx >= 4)
+        val chunkOffsetAfter = readBe32(out, stcoIdx + 12)
+        assertEquals(initialAudioOffset, chunkOffsetAfter)
+        for (i in audioPayload.indices) {
+            assertEquals(audioPayload[i], out[chunkOffsetAfter + i])
+        }
+    }
+
+    private fun mp4Box(type: String, payload: ByteArray): ByteArray {
+        val box = ByteArray(8 + payload.size)
+        putBe32(box, 0, box.size)
+        type.toByteArray(Charsets.ISO_8859_1).copyInto(box, destinationOffset = 4)
+        payload.copyInto(box, destinationOffset = 8)
+        return box
+    }
+
+    private fun mp4Box64(type: String, payload: ByteArray): ByteArray {
+        val total = 16L + payload.size
+        val box = ByteArray(total.toInt())
+        putBe32(box, 0, 1) // 64-bit largesize indicator
+        type.toByteArray(Charsets.ISO_8859_1).copyInto(box, destinationOffset = 4)
+        for (i in 0 until 8) {
+            box[8 + i] = ((total ushr ((7 - i) * 8)) and 0xFFL).toByte()
+        }
+        payload.copyInto(box, destinationOffset = 16)
+        return box
+    }
+
+    private fun putBe32(arr: ByteArray, offset: Int, value: Int) {
+        arr[offset] = (value shr 24).toByte()
+        arr[offset + 1] = (value shr 16).toByte()
+        arr[offset + 2] = (value shr 8).toByte()
+        arr[offset + 3] = value.toByte()
+    }
+
+    private fun readBe32(arr: ByteArray, offset: Int): Int {
+        return ((arr[offset].toInt() and 0xFF) shl 24) or
+            ((arr[offset + 1].toInt() and 0xFF) shl 16) or
+            ((arr[offset + 2].toInt() and 0xFF) shl 8) or
+            (arr[offset + 3].toInt() and 0xFF)
+    }
+
+    private fun findAscii(arr: ByteArray, needle: String): Int {
+        val target = needle.toByteArray(Charsets.ISO_8859_1)
+        for (i in 0..(arr.size - target.size)) {
+            var match = true
+            for (j in target.indices) {
+                if (arr[i + j] != target[j]) {
+                    match = false
+                    break
+                }
+            }
+            if (match) return i
+        }
+        return -1
+    }
+
     // -------------------------------------------------------------------------
     // Helpers
     // -------------------------------------------------------------------------
+
+    private fun createAdtsAacFrame48kStereo(rawPayload: ByteArray): ByteArray {
+        val frameLength = 7 + rawPayload.size
+        val frame = ByteArray(frameLength)
+        frame[0] = 0xFF.toByte()
+        frame[1] = 0xF1.toByte() // MPEG-4, Layer 0, protection_absent=1 (no CRC)
+        frame[2] = 0x4C.toByte() // profile=1 (AAC-LC), freqIdx=3 (48kHz), chCfg high bit=0
+        frame[3] = ((2 shl 6) or ((frameLength shr 11) and 0x03)).toByte() // chCfg=2 (stereo)
+        frame[4] = ((frameLength shr 3) and 0xFF).toByte()
+        frame[5] = (((frameLength and 0x07) shl 5) or 0x1F).toByte()
+        frame[6] = 0xFC.toByte()
+        rawPayload.copyInto(frame, destinationOffset = 7)
+        return frame
+    }
+
+    private fun wrapInAudioPesPacket(pts90k: Long, payload: ByteArray): ByteArray {
+        val header = ByteArray(14)
+        header[0] = 0x00
+        header[1] = 0x00
+        header[2] = 0x01
+        header[3] = 0xC0.toByte() // Audio stream 0
+        val pesLen = 8 + payload.size
+        header[4] = if (pesLen <= 0xFFFF) ((pesLen shr 8) and 0xFF).toByte() else 0
+        header[5] = if (pesLen <= 0xFFFF) (pesLen and 0xFF).toByte() else 0
+        header[6] = 0x80.toByte()
+        header[7] = 0x80.toByte() // PTS present
+        header[8] = 0x05 // PTS header data length
+        header[9] = (0x20 or (((pts90k ushr 30) and 0x07L).toInt() shl 1) or 0x01).toByte()
+        header[10] = ((pts90k ushr 22) and 0xFFL).toByte()
+        header[11] = ((((pts90k ushr 15) and 0x7FL).toInt() shl 1) or 0x01).toByte()
+        header[12] = ((pts90k ushr 7) and 0xFFL).toByte()
+        header[13] = (((pts90k and 0x7FL).toInt() shl 1) or 0x01).toByte()
+        return header + payload
+    }
+
+    private fun writePesAsTsPackets(out: ByteArrayOutputStream, pid: Int, pesBytes: ByteArray, startCc: Int): Int {
+        var offset = 0
+        var cc = startCc
+        var first = true
+        while (offset < pesBytes.size) {
+            val packet = ByteArray(188) { 0xFF.toByte() }
+            packet[0] = 0x47
+            packet[1] = ((if (first) 0x40 else 0x00) or ((pid shr 8) and 0x1F)).toByte()
+            packet[2] = (pid and 0xFF).toByte()
+            val remaining = pesBytes.size - offset
+            if (remaining >= 184) {
+                packet[3] = (0x10 or (cc and 0x0F)).toByte()
+                pesBytes.copyInto(packet, destinationOffset = 4, startIndex = offset, endIndex = offset + 184)
+                offset += 184
+            } else {
+                // Adaptation field stuffing so payload fills the exact end of the 188-byte packet
+                val stuffingTotal = 184 - remaining
+                packet[3] = (0x30 or (cc and 0x0F)).toByte()
+                packet[4] = (stuffingTotal - 1).toByte()
+                if (stuffingTotal >= 2) {
+                    packet[5] = 0x00
+                }
+                pesBytes.copyInto(packet, destinationOffset = 4 + stuffingTotal, startIndex = offset, endIndex = pesBytes.size)
+                offset = pesBytes.size
+            }
+            out.write(packet)
+            cc = (cc + 1) and 0x0F
+            first = false
+        }
+        return cc
+    }
+
+    private fun createPatPacket(pmtPid: Int): ByteArray {
+        val section = byteArrayOf(
+            0x00, 0xB0.toByte(), 0x0D, // table_id=0, section_length=13
+            0x00, 0x01, 0xC1.toByte(), 0x00, 0x00, // tsid=1, ver=0, cur=1
+            0x00, 0x01, (0xE0 or ((pmtPid shr 8) and 0x1F)).toByte(), (pmtPid and 0xFF).toByte()
+        )
+        return buildPsiTsPacket(pid = 0x0000, sectionWithoutCrc = section)
+    }
+
+    private fun createPmtPacket(pmtPid: Int, videoPid: Int, audioPid: Int): ByteArray {
+        val section = byteArrayOf(
+            0x02, 0xB0.toByte(), 0x17, // table_id=2, section_length=23
+            0x00, 0x01, 0xC1.toByte(), 0x00, 0x00,
+            (0xE0 or ((audioPid shr 8) and 0x1F)).toByte(), (audioPid and 0xFF).toByte(), // PCR PID
+            0xF0.toByte(), 0x00, // program_info_length=0
+            // Video track (H.264) - should be discarded
+            0x1B, (0xE0 or ((videoPid shr 8) and 0x1F)).toByte(), (videoPid and 0xFF).toByte(), 0xF0.toByte(), 0x00,
+            // Audio track (ADTS AAC) - should be selected
+            0x0F, (0xE0 or ((audioPid shr 8) and 0x1F)).toByte(), (audioPid and 0xFF).toByte(), 0xF0.toByte(), 0x00
+        )
+        return buildPsiTsPacket(pid = pmtPid, sectionWithoutCrc = section)
+    }
+
+    private fun buildPsiTsPacket(pid: Int, sectionWithoutCrc: ByteArray): ByteArray {
+        val crc = mpeg2Crc32(sectionWithoutCrc)
+        val packet = ByteArray(188) { 0xFF.toByte() }
+        packet[0] = 0x47
+        packet[1] = (0x40 or ((pid shr 8) and 0x1F)).toByte()
+        packet[2] = (pid and 0xFF).toByte()
+        packet[3] = 0x10
+        packet[4] = 0x00 // pointer_field
+        sectionWithoutCrc.copyInto(packet, destinationOffset = 5)
+        val crcOff = 5 + sectionWithoutCrc.size
+        packet[crcOff] = ((crc ushr 24) and 0xFF).toByte()
+        packet[crcOff + 1] = ((crc ushr 16) and 0xFF).toByte()
+        packet[crcOff + 2] = ((crc ushr 8) and 0xFF).toByte()
+        packet[crcOff + 3] = (crc and 0xFF).toByte()
+        return packet
+    }
+
+    private fun mpeg2Crc32(data: ByteArray): Int {
+        var crc = -1
+        for (b in data) {
+            crc = crc xor ((b.toInt() and 0xFF) shl 24)
+            repeat(8) {
+                crc = if ((crc and Int.MIN_VALUE) != 0) (crc shl 1) xor 0x04C11DB7 else crc shl 1
+            }
+        }
+        return crc
+    }
 
     private fun createMp3FrameMpeg1L3(bitrateIdx: Int, sampleRateIdx: Int): ByteArray {
         val bitrates = intArrayOf(0, 32, 40, 48, 56, 64, 80, 96, 112, 128, 160, 192, 224, 256, 320, 0)

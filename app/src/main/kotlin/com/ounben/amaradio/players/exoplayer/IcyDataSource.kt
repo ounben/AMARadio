@@ -2,6 +2,7 @@ package com.ounben.amaradio.players.exoplayer
 
 import android.net.Uri
 import android.util.Log
+import androidx.annotation.VisibleForTesting
 import androidx.media3.common.PlaybackException
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.datasource.DataSpec
@@ -161,6 +162,22 @@ class IcyDataSource(
         responseBody = null
         lastMetadataString = null
         dataSpec = null
+    }
+
+    @VisibleForTesting
+    internal fun attachTestStream(inputStream: InputStream, metadataInterval: Int) {
+        byteStream = inputStream
+        opened = true
+        lastMetadataString = null
+        metadataBytesToRead = 0
+        metadataBufferPos = 0
+        if (metadataInterval > 0) {
+            shoutcastInfo = ShoutcastInfo(metadataOffset = metadataInterval)
+            bytesUntilMetadata = metadataInterval
+        } else {
+            shoutcastInfo = null
+            bytesUntilMetadata = Int.MAX_VALUE
+        }
     }
 
     override fun read(buffer: ByteArray, offset: Int, readLength: Int): Int {
