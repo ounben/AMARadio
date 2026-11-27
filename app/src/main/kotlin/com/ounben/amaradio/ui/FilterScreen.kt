@@ -32,6 +32,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -457,7 +458,7 @@ fun FilterScreen(
                             ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
-                            Icon(Icons.Default.Delete, contentDescription = null, modifier = Modifier.size(18.dp))
+                            Icon(painter = painterResource(R.drawable.delete_24), contentDescription = null, modifier = Modifier.size(18.dp))
                             Spacer(Modifier.width(8.dp))
                             Text(stringResource(R.string.action_delete))
                         }

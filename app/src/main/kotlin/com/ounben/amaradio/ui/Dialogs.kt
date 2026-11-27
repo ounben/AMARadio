@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -598,7 +599,7 @@ fun StationOptionsDialog(
                                 color = MaterialTheme.colorScheme.error
                             ) 
                         },
-                        leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                        leadingContent = { Icon(painter = painterResource(R.drawable.delete_24), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
                         modifier = Modifier.clickable {
                             onDeleteClick()
                             onDismiss()

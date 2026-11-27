@@ -309,7 +309,7 @@ fun MainTopBar(
                             HorizontalDivider(modifier = Modifier.padding(vertical = 4.dp), color = MaterialTheme.colorScheme.outline)
                             DropdownMenuItem(
                                 text = { Text(stringResource(deleteTitleRes)) },
-                                leadingIcon = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                                leadingIcon = { Icon(painter = painterResource(R.drawable.delete_24), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
                                 onClick = {
                                     onDeleteClick()
                                     showMenu = false

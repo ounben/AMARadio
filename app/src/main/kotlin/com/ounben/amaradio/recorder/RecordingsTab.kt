@@ -30,6 +30,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
@@ -742,7 +743,7 @@ fun RecordingOptionsDialog(
 
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_delete), color = SolidRedError) },
-                    leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = SolidRedError) },
+                    leadingContent = { Icon(painter = painterResource(R.drawable.delete_24), contentDescription = null, tint = SolidRedError) },
                     modifier = Modifier.clickable {
                         onDeleteClick()
                         onDismiss()

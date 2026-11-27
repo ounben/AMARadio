@@ -27,7 +27,6 @@ import androidx.compose.material.icons.automirrored.filled.PlaylistPlay
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Settings
@@ -63,6 +62,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.Role
@@ -475,7 +475,7 @@ fun ManageFavoriteListsDialog(
                                                 modifier = Modifier.size(48.dp)
                                             ) {
                                                 Icon(
-                                                    imageVector = Icons.Default.Delete,
+                                                    painter = painterResource(R.drawable.delete_24),
                                                     contentDescription = stringResource(R.string.accessibility_playlist_delete, list.name),
                                                     tint = MaterialTheme.colorScheme.onSurface
                                                 )

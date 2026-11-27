@@ -22,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -265,7 +266,7 @@ fun CustomStationOptionsDialog(
 
                 ListItem(
                     headlineContent = { Text(stringResource(R.string.action_delete), color = MaterialTheme.colorScheme.error) },
-                    leadingContent = { Icon(Icons.Default.Delete, contentDescription = null, tint = MaterialTheme.colorScheme.error) },
+                    leadingContent = { Icon(painter = painterResource(R.drawable.delete_24), contentDescription = null, tint = MaterialTheme.colorScheme.error) },
                     modifier = Modifier.clickable { onDelete() },
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
