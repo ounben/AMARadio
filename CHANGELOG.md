@@ -5,6 +5,30 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.53] - 2026-11-27
+### Added
+- **Live Recording Status Bar (`RecordingStatusBar`)**: Displays a compact status bar directly above the MiniPlayer, FullPlayer, and landscape SidePanelPlayer while a background recording is active, showing a record indicator, truncated station name, live elapsed time, file size (`KB`/`MB`), accessible spoken duration for TalkBack, and a direct stop button.
+- **Active Recording Replacement Warning**: Starting a recording on another station while a recording is already active now shows a confirmation dialog (`ReplaceRecordingWarningDialog`); confirming cleanly stops and saves the running recording and immediately starts recording the new stream via isolated `RecordingSession` instances in `RecordManager`.
+- **Always-Visible Scroll-to-Top Button (#168)**: Added a persistent bottom-right `ScrollToTopButton` across station lists, favorites, history, recordings, and settings that smoothly scrolls to the top, restores TalkBack focus to the first item, and dynamically stays clear of the MiniPlayer and Recording Status Bar.
+- **Recording Player Playback Speed & Skip Controls (#168)**: Added playback speed selection (`0.5x`–`2.0x` with 1x reset), 15-second rewind/forward controls, and accessible TalkBack seekbar announcements in `RecordingPlayer`.
+- **TV & Multi-Track HLS Stream Recording**: Added dynamic HLS playlist detection, MPEG-TS/fMP4 video-track stripping, and lossless audio extraction (`AacMuxer`, `HlsResolver`, `FormatParser`) for TV streams (e.g. MSNBC).
+- **Recorder Timing & Container Unit Tests (#116)**: Migrated unit tests to `app/src/test/kotlin` and added `RecorderTimingFixesTest.kt` covering MP3 frame timing, Ogg granulepos/CRC32 handling, MPEG-TS multi-frame PES demuxing, and M4A 64-bit `mdat` cover-art chunk offset shifting.
+- **Global Localization Update**: Synchronized 18 new UI and accessibility string keys (including `accessibility_sleep_timer_active_remaining`) across all 89 language resource folders.
+
+### Changed
+- **Top Bar Sleep Timer & TalkBack Active State (#168)**: Moved the Sleep Timer button into the main TopBar (using `ic_timer_play_24dp` with Amber tint when active and localized TalkBack remaining-duration `stateDescription` via ICU `MeasureFormat` + `accessibility_sleep_timer_active_remaining`) and moved the Filter shortcut into the overflow menu.
+- **Custom Stations Add Button Layout**: Repositioned the Add Station FAB in `CustomStationsTab` to the left of `ScrollToTopButton` so the scroll-to-top button remains in its fixed bottom-right position without overlap.
+- **Recording Pipeline & Player Overhaul**: Reworked recording finalization via collision-free temporary `.part` files, exact MP3 frame scanning with fresh Xing/Info seek headers (`Mp3FrameHelper`), Ogg page re-zeroing (`OggStreamHandler`), and `RecordingPlayer` duration/seeking synchronization.
+- **Standardized Record Button Styling & Accessibility (#168)**: Aligned the record button color with standard AMARadio `onSurface` icon styling, added localized ICU `MeasureFormat` TalkBack announcements (`1 hour`, `2 hours`, `5 minutes`, etc.) to timer menus in `RecordButtonWithTimer` and `StationOptionsDialog` as well as `RecordingStatusBar`, and improved TalkBack labels and clear buttons for station and date filters in `RecordingsTab`.
+
+### Fixed
+- **AudioFocus Main-Thread ANR & Duplicate Playback Start (#178)**: Offloaded `AudioManager.requestAudioFocus` and `abandonAudioFocusRequest` Binder IPCs in `PlayerService` to a serialized background dispatcher (`Dispatchers.IO.limitedParallelism(1)`) with generation/cancellation guards (preventing ANRs during `AudioService`/`AudioFlinger` stalls while preserving Android Auto, Cast, and metered-warning cooldown behavior), and removed the redundant `Play()` call after `SetStation()` in `PlayerServiceUtil.play` and `GetRealLinkAndPlayTask`.
+- **Sleep Timer TalkBack Decimal Readout & Touch Target Size (#168)**: Fixed the off-by-one `steps` calculation in `SleepTimerDialog` (`maxMinutes - minMinutes - 1` + integer rounding) so the slider snaps to exact 1-minute steps without fractional TalkBack announcements (e.g. `15.88` / `17.86`), added localized ICU `MeasureFormat` TalkBack descriptions for all preset chips (`5 min`–`2 h`) and slider values, and increased all dialog buttons/chips to at least `48dp` height for Google Play Pre-Launch Report compliance.
+- **WorkManager Direct Boot Crash (#177)**: Removed `android:directBootAware="true"` from `StationIconProvider`, guarded `SyncWorker.enqueue` with `UserManagerCompat.isUserUnlocked`, and switched `WorkManager` to on-demand initialization with an `InitializationExceptionHandler` in `AMARadioApp` to prevent `ForceStopRunnable` background crashes during Direct Boot on Android 16.
+- **HLS MPEG-TS Multi-Frame PES Playback Errors**: Replaced Android `MediaExtractor` for MPEG-TS inputs in `AacMuxer` with Media3 `TsExtractor(MODE_HLS)` to split multi-frame PES packets into individual AAC frames with zero-based monotonic timestamps, fixing `UnexpectedDiscontinuityException` and external player (Musicolet) playback (e.g. BBC Radio 2).
+- **Silent Fast-Start M4A Recordings After Cover Art Embedding**: Updated MP4 box parsing in `TagEmbedder` to handle 64-bit `mdat` (`size == 1`) boxes and recursively shift `stco`/`co64` chunk offsets whenever `moov` precedes `mdat` (e.g. BBC CWR).
+- **User Room DB Startup Race Condition (#167)**: Awaited `AMARadioApp.userDbMigrationJob` in `StationSaveManager` and `PlayerService` so cold-start playback and station loading wait for Room DB initialization/migration.
+
 ## [1.52] - 2026-11-21
 ### Added
 - **TalkBack Position-Picker Dialog for Favorites Reordering (#168)**: Tapping or double-tapping the reorder drag handle in the Favorites tab opens a direct `PositionPickerDialog` (`1` to `N`) with explicit position announcements (*"2. Radio Paradiso (current), Radio button, selected"*). Long-press & drag remains fully functional for sighted users.
