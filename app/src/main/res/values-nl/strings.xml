@@ -429,4 +429,21 @@
     <string name="action_play_recording">Opname afspelen</string>
     <string name="dialog_move_to_position_title">"%1$s" naar positie verplaatsen</string>
     <string name="label_current_position">(huidig)</string>
+    <string name="accessibility_filter_date_from">Vanaf datum: %1$s</string>
+    <string name="accessibility_filter_date_to">Tot datum: %1$s</string>
+    <string name="accessibility_filter_station">Zenderfilter: %1$s</string>
+    <string name="accessibility_playback_speed">Afspeelsnelheid %1$s</string>
+    <string name="accessibility_seek_slider">Afspeelpositie</string>
+    <string name="accessibility_time_position">%1$s van %2$s</string>
+    <string name="action_change_playback_speed">Afspeelsnelheid wijzigen</string>
+    <string name="action_clear_date_filter">Datumfilter wissen</string>
+    <string name="action_clear_station_filter">Zenderfilter wissen</string>
+    <string name="action_forward_15s">15 seconden vooruit</string>
+    <string name="action_reset_playback_speed">Afspeelsnelheid terugzetten naar 1x</string>
+    <string name="action_rewind_15s">15 seconden terug</string>
+    <string name="action_scroll_to_top">Naar boven scrollen</string>
+    <string name="dialog_replace_recording_message">"%1$s" wordt momenteel opgenomen. Wilt u de huidige opname stoppen en opslaan en de opname van "%2$s" starten?</string>
+    <string name="dialog_replace_recording_title">Opname bezig</string>
+    <string name="filter_all_stations">Alle zenders</string>
+    <string name="filter_date_any">Elke datum</string>
 </resources>

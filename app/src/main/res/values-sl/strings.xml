@@ -429,4 +429,21 @@
     <string name="action_play_recording">Predvajaj posnetek</string>
     <string name="dialog_move_to_position_title">Premakni "%1$s" na položaj</string>
     <string name="label_current_position">(trenutni)</string>
+    <string name="accessibility_filter_date_from">Od datuma: %1$s</string>
+    <string name="accessibility_filter_date_to">Do datuma: %1$s</string>
+    <string name="accessibility_filter_station">Filter postaje: %1$s</string>
+    <string name="accessibility_playback_speed">Hitrost predvajanja %1$s</string>
+    <string name="accessibility_seek_slider">Položaj predvajanja</string>
+    <string name="accessibility_time_position">%1$s od %2$s</string>
+    <string name="action_change_playback_speed">Spremeni hitrost predvajanja</string>
+    <string name="action_clear_date_filter">Počisti filter datuma</string>
+    <string name="action_clear_station_filter">Počisti filter postaje</string>
+    <string name="action_forward_15s">Naprej za 15 sekund</string>
+    <string name="action_reset_playback_speed">Ponastavi hitrost predvajanja na 1x</string>
+    <string name="action_rewind_15s">Nazaj za 15 sekund</string>
+    <string name="action_scroll_to_top">Pomakni na vrh</string>
+    <string name="dialog_replace_recording_message">"%1$s" se trenutno snema. Ali želite ustaviti in shraniti trenutni posnetek ter začeti snemati "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Snemanje poteka</string>
+    <string name="filter_all_stations">Vse postaje</string>
+    <string name="filter_date_any">Kateri koli datum</string>
 </resources>

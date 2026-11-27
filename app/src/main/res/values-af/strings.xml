@@ -433,4 +433,21 @@
     <string name="action_play_recording">Speel opname</string>
     <string name="dialog_move_to_position_title">Skuif "%1$s" na posisie</string>
     <string name="label_current_position">(huidige)</string>
+    <string name="accessibility_filter_date_from">Vanaf datum: %1$s</string>
+    <string name="accessibility_filter_date_to">Tot datum: %1$s</string>
+    <string name="accessibility_filter_station">Stasiefilter: %1$s</string>
+    <string name="accessibility_playback_speed">Terugspeelspoed %1$s</string>
+    <string name="accessibility_seek_slider">Terugspeelposisie</string>
+    <string name="accessibility_time_position">%1$s van %2$s</string>
+    <string name="action_change_playback_speed">Verander terugspeelspoed</string>
+    <string name="action_clear_date_filter">Vee datumfilter uit</string>
+    <string name="action_clear_station_filter">Vee stasiefilter uit</string>
+    <string name="action_forward_15s">15 sekondes vorentoe</string>
+    <string name="action_reset_playback_speed">Stel terugspeelspoed terug na 1x</string>
+    <string name="action_rewind_15s">15 sekondes terug</string>
+    <string name="action_scroll_to_top">Rol na bo</string>
+    <string name="dialog_replace_recording_message">"%1$s" word tans opgeneem. Wil jy die huidige opname stop en stoor en begin om "%2$s" op te neem?</string>
+    <string name="dialog_replace_recording_title">Opname aan die gang</string>
+    <string name="filter_all_stations">Alle stasies</string>
+    <string name="filter_date_any">Enige datum</string>
 </resources>

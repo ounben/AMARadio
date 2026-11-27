@@ -429,4 +429,21 @@
     <string name="action_play_recording">রেকর্ডিং চালান</string>
     <string name="dialog_move_to_position_title">"%1$s" অবস্থানে সরান</string>
     <string name="label_current_position">(বর্তমান)</string>
+    <string name="accessibility_filter_date_from">তারিখ থেকে: %1$s</string>
+    <string name="accessibility_filter_date_to">তারিখ পর্যন্ত: %1$s</string>
+    <string name="accessibility_filter_station">স্টেশন ফিল্টার: %1$s</string>
+    <string name="accessibility_playback_speed">প্লেব্যাকের গতি %1$s</string>
+    <string name="accessibility_seek_slider">প্লেব্যাকের অবস্থান</string>
+    <string name="accessibility_time_position">%2$s এর %1$s</string>
+    <string name="action_change_playback_speed">প্লেব্যাকের গতি পরিবর্তন করুন</string>
+    <string name="action_clear_date_filter">তারিখ ফিল্টার মুছুন</string>
+    <string name="action_clear_station_filter">স্টেশন ফিল্টার মুছুন</string>
+    <string name="action_forward_15s">১৫ সেকেন্ড সামনে</string>
+    <string name="action_reset_playback_speed">প্লেব্যাকের গতি 1x-এ রিসেট করুন</string>
+    <string name="action_rewind_15s">১৫ সেকেন্ড পিছনে</string>
+    <string name="action_scroll_to_top">সবার উপরে স্ক্রল করুন</string>
+    <string name="dialog_replace_recording_message">"%1$s" বর্তমানে রেকর্ড হচ্ছে। আপনি কি বর্তমান রেকর্ডিং বন্ধ ও সংরক্ষণ করে "%2$s" রেকর্ড শুরু করতে চান?</string>
+    <string name="dialog_replace_recording_title">রেকর্ডিং চলছে</string>
+    <string name="filter_all_stations">সব স্টেশন</string>
+    <string name="filter_date_any">যেকোনো তারিখ</string>
 </resources>

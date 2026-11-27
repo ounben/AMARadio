@@ -429,4 +429,21 @@
     <string name="action_play_recording">Yozuvni ijro etish</string>
     <string name="dialog_move_to_position_title">"%1$s" ni pozitsiyaga o‘tkazish</string>
     <string name="label_current_position">(joriy)</string>
+    <string name="accessibility_filter_date_from">Sanadan: %1$s</string>
+    <string name="accessibility_filter_date_to">Sanagacha: %1$s</string>
+    <string name="accessibility_filter_station">Stansiya filtri: %1$s</string>
+    <string name="accessibility_playback_speed">Ijro tezligi %1$s</string>
+    <string name="accessibility_seek_slider">Ijro holati</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Ijro tezligini o‘zgartirish</string>
+    <string name="action_clear_date_filter">Sana filtrini tozalash</string>
+    <string name="action_clear_station_filter">Stansiya filtrini tozalash</string>
+    <string name="action_forward_15s">15 soniya oldinga</string>
+    <string name="action_reset_playback_speed">Ijro tezligini 1x ga tiklash</string>
+    <string name="action_rewind_15s">15 soniya orqaga</string>
+    <string name="action_scroll_to_top">Eng yuqoriga aylantirish</string>
+    <string name="dialog_replace_recording_message">Hozirda "%1$s" yozib olinmoqda. Joriy yozuvni to‘xtatib, saqlashni va "%2$s" yozishni boshlashni xohlaysizmi?</string>
+    <string name="dialog_replace_recording_title">Yozib olinmoqda</string>
+    <string name="filter_all_stations">Barcha stansiyalar</string>
+    <string name="filter_date_any">Istalgan sana</string>
 </resources>

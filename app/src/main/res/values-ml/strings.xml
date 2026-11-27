@@ -429,4 +429,21 @@
     <string name="action_play_recording">റെക്കോർഡിംഗ് പ്ലേ ചെയ്യുക</string>
     <string name="dialog_move_to_position_title">"%1$s" സ്ഥാനത്തേക്ക് നീക്കുക</string>
     <string name="label_current_position">(നിലവിലെ)</string>
+    <string name="accessibility_filter_date_from">തീയതി മുതൽ: %1$s</string>
+    <string name="accessibility_filter_date_to">തീയതി വരെ: %1$s</string>
+    <string name="accessibility_filter_station">സ്റ്റേഷൻ ഫിൽട്ടർ: %1$s</string>
+    <string name="accessibility_playback_speed">പ്ലേബാക്ക് വേഗത %1$s</string>
+    <string name="accessibility_seek_slider">പ്ലേബാക്ക് സ്ഥാനം</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">പ്ലേബാക്ക് വേഗത മാറ്റുക</string>
+    <string name="action_clear_date_filter">തീയതി ഫിൽട്ടർ മായ്ക്കുക</string>
+    <string name="action_clear_station_filter">സ്റ്റേഷൻ ഫിൽട്ടർ മായ്ക്കുക</string>
+    <string name="action_forward_15s">15 സെക്കൻഡ് മുന്നോട്ട്</string>
+    <string name="action_reset_playback_speed">പ്ലേബാക്ക് വേഗത 1x ആക്കുക</string>
+    <string name="action_rewind_15s">15 സെക്കൻഡ് പിന്നോട്ട്</string>
+    <string name="action_scroll_to_top">ഏറ്റവും മുകളിലേക്ക് സ്ക്രോൾ ചെയ്യുക</string>
+    <string name="dialog_replace_recording_message">"%1$s" നിലവിൽ റെക്കോർഡ് ചെയ്യുകയാണ്. നിലവിലെ റെക്കോർഡിംഗ് നിർത്തി സംരക്ഷിച്ച ശേഷം "%2$s" റെക്കോർഡിംഗ് ആരംഭിക്കണോ?</string>
+    <string name="dialog_replace_recording_title">റെക്കോർഡിംഗ് നടക്കുന്നു</string>
+    <string name="filter_all_stations">എല്ലാ സ്റ്റേഷനുകളും</string>
+    <string name="filter_date_any">ഏത് തീയതിയും</string>
 </resources>

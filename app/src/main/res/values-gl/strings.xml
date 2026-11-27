@@ -429,4 +429,21 @@
     <string name="action_play_recording">Reproducir gravación</string>
     <string name="dialog_move_to_position_title">Mover "%1$s" á posición</string>
     <string name="label_current_position">(actual)</string>
+    <string name="accessibility_filter_date_from">Dende a data: %1$s</string>
+    <string name="accessibility_filter_date_to">Ata a data: %1$s</string>
+    <string name="accessibility_filter_station">Filtro de emisora: %1$s</string>
+    <string name="accessibility_playback_speed">Velocidade de reprodución %1$s</string>
+    <string name="accessibility_seek_slider">Posición de reprodución</string>
+    <string name="accessibility_time_position">%1$s de %2$s</string>
+    <string name="action_change_playback_speed">Cambiar velocidade de reprodución</string>
+    <string name="action_clear_date_filter">Borrar filtro de data</string>
+    <string name="action_clear_station_filter">Borrar filtro de emisora</string>
+    <string name="action_forward_15s">Adiantar 15 segundos</string>
+    <string name="action_reset_playback_speed">Restablecer velocidade de reprodución a 1x</string>
+    <string name="action_rewind_15s">Retroceder 15 segundos</string>
+    <string name="action_scroll_to_top">Desprazar cara arriba</string>
+    <string name="dialog_replace_recording_message">Estase a gravar "%1$s" neste momento. Queres deter e gardar a gravación actual e comezar a gravar "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Gravación en curso</string>
+    <string name="filter_all_stations">Todas as emisoras</string>
+    <string name="filter_date_any">Calquera data</string>
 </resources>

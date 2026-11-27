@@ -431,4 +431,21 @@
     <string name="action_play_recording">שפּילן רעקאָרדירונג</string>
     <string name="dialog_move_to_position_title">רוקן "%1$s" צו פּאָזיציע</string>
     <string name="label_current_position">(איצטיק)</string>
+    <string name="accessibility_filter_date_from">פֿון דאַטע: %1$s</string>
+    <string name="accessibility_filter_date_to">ביז דאַטע: %1$s</string>
+    <string name="accessibility_filter_station">סטאַנציע פֿילטער: %1$s</string>
+    <string name="accessibility_playback_speed">שפּיל-גיכקייט %1$s</string>
+    <string name="accessibility_seek_slider">שפּיל-פּאָזיציע</string>
+    <string name="accessibility_time_position">%1$s פֿון %2$s</string>
+    <string name="action_change_playback_speed">ענדערן שפּיל-גיכקייט</string>
+    <string name="action_clear_date_filter">אויסמעקן דאַטע פֿילטער</string>
+    <string name="action_clear_station_filter">אויסמעקן סטאַנציע פֿילטער</string>
+    <string name="action_forward_15s">פֿאָרויס 15 סעקונדעס</string>
+    <string name="action_reset_playback_speed">צוריקשטעלן שפּיל-גיכקייט צו 1x</string>
+    <string name="action_rewind_15s">צוריק 15 סעקונדעס</string>
+    <string name="action_scroll_to_top">סקראָלן צום שפּיץ</string>
+    <string name="dialog_replace_recording_message">"%1$s" ווערט איצט רעקאָרדירט. ווילט איר אָפּשטעלן און היטן די איצטיקע רעקאָרדירונג און אָנהייבן רעקאָרדירן "%2$s"?</string>
+    <string name="dialog_replace_recording_title">רעקאָרדירונג אין גאַנג</string>
+    <string name="filter_all_stations">אַלע סטאַנציעס</string>
+    <string name="filter_date_any">יעדע דאַטע</string>
 </resources>

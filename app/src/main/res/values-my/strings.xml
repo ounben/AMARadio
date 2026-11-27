@@ -429,4 +429,21 @@
     <string name="action_play_recording">အသံဖမ်းမှု ဖွင့်ရန်</string>
     <string name="dialog_move_to_position_title">"%1$s" ကို နေရာသို့ ရွှေ့ရန်</string>
     <string name="label_current_position">(လက်ရှိ)</string>
+    <string name="accessibility_filter_date_from">စတင်ရက်စွဲ- %1$s</string>
+    <string name="accessibility_filter_date_to">ပြီးဆုံးရက်စွဲ- %1$s</string>
+    <string name="accessibility_filter_station">အသံလွှင့်ဌာန စစ်ထုတ်မှု- %1$s</string>
+    <string name="accessibility_playback_speed">ဖွင့်သည့်နှုန်း %1$s</string>
+    <string name="accessibility_seek_slider">ဖွင့်နေသည့်နေရာ</string>
+    <string name="accessibility_time_position">%2$s အနက် %1$s</string>
+    <string name="action_change_playback_speed">ဖွင့်သည့်နှုန်း ပြောင်းရန်</string>
+    <string name="action_clear_date_filter">ရက်စွဲစစ်ထုတ်မှု ရှင်းလင်းရန်</string>
+    <string name="action_clear_station_filter">အသံလွှင့်ဌာန စစ်ထုတ်မှု ရှင်းလင်းရန်</string>
+    <string name="action_forward_15s">၁၅ စက္ကန့် ရှေ့တိုးရန်</string>
+    <string name="action_reset_playback_speed">ဖွင့်သည့်နှုန်းကို 1x သို့ ပြန်ထားရန်</string>
+    <string name="action_rewind_15s">၁၅ စက္ကန့် နောက်ပြန်ရစ်ရန်</string>
+    <string name="action_scroll_to_top">ထိပ်ဆုံးသို့ ရွှေ့ရန်</string>
+    <string name="dialog_replace_recording_message">"%1$s" ကို လက်ရှိ အသံဖမ်းနေပါသည်။ လက်ရှိအသံဖမ်းမှုကို ရပ်ပြီး သိမ်းဆည်းကာ "%2$s" ကို စတင်အသံဖမ်းလိုပါသလား။</string>
+    <string name="dialog_replace_recording_title">အသံဖမ်းနေပါသည်</string>
+    <string name="filter_all_stations">အသံလွှင့်ဌာနအားလုံး</string>
+    <string name="filter_date_any">မည်သည့်ရက်စွဲမဆို</string>
 </resources>

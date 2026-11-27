@@ -431,4 +431,21 @@
     <string name="action_play_recording">ثبت شوی غږ واورئ</string>
     <string name="dialog_move_to_position_title">"%1$s" ځای ته یوسئ</string>
     <string name="label_current_position">(اوسنی)</string>
+    <string name="accessibility_filter_date_from">له نېټې څخه: %1$s</string>
+    <string name="accessibility_filter_date_to">تر نېټې پورې: %1$s</string>
+    <string name="accessibility_filter_station">د سټېشن فلټر: %1$s</string>
+    <string name="accessibility_playback_speed">د غږولو چټکتیا %1$s</string>
+    <string name="accessibility_seek_slider">د غږولو ځای</string>
+    <string name="accessibility_time_position">%1$s له %2$s څخه</string>
+    <string name="action_change_playback_speed">د غږولو چټکتیا بدلول</string>
+    <string name="action_clear_date_filter">د نېټې فلټر پاکول</string>
+    <string name="action_clear_station_filter">د سټېشن فلټر پاکول</string>
+    <string name="action_forward_15s">۱۵ ثانیې مخکې</string>
+    <string name="action_reset_playback_speed">د غږولو چټکتیا 1x ته بېرته تنظیمول</string>
+    <string name="action_rewind_15s">۱۵ ثانیې شاته</string>
+    <string name="action_scroll_to_top">تر ټولو پورته سکرول کول</string>
+    <string name="dialog_replace_recording_message">"%1$s" دا مهال ثبتېږي. ایا غواړئ اوسنی ثبت ودرول او خوندي شي او د "%2$s" ثبتول پیل شي؟</string>
+    <string name="dialog_replace_recording_title">ثبتول روان دي</string>
+    <string name="filter_all_stations">ټول سټېشنونه</string>
+    <string name="filter_date_any">هره نېټه</string>
 </resources>

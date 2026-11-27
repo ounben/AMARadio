@@ -431,4 +431,21 @@
     <string name="action_play_recording">Kpọọ ndekọ</string>
     <string name="dialog_move_to_position_title">Bugharịa "%1$s" n\'ọkwa</string>
     <string name="label_current_position">(ugbu a)</string>
+    <string name="accessibility_filter_date_from">Site na ụbọchị: %1$s</string>
+    <string name="accessibility_filter_date_to">Ruo ụbọchị: %1$s</string>
+    <string name="accessibility_filter_station">Nzacha ọdụ: %1$s</string>
+    <string name="accessibility_playback_speed">Ọsọ ọkpụkpọ %1$s</string>
+    <string name="accessibility_seek_slider">Ọnọdụ ọkpụkpọ</string>
+    <string name="accessibility_time_position">%1$s n\'ime %2$s</string>
+    <string name="action_change_playback_speed">Gbanwee ọsọ ọkpụkpọ</string>
+    <string name="action_clear_date_filter">Hichapụ nzacha ụbọchị</string>
+    <string name="action_clear_station_filter">Hichapụ nzacha ọdụ</string>
+    <string name="action_forward_15s">Gaa n\'ihu sekọnd 15</string>
+    <string name="action_reset_playback_speed">Tọgharịa ọsọ ọkpụkpọ ka ọ bụrụ 1x</string>
+    <string name="action_rewind_15s">Laghachi azụ sekọnd 15</string>
+    <string name="action_scroll_to_top">Pịgharịa gaa n\'elu</string>
+    <string name="dialog_replace_recording_message">A na-edekọ "%1$s" ugbu a. Ị chọrọ ịkwụsị ma chekwaa ndekọ dị ugbu a wee malite ịdekọ "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Ndekọ na-aga n\'ihu</string>
+    <string name="filter_all_stations">Ọdụ niile</string>
+    <string name="filter_date_any">Ụbọchị ọ bụla</string>
 </resources>

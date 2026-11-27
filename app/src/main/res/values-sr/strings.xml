@@ -429,4 +429,21 @@
     <string name="action_play_recording">Пусти снимак</string>
     <string name="dialog_move_to_position_title">Помери "%1$s" на позицију</string>
     <string name="label_current_position">(тренутна)</string>
+    <string name="accessibility_filter_date_from">Од датума: %1$s</string>
+    <string name="accessibility_filter_date_to">До датума: %1$s</string>
+    <string name="accessibility_filter_station">Филтер станице: %1$s</string>
+    <string name="accessibility_playback_speed">Брзина репродукције %1$s</string>
+    <string name="accessibility_seek_slider">Положај репродукције</string>
+    <string name="accessibility_time_position">%1$s од %2$s</string>
+    <string name="action_change_playback_speed">Промени брзину репродукције</string>
+    <string name="action_clear_date_filter">Обриши филтер датума</string>
+    <string name="action_clear_station_filter">Обриши филтер станице</string>
+    <string name="action_forward_15s">Напред 15 секунди</string>
+    <string name="action_reset_playback_speed">Врати брзину репродукције на 1x</string>
+    <string name="action_rewind_15s">Назад 15 секунди</string>
+    <string name="action_scroll_to_top">Помери на врх</string>
+    <string name="dialog_replace_recording_message">„%1$s“ се тренутно снима. Да ли желите да зауставите и сачувате тренутни снимак и започнете снимање „%2$s“?</string>
+    <string name="dialog_replace_recording_title">Снимање је у току</string>
+    <string name="filter_all_stations">Све станице</string>
+    <string name="filter_date_any">Било који датум</string>
 </resources>

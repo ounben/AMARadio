@@ -430,4 +430,21 @@
     <string name="action_play_recording">ቀረጻውን አጫውት</string>
     <string name="dialog_move_to_position_title">"%1$s" ወደ ቦታው ውሰድ</string>
     <string name="label_current_position">(የአሁኑ)</string>
+    <string name="accessibility_filter_date_from">ከቀን፦ %1$s</string>
+    <string name="accessibility_filter_date_to">እስከ ቀን፦ %1$s</string>
+    <string name="accessibility_filter_station">የጣቢያ ማጣሪያ፦ %1$s</string>
+    <string name="accessibility_playback_speed">የመልሶ ማጫወት ፍጥነት %1$s</string>
+    <string name="accessibility_seek_slider">የመልሶ ማጫወት ቦታ</string>
+    <string name="accessibility_time_position">%1$s ከ %2$s</string>
+    <string name="action_change_playback_speed">የመልሶ ማጫወት ፍጥነት ቀይር</string>
+    <string name="action_clear_date_filter">የቀን ማጣሪያ አጽዳ</string>
+    <string name="action_clear_station_filter">የጣቢያ ማጣሪያ አጽዳ</string>
+    <string name="action_forward_15s">15 ሰከንድ ወደፊት</string>
+    <string name="action_reset_playback_speed">የመልሶ ማጫወት ፍጥነት ወደ 1x ዳግም አስጀምር</string>
+    <string name="action_rewind_15s">15 ሰከንድ ወደኋላ</string>
+    <string name="action_scroll_to_top">ወደ ላይ ሸብልል</string>
+    <string name="dialog_replace_recording_message">"%1$s" በአሁኑ ጊዜ እየተቀዳ ነው። የአሁኑን ቀረጻ አቁመህ ማስቀመጥ እና "%2$s" መቅዳት መጀመር ትፈልጋለህ?</string>
+    <string name="dialog_replace_recording_title">ቀረጻ በሂደት ላይ</string>
+    <string name="filter_all_stations">ሁሉም ጣቢያዎች</string>
+    <string name="filter_date_any">ማንኛውም ቀን</string>
 </resources>

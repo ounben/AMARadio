@@ -431,4 +431,21 @@
     <string name="action_play_recording">ରେକର୍ଡିଂ ଚଲାନ୍ତୁ</string>
     <string name="dialog_move_to_position_title">"%1$s" କୁ ସ୍ଥାନକୁ ନିଅନ୍ତୁ</string>
     <string name="label_current_position">(ବର୍ତ୍ତମାନ)</string>
+    <string name="accessibility_filter_date_from">ତାରିଖଠାରୁ: %1$s</string>
+    <string name="accessibility_filter_date_to">ତାରିଖ ପର୍ଯ୍ୟନ୍ତ: %1$s</string>
+    <string name="accessibility_filter_station">ଷ୍ଟେସନ୍ ଫିଲ୍ଟର୍: %1$s</string>
+    <string name="accessibility_playback_speed">ପ୍ଲେବ୍ୟାକ୍ ଗତି %1$s</string>
+    <string name="accessibility_seek_slider">ପ୍ଲେବ୍ୟାକ୍ ସ୍ଥିତି</string>
+    <string name="accessibility_time_position">%2$s ର %1$s</string>
+    <string name="action_change_playback_speed">ପ୍ଲେବ୍ୟାକ୍ ଗତି ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="action_clear_date_filter">ତାରିଖ ଫିଲ୍ଟର୍ ସଫା କରନ୍ତୁ</string>
+    <string name="action_clear_station_filter">ଷ୍ଟେସନ୍ ଫିଲ୍ଟର୍ ସଫା କରନ୍ତୁ</string>
+    <string name="action_forward_15s">୧୫ ସେକେଣ୍ଡ ଆଗକୁ</string>
+    <string name="action_reset_playback_speed">ପ୍ଲେବ୍ୟାକ୍ ଗତି 1x କୁ ରିସେଟ୍ କରନ୍ତୁ</string>
+    <string name="action_rewind_15s">୧୫ ସେକେଣ୍ଡ ପଛକୁ</string>
+    <string name="action_scroll_to_top">ସବୁଠାରୁ ଉପରକୁ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ</string>
+    <string name="dialog_replace_recording_message">"%1$s" ବର୍ତ୍ତମାନ ରେକର୍ଡ ହେଉଛି। ଆପଣ ବର୍ତ୍ତମାନର ରେକର୍ଡିଂ ବନ୍ଦ କରି ସେଭ୍ କରିବାକୁ ଏବଂ "%2$s" ରେକର୍ଡିଂ ଆରମ୍ଭ କରିବାକୁ ଚାହୁଁଛନ୍ତି କି?</string>
+    <string name="dialog_replace_recording_title">ରେକର୍ଡିଂ ଚାଲିଛି</string>
+    <string name="filter_all_stations">ସମସ୍ତ ଷ୍ଟେସନ୍</string>
+    <string name="filter_date_any">ଯେକୌଣସି ତାରିଖ</string>
 </resources>

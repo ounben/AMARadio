@@ -429,4 +429,21 @@
     <string name="action_play_recording">Leisti įrašą</string>
     <string name="dialog_move_to_position_title">Perkelti "%1$s" į poziciją</string>
     <string name="label_current_position">(dabartinė)</string>
+    <string name="accessibility_filter_date_from">Nuo datos: %1$s</string>
+    <string name="accessibility_filter_date_to">Iki datos: %1$s</string>
+    <string name="accessibility_filter_station">Stoties filtras: %1$s</string>
+    <string name="accessibility_playback_speed">Atkūrimo greitis %1$s</string>
+    <string name="accessibility_seek_slider">Atkūrimo vieta</string>
+    <string name="accessibility_time_position">%1$s iš %2$s</string>
+    <string name="action_change_playback_speed">Keisti atkūrimo greitį</string>
+    <string name="action_clear_date_filter">Išvalyti datos filtrą</string>
+    <string name="action_clear_station_filter">Išvalyti stoties filtrą</string>
+    <string name="action_forward_15s">Pirmyn 15 sekundžių</string>
+    <string name="action_reset_playback_speed">Atkurti 1x atkūrimo greitį</string>
+    <string name="action_rewind_15s">Atgal 15 sekundžių</string>
+    <string name="action_scroll_to_top">Slinkti į viršų</string>
+    <string name="dialog_replace_recording_message">Šiuo metu įrašoma "%1$s". Ar norite sustabdyti ir išsaugoti dabartinį įrašą bei pradėti įrašyti "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Vyksta įrašymas</string>
+    <string name="filter_all_stations">Visos stotys</string>
+    <string name="filter_date_any">Bet kokia data</string>
 </resources>

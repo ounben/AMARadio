@@ -429,4 +429,21 @@
     <string name="action_play_recording">Riproduci registrazione</string>
     <string name="dialog_move_to_position_title">Sposta "%1$s" nella posizione</string>
     <string name="label_current_position">(attuale)</string>
+    <string name="accessibility_filter_date_from">Dalla data: %1$s</string>
+    <string name="accessibility_filter_date_to">Alla data: %1$s</string>
+    <string name="accessibility_filter_station">Filtro stazione: %1$s</string>
+    <string name="accessibility_playback_speed">Velocità di riproduzione %1$s</string>
+    <string name="accessibility_seek_slider">Posizione di riproduzione</string>
+    <string name="accessibility_time_position">%1$s di %2$s</string>
+    <string name="action_change_playback_speed">Cambia velocità di riproduzione</string>
+    <string name="action_clear_date_filter">Cancella filtro data</string>
+    <string name="action_clear_station_filter">Cancella filtro stazione</string>
+    <string name="action_forward_15s">Avanti di 15 secondi</string>
+    <string name="action_reset_playback_speed">Ripristina velocità di riproduzione a 1x</string>
+    <string name="action_rewind_15s">Indietro di 15 secondi</string>
+    <string name="action_scroll_to_top">Scorri fino in cima</string>
+    <string name="dialog_replace_recording_message">Registrazione di "%1$s" in corso. Vuoi interrompere e salvare la registrazione attuale e avviare la registrazione di "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Registrazione in corso</string>
+    <string name="filter_all_stations">Tutte le stazioni</string>
+    <string name="filter_date_any">Qualsiasi data</string>
 </resources>

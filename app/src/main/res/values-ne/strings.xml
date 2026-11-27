@@ -429,4 +429,21 @@
     <string name="action_play_recording">रेकर्डिङ प्ले गर्नुहोस्</string>
     <string name="dialog_move_to_position_title">"%1$s" लाई स्थानमा सार्नुहोस्</string>
     <string name="label_current_position">(हालको)</string>
+    <string name="accessibility_filter_date_from">मितिदेखि: %1$s</string>
+    <string name="accessibility_filter_date_to">मितिसम्म: %1$s</string>
+    <string name="accessibility_filter_station">स्टेसन फिल्टर: %1$s</string>
+    <string name="accessibility_playback_speed">प्लेब्याक गति %1$s</string>
+    <string name="accessibility_seek_slider">प्लेब्याक स्थिति</string>
+    <string name="accessibility_time_position">%2$s को %1$s</string>
+    <string name="action_change_playback_speed">प्लेब्याक गति परिवर्तन गर्नुहोस्</string>
+    <string name="action_clear_date_filter">मिति फिल्टर हटाउनुहोस्</string>
+    <string name="action_clear_station_filter">स्टेसन फिल्टर हटाउनुहोस्</string>
+    <string name="action_forward_15s">१५ सेकेन्ड अगाडि</string>
+    <string name="action_reset_playback_speed">प्लेब्याक गति 1x मा रिसेट गर्नुहोस्</string>
+    <string name="action_rewind_15s">१५ सेकेन्ड पछाडि</string>
+    <string name="action_scroll_to_top">सबैभन्दा माथि स्क्रोल गर्नुहोस्</string>
+    <string name="dialog_replace_recording_message">"%1$s" हाल रेकर्ड भइरहेको छ। के तपाईं हालको रेकर्डिङ रोकेर सुरक्षित गर्न र "%2$s" रेकर्ड गर्न सुरु गर्न चाहनुहुन्छ?</string>
+    <string name="dialog_replace_recording_title">रेकर्डिङ भइरहेको छ</string>
+    <string name="filter_all_stations">सबै स्टेसनहरू</string>
+    <string name="filter_date_any">कुनै पनि मिति</string>
 </resources>

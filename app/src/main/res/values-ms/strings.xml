@@ -429,4 +429,21 @@
     <string name="action_play_recording">Mainkan rakaman</string>
     <string name="dialog_move_to_position_title">Alihkan "%1$s" ke kedudukan</string>
     <string name="label_current_position">(semasa)</string>
+    <string name="accessibility_filter_date_from">Dari tarikh: %1$s</string>
+    <string name="accessibility_filter_date_to">Hingga tarikh: %1$s</string>
+    <string name="accessibility_filter_station">Penapis stesen: %1$s</string>
+    <string name="accessibility_playback_speed">Kelajuan main balik %1$s</string>
+    <string name="accessibility_seek_slider">Kedudukan main balik</string>
+    <string name="accessibility_time_position">%1$s daripada %2$s</string>
+    <string name="action_change_playback_speed">Tukar kelajuan main balik</string>
+    <string name="action_clear_date_filter">Kosongkan penapis tarikh</string>
+    <string name="action_clear_station_filter">Kosongkan penapis stesen</string>
+    <string name="action_forward_15s">Maju 15 saat</string>
+    <string name="action_reset_playback_speed">Tetapkan semula kelajuan main balik ke 1x</string>
+    <string name="action_rewind_15s">Undur 15 saat</string>
+    <string name="action_scroll_to_top">Tatal ke paling atas</string>
+    <string name="dialog_replace_recording_message">"%1$s" sedang dirakam. Adakah anda mahu menghentikan dan menyimpan rakaman semasa serta mula merakam "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Rakaman sedang berlangsung</string>
+    <string name="filter_all_stations">Semua stesen</string>
+    <string name="filter_date_any">Sebarang tarikh</string>
 </resources>

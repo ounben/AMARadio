@@ -429,4 +429,21 @@
     <string name="action_play_recording">Erreproduzitu grabazioa</string>
     <string name="dialog_move_to_position_title">Mugitu "%1$s" posiziora</string>
     <string name="label_current_position">(oraingoa)</string>
+    <string name="accessibility_filter_date_from">Hasiera-data: %1$s</string>
+    <string name="accessibility_filter_date_to">Amaiera-data: %1$s</string>
+    <string name="accessibility_filter_station">Irrati-iragazkia: %1$s</string>
+    <string name="accessibility_playback_speed">Erreprodukzio-abiadura %1$s</string>
+    <string name="accessibility_seek_slider">Erreprodukzio-posizioa</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Aldatu erreprodukzio-abiadura</string>
+    <string name="action_clear_date_filter">Garbitu data-iragazkia</string>
+    <string name="action_clear_station_filter">Garbitu irrati-iragazkia</string>
+    <string name="action_forward_15s">Aurreratu 15 segundo</string>
+    <string name="action_reset_playback_speed">Berrezarri erreprodukzio-abiadura 1x-era</string>
+    <string name="action_rewind_15s">Atzeratu 15 segundo</string>
+    <string name="action_scroll_to_top">Joan goialdera</string>
+    <string name="dialog_replace_recording_message">"%1$s" grabatzen ari da une honetan. Uneko grabazioa gelditu eta gorde nahi duzu, eta "%2$s" grabatzen hasi?</string>
+    <string name="dialog_replace_recording_title">Grabazioa abian</string>
+    <string name="filter_all_stations">Irrati guztiak</string>
+    <string name="filter_date_any">Edozein data</string>
 </resources>

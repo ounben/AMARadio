@@ -429,4 +429,21 @@
     <string name="action_play_recording">録音を再生</string>
     <string name="dialog_move_to_position_title">「%1$s」を位置に移動</string>
     <string name="label_current_position">(現在)</string>
+    <string name="accessibility_filter_date_from">開始日: %1$s</string>
+    <string name="accessibility_filter_date_to">終了日: %1$s</string>
+    <string name="accessibility_filter_station">放送局フィルター: %1$s</string>
+    <string name="accessibility_playback_speed">再生速度 %1$s</string>
+    <string name="accessibility_seek_slider">再生位置</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">再生速度を変更</string>
+    <string name="action_clear_date_filter">日付フィルターをクリア</string>
+    <string name="action_clear_station_filter">放送局フィルターをクリア</string>
+    <string name="action_forward_15s">15秒早送り</string>
+    <string name="action_reset_playback_speed">再生速度を 1x にリセット</string>
+    <string name="action_rewind_15s">15秒巻き戻し</string>
+    <string name="action_scroll_to_top">一番上へスクロール</string>
+    <string name="dialog_replace_recording_message">「%1$s」を録音中です。現在の録音を停止して保存し、「%2$s」の録音を開始しますか？</string>
+    <string name="dialog_replace_recording_title">録音中</string>
+    <string name="filter_all_stations">すべての放送局</string>
+    <string name="filter_date_any">すべての日付</string>
 </resources>

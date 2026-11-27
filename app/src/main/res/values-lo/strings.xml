@@ -431,4 +431,21 @@
     <string name="action_play_recording">ຫຼິ້ນການບັນທຶກ</string>
     <string name="dialog_move_to_position_title">ຍ້າຍ "%1$s" ໄປຕຳແໜ່ງ</string>
     <string name="label_current_position">(ປັດຈຸບັນ)</string>
+    <string name="accessibility_filter_date_from">ຈາກວັນທີ: %1$s</string>
+    <string name="accessibility_filter_date_to">ເຖິງວັນທີ: %1$s</string>
+    <string name="accessibility_filter_station">ຕົວກອງສະຖານີ: %1$s</string>
+    <string name="accessibility_playback_speed">ຄວາມໄວການຫຼິ້ນ %1$s</string>
+    <string name="accessibility_seek_slider">ຕຳແໜ່ງການຫຼິ້ນ</string>
+    <string name="accessibility_time_position">%1$s ຈາກ %2$s</string>
+    <string name="action_change_playback_speed">ປ່ຽນຄວາມໄວການຫຼິ້ນ</string>
+    <string name="action_clear_date_filter">ລ້າງຕົວກອງວັນທີ</string>
+    <string name="action_clear_station_filter">ລ້າງຕົວກອງສະຖານີ</string>
+    <string name="action_forward_15s">ໄປໜ້າ 15 ວິນາທີ</string>
+    <string name="action_reset_playback_speed">ຣີເຊັດຄວາມໄວການຫຼິ້ນເປັນ 1x</string>
+    <string name="action_rewind_15s">ກັບຫຼັງ 15 ວິນາທີ</string>
+    <string name="action_scroll_to_top">ເລື່ອນໄປເທິງສຸດ</string>
+    <string name="dialog_replace_recording_message">ກຳລັງບັນທຶກ "%1$s" ຢູ່. ທ່ານຕ້ອງການຢຸດ ແລະ ບັນທຶກການອັດສຽງປັດຈຸບັນ ແລ້ວເລີ່ມບັນທຶກ "%2$s" ບໍ?</string>
+    <string name="dialog_replace_recording_title">ກຳລັງບັນທຶກສຽງ</string>
+    <string name="filter_all_stations">ທຸກສະຖານີ</string>
+    <string name="filter_date_any">ວັນທີໃດກໍໄດ້</string>
 </resources>

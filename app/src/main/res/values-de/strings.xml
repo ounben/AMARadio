@@ -431,4 +431,21 @@
     <string name="action_play_recording">Aufnahme abspielen</string>
     <string name="dialog_move_to_position_title">„%1$s“ an Position verschieben</string>
     <string name="label_current_position">(aktuell)</string>
+    <string name="accessibility_filter_date_from">Von Datum: %1$s</string>
+    <string name="accessibility_filter_date_to">Bis Datum: %1$s</string>
+    <string name="accessibility_filter_station">Senderfilter: %1$s</string>
+    <string name="accessibility_playback_speed">Wiedergabegeschwindigkeit %1$s</string>
+    <string name="accessibility_seek_slider">Wiedergabeposition</string>
+    <string name="accessibility_time_position">%1$s von %2$s</string>
+    <string name="action_change_playback_speed">Wiedergabegeschwindigkeit ändern</string>
+    <string name="action_clear_date_filter">Datumsfilter löschen</string>
+    <string name="action_clear_station_filter">Senderfilter löschen</string>
+    <string name="action_forward_15s">15 Sekunden vorspulen</string>
+    <string name="action_reset_playback_speed">Wiedergabegeschwindigkeit auf 1x zurücksetzen</string>
+    <string name="action_rewind_15s">15 Sekunden zurückspulen</string>
+    <string name="action_scroll_to_top">Nach oben scrollen</string>
+    <string name="dialog_replace_recording_message">„%1$s“ wird derzeit aufgenommen. Möchten Sie die aktuelle Aufnahme stoppen und speichern und die Aufnahme von „%2$s“ starten?</string>
+    <string name="dialog_replace_recording_title">Aufnahme läuft</string>
+    <string name="filter_all_stations">Alle Sender</string>
+    <string name="filter_date_any">Beliebiges Datum</string>
 </resources>

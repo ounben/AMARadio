@@ -428,4 +428,21 @@
     <string name="action_play_recording">Far ir la registraziun</string>
     <string name="dialog_move_to_position_title">Spustar «%1$s» a la posiziun</string>
     <string name="label_current_position">(actual)</string>
+    <string name="accessibility_filter_date_from">Da la data: %1$s</string>
+    <string name="accessibility_filter_date_to">Enfin a la data: %1$s</string>
+    <string name="accessibility_filter_station">Filter dad emettur: %1$s</string>
+    <string name="accessibility_playback_speed">Sveltezza da reproducziun %1$s</string>
+    <string name="accessibility_seek_slider">Posiziun da reproducziun</string>
+    <string name="accessibility_time_position">%1$s da %2$s</string>
+    <string name="action_change_playback_speed">Midar la sveltezza da reproducziun</string>
+    <string name="action_clear_date_filter">Stizzar il filter da data</string>
+    <string name="action_clear_station_filter">Stizzar il filter dad emettur</string>
+    <string name="action_forward_15s">15 secundas enavant</string>
+    <string name="action_reset_playback_speed">Redefinir la sveltezza da reproducziun sin 1x</string>
+    <string name="action_rewind_15s">15 secundas enavos</string>
+    <string name="action_scroll_to_top">Scrollar tut ensi</string>
+    <string name="dialog_replace_recording_message">«%1$s» vegn gist registrà. Vulais Vus fermar e memorisar la registraziun actuala e cumenzar a registrar «%2$s»?</string>
+    <string name="dialog_replace_recording_title">Registraziun activa</string>
+    <string name="filter_all_stations">Tut ils emetturs</string>
+    <string name="filter_date_any">Mintga data</string>
 </resources>

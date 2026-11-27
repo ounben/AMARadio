@@ -429,4 +429,21 @@
     <string name="action_play_recording">Воспроизвести запись</string>
     <string name="dialog_move_to_position_title">Переместить "%1$s" на позицию</string>
     <string name="label_current_position">(текущая)</string>
+    <string name="accessibility_filter_date_from">С даты: %1$s</string>
+    <string name="accessibility_filter_date_to">По дату: %1$s</string>
+    <string name="accessibility_filter_station">Фильтр станций: %1$s</string>
+    <string name="accessibility_playback_speed">Скорость воспроизведения %1$s</string>
+    <string name="accessibility_seek_slider">Позиция воспроизведения</string>
+    <string name="accessibility_time_position">%1$s из %2$s</string>
+    <string name="action_change_playback_speed">Изменить скорость воспроизведения</string>
+    <string name="action_clear_date_filter">Сбросить фильтр даты</string>
+    <string name="action_clear_station_filter">Сбросить фильтр станций</string>
+    <string name="action_forward_15s">Вперёд на 15 секунд</string>
+    <string name="action_reset_playback_speed">Сбросить скорость воспроизведения до 1x</string>
+    <string name="action_rewind_15s">Назад на 15 секунд</string>
+    <string name="action_scroll_to_top">Прокрутить наверх</string>
+    <string name="dialog_replace_recording_message">Сейчас записывается «%1$s». Остановить и сохранить текущую запись и начать запись «%2$s»?</string>
+    <string name="dialog_replace_recording_title">Идёт запись</string>
+    <string name="filter_all_stations">Все станции</string>
+    <string name="filter_date_any">Любая дата</string>
 </resources>

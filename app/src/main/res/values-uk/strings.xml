@@ -429,4 +429,21 @@
     <string name="action_play_recording">Відтворити запис</string>
     <string name="dialog_move_to_position_title">Перемістити "%1$s" на позицію</string>
     <string name="label_current_position">(поточна)</string>
+    <string name="accessibility_filter_date_from">Від дати: %1$s</string>
+    <string name="accessibility_filter_date_to">До дати: %1$s</string>
+    <string name="accessibility_filter_station">Фільтр станцій: %1$s</string>
+    <string name="accessibility_playback_speed">Швидкість відтворення %1$s</string>
+    <string name="accessibility_seek_slider">Позиція відтворення</string>
+    <string name="accessibility_time_position">%1$s із %2$s</string>
+    <string name="action_change_playback_speed">Змінити швидкість відтворення</string>
+    <string name="action_clear_date_filter">Очистити фільтр дати</string>
+    <string name="action_clear_station_filter">Очистити фільтр станцій</string>
+    <string name="action_forward_15s">Вперед на 15 секунд</string>
+    <string name="action_reset_playback_speed">Скинути швидкість відтворення до 1x</string>
+    <string name="action_rewind_15s">Назад на 15 секунд</string>
+    <string name="action_scroll_to_top">Прокрутити на початок</string>
+    <string name="dialog_replace_recording_message">Зараз записується «%1$s». Зупинити та зберегти поточний запис і почати запис «%2$s»?</string>
+    <string name="dialog_replace_recording_title">Триває запис</string>
+    <string name="filter_all_stations">Усі станції</string>
+    <string name="filter_date_any">Будь-яка дата</string>
 </resources>

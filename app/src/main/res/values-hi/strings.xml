@@ -429,4 +429,21 @@
     <string name="action_play_recording">रिकॉर्डिंग चलाएं</string>
     <string name="dialog_move_to_position_title">"%1$s" को स्थिति पर ले जाएं</string>
     <string name="label_current_position">(वर्तमान)</string>
+    <string name="accessibility_filter_date_from">तारीख से: %1$s</string>
+    <string name="accessibility_filter_date_to">तारीख तक: %1$s</string>
+    <string name="accessibility_filter_station">स्टेशन फ़िल्टर: %1$s</string>
+    <string name="accessibility_playback_speed">प्लेबैक गति %1$s</string>
+    <string name="accessibility_seek_slider">प्लेबैक स्थिति</string>
+    <string name="accessibility_time_position">%2$s में से %1$s</string>
+    <string name="action_change_playback_speed">प्लेबैक गति बदलें</string>
+    <string name="action_clear_date_filter">तारीख फ़िल्टर साफ़ करें</string>
+    <string name="action_clear_station_filter">स्टेशन फ़िल्टर साफ़ करें</string>
+    <string name="action_forward_15s">15 सेकंड आगे बढ़ाएं</string>
+    <string name="action_reset_playback_speed">प्लेबैक गति 1x पर रीसेट करें</string>
+    <string name="action_rewind_15s">15 सेकंड पीछे करें</string>
+    <string name="action_scroll_to_top">सबसे ऊपर स्क्रॉल करें</string>
+    <string name="dialog_replace_recording_message">"%1$s" वर्तमान में रिकॉर्ड हो रहा है। क्या आप वर्तमान रिकॉर्डिंग रोककर सहेजना चाहते हैं और "%2$s" की रिकॉर्डिंग शुरू करना चाहते हैं?</string>
+    <string name="dialog_replace_recording_title">रिकॉर्डिंग जारी है</string>
+    <string name="filter_all_stations">सभी स्टेशन</string>
+    <string name="filter_date_any">कोई भी तारीख</string>
 </resources>

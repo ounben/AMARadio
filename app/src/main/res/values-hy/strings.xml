@@ -429,4 +429,21 @@
     <string name="action_play_recording">Նվագարկել ձայնագրությունը</string>
     <string name="dialog_move_to_position_title">Տեղափոխել "%1$s" դիրք</string>
     <string name="label_current_position">(ընթացիկ)</string>
+    <string name="accessibility_filter_date_from">Սկսած ամսաթվից՝ %1$s</string>
+    <string name="accessibility_filter_date_to">Մինչև ամսաթիվը՝ %1$s</string>
+    <string name="accessibility_filter_station">Կայանի զտիչ՝ %1$s</string>
+    <string name="accessibility_playback_speed">Նվագարկման արագություն %1$s</string>
+    <string name="accessibility_seek_slider">Նվագարկման դիրք</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Փոխել նվագարկման արագությունը</string>
+    <string name="action_clear_date_filter">Մաքրել ամսաթվի զտիչը</string>
+    <string name="action_clear_station_filter">Մաքրել կայանի զտիչը</string>
+    <string name="action_forward_15s">Առաջ 15 վայրկյան</string>
+    <string name="action_reset_playback_speed">Վերականգնել նվագարկման արագությունը 1x-ի</string>
+    <string name="action_rewind_15s">Հետ 15 վայրկյան</string>
+    <string name="action_scroll_to_top">Ոլորել վերև</string>
+    <string name="dialog_replace_recording_message">«%1$s»-ը ներկայումս ձայնագրվում է: Ցանկանու՞մ եք դադարեցնել և պահպանել ընթացիկ ձայնագրությունը և սկսել «%2$s»-ի ձայնագրումը:</string>
+    <string name="dialog_replace_recording_title">Ընթանում է ձայնագրում</string>
+    <string name="filter_all_stations">Բոլոր կայանները</string>
+    <string name="filter_date_any">Ցանկացած ամսաթիվ</string>
 </resources>

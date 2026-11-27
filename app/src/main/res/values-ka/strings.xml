@@ -429,4 +429,21 @@
     <string name="action_play_recording">ჩანაწერის დაკვრა</string>
     <string name="dialog_move_to_position_title">"%1$s"-ის გადატანა პოზიციაზე</string>
     <string name="label_current_position">(მიმდინარე)</string>
+    <string name="accessibility_filter_date_from">თარიღიდან: %1$s</string>
+    <string name="accessibility_filter_date_to">თარიღამდე: %1$s</string>
+    <string name="accessibility_filter_station">სადგურის ფილტრი: %1$s</string>
+    <string name="accessibility_playback_speed">დაკვრის სიჩქარე %1$s</string>
+    <string name="accessibility_seek_slider">დაკვრის პოზიცია</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">დაკვრის სიჩქარის შეცვლა</string>
+    <string name="action_clear_date_filter">თარიღის ფილტრის გასუფთავება</string>
+    <string name="action_clear_station_filter">სადგურის ფილტრის გასუფთავება</string>
+    <string name="action_forward_15s">15 წამით წინ</string>
+    <string name="action_reset_playback_speed">დაკვრის სიჩქარის 1x-ზე დაბრუნება</string>
+    <string name="action_rewind_15s">15 წამით უკან</string>
+    <string name="action_scroll_to_top">თავში ასვლა</string>
+    <string name="dialog_replace_recording_message">ამჟამად მიმდინარეობს "%1$s"-ის ჩაწერა. გსურთ შეაჩეროთ და შეინახოთ მიმდინარე ჩანაწერი და დაიწყოთ "%2$s"-ის ჩაწერა?</string>
+    <string name="dialog_replace_recording_title">მიმდინარეობს ჩაწერა</string>
+    <string name="filter_all_stations">ყველა სადგური</string>
+    <string name="filter_date_any">ნებისმიერი თარიღი</string>
 </resources>

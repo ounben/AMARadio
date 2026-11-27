@@ -429,4 +429,21 @@
     <string name="action_play_recording">Luaj regjistrimin</string>
     <string name="dialog_move_to_position_title">Zhvendos "%1$s" në pozicion</string>
     <string name="label_current_position">(aktual)</string>
+    <string name="accessibility_filter_date_from">Nga data: %1$s</string>
+    <string name="accessibility_filter_date_to">Deri më datën: %1$s</string>
+    <string name="accessibility_filter_station">Filtri i stacionit: %1$s</string>
+    <string name="accessibility_playback_speed">Shpejtësia e luajtjes %1$s</string>
+    <string name="accessibility_seek_slider">Pozicioni i luajtjes</string>
+    <string name="accessibility_time_position">%1$s nga %2$s</string>
+    <string name="action_change_playback_speed">Ndrysho shpejtësinë e luajtjes</string>
+    <string name="action_clear_date_filter">Pastro filtrin e datës</string>
+    <string name="action_clear_station_filter">Pastro filtrin e stacionit</string>
+    <string name="action_forward_15s">Përpara 15 sekonda</string>
+    <string name="action_reset_playback_speed">Rivendos shpejtësinë e luajtjes në 1x</string>
+    <string name="action_rewind_15s">Prapa 15 sekonda</string>
+    <string name="action_scroll_to_top">Lëviz në krye</string>
+    <string name="dialog_replace_recording_message">"%1$s" po regjistrohet aktualisht. Dëshiron të ndalosh dhe të ruash regjistrimin aktual dhe të fillosh regjistrimin e "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Regjistrimi në vazhdim</string>
+    <string name="filter_all_stations">Të gjitha stacionet</string>
+    <string name="filter_date_any">Çdo datë</string>
 </resources>

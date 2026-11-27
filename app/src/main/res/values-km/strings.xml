@@ -429,4 +429,21 @@
     <string name="action_play_recording">ចាក់ការថត</string>
     <string name="dialog_move_to_position_title">ផ្លាស់ទី "%1$s" ទៅទីតាំង</string>
     <string name="label_current_position">(បច្ចុប្បន្ន)</string>
+    <string name="accessibility_filter_date_from">ចាប់ពីកាលបរិច្ឆេទ៖ %1$s</string>
+    <string name="accessibility_filter_date_to">ដល់កាលបរិច្ឆេទ៖ %1$s</string>
+    <string name="accessibility_filter_station">តម្រងស្ថានីយ៖ %1$s</string>
+    <string name="accessibility_playback_speed">ល្បឿនចាក់ %1$s</string>
+    <string name="accessibility_seek_slider">ទីតាំងចាក់</string>
+    <string name="accessibility_time_position">%1$s នៃ %2$s</string>
+    <string name="action_change_playback_speed">ប្តូរល្បឿនចាក់</string>
+    <string name="action_clear_date_filter">សម្អាតតម្រងកាលបរិច្ឆេទ</string>
+    <string name="action_clear_station_filter">សម្អាតតម្រងស្ថានីយ</string>
+    <string name="action_forward_15s">ទៅមុខ 15 វិនាទី</string>
+    <string name="action_reset_playback_speed">កំណត់ល្បឿនចាក់ឡើងវិញទៅ 1x</string>
+    <string name="action_rewind_15s">ថយក្រោយ 15 វិនាទី</string>
+    <string name="action_scroll_to_top">រំកិលទៅកំពូល</string>
+    <string name="dialog_replace_recording_message">"%1$s" កំពុងត្រូវបានថត។ តើអ្នកចង់បញ្ឈប់ និងរក្សាទុកការថតបច្ចុប្បន្ន ហើយចាប់ផ្តើមថត "%2$s" ទេ?</string>
+    <string name="dialog_replace_recording_title">កំពុងថត</string>
+    <string name="filter_all_stations">គ្រប់ស្ថានីយ</string>
+    <string name="filter_date_any">កាលបរិច្ឆេទណាមួយ</string>
 </resources>

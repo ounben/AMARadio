@@ -431,4 +431,21 @@
     <string name="action_play_recording">Αναπαραγωγή εγγραφής</string>
     <string name="dialog_move_to_position_title">Μετακίνηση "%1$s" στη θέση</string>
     <string name="label_current_position">(τρέχουσα)</string>
+    <string name="accessibility_filter_date_from">Από ημερομηνία: %1$s</string>
+    <string name="accessibility_filter_date_to">Έως ημερομηνία: %1$s</string>
+    <string name="accessibility_filter_station">Φίλτρο σταθμού: %1$s</string>
+    <string name="accessibility_playback_speed">Ταχύτητα αναπαραγωγής %1$s</string>
+    <string name="accessibility_seek_slider">Θέση αναπαραγωγής</string>
+    <string name="accessibility_time_position">%1$s από %2$s</string>
+    <string name="action_change_playback_speed">Αλλαγή ταχύτητας αναπαραγωγής</string>
+    <string name="action_clear_date_filter">Εκκαθάριση φίλτρου ημερομηνίας</string>
+    <string name="action_clear_station_filter">Εκκαθάριση φίλτρου σταθμού</string>
+    <string name="action_forward_15s">15 δευτερόλεπτα μπροστά</string>
+    <string name="action_reset_playback_speed">Επαναφορά ταχύτητας αναπαραγωγής σε 1x</string>
+    <string name="action_rewind_15s">15 δευτερόλεπτα πίσω</string>
+    <string name="action_scroll_to_top">Κύλιση στην κορυφή</string>
+    <string name="dialog_replace_recording_message">Το "%1$s" εγγράφεται αυτήν τη στιγμή. Θέλετε να διακόψετε και να αποθηκεύσετε την τρέχουσα εγγραφή και να ξεκινήσετε την εγγραφή του "%2$s";</string>
+    <string name="dialog_replace_recording_title">Εγγραφή σε εξέλιξη</string>
+    <string name="filter_all_stations">Όλοι οι σταθμοί</string>
+    <string name="filter_date_any">Οποιαδήποτε ημερομηνία</string>
 </resources>

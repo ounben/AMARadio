@@ -429,4 +429,21 @@
     <string name="action_play_recording">Prehrať nahrávku</string>
     <string name="dialog_move_to_position_title">Presunúť "%1$s" na pozíciu</string>
     <string name="label_current_position">(aktuálna)</string>
+    <string name="accessibility_filter_date_from">Od dátumu: %1$s</string>
+    <string name="accessibility_filter_date_to">Do dátumu: %1$s</string>
+    <string name="accessibility_filter_station">Filter staníc: %1$s</string>
+    <string name="accessibility_playback_speed">Rýchlosť prehrávania %1$s</string>
+    <string name="accessibility_seek_slider">Pozícia prehrávania</string>
+    <string name="accessibility_time_position">%1$s z %2$s</string>
+    <string name="action_change_playback_speed">Zmeniť rýchlosť prehrávania</string>
+    <string name="action_clear_date_filter">Vymazať filter dátumu</string>
+    <string name="action_clear_station_filter">Vymazať filter staníc</string>
+    <string name="action_forward_15s">Dopredu o 15 sekúnd</string>
+    <string name="action_reset_playback_speed">Obnoviť rýchlosť prehrávania na 1x</string>
+    <string name="action_rewind_15s">Dozadu o 15 sekúnd</string>
+    <string name="action_scroll_to_top">Posunúť na začiatok</string>
+    <string name="dialog_replace_recording_message">Stanica "%1$s" sa práve nahráva. Chcete zastaviť a uložiť aktuálnu nahrávku a spustiť nahrávanie "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Prebieha nahrávanie</string>
+    <string name="filter_all_stations">Všetky stanice</string>
+    <string name="filter_date_any">Akýkoľvek dátum</string>
 </resources>

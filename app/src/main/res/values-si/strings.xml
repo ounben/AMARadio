@@ -429,4 +429,21 @@
     <string name="action_play_recording">පටිගත කිරීම වාදනය කරන්න</string>
     <string name="dialog_move_to_position_title">"%1$s" ස්ථානයට ගෙන යන්න</string>
     <string name="label_current_position">(වත්මන්)</string>
+    <string name="accessibility_filter_date_from">දින සිට: %1$s</string>
+    <string name="accessibility_filter_date_to">දින දක්වා: %1$s</string>
+    <string name="accessibility_filter_station">නාලිකා පෙරහන: %1$s</string>
+    <string name="accessibility_playback_speed">ධාවන වේගය %1$s</string>
+    <string name="accessibility_seek_slider">ධාවන ස්ථානය</string>
+    <string name="accessibility_time_position">%2$s න් %1$s</string>
+    <string name="action_change_playback_speed">ධාවන වේගය වෙනස් කරන්න</string>
+    <string name="action_clear_date_filter">දින පෙරහන ඉවත් කරන්න</string>
+    <string name="action_clear_station_filter">නාලිකා පෙරහන ඉවත් කරන්න</string>
+    <string name="action_forward_15s">තත්පර 15ක් ඉදිරියට</string>
+    <string name="action_reset_playback_speed">ධාවන වේගය 1x වෙත යළි සකසන්න</string>
+    <string name="action_rewind_15s">තත්පර 15ක් පසුපසට</string>
+    <string name="action_scroll_to_top">ඉහළටම අනුචලනය කරන්න</string>
+    <string name="dialog_replace_recording_message">"%1$s" දැනට පටිගත වෙමින් පවතී. වත්මන් පටිගත කිරීම නවතා සුරැකීමට සහ "%2$s" පටිගත කිරීම ආරම්භ කිරීමට ඔබට අවශ්‍යද?</string>
+    <string name="dialog_replace_recording_title">පටිගත කිරීම සිදු වෙමින් පවතී</string>
+    <string name="filter_all_stations">සියලුම නාලිකා</string>
+    <string name="filter_date_any">ඕනෑම දිනයක්</string>
 </resources>

@@ -430,4 +430,21 @@
     <string name="action_play_recording">Səsyazmanı oxut</string>
     <string name="dialog_move_to_position_title">"%1$s" mövqeyinə köçür</string>
     <string name="label_current_position">(cari)</string>
+    <string name="accessibility_filter_date_from">Başlanğıc tarixi: %1$s</string>
+    <string name="accessibility_filter_date_to">Bitmə tarixi: %1$s</string>
+    <string name="accessibility_filter_station">Stansiya filtri: %1$s</string>
+    <string name="accessibility_playback_speed">Oxutma sürəti %1$s</string>
+    <string name="accessibility_seek_slider">Oxutma mövqeyi</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Oxutma sürətini dəyiş</string>
+    <string name="action_clear_date_filter">Tarix filtrini təmizlə</string>
+    <string name="action_clear_station_filter">Stansiya filtrini təmizlə</string>
+    <string name="action_forward_15s">15 saniyə irəli</string>
+    <string name="action_reset_playback_speed">Oxutma sürətini 1x-ə sıfırla</string>
+    <string name="action_rewind_15s">15 saniyə geri</string>
+    <string name="action_scroll_to_top">Yuxarı sürüşdür</string>
+    <string name="dialog_replace_recording_message">"%1$s" hazırda yazılır. Cari yazmanı dayandırıb saxlamaq və "%2$s" yazmağa başlamaq istəyirsiniz?</string>
+    <string name="dialog_replace_recording_title">Yazma davam edir</string>
+    <string name="filter_all_stations">Bütün stansiyalar</string>
+    <string name="filter_date_any">İstənilən tarix</string>
 </resources>

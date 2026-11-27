@@ -429,4 +429,21 @@
     <string name="action_play_recording">பதிவை இயக்கு</string>
     <string name="dialog_move_to_position_title">"%1$s" ஐ நிலைக்கு நகர்த்து</string>
     <string name="label_current_position">(தற்போதைய)</string>
+    <string name="accessibility_filter_date_from">தேதி முதல்: %1$s</string>
+    <string name="accessibility_filter_date_to">தேதி வரை: %1$s</string>
+    <string name="accessibility_filter_station">நிலைய வடிகட்டி: %1$s</string>
+    <string name="accessibility_playback_speed">இயக்க வேகம் %1$s</string>
+    <string name="accessibility_seek_slider">இயக்க நிலை</string>
+    <string name="accessibility_time_position">%2$s இல் %1$s</string>
+    <string name="action_change_playback_speed">இயக்க வேகத்தை மாற்று</string>
+    <string name="action_clear_date_filter">தேதி வடிகட்டியை அழி</string>
+    <string name="action_clear_station_filter">நிலைய வடிகட்டியை அழி</string>
+    <string name="action_forward_15s">15 வினாடிகள் முன்னோக்கி</string>
+    <string name="action_reset_playback_speed">இயக்க வேகத்தை 1x ஆக மீட்டமை</string>
+    <string name="action_rewind_15s">15 வினாடிகள் பின்னோக்கி</string>
+    <string name="action_scroll_to_top">மேலே உருட்டு</string>
+    <string name="dialog_replace_recording_message">"%1$s" தற்போது பதிவு செய்யப்படுகிறது. தற்போதைய பதிவை நிறுத்தி சேமித்துவிட்டு "%2$s" பதிவைத் தொடங்க விரும்புகிறீர்களா?</string>
+    <string name="dialog_replace_recording_title">பதிவு நடைபெறுகிறது</string>
+    <string name="filter_all_stations">அனைத்து நிலையங்களும்</string>
+    <string name="filter_date_any">எந்தத் தேதியும்</string>
 </resources>

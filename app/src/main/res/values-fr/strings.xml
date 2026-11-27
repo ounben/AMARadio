@@ -429,4 +429,21 @@
     <string name="action_play_recording">Lire l\'enregistrement</string>
     <string name="dialog_move_to_position_title">Déplacer "%1$s" à la position</string>
     <string name="label_current_position">(actuelle)</string>
+    <string name="accessibility_filter_date_from">À partir du : %1$s</string>
+    <string name="accessibility_filter_date_to">Jusqu\'au : %1$s</string>
+    <string name="accessibility_filter_station">Filtre de station : %1$s</string>
+    <string name="accessibility_playback_speed">Vitesse de lecture %1$s</string>
+    <string name="accessibility_seek_slider">Position de lecture</string>
+    <string name="accessibility_time_position">%1$s sur %2$s</string>
+    <string name="action_change_playback_speed">Modifier la vitesse de lecture</string>
+    <string name="action_clear_date_filter">Effacer le filtre de date</string>
+    <string name="action_clear_station_filter">Effacer le filtre de station</string>
+    <string name="action_forward_15s">Avancer de 15 secondes</string>
+    <string name="action_reset_playback_speed">Réinitialiser la vitesse de lecture à 1x</string>
+    <string name="action_rewind_15s">Reculer de 15 secondes</string>
+    <string name="action_scroll_to_top">Faire défiler vers le haut</string>
+    <string name="dialog_replace_recording_message">« %1$s » est en cours d\'enregistrement. Voulez-vous arrêter et enregistrer la capture actuelle, puis démarrer l\'enregistrement de « %2$s » ?</string>
+    <string name="dialog_replace_recording_title">Enregistrement en cours</string>
+    <string name="filter_all_stations">Toutes les stations</string>
+    <string name="filter_date_any">N\'importe quelle date</string>
 </resources>

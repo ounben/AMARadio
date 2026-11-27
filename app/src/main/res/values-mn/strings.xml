@@ -431,4 +431,21 @@
     <string name="action_play_recording">Бичлэг тоглуулах</string>
     <string name="dialog_move_to_position_title">"%1$s"-г байрлал руу зөөх</string>
     <string name="label_current_position">(одоогийн)</string>
+    <string name="accessibility_filter_date_from">Эхлэх огноо: %1$s</string>
+    <string name="accessibility_filter_date_to">Дуусах огноо: %1$s</string>
+    <string name="accessibility_filter_station">Станцын шүүлтүүр: %1$s</string>
+    <string name="accessibility_playback_speed">Тоглуулах хурд %1$s</string>
+    <string name="accessibility_seek_slider">Тоглуулах байрлал</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Тоглуулах хурд өөрчлөх</string>
+    <string name="action_clear_date_filter">Огнооны шүүлтүүр арилгах</string>
+    <string name="action_clear_station_filter">Станцын шүүлтүүр арилгах</string>
+    <string name="action_forward_15s">15 секунд урагшлуулах</string>
+    <string name="action_reset_playback_speed">Тоглуулах хурдыг 1x болгох</string>
+    <string name="action_rewind_15s">15 секунд ухраах</string>
+    <string name="action_scroll_to_top">Хамгийн дээш гүйлгэх</string>
+    <string name="dialog_replace_recording_message">"%1$s" одоо бичигдэж байна. Одоогийн бичлэгийг зогсоож хадгалаад "%2$s"-г бичиж эхлэх үү?</string>
+    <string name="dialog_replace_recording_title">Бичлэг хийгдэж байна</string>
+    <string name="filter_all_stations">Бүх станц</string>
+    <string name="filter_date_any">Дурын огноо</string>
 </resources>

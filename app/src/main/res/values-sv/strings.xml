@@ -429,4 +429,21 @@
     <string name="action_play_recording">Spela upp inspelning</string>
     <string name="dialog_move_to_position_title">Flytta "%1$s" till position</string>
     <string name="label_current_position">(nuvarande)</string>
+    <string name="accessibility_filter_date_from">Från datum: %1$s</string>
+    <string name="accessibility_filter_date_to">Till datum: %1$s</string>
+    <string name="accessibility_filter_station">Stationsfilter: %1$s</string>
+    <string name="accessibility_playback_speed">Uppspelningshastighet %1$s</string>
+    <string name="accessibility_seek_slider">Uppspelningsposition</string>
+    <string name="accessibility_time_position">%1$s av %2$s</string>
+    <string name="action_change_playback_speed">Ändra uppspelningshastighet</string>
+    <string name="action_clear_date_filter">Rensa datumfilter</string>
+    <string name="action_clear_station_filter">Rensa stationsfilter</string>
+    <string name="action_forward_15s">Framåt 15 sekunder</string>
+    <string name="action_reset_playback_speed">Återställ uppspelningshastighet till 1x</string>
+    <string name="action_rewind_15s">Bakåt 15 sekunder</string>
+    <string name="action_scroll_to_top">Bläddra överst</string>
+    <string name="dialog_replace_recording_message">"%1$s" spelas in just nu. Vill du stoppa och spara den pågående inspelningen och börja spela in "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Inspelning pågår</string>
+    <string name="filter_all_stations">Alla stationer</string>
+    <string name="filter_date_any">Valfritt datum</string>
 </resources>

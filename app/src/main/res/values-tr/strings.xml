@@ -429,4 +429,21 @@
     <string name="action_play_recording">Kaydı oynat</string>
     <string name="dialog_move_to_position_title">"%1$s" öğesini konuma taşı</string>
     <string name="label_current_position">(mevcut)</string>
+    <string name="accessibility_filter_date_from">Başlangıç tarihi: %1$s</string>
+    <string name="accessibility_filter_date_to">Bitiş tarihi: %1$s</string>
+    <string name="accessibility_filter_station">İstasyon filtresi: %1$s</string>
+    <string name="accessibility_playback_speed">Oynatma hızı %1$s</string>
+    <string name="accessibility_seek_slider">Oynatma konumu</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Oynatma hızını değiştir</string>
+    <string name="action_clear_date_filter">Tarih filtresini temizle</string>
+    <string name="action_clear_station_filter">İstasyon filtresini temizle</string>
+    <string name="action_forward_15s">15 saniye ileri sar</string>
+    <string name="action_reset_playback_speed">Oynatma hızını 1x olarak sıfırla</string>
+    <string name="action_rewind_15s">15 saniye geri sar</string>
+    <string name="action_scroll_to_top">En üste kaydır</string>
+    <string name="dialog_replace_recording_message">"%1$s" şu anda kaydediliyor. Mevcut kaydı durdurup kaydetmek ve "%2$s" kaydını başlatmak istiyor musunuz?</string>
+    <string name="dialog_replace_recording_title">Kayıt devam ediyor</string>
+    <string name="filter_all_stations">Tüm istasyonlar</string>
+    <string name="filter_date_any">Herhangi bir tarih</string>
 </resources>

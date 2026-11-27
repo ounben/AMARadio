@@ -429,4 +429,21 @@
     <string name="action_play_recording">הפעל הקלטה</string>
     <string name="dialog_move_to_position_title">הזז את "%1$s" למיקום</string>
     <string name="label_current_position">(נוכחי)</string>
+    <string name="accessibility_filter_date_from">מתאריך: %1$s</string>
+    <string name="accessibility_filter_date_to">עד תאריך: %1$s</string>
+    <string name="accessibility_filter_station">מסנן תחנות: %1$s</string>
+    <string name="accessibility_playback_speed">מהירות השמעה %1$s</string>
+    <string name="accessibility_seek_slider">מיקום השמעה</string>
+    <string name="accessibility_time_position">%1$s מתוך %2$s</string>
+    <string name="action_change_playback_speed">שנה מהירות השמעה</string>
+    <string name="action_clear_date_filter">נקה מסנן תאריכים</string>
+    <string name="action_clear_station_filter">נקה מסנן תחנות</string>
+    <string name="action_forward_15s">קדימה 15 שניות</string>
+    <string name="action_reset_playback_speed">אפס מהירות השמעה ל-1x</string>
+    <string name="action_rewind_15s">אחורה 15 שניות</string>
+    <string name="action_scroll_to_top">גלול לראש הרשימה</string>
+    <string name="dialog_replace_recording_message">"%1$s" מוקלט כעת. האם לעצור ולשמור את ההקלטה הנוכחית ולהתחיל להקליט את "%2$s"?</string>
+    <string name="dialog_replace_recording_title">ההקלטה מתבצעת</string>
+    <string name="filter_all_stations">כל התחנות</string>
+    <string name="filter_date_any">כל תאריך</string>
 </resources>

@@ -429,4 +429,21 @@
     <string name="action_play_recording">Toista tallenne</string>
     <string name="dialog_move_to_position_title">Siirrä "%1$s" sijaintiin</string>
     <string name="label_current_position">(nykyinen)</string>
+    <string name="accessibility_filter_date_from">Alkaen päivämäärästä: %1$s</string>
+    <string name="accessibility_filter_date_to">Päättyen päivämäärään: %1$s</string>
+    <string name="accessibility_filter_station">Asemasuodatin: %1$s</string>
+    <string name="accessibility_playback_speed">Toistonopeus %1$s</string>
+    <string name="accessibility_seek_slider">Toistokohta</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Vaihda toistonopeutta</string>
+    <string name="action_clear_date_filter">Tyhjennä päivämääräsuodatin</string>
+    <string name="action_clear_station_filter">Tyhjennä asemasuodatin</string>
+    <string name="action_forward_15s">15 sekuntia eteenpäin</string>
+    <string name="action_reset_playback_speed">Palauta toistonopeus 1x:ksi</string>
+    <string name="action_rewind_15s">15 sekuntia taaksepäin</string>
+    <string name="action_scroll_to_top">Vieritä ylös</string>
+    <string name="dialog_replace_recording_message">"%1$s" on parhaillaan tallenteilla. Haluatko lopettaa ja tallentaa nykyisen tallenteen ja aloittaa kohteen "%2$s" tallentamisen?</string>
+    <string name="dialog_replace_recording_title">Tallennus käynnissä</string>
+    <string name="filter_all_stations">Kaikki asemat</string>
+    <string name="filter_date_any">Mikä tahansa päivämäärä</string>
 </resources>

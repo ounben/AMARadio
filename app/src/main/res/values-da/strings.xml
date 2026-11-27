@@ -429,4 +429,21 @@
     <string name="action_play_recording">Afspil optagelse</string>
     <string name="dialog_move_to_position_title">Flyt "%1$s" til position</string>
     <string name="label_current_position">(nuværende)</string>
+    <string name="accessibility_filter_date_from">Fra dato: %1$s</string>
+    <string name="accessibility_filter_date_to">Til dato: %1$s</string>
+    <string name="accessibility_filter_station">Stationsfilter: %1$s</string>
+    <string name="accessibility_playback_speed">Afspilningshastighed %1$s</string>
+    <string name="accessibility_seek_slider">Afspilningsposition</string>
+    <string name="accessibility_time_position">%1$s af %2$s</string>
+    <string name="action_change_playback_speed">Skift afspilningshastighed</string>
+    <string name="action_clear_date_filter">Ryd datofilter</string>
+    <string name="action_clear_station_filter">Ryd stationsfilter</string>
+    <string name="action_forward_15s">15 sekunder frem</string>
+    <string name="action_reset_playback_speed">Nulstil afspilningshastighed til 1x</string>
+    <string name="action_rewind_15s">15 sekunder tilbage</string>
+    <string name="action_scroll_to_top">Rul til toppen</string>
+    <string name="dialog_replace_recording_message">"%1$s" optages i øjeblikket. Vil du stoppe og gemme den nuværende optagelse og starte optagelse af "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Optagelse i gang</string>
+    <string name="filter_all_stations">Alle stationer</string>
+    <string name="filter_date_any">Enhver dato</string>
 </resources>

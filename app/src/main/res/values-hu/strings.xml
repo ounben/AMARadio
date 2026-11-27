@@ -429,4 +429,21 @@
     <string name="action_play_recording">Felvétel lejátszása</string>
     <string name="dialog_move_to_position_title">"%1$s" áthelyezése pozícióra</string>
     <string name="label_current_position">(jelenlegi)</string>
+    <string name="accessibility_filter_date_from">Dátumtól: %1$s</string>
+    <string name="accessibility_filter_date_to">Dátumig: %1$s</string>
+    <string name="accessibility_filter_station">Állomásszűrő: %1$s</string>
+    <string name="accessibility_playback_speed">Lejátszási sebesség %1$s</string>
+    <string name="accessibility_seek_slider">Lejátszási pozíció</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Lejátszási sebesség módosítása</string>
+    <string name="action_clear_date_filter">Dátumszűrő törlése</string>
+    <string name="action_clear_station_filter">Állomásszűrő törlése</string>
+    <string name="action_forward_15s">Előre 15 másodperccel</string>
+    <string name="action_reset_playback_speed">Lejátszási sebesség visszaállítása 1x-re</string>
+    <string name="action_rewind_15s">Vissza 15 másodperccel</string>
+    <string name="action_scroll_to_top">Görgetés legfelülre</string>
+    <string name="dialog_replace_recording_message">"%1$s" felvétele jelenleg folyamatban van. Leállítja és menti az aktuális felvételt, majd elindítja a(z) "%2$s" felvételét?</string>
+    <string name="dialog_replace_recording_title">Felvétel folyamatban</string>
+    <string name="filter_all_stations">Összes állomás</string>
+    <string name="filter_date_any">Bármilyen dátum</string>
 </resources>

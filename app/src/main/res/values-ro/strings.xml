@@ -429,4 +429,21 @@
     <string name="action_play_recording">Redă înregistrarea</string>
     <string name="dialog_move_to_position_title">Mută "%1$s" pe poziția</string>
     <string name="label_current_position">(actuală)</string>
+    <string name="accessibility_filter_date_from">De la data: %1$s</string>
+    <string name="accessibility_filter_date_to">Până la data: %1$s</string>
+    <string name="accessibility_filter_station">Filtru post: %1$s</string>
+    <string name="accessibility_playback_speed">Viteză de redare %1$s</string>
+    <string name="accessibility_seek_slider">Poziție de redare</string>
+    <string name="accessibility_time_position">%1$s din %2$s</string>
+    <string name="action_change_playback_speed">Schimbă viteza de redare</string>
+    <string name="action_clear_date_filter">Șterge filtrul de dată</string>
+    <string name="action_clear_station_filter">Șterge filtrul de post</string>
+    <string name="action_forward_15s">Înainte cu 15 secunde</string>
+    <string name="action_reset_playback_speed">Resetează viteza de redare la 1x</string>
+    <string name="action_rewind_15s">Înapoi cu 15 secunde</string>
+    <string name="action_scroll_to_top">Derulează sus de tot</string>
+    <string name="dialog_replace_recording_message">"%1$s" se înregistrează în prezent. Doriți să opriți și să salvați înregistrarea curentă și să începeți înregistrarea "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Înregistrare în curs</string>
+    <string name="filter_all_stations">Toate posturile</string>
+    <string name="filter_date_any">Orice dată</string>
 </resources>

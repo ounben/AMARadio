@@ -431,4 +431,21 @@
     <string name="action_play_recording">Reprodueix la gravació</string>
     <string name="dialog_move_to_position_title">Mou "%1$s" a la posició</string>
     <string name="label_current_position">(actual)</string>
+    <string name="accessibility_filter_date_from">Des de la data: %1$s</string>
+    <string name="accessibility_filter_date_to">Fins a la data: %1$s</string>
+    <string name="accessibility_filter_station">Filtre d\'emissora: %1$s</string>
+    <string name="accessibility_playback_speed">Velocitat de reproducció %1$s</string>
+    <string name="accessibility_seek_slider">Posició de reproducció</string>
+    <string name="accessibility_time_position">%1$s de %2$s</string>
+    <string name="action_change_playback_speed">Canvia la velocitat de reproducció</string>
+    <string name="action_clear_date_filter">Esborra el filtre de data</string>
+    <string name="action_clear_station_filter">Esborra el filtre d\'emissora</string>
+    <string name="action_forward_15s">Avança 15 segons</string>
+    <string name="action_reset_playback_speed">Restableix la velocitat de reproducció a 1x</string>
+    <string name="action_rewind_15s">Rebobina 15 segons</string>
+    <string name="action_scroll_to_top">Desplaça\'t a dalt de tot</string>
+    <string name="dialog_replace_recording_message">Actualment s\'està gravant "%1$s". Vols aturar i desar la gravació actual i començar a gravar "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Gravació en curs</string>
+    <string name="filter_all_stations">Totes les emissores</string>
+    <string name="filter_date_any">Qualsevol data</string>
 </resources>

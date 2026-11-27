@@ -429,4 +429,21 @@
     <string name="action_play_recording">Spill av opptak</string>
     <string name="dialog_move_to_position_title">Flytt "%1$s" til posisjon</string>
     <string name="label_current_position">(nåværende)</string>
+    <string name="accessibility_filter_date_from">Fra dato: %1$s</string>
+    <string name="accessibility_filter_date_to">Til dato: %1$s</string>
+    <string name="accessibility_filter_station">Stasjonsfilter: %1$s</string>
+    <string name="accessibility_playback_speed">Avspillingshastighet %1$s</string>
+    <string name="accessibility_seek_slider">Avspillingsposisjon</string>
+    <string name="accessibility_time_position">%1$s av %2$s</string>
+    <string name="action_change_playback_speed">Endre avspillingshastighet</string>
+    <string name="action_clear_date_filter">Tøm datofilter</string>
+    <string name="action_clear_station_filter">Tøm stasjonsfilter</string>
+    <string name="action_forward_15s">15 sekunder fremover</string>
+    <string name="action_reset_playback_speed">Tilbakestill avspillingshastighet til 1x</string>
+    <string name="action_rewind_15s">15 sekunder bakover</string>
+    <string name="action_scroll_to_top">Rull til toppen</string>
+    <string name="dialog_replace_recording_message">"%1$s" tas opp akkurat nå. Vil du stoppe og lagre det pågående opptaket og starte opptak av "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Opptak pågår</string>
+    <string name="filter_all_stations">Alle stasjoner</string>
+    <string name="filter_date_any">Enhver dato</string>
 </resources>

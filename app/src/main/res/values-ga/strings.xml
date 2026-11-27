@@ -429,4 +429,21 @@
     <string name="action_play_recording">Seinn taifeadadh</string>
     <string name="dialog_move_to_position_title">Bog "%1$s" go dtí an suíomh</string>
     <string name="label_current_position">(reatha)</string>
+    <string name="accessibility_filter_date_from">Ón dáta: %1$s</string>
+    <string name="accessibility_filter_date_to">Go dtí an dáta: %1$s</string>
+    <string name="accessibility_filter_station">Scagaire stáisiúin: %1$s</string>
+    <string name="accessibility_playback_speed">Luas athsheinm %1$s</string>
+    <string name="accessibility_seek_slider">Suíomh athsheinm</string>
+    <string name="accessibility_time_position">%1$s as %2$s</string>
+    <string name="action_change_playback_speed">Athraigh luas athsheinm</string>
+    <string name="action_clear_date_filter">Glan scagaire dáta</string>
+    <string name="action_clear_station_filter">Glan scagaire stáisiúin</string>
+    <string name="action_forward_15s">Ar aghaidh 15 soicind</string>
+    <string name="action_reset_playback_speed">Athshocraigh luas athsheinm go 1x</string>
+    <string name="action_rewind_15s">Siar 15 soicind</string>
+    <string name="action_scroll_to_top">Scrollaigh go barr</string>
+    <string name="dialog_replace_recording_message">Tá "%1$s" á thaifeadadh faoi láthair. Ar mhaith leat an taifeadadh reatha a stopadh agus a shábháil agus tosú ag taifeadadh "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Taifeadadh ar siúl</string>
+    <string name="filter_all_stations">Gach stáisiún</string>
+    <string name="filter_date_any">Aon dáta</string>
 </resources>

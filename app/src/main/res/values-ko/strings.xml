@@ -429,4 +429,21 @@
     <string name="action_play_recording">녹음 재생</string>
     <string name="dialog_move_to_position_title">"%1$s" 위치 이동</string>
     <string name="label_current_position">(현재)</string>
+    <string name="accessibility_filter_date_from">시작 날짜: %1$s</string>
+    <string name="accessibility_filter_date_to">종료 날짜: %1$s</string>
+    <string name="accessibility_filter_station">방송국 필터: %1$s</string>
+    <string name="accessibility_playback_speed">재생 속도 %1$s</string>
+    <string name="accessibility_seek_slider">재생 위치</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">재생 속도 변경</string>
+    <string name="action_clear_date_filter">날짜 필터 지우기</string>
+    <string name="action_clear_station_filter">방송국 필터 지우기</string>
+    <string name="action_forward_15s">15초 앞으로</string>
+    <string name="action_reset_playback_speed">재생 속도를 1x로 초기화</string>
+    <string name="action_rewind_15s">15초 뒤로</string>
+    <string name="action_scroll_to_top">맨 위로 스크롤</string>
+    <string name="dialog_replace_recording_message">"%1$s" 녹음이 진행 중입니다. 현재 녹음을 중지 및 저장하고 "%2$s" 녹음을 시작하시겠습니까?</string>
+    <string name="dialog_replace_recording_title">녹음 진행 중</string>
+    <string name="filter_all_stations">모든 방송국</string>
+    <string name="filter_date_any">모든 날짜</string>
 </resources>

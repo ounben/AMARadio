@@ -429,4 +429,21 @@
     <string name="action_play_recording">Esita salvestus</string>
     <string name="dialog_move_to_position_title">Teisalda "%1$s" asukohta</string>
     <string name="label_current_position">(praegune)</string>
+    <string name="accessibility_filter_date_from">Alates kuupäevast: %1$s</string>
+    <string name="accessibility_filter_date_to">Kuni kuupäevani: %1$s</string>
+    <string name="accessibility_filter_station">Jaama filter: %1$s</string>
+    <string name="accessibility_playback_speed">Taasesituse kiirus %1$s</string>
+    <string name="accessibility_seek_slider">Taasesituse asukoht</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Muuda taasesituse kiirust</string>
+    <string name="action_clear_date_filter">Tühjenda kuupäevafilter</string>
+    <string name="action_clear_station_filter">Tühjenda jaamafilter</string>
+    <string name="action_forward_15s">15 sekundit edasi</string>
+    <string name="action_reset_playback_speed">Lähtesta taasesituse kiirus 1x peale</string>
+    <string name="action_rewind_15s">15 sekundit tagasi</string>
+    <string name="action_scroll_to_top">Keri üles</string>
+    <string name="dialog_replace_recording_message">"%1$s" salvestamine on pooleli. Kas soovite praeguse salvestuse peatada ja salvestada ning alustada "%2$s" salvestamist?</string>
+    <string name="dialog_replace_recording_title">Salvestamine on pooleli</string>
+    <string name="filter_all_stations">Kõik jaamad</string>
+    <string name="filter_date_any">Mis tahes kuupäev</string>
 </resources>

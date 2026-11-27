@@ -429,4 +429,21 @@
     <string name="action_play_recording">播放录音</string>
     <string name="dialog_move_to_position_title">将“%1$s”移至位置</string>
     <string name="label_current_position">（当前）</string>
+    <string name="accessibility_filter_date_from">开始日期：%1$s</string>
+    <string name="accessibility_filter_date_to">结束日期：%1$s</string>
+    <string name="accessibility_filter_station">电台筛选：%1$s</string>
+    <string name="accessibility_playback_speed">播放速度 %1$s</string>
+    <string name="accessibility_seek_slider">播放位置</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">更改播放速度</string>
+    <string name="action_clear_date_filter">清除日期筛选</string>
+    <string name="action_clear_station_filter">清除电台筛选</string>
+    <string name="action_forward_15s">快进 15 秒</string>
+    <string name="action_reset_playback_speed">将播放速度重置为 1x</string>
+    <string name="action_rewind_15s">快退 15 秒</string>
+    <string name="action_scroll_to_top">滚动到顶部</string>
+    <string name="dialog_replace_recording_message">当前正在录制“%1$s”。是否停止并保存当前录音，然后开始录制“%2$s”？</string>
+    <string name="dialog_replace_recording_title">正在录音</string>
+    <string name="filter_all_stations">所有电台</string>
+    <string name="filter_date_any">任意日期</string>
 </resources>

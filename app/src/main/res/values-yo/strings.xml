@@ -431,4 +431,21 @@
     <string name="action_play_recording">Mu gbigbasilẹ ṣiṣẹ</string>
     <string name="dialog_move_to_position_title">Gbe "%1$s" lọ si ipo</string>
     <string name="label_current_position">(lọwọlọwọ)</string>
+    <string name="accessibility_filter_date_from">Lati ọjọ: %1$s</string>
+    <string name="accessibility_filter_date_to">Titi di ọjọ: %1$s</string>
+    <string name="accessibility_filter_station">Àlẹ̀mọ́ ibùdó: %1$s</string>
+    <string name="accessibility_playback_speed">Iyára ṣíṣẹ̀ %1$s</string>
+    <string name="accessibility_seek_slider">Ipò ṣíṣẹ̀</string>
+    <string name="accessibility_time_position">%1$s nínú %2$s</string>
+    <string name="action_change_playback_speed">Yí iyára ṣíṣẹ̀ padà</string>
+    <string name="action_clear_date_filter">Pa àlẹ̀mọ́ ọjọ́ rẹ́</string>
+    <string name="action_clear_station_filter">Pa àlẹ̀mọ́ ibùdó rẹ́</string>
+    <string name="action_forward_15s">Síwájú ìṣẹ́jú-àáyá 15</string>
+    <string name="action_reset_playback_speed">Tún iyára ṣíṣẹ̀ ṣe sí 1x</string>
+    <string name="action_rewind_15s">Padà sẹ́yìn ìṣẹ́jú-àáyá 15</string>
+    <string name="action_scroll_to_top">Yí lọ sí òkè pátápátá</string>
+    <string name="dialog_replace_recording_message">"%1$s" ń gba ohùn sílẹ̀ lọ́wọ́lọ́wọ́. Ṣé o fẹ́ dáwọ́ dúró kí o sì fi ìgbasílẹ̀ lọ́wọ́lọ́wọ́ pamọ́ kí o sì bẹ̀rẹ̀ sí í gba "%2$s" sílẹ̀?</string>
+    <string name="dialog_replace_recording_title">Ìgbasílẹ̀ ń lọ lọ́wọ́</string>
+    <string name="filter_all_stations">Gbogbo ibùdó</string>
+    <string name="filter_date_any">Ọjọ́ èyíkéyìí</string>
 </resources>

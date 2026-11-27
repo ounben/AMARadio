@@ -429,4 +429,21 @@
     <string name="action_play_recording">پخش ضبط</string>
     <string name="dialog_move_to_position_title">انتقال "%1$s" به موقعیت</string>
     <string name="label_current_position">(فعلی)</string>
+    <string name="accessibility_filter_date_from">از تاریخ: %1$s</string>
+    <string name="accessibility_filter_date_to">تا تاریخ: %1$s</string>
+    <string name="accessibility_filter_station">فیلتر ایستگاه: %1$s</string>
+    <string name="accessibility_playback_speed">سرعت پخش %1$s</string>
+    <string name="accessibility_seek_slider">موقعیت پخش</string>
+    <string name="accessibility_time_position">%1$s از %2$s</string>
+    <string name="action_change_playback_speed">تغییر سرعت پخش</string>
+    <string name="action_clear_date_filter">پاک کردن فیلتر تاریخ</string>
+    <string name="action_clear_station_filter">پاک کردن فیلتر ایستگاه</string>
+    <string name="action_forward_15s">۱۵ ثانیه به جلو</string>
+    <string name="action_reset_playback_speed">بازنشانی سرعت پخش به 1x</string>
+    <string name="action_rewind_15s">۱۵ ثانیه به عقب</string>
+    <string name="action_scroll_to_top">اسکرول به بالا</string>
+    <string name="dialog_replace_recording_message">«%1$s» در حال حاضر در حال ضبط است. آیا می‌خواهید ضبط فعلی را متوقف و ذخیره کنید و ضبط «%2$s» را شروع کنید؟</string>
+    <string name="dialog_replace_recording_title">ضبط در حال انجام است</string>
+    <string name="filter_all_stations">همه ایستگاه‌ها</string>
+    <string name="filter_date_any">هر تاریخی</string>
 </resources>

@@ -429,4 +429,21 @@
     <string name="action_play_recording">เล่นการบันทึก</string>
     <string name="dialog_move_to_position_title">ย้าย "%1$s" ไปยังตำแหน่ง</string>
     <string name="label_current_position">(ปัจจุบัน)</string>
+    <string name="accessibility_filter_date_from">ตั้งแต่วันที่: %1$s</string>
+    <string name="accessibility_filter_date_to">ถึงวันที่: %1$s</string>
+    <string name="accessibility_filter_station">ตัวกรองสถานี: %1$s</string>
+    <string name="accessibility_playback_speed">ความเร็วในการเล่น %1$s</string>
+    <string name="accessibility_seek_slider">ตำแหน่งการเล่น</string>
+    <string name="accessibility_time_position">%1$s จาก %2$s</string>
+    <string name="action_change_playback_speed">เปลี่ยนความเร็วในการเล่น</string>
+    <string name="action_clear_date_filter">ล้างตัวกรองวันที่</string>
+    <string name="action_clear_station_filter">ล้างตัวกรองสถานี</string>
+    <string name="action_forward_15s">เดินหน้า 15 วินาที</string>
+    <string name="action_reset_playback_speed">รีเซ็ตความเร็วในการเล่นเป็น 1x</string>
+    <string name="action_rewind_15s">ย้อนกลับ 15 วินาที</string>
+    <string name="action_scroll_to_top">เลื่อนไปด้านบนสุด</string>
+    <string name="dialog_replace_recording_message">กำลังบันทึก "%1$s" อยู่ในขณะนี้ คุณต้องการหยุดและบันทึกไฟล์ปัจจุบัน แล้วเริ่มบันทึก "%2$s" หรือไม่?</string>
+    <string name="dialog_replace_recording_title">กำลังบันทึกเสียง</string>
+    <string name="filter_all_stations">ทุกสถานี</string>
+    <string name="filter_date_any">ทุกวันที่</string>
 </resources>

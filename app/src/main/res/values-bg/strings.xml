@@ -430,4 +430,21 @@
     <string name="action_play_recording">Възпроизвеждане на записа</string>
     <string name="dialog_move_to_position_title">Преместване на "%1$s" на позиция</string>
     <string name="label_current_position">(текуща)</string>
+    <string name="accessibility_filter_date_from">От дата: %1$s</string>
+    <string name="accessibility_filter_date_to">До дата: %1$s</string>
+    <string name="accessibility_filter_station">Филтър по станция: %1$s</string>
+    <string name="accessibility_playback_speed">Скорост на възпроизвеждане %1$s</string>
+    <string name="accessibility_seek_slider">Позиция на възпроизвеждане</string>
+    <string name="accessibility_time_position">%1$s от %2$s</string>
+    <string name="action_change_playback_speed">Промяна на скоростта на възпроизвеждане</string>
+    <string name="action_clear_date_filter">Изчистване на филтъра за дата</string>
+    <string name="action_clear_station_filter">Изчистване на филтъра за станция</string>
+    <string name="action_forward_15s">15 секунди напред</string>
+    <string name="action_reset_playback_speed">Нулиране на скоростта на възпроизвеждане на 1x</string>
+    <string name="action_rewind_15s">15 секунди назад</string>
+    <string name="action_scroll_to_top">Превъртане най-отгоре</string>
+    <string name="dialog_replace_recording_message">В момента се записва "%1$s". Искате ли да спрете и запазите текущия запис и да започнете запис на "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Записът е в ход</string>
+    <string name="filter_all_stations">Всички станции</string>
+    <string name="filter_date_any">Всяка дата</string>
 </resources>

@@ -429,4 +429,21 @@
     <string name="action_play_recording">Odtwórz nagranie</string>
     <string name="dialog_move_to_position_title">Przenieś „%1$s” na pozycję</string>
     <string name="label_current_position">(aktualna)</string>
+    <string name="accessibility_filter_date_from">Od daty: %1$s</string>
+    <string name="accessibility_filter_date_to">Do daty: %1$s</string>
+    <string name="accessibility_filter_station">Filtr stacji: %1$s</string>
+    <string name="accessibility_playback_speed">Prędkość odtwarzania %1$s</string>
+    <string name="accessibility_seek_slider">Pozycja odtwarzania</string>
+    <string name="accessibility_time_position">%1$s z %2$s</string>
+    <string name="action_change_playback_speed">Zmień prędkość odtwarzania</string>
+    <string name="action_clear_date_filter">Wyczyść filtr daty</string>
+    <string name="action_clear_station_filter">Wyczyść filtr stacji</string>
+    <string name="action_forward_15s">Do przodu o 15 sekund</string>
+    <string name="action_reset_playback_speed">Przywróć prędkość odtwarzania 1x</string>
+    <string name="action_rewind_15s">Do tyłu o 15 sekund</string>
+    <string name="action_scroll_to_top">Przewiń na górę</string>
+    <string name="dialog_replace_recording_message">Trwa nagrywanie stacji „%1$s”. Czy chcesz zatrzymać i zapisać bieżące nagranie oraz rozpocząć nagrywanie „%2$s”?</string>
+    <string name="dialog_replace_recording_title">Trwa nagrywanie</string>
+    <string name="filter_all_stations">Wszystkie stacje</string>
+    <string name="filter_date_any">Dowolna data</string>
 </resources>

@@ -431,4 +431,21 @@
     <string name="action_play_recording">ਰਿਕਾਰਡਿੰਗ ਚਲਾਓ</string>
     <string name="dialog_move_to_position_title">"%1$s" ਨੂੰ ਸਥਿਤੀ \'ਤੇ ਭੇਜੋ</string>
     <string name="label_current_position">(ਮੌਜੂਦਾ)</string>
+    <string name="accessibility_filter_date_from">ਮਿਤੀ ਤੋਂ: %1$s</string>
+    <string name="accessibility_filter_date_to">ਮਿਤੀ ਤੱਕ: %1$s</string>
+    <string name="accessibility_filter_station">ਸਟੇਸ਼ਨ ਫਿਲਟਰ: %1$s</string>
+    <string name="accessibility_playback_speed">ਪਲੇਬੈਕ ਗਤੀ %1$s</string>
+    <string name="accessibility_seek_slider">ਪਲੇਬੈਕ ਸਥਿਤੀ</string>
+    <string name="accessibility_time_position">%2$s ਵਿੱਚੋਂ %1$s</string>
+    <string name="action_change_playback_speed">ਪਲੇਬੈਕ ਗਤੀ ਬਦਲੋ</string>
+    <string name="action_clear_date_filter">ਮਿਤੀ ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="action_clear_station_filter">ਸਟੇਸ਼ਨ ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="action_forward_15s">15 ਸਕਿੰਟ ਅੱਗੇ</string>
+    <string name="action_reset_playback_speed">ਪਲੇਬੈਕ ਗਤੀ 1x \'ਤੇ ਰੀਸੈਟ ਕਰੋ</string>
+    <string name="action_rewind_15s">15 ਸਕਿੰਟ ਪਿੱਛੇ</string>
+    <string name="action_scroll_to_top">ਸਭ ਤੋਂ ਉੱਪਰ ਸਕ੍ਰੋਲ ਕਰੋ</string>
+    <string name="dialog_replace_recording_message">"%1$s" ਇਸ ਵੇਲੇ ਰਿਕਾਰਡ ਹੋ ਰਿਹਾ ਹੈ। ਕੀ ਤੁਸੀਂ ਮੌਜੂਦਾ ਰਿਕਾਰਡਿੰਗ ਰੋਕ ਕੇ ਸੁਰੱਖਿਅਤ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਅਤੇ "%2$s" ਦੀ ਰਿਕਾਰਡਿੰਗ ਸ਼ੁਰੂ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?</string>
+    <string name="dialog_replace_recording_title">ਰਿਕਾਰਡਿੰਗ ਜਾਰੀ ਹੈ</string>
+    <string name="filter_all_stations">ਸਾਰੇ ਸਟੇਸ਼ਨ</string>
+    <string name="filter_date_any">ਕੋਈ ਵੀ ਮਿਤੀ</string>
 </resources>

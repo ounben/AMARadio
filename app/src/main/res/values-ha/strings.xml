@@ -431,4 +431,21 @@
     <string name="action_play_recording">Kunna rikodi</string>
     <string name="dialog_move_to_position_title">Matsar da "%1$s" zuwa matsayi</string>
     <string name="label_current_position">(na yanzu)</string>
+    <string name="accessibility_filter_date_from">Daga kwanan wata: %1$s</string>
+    <string name="accessibility_filter_date_to">Zuwa kwanan wata: %1$s</string>
+    <string name="accessibility_filter_station">Tace tasha: %1$s</string>
+    <string name="accessibility_playback_speed">Saurin kunnawa %1$s</string>
+    <string name="accessibility_seek_slider">Matsayin kunnawa</string>
+    <string name="accessibility_time_position">%1$s cikin %2$s</string>
+    <string name="action_change_playback_speed">Canja saurin kunnawa</string>
+    <string name="action_clear_date_filter">Share tace kwanan wata</string>
+    <string name="action_clear_station_filter">Share tace tasha</string>
+    <string name="action_forward_15s">Gaba da sakan 15</string>
+    <string name="action_reset_playback_speed">Sake saita saurin kunnawa zuwa 1x</string>
+    <string name="action_rewind_15s">Baya da sakan 15</string>
+    <string name="action_scroll_to_top">Gungura zuwa sama</string>
+    <string name="dialog_replace_recording_message">Ana yin rikodin "%1$s" a halin yanzu. Kuna son dakatarwa da ajiye rikodin na yanzu sannan ku fara rikodin "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Ana ci gaba da rikodi</string>
+    <string name="filter_all_stations">Duk tashoshi</string>
+    <string name="filter_date_any">Kowane kwanan wata</string>
 </resources>

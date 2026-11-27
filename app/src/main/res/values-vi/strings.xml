@@ -429,4 +429,21 @@
     <string name="action_play_recording">Phát bản ghi</string>
     <string name="dialog_move_to_position_title">Di chuyển "%1$s" đến vị trí</string>
     <string name="label_current_position">(hiện tại)</string>
+    <string name="accessibility_filter_date_from">Từ ngày: %1$s</string>
+    <string name="accessibility_filter_date_to">Đến ngày: %1$s</string>
+    <string name="accessibility_filter_station">Bộ lọc đài: %1$s</string>
+    <string name="accessibility_playback_speed">Tốc độ phát %1$s</string>
+    <string name="accessibility_seek_slider">Vị trí phát</string>
+    <string name="accessibility_time_position">%1$s / %2$s</string>
+    <string name="action_change_playback_speed">Thay đổi tốc độ phát</string>
+    <string name="action_clear_date_filter">Xóa bộ lọc ngày</string>
+    <string name="action_clear_station_filter">Xóa bộ lọc đài</string>
+    <string name="action_forward_15s">Tua tới 15 giây</string>
+    <string name="action_reset_playback_speed">Đặt lại tốc độ phát về 1x</string>
+    <string name="action_rewind_15s">Tua lại 15 giây</string>
+    <string name="action_scroll_to_top">Cuộn lên đầu</string>
+    <string name="dialog_replace_recording_message">"%1$s" hiện đang được ghi âm. Bạn có muốn dừng và lưu bản ghi hiện tại rồi bắt đầu ghi "%2$s" không?</string>
+    <string name="dialog_replace_recording_title">Đang ghi âm</string>
+    <string name="filter_all_stations">Tất cả các đài</string>
+    <string name="filter_date_any">Bất kỳ ngày nào</string>
 </resources>

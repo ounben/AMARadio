@@ -431,4 +431,21 @@
     <string name="action_play_recording">تشغيل التسجيل</string>
     <string name="dialog_move_to_position_title">نقل "%1$s" إلى الموضع</string>
     <string name="label_current_position">(الحالي)</string>
+    <string name="accessibility_filter_date_from">من تاريخ: %1$s</string>
+    <string name="accessibility_filter_date_to">إلى تاريخ: %1$s</string>
+    <string name="accessibility_filter_station">فلتر المحطة: %1$s</string>
+    <string name="accessibility_playback_speed">سرعة التشغيل %1$s</string>
+    <string name="accessibility_seek_slider">موضع التشغيل</string>
+    <string name="accessibility_time_position">%1$s من %2$s</string>
+    <string name="action_change_playback_speed">تغيير سرعة التشغيل</string>
+    <string name="action_clear_date_filter">مسح فلتر التاريخ</string>
+    <string name="action_clear_station_filter">مسح فلتر المحطة</string>
+    <string name="action_forward_15s">تقديم 15 ثانية</string>
+    <string name="action_reset_playback_speed">إعادة ضبط سرعة التشغيل إلى 1x</string>
+    <string name="action_rewind_15s">ترجيع 15 ثانية</string>
+    <string name="action_scroll_to_top">التمرير إلى الأعلى</string>
+    <string name="dialog_replace_recording_message">يتم حاليًا تسجيل "%1$s". هل تريد إيقاف التسجيل الحالي وحفظه وبدء تسجيل "%2$s"؟</string>
+    <string name="dialog_replace_recording_title">التسجيل قيد التقدم</string>
+    <string name="filter_all_stations">جميع المحطات</string>
+    <string name="filter_date_any">أي تاريخ</string>
 </resources>

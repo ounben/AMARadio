@@ -429,4 +429,21 @@
     <string name="action_play_recording">Atskaņot ierakstu</string>
     <string name="dialog_move_to_position_title">Pārvietot "%1$s" uz pozīciju</string>
     <string name="label_current_position">(pašreizējā)</string>
+    <string name="accessibility_filter_date_from">No datuma: %1$s</string>
+    <string name="accessibility_filter_date_to">Līdz datumam: %1$s</string>
+    <string name="accessibility_filter_station">Stacijas filtrs: %1$s</string>
+    <string name="accessibility_playback_speed">Atskaņošanas ātrums %1$s</string>
+    <string name="accessibility_seek_slider">Atskaņošanas pozīcija</string>
+    <string name="accessibility_time_position">%1$s no %2$s</string>
+    <string name="action_change_playback_speed">Mainīt atskaņošanas ātrumu</string>
+    <string name="action_clear_date_filter">Notīrīt datuma filtru</string>
+    <string name="action_clear_station_filter">Notīrīt stacijas filtru</string>
+    <string name="action_forward_15s">Uz priekšu 15 sekundes</string>
+    <string name="action_reset_playback_speed">Atiestatīt atskaņošanas ātrumu uz 1x</string>
+    <string name="action_rewind_15s">Atpakaļ 15 sekundes</string>
+    <string name="action_scroll_to_top">Ritināt uz augšu</string>
+    <string name="dialog_replace_recording_message">Pašlaik tiek ierakstīts "%1$s". Vai vēlaties apturēt un saglabāt pašreizējo ierakstu un sākt ierakstīt "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Notiek ierakstīšana</string>
+    <string name="filter_all_stations">Visas stacijas</string>
+    <string name="filter_date_any">Jebkurš datums</string>
 </resources>

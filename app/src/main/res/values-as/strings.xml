@@ -431,4 +431,21 @@
     <string name="action_play_recording">ৰেকৰ্ডিং চলাওক</string>
     <string name="dialog_move_to_position_title">"%1$s" স্থানলৈ নিয়াওক</string>
     <string name="label_current_position">(বৰ্তমান)</string>
+    <string name="accessibility_filter_date_from">তাৰিখৰ পৰা: %1$s</string>
+    <string name="accessibility_filter_date_to">তাৰিখলৈ: %1$s</string>
+    <string name="accessibility_filter_station">ষ্টেচন ফিল্টাৰ: %1$s</string>
+    <string name="accessibility_playback_speed">প্লেবেক গতি %1$s</string>
+    <string name="accessibility_seek_slider">প্লেবেক অৱস্থান</string>
+    <string name="accessibility_time_position">%2$s ৰ %1$s</string>
+    <string name="action_change_playback_speed">প্লেবেক গতি সলনি কৰক</string>
+    <string name="action_clear_date_filter">তাৰিখ ফিল্টাৰ মচক</string>
+    <string name="action_clear_station_filter">ষ্টেচন ফিল্টাৰ মচক</string>
+    <string name="action_forward_15s">১৫ ছেকেণ্ড আগুৱাই যাওক</string>
+    <string name="action_reset_playback_speed">প্লেবেক গতি 1x লৈ ৰিছেট কৰক</string>
+    <string name="action_rewind_15s">১৫ ছেকেণ্ড পিছুৱাই যাওক</string>
+    <string name="action_scroll_to_top">ওপৰলৈ স্ক্ৰল কৰক</string>
+    <string name="dialog_replace_recording_message">"%1$s" বৰ্তমান ৰেকৰ্ড হৈ আছে। আপুনি বৰ্তমানৰ ৰেকৰ্ডিং বন্ধ কৰি সংৰক্ষণ কৰিব বিচাৰে আৰু "%2$s" ৰেকৰ্ডিং আৰম্ভ কৰিব বিচাৰে নেকি?</string>
+    <string name="dialog_replace_recording_title">ৰেকৰ্ডিং চলি আছে</string>
+    <string name="filter_all_stations">সকলো ষ্টেচন</string>
+    <string name="filter_date_any">যিকোনো তাৰিখ</string>
 </resources>

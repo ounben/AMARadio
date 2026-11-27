@@ -429,4 +429,21 @@
     <string name="action_play_recording">Cheza rekodi</string>
     <string name="dialog_move_to_position_title">Sogeza "%1$s" kwenye nafasi</string>
     <string name="label_current_position">(ya sasa)</string>
+    <string name="accessibility_filter_date_from">Kuanzia tarehe: %1$s</string>
+    <string name="accessibility_filter_date_to">Hadi tarehe: %1$s</string>
+    <string name="accessibility_filter_station">Kichujio cha kituo: %1$s</string>
+    <string name="accessibility_playback_speed">Kasi ya uchezaji %1$s</string>
+    <string name="accessibility_seek_slider">Nafasi ya uchezaji</string>
+    <string name="accessibility_time_position">%1$s kati ya %2$s</string>
+    <string name="action_change_playback_speed">Badilisha kasi ya uchezaji</string>
+    <string name="action_clear_date_filter">Futa kichujio cha tarehe</string>
+    <string name="action_clear_station_filter">Futa kichujio cha kituo</string>
+    <string name="action_forward_15s">Sogeza mbele sekunde 15</string>
+    <string name="action_reset_playback_speed">Weka upya kasi ya uchezaji kuwa 1x</string>
+    <string name="action_rewind_15s">Rudisha nyuma sekunde 15</string>
+    <string name="action_scroll_to_top">Sogeza juu kabisa</string>
+    <string name="dialog_replace_recording_message">"%1$s" inarekodiwa kwa sasa. Je, ungependa kusitisha na kuhifadhi rekodi ya sasa kisha uanze kurekodi "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Kurekodi kunaendelea</string>
+    <string name="filter_all_stations">Vituo vyote</string>
+    <string name="filter_date_any">Tarehe yoyote</string>
 </resources>

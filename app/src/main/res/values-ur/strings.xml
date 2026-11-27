@@ -429,4 +429,21 @@
     <string name="action_play_recording">ریکارڈنگ چلائیں</string>
     <string name="dialog_move_to_position_title">"%1$s" کو پوزیشن پر منتقل کریں</string>
     <string name="label_current_position">(موجودہ)</string>
+    <string name="accessibility_filter_date_from">تاریخ سے: %1$s</string>
+    <string name="accessibility_filter_date_to">تاریخ تک: %1$s</string>
+    <string name="accessibility_filter_station">اسٹیشن فلٹر: %1$s</string>
+    <string name="accessibility_playback_speed">پلے بیک رفتار %1$s</string>
+    <string name="accessibility_seek_slider">پلے بیک پوزیشن</string>
+    <string name="accessibility_time_position">%2$s میں سے %1$s</string>
+    <string name="action_change_playback_speed">پلے بیک رفتار تبدیل کریں</string>
+    <string name="action_clear_date_filter">تاریخ کا فلٹر صاف کریں</string>
+    <string name="action_clear_station_filter">اسٹیشن فلٹر صاف کریں</string>
+    <string name="action_forward_15s">15 سیکنڈ آگے</string>
+    <string name="action_reset_playback_speed">پلے بیک رفتار 1x پر ری سیٹ کریں</string>
+    <string name="action_rewind_15s">15 سیکنڈ پیچھے</string>
+    <string name="action_scroll_to_top">سب سے اوپر سکرول کریں</string>
+    <string name="dialog_replace_recording_message">"%1$s" اس وقت ریکارڈ ہو رہا ہے۔ کیا آپ موجودہ ریکارڈنگ روک کر محفوظ کرنا اور "%2$s" کی ریکارڈنگ شروع کرنا چاہتے ہیں؟</string>
+    <string name="dialog_replace_recording_title">ریکارڈنگ جاری ہے</string>
+    <string name="filter_all_stations">تمام اسٹیشنز</string>
+    <string name="filter_date_any">کوئی بھی تاریخ</string>
 </resources>

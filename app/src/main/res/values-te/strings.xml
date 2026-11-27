@@ -429,4 +429,21 @@
     <string name="action_play_recording">రికార్డింగ్ ప్లే చేయండి</string>
     <string name="dialog_move_to_position_title">"%1$s" ని స్థానానికి జరపండి</string>
     <string name="label_current_position">(ప్రస్తుత)</string>
+    <string name="accessibility_filter_date_from">తేదీ నుండి: %1$s</string>
+    <string name="accessibility_filter_date_to">తేదీ వరకు: %1$s</string>
+    <string name="accessibility_filter_station">స్టేషన్ ఫిల్టర్: %1$s</string>
+    <string name="accessibility_playback_speed">ప్లేబ్యాక్ వేగం %1$s</string>
+    <string name="accessibility_seek_slider">ప్లేబ్యాక్ స్థానం</string>
+    <string name="accessibility_time_position">%2$s లో %1$s</string>
+    <string name="action_change_playback_speed">ప్లేబ్యాక్ వేగాన్ని మార్చండి</string>
+    <string name="action_clear_date_filter">తేదీ ఫిల్టర్‌ను క్లియర్ చేయండి</string>
+    <string name="action_clear_station_filter">స్టేషన్ ఫిల్టర్‌ను క్లియర్ చేయండి</string>
+    <string name="action_forward_15s">15 సెకన్లు ముందుకు</string>
+    <string name="action_reset_playback_speed">ప్లేబ్యాక్ వేగాన్ని 1x కి రీసెట్ చేయండి</string>
+    <string name="action_rewind_15s">15 సెకన్లు వెనుకకు</string>
+    <string name="action_scroll_to_top">పైకి స్క్రోల్ చేయండి</string>
+    <string name="dialog_replace_recording_message">"%1$s" ప్రస్తుతం రికార్డ్ అవుతోంది. మీరు ప్రస్తుత రికార్డింగ్‌ను ఆపి సేవ్ చేసి, "%2$s" రికార్డింగ్ ప్రారంభించాలనుకుంటున్నారా?</string>
+    <string name="dialog_replace_recording_title">రికార్డింగ్ జరుగుతోంది</string>
+    <string name="filter_all_stations">అన్ని స్టేషన్లు</string>
+    <string name="filter_date_any">ఏదైనా తేదీ</string>
 </resources>

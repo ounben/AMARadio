@@ -429,4 +429,21 @@
     <string name="action_play_recording">Spila upptöku</string>
     <string name="dialog_move_to_position_title">Færa "%1$s" í stöðu</string>
     <string name="label_current_position">(núverandi)</string>
+    <string name="accessibility_filter_date_from">Frá dagsetningu: %1$s</string>
+    <string name="accessibility_filter_date_to">Til dagsetningar: %1$s</string>
+    <string name="accessibility_filter_station">Stöðvarsía: %1$s</string>
+    <string name="accessibility_playback_speed">Afspilunarhraði %1$s</string>
+    <string name="accessibility_seek_slider">Afspilunarstaða</string>
+    <string name="accessibility_time_position">%1$s af %2$s</string>
+    <string name="action_change_playback_speed">Breyta afspilunarhraða</string>
+    <string name="action_clear_date_filter">Hreinsa dagsetningarsíu</string>
+    <string name="action_clear_station_filter">Hreinsa stöðvarsíu</string>
+    <string name="action_forward_15s">Áfram um 15 sekúndur</string>
+    <string name="action_reset_playback_speed">Endurstilla afspilunarhraða í 1x</string>
+    <string name="action_rewind_15s">Til baka um 15 sekúndur</string>
+    <string name="action_scroll_to_top">Skruna efst</string>
+    <string name="dialog_replace_recording_message">Verið er að taka upp „%1$s“. Viltu stöðva og vista núverandi upptöku og hefja upptöku á „%2$s“?</string>
+    <string name="dialog_replace_recording_title">Upptaka í gangi</string>
+    <string name="filter_all_stations">Allar stöðvar</string>
+    <string name="filter_date_any">Hvaða dagsetning sem er</string>
 </resources>

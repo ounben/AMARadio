@@ -429,4 +429,21 @@
     <string name="action_play_recording">Ilgħab ir-reġistrazzjoni</string>
     <string name="dialog_move_to_position_title">Mexxi "%1$s" għall-pożizzjoni</string>
     <string name="label_current_position">(attwali)</string>
+    <string name="accessibility_filter_date_from">Mid-data: %1$s</string>
+    <string name="accessibility_filter_date_to">Sad-data: %1$s</string>
+    <string name="accessibility_filter_station">Filtru tal-istazzjon: %1$s</string>
+    <string name="accessibility_playback_speed">Veloċità tal-plejbek %1$s</string>
+    <string name="accessibility_seek_slider">Pożizzjoni tal-plejbek</string>
+    <string name="accessibility_time_position">%1$s minn %2$s</string>
+    <string name="action_change_playback_speed">Ibdel il-veloċità tal-plejbek</string>
+    <string name="action_clear_date_filter">Neħħi l-filtru tad-data</string>
+    <string name="action_clear_station_filter">Neħħi l-filtru tal-istazzjon</string>
+    <string name="action_forward_15s">Quddiem 15-il sekonda</string>
+    <string name="action_reset_playback_speed">Irrisettja l-veloċità tal-plejbek għal 1x</string>
+    <string name="action_rewind_15s">Lura 15-il sekonda</string>
+    <string name="action_scroll_to_top">Skrollja fil-quċċata</string>
+    <string name="dialog_replace_recording_message">"%1$s" qed jiġi rreġistrat bħalissa. Trid twaqqaf u ssalva r-reġistrazzjoni attwali u tibda tirreġistra "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Reġistrazzjoni għaddejja</string>
+    <string name="filter_all_stations">L-istazzjonijiet kollha</string>
+    <string name="filter_date_any">Kwalunkwe data</string>
 </resources>

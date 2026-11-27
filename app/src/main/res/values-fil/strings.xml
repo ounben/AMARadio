@@ -429,4 +429,21 @@
     <string name="action_play_recording">I-play ang recording</string>
     <string name="dialog_move_to_position_title">Ilipat ang "%1$s" sa posisyon</string>
     <string name="label_current_position">(kasalukuyan)</string>
+    <string name="accessibility_filter_date_from">Mula sa petsa: %1$s</string>
+    <string name="accessibility_filter_date_to">Hanggang sa petsa: %1$s</string>
+    <string name="accessibility_filter_station">Filter ng istasyon: %1$s</string>
+    <string name="accessibility_playback_speed">Bilis ng playback %1$s</string>
+    <string name="accessibility_seek_slider">Posisyon ng playback</string>
+    <string name="accessibility_time_position">%1$s ng %2$s</string>
+    <string name="action_change_playback_speed">Baguhin ang bilis ng playback</string>
+    <string name="action_clear_date_filter">I-clear ang filter ng petsa</string>
+    <string name="action_clear_station_filter">I-clear ang filter ng istasyon</string>
+    <string name="action_forward_15s">I-forward nang 15 segundo</string>
+    <string name="action_reset_playback_speed">I-reset ang bilis ng playback sa 1x</string>
+    <string name="action_rewind_15s">I-rewind nang 15 segundo</string>
+    <string name="action_scroll_to_top">Mag-scroll sa itaas</string>
+    <string name="dialog_replace_recording_message">Kasalukuyang nire-record ang "%1$s". Gusto mo bang ihinto at i-save ang kasalukuyang recording at simulan ang pag-record ng "%2$s"?</string>
+    <string name="dialog_replace_recording_title">Kasalukuyang nagre-record</string>
+    <string name="filter_all_stations">Lahat ng istasyon</string>
+    <string name="filter_date_any">Kahit anong petsa</string>
 </resources>
