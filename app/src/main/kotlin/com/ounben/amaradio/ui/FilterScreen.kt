@@ -43,6 +43,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.collectionItemInfo
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.role
@@ -818,6 +819,7 @@ fun MultiSearchableSelectionDialog(
                     )
                 )
 
+                BindListScrollRangeAccessibility(listState = listState, enabled = filteredOptions.isNotEmpty())
                 androidx.compose.foundation.lazy.LazyColumn(
                     state = listState,
                     modifier = Modifier.weight(1f),
@@ -827,7 +829,7 @@ fun MultiSearchableSelectionDialog(
                         items = filteredOptions, 
                         key = { index, item -> "${item.code}_${item.label}_$index" },
                         contentType = { _, _ -> "category_item" }
-                    ) { _, item ->
+                    ) { index, item ->
                         val isChecked = selectedCodes.contains(item.code)
                         ListItem(
                             headlineContent = { Text(item.label, style = MaterialTheme.typography.bodyLarge) },
@@ -841,13 +843,15 @@ fun MultiSearchableSelectionDialog(
                                     colors = CheckboxDefaults.colors(checkedColor = AmaradioAmber)
                                 )
                             },
-                            modifier = Modifier.toggleable(
-                                value = isChecked,
-                                role = Role.Checkbox,
-                                onValueChange = { checked ->
-                                    if (checked) selectedCodes.add(item.code) else selectedCodes.remove(item.code)
-                                }
-                            ),
+                            modifier = Modifier
+                                .toggleable(
+                                    value = isChecked,
+                                    role = Role.Checkbox,
+                                    onValueChange = { checked ->
+                                        if (checked) selectedCodes.add(item.code) else selectedCodes.remove(item.code)
+                                    }
+                                )
+                                .listItemSemantics(index),
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outline)
@@ -981,6 +985,7 @@ fun SearchableSelectionDialog(
                     )
                 )
 
+                BindListScrollRangeAccessibility(listState = listState, enabled = filteredOptions.isNotEmpty())
                 androidx.compose.foundation.lazy.LazyColumn(
                     state = listState,
                     modifier = Modifier.weight(1f),
@@ -990,7 +995,7 @@ fun SearchableSelectionDialog(
                         items = filteredOptions, 
                         key = { index, item -> "${item.code}_${item.label}_$index" },
                         contentType = { _, _ -> "category_item" }
-                    ) { _, item ->
+                    ) { index, item ->
                         ListItem(
                             headlineContent = { Text(item.label, style = MaterialTheme.typography.bodyLarge) },
                             supportingContent = if (showCount && item.count > 0) {
@@ -1000,11 +1005,11 @@ fun SearchableSelectionDialog(
                                 { Text(item.emoji, style = MaterialTheme.typography.titleLarge, modifier = Modifier.clearAndSetSemantics {}) }
                             } else null,
                             modifier = Modifier
+                                .clickable(role = Role.Button) { onSelect(item) }
                                 .clearAndSetSemantics {
-                                    role = Role.Button
                                     contentDescription = item.label
-                                }
-                                .clickable { onSelect(item) },
+                                    collectionItemInfo = listItemCollectionInfo(index)
+                                },
                             colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                         )
                         HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), color = MaterialTheme.colorScheme.outline)

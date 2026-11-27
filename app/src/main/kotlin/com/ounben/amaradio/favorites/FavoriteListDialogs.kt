@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.selection.selectable
@@ -79,7 +78,9 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.FavoriteListEntity
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
+import com.ounben.amaradio.ui.BindListScrollRangeAccessibility
 import com.ounben.amaradio.ui.StationIcon
+import com.ounben.amaradio.ui.listItemSemantics
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
@@ -378,6 +379,7 @@ fun ManageFavoriteListsDialog(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 } else {
+                    BindListScrollRangeAccessibility(listState = lazyListState, enabled = listsLocal.isNotEmpty())
                     LazyColumn(
                         state = lazyListState,
                         modifier = Modifier
@@ -444,6 +446,7 @@ fun ManageFavoriteListsDialog(
                                             overflow = TextOverflow.Ellipsis,
                                             modifier = Modifier
                                                 .fillMaxWidth()
+                                                .listItemSemantics(index)
                                                 .padding(horizontal = 4.dp)
                                         )
                                         Row(
@@ -578,6 +581,7 @@ fun PlaylistPositionPickerDialog(
 ) {
     val currentLabel = stringResource(R.string.label_current_position)
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = (currentIndex - 2).coerceAtLeast(0))
+    BindListScrollRangeAccessibility(listState = listState, enabled = allLists.isNotEmpty())
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -618,6 +622,7 @@ fun PlaylistPositionPickerDialog(
                                     }
                                 }
                             )
+                            .listItemSemantics(idx)
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -759,12 +764,15 @@ fun AssignFavoriteListsDialog(
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                 } else {
+                    val assignListState = rememberLazyListState()
+                    BindListScrollRangeAccessibility(listState = assignListState, enabled = lists.isNotEmpty())
                     LazyColumn(
+                        state = assignListState,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 320.dp)
                     ) {
-                        items(lists, key = { it.id }) { list ->
+                        itemsIndexed(lists, key = { _, item -> item.id }) { index, list ->
                             val isChecked = list.id in selectedIds
                             Row(
                                 modifier = Modifier
@@ -777,6 +785,7 @@ fun AssignFavoriteListsDialog(
                                             selectedIds = if (checked) selectedIds + list.id else selectedIds - list.id
                                         }
                                     )
+                                    .listItemSemantics(index)
                                     .padding(horizontal = 4.dp, vertical = 6.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -908,12 +917,15 @@ fun ManagePlaylistStationsDialog(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             } else {
+                val stationsListState = rememberLazyListState()
+                BindListScrollRangeAccessibility(listState = stationsListState, enabled = allFavorites.isNotEmpty())
                 LazyColumn(
+                    state = stationsListState,
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 360.dp)
                 ) {
-                    items(allFavorites, key = { it.StationUuid }) { station ->
+                    itemsIndexed(allFavorites, key = { _, item -> item.StationUuid }) { index, station ->
                         val isChecked = station.StationUuid in selectedUuids
                         Row(
                             modifier = Modifier
@@ -930,6 +942,7 @@ fun ManagePlaylistStationsDialog(
                                         }
                                     }
                                 )
+                                .listItemSemantics(index)
                                 .padding(vertical = 6.dp, horizontal = 4.dp),
                             verticalAlignment = Alignment.CenterVertically
                         ) {

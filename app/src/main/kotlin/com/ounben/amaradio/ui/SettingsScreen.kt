@@ -11,6 +11,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -526,8 +527,11 @@ fun SettingsListPreference(
                 ) 
             },
             text = {
+                val listState = rememberLazyListState()
+                BindListScrollRangeAccessibility(listState = listState, enabled = entries.isNotEmpty())
                 // LazyColumn with a fixed max height to ensure scrollability in the dialog
                 LazyColumn(
+                    state = listState,
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 400.dp)
@@ -542,6 +546,7 @@ fun SettingsListPreference(
                                         onValueChange(entryValues[index])
                                         showDialog = false 
                                     }
+                                    .listItemSemantics(index)
                                     .padding(vertical = 12.dp, horizontal = 8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {

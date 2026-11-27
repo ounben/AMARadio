@@ -2,7 +2,8 @@ package com.ounben.amaradio.ui
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Refresh
@@ -117,13 +118,16 @@ fun GlobalStatsTab(uiState: ServerInfoViewModel.ServerInfoUiState, onRefresh: ()
         } else if (uiState.error != null) {
             Text(text = uiState.error, modifier = Modifier.align(Alignment.Center), color = MaterialTheme.colorScheme.error)
         } else {
+            val statsListState = rememberLazyListState()
+            BindListScrollRangeAccessibility(listState = statsListState, enabled = uiState.statistics.isNotEmpty())
             LazyColumn(
+                state = statsListState,
                 modifier = Modifier.fillMaxSize(),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(uiState.statistics) { item ->
-                    Column {
+                itemsIndexed(uiState.statistics) { index, item ->
+                    Column(modifier = Modifier.listItemSemantics(index)) {
                         Text(
                             text = item.Name, 
                             style = MaterialTheme.typography.labelMedium, 
@@ -164,8 +168,11 @@ fun LocalDbTab(
     isPlaying: Boolean = false
 ) {
     var stationWithOptions by remember { mutableStateOf<DataRadioStation?>(null) }
+    val localDbListState = rememberLazyListState()
+    BindListScrollRangeAccessibility(listState = localDbListState, enabled = uiState.recentChanges.isNotEmpty())
 
     LazyColumn(
+        state = localDbListState,
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
@@ -206,7 +213,7 @@ fun LocalDbTab(
                 )
             }
         } else {
-            items(uiState.recentChanges, key = { it.StationUuid }) { station ->
+            itemsIndexed(uiState.recentChanges, key = { _, it -> it.StationUuid }) { index, station ->
                 val isCurrentPlaying = isPlaying && (station.StationUuid == currentPlayingUuid)
                 Column {
                     StationListItem(
@@ -215,7 +222,8 @@ fun LocalDbTab(
                         onClick = { onStationClick(station) },
                         onFavoriteClick = { onFavoriteClick(station) },
                         onLongClick = { stationWithOptions = station },
-                        isPlaying = isCurrentPlaying
+                        isPlaying = isCurrentPlaying,
+                        itemCollectionInfo = listItemCollectionInfo(index + 2)
                     )
                     Text(
                         text = "Change Time: ${station.LastChangeTime}",

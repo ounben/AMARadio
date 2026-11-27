@@ -32,7 +32,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CollectionItemInfo
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.collectionItemInfo
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
@@ -43,9 +45,11 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.ui.AmaradioAmber
+import com.ounben.amaradio.ui.BindListScrollRangeAccessibility
 import com.ounben.amaradio.ui.BindScrollToTop
 import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
+import com.ounben.amaradio.ui.listItemCollectionInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -110,6 +114,10 @@ fun RecordingsTab() {
             firstItemFocusRequester = firstItemFocusRequester,
             enabled = recordings.isNotEmpty()
         )
+        BindListScrollRangeAccessibility(
+            listState = listState,
+            enabled = recordings.isNotEmpty()
+        )
 
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
             if (recordings.isEmpty()) {
@@ -135,7 +143,8 @@ fun RecordingsTab() {
                                 record = record,
                                 onPlay = { recordingToPlay = record },
                                 onLongClick = { recordingWithOptions = record },
-                                focusRequester = if (index == 0) firstItemFocusRequester else null
+                                focusRequester = if (index == 0) firstItemFocusRequester else null,
+                                itemCollectionInfo = listItemCollectionInfo(index)
                             )
                             HorizontalDivider(
                                 modifier = Modifier.padding(horizontal = 12.dp),
@@ -554,7 +563,8 @@ fun RecordingListItem(
     record: RecordEntity,
     onPlay: () -> Unit,
     onLongClick: () -> Unit,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     val context = LocalContext.current
     val db = remember { AMARadioUserDatabase.getDatabase(context) }
@@ -574,6 +584,11 @@ fun RecordingListItem(
             .combinedClickable(
                 onClick = onPlay,
                 onLongClick = onLongClick
+            )
+            .then(
+                if (itemCollectionInfo != null) {
+                    Modifier.semantics { collectionItemInfo = itemCollectionInfo }
+                } else Modifier
             )
             .padding(vertical = 8.dp, horizontal = 12.dp)
     ) {

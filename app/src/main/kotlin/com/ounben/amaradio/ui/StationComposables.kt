@@ -69,9 +69,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CollectionItemInfo
 import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.collectionInfo
+import androidx.compose.ui.semantics.collectionItemInfo
 import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.unit.IntOffset
@@ -291,14 +294,25 @@ fun StationList(
         enabled = !isGrid && stations.isNotEmpty()
     )
 
+    BindGridScrollRangeAccessibility(
+        gridState = gridState,
+        enabled = isGrid && stations.isNotEmpty()
+    )
+    BindListScrollRangeAccessibility(
+        listState = listState,
+        enabled = !isGrid && stations.isNotEmpty()
+    )
+
     if (isGrid) {
+        val columnCount = rememberGridColumnCount(gridState)
         LazyVerticalGrid(
             state = gridState,
             columns = GridCells.Adaptive(140.dp),
             modifier = modifier
                 .fillMaxSize()
                 .clipToBounds()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .semantics { collectionInfo = gridCollectionInfo(stations.size, columnCount) },
             contentPadding = PaddingValues(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
         ) {
             itemsIndexed(
@@ -316,7 +330,8 @@ fun StationList(
                     },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station },
-                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                    focusRequester = if (index == 0) firstItemFocusRequester else null,
+                    itemCollectionInfo = gridItemCollectionInfo(index, columnCount)
                 )
             }
         }
@@ -344,7 +359,8 @@ fun StationList(
                     },
                     onFavoriteClick = { onFavoriteClick(station) },
                     onLongClick = { stationWithOptions = station },
-                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                    focusRequester = if (index == 0) firstItemFocusRequester else null,
+                    itemCollectionInfo = listItemCollectionInfo(index)
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
@@ -379,6 +395,10 @@ fun TrackList(
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = tracks.itemCount > 0
     )
+    BindListScrollRangeAccessibility(
+        listState = listState,
+        enabled = tracks.itemCount > 0
+    )
 
     PullToRefreshBox(
         isRefreshing = isRefreshing,
@@ -405,7 +425,8 @@ fun TrackList(
                         track = track, 
                         onClick = { onTrackClick(track) },
                         onLongClick = { onTrackLongClick(track) },
-                        focusRequester = if (index == 0) firstItemFocusRequester else null
+                        focusRequester = if (index == 0) firstItemFocusRequester else null,
+                        itemCollectionInfo = listItemCollectionInfo(index)
                     )
                     HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                 }
@@ -420,7 +441,8 @@ fun TrackListItem(
     track: TrackHistoryEntry,
     onClick: () -> Unit,
     onLongClick: () -> Unit,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     val context = LocalContext.current
     Row(
@@ -430,6 +452,11 @@ fun TrackListItem(
             .combinedClickable(
                 onClick = onClick,
                 onLongClick = onLongClick
+            )
+            .then(
+                if (itemCollectionInfo != null) {
+                    Modifier.semantics { collectionItemInfo = itemCollectionInfo }
+                } else Modifier
             )
             .padding(vertical = 8.dp, horizontal = 12.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -486,7 +513,8 @@ fun StationListItem(
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
     isPlaying: Boolean = false,
     showFavoriteIcon: Boolean = true,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     val context = LocalContext.current
     val flagEmoji = remember(station.CountryCode) { EmojiUtils.getFlagEmoji(station.CountryCode) ?: "" }
@@ -537,6 +565,9 @@ fun StationListItem(
                 )
                 .clearAndSetSemantics {
                     contentDescription = accessibilityDesc
+                    if (itemCollectionInfo != null) {
+                        collectionItemInfo = itemCollectionInfo
+                    }
                 },
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -620,7 +651,8 @@ fun StationGridItem(
     dragHandle: (@Composable (Modifier) -> Unit)? = null,
     isPlaying: Boolean = false,
     showFavoriteIcon: Boolean = true,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     val countryName = remember(station.CountryCode, station.Country) {
         val code = station.CountryCode.trim().uppercase(java.util.Locale.ROOT)
@@ -670,6 +702,9 @@ fun StationGridItem(
                     )
                     .clearAndSetSemantics {
                         contentDescription = accessibilityDesc
+                        if (itemCollectionInfo != null) {
+                            collectionItemInfo = itemCollectionInfo
+                        }
                     }
                     .padding(8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -776,6 +811,15 @@ fun ReorderableStationList(
         extraBottomOffset = scrollToTopBottomOffset
     )
 
+    BindGridScrollRangeAccessibility(
+        gridState = gridState,
+        enabled = isGrid && stationsLocal.isNotEmpty()
+    )
+    BindListScrollRangeAccessibility(
+        listState = listState,
+        enabled = !isGrid && stationsLocal.isNotEmpty()
+    )
+
     val moveToTopLabel = stringResource(R.string.action_move_to_top)
     val moveUpLabel = stringResource(R.string.action_move_up)
     val moveDownLabel = stringResource(R.string.action_move_down)
@@ -785,11 +829,14 @@ fun ReorderableStationList(
             stationsLocal.add(to.index, stationsLocal.removeAt(from.index))
             onReorder(stationsLocal.toList())
         }
+        val columnCount = rememberGridColumnCount(gridState)
 
         LazyVerticalGrid(
             state = gridState,
             columns = GridCells.Adaptive(140.dp),
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .semantics { collectionInfo = gridCollectionInfo(stationsLocal.size, columnCount) },
             contentPadding = PaddingValues(8.dp)
         ) {
             itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { index, station ->
@@ -842,6 +889,7 @@ fun ReorderableStationList(
                             useInternalClickable = true,
                             showFavoriteIcon = showFavoriteIcon,
                             focusRequester = if (index == 0) firstItemFocusRequester else null,
+                            itemCollectionInfo = gridItemCollectionInfo(index, columnCount),
                             dragHandle = { dragModifier ->
                                 with(itemScope) {
                                     Box(
@@ -934,6 +982,7 @@ fun ReorderableStationList(
                                 useInternalClickable = true,
                                 showFavoriteIcon = showFavoriteIcon,
                                 focusRequester = if (index == 0) firstItemFocusRequester else null,
+                                itemCollectionInfo = listItemCollectionInfo(index),
                                 dragHandle = { dragModifier ->
                                     with(itemScope) {
                                         Box(
@@ -1007,6 +1056,7 @@ fun PositionPickerDialog(
 ) {
     val currentLabel = stringResource(R.string.label_current_position)
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = (currentIndex - 2).coerceAtLeast(0))
+    BindListScrollRangeAccessibility(listState = listState, enabled = allStations.isNotEmpty())
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -1047,6 +1097,7 @@ fun PositionPickerDialog(
                                     }
                                 }
                             )
+                            .listItemSemantics(idx)
                             .padding(horizontal = 12.dp, vertical = 8.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
@@ -1104,12 +1155,24 @@ fun CategoryList(
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = !isGrid && categories.isNotEmpty()
     )
+    BindGridScrollRangeAccessibility(
+        gridState = gridState,
+        enabled = isGrid && categories.isNotEmpty()
+    )
+    BindListScrollRangeAccessibility(
+        listState = listState,
+        enabled = !isGrid && categories.isNotEmpty()
+    )
 
     if (isGrid) {
+        val columnCount = rememberGridColumnCount(gridState)
         LazyVerticalGrid(
             state = gridState,
             columns = GridCells.Adaptive(100.dp),
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .semantics { collectionInfo = gridCollectionInfo(categories.size, columnCount) },
             contentPadding = PaddingValues(8.dp)
         ) {
             itemsIndexed(
@@ -1120,7 +1183,8 @@ fun CategoryList(
                 CategoryGridItem(
                     category = category,
                     onClick = { onCategoryClick(category) },
-                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                    focusRequester = if (index == 0) firstItemFocusRequester else null,
+                    itemCollectionInfo = gridItemCollectionInfo(index, columnCount)
                 )
             }
         }
@@ -1137,7 +1201,8 @@ fun CategoryList(
                 CategoryListItem(
                     category = category,
                     onClick = { onCategoryClick(category) },
-                    focusRequester = if (index == 0) firstItemFocusRequester else null
+                    focusRequester = if (index == 0) firstItemFocusRequester else null,
+                    itemCollectionInfo = listItemCollectionInfo(index)
                 )
                 HorizontalDivider(modifier = Modifier.padding(horizontal = 12.dp), thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
             }
@@ -1149,13 +1214,19 @@ fun CategoryList(
 fun CategoryListItem(
     category: DataCategory,
     onClick: () -> Unit,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
             .clickable(onClick = onClick)
+            .then(
+                if (itemCollectionInfo != null) {
+                    Modifier.semantics { collectionItemInfo = itemCollectionInfo }
+                } else Modifier
+            )
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -1180,13 +1251,19 @@ fun CategoryListItem(
 fun CategoryGridItem(
     category: DataCategory,
     onClick: () -> Unit,
-    focusRequester: FocusRequester? = null
+    focusRequester: FocusRequester? = null,
+    itemCollectionInfo: CollectionItemInfo? = null
 ) {
     Card(
         modifier = Modifier
             .padding(4.dp)
             .then(if (focusRequester != null) Modifier.focusRequester(focusRequester) else Modifier)
-            .clickable(onClick = onClick),
+            .clickable(onClick = onClick)
+            .then(
+                if (itemCollectionInfo != null) {
+                    Modifier.semantics { collectionItemInfo = itemCollectionInfo }
+                } else Modifier
+            ),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         shape = RoundedCornerShape(12.dp)
