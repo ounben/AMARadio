@@ -65,14 +65,15 @@ fun CustomStationsTab(
                 isFavorite = isFavorite,
                 onReorder = { viewModel.updateAllOrder(it) },
                 onLongClick = { stationWithOptions = it },
-                showFavoriteIcon = true,
-                scrollToTopBottomOffset = 72.dp
+                showFavoriteIcon = true
             )
         }
 
         FloatingActionButton(
             onClick = { showAddDialog = true },
-            modifier = Modifier.align(Alignment.BottomEnd).padding(16.dp),
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(end = 76.dp, bottom = 12.dp),
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
             elevation = FloatingActionButtonDefaults.elevation(0.dp, 0.dp, 0.dp, 0.dp)
