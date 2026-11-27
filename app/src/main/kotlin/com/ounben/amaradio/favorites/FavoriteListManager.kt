@@ -47,6 +47,18 @@ object FavoriteListHelper {
         return counts
     }
 
+    fun computeMovedList(
+        lists: List<FavoriteListEntity>,
+        fromIndex: Int,
+        toIndex: Int
+    ): List<FavoriteListEntity>? {
+        if (fromIndex !in lists.indices || toIndex !in lists.indices || fromIndex == toIndex) return null
+        val mutable = lists.toMutableList()
+        val moved = mutable.removeAt(fromIndex)
+        mutable.add(toIndex, moved)
+        return mutable.mapIndexed { index, entity -> entity.copy(displayOrder = index) }
+    }
+
     fun computeReorderedLists(
         lists: List<FavoriteListEntity>,
         listId: String,
@@ -54,13 +66,7 @@ object FavoriteListHelper {
     ): List<FavoriteListEntity>? {
         val currentIndex = lists.indexOfFirst { it.id == listId }
         if (currentIndex == -1) return null
-        val targetIndex = currentIndex + delta
-        if (targetIndex !in lists.indices || targetIndex == currentIndex) return null
-
-        val mutable = lists.toMutableList()
-        val moved = mutable.removeAt(currentIndex)
-        mutable.add(targetIndex, moved)
-        return mutable.mapIndexed { index, entity -> entity.copy(displayOrder = index) }
+        return computeMovedList(lists, currentIndex, currentIndex + delta)
     }
 
     fun computeUpdatedListItems(
@@ -186,6 +192,17 @@ class FavoriteListManager(private val context: Context) {
             val currentLists = dao.getAllLists()
             val updated = FavoriteListHelper.computeReorderedLists(currentLists, listId, delta) ?: return@launch
             dao.updateLists(updated)
+        }
+    }
+
+    fun persistListsOrder(orderedLists: List<FavoriteListEntity>) {
+        scope.launch(Dispatchers.IO) {
+            val updated = orderedLists.mapIndexed { index, list ->
+                list.copy(displayOrder = index)
+            }
+            if (updated.isNotEmpty()) {
+                dao.updateLists(updated)
+            }
         }
     }
 

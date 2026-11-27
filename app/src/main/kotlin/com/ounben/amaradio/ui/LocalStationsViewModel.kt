@@ -159,6 +159,10 @@ class LocalStationsViewModel(application: Application, private val type: LocalMa
         app.favoriteListManager.moveList(listId, delta)
     }
 
+    fun updateFavoriteListsOrder(orderedLists: List<FavoriteListEntity>) {
+        app.favoriteListManager.persistListsOrder(orderedLists)
+    }
+
     fun setStationsForList(listId: String, selectedUuids: Set<String>) {
         app.favoriteListManager.setListStations(listId, _uiState.value.stations, selectedUuids)
     }

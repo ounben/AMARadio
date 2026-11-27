@@ -1,10 +1,12 @@
 package com.ounben.amaradio.favorites
 
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.toggleable
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.PlaylistAdd
@@ -24,9 +28,8 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowDropDown
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.DragHandle
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
@@ -43,22 +46,29 @@ import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.CustomAccessibilityAction
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.customActions
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -69,9 +79,9 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.database.user.FavoriteListEntity
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.ui.AmaradioAmber
-import com.ounben.amaradio.ui.SolidRedError
-import com.ounben.amaradio.ui.SolidRedErrorLight
 import com.ounben.amaradio.ui.StationIcon
+import sh.calvin.reorderable.ReorderableItem
+import sh.calvin.reorderable.rememberReorderableLazyListState
 
 @Composable
 fun FavoritePlaylistFilterBar(
@@ -193,14 +203,14 @@ fun FavoritePlaylistFilterBar(
                             Icon(
                                 imageVector = Icons.Default.Add,
                                 contentDescription = null,
-                                tint = AmaradioAmber
+                                tint = MaterialTheme.colorScheme.onSurface
                             )
                         },
                         text = {
                             Text(
                                 text = stringResource(R.string.favorite_list_create),
                                 fontWeight = FontWeight.Bold,
-                                color = AmaradioAmber
+                                color = MaterialTheme.colorScheme.onSurface
                             )
                         },
                         onClick = {
@@ -275,7 +285,9 @@ fun CreateEditFavoriteListDialog(
                     unfocusedBorderColor = MaterialTheme.colorScheme.outline,
                     focusedTextColor = MaterialTheme.colorScheme.onSurface,
                     unfocusedTextColor = MaterialTheme.colorScheme.onSurface,
-                    focusedLabelColor = AmaradioAmber
+                    focusedLabelColor = AmaradioAmber,
+                    unfocusedLabelColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                    cursorColor = AmaradioAmber
                 )
             )
         },
@@ -288,7 +300,10 @@ fun CreateEditFavoriteListDialog(
                 },
                 enabled = trimmed.isNotEmpty(),
                 modifier = Modifier.heightIn(min = 48.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = AmaradioAmber,
+                    disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
             ) {
                 Text(
                     text = stringResource(R.string.action_save),
@@ -302,7 +317,10 @@ fun CreateEditFavoriteListDialog(
                 modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
-                Text(stringResource(R.string.action_cancel))
+                Text(
+                    text = stringResource(R.string.action_cancel),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     )
@@ -312,16 +330,32 @@ fun CreateEditFavoriteListDialog(
 fun ManageFavoriteListsDialog(
     lists: List<FavoriteListEntity>,
     listItemCounts: Map<String, Int>,
-    onMoveUp: (String) -> Unit,
-    onMoveDown: (String) -> Unit,
+    onReorder: (List<FavoriteListEntity>) -> Unit,
     onRename: (FavoriteListEntity) -> Unit,
     onEditStations: (FavoriteListEntity) -> Unit,
     onDelete: (FavoriteListEntity) -> Unit,
     onCreateNew: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
-    val deleteRedColor = if (isDark) SolidRedError else SolidRedErrorLight
+    val listsLocal = remember { mutableStateListOf<FavoriteListEntity>() }
+    var listToMove by remember { mutableStateOf<Pair<Int, FavoriteListEntity>?>(null) }
+
+    LaunchedEffect(lists) {
+        if (listsLocal.toList() != lists) {
+            listsLocal.clear()
+            listsLocal.addAll(lists)
+        }
+    }
+
+    val lazyListState = rememberLazyListState()
+    val reorderableState = rememberReorderableLazyListState(lazyListState) { from, to ->
+        listsLocal.add(to.index, listsLocal.removeAt(from.index))
+        onReorder(listsLocal.toList())
+    }
+
+    val moveToTopLabel = stringResource(R.string.action_move_to_top)
+    val moveUpLabel = stringResource(R.string.action_move_up)
+    val moveDownLabel = stringResource(R.string.action_move_down)
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -336,7 +370,7 @@ fun ManageFavoriteListsDialog(
         },
         text = {
             Column(modifier = Modifier.fillMaxWidth()) {
-                if (lists.isEmpty()) {
+                if (listsLocal.isEmpty()) {
                     Text(
                         text = stringResource(R.string.favorite_list_none_yet),
                         style = MaterialTheme.typography.bodyMedium,
@@ -345,90 +379,142 @@ fun ManageFavoriteListsDialog(
                     )
                 } else {
                     LazyColumn(
+                        state = lazyListState,
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 360.dp)
                     ) {
-                        itemsIndexed(lists, key = { _, item -> item.id }) { index, list ->
-                            val count = listItemCounts[list.id] ?: 0
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 4.dp)
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    Text(
-                                        text = "${list.name} ($count)",
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        fontWeight = FontWeight.SemiBold,
-                                        color = MaterialTheme.colorScheme.onSurface,
-                                        maxLines = 1,
-                                        overflow = TextOverflow.Ellipsis,
-                                        modifier = Modifier.weight(1f)
-                                    )
-                                    IconButton(
-                                        onClick = { onMoveUp(list.id) },
-                                        enabled = index > 0,
-                                        modifier = Modifier.size(48.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.KeyboardArrowUp,
-                                            contentDescription = stringResource(R.string.accessibility_playlist_move_up, list.name)
-                                        )
+                        itemsIndexed(listsLocal, key = { _, item -> item.id }) { index, list ->
+                            ReorderableItem(reorderableState, key = list.id) { isDragging ->
+                                val itemScope = this
+                                val elevation by animateDpAsState(if (isDragging) 8.dp else 0.dp)
+                                val count = listItemCounts[list.id] ?: 0
+                                val reorderLabel = stringResource(R.string.accessibility_reorder_station, list.name)
+
+                                val customActionsList = remember(index, listsLocal.size, moveToTopLabel, moveUpLabel, moveDownLabel) {
+                                    val actions = mutableListOf<CustomAccessibilityAction>()
+                                    if (index > 0) {
+                                        actions.add(CustomAccessibilityAction(label = moveToTopLabel) {
+                                            listsLocal.add(0, listsLocal.removeAt(index))
+                                            onReorder(listsLocal.toList())
+                                            true
+                                        })
+                                        actions.add(CustomAccessibilityAction(label = moveUpLabel) {
+                                            listsLocal.add(index - 1, listsLocal.removeAt(index))
+                                            onReorder(listsLocal.toList())
+                                            true
+                                        })
                                     }
-                                    IconButton(
-                                        onClick = { onMoveDown(list.id) },
-                                        enabled = index < lists.lastIndex,
-                                        modifier = Modifier.size(48.dp)
+                                    if (index < listsLocal.lastIndex) {
+                                        actions.add(CustomAccessibilityAction(label = moveDownLabel) {
+                                            listsLocal.add(index + 1, listsLocal.removeAt(index))
+                                            onReorder(listsLocal.toList())
+                                            true
+                                        })
+                                    }
+                                    actions
+                                }
+
+                                Surface(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .graphicsLayer {
+                                            scaleX = if (isDragging) 1.03f else 1f
+                                            scaleY = if (isDragging) 1.03f else 1f
+                                        },
+                                    color = if (isDragging) {
+                                        MaterialTheme.colorScheme.surfaceVariant
+                                    } else {
+                                        MaterialTheme.colorScheme.surface
+                                    },
+                                    shadowElevation = elevation,
+                                    tonalElevation = 0.dp
+                                ) {
+                                    Column(
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(top = 8.dp, bottom = 2.dp)
                                     ) {
-                                        Icon(
-                                            imageVector = Icons.Default.KeyboardArrowDown,
-                                            contentDescription = stringResource(R.string.accessibility_playlist_move_down, list.name)
+                                        Text(
+                                            text = "${list.name} ($count)",
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            fontWeight = FontWeight.Bold,
+                                            color = MaterialTheme.colorScheme.onSurface,
+                                            maxLines = 1,
+                                            overflow = TextOverflow.Ellipsis,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(horizontal = 4.dp)
                                         )
+                                        Row(
+                                            modifier = Modifier.fillMaxWidth(),
+                                            verticalAlignment = Alignment.CenterVertically
+                                        ) {
+                                            IconButton(
+                                                onClick = { onEditStations(list) },
+                                                modifier = Modifier.size(48.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
+                                                    contentDescription = stringResource(R.string.accessibility_playlist_edit_stations, list.name),
+                                                    tint = MaterialTheme.colorScheme.onSurface
+                                                )
+                                            }
+                                            IconButton(
+                                                onClick = { onRename(list) },
+                                                modifier = Modifier.size(48.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Edit,
+                                                    contentDescription = stringResource(R.string.accessibility_playlist_rename, list.name),
+                                                    tint = MaterialTheme.colorScheme.onSurface
+                                                )
+                                            }
+                                            IconButton(
+                                                onClick = { onDelete(list) },
+                                                modifier = Modifier.size(48.dp)
+                                            ) {
+                                                Icon(
+                                                    imageVector = Icons.Default.Delete,
+                                                    contentDescription = stringResource(R.string.accessibility_playlist_delete, list.name),
+                                                    tint = MaterialTheme.colorScheme.onSurface
+                                                )
+                                            }
+                                            Spacer(modifier = Modifier.weight(1f))
+                                            with(itemScope) {
+                                                Box(
+                                                    modifier = Modifier
+                                                        .size(48.dp)
+                                                        .semantics {
+                                                            customActions = customActionsList
+                                                        },
+                                                    contentAlignment = Alignment.Center
+                                                ) {
+                                                    Box(
+                                                        modifier = Modifier
+                                                            .size(48.dp)
+                                                            .clearAndSetSemantics {
+                                                                contentDescription = reorderLabel
+                                                            }
+                                                            .clickable { listToMove = index to list }
+                                                            .draggableHandle(),
+                                                        contentAlignment = Alignment.Center
+                                                    ) {
+                                                        Icon(
+                                                            imageVector = Icons.Default.DragHandle,
+                                                            contentDescription = null,
+                                                            tint = MaterialTheme.colorScheme.onSurface,
+                                                            modifier = Modifier.size(24.dp)
+                                                        )
+                                                    }
+                                                }
+                                            }
+                                        }
+                                        if (index < listsLocal.lastIndex) {
+                                            HorizontalDivider(thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
+                                        }
                                     }
                                 }
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.End,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
-                                    IconButton(
-                                        onClick = { onEditStations(list) },
-                                        modifier = Modifier.size(48.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.AutoMirrored.Filled.PlaylistAdd,
-                                            contentDescription = stringResource(R.string.accessibility_playlist_edit_stations, list.name),
-                                            tint = AmaradioAmber
-                                        )
-                                    }
-                                    IconButton(
-                                        onClick = { onRename(list) },
-                                        modifier = Modifier.size(48.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Edit,
-                                            contentDescription = stringResource(R.string.accessibility_playlist_rename, list.name),
-                                            tint = MaterialTheme.colorScheme.onSurfaceVariant
-                                        )
-                                    }
-                                    IconButton(
-                                        onClick = { onDelete(list) },
-                                        modifier = Modifier.size(48.dp)
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Default.Delete,
-                                            contentDescription = stringResource(R.string.accessibility_playlist_delete, list.name),
-                                            tint = deleteRedColor
-                                        )
-                                    }
-                                }
-                            }
-                            if (index < lists.lastIndex) {
-                                HorizontalDivider(thickness = 0.5.dp, color = MaterialTheme.colorScheme.outline)
                             }
                         }
                     }
@@ -436,23 +522,145 @@ fun ManageFavoriteListsDialog(
             }
         },
         confirmButton = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                TextButton(
+                    onClick = onCreateNew,
+                    modifier = Modifier.heightIn(min = 48.dp),
+                    contentPadding = PaddingValues(start = 0.dp, end = 12.dp, top = 8.dp, bottom = 8.dp),
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
+                    Text(
+                        text = stringResource(R.string.favorite_list_create),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                TextButton(
+                    onClick = onDismiss,
+                    modifier = Modifier.heightIn(min = 48.dp),
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
+                ) {
+                    Text(
+                        text = stringResource(R.string.accessibility_close),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+            }
+        }
+    )
+
+    listToMove?.let { (currentIndex, list) ->
+        PlaylistPositionPickerDialog(
+            list = list,
+            currentIndex = currentIndex,
+            allLists = listsLocal.toList(),
+            onPositionSelected = { targetIndex ->
+                listsLocal.add(targetIndex, listsLocal.removeAt(currentIndex))
+                onReorder(listsLocal.toList())
+                listToMove = null
+            },
+            onDismiss = { listToMove = null }
+        )
+    }
+}
+
+@Composable
+fun PlaylistPositionPickerDialog(
+    list: FavoriteListEntity,
+    currentIndex: Int,
+    allLists: List<FavoriteListEntity>,
+    onPositionSelected: (targetIndex: Int) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val currentLabel = stringResource(R.string.label_current_position)
+    val listState = rememberLazyListState(initialFirstVisibleItemIndex = (currentIndex - 2).coerceAtLeast(0))
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        containerColor = MaterialTheme.colorScheme.surface,
+        tonalElevation = 0.dp,
+        title = {
+            Text(
+                text = stringResource(R.string.dialog_move_to_position_title, list.name),
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        },
+        text = {
+            LazyColumn(
+                state = listState,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 360.dp),
+                verticalArrangement = Arrangement.spacedBy(2.dp)
+            ) {
+                itemsIndexed(allLists) { idx, targetList ->
+                    val isCurrent = idx == currentIndex
+                    val itemText = "${idx + 1}. ${targetList.name}${if (isCurrent) " $currentLabel" else ""}"
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .heightIn(min = 48.dp)
+                            .selectable(
+                                selected = isCurrent,
+                                role = Role.RadioButton,
+                                onClick = {
+                                    if (idx != currentIndex) {
+                                        onPositionSelected(idx)
+                                    } else {
+                                        onDismiss()
+                                    }
+                                }
+                            )
+                            .padding(horizontal = 12.dp, vertical = 8.dp),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        RadioButton(
+                            selected = isCurrent,
+                            onClick = null,
+                            colors = RadioButtonDefaults.colors(
+                                selectedColor = AmaradioAmber,
+                                unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
+                            )
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = itemText,
+                            style = MaterialTheme.typography.bodyMedium,
+                            fontWeight = if (isCurrent) FontWeight.Bold else FontWeight.Normal,
+                            color = if (isCurrent) AmaradioAmber else MaterialTheme.colorScheme.onSurface,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+        },
+        confirmButton = {},
+        dismissButton = {
             TextButton(
                 onClick = onDismiss,
                 modifier = Modifier.heightIn(min = 48.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
+                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
-                Text(stringResource(R.string.action_ok), fontWeight = FontWeight.Bold)
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = onCreateNew,
-                modifier = Modifier.heightIn(min = 48.dp),
-                colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
-            ) {
-                Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-                Spacer(modifier = Modifier.width(4.dp))
-                Text(stringResource(R.string.favorite_list_create))
+                Text(
+                    text = stringResource(R.string.label_button_cancel),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     )
@@ -464,8 +672,7 @@ fun DeleteFavoriteListConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val isDark = isSystemInDarkTheme()
-    val deleteRedColor = if (isDark) SolidRedError else SolidRedErrorLight
+    val deleteRedColor = MaterialTheme.colorScheme.error
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -491,7 +698,11 @@ fun DeleteFavoriteListConfirmDialog(
                 modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.textButtonColors(contentColor = deleteRedColor)
             ) {
-                Text(stringResource(R.string.action_delete), fontWeight = FontWeight.Bold)
+                Text(
+                    text = stringResource(R.string.action_delete),
+                    fontWeight = FontWeight.Bold,
+                    color = deleteRedColor
+                )
             }
         },
         dismissButton = {
@@ -500,7 +711,10 @@ fun DeleteFavoriteListConfirmDialog(
                 modifier = Modifier.heightIn(min = 48.dp),
                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
-                Text(stringResource(R.string.action_cancel))
+                Text(
+                    text = stringResource(R.string.action_cancel),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
             }
         }
     )
@@ -532,11 +746,12 @@ fun AssignFavoriteListsDialog(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
                 )
-                Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = station.Name,
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
@@ -578,6 +793,7 @@ fun AssignFavoriteListsDialog(
                                     onCheckedChange = null,
                                     colors = CheckboxDefaults.colors(
                                         checkedColor = AmaradioAmber,
+                                        uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                         checkmarkColor = Color.Black
                                     )
                                 )
@@ -600,11 +816,27 @@ fun AssignFavoriteListsDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 48.dp),
-                    colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
+                    contentPadding = PaddingValues(horizontal = 4.dp, vertical = 8.dp),
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurface)
                 ) {
-                    Icon(Icons.Default.Add, contentDescription = null, modifier = Modifier.size(18.dp))
-                    Spacer(modifier = Modifier.width(6.dp))
-                    Text(stringResource(R.string.favorite_list_create), fontWeight = FontWeight.Bold)
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurface,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(modifier = Modifier.width(6.dp))
+                        Text(
+                            text = stringResource(R.string.favorite_list_create),
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    }
                 }
             }
         },
@@ -714,22 +946,24 @@ fun ManagePlaylistStationsDialog(
                                 onCheckedChange = null,
                                 colors = CheckboxDefaults.colors(
                                     checkedColor = AmaradioAmber,
+                                    uncheckedColor = MaterialTheme.colorScheme.onSurfaceVariant,
                                     checkmarkColor = Color.Black
                                 )
                             )
                             Spacer(modifier = Modifier.width(8.dp))
-                            Box(modifier = Modifier.size(36.dp)) {
+                            Box(modifier = Modifier.size(40.dp)) {
                                 StationIcon(
                                     stationName = station.Name,
                                     stationUuid = station.StationUuid,
                                     iconUrl = station.IconUrl,
-                                    modifier = Modifier.size(36.dp)
+                                    modifier = Modifier.size(40.dp)
                                 )
                             }
-                            Spacer(modifier = Modifier.width(10.dp))
+                            Spacer(modifier = Modifier.width(12.dp))
                             Text(
                                 text = station.Name,
-                                style = MaterialTheme.typography.bodyMedium,
+                                style = MaterialTheme.typography.bodyLarge,
+                                fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,

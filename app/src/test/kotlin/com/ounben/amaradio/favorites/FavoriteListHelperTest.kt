@@ -75,6 +75,11 @@ class FavoriteListHelperTest {
         assertNull(FavoriteListHelper.computeReorderedLists(lists, "a", -1))
         assertNull(FavoriteListHelper.computeReorderedLists(lists, "c", 1))
         assertNull(FavoriteListHelper.computeReorderedLists(lists, "missing", 1))
+
+        val jumpedToTop = FavoriteListHelper.computeMovedList(lists, 2, 0)!!
+        assertEquals(listOf("c", "a", "b"), jumpedToTop.map { it.id })
+        assertEquals(listOf(0, 1, 2), jumpedToTop.map { it.displayOrder })
+        assertNull(FavoriteListHelper.computeMovedList(lists, 1, 1))
     }
 
     @Test

@@ -211,8 +211,7 @@ fun StarredScreen(
         ManageFavoriteListsDialog(
             lists = favUiState.favoriteLists,
             listItemCounts = favUiState.listItemCounts,
-            onMoveUp = { viewModel.moveFavoriteList(it, -1) },
-            onMoveDown = { viewModel.moveFavoriteList(it, 1) },
+            onReorder = { viewModel.updateFavoriteListsOrder(it) },
             onRename = { listToRename = it },
             onEditStations = { listToEditStations = it },
             onDelete = { listToDelete = it },

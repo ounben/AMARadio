@@ -483,11 +483,8 @@
     <string name="favorite_list_none_yet">No playlists yet. Create one to organize your favorites.</string>
     <string name="action_manage_station_playlists">Add to playlist</string>
     <string name="action_remove_from_playlist">Remove from \"%1$s\"</string>
-    <string name="accessibility_favorite_list_chip">%1$s, %2$d stations</string>
     <string name="accessibility_filter_playlist">Playlist filter: %1$s</string>
     <string name="action_clear_playlist_filter">Clear playlist filter</string>
-    <string name="accessibility_playlist_move_up">Move %1$s up</string>
-    <string name="accessibility_playlist_move_down">Move %1$s down</string>
     <string name="accessibility_playlist_rename">Rename %1$s</string>
     <string name="accessibility_playlist_delete">Delete %1$s</string>
     <string name="accessibility_playlist_edit_stations">Edit stations in %1$s</string>
