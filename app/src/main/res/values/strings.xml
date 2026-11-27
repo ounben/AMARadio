@@ -428,6 +428,7 @@
         <item quantity="one">Active, %1$d minute remaining</item>
         <item quantity="other">Active, %1$d minutes remaining</item>
     </plurals>
+    <string name="accessibility_sleep_timer_active_remaining">Active, %1$s remaining</string>
     <string name="action_clear_station_filter">Clear station filter</string>
     <string name="action_clear_date_filter">Clear date filter</string>
     <string name="accessibility_configure">Configure</string>

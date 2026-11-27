@@ -19,9 +19,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.stateDescription
@@ -34,6 +34,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.text.intl.LocaleList
 import androidx.compose.ui.unit.dp
+import com.ounben.amaradio.recorder.formatAccessibleDuration
 import com.ounben.amaradio.utils.LocaleUtils
 import androidx.compose.ui.unit.sp
 import com.ounben.amaradio.R
@@ -194,11 +195,17 @@ fun MainTopBar(
                         }
 
                         val isSleepTimerActive = sleepTimerRemainingMinutes > 0
+                        val configuration = LocalConfiguration.current
+                        val locale = remember(configuration) {
+                            configuration.locales.takeIf { !it.isEmpty }?.get(0) ?: java.util.Locale.getDefault()
+                        }
                         val sleepTimerStateDescription = if (isSleepTimerActive) {
-                            pluralStringResource(
-                                R.plurals.accessibility_sleep_timer_active,
-                                sleepTimerRemainingMinutes,
-                                sleepTimerRemainingMinutes
+                            val remainingDuration = remember(sleepTimerRemainingMinutes, locale) {
+                                formatAccessibleDuration(sleepTimerRemainingMinutes.toLong() * 60_000L, locale)
+                            }
+                            stringResource(
+                                R.string.accessibility_sleep_timer_active_remaining,
+                                remainingDuration
                             )
                         } else {
                             null
