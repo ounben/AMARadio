@@ -2,6 +2,7 @@ package com.ounben.amaradio.service
 
 import android.content.Context
 import android.util.Log
+import androidx.core.os.UserManagerCompat
 import androidx.work.BackoffPolicy
 import androidx.work.Constraints
 import androidx.work.CoroutineWorker
@@ -59,6 +60,10 @@ class SyncWorker(context: Context, workerParams: WorkerParameters) : CoroutineWo
         const val STARTUP_WORK_NAME = "radio_database_startup_sync"
 
         fun enqueue(context: Context) {
+            if (!UserManagerCompat.isUserUnlocked(context)) {
+                Log.w("SYNC_DEBUG", "Skipping SyncWorker.enqueue during Direct Boot (user locked)")
+                return
+            }
             val workManager = WorkManager.getInstance(context)
             val sharedPref = PreferenceManager.getDefaultSharedPreferences(context)
             

@@ -26,9 +26,10 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.io.IOException
+import androidx.work.Configuration as WorkConfiguration
 import kotlin.time.Duration.Companion.seconds
 
-class AMARadioApp : Application(), ImageLoaderFactory {
+class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provider {
 
     lateinit var historyManager: HistoryManager
         private set
@@ -181,6 +182,13 @@ class AMARadioApp : Application(), ImageLoaderFactory {
         }
         return true
     }
+
+    override val workManagerConfiguration: WorkConfiguration
+        get() = WorkConfiguration.Builder()
+            .setInitializationExceptionHandler { throwable ->
+                Log.w("APP", "WorkManager initialization skipped/failed (e.g. Direct Boot)", throwable)
+            }
+            .build()
 
     override fun newImageLoader(): ImageLoader {
         return ImageLoader.Builder(this)
