@@ -48,6 +48,11 @@ import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.history.TrackHistoryViewModel
+import com.ounben.amaradio.recorder.RecordManager
+import com.ounben.amaradio.recorder.RecordingStatusBar
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 sealed class Screen(val route: String, val titleRes: Int, val icon: androidx.compose.ui.graphics.vector.ImageVector) {
@@ -287,16 +292,40 @@ fun MainScreen(
                 }
 
                 Box(modifier = Modifier.weight(1f).fillMaxHeight()) {
+                    val showRecorder = remember(context) {
+                        try {
+                            context.resources.getBoolean(R.bool.show_recorder_button)
+                        } catch (_: Exception) {
+                            false
+                        }
+                    }
+                    val isRecording by remember(showRecorder) {
+                        if (showRecorder) {
+                            RecordManager.getInstance(context)
+                                .recordingState
+                                .map { it.isRecording }
+                                .distinctUntilChanged()
+                        } else {
+                            flowOf(false)
+                        }
+                    }.collectAsStateWithLifecycle(initialValue = false)
+
                     // Fixed bottom padding to avoid measurement loops during scrolling.
                     // In the wide layout the player has its own column, so nothing overlaps the content.
-                    val contentBottomPadding = if (useWideLayout) 0.dp else 110.dp
+                    val contentBottomPadding = if (useWideLayout) 0.dp else if (isRecording) 158.dp else 110.dp
+                    val contentTopPadding = if (useWideLayout && !showSidePlayer && isRecording) 48.dp else 0.dp
                     val density = LocalDensity.current
                     var miniPlayerHeightPx by remember { mutableIntStateOf(0) }
                     val miniPlayerHeightDp = with(density) { miniPlayerHeightPx.toDp() }
                 
                     if (mainUiState.isSearching) {
                         Surface(
-                            modifier = Modifier.fillMaxSize().padding(bottom = if (playerUiState.currentStation != null) contentBottomPadding else 0.dp),
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(
+                                    top = contentTopPadding,
+                                    bottom = if (playerUiState.currentStation != null || isRecording) contentBottomPadding else 0.dp
+                                ),
                             color = MaterialTheme.colorScheme.background
                         ) {
                             if (searchUiState.isSearching && searchUiState.results.isEmpty()) {
@@ -332,7 +361,7 @@ fun MainScreen(
                             startDestination = startRoute,
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(bottom = contentBottomPadding)
+                                .padding(top = contentTopPadding, bottom = contentBottomPadding)
                                 .then(
                                     if (isPlayerExpanded && playerUiState.currentStation != null)
                                         Modifier.clearAndSetSemantics { }
@@ -522,6 +551,7 @@ fun MainScreen(
                                             .clearAndSetSemantics {}
                                     )
                                 }
+                                RecordingStatusBar()
                                 FullPlayer(
                                     playerViewModel = playerViewModel,
                                     trackHistoryViewModel = trackHistoryViewModel,
@@ -529,26 +559,38 @@ fun MainScreen(
                                 )
                             }
                         } else {
-                            MiniPlayer(
-                                viewModel = playerViewModel,
-                                isHeaderRole = false,
-                                onToggleBottomSheet = { 
-                                    if (playerUiState.currentStation != null) isPlayerExpanded = true 
-                                },
-                                onMoreClick = { }
-                            )
+                            Column(modifier = Modifier.fillMaxWidth().wrapContentHeight()) {
+                                RecordingStatusBar()
+                                MiniPlayer(
+                                    viewModel = playerViewModel,
+                                    isHeaderRole = false,
+                                    onToggleBottomSheet = { 
+                                        if (playerUiState.currentStation != null) isPlayerExpanded = true 
+                                    },
+                                    onMoreClick = { }
+                                )
+                            }
                         }
+                    }
+
+                    if (useWideLayout && !showSidePlayer) {
+                        RecordingStatusBar(
+                            modifier = Modifier.align(Alignment.TopCenter)
+                        )
                     }
                 }
 
                 // Wide layout: the player is always visible in its own column on the right
                 if (showSidePlayer) {
                     VerticalDivider(thickness = 1.dp, color = MaterialTheme.colorScheme.outline)
-                    SidePanelPlayer(
-                        playerViewModel = playerViewModel,
-                        trackHistoryViewModel = trackHistoryViewModel,
-                        modifier = Modifier.width(sidePanelWidth).fillMaxHeight()
-                    )
+                    Column(modifier = Modifier.width(sidePanelWidth).fillMaxHeight()) {
+                        RecordingStatusBar()
+                        SidePanelPlayer(
+                            playerViewModel = playerViewModel,
+                            trackHistoryViewModel = trackHistoryViewModel,
+                            modifier = Modifier.weight(1f).fillMaxWidth()
+                        )
+                    }
                 }
             }
         }

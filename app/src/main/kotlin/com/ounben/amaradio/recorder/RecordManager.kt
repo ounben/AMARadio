@@ -32,6 +32,7 @@ class RecordManager private constructor(private val context: Context) {
         val stationName: String = "",
         val stationUuid: String = "",
         val currentTrackTitle: String = "",
+        val startTimeMs: Long = 0L,
         val durationMs: Long = 0L,
         val fileSizeBytes: Long = 0L,
         val formatExtension: String = "mp3",
@@ -94,7 +95,8 @@ class RecordManager private constructor(private val context: Context) {
         _recordingState.value = RecordingState(
             isRecording = true,
             stationName = station.Name,
-            stationUuid = station.StationUuid
+            stationUuid = station.StationUuid,
+            startTimeMs = session.startTimeMs
         )
 
         RecordService.startService(context, station.Name)
