@@ -3,6 +3,8 @@ package com.ounben.amaradio.ui
 import android.content.Context
 import android.content.Intent
 import androidx.activity.compose.BackHandler
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
@@ -44,6 +46,7 @@ import androidx.navigation.compose.*
 import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
+import com.ounben.amaradio.audio.InAppEqualizerManager
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.service.PlayerServiceUtil
@@ -97,11 +100,35 @@ fun MainScreen(
 
     var showSleepTimerDialog by remember { mutableStateOf(false) }
     var showProxyDialog by remember { mutableStateOf(false) }
+    var showInAppEqualizerDialog by remember { mutableStateOf(false) }
     var showPlayerSelectorDialog by remember { mutableStateOf<DataRadioStation?>(null) }
     var showDeleteConfirmDialog by remember { mutableStateOf<Int?>(null) }
     var isPlayerExpanded by remember { mutableStateOf(false) }
     val scrollNavigationController = remember { ScrollNavigationController() }
     val coroutineScope = rememberCoroutineScope()
+
+    val equalizerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { /* Result not needed; launching via StartActivityForResult satisfies Android's callingPackage contract */ }
+
+    fun launchSystemEqualizerOrFallback(forceSystem: Boolean = false) {
+        val sessionId = PlayerServiceUtil.getAudioSessionId()
+        val hasSystemEq = InAppEqualizerManager.hasSystemEqualizer(context, sessionId)
+        if (!forceSystem && (!hasSystemEq || app.inAppEqualizerManager.isEnabled)) {
+            showInAppEqualizerDialog = true
+            return
+        }
+        if (!hasSystemEq) {
+            showInAppEqualizerDialog = true
+            return
+        }
+        try {
+            val intent = InAppEqualizerManager.buildSystemEqualizerIntent(context, sessionId)
+            equalizerLauncher.launch(intent)
+        } catch (_: Exception) {
+            showInAppEqualizerDialog = true
+        }
+    }
     
     val settingsViewModel: SettingsViewModel = viewModel()
     val settingsUiState by settingsViewModel.uiState.collectAsStateWithLifecycle()
@@ -225,6 +252,7 @@ fun MainScreen(
                     isDeleteVisible = currentRoute == Screen.Favourites.route || currentRoute == Screen.History.route,
                     deleteTitleRes = R.string.action_delete,
                     currentStation = playerUiState.currentStation,
+                    onEqualizerClick = { launchSystemEqualizerOrFallback() },
                     onExportBackup = onExportBackup,
                     onImportBackup = onImportBackup
                 )
@@ -425,11 +453,8 @@ fun MainScreen(
                                         isPlayerExpanded = false
                                         navController.navigate(Screen.Statistics.route) 
                                     },
-                                    onOpenEqualizer = { 
-                                        val intent = Intent("android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL")
-                                        intent.putExtra("android.media.extra.PACKAGE_NAME", context.packageName)
-                                        intent.putExtra("android.media.extra.AUDIO_SESSION", 0)
-                                        try { context.startActivity(intent) } catch (_: Exception) {}
+                                    onOpenEqualizer = {
+                                        launchSystemEqualizerOrFallback()
                                     },
                                     onBatteryOptimize = {
                                         Utils.openBatteryOrAppSettings(context)
@@ -604,6 +629,17 @@ fun MainScreen(
 
     if (showSleepTimerDialog) SleepTimerDialog(onDismiss = { showSleepTimerDialog = false })
     if (showProxyDialog) ProxySettingsDialogCompose(onDismiss = { showProxyDialog = false })
+    if (showInAppEqualizerDialog) {
+        val hasSystemEq = remember(context) {
+            InAppEqualizerManager.hasSystemEqualizer(context, PlayerServiceUtil.getAudioSessionId())
+        }
+        InAppEqualizerDialog(
+            onOpenSystemEqualizer = if (hasSystemEq) {
+                { launchSystemEqualizerOrFallback(forceSystem = true) }
+            } else null,
+            onDismiss = { showInAppEqualizerDialog = false }
+        )
+    }
     showPlayerSelectorDialog?.let { station -> 
         PlayerSelectorDialogCompose(
             station = station, 

@@ -9,6 +9,7 @@ import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.FavoriteListEntity
 import com.ounben.amaradio.database.user.FavoriteListItemEntity
 import com.ounben.amaradio.database.user.FilterTabEntity
+import com.ounben.amaradio.database.user.StationAudioEntity
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -27,13 +28,14 @@ import java.util.zip.ZipOutputStream
 
 @Serializable
 data class BackupData(
-    @SerialName("version") val version: Int = 3,
+    @SerialName("version") val version: Int = 4,
     @SerialName("createdAt") val createdAt: Long = System.currentTimeMillis(),
     @SerialName("favorites") val favorites: List<DataRadioStation> = emptyList(),
     @SerialName("customStations") val customStations: List<DataRadioStation> = emptyList(),
     @SerialName("filterTabs") val filterTabs: List<FilterTabEntity> = emptyList(),
     @SerialName("favoriteLists") val favoriteLists: List<FavoriteListEntity> = emptyList(),
     @SerialName("favoriteListItems") val favoriteListItems: List<FavoriteListItemEntity> = emptyList(),
+    @SerialName("stationAudioSettings") val stationAudioSettings: List<StationAudioEntity> = emptyList(),
     @SerialName("settings") val settings: Map<String, String> = emptyMap()
 )
 
@@ -56,6 +58,7 @@ object BackupManager {
             val filterTabs = userDb.filterTabDao().getAllTabs()
             val favoriteLists = userDb.favoriteListDao().getAllLists()
             val favoriteListItems = userDb.favoriteListDao().getAllItems()
+            val stationAudioSettings = userDb.stationAudioDao().getAll()
 
             // Filter out temporary runtime keys
             val exportedSettings = sharedPref.all
@@ -65,13 +68,14 @@ object BackupManager {
                 .mapValues { it.value?.toString() ?: "" }
 
             val backupData = BackupData(
-                version = 3,
+                version = 4,
                 createdAt = System.currentTimeMillis(),
                 favorites = favorites,
                 customStations = customStations,
                 filterTabs = filterTabs,
                 favoriteLists = favoriteLists,
                 favoriteListItems = favoriteListItems,
+                stationAudioSettings = stationAudioSettings,
                 settings = exportedSettings
             )
 
@@ -174,6 +178,12 @@ object BackupManager {
                             favoriteListDao.insertItemsIgnore(validItems)
                         }
                     }
+                }
+
+                // 3c. Restore Per-Station Audio Gain Settings (v4+, backward-compatible with v1-v3)
+                if (data.stationAudioSettings.isNotEmpty()) {
+                    userDb.stationAudioDao().insertAllIgnore(data.stationAudioSettings)
+                    app.stationAudioManager.reloadFromDb()
                 }
 
                 // 4. Restore App Settings

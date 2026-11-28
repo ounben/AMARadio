@@ -44,6 +44,12 @@
 
     <uses-sdk tools:overrideLibrary="androidx.tvprovider"/>
 
+    <queries>
+        <intent>
+            <action android:name="android.media.action.DISPLAY_AUDIO_EFFECT_CONTROL_PANEL" />
+        </intent>
+    </queries>
+
     <application
         android:banner="@mipmap/ic_banner"
         android:name=".AMARadioApp"

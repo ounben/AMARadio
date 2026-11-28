@@ -12,6 +12,8 @@ import androidx.preference.PreferenceManager
 import coil.ImageLoader
 import coil.ImageLoaderFactory
 import coil.decode.SvgDecoder
+import com.ounben.amaradio.audio.InAppEqualizerManager
+import com.ounben.amaradio.audio.StationAudioManager
 import com.ounben.amaradio.favorites.FavoriteListManager
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.proxy.ProxySettings
@@ -48,6 +50,12 @@ class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provide
         private set
 
     lateinit var trackHistoryRepository: TrackHistoryRepository
+        private set
+
+    lateinit var stationAudioManager: StationAudioManager
+        private set
+
+    lateinit var inAppEqualizerManager: InAppEqualizerManager
         private set
 
     lateinit var audioDispatcher: kotlinx.coroutines.CoroutineDispatcher
@@ -119,6 +127,8 @@ class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provide
             }
 
             trackHistoryRepository = TrackHistoryRepository(this)
+            stationAudioManager = StationAudioManager(this)
+            inAppEqualizerManager = InAppEqualizerManager(this)
 
             com.ounben.amaradio.service.SyncWorker.enqueue(this)
 

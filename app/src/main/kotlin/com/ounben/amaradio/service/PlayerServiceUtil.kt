@@ -303,4 +303,13 @@ object PlayerServiceUtil {
             Log.e("", "$e")
         }
     }
+
+    @JvmStatic
+    fun getAudioSessionId(): Int {
+        return try {
+            itsPlayerService?.audioSessionId ?: 0
+        } catch (_: RemoteException) {
+            0
+        }
+    }
 }

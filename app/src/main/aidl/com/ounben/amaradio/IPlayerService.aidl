@@ -32,4 +32,5 @@ interface IPlayerService
     PauseReason getPauseReason();
     boolean isNotificationActive();
     void warnAboutMeteredConnection(in PlayerType playerType);
+    int getAudioSessionId();
 }

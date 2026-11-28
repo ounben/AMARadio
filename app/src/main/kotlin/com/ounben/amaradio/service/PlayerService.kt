@@ -171,6 +171,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         override fun getPauseReason(): PauseReason = this@PlayerService.pauseReason
         override fun warnAboutMeteredConnection(playerType: PlayerType) { this@PlayerService.warnAboutMeteredConnection(playerType) }
         override fun isNotificationActive(): Boolean = this@PlayerService.notificationIsActive
+        override fun getAudioSessionId(): Int = this@PlayerService.radioPlayer?.audioSessionId ?: 0
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaLibrarySession? = mediaSession
@@ -458,6 +459,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             release()
             mediaSession = null
         }
+        (applicationContext as? AMARadioApp)?.inAppEqualizerManager?.releaseSession()
         radioPlayer?.destroy()
         unregisterReceiver(headsetConnectionReceiver)
         unregisterReceiver(becomingNoisyReceiver)
@@ -1361,11 +1363,13 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                 val i = Intent(AudioEffect.ACTION_OPEN_AUDIO_EFFECT_CONTROL_SESSION).apply {
                     putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
                     putExtra(AudioEffect.EXTRA_PACKAGE_NAME, packageName)
+                    putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                         putExtra("android.intent.extra.ATTRIBUTION_TAG", "player_service")
                     }
                 }
                 sendBroadcast(i)
+                (applicationContext as? AMARadioApp)?.inAppEqualizerManager?.onPlaybackSessionActive(audioSessionId)
             }
         } else {
             if (audioSessionId > 0) {
@@ -1377,6 +1381,9 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     }
                 }
                 sendBroadcast(i)
+            }
+            if (status == PlayState.Idle || status == PlayState.Error) {
+                (applicationContext as? AMARadioApp)?.inAppEqualizerManager?.releaseSession()
             }
         }
         if ((status != PlayState.Paused) && (status != PlayState.Idle)) startMeteredConnectionListener() else stopMeteredConnectionListener()

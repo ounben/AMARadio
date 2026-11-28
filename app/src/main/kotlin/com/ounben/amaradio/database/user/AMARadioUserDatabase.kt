@@ -21,9 +21,10 @@ import com.ounben.amaradio.history.TrackHistoryEntry
         RecordEntity::class,
         RecordTrackEntity::class,
         FavoriteListEntity::class,
-        FavoriteListItemEntity::class
+        FavoriteListItemEntity::class,
+        StationAudioEntity::class
     ], 
-    version = 9,
+    version = 10,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -35,6 +36,7 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
     abstract fun customStationDao(): CustomStationDao
     abstract fun recordDao(): RecordDao
     abstract fun favoriteListDao(): FavoriteListDao
+    abstract fun stationAudioDao(): StationAudioDao
 
     val databaseExecutor: java.util.concurrent.Executor = java.util.concurrent.Executors.newSingleThreadExecutor { runnable -> 
         Thread(runnable, "UserDatabase Executor") 
@@ -271,6 +273,20 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_9_10 = object : Migration(9, 10) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("""
+                    CREATE TABLE IF NOT EXISTS `station_audio_settings` (
+                        `stationUuid` TEXT NOT NULL,
+                        `manualGainDb` REAL NOT NULL DEFAULT 0.0,
+                        `learnedGainDb` REAL,
+                        `updatedAt` INTEGER NOT NULL DEFAULT 0,
+                        PRIMARY KEY(`stationUuid`)
+                    )
+                """.trimIndent())
+            }
+        }
+
         fun getDatabase(context: Context): AMARadioUserDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -278,8 +294,8 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
                     AMARadioUserDatabase::class.java,
                     "user_data.db"
                 )
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9)
-                .fallbackToDestructiveMigrationFrom(true, 10) // Nur bei künftigen Fehlern ab v10 zerstörerisch
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
+                .fallbackToDestructiveMigrationFrom(true, 11) // Nur bei künftigen Fehlern ab v11 zerstörerisch
                 .addCallback(CALLBACK)
                 .build()
                 INSTANCE = instance

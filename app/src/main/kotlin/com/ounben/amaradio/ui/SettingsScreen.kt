@@ -339,6 +339,18 @@ fun SettingsScreen(
                     icon = Icons.AutoMirrored.Filled.VolumeUp,
                     onCheckedChange = { viewModel.updateBoolean("settings_auto_resume_audio_focus", it) }
                 )
+                SettingsSwitch(
+                    title = stringResource(R.string.settings_volume_normalization),
+                    summary = stringResource(R.string.settings_volume_normalization_desc),
+                    checked = uiState.volumeNormalization,
+                    icon = Icons.Default.GraphicEq,
+                    onCheckedChange = { viewModel.updateBoolean("settings_volume_normalization", it) }
+                )
+                SettingsClickable(
+                    title = stringResource(R.string.settings_equalizer),
+                    icon = Icons.Default.Equalizer,
+                    onClick = onOpenEqualizer
+                )
             }
 
             // Backup & Restore

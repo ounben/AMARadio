@@ -32,6 +32,7 @@ import androidx.preference.PreferenceManager
 import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.audio.StationAudioManager
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.PlayerWrapper
 import com.ounben.amaradio.station.live.ShoutcastInfo
@@ -59,6 +60,35 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     
     private var playbackStartTime: Long = 0
     private var stationName: String? = null
+    @Volatile
+    private var currentStationUuid: String? = null
+
+    private val stationAudioManager: StationAudioManager =
+        (context.applicationContext as AMARadioApp).stationAudioManager
+
+    private val volumeNormalizationProcessor = VolumeNormalizationAudioProcessor { uuid, learnedGainDb ->
+        stationAudioManager.saveLearnedGainDb(uuid, learnedGainDb)
+    }
+
+    private val stationAudioListener = object : StationAudioManager.Listener {
+        override fun onAutoNormalizationChanged(enabled: Boolean) {
+            volumeNormalizationProcessor.setAutoNormalizationEnabled(enabled)
+        }
+
+        override fun onStationManualGainChanged(stationUuid: String, manualGainDb: Float) {
+            if (stationUuid == currentStationUuid) {
+                volumeNormalizationProcessor.setManualGainDb(manualGainDb)
+            }
+        }
+    }
+
+    fun setCurrentStationUuid(stationUuid: String?) {
+        currentStationUuid = stationUuid
+        val manualGainDb = stationAudioManager.getManualGainDb(stationUuid)
+        val learnedGainDb = stationAudioManager.getLearnedGainDb(stationUuid)
+        volumeNormalizationProcessor.setAutoNormalizationEnabled(stationAudioManager.isAutoNormalizationEnabled.value)
+        volumeNormalizationProcessor.setStation(stationUuid, manualGainDb, learnedGainDb)
+    }
 
     private fun cancelStopTask() {
         fullStopTask?.let {
@@ -104,6 +134,9 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
         val strictMediaSourceFactory = DefaultMediaSourceFactory(attributedContext, Media3Utils.getRadioExtractorsFactory())
             .setDataSourceFactory(icyFactory)
 
+        volumeNormalizationProcessor.setAutoNormalizationEnabled(stationAudioManager.isAutoNormalizationEnabled.value)
+        stationAudioManager.addListener(stationAudioListener)
+
         val renderersFactory = object : DefaultRenderersFactory(attributedContext) {
             override fun buildAudioSink(
                 context: Context,
@@ -111,6 +144,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
                 enableAudioTrackPlaybackParams: Boolean
             ): androidx.media3.exoplayer.audio.AudioSink {
                 return DefaultAudioSink.Builder(context)
+                    .setAudioProcessors(arrayOf(volumeNormalizationProcessor))
                     .setEnableFloatOutput(false)
                     .build()
             }
@@ -229,6 +263,7 @@ class ExoPlayerWrapper(private val context: Context, looper: Looper) : PlayerWra
     override fun release() {
         cancelStopTask()
         isPlayingFlag = false
+        stationAudioManager.removeListener(stationAudioListener)
         val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         try { cm?.unregisterNetworkCallback(networkCallback) } catch (_: Exception) {}
         if (playerThreadHandler.looper.thread.isAlive) {

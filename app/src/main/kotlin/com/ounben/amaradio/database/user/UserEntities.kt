@@ -111,3 +111,12 @@ data class FavoriteListItemEntity(
     val displayOrder: Int = 0,
     val addedAt: Long = System.currentTimeMillis()
 )
+
+@Serializable
+@Entity(tableName = "station_audio_settings")
+data class StationAudioEntity(
+    @PrimaryKey val stationUuid: String,
+    val manualGainDb: Float = 0f,
+    val learnedGainDb: Float? = null,
+    val updatedAt: Long = System.currentTimeMillis()
+)

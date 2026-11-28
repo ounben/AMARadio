@@ -58,6 +58,7 @@ fun MainTopBar(
     isDeleteVisible: Boolean,
     deleteTitleRes: Int,
     currentStation: DataRadioStation? = null,
+    onEqualizerClick: () -> Unit = {},
     onExportBackup: () -> Unit = {},
     onImportBackup: () -> Unit = {}
 ) {
@@ -268,6 +269,14 @@ fun MainTopBar(
                             leadingIcon = { Icon(Icons.Default.FilterList, contentDescription = null) },
                             onClick = {
                                 onFilterClick()
+                                showMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.settings_equalizer)) },
+                            leadingIcon = { Icon(Icons.Default.Equalizer, contentDescription = null) },
+                            onClick = {
+                                onEqualizerClick()
                                 showMenu = false
                             }
                         )

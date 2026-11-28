@@ -215,3 +215,24 @@ interface FavoriteListDao {
         }
     }
 }
+
+@Dao
+interface StationAudioDao {
+    @Query("SELECT * FROM station_audio_settings")
+    fun getAllFlow(): Flow<List<StationAudioEntity>>
+
+    @Query("SELECT * FROM station_audio_settings")
+    suspend fun getAll(): List<StationAudioEntity>
+
+    @Query("SELECT * FROM station_audio_settings WHERE stationUuid = :stationUuid LIMIT 1")
+    suspend fun getByStationUuid(stationUuid: String): StationAudioEntity?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun upsert(entity: StationAudioEntity)
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAllIgnore(entities: List<StationAudioEntity>)
+
+    @Query("DELETE FROM station_audio_settings WHERE stationUuid = :stationUuid")
+    suspend fun deleteByStationUuid(stationUuid: String)
+}

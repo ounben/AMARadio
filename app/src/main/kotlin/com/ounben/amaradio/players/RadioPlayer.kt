@@ -202,6 +202,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         Log.d(castTag, "executeActualPlayRemote: calling playRemote for station '$streamName' ($stationURL)")
         setState(PlayState.PrePlaying, -1)
         this.streamName = streamName
+        (currentPlayer as? ExoPlayerWrapper)?.setCurrentStationUuid(currentStationUuid)
         val app = mainContext.applicationContext as AMARadioApp
         val customizedHttpClient = app.newHttpClient().build()
         currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, metadata)
@@ -356,7 +357,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         val oldState = playState
         playState = state
 
-        if (state == PlayState.Playing) {
+        val resolvedSessionId = if (state == PlayState.Playing) {
             isPausing = false
             reconnectAttempts = 0
             cachedAudioSessionId = currentPlayer.audioSessionId
@@ -364,14 +365,16 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
             
             playerThreadHandler.removeCallbacks(bufferCheckRunnable)
             playerThreadHandler.post(bufferCheckRunnable)
+            if (audioSessionId > 0) audioSessionId else cachedAudioSessionId
         } else {
             playerThreadHandler.removeCallbacks(bufferCheckRunnable)
             // Critical: Only reset isPausing if we are logically stopping, not during a user-requested pause
             if (state == PlayState.Idle && userWantPlaying) isPausing = false
+            audioSessionId
         }
 
         if (oldState != state) {
-            playerListener?.onStateChanged(state, audioSessionId)
+            playerListener?.onStateChanged(state, resolvedSessionId)
         }
     }
 

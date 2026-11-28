@@ -35,6 +35,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val stationClickCounter: Boolean = true,
         val removeNotificationOnStop: Boolean = false,
         val autoResumeAudioFocus: Boolean = true,
+        val volumeNormalization: Boolean = false,
         val isReviewCompleted: Boolean = false
     )
 
@@ -94,6 +95,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
                 stationClickCounter = sharedPref.getBoolean("settings_station_click_counter", app.resources.getBoolean(R.bool.default_station_click_counter)),
                 removeNotificationOnStop = sharedPref.getBoolean("settings_remove_notification_on_stop", false),
                 autoResumeAudioFocus = sharedPref.getBoolean("settings_auto_resume_audio_focus", true),
+                volumeNormalization = sharedPref.getBoolean("settings_volume_normalization", false),
                 isReviewCompleted = sharedPref.getBoolean("review_completed", false)
             )
         }
