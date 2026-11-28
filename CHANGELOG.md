@@ -5,6 +5,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.54] - 2026-11-28
+### Added
+- **Favorite Playlists (#118)**: Added custom favorite playlists (`FavoriteListManager`, `FavoriteListDialogs`, Room DB v9 `FavoriteListEntity`/`FavoriteListItemEntity`) with a playlist filter bar (`FavoritePlaylistFilterBar`), playlist management (`ManageFavoriteListsDialog`, `CreateEditFavoriteListDialog`, `DeleteFavoriteListConfirmDialog`), station assignment (`AssignFavoriteListsDialog`, `ManagePlaylistStationsDialog`), per-playlist station ordering, TalkBack-friendly playlist reordering (`PlaylistPositionPickerDialog`), ZIP backup/restore integration (`BackupManager`), and unit tests (`FavoriteListHelperTest`).
+- **Scroll-to-Top & Scroll-to-Bottom Navigation (#168)**: Renamed `ScrollToTop.kt` to `ScrollNavigation.kt` and expanded the bottom-right control into stacked `48dp` Scroll-to-Top and Scroll-to-Bottom buttons (`ScrollNavigationButtons`) with instant list/scroll jumping (`scrollToItem`/`scrollTo`), localized `action_scroll_to_bottom` label, and coverage extended to `AboutScreen`.
+- **Always-Visible AMARadio Amber Scroll Indicator**: Added a subtle, always-visible AMARadio Amber vertical scrollbar (`Modifier.verticalScrollbar`) on the right edge across all `LazyColumn`, `LazyVerticalGrid`, and `verticalScroll` views (including station tabs, favorites, playlists, recordings, filter, settings, server info, about screen, and proxy dialog).
+- **Screen Reader List Count & Scroll Range Accessibility (#168)**: Added `ListAccessibility.kt` providing explicit `CollectionInfo`/`CollectionItemInfo` semantics across all lists and grids and emitting standard Android `TYPE_VIEW_SCROLLED` events (`fromIndex`, `toIndex`, `itemCount`, `eventTime`) directly from the virtual scrollable `LazyColumn`/`LazyVerticalGrid` node (via `RootForTest.semanticsOwner`) with TalkBack-aligned timing, enabling TalkBack and Jieshuo to announce item positions and visible scroll ranges.
+- **Global Localization Update**: Synchronized all new Playlist and scroll navigation string keys across all 89 language resource folders.
+
+### Changed
+- **Unified Delete Icon & Playlist Styling**: Standardized delete actions across `MainTopBar`, `CustomStationsTab`, `RecordingsTab`, `FilterScreen`, `Dialogs`, and `FavoriteListDialogs` using the new `delete_24.xml` vector drawable, and aligned playlist dialogs and chips with AMARadio theme colors (#118).
+
+### Fixed
+- **Duplicate TalkBack Reorder Button Announcement (#168)**: Merged nested drag-handle containers into a single interactive `Box` with `Role.Button` and merged semantics in `StationComposables` and `FavoriteListDialogs` so screen readers announce the reorder control once instead of twice.
+
 ## [1.53] - 2026-11-27
 ### Added
 - **Live Recording Status Bar (`RecordingStatusBar`)**: Displays a compact status bar directly above the MiniPlayer, FullPlayer, and landscape SidePanelPlayer while a background recording is active, showing a record indicator, truncated station name, live elapsed time, file size (`KB`/`MB`), accessible spoken duration for TalkBack, and a direct stop button.
