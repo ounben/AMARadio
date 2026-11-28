@@ -90,10 +90,14 @@ fun AboutScreen(onBack: () -> Unit) {
         }
     }
 
+    val scrollState = rememberScrollState()
+    BindScrollNavigation(scrollState = scrollState)
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
+            .verticalScrollbar(scrollState)
+            .verticalScroll(scrollState)
     ) {
         // Internal Back Button Header
         Row(

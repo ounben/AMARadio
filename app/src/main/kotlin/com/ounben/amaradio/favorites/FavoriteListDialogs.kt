@@ -81,6 +81,7 @@ import com.ounben.amaradio.ui.AmaradioAmber
 import com.ounben.amaradio.ui.BindListScrollRangeAccessibility
 import com.ounben.amaradio.ui.StationIcon
 import com.ounben.amaradio.ui.listItemSemantics
+import com.ounben.amaradio.ui.verticalScrollbar
 import sh.calvin.reorderable.ReorderableItem
 import sh.calvin.reorderable.rememberReorderableLazyListState
 
@@ -385,6 +386,7 @@ fun ManageFavoriteListsDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 360.dp)
+                            .verticalScrollbar(lazyListState)
                     ) {
                         itemsIndexed(listsLocal, key = { _, item -> item.id }) { index, list ->
                             ReorderableItem(reorderableState, key = list.id) { isDragging ->
@@ -600,7 +602,8 @@ fun PlaylistPositionPickerDialog(
                 state = listState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 360.dp),
+                    .heightIn(max = 360.dp)
+                    .verticalScrollbar(listState),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 itemsIndexed(allLists) { idx, targetList ->
@@ -771,6 +774,7 @@ fun AssignFavoriteListsDialog(
                         modifier = Modifier
                             .fillMaxWidth()
                             .heightIn(max = 320.dp)
+                            .verticalScrollbar(assignListState)
                     ) {
                         itemsIndexed(lists, key = { _, item -> item.id }) { index, list ->
                             val isChecked = list.id in selectedIds
@@ -924,6 +928,7 @@ fun ManagePlaylistStationsDialog(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 360.dp)
+                        .verticalScrollbar(stationsListState)
                 ) {
                     itemsIndexed(allFavorites, key = { _, item -> item.StationUuid }) { index, station ->
                         val isChecked = station.StationUuid in selectedUuids

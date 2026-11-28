@@ -82,6 +82,7 @@ fun SettingsScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScrollbar(scrollState)
                 .verticalScroll(scrollState)
                 .padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
@@ -535,6 +536,7 @@ fun SettingsListPreference(
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(max = 400.dp)
+                        .verticalScrollbar(listState)
                 ) {
                     itemsIndexed(entries) { index, label ->
                         // Only show non-empty entries and ensure we have a corresponding value

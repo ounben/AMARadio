@@ -312,6 +312,7 @@ fun StationList(
                 .fillMaxSize()
                 .clipToBounds()
                 .background(MaterialTheme.colorScheme.background)
+                .verticalScrollbar(gridState)
                 .semantics { collectionInfo = gridCollectionInfo(stations.size, columnCount) },
             contentPadding = PaddingValues(top = 8.dp, start = 8.dp, end = 8.dp, bottom = 16.dp)
         ) {
@@ -341,7 +342,8 @@ fun StationList(
             modifier = modifier
                 .fillMaxSize()
                 .clipToBounds()
-                .background(MaterialTheme.colorScheme.background),
+                .background(MaterialTheme.colorScheme.background)
+                .verticalScrollbar(listState),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             itemsIndexed(
@@ -409,7 +411,8 @@ fun TrackList(
             state = listState,
             modifier = Modifier
                 .fillMaxSize()
-                .clipToBounds(),
+                .clipToBounds()
+                .verticalScrollbar(listState),
             contentPadding = PaddingValues(bottom = 16.dp)
         ) {
             items(
@@ -836,6 +839,7 @@ fun ReorderableStationList(
             columns = GridCells.Adaptive(140.dp),
             modifier = modifier
                 .fillMaxSize()
+                .verticalScrollbar(gridState)
                 .semantics { collectionInfo = gridCollectionInfo(stationsLocal.size, columnCount) },
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -925,7 +929,9 @@ fun ReorderableStationList(
 
         LazyColumn(
             state = listState,
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier
+                .fillMaxSize()
+                .verticalScrollbar(listState),
             contentPadding = PaddingValues(bottom = 80.dp)
         ) {
             itemsIndexed(stationsLocal, key = { _, s -> s.StationUuid }) { index, station ->
@@ -1075,7 +1081,8 @@ fun PositionPickerDialog(
                 state = listState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(max = 360.dp),
+                    .heightIn(max = 360.dp)
+                    .verticalScrollbar(listState),
                 verticalArrangement = Arrangement.spacedBy(2.dp)
             ) {
                 itemsIndexed(allStations) { idx, targetStation ->
@@ -1172,6 +1179,7 @@ fun CategoryList(
             modifier = modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
+                .verticalScrollbar(gridState)
                 .semantics { collectionInfo = gridCollectionInfo(categories.size, columnCount) },
             contentPadding = PaddingValues(8.dp)
         ) {
@@ -1191,7 +1199,10 @@ fun CategoryList(
     } else {
         LazyColumn(
             state = listState,
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.background)
+                .verticalScrollbar(listState)
         ) {
             itemsIndexed(
                 items = categories,

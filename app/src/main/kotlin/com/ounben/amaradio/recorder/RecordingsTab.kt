@@ -50,6 +50,7 @@ import com.ounben.amaradio.ui.BindScrollNavigation
 import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import com.ounben.amaradio.ui.listItemCollectionInfo
+import com.ounben.amaradio.ui.verticalScrollbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -134,7 +135,9 @@ fun RecordingsTab() {
             } else {
                 LazyColumn(
                     state = listState,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .verticalScrollbar(listState),
                     contentPadding = PaddingValues(bottom = 16.dp)
                 ) {
                     itemsIndexed(recordings, key = { _, it -> it.id }) { index, record ->

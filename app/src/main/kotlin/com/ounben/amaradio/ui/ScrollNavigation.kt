@@ -28,7 +28,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameNanos
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -262,4 +267,144 @@ fun BindScrollNavigation(
             )
         }
     }
+}
+
+/**
+ * Draws an always-visible AMARadio accent-colored vertical scroll indicator on the right edge
+ * whenever the [LazyListState] is scrollable. Purely visual (no accessibility nodes added).
+ */
+fun Modifier.verticalScrollbar(
+    state: LazyListState,
+    color: Color = AmaradioAmber,
+    width: Dp = 4.dp,
+    endMargin: Dp = 2.dp,
+    verticalMargin: Dp = 4.dp,
+    minThumbHeight: Dp = 28.dp,
+): Modifier = drawWithContent {
+    drawContent()
+    if (!state.canScrollForward && !state.canScrollBackward) return@drawWithContent
+    val layoutInfo = state.layoutInfo
+    val totalItems = layoutInfo.totalItemsCount
+    val visibleItems = layoutInfo.visibleItemsInfo
+    if (totalItems <= 0 || visibleItems.isEmpty()) return@drawWithContent
+
+    val marginPx = verticalMargin.toPx()
+    val trackHeight = (size.height - marginPx * 2f).coerceAtLeast(1f)
+    val widthPx = width.toPx()
+    val minThumbPx = minThumbHeight.toPx().coerceAtMost(trackHeight)
+
+    val firstVisible = visibleItems.first()
+    val firstItemFraction = if (firstVisible.size > 0) {
+        (-firstVisible.offset).coerceAtLeast(0).toFloat() / firstVisible.size.toFloat()
+    } else 0f
+    val avgItemSize = visibleItems.sumOf { it.size }.toFloat() / visibleItems.size.toFloat()
+    val viewportHeight = layoutInfo.viewportSize.height.toFloat().coerceAtLeast(1f)
+    val visibleCountApprox = if (avgItemSize > 0f) viewportHeight / avgItemSize else visibleItems.size.toFloat()
+    val estimatedTotalItems = totalItems.toFloat().coerceAtLeast(visibleCountApprox)
+
+    val thumbHeight = ((visibleCountApprox / estimatedTotalItems) * trackHeight).coerceIn(minThumbPx, trackHeight)
+    val maxScrollItems = (estimatedTotalItems - visibleCountApprox).coerceAtLeast(0.001f)
+    val scrollFraction = when {
+        !state.canScrollBackward -> 0f
+        !state.canScrollForward -> 1f
+        else -> ((firstVisible.index.toFloat() + firstItemFraction) / maxScrollItems).coerceIn(0f, 1f)
+    }
+    val thumbTop = marginPx + scrollFraction * (trackHeight - thumbHeight)
+    val thumbLeft = (size.width - widthPx - endMargin.toPx()).coerceAtLeast(0f)
+
+    drawRoundRect(
+        color = color,
+        topLeft = Offset(thumbLeft, thumbTop),
+        size = Size(widthPx, thumbHeight),
+        cornerRadius = CornerRadius(widthPx / 2f, widthPx / 2f),
+    )
+}
+
+/**
+ * Draws an always-visible AMARadio accent-colored vertical scroll indicator on the right edge
+ * whenever the [LazyGridState] is scrollable. Purely visual (no accessibility nodes added).
+ */
+fun Modifier.verticalScrollbar(
+    state: LazyGridState,
+    color: Color = AmaradioAmber,
+    width: Dp = 4.dp,
+    endMargin: Dp = 2.dp,
+    verticalMargin: Dp = 4.dp,
+    minThumbHeight: Dp = 28.dp,
+): Modifier = drawWithContent {
+    drawContent()
+    if (!state.canScrollForward && !state.canScrollBackward) return@drawWithContent
+    val layoutInfo = state.layoutInfo
+    val totalItems = layoutInfo.totalItemsCount
+    val visibleItems = layoutInfo.visibleItemsInfo
+    if (totalItems <= 0 || visibleItems.isEmpty()) return@drawWithContent
+
+    val marginPx = verticalMargin.toPx()
+    val trackHeight = (size.height - marginPx * 2f).coerceAtLeast(1f)
+    val widthPx = width.toPx()
+    val minThumbPx = minThumbHeight.toPx().coerceAtMost(trackHeight)
+
+    val columnCount = (visibleItems.maxOf { it.column } + 1).coerceAtLeast(1)
+    val totalRows = ((totalItems + columnCount - 1) / columnCount).toFloat()
+    val firstVisible = visibleItems.first()
+    val firstRow = (firstVisible.index / columnCount).toFloat()
+    val firstRowHeight = firstVisible.size.height.coerceAtLeast(1)
+    val firstRowFraction = (-firstVisible.offset.y).coerceAtLeast(0).toFloat() / firstRowHeight.toFloat()
+    val avgRowHeight = visibleItems.sumOf { it.size.height }.toFloat() / visibleItems.size.toFloat()
+    val viewportHeight = layoutInfo.viewportSize.height.toFloat().coerceAtLeast(1f)
+    val visibleRowsApprox = if (avgRowHeight > 0f) viewportHeight / avgRowHeight else 1f
+    val estimatedTotalRows = totalRows.coerceAtLeast(visibleRowsApprox)
+
+    val thumbHeight = ((visibleRowsApprox / estimatedTotalRows) * trackHeight).coerceIn(minThumbPx, trackHeight)
+    val maxScrollRows = (estimatedTotalRows - visibleRowsApprox).coerceAtLeast(0.001f)
+    val scrollFraction = when {
+        !state.canScrollBackward -> 0f
+        !state.canScrollForward -> 1f
+        else -> ((firstRow + firstRowFraction) / maxScrollRows).coerceIn(0f, 1f)
+    }
+    val thumbTop = marginPx + scrollFraction * (trackHeight - thumbHeight)
+    val thumbLeft = (size.width - widthPx - endMargin.toPx()).coerceAtLeast(0f)
+
+    drawRoundRect(
+        color = color,
+        topLeft = Offset(thumbLeft, thumbTop),
+        size = Size(widthPx, thumbHeight),
+        cornerRadius = CornerRadius(widthPx / 2f, widthPx / 2f),
+    )
+}
+
+/**
+ * Draws an always-visible AMARadio accent-colored vertical scroll indicator on the right edge
+ * whenever the [ScrollState] is scrollable. Must be placed BEFORE [Modifier.verticalScroll].
+ */
+fun Modifier.verticalScrollbar(
+    state: ScrollState,
+    color: Color = AmaradioAmber,
+    width: Dp = 4.dp,
+    endMargin: Dp = 2.dp,
+    verticalMargin: Dp = 4.dp,
+    minThumbHeight: Dp = 28.dp,
+): Modifier = drawWithContent {
+    drawContent()
+    val maxValue = state.maxValue
+    if (maxValue <= 0 || maxValue == Int.MAX_VALUE) return@drawWithContent
+
+    val marginPx = verticalMargin.toPx()
+    val trackHeight = (size.height - marginPx * 2f).coerceAtLeast(1f)
+    val widthPx = width.toPx()
+    val minThumbPx = minThumbHeight.toPx().coerceAtMost(trackHeight)
+
+    val viewportHeight = size.height.coerceAtLeast(1f)
+    val totalContentHeight = viewportHeight + maxValue.toFloat()
+    val thumbHeight = ((viewportHeight / totalContentHeight) * trackHeight).coerceIn(minThumbPx, trackHeight)
+    val scrollFraction = (state.value.toFloat() / maxValue.toFloat()).coerceIn(0f, 1f)
+    val thumbTop = marginPx + scrollFraction * (trackHeight - thumbHeight)
+    val thumbLeft = (size.width - widthPx - endMargin.toPx()).coerceAtLeast(0f)
+
+    drawRoundRect(
+        color = color,
+        topLeft = Offset(thumbLeft, thumbTop),
+        size = Size(widthPx, thumbHeight),
+        cornerRadius = CornerRadius(widthPx / 2f, widthPx / 2f),
+    )
 }

@@ -153,6 +153,7 @@ fun FilterScreen(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .verticalScrollbar(sheetScrollState)
                     .verticalScroll(sheetScrollState)
                     .padding(start = 20.dp, end = 20.dp, bottom = 40.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -528,11 +529,13 @@ fun FilterScreen(
 
 @Composable
 fun FilterEmptyState() {
+    val scrollState = rememberScrollState()
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScrollbar(scrollState)
             .padding(horizontal = 32.dp)
-            .verticalScroll(rememberScrollState())
+            .verticalScroll(scrollState)
             .background(MaterialTheme.colorScheme.surfaceVariant),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
@@ -822,7 +825,9 @@ fun MultiSearchableSelectionDialog(
                 BindListScrollRangeAccessibility(listState = listState, enabled = filteredOptions.isNotEmpty())
                 androidx.compose.foundation.lazy.LazyColumn(
                     state = listState,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScrollbar(listState),
                     contentPadding = PaddingValues(vertical = 4.dp)
                 ) {
                     itemsIndexed(
@@ -988,7 +993,9 @@ fun SearchableSelectionDialog(
                 BindListScrollRangeAccessibility(listState = listState, enabled = filteredOptions.isNotEmpty())
                 androidx.compose.foundation.lazy.LazyColumn(
                     state = listState,
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScrollbar(listState),
                     contentPadding = PaddingValues(vertical = 4.dp)
                 ) {
                     itemsIndexed(

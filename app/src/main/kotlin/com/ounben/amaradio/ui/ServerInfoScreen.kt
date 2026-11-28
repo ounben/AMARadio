@@ -122,7 +122,9 @@ fun GlobalStatsTab(uiState: ServerInfoViewModel.ServerInfoUiState, onRefresh: ()
             BindListScrollRangeAccessibility(listState = statsListState, enabled = uiState.statistics.isNotEmpty())
             LazyColumn(
                 state = statsListState,
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .verticalScrollbar(statsListState),
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
@@ -173,7 +175,9 @@ fun LocalDbTab(
 
     LazyColumn(
         state = localDbListState,
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScrollbar(localDbListState),
         contentPadding = PaddingValues(bottom = 16.dp)
     ) {
         item {

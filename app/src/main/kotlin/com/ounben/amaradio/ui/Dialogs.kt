@@ -267,10 +267,12 @@ fun ProxySettingsDialogCompose(onDismiss: () -> Unit) {
         tonalElevation = 0.dp,
         title = { Text(stringResource(R.string.settings_proxy), fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.onSurface) },
         text = {
+            val scrollState = rememberScrollState()
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .verticalScrollbar(scrollState)
+                    .verticalScroll(scrollState),
                 verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 OutlinedTextField(
