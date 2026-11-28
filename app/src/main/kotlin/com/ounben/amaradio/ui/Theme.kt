@@ -37,6 +37,67 @@ val DarkOnBackground = Color(0xFFFFFFFF)
 val DarkOnSurfaceVariant = Color(0xFFBBBBBB)
 val DarkOutline = Color(0xFF444444) // Solid Outline
 
+// Shared Single-Source-of-Truth Color Schemes (used by both App UI and Glance Widgets)
+val AmaradioDarkColorScheme = darkColorScheme(
+    primary = AmaradioAmber,
+    onPrimary = Color.Black,
+    primaryContainer = Color(0xFF331E00),
+    onPrimaryContainer = AmaradioAmber,
+    secondary = DarkSurfaceVariant,
+    onSecondary = Color.White,
+    secondaryContainer = Color(0xFF2C2C2C),
+    onSecondaryContainer = Color.White,
+    tertiary = AmaradioAmber,
+    onTertiary = Color.Black,
+    tertiaryContainer = Color(0xFF331E00),
+    onTertiaryContainer = AmaradioAmber,
+    error = SolidRedError,
+    onError = Color.White,
+    errorContainer = Color(0xFF8C1D18),
+    onErrorContainer = Color(0xFFF9DEDC),
+    background = DarkBackground,
+    onBackground = Color.White,
+    surface = DarkSurface,
+    onSurface = Color.White,
+    surfaceVariant = DarkSurfaceVariant,
+    onSurfaceVariant = DarkOnSurfaceVariant,
+    surfaceContainer = Color(0xFF1E1E1E),
+    surfaceContainerHigh = Color(0xFF252525),
+    surfaceContainerHighest = Color(0xFF2D2D2D),
+    outline = DarkOutline,
+    surfaceTint = Color.Transparent
+)
+
+val AmaradioLightColorScheme = lightColorScheme(
+    primary = AmaradioAmber,
+    onPrimary = Color.Black,
+    primaryContainer = Color(0xFFFFECB3),
+    onPrimaryContainer = Color(0xFF3E2723),
+    secondary = LightSurfaceVariant,
+    onSecondary = Color.Black,
+    secondaryContainer = Color(0xFFE0E0E0),
+    onSecondaryContainer = Color.Black,
+    tertiary = AmaradioAmber,
+    onTertiary = Color.Black,
+    tertiaryContainer = Color(0xFFFFECB3),
+    onTertiaryContainer = Color(0xFF3E2723),
+    error = SolidRedErrorLight,
+    onError = Color.White,
+    errorContainer = Color(0xFFF9DEDC),
+    onErrorContainer = Color(0xFF410E0B),
+    background = LightBackground,
+    onBackground = Color.Black,
+    surface = LightSurface,
+    onSurface = Color.Black,
+    surfaceVariant = LightSurfaceVariant,
+    onSurfaceVariant = LightOnSurfaceVariant,
+    surfaceContainer = Color(0xFFF5F5F5),
+    surfaceContainerHigh = Color(0xFFEEEEEE),
+    surfaceContainerHighest = Color(0xFFE0E0E0),
+    outline = LightOutline,
+    surfaceTint = Color.Transparent
+)
+
 @Composable
 fun AMARadioTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
@@ -50,69 +111,7 @@ fun AMARadioTheme(
         else -> darkTheme
     }
 
-    val colorScheme = if (useDarkTheme) {
-        // STRICT OPAQUE DARK (All containers & indicators forced to Amber / Neutral Grays / Solid Red)
-        darkColorScheme(
-            primary = AmaradioAmber,
-            onPrimary = Color.Black,
-            primaryContainer = Color(0xFF331E00),
-            onPrimaryContainer = AmaradioAmber,
-            secondary = DarkSurfaceVariant,
-            onSecondary = Color.White,
-            secondaryContainer = Color(0xFF2C2C2C),
-            onSecondaryContainer = Color.White,
-            tertiary = AmaradioAmber,
-            onTertiary = Color.Black,
-            tertiaryContainer = Color(0xFF331E00),
-            onTertiaryContainer = AmaradioAmber,
-            error = SolidRedError,
-            onError = Color.White,
-            errorContainer = Color(0xFF8C1D18),
-            onErrorContainer = Color(0xFFF9DEDC),
-            background = DarkBackground,
-            onBackground = Color.White,
-            surface = DarkSurface,
-            onSurface = Color.White,
-            surfaceVariant = DarkSurfaceVariant,
-            onSurfaceVariant = DarkOnSurfaceVariant,
-            surfaceContainer = Color(0xFF1E1E1E),
-            surfaceContainerHigh = Color(0xFF252525),
-            surfaceContainerHighest = Color(0xFF2D2D2D),
-            outline = DarkOutline,
-            surfaceTint = Color.Transparent
-        )
-    } else {
-        // STRICT OPAQUE LIGHT (All containers & indicators forced to Amber / Neutral Grays / Solid Red)
-        lightColorScheme(
-            primary = AmaradioAmber,
-            onPrimary = Color.Black,
-            primaryContainer = Color(0xFFFFECB3),
-            onPrimaryContainer = Color(0xFF3E2723),
-            secondary = LightSurfaceVariant,
-            onSecondary = Color.Black,
-            secondaryContainer = Color(0xFFE0E0E0),
-            onSecondaryContainer = Color.Black,
-            tertiary = AmaradioAmber,
-            onTertiary = Color.Black,
-            tertiaryContainer = Color(0xFFFFECB3),
-            onTertiaryContainer = Color(0xFF3E2723),
-            error = SolidRedErrorLight,
-            onError = Color.White,
-            errorContainer = Color(0xFFF9DEDC),
-            onErrorContainer = Color(0xFF410E0B),
-            background = LightBackground,
-            onBackground = Color.Black,
-            surface = LightSurface,
-            onSurface = Color.Black,
-            surfaceVariant = LightSurfaceVariant,
-            onSurfaceVariant = LightOnSurfaceVariant,
-            surfaceContainer = Color(0xFFF5F5F5),
-            surfaceContainerHigh = Color(0xFFEEEEEE),
-            surfaceContainerHighest = Color(0xFFE0E0E0),
-            outline = LightOutline,
-            surfaceTint = Color.Transparent
-        )
-    }
+    val colorScheme = if (useDarkTheme) AmaradioDarkColorScheme else AmaradioLightColorScheme
 
     val view = LocalView.current
     if (!view.isInEditMode) {

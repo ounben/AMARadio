@@ -1,44 +1,35 @@
 package com.ounben.amaradio.widget
 
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
-import androidx.compose.ui.graphics.Color
+import android.content.Context
+import androidx.glance.color.ColorProviders
 import androidx.glance.material3.ColorProviders
+import com.ounben.amaradio.Utils
+import com.ounben.amaradio.ui.AmaradioDarkColorScheme
+import com.ounben.amaradio.ui.AmaradioLightColorScheme
 
+/**
+ * Bridges AMARadio's single-source-of-truth Material 3 color schemes from `Theme.kt`
+ * into Glance [ColorProviders] while respecting the user's app theme preference.
+ */
 object WidgetTheme {
-    val Amber = Color(0xFFFF9800)
-    
-    val LightBackground = Color(0xFFFFFFFF)
-    val LightTextPrimary = Color(0xFF0F0F0F)
-    val LightTextSecondary = Color(0xFF606060)
-    
-    val DarkBackground = Color(0xFF000000)
-    val DarkTextPrimary = Color(0xFFFFFFFF)
-    val DarkTextSecondary = Color(0xFFAAAAAA)
-    val DarkSurfaceVariant = Color(0xFF242424)
-
-    val colors = ColorProviders(
-        light = lightColorScheme(
-            primary = Amber,
-            onPrimary = Color.Black,
-            background = LightBackground,
-            onBackground = LightTextPrimary,
-            surface = LightBackground,
-            onSurface = LightTextPrimary,
-            surfaceVariant = Color(0xFFF2F2F2),
-            onSurfaceVariant = LightTextSecondary,
-            outline = Color(0xFFBDBDBD)
-        ),
-        dark = darkColorScheme(
-            primary = Amber,
-            onPrimary = Color.Black,
-            background = DarkBackground,
-            onBackground = DarkTextPrimary,
-            surface = DarkBackground,
-            onSurface = DarkTextPrimary,
-            surfaceVariant = DarkSurfaceVariant,
-            onSurfaceVariant = DarkTextSecondary,
-            outline = Color(0xFF444444)
-        )
+    private val systemColors = ColorProviders(
+        light = AmaradioLightColorScheme,
+        dark = AmaradioDarkColorScheme
     )
+
+    private val forcedDarkColors = ColorProviders(
+        light = AmaradioDarkColorScheme,
+        dark = AmaradioDarkColorScheme
+    )
+
+    private val forcedLightColors = ColorProviders(
+        light = AmaradioLightColorScheme,
+        dark = AmaradioLightColorScheme
+    )
+
+    fun colors(context: Context): ColorProviders = when (Utils.getTheme(context)) {
+        "dark" -> forcedDarkColors
+        "light" -> forcedLightColors
+        else -> systemColors
+    }
 }

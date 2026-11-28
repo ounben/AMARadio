@@ -15,7 +15,6 @@ import androidx.glance.layout.*
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
-import androidx.glance.unit.ColorProvider
 import androidx.glance.state.GlanceStateDefinition
 import androidx.glance.state.PreferencesGlanceStateDefinition
 import androidx.glance.action.actionStartActivity
@@ -40,7 +39,7 @@ class AMARadioSmallWidget : GlanceAppWidget() {
             // Observe the counter to ensure Glance recomposes
             val counter = prefs[WidgetState.updateCounterKey] ?: 0
 
-            androidx.glance.GlanceTheme(colors = WidgetTheme.colors) {
+            GlanceTheme(colors = WidgetTheme.colors(context)) {
                 SmallWidgetContent(context, name, details, trackInfo, uuid, iconUrl, isPlaying)
             }
         }
@@ -57,10 +56,10 @@ fun SmallWidgetContent(
     iconUrl: String,
     isPlaying: Boolean
 ) {
-    val backgroundColor = ColorProvider(R.color.widget_bg)
-    val textColor = ColorProvider(R.color.widget_on_bg)
-    val secondaryColor = ColorProvider(R.color.widget_on_bg_secondary)
-    val amber = ColorProvider(WidgetTheme.Amber)
+    val backgroundColor = GlanceTheme.colors.background
+    val textColor = GlanceTheme.colors.onBackground
+    val secondaryColor = GlanceTheme.colors.onSurfaceVariant
+    val amber = GlanceTheme.colors.primary
 
     Row(
         modifier = GlanceModifier

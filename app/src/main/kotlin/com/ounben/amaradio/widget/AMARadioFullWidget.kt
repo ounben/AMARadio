@@ -78,7 +78,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
                 emptyList()
             }
 
-            androidx.glance.GlanceTheme(colors = WidgetTheme.colors) {
+            GlanceTheme(colors = WidgetTheme.colors(context)) {
                 FullWidgetContent(
                     context = context,
                     name = currentName,

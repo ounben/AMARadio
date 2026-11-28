@@ -19,6 +19,7 @@ import com.ounben.amaradio.ui.MainScreen
 import com.ounben.amaradio.ui.MainViewModel
 import com.ounben.amaradio.utils.LocaleUtils
 import com.ounben.amaradio.utils.UiScaler
+import com.ounben.amaradio.widget.WidgetUpdateHelper
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -256,6 +257,9 @@ class ActivityMain : AppCompatActivity(), SharedPreferences.OnSharedPreferenceCh
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
+        if (key == "theme_name" || key == "settings_language") {
+            WidgetUpdateHelper.refreshAllWidgets(applicationContext)
+        }
         if (key == "theme_name" || key == UiScaler.PREF_KEY_UI_SCALE || key == "settings_language") {
             recreate()
         }
