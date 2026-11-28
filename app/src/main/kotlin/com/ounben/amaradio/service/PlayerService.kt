@@ -45,14 +45,17 @@ import com.ounben.amaradio.AMARadioApp
 import com.ounben.amaradio.ActivityMain
 import com.ounben.amaradio.AppEventManager
 import com.ounben.amaradio.IPlayerService
+import com.ounben.amaradio.InMemoryStationQueue
 import com.ounben.amaradio.R
 import com.ounben.amaradio.Utils
+import com.ounben.amaradio.database.toDataStation
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.favorites.FavoriteListHelper
 import com.ounben.amaradio.history.TrackHistoryEntry
 import com.ounben.amaradio.history.TrackHistoryRepository
 import com.ounben.amaradio.players.PlayState
 import com.ounben.amaradio.players.RadioPlayer
 import com.ounben.amaradio.players.selector.PlayerType
-import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.station.live.ShoutcastInfo
 import com.ounben.amaradio.station.live.StreamLiveInfo
@@ -489,6 +492,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     }
                     ACTION_PLAY_STATION -> {
                         val stationId = it.getStringExtra(EXTRA_STATION_ID)
+                        val playlistId = it.getStringExtra(EXTRA_PLAYLIST_ID)
                         if (!stationId.isNullOrEmpty()) {
                             val placeholderStation = DataRadioStation(StationUuid = stationId, Name = "Connecting...")
                             if (itsCurrentStation == null) {
@@ -497,11 +501,24 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                             updateNotification(PlayState.PrePlaying)
 
                             serviceScope.launch {
+                                val app = application as AMARadioApp
                                 val station = amaradioBrowser.getStationById(stationId)
-                                                ?: (application as AMARadioApp).favouriteManager.getById(stationId)
-                                                ?: (application as AMARadioApp).historyManager.getById(stationId)
+                                                ?: app.favouriteManager.getById(stationId)
+                                                ?: app.historyManager.getById(stationId)
                                                 ?: placeholderStation
-                                
+
+                                if (!playlistId.isNullOrEmpty()) {
+                                    val playlistStations = withContext(Dispatchers.IO) {
+                                        val userDb = AMARadioUserDatabase.getDatabase(this@PlayerService)
+                                        val allFavorites = userDb.favoriteDao().getAllFavorites().map { entity -> entity.toDataStation() }
+                                        val allItems = userDb.favoriteListDao().getAllItems()
+                                        FavoriteListHelper.filterStationsForList(allFavorites, allItems, playlistId)
+                                    }
+                                    if (playlistStations.isNotEmpty()) {
+                                        station.queue = InMemoryStationQueue(this@PlayerService, playlistStations)
+                                    }
+                                }
+
                                 withContext(Dispatchers.Main) {
                                     playWithoutWarnings(station)
                                 }
@@ -1555,6 +1572,7 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         const val ACTION_TOGGLE_PLAY_PAUSE = "com.ounben.amaradio.toggle"
         const val ACTION_PLAY_STATION = "com.ounben.amaradio.play_station"
         const val EXTRA_STATION_ID = "STATION_ID"
+        const val EXTRA_PLAYLIST_ID = "PLAYLIST_ID"
         private const val FULL_VOLUME = 100f; private const val DUCK_VOLUME = 40f
         private const val METERED_CONNECTION_WARNING_COOLDOWN = 20 * 1000
         private const val AUDIO_WARNING_DURATION = 2000

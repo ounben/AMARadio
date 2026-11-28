@@ -46,6 +46,7 @@
 -keep class com.ounben.amaradio.widget.AMARadioSmallWidgetReceiver { *; }
 -keep class com.ounben.amaradio.widget.AMARadioWidgetActionReceiver { *; }
 -keep class com.ounben.amaradio.widget.WidgetState { *; }
+-keep class com.ounben.amaradio.widget.WidgetPlaylistSummary { *; }
 -keep class com.ounben.amaradio.widget.WidgetUpdateHelper { *; }
 -keep class com.ounben.amaradio.widget.WidgetImageLoader { *; }
 

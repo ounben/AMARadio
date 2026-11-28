@@ -20,7 +20,7 @@ object WidgetTheme {
     val colors = ColorProviders(
         light = lightColorScheme(
             primary = Amber,
-            onPrimary = Color.White,
+            onPrimary = Color.Black,
             background = LightBackground,
             onBackground = LightTextPrimary,
             surface = LightBackground,

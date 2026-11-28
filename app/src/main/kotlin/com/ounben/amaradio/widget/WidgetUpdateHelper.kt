@@ -2,12 +2,13 @@ package com.ounben.amaradio.widget
 
 import android.content.Context
 import android.util.Log
+import androidx.glance.GlanceId
 import androidx.glance.appwidget.GlanceAppWidgetManager
 import androidx.glance.appwidget.state.updateAppWidgetState
 import androidx.glance.state.PreferencesGlanceStateDefinition
-import com.ounben.amaradio.AMARadioApp
-import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.toDataStation
+import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.favorites.FavoriteListHelper
 import com.ounben.amaradio.service.PlayerServiceUtil
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.CoroutineScope
@@ -18,11 +19,11 @@ import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
 object WidgetUpdateHelper {
     private const val TAG = "WidgetUpdate"
+    private const val MAX_WIDGET_STATIONS = 30
 
     private val json = Json { 
         ignoreUnknownKeys = true 
@@ -39,8 +40,10 @@ object WidgetUpdateHelper {
         scope.launch {
             combine(
                 userDb.favoriteDao().getAllFavoritesFlow(),
-                userDb.historyDao().getAllHistoryFlow()
-            ) { _, _ -> }
+                userDb.historyDao().getAllHistoryFlow(),
+                userDb.favoriteListDao().getAllListsFlow(),
+                userDb.favoriteListDao().getAllItemsFlow()
+            ) { _, _, _, _ -> }
             .debounce(1000) 
             .collect {
                 Log.d(TAG, "SQL Database changed -> Updating Widgets")
@@ -55,12 +58,24 @@ object WidgetUpdateHelper {
                 try {
                     // 1. Fetch fresh data from Room
                     val userDb = AMARadioUserDatabase.getDatabase(context)
-                    val favorites = userDb.favoriteDao().getAllFavorites().take(30).map { it.toDataStation() }
-                    val history = userDb.historyDao().getAllHistory().take(30).map { it.toDataStation() }
+                    val allFavorites = userDb.favoriteDao().getAllFavorites().map { it.toDataStation() }
+                    val history = userDb.historyDao().getAllHistory().take(MAX_WIDGET_STATIONS).map { it.toDataStation() }
+                    val favoriteLists = userDb.favoriteListDao().getAllLists()
+                    val favoriteListItems = userDb.favoriteListDao().getAllItems()
 
-                    // 2. Serialize to JSON for Glance Preferences
-                    val favoritesJson = json.encodeToString(favorites)
+                    val listCounts = FavoriteListHelper.computeListCounts(allFavorites, favoriteListItems)
+                    val validListIds = favoriteLists.mapTo(HashSet()) { it.id }
+                    val playlistSummaries = favoriteLists.map { list ->
+                        WidgetPlaylistSummary(
+                            id = list.id,
+                            name = list.name,
+                            count = listCounts[list.id] ?: 0
+                        )
+                    }
+
+                    // 2. Serialize shared lists to JSON for Glance Preferences
                     val historyJson = json.encodeToString(history)
+                    val playlistsJson = json.encodeToString(playlistSummaries)
 
                     val manager = GlanceAppWidgetManager(context)
 
@@ -86,7 +101,7 @@ object WidgetUpdateHelper {
                         smallWidget.update(context, id)
                     }
 
-                    // 4. Update Full Widgets
+                    // 4. Update Full Widgets (each instance keeps its own selected playlist filter)
                     val fullWidget = AMARadioFullWidget()
                     val fullIds = manager.getGlanceIds(AMARadioFullWidget::class.java)
                     fullIds.forEach { id ->
@@ -100,9 +115,26 @@ object WidgetUpdateHelper {
                             }
                             m[WidgetState.isPlayingKey] = isPlaying
                             m[WidgetState.currentTrackKey] = trackInfo ?: ""
-                            
-                            m[WidgetState.favoritesJsonKey] = favoritesJson
+
+                            val currentSelectedId = m[WidgetState.selectedPlaylistIdKey] ?: ""
+                            val effectiveListId = if (currentSelectedId.isNotEmpty() && currentSelectedId in validListIds) {
+                                currentSelectedId
+                            } else {
+                                ""
+                            }
+                            if (effectiveListId != currentSelectedId) {
+                                m[WidgetState.selectedPlaylistIdKey] = effectiveListId
+                                m[WidgetState.playlistPickerOpenKey] = false
+                            }
+
+                            val visibleFavorites = FavoriteListHelper
+                                .filterStationsForList(allFavorites, favoriteListItems, effectiveListId.ifEmpty { null })
+                                .take(MAX_WIDGET_STATIONS)
+
+                            m[WidgetState.favoritesJsonKey] = json.encodeToString(visibleFavorites)
                             m[WidgetState.historyJsonKey] = historyJson
+                            m[WidgetState.playlistsJsonKey] = playlistsJson
+                            m[WidgetState.totalFavoritesCountKey] = allFavorites.size
                             
                             val current = m[WidgetState.updateCounterKey] ?: 0
                             m[WidgetState.updateCounterKey] = current + 1
@@ -113,6 +145,77 @@ object WidgetUpdateHelper {
                 } catch (e: Exception) {
                     Log.e(TAG, "Update failed", e)
                 }
+            }
+        }
+    }
+
+    /**
+     * Immediately refreshes a single [AMARadioFullWidget] instance after an interactive tab or
+     * playlist filter change, preserving player state and recomputing only that widget's filtered list.
+     */
+    suspend fun updateFullWidget(context: Context, glanceId: GlanceId) {
+        updateMutex.withLock {
+            try {
+                val userDb = AMARadioUserDatabase.getDatabase(context)
+                val allFavorites = userDb.favoriteDao().getAllFavorites().map { it.toDataStation() }
+                val history = userDb.historyDao().getAllHistory().take(MAX_WIDGET_STATIONS).map { it.toDataStation() }
+                val favoriteLists = userDb.favoriteListDao().getAllLists()
+                val favoriteListItems = userDb.favoriteListDao().getAllItems()
+
+                val listCounts = FavoriteListHelper.computeListCounts(allFavorites, favoriteListItems)
+                val validListIds = favoriteLists.mapTo(HashSet()) { it.id }
+                val playlistSummaries = favoriteLists.map { list ->
+                    WidgetPlaylistSummary(
+                        id = list.id,
+                        name = list.name,
+                        count = listCounts[list.id] ?: 0
+                    )
+                }
+
+                val currentStation = PlayerServiceUtil.getCurrentStation()
+                val isPlaying = PlayerServiceUtil.isPlaying()
+                val live = PlayerServiceUtil.getMetadataLive()
+                val trackInfo = if (live.track.isNotEmpty()) live.track else if (live.title.isNotEmpty()) live.title else null
+
+                val fullWidget = AMARadioFullWidget()
+                updateAppWidgetState(context, PreferencesGlanceStateDefinition, glanceId) { prefs ->
+                    val m = prefs.toMutablePreferences()
+                    currentStation?.let {
+                        m[WidgetState.stationNameKey] = it.Name
+                        m[WidgetState.stationDetailsKey] = it.TagsAll
+                        m[WidgetState.stationUuidKey] = it.StationUuid
+                        m[WidgetState.stationIconUrlKey] = it.IconUrl
+                    }
+                    m[WidgetState.isPlayingKey] = isPlaying
+                    m[WidgetState.currentTrackKey] = trackInfo ?: ""
+
+                    val currentSelectedId = m[WidgetState.selectedPlaylistIdKey] ?: ""
+                    val effectiveListId = if (currentSelectedId.isNotEmpty() && currentSelectedId in validListIds) {
+                        currentSelectedId
+                    } else {
+                        ""
+                    }
+                    if (effectiveListId != currentSelectedId) {
+                        m[WidgetState.selectedPlaylistIdKey] = effectiveListId
+                        m[WidgetState.playlistPickerOpenKey] = false
+                    }
+
+                    val visibleFavorites = FavoriteListHelper
+                        .filterStationsForList(allFavorites, favoriteListItems, effectiveListId.ifEmpty { null })
+                        .take(MAX_WIDGET_STATIONS)
+
+                    m[WidgetState.favoritesJsonKey] = json.encodeToString(visibleFavorites)
+                    m[WidgetState.historyJsonKey] = json.encodeToString(history)
+                    m[WidgetState.playlistsJsonKey] = json.encodeToString(playlistSummaries)
+                    m[WidgetState.totalFavoritesCountKey] = allFavorites.size
+
+                    val current = m[WidgetState.updateCounterKey] ?: 0
+                    m[WidgetState.updateCounterKey] = current + 1
+                    m
+                }
+                fullWidget.update(context, glanceId)
+            } catch (e: Exception) {
+                Log.e(TAG, "Single full widget update failed", e)
             }
         }
     }

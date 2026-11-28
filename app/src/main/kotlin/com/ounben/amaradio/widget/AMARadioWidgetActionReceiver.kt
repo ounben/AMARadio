@@ -23,6 +23,7 @@ class AMARadioWidgetActionReceiver : BroadcastReceiver() {
         const val ACTION_SWITCH_TAB = "com.ounben.amaradio.widget.SWITCH_TAB"
 
         const val EXTRA_STATION_UUID = "extra_station_uuid"
+        const val EXTRA_PLAYLIST_ID = "extra_playlist_id"
         const val EXTRA_TAB = "extra_tab"
     }
 
@@ -33,9 +34,13 @@ class AMARadioWidgetActionReceiver : BroadcastReceiver() {
         when (action) {
             ACTION_PLAY_STATION -> {
                 val uuid = intent.getStringExtra(EXTRA_STATION_UUID) ?: return
+                val playlistId = intent.getStringExtra(EXTRA_PLAYLIST_ID)
                 val serviceIntent = Intent(context, PlayerService::class.java).apply {
                     this.action = PlayerService.ACTION_PLAY_STATION
                     putExtra(PlayerService.EXTRA_STATION_ID, uuid)
+                    if (!playlistId.isNullOrEmpty()) {
+                        putExtra(PlayerService.EXTRA_PLAYLIST_ID, playlistId)
+                    }
                 }
                 try {
                     ContextCompat.startForegroundService(context, serviceIntent)
@@ -82,6 +87,7 @@ class AMARadioWidgetActionReceiver : BroadcastReceiver() {
                         updateAppWidgetState(context, PreferencesGlanceStateDefinition, id) { prefs ->
                             val m = prefs.toMutablePreferences()
                             m[WidgetState.activeTabKey] = tab
+                            m[WidgetState.playlistPickerOpenKey] = false
                             m
                         }
                     }
