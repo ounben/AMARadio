@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Amaradio Brand Color (Replaces YouTube Red) -->
-    <color name="amaradioAmber">#FF9800</color>
+    <!-- Amaradio Brand Color (matches AmaradioAmber in Theme.kt) -->
+    <color name="amaradioAmber">#FF8F00</color>
 
     <!-- Light Mode (YouTube Inspired) -->
     <color name="windowBackground">#FFFFFF</color>

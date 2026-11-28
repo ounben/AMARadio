@@ -175,4 +175,15 @@
         <item name="android:paddingEnd" tools:ignore="SpUsage">4dp</item>
         <item name="android:layout_margin">0dp</item>
     </style>
+
+    <!-- Overrides Glance's ListView style so the widget scrollbar matches AMARadio's verticalScrollbar -->
+    <style name="Glance.AppWidget.List" parent="" tools:override="true" tools:ignore="ResourceName">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadeScrollbars">false</item>
+        <item name="android:scrollbarStyle">insideOverlay</item>
+        <item name="android:scrollbarSize">6dp</item>
+        <item name="android:scrollbarThumbVertical">@drawable/widget_scrollbar_thumb</item>
+        <item name="android:scrollbarTrackVertical">@android:color/transparent</item>
+        <item name="android:smoothScrollbar">true</item>
+    </style>
 </resources>
