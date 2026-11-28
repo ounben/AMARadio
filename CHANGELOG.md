@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.57] - 2026-11-28
+### Added
+- **Automatic Volume Normalization & Per-Station Gain (#146)**: Added a Media3 `BaseAudioProcessor` (`VolumeNormalizationAudioProcessor`) in `ExoPlayerWrapper` combining optional real-time loudness normalization (high-pass filtered RMS targeting `-16 dBFS`, `-45 dBFS` silence gate, fast attack / slow release anti-pumping envelope, learned per-station start gain) with additive per-station manual gain (`-12 dB` to `+12 dB` in `0.5 dB` steps) and a smooth `tanh` soft-knee peak limiter (`-1 dBFS` threshold, `0.99` ceiling). Accessible via Settings (`Volume normalization` toggle) and each station's long-click menu (`StationOptionsDialog` → `StationGainDialog`) with live audio preview and Room/Backup persistence (`StationAudioEntity`, `StationAudioManager`, Room DB v10/v11, `BackupManager` v4).
+- **Built-In 5-Band Equalizer with Per-Station Overrides (#146)**: Added a crash-safe built-in 5-band Equalizer (`InAppEqualizerManager`, `InAppEqualizerDialog`) powered by `android.media.audiofx.Equalizer` supporting global settings (accessible from the top-right overflow menu in `MainTopBar` and `SettingsScreen`) as well as optional per-station EQ overrides in `StationOptionsDialog` (automatically switching profiles on station transitions in `PlayerService` and `RadioPlayer`, with Room and ZIP backup persistence).
+- **Audio Processor Unit Tests**: Added `VolumeNormalizationAudioProcessorTest` covering passthrough, standalone manual gain, fast attack on loud signals, slow release with silence gate, additive auto + manual gain with soft-limiter peak safety, learned gain persistence, and EQ band serialization.
+
+### Fixed
+- **Audio Session ID Propagation**: Exposed the active playback `audioSessionId` across `IPlayerService.aidl`, `PlayerService`, `PlayerServiceUtil`, and `RadioPlayer`, added `AudioEffect.EXTRA_CONTENT_TYPE = CONTENT_TYPE_MUSIC` to session broadcasts, and switched AMARadio's Equalizer UI exclusively to the built-in equalizer to avoid inconsistent OEM equalizer intents across Android devices.
+
 ## [1.56] - 2026-11-28
 ### Added
 - **Android Auto Favorite Playlists (#118)**: Integrated custom favorite playlists directly into Android Auto's Favorites tab (`AMARadioBrowser`, `Media3Utils`, `ic_playlist_white_24dp`) with browsable playlist folders (`Name (count)`), localized "All" group header (`EXTRAS_KEY_CONTENT_STYLE_GROUP_TITLE`), ordered playlist station browsing (`playlist_<id>`), playlist-aware `InMemoryStationQueue` playback for steering-wheel Next/Previous (`MediaSessionCallback`, `PlayerService.buildPlaylistStationWithQueue`), voice-command playlist matching (`resolvePlaybackByKeywords`), live `notifyChildrenChanged` sync on playlist DB updates, and unit tests (`AMARadioBrowserMediaIdTest`).
