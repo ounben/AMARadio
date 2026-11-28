@@ -447,4 +447,24 @@
     <string name="filter_all_stations">すべての放送局</string>
     <string name="filter_date_any">すべての日付</string>
     <string name="accessibility_sleep_timer_active_remaining">有効、残り %1$s</string>
+    <string name="accessibility_filter_playlist">プレイリストフィルター: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s を削除</string>
+    <string name="accessibility_playlist_edit_stations">%1$s の放送局を編集</string>
+    <string name="accessibility_playlist_rename">%1$s の名前を変更</string>
+    <string name="action_clear_playlist_filter">プレイリストフィルターをクリア</string>
+    <string name="action_manage_station_playlists">プレイリストに追加</string>
+    <string name="action_remove_from_playlist">「%1$s」から削除</string>
+    <string name="action_scroll_to_bottom">一番下へスクロール</string>
+    <string name="favorite_list_add_stations">お気に入りを追加</string>
+    <string name="favorite_list_all">すべて</string>
+    <string name="favorite_list_assign_title">プレイリストに追加</string>
+    <string name="favorite_list_create">新しいプレイリスト</string>
+    <string name="favorite_list_delete_message">「%1$s」を削除しますか？放送局はお気に入りに残ります。</string>
+    <string name="favorite_list_delete_title">プレイリストを削除</string>
+    <string name="favorite_list_edit_stations">放送局を編集</string>
+    <string name="favorite_list_empty">このプレイリストは空です</string>
+    <string name="favorite_list_manage">プレイリストを管理</string>
+    <string name="favorite_list_name_hint">プレイリスト名</string>
+    <string name="favorite_list_none_yet">プレイリストはまだありません。お気に入りを整理するために作成しましょう。</string>
+    <string name="favorite_list_rename">プレイリスト名を変更</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">සියලුම නාලිකා</string>
     <string name="filter_date_any">ඕනෑම දිනයක්</string>
     <string name="accessibility_sleep_timer_active_remaining">සක්‍රියයි, %1$s ඉතිරිව ඇත</string>
+    <string name="accessibility_filter_playlist">ධාවන ලැයිස්තු පෙරහන: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s මකන්න</string>
+    <string name="accessibility_playlist_edit_stations">%1$s හි නාලිකා සංස්කරණය කරන්න</string>
+    <string name="accessibility_playlist_rename">%1$s නැවත නම් කරන්න</string>
+    <string name="action_clear_playlist_filter">ධාවන ලැයිස්තු පෙරහන ඉවත් කරන්න</string>
+    <string name="action_manage_station_playlists">ධාවන ලැයිස්තුවට එක් කරන්න</string>
+    <string name="action_remove_from_playlist">"%1$s" වෙතින් ඉවත් කරන්න</string>
+    <string name="action_scroll_to_bottom">පහළටම අනුචලනය කරන්න</string>
+    <string name="favorite_list_add_stations">ප්‍රියතමයන් එක් කරන්න</string>
+    <string name="favorite_list_all">සියල්ල</string>
+    <string name="favorite_list_assign_title">ධාවන ලැයිස්තු වෙත එක් කරන්න</string>
+    <string name="favorite_list_create">නව ධාවන ලැයිස්තුව</string>
+    <string name="favorite_list_delete_message">"%1$s" මකන්නද? ඔබේ නාලිකා ප්‍රියතමයන් තුළ පවතිනු ඇත.</string>
+    <string name="favorite_list_delete_title">ධාවන ලැයිස්තුව මකන්න</string>
+    <string name="favorite_list_edit_stations">නාලිකා සංස්කරණය කරන්න</string>
+    <string name="favorite_list_empty">මෙම ධාවන ලැයිස්තුව හිස්ය</string>
+    <string name="favorite_list_manage">ධාවන ලැයිස්තු කළමනාකරණය කරන්න</string>
+    <string name="favorite_list_name_hint">ධාවන ලැයිස්තුවේ නම</string>
+    <string name="favorite_list_none_yet">තවමත් ධාවන ලැයිස්තු නොමැත. ඔබේ ප්‍රියතමයන් සංවිධානය කිරීමට එකක් සාදන්න.</string>
+    <string name="favorite_list_rename">ධාවන ලැයිස්තුව නැවත නම් කරන්න</string>
 </resources>

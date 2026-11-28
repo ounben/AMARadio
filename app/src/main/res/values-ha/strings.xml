@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Duk tashoshi</string>
     <string name="filter_date_any">Kowane kwanan wata</string>
     <string name="accessibility_sleep_timer_active_remaining">Mai aiki, saura %1$s</string>
+    <string name="accessibility_filter_playlist">Tace jerin waƙoƙi: %1$s</string>
+    <string name="accessibility_playlist_delete">Share %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Gyara tashoshi a %1$s</string>
+    <string name="accessibility_playlist_rename">Sake sunan %1$s</string>
+    <string name="action_clear_playlist_filter">Share tace jerin waƙoƙi</string>
+    <string name="action_manage_station_playlists">Ƙara zuwa jerin waƙoƙi</string>
+    <string name="action_remove_from_playlist">Cire daga "%1$s"</string>
+    <string name="action_scroll_to_bottom">Gungura zuwa ƙasa</string>
+    <string name="favorite_list_add_stations">Ƙara waɗanda aka fi so</string>
+    <string name="favorite_list_all">Duka</string>
+    <string name="favorite_list_assign_title">Ƙara zuwa jerin waƙoƙi</string>
+    <string name="favorite_list_create">Sabon jerin waƙoƙi</string>
+    <string name="favorite_list_delete_message">A share "%1$s"? Tashoshinka za su ci gaba da kasancewa a cikin Waɗanda aka fi so.</string>
+    <string name="favorite_list_delete_title">Share jerin waƙoƙi</string>
+    <string name="favorite_list_edit_stations">Gyara tashoshi</string>
+    <string name="favorite_list_empty">Wannan jerin waƙoƙin babu komai a ciki</string>
+    <string name="favorite_list_manage">Sarrafa jerin waƙoƙi</string>
+    <string name="favorite_list_name_hint">Sunan jerin waƙoƙi</string>
+    <string name="favorite_list_none_yet">Babu jerin waƙoƙi tukuna. Ƙirƙiri guda ɗaya don tsara waɗanda kuka fi so.</string>
+    <string name="favorite_list_rename">Sake sunan jerin waƙoƙi</string>
 </resources>

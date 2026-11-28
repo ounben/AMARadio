@@ -448,4 +448,24 @@
     <string name="filter_all_stations">ሁሉም ጣቢያዎች</string>
     <string name="filter_date_any">ማንኛውም ቀን</string>
     <string name="accessibility_sleep_timer_active_remaining">ንቁ፣ %1$s ይቀራል</string>
+    <string name="accessibility_filter_playlist">የአጫዋች ዝርዝር ማጣሪያ፦ %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ን ሰርዝ</string>
+    <string name="accessibility_playlist_edit_stations">በ%1$s ውስጥ ጣቢያዎችን አርትዕ</string>
+    <string name="accessibility_playlist_rename">%1$s ን እንደገና ሰይም</string>
+    <string name="action_clear_playlist_filter">የአጫዋች ዝርዝር ማጣሪያ አጽዳ</string>
+    <string name="action_manage_station_playlists">ወደ አጫዋች ዝርዝር አክል</string>
+    <string name="action_remove_from_playlist">ከ "%1$s" አስወግድ</string>
+    <string name="action_scroll_to_bottom">ወደ ታች ሸብልል</string>
+    <string name="favorite_list_add_stations">ተወዳጆችን አክል</string>
+    <string name="favorite_list_all">ሁሉም</string>
+    <string name="favorite_list_assign_title">ወደ አጫዋች ዝርዝሮች አክል</string>
+    <string name="favorite_list_create">አዲስ አጫዋች ዝርዝር</string>
+    <string name="favorite_list_delete_message">"%1$s" ይሰረዝ? ጣቢያዎችዎ በተወዳጆች ውስጥ ይቆያሉ።</string>
+    <string name="favorite_list_delete_title">አጫዋች ዝርዝር ሰርዝ</string>
+    <string name="favorite_list_edit_stations">ጣቢያዎችን አርትዕ</string>
+    <string name="favorite_list_empty">ይህ አጫዋች ዝርዝር ባዶ ነው</string>
+    <string name="favorite_list_manage">አጫዋች ዝርዝሮችን አስተዳድር</string>
+    <string name="favorite_list_name_hint">የአጫዋች ዝርዝር ስም</string>
+    <string name="favorite_list_none_yet">እስካሁን ምንም አጫዋች ዝርዝሮች የሉም። ተወዳጆችዎን ለማደራጀት አንድ ይፍጠሩ።</string>
+    <string name="favorite_list_rename">አጫዋች ዝርዝር እንደገና ሰይም</string>
 </resources>

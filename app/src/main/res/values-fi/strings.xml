@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Kaikki asemat</string>
     <string name="filter_date_any">Mikä tahansa päivämäärä</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiivinen, %1$s jäljellä</string>
+    <string name="accessibility_filter_playlist">Soittolistasuodatin: %1$s</string>
+    <string name="accessibility_playlist_delete">Poista %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Muokkaa asemia kohteessa %1$s</string>
+    <string name="accessibility_playlist_rename">Nimeä %1$s uudelleen</string>
+    <string name="action_clear_playlist_filter">Tyhjennä soittolistasuodatin</string>
+    <string name="action_manage_station_playlists">Lisää soittolistaan</string>
+    <string name="action_remove_from_playlist">Poista soittolistalta "%1$s"</string>
+    <string name="action_scroll_to_bottom">Vieritä alas</string>
+    <string name="favorite_list_add_stations">Lisää suosikkeja</string>
+    <string name="favorite_list_all">Kaikki</string>
+    <string name="favorite_list_assign_title">Lisää soittolistoihin</string>
+    <string name="favorite_list_create">Uusi soittolista</string>
+    <string name="favorite_list_delete_message">Poistetaanko "%1$s"? Asemasi säilyvät Suosikeissa.</string>
+    <string name="favorite_list_delete_title">Poista soittolista</string>
+    <string name="favorite_list_edit_stations">Muokkaa asemia</string>
+    <string name="favorite_list_empty">Tämä soittolista on tyhjä</string>
+    <string name="favorite_list_manage">Hallitse soittolistoja</string>
+    <string name="favorite_list_name_hint">Soittolistan nimi</string>
+    <string name="favorite_list_none_yet">Ei vielä soittolistoja. Luo soittolista järjestääksesi suosikkisi.</string>
+    <string name="favorite_list_rename">Nimeä soittolista uudelleen</string>
 </resources>

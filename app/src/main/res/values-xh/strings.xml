@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Zonke izitishi</string>
     <string name="filter_date_any">Nawuphi na umhla</string>
     <string name="accessibility_sleep_timer_active_remaining">Iyasebenza, %1$s eseleyo</string>
+    <string name="accessibility_filter_playlist">Isihluzi soluhlu lokudlala: %1$s</string>
+    <string name="accessibility_playlist_delete">Cima %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Hlela izitishi kwi-%1$s</string>
+    <string name="accessibility_playlist_rename">Thiya ngokutsha %1$s</string>
+    <string name="action_clear_playlist_filter">Susa isihluzi soluhlu lokudlala</string>
+    <string name="action_manage_station_playlists">Yongeza kuluhlu lokudlala</string>
+    <string name="action_remove_from_playlist">Susa kwi-"%1$s"</string>
+    <string name="action_scroll_to_bottom">Skrolela ezantsi</string>
+    <string name="favorite_list_add_stations">Yongeza izintandokazi</string>
+    <string name="favorite_list_all">Zonke</string>
+    <string name="favorite_list_assign_title">Yongeza kwizintlu zokudlala</string>
+    <string name="favorite_list_create">Uluhlu olutsha lokudlala</string>
+    <string name="favorite_list_delete_message">Cima "%1$s"? Izitishi zakho ziya kuhlala kwizintandokazi.</string>
+    <string name="favorite_list_delete_title">Cima uluhlu lokudlala</string>
+    <string name="favorite_list_edit_stations">Hlela izitishi</string>
+    <string name="favorite_list_empty">Olu luhlu lokudlala alunanto</string>
+    <string name="favorite_list_manage">Lawula izintlu zokudlala</string>
+    <string name="favorite_list_name_hint">Igama loluhlu lokudlala</string>
+    <string name="favorite_list_none_yet">Akukho zintlu zokudlala okwangoku. Yenza enye ukuze ulungelelanise izintandokazi zakho.</string>
+    <string name="favorite_list_rename">Thiya ngokutsha uluhlu lokudlala</string>
 </resources>

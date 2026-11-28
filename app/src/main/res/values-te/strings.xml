@@ -447,4 +447,24 @@
     <string name="filter_all_stations">అన్ని స్టేషన్లు</string>
     <string name="filter_date_any">ఏదైనా తేదీ</string>
     <string name="accessibility_sleep_timer_active_remaining">సక్రియంగా ఉంది, %1$s మిగిలి ఉంది</string>
+    <string name="accessibility_filter_playlist">ప్లేలిస్ట్ ఫిల్టర్: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ని తొలగించు</string>
+    <string name="accessibility_playlist_edit_stations">%1$s లోని స్టేషన్లను సవరించు</string>
+    <string name="accessibility_playlist_rename">%1$s పేరు మార్చు</string>
+    <string name="action_clear_playlist_filter">ప్లేలిస్ట్ ఫిల్టర్‌ను క్లియర్ చేయి</string>
+    <string name="action_manage_station_playlists">ప్లేలిస్ట్‌కు జోడించు</string>
+    <string name="action_remove_from_playlist">"%1$s" నుండి తీసివేయి</string>
+    <string name="action_scroll_to_bottom">అడుగుకు స్క్రోల్ చేయి</string>
+    <string name="favorite_list_add_stations">ఇష్టమైనవి జోడించు</string>
+    <string name="favorite_list_all">అన్నీ</string>
+    <string name="favorite_list_assign_title">ప్లేలిస్ట్‌లకు జోడించు</string>
+    <string name="favorite_list_create">కొత్త ప్లేలిస్ట్</string>
+    <string name="favorite_list_delete_message">"%1$s" ని తొలగించాలా? మీ స్టేషన్లు ఇష్టమైన వాటిలో అలాగే ఉంటాయి.</string>
+    <string name="favorite_list_delete_title">ప్లేలిస్ట్‌ను తొలగించు</string>
+    <string name="favorite_list_edit_stations">స్టేషన్లను సవరించు</string>
+    <string name="favorite_list_empty">ఈ ప్లేలిస్ట్ ఖాళీగా ఉంది</string>
+    <string name="favorite_list_manage">ప్లేలిస్ట్‌లను నిర్వహించు</string>
+    <string name="favorite_list_name_hint">ప్లేలిస్ట్ పేరు</string>
+    <string name="favorite_list_none_yet">ఇంకా ప్లేలిస్ట్‌లు లేవు. మీ ఇష్టమైన వాటిని నిర్వహించడానికి ఒకదాన్ని సృష్టించండి.</string>
+    <string name="favorite_list_rename">ప్లేలిస్ట్ పేరు మార్చు</string>
 </resources>

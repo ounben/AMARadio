@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Бардык станциялар</string>
     <string name="filter_date_any">Каалаган дата</string>
     <string name="accessibility_sleep_timer_active_remaining">Активдүү, %1$s калды</string>
+    <string name="accessibility_filter_playlist">Ойнотмо тизме чыпкасы: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s өчүрүү</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ичиндеги станцияларды түзөтүү</string>
+    <string name="accessibility_playlist_rename">%1$s атын өзгөртүү</string>
+    <string name="action_clear_playlist_filter">Ойнотмо тизме чыпкасын тазалоо</string>
+    <string name="action_manage_station_playlists">Ойнотмо тизмеге кошуу</string>
+    <string name="action_remove_from_playlist">"%1$s" тизмесинен алып салуу</string>
+    <string name="action_scroll_to_bottom">Төмөнгө сыдыруу</string>
+    <string name="favorite_list_add_stations">Сүйүктүүлөрдү кошуу</string>
+    <string name="favorite_list_all">Баары</string>
+    <string name="favorite_list_assign_title">Ойнотмо тизмелерге кошуу</string>
+    <string name="favorite_list_create">Жаңы ойнотмо тизме</string>
+    <string name="favorite_list_delete_message">"%1$s" өчүрүлсүнбү? Станцияларыңыз Сүйүктүүлөрдө кала берет.</string>
+    <string name="favorite_list_delete_title">Ойнотмо тизмени өчүрүү</string>
+    <string name="favorite_list_edit_stations">Станцияларды түзөтүү</string>
+    <string name="favorite_list_empty">Бул ойнотмо тизме бош</string>
+    <string name="favorite_list_manage">Ойнотмо тизмелерди башкаруу</string>
+    <string name="favorite_list_name_hint">Ойнотмо тизменин аталышы</string>
+    <string name="favorite_list_none_yet">Азырынча ойнотмо тизмелер жок. Сүйүктүүлөрдү иреттөө үчүн бирин түзүңүз.</string>
+    <string name="favorite_list_rename">Ойнотмо тизменин атын өзгөртүү</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Todas as emisoras</string>
     <string name="filter_date_any">Calquera data</string>
     <string name="accessibility_sleep_timer_active_remaining">Activo, queda %1$s</string>
+    <string name="accessibility_filter_playlist">Filtro de lista de reprodución: %1$s</string>
+    <string name="accessibility_playlist_delete">Eliminar %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editar emisoras en %1$s</string>
+    <string name="accessibility_playlist_rename">Cambiar o nome de %1$s</string>
+    <string name="action_clear_playlist_filter">Borrar filtro de lista de reprodución</string>
+    <string name="action_manage_station_playlists">Engadir á lista de reprodución</string>
+    <string name="action_remove_from_playlist">Quitar de "%1$s"</string>
+    <string name="action_scroll_to_bottom">Desprazar cara abaixo</string>
+    <string name="favorite_list_add_stations">Engadir favoritos</string>
+    <string name="favorite_list_all">Todas</string>
+    <string name="favorite_list_assign_title">Engadir ás listas de reprodución</string>
+    <string name="favorite_list_create">Nova lista de reprodución</string>
+    <string name="favorite_list_delete_message">Eliminar "%1$s"? As túas emisoras permanecerán en Favoritos.</string>
+    <string name="favorite_list_delete_title">Eliminar lista de reprodución</string>
+    <string name="favorite_list_edit_stations">Editar emisoras</string>
+    <string name="favorite_list_empty">Esta lista de reprodución está baleira</string>
+    <string name="favorite_list_manage">Xestionar listas de reprodución</string>
+    <string name="favorite_list_name_hint">Nome da lista de reprodución</string>
+    <string name="favorite_list_none_yet">Aínda non hai listas de reprodución. Crea unha para organizar os teus favoritos.</string>
+    <string name="favorite_list_rename">Cambiar o nome da lista de reprodución</string>
 </resources>

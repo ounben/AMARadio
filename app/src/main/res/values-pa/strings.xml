@@ -449,4 +449,24 @@
     <string name="filter_all_stations">ਸਾਰੇ ਸਟੇਸ਼ਨ</string>
     <string name="filter_date_any">ਕੋਈ ਵੀ ਮਿਤੀ</string>
     <string name="accessibility_sleep_timer_active_remaining">ਕਿਰਿਆਸ਼ੀਲ, %1$s ਬਾਕੀ</string>
+    <string name="accessibility_filter_playlist">ਪਲੇਲਿਸਟ ਫਿਲਟਰ: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ਮਿਟਾਓ</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ਵਿੱਚ ਸਟੇਸ਼ਨ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="accessibility_playlist_rename">%1$s ਦਾ ਨਾਮ ਬਦਲੋ</string>
+    <string name="action_clear_playlist_filter">ਪਲੇਲਿਸਟ ਫਿਲਟਰ ਸਾਫ਼ ਕਰੋ</string>
+    <string name="action_manage_station_playlists">ਪਲੇਲਿਸਟ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="action_remove_from_playlist">"%1$s" ਤੋਂ ਹਟਾਓ</string>
+    <string name="action_scroll_to_bottom">ਸਭ ਤੋਂ ਹੇਠਾਂ ਸਕ੍ਰੋਲ ਕਰੋ</string>
+    <string name="favorite_list_add_stations">ਮਨਪਸੰਦ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="favorite_list_all">ਸਾਰੇ</string>
+    <string name="favorite_list_assign_title">ਪਲੇਲਿਸਟਾਂ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ</string>
+    <string name="favorite_list_create">ਨਵੀਂ ਪਲੇਲਿਸਟ</string>
+    <string name="favorite_list_delete_message">"%1$s" ਮਿਟਾਉਣੀ ਹੈ? ਤੁਹਾਡੇ ਸਟੇਸ਼ਨ ਮਨਪਸੰਦ ਵਿੱਚ ਰਹਿਣਗੇ।</string>
+    <string name="favorite_list_delete_title">ਪਲੇਲਿਸਟ ਮਿਟਾਓ</string>
+    <string name="favorite_list_edit_stations">ਸਟੇਸ਼ਨ ਸੰਪਾਦਿਤ ਕਰੋ</string>
+    <string name="favorite_list_empty">ਇਹ ਪਲੇਲਿਸਟ ਖਾਲੀ ਹੈ</string>
+    <string name="favorite_list_manage">ਪਲੇਲਿਸਟਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ</string>
+    <string name="favorite_list_name_hint">ਪਲੇਲਿਸਟ ਦਾ ਨਾਮ</string>
+    <string name="favorite_list_none_yet">ਅਜੇ ਤੱਕ ਕੋਈ ਪਲੇਲਿਸਟ ਨਹੀਂ ਹੈ। ਆਪਣੇ ਮਨਪਸੰਦ ਸਟੇਸ਼ਨ ਵਿਵਸਥਿਤ ਕਰਨ ਲਈ ਇੱਕ ਬਣਾਓ।</string>
+    <string name="favorite_list_rename">ਪਲੇਲਿਸਟ ਦਾ ਨਾਮ ਬਦਲੋ</string>
 </resources>

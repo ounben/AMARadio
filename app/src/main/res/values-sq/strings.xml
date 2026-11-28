@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Të gjitha stacionet</string>
     <string name="filter_date_any">Çdo datë</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiv, mbeten %1$s</string>
+    <string name="accessibility_filter_playlist">Filtri i listës së luajtjes: %1$s</string>
+    <string name="accessibility_playlist_delete">Fshi %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Ndrysho stacionet te %1$s</string>
+    <string name="accessibility_playlist_rename">Riemërto %1$s</string>
+    <string name="action_clear_playlist_filter">Pastro filtrin e listës së luajtjes</string>
+    <string name="action_manage_station_playlists">Shto në listën e luajtjes</string>
+    <string name="action_remove_from_playlist">Hiq nga "%1$s"</string>
+    <string name="action_scroll_to_bottom">Lëviz në fund</string>
+    <string name="favorite_list_add_stations">Shto të preferuarat</string>
+    <string name="favorite_list_all">Të gjitha</string>
+    <string name="favorite_list_assign_title">Shto në listat e luajtjes</string>
+    <string name="favorite_list_create">Listë e re luajtjeje</string>
+    <string name="favorite_list_delete_message">Të fshihet "%1$s"? Stacionet tuaja do të mbeten te Të preferuarat.</string>
+    <string name="favorite_list_delete_title">Fshi listën e luajtjes</string>
+    <string name="favorite_list_edit_stations">Ndrysho stacionet</string>
+    <string name="favorite_list_empty">Kjo listë luajtjeje është bosh</string>
+    <string name="favorite_list_manage">Menaxho listat e luajtjes</string>
+    <string name="favorite_list_name_hint">Emri i listës së luajtjes</string>
+    <string name="favorite_list_none_yet">Nuk ka ende lista luajtjeje. Krijoni një për të organizuar të preferuarat tuaja.</string>
+    <string name="favorite_list_rename">Riemërto listën e luajtjes</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Toate posturile</string>
     <string name="filter_date_any">Orice dată</string>
     <string name="accessibility_sleep_timer_active_remaining">Activ, %1$s rămas</string>
+    <string name="accessibility_filter_playlist">Filtru playlist: %1$s</string>
+    <string name="accessibility_playlist_delete">Șterge %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editează posturile din %1$s</string>
+    <string name="accessibility_playlist_rename">Redenumește %1$s</string>
+    <string name="action_clear_playlist_filter">Șterge filtrul de playlist</string>
+    <string name="action_manage_station_playlists">Adaugă în playlist</string>
+    <string name="action_remove_from_playlist">Elimină din "%1$s"</string>
+    <string name="action_scroll_to_bottom">Derulează până jos</string>
+    <string name="favorite_list_add_stations">Adaugă favorite</string>
+    <string name="favorite_list_all">Toate</string>
+    <string name="favorite_list_assign_title">Adaugă în playlisturi</string>
+    <string name="favorite_list_create">Playlist nou</string>
+    <string name="favorite_list_delete_message">Ștergeți "%1$s"? Posturile dvs. vor rămâne la Favorite.</string>
+    <string name="favorite_list_delete_title">Șterge playlistul</string>
+    <string name="favorite_list_edit_stations">Editează posturile</string>
+    <string name="favorite_list_empty">Acest playlist este gol</string>
+    <string name="favorite_list_manage">Gestionează playlisturile</string>
+    <string name="favorite_list_name_hint">Numele playlistului</string>
+    <string name="favorite_list_none_yet">Încă nu există playlisturi. Creați unul pentru a vă organiza favoritele.</string>
+    <string name="favorite_list_rename">Redenumește playlistul</string>
 </resources>

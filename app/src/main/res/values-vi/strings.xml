@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Tất cả các đài</string>
     <string name="filter_date_any">Bất kỳ ngày nào</string>
     <string name="accessibility_sleep_timer_active_remaining">Đang bật, còn lại %1$s</string>
+    <string name="accessibility_filter_playlist">Bộ lọc danh sách phát: %1$s</string>
+    <string name="accessibility_playlist_delete">Xóa %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Chỉnh sửa đài trong %1$s</string>
+    <string name="accessibility_playlist_rename">Đổi tên %1$s</string>
+    <string name="action_clear_playlist_filter">Xóa bộ lọc danh sách phát</string>
+    <string name="action_manage_station_playlists">Thêm vào danh sách phát</string>
+    <string name="action_remove_from_playlist">Xóa khỏi "%1$s"</string>
+    <string name="action_scroll_to_bottom">Cuộn xuống dưới cùng</string>
+    <string name="favorite_list_add_stations">Thêm mục yêu thích</string>
+    <string name="favorite_list_all">Tất cả</string>
+    <string name="favorite_list_assign_title">Thêm vào danh sách phát</string>
+    <string name="favorite_list_create">Danh sách phát mới</string>
+    <string name="favorite_list_delete_message">Xóa "%1$s"? Các đài của bạn sẽ vẫn nằm trong Mục yêu thích.</string>
+    <string name="favorite_list_delete_title">Xóa danh sách phát</string>
+    <string name="favorite_list_edit_stations">Chỉnh sửa đài</string>
+    <string name="favorite_list_empty">Danh sách phát này trống</string>
+    <string name="favorite_list_manage">Quản lý danh sách phát</string>
+    <string name="favorite_list_name_hint">Tên danh sách phát</string>
+    <string name="favorite_list_none_yet">Chưa có danh sách phát nào. Hãy tạo một danh sách để sắp xếp các mục yêu thích của bạn.</string>
+    <string name="favorite_list_rename">Đổi tên danh sách phát</string>
 </resources>

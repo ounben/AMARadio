@@ -447,4 +447,24 @@
     <string name="filter_all_stations">모든 방송국</string>
     <string name="filter_date_any">모든 날짜</string>
     <string name="accessibility_sleep_timer_active_remaining">활성, %1$s 남음</string>
+    <string name="accessibility_filter_playlist">재생목록 필터: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s 삭제</string>
+    <string name="accessibility_playlist_edit_stations">%1$s의 방송국 편집</string>
+    <string name="accessibility_playlist_rename">%1$s 이름 변경</string>
+    <string name="action_clear_playlist_filter">재생목록 필터 지우기</string>
+    <string name="action_manage_station_playlists">재생목록에 추가</string>
+    <string name="action_remove_from_playlist">"%1$s"에서 제거</string>
+    <string name="action_scroll_to_bottom">맨 아래로 스크롤</string>
+    <string name="favorite_list_add_stations">즐겨찾기 추가</string>
+    <string name="favorite_list_all">전체</string>
+    <string name="favorite_list_assign_title">재생목록에 추가</string>
+    <string name="favorite_list_create">새 재생목록</string>
+    <string name="favorite_list_delete_message">"%1$s" 재생목록을 삭제할까요? 방송국은 즐겨찾기에 그대로 유지됩니다.</string>
+    <string name="favorite_list_delete_title">재생목록 삭제</string>
+    <string name="favorite_list_edit_stations">방송국 편집</string>
+    <string name="favorite_list_empty">재생목록이 비어 있습니다</string>
+    <string name="favorite_list_manage">재생목록 관리</string>
+    <string name="favorite_list_name_hint">재생목록 이름</string>
+    <string name="favorite_list_none_yet">아직 재생목록이 없습니다. 즐겨찾기를 정리하려면 새 재생목록을 만드세요.</string>
+    <string name="favorite_list_rename">재생목록 이름 변경</string>
 </resources>

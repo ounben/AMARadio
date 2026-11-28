@@ -449,4 +449,24 @@
     <string name="filter_all_stations">ທຸກສະຖານີ</string>
     <string name="filter_date_any">ວັນທີໃດກໍໄດ້</string>
     <string name="accessibility_sleep_timer_active_remaining">ເປີດໃຊ້ງານຢູ່, ຍັງເຫຼືອ %1$s</string>
+    <string name="accessibility_filter_playlist">ຕົວກອງລາຍການຫຼິ້ນ: %1$s</string>
+    <string name="accessibility_playlist_delete">ລຶບ %1$s</string>
+    <string name="accessibility_playlist_edit_stations">ແກ້ໄຂສະຖານີໃນ %1$s</string>
+    <string name="accessibility_playlist_rename">ປ່ຽນຊື່ %1$s</string>
+    <string name="action_clear_playlist_filter">ລ້າງຕົວກອງລາຍການຫຼິ້ນ</string>
+    <string name="action_manage_station_playlists">ເພີ່ມໃສ່ລາຍການຫຼິ້ນ</string>
+    <string name="action_remove_from_playlist">ລຶບອອກຈາກ "%1$s"</string>
+    <string name="action_scroll_to_bottom">ເລື່ອນລົງລຸ່ມສຸດ</string>
+    <string name="favorite_list_add_stations">ເພີ່ມລາຍການທີ່ມັກ</string>
+    <string name="favorite_list_all">ທັງໝົດ</string>
+    <string name="favorite_list_assign_title">ເພີ່ມໃສ່ລາຍການຫຼິ້ນ</string>
+    <string name="favorite_list_create">ລາຍການຫຼິ້ນໃໝ່</string>
+    <string name="favorite_list_delete_message">ລຶບ "%1$s" ບໍ? ສະຖານີຂອງທ່ານຈະຍັງຢູ່ໃນລາຍການທີ່ມັກ.</string>
+    <string name="favorite_list_delete_title">ລຶບລາຍການຫຼິ້ນ</string>
+    <string name="favorite_list_edit_stations">ແກ້ໄຂສະຖານີ</string>
+    <string name="favorite_list_empty">ລາຍການຫຼິ້ນນີ້ຫວ່າງເປົ່າ</string>
+    <string name="favorite_list_manage">ຈັດການລາຍການຫຼິ້ນ</string>
+    <string name="favorite_list_name_hint">ຊື່ລາຍການຫຼິ້ນ</string>
+    <string name="favorite_list_none_yet">ຍັງບໍ່ມີລາຍການຫຼິ້ນເທື່ອ. ສ້າງອັນໜຶ່ງເພື່ອຈັດລະບຽບລາຍການທີ່ມັກຂອງທ່ານ.</string>
+    <string name="favorite_list_rename">ປ່ຽນຊື່ລາຍການຫຼິ້ນ</string>
 </resources>

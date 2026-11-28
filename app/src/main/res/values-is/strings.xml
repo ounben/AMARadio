@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Allar stöðvar</string>
     <string name="filter_date_any">Hvaða dagsetning sem er</string>
     <string name="accessibility_sleep_timer_active_remaining">Virkt, %1$s eftir</string>
+    <string name="accessibility_filter_playlist">Spilunarlistasía: %1$s</string>
+    <string name="accessibility_playlist_delete">Eyða %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Breyta stöðvum í %1$s</string>
+    <string name="accessibility_playlist_rename">Endurnefna %1$s</string>
+    <string name="action_clear_playlist_filter">Hreinsa spilunarlistasíu</string>
+    <string name="action_manage_station_playlists">Bæta á spilunarlista</string>
+    <string name="action_remove_from_playlist">Fjarlægja af "%1$s"</string>
+    <string name="action_scroll_to_bottom">Skruna neðst</string>
+    <string name="favorite_list_add_stations">Bæta við uppáhalds</string>
+    <string name="favorite_list_all">Allar</string>
+    <string name="favorite_list_assign_title">Bæta á spilunarlista</string>
+    <string name="favorite_list_create">Nýr spilunarlisti</string>
+    <string name="favorite_list_delete_message">Eyða „%1$s“? Stöðvarnar þínar verða áfram í Uppáhalds.</string>
+    <string name="favorite_list_delete_title">Eyða spilunarlista</string>
+    <string name="favorite_list_edit_stations">Breyta stöðvum</string>
+    <string name="favorite_list_empty">Þessi spilunarlisti er tómur</string>
+    <string name="favorite_list_manage">Stjórna spilunarlistum</string>
+    <string name="favorite_list_name_hint">Heiti spilunarlista</string>
+    <string name="favorite_list_none_yet">Engir spilunarlistar ennþá. Búðu til einn til að skipuleggja uppáhaldsstöðvarnar þínar.</string>
+    <string name="favorite_list_rename">Endurnefna spilunarlista</string>
 </resources>

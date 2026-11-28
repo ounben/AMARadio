@@ -449,4 +449,24 @@
     <string name="filter_all_stations">ସମସ୍ତ ଷ୍ଟେସନ୍</string>
     <string name="filter_date_any">ଯେକୌଣସି ତାରିଖ</string>
     <string name="accessibility_sleep_timer_active_remaining">ସକ୍ରିୟ, %1$s ବାକି ଅଛି</string>
+    <string name="accessibility_filter_playlist">ପ୍ଲେଲିଷ୍ଟ ଫିଲ୍ଟର୍: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ରେ ଷ୍ଟେସନ୍ ସମ୍ପାଦନ କରନ୍ତୁ</string>
+    <string name="accessibility_playlist_rename">%1$s ର ନାମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
+    <string name="action_clear_playlist_filter">ପ୍ଲେଲିଷ୍ଟ ଫିଲ୍ଟର୍ ସଫା କରନ୍ତୁ</string>
+    <string name="action_manage_station_playlists">ପ୍ଲେଲିଷ୍ଟରେ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="action_remove_from_playlist">"%1$s" ରୁ ହଟାନ୍ତୁ</string>
+    <string name="action_scroll_to_bottom">ସବୁଠାରୁ ତଳକୁ ସ୍କ୍ରୋଲ୍ କରନ୍ତୁ</string>
+    <string name="favorite_list_add_stations">ପସନ୍ଦଗୁଡ଼ିକ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="favorite_list_all">ସମସ୍ତ</string>
+    <string name="favorite_list_assign_title">ପ୍ଲେଲିଷ୍ଟଗୁଡ଼ିକରେ ଯୋଡ଼ନ୍ତୁ</string>
+    <string name="favorite_list_create">ନୂଆ ପ୍ଲେଲିଷ୍ଟ</string>
+    <string name="favorite_list_delete_message">"%1$s" ଡିଲିଟ୍ କରିବେ କି? ଆପଣଙ୍କ ଷ୍ଟେସନ୍‌ଗୁଡ଼ିକ ପସନ୍ଦରେ ରହିବ।</string>
+    <string name="favorite_list_delete_title">ପ୍ଲେଲିଷ୍ଟ ଡିଲିଟ୍ କରନ୍ତୁ</string>
+    <string name="favorite_list_edit_stations">ଷ୍ଟେସନ୍ ସମ୍ପାଦନ କରନ୍ତୁ</string>
+    <string name="favorite_list_empty">ଏହି ପ୍ଲେଲିଷ୍ଟ ଖାଲି ଅଛି</string>
+    <string name="favorite_list_manage">ପ୍ଲେଲିଷ୍ଟ ପରିଚାଳନା କରନ୍ତୁ</string>
+    <string name="favorite_list_name_hint">ପ୍ଲେଲିଷ୍ଟ ନାମ</string>
+    <string name="favorite_list_none_yet">ଏପର୍ଯ୍ୟନ୍ତ କୌଣସି ପ୍ଲେଲିଷ୍ଟ ନାହିଁ। ଆପଣଙ୍କ ପସନ୍ଦଗୁଡ଼ିକ ସଜାଇବା ପାଇଁ ଗୋଟିଏ ତିଆରି କରନ୍ତୁ।</string>
+    <string name="favorite_list_rename">ପ୍ଲେଲିଷ୍ଟ ନାମ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</string>
 </resources>

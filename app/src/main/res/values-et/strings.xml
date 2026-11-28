@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Kõik jaamad</string>
     <string name="filter_date_any">Mis tahes kuupäev</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiivne, %1$s jäänud</string>
+    <string name="accessibility_filter_playlist">Esitusloendi filter: %1$s</string>
+    <string name="accessibility_playlist_delete">Kustuta %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Muuda jaamu loendis %1$s</string>
+    <string name="accessibility_playlist_rename">Nimeta %1$s ümber</string>
+    <string name="action_clear_playlist_filter">Tühjenda esitusloendi filter</string>
+    <string name="action_manage_station_playlists">Lisa esitusloendisse</string>
+    <string name="action_remove_from_playlist">Eemalda loendist "%1$s"</string>
+    <string name="action_scroll_to_bottom">Keri alla</string>
+    <string name="favorite_list_add_stations">Lisa lemmikuid</string>
+    <string name="favorite_list_all">Kõik</string>
+    <string name="favorite_list_assign_title">Lisa esitusloenditesse</string>
+    <string name="favorite_list_create">Uus esitusloend</string>
+    <string name="favorite_list_delete_message">Kas kustutada "%1$s"? Teie jaamad jäävad lemmikute hulka.</string>
+    <string name="favorite_list_delete_title">Kustuta esitusloend</string>
+    <string name="favorite_list_edit_stations">Muuda jaamu</string>
+    <string name="favorite_list_empty">See esitusloend on tühi</string>
+    <string name="favorite_list_manage">Halda esitusloendeid</string>
+    <string name="favorite_list_name_hint">Esitusloendi nimi</string>
+    <string name="favorite_list_none_yet">Esitusloendeid pole veel. Looge üks oma lemmikute korrastamiseks.</string>
+    <string name="favorite_list_rename">Nimeta esitusloend ümber</string>
 </resources>

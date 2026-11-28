@@ -451,4 +451,24 @@
     <string name="filter_all_stations">Alle stasies</string>
     <string name="filter_date_any">Enige datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktief, %1$s oor</string>
+    <string name="accessibility_filter_playlist">Snitlysfilter: %1$s</string>
+    <string name="accessibility_playlist_delete">Vee %1$s uit</string>
+    <string name="accessibility_playlist_edit_stations">Wysig stasies in %1$s</string>
+    <string name="accessibility_playlist_rename">Hernoem %1$s</string>
+    <string name="action_clear_playlist_filter">Vee snitlysfilter uit</string>
+    <string name="action_manage_station_playlists">Voeg by snitlys</string>
+    <string name="action_remove_from_playlist">Verwyder uit "%1$s"</string>
+    <string name="action_scroll_to_bottom">Rol na onder</string>
+    <string name="favorite_list_add_stations">Voeg gunstelinge by</string>
+    <string name="favorite_list_all">Almal</string>
+    <string name="favorite_list_assign_title">Voeg by snitlyste</string>
+    <string name="favorite_list_create">Nuwe snitlys</string>
+    <string name="favorite_list_delete_message">Vee "%1$s" uit? Jou stasies sal in Gunstelinge bly.</string>
+    <string name="favorite_list_delete_title">Vee snitlys uit</string>
+    <string name="favorite_list_edit_stations">Wysig stasies</string>
+    <string name="favorite_list_empty">Hierdie snitlys is leeg</string>
+    <string name="favorite_list_manage">Bestuur snitlyste</string>
+    <string name="favorite_list_name_hint">Snitlysnaam</string>
+    <string name="favorite_list_none_yet">Nog geen snitlyste nie. Skep een om jou gunstelinge te organiseer.</string>
+    <string name="favorite_list_rename">Hernoem snitlys</string>
 </resources>

@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Бүх станц</string>
     <string name="filter_date_any">Дурын огноо</string>
     <string name="accessibility_sleep_timer_active_remaining">Идэвхтэй, %1$s үлдсэн</string>
+    <string name="accessibility_filter_playlist">Тоглуулах жагсаалтын шүүлтүүр: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s устгах</string>
+    <string name="accessibility_playlist_edit_stations">%1$s доторх станцуудыг засах</string>
+    <string name="accessibility_playlist_rename">%1$s нэрийг өөрчлөх</string>
+    <string name="action_clear_playlist_filter">Тоглуулах жагсаалтын шүүлтүүр арилгах</string>
+    <string name="action_manage_station_playlists">Тоглуулах жагсаалтад нэмэх</string>
+    <string name="action_remove_from_playlist">"%1$s"-ээс хасах</string>
+    <string name="action_scroll_to_bottom">Хамгийн доош гүйлгэх</string>
+    <string name="favorite_list_add_stations">Дуртай станц нэмэх</string>
+    <string name="favorite_list_all">Бүгд</string>
+    <string name="favorite_list_assign_title">Тоглуулах жагсаалтуудад нэмэх</string>
+    <string name="favorite_list_create">Шинэ тоглуулах жагсаалт</string>
+    <string name="favorite_list_delete_message">"%1$s"-г устгах уу? Таны станцууд Дуртай хэсэгт хэвээр үлдэнэ.</string>
+    <string name="favorite_list_delete_title">Тоглуулах жагсаалт устгах</string>
+    <string name="favorite_list_edit_stations">Станцуудыг засах</string>
+    <string name="favorite_list_empty">Энэ тоглуулах жагсаалт хоосон байна</string>
+    <string name="favorite_list_manage">Тоглуулах жагсаалтуудыг удирдах</string>
+    <string name="favorite_list_name_hint">Тоглуулах жагсаалтын нэр</string>
+    <string name="favorite_list_none_yet">Одоогоор тоглуулах жагсаалт алга. Дуртай станцуудаа эмхлэхийн тулд нэгийг үүсгэнэ үү.</string>
+    <string name="favorite_list_rename">Тоглуулах жагсаалтын нэр өөрчлөх</string>
 </resources>

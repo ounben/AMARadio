@@ -447,4 +447,24 @@
     <string name="filter_all_stations">所有电台</string>
     <string name="filter_date_any">任意日期</string>
     <string name="accessibility_sleep_timer_active_remaining">已开启，剩余 %1$s</string>
+    <string name="accessibility_filter_playlist">播放列表筛选：%1$s</string>
+    <string name="accessibility_playlist_delete">删除 %1$s</string>
+    <string name="accessibility_playlist_edit_stations">编辑 %1$s 中的电台</string>
+    <string name="accessibility_playlist_rename">重命名 %1$s</string>
+    <string name="action_clear_playlist_filter">清除播放列表筛选</string>
+    <string name="action_manage_station_playlists">添加到播放列表</string>
+    <string name="action_remove_from_playlist">从“%1$s”中移除</string>
+    <string name="action_scroll_to_bottom">滚动到底部</string>
+    <string name="favorite_list_add_stations">添加收藏</string>
+    <string name="favorite_list_all">全部</string>
+    <string name="favorite_list_assign_title">添加到播放列表</string>
+    <string name="favorite_list_create">新建播放列表</string>
+    <string name="favorite_list_delete_message">删除“%1$s”？您的电台仍会保留在收藏夹中。</string>
+    <string name="favorite_list_delete_title">删除播放列表</string>
+    <string name="favorite_list_edit_stations">编辑电台</string>
+    <string name="favorite_list_empty">此播放列表为空</string>
+    <string name="favorite_list_manage">管理播放列表</string>
+    <string name="favorite_list_name_hint">播放列表名称</string>
+    <string name="favorite_list_none_yet">暂无播放列表。创建一个来整理您的收藏。</string>
+    <string name="favorite_list_rename">重命名播放列表</string>
 </resources>

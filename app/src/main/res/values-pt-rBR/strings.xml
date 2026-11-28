@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Todas as estações</string>
     <string name="filter_date_any">Qualquer data</string>
     <string name="accessibility_sleep_timer_active_remaining">Ativo, %1$s restante</string>
+    <string name="accessibility_filter_playlist">Filtro da playlist: %1$s</string>
+    <string name="accessibility_playlist_delete">Excluir %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editar estações em %1$s</string>
+    <string name="accessibility_playlist_rename">Renomear %1$s</string>
+    <string name="action_clear_playlist_filter">Limpar filtro da playlist</string>
+    <string name="action_manage_station_playlists">Adicionar à playlist</string>
+    <string name="action_remove_from_playlist">Remover de "%1$s"</string>
+    <string name="action_scroll_to_bottom">Rolar para o final</string>
+    <string name="favorite_list_add_stations">Adicionar favoritos</string>
+    <string name="favorite_list_all">Todas</string>
+    <string name="favorite_list_assign_title">Adicionar às playlists</string>
+    <string name="favorite_list_create">Nova playlist</string>
+    <string name="favorite_list_delete_message">Excluir "%1$s"? Suas estações permanecerão nos Favoritos.</string>
+    <string name="favorite_list_delete_title">Excluir playlist</string>
+    <string name="favorite_list_edit_stations">Editar estações</string>
+    <string name="favorite_list_empty">Esta playlist está vazia</string>
+    <string name="favorite_list_manage">Gerenciar playlists</string>
+    <string name="favorite_list_name_hint">Nome da playlist</string>
+    <string name="favorite_list_none_yet">Nenhuma playlist ainda. Crie uma para organizar seus favoritos.</string>
+    <string name="favorite_list_rename">Renomear playlist</string>
 </resources>

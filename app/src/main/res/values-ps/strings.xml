@@ -449,4 +449,24 @@
     <string name="filter_all_stations">ټول سټېشنونه</string>
     <string name="filter_date_any">هره نېټه</string>
     <string name="accessibility_sleep_timer_active_remaining">فعال، %1$s پاتې دي</string>
+    <string name="accessibility_filter_playlist">د پلې لېست فلټر: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ړنګول</string>
+    <string name="accessibility_playlist_edit_stations">په %1$s کې سټېشنونه سمول</string>
+    <string name="accessibility_playlist_rename">د %1$s نوم بدلول</string>
+    <string name="action_clear_playlist_filter">د پلې لېست فلټر پاکول</string>
+    <string name="action_manage_station_playlists">پلې لېست ته ورزیاتول</string>
+    <string name="action_remove_from_playlist">له "%1$s" څخه لرې کول</string>
+    <string name="action_scroll_to_bottom">تر ټولو ښکته سکرول کول</string>
+    <string name="favorite_list_add_stations">خوښې ورزیاتول</string>
+    <string name="favorite_list_all">ټول</string>
+    <string name="favorite_list_assign_title">پلې لېستونو ته ورزیاتول</string>
+    <string name="favorite_list_create">نوی پلې لېست</string>
+    <string name="favorite_list_delete_message">"%1$s" ړنګ شي؟ ستاسو سټېشنونه به په خوښو کې پاتې شي.</string>
+    <string name="favorite_list_delete_title">پلې لېست ړنګول</string>
+    <string name="favorite_list_edit_stations">سټېشنونه سمول</string>
+    <string name="favorite_list_empty">دا پلې لېست تش دی</string>
+    <string name="favorite_list_manage">د پلې لېستونو اداره کول</string>
+    <string name="favorite_list_name_hint">د پلې لېست نوم</string>
+    <string name="favorite_list_none_yet">تر اوسه هېڅ پلې لېست نشته. د خپلو خوښو د تنظیمولو لپاره یو جوړ کړئ.</string>
+    <string name="favorite_list_rename">د پلې لېست نوم بدلول</string>
 </resources>

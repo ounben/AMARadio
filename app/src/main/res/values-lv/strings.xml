@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Visas stacijas</string>
     <string name="filter_date_any">Jebkurš datums</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktīvs, atlicis %1$s</string>
+    <string name="accessibility_filter_playlist">Atskaņošanas saraksta filtrs: %1$s</string>
+    <string name="accessibility_playlist_delete">Dzēst %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Rediģēt stacijas sarakstā %1$s</string>
+    <string name="accessibility_playlist_rename">Pārdēvēt %1$s</string>
+    <string name="action_clear_playlist_filter">Notīrīt atskaņošanas saraksta filtru</string>
+    <string name="action_manage_station_playlists">Pievienot atskaņošanas sarakstam</string>
+    <string name="action_remove_from_playlist">Noņemt no "%1$s"</string>
+    <string name="action_scroll_to_bottom">Ritināt uz leju</string>
+    <string name="favorite_list_add_stations">Pievienot izlasei</string>
+    <string name="favorite_list_all">Visas</string>
+    <string name="favorite_list_assign_title">Pievienot atskaņošanas sarakstiem</string>
+    <string name="favorite_list_create">Jauns atskaņošanas saraksts</string>
+    <string name="favorite_list_delete_message">Vai dzēst "%1$s"? Jūsu stacijas paliks sadaļā Izlase.</string>
+    <string name="favorite_list_delete_title">Dzēst atskaņošanas sarakstu</string>
+    <string name="favorite_list_edit_stations">Rediģēt stacijas</string>
+    <string name="favorite_list_empty">Šis atskaņošanas saraksts ir tukšs</string>
+    <string name="favorite_list_manage">Pārvaldīt atskaņošanas sarakstus</string>
+    <string name="favorite_list_name_hint">Atskaņošanas saraksta nosaukums</string>
+    <string name="favorite_list_none_yet">Atskaņošanas sarakstu vēl nav. Izveidojiet vienu, lai sakārtotu izlasi.</string>
+    <string name="favorite_list_rename">Pārdēvēt atskaņošanas sarakstu</string>
 </resources>

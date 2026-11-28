@@ -448,4 +448,24 @@
     <string name="filter_all_stations">Zonke iziteshi</string>
     <string name="filter_date_any">Noma iyiphi idethi</string>
     <string name="accessibility_sleep_timer_active_remaining">Iyasebenza, %1$s esele</string>
+    <string name="accessibility_filter_playlist">Isihlungi sohlu lwadlalwayo: %1$s</string>
+    <string name="accessibility_playlist_delete">Susa %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Hlela iziteshi ku-%1$s</string>
+    <string name="accessibility_playlist_rename">Qamba kabusha %1$s</string>
+    <string name="action_clear_playlist_filter">Sula isihlungi sohlu lwadlalwayo</string>
+    <string name="action_manage_station_playlists">Engeza ohlwini lwadlalwayo</string>
+    <string name="action_remove_from_playlist">Susa ku-"%1$s"</string>
+    <string name="action_scroll_to_bottom">Skrolela phansi</string>
+    <string name="favorite_list_add_stations">Engeza izintandokazi</string>
+    <string name="favorite_list_all">Zonke</string>
+    <string name="favorite_list_assign_title">Engeza ezinhlwini zokudlalwayo</string>
+    <string name="favorite_list_create">Uhlu olusha lwadlalwayo</string>
+    <string name="favorite_list_delete_message">Susa "%1$s"? Iziteshi zakho zizohlala ezintandokazini.</string>
+    <string name="favorite_list_delete_title">Susa uhlu lwadlalwayo</string>
+    <string name="favorite_list_edit_stations">Hlela iziteshi</string>
+    <string name="favorite_list_empty">Lolu hlu lwadlalwayo alunalutho</string>
+    <string name="favorite_list_manage">Phatha izinhla zokudlalwayo</string>
+    <string name="favorite_list_name_hint">Igama lohlu lwadlalwayo</string>
+    <string name="favorite_list_none_yet">Azikho izinhla zokudlalwayo okwamanje. Dala eyodwa ukuze uhlele izintandokazi zakho.</string>
+    <string name="favorite_list_rename">Qamba kabusha uhlu lwadlalwayo</string>
 </resources>

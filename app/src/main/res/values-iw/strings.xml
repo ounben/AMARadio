@@ -447,4 +447,24 @@
     <string name="filter_all_stations">כל התחנות</string>
     <string name="filter_date_any">כל תאריך</string>
     <string name="accessibility_sleep_timer_active_remaining">פעיל, נותרו %1$s</string>
+    <string name="accessibility_filter_playlist">מסנן רשימות השמעה: %1$s</string>
+    <string name="accessibility_playlist_delete">מחק את %1$s</string>
+    <string name="accessibility_playlist_edit_stations">ערוך תחנות ב-%1$s</string>
+    <string name="accessibility_playlist_rename">שנה את השם של %1$s</string>
+    <string name="action_clear_playlist_filter">נקה מסנן רשימות השמעה</string>
+    <string name="action_manage_station_playlists">הוסף לרשימת השמעה</string>
+    <string name="action_remove_from_playlist">הסר מ-"%1$s"</string>
+    <string name="action_scroll_to_bottom">גלול לתחתית הרשימה</string>
+    <string name="favorite_list_add_stations">הוסף מועדפים</string>
+    <string name="favorite_list_all">הכל</string>
+    <string name="favorite_list_assign_title">הוסף לרשימות השמעה</string>
+    <string name="favorite_list_create">רשימת השמעה חדשה</string>
+    <string name="favorite_list_delete_message">למחוק את "%1$s"? התחנות שלך יישארו במועדפים.</string>
+    <string name="favorite_list_delete_title">מחק רשימת השמעה</string>
+    <string name="favorite_list_edit_stations">ערוך תחנות</string>
+    <string name="favorite_list_empty">רשימת השמעה זו ריקה</string>
+    <string name="favorite_list_manage">נהל רשימות השמעה</string>
+    <string name="favorite_list_name_hint">שם רשימת ההשמעה</string>
+    <string name="favorite_list_none_yet">אין עדיין רשימות השמעה. צור רשימה כדי לארגן את המועדפים שלך.</string>
+    <string name="favorite_list_rename">שנה שם רשימת השמעה</string>
 </resources>

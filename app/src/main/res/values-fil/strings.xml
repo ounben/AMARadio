@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Lahat ng istasyon</string>
     <string name="filter_date_any">Kahit anong petsa</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktibo, %1$s ang natitira</string>
+    <string name="accessibility_filter_playlist">Filter ng playlist: %1$s</string>
+    <string name="accessibility_playlist_delete">I-delete ang %1$s</string>
+    <string name="accessibility_playlist_edit_stations">I-edit ang mga istasyon sa %1$s</string>
+    <string name="accessibility_playlist_rename">Palitan ang pangalan ng %1$s</string>
+    <string name="action_clear_playlist_filter">I-clear ang filter ng playlist</string>
+    <string name="action_manage_station_playlists">Idagdag sa playlist</string>
+    <string name="action_remove_from_playlist">Alisin sa "%1$s"</string>
+    <string name="action_scroll_to_bottom">Mag-scroll pababa</string>
+    <string name="favorite_list_add_stations">Magdagdag ng mga paborito</string>
+    <string name="favorite_list_all">Lahat</string>
+    <string name="favorite_list_assign_title">Idagdag sa mga playlist</string>
+    <string name="favorite_list_create">Bagong playlist</string>
+    <string name="favorite_list_delete_message">I-delete ang "%1$s"? Mananatili sa Mga Paborito ang iyong mga istasyon.</string>
+    <string name="favorite_list_delete_title">I-delete ang playlist</string>
+    <string name="favorite_list_edit_stations">I-edit ang mga istasyon</string>
+    <string name="favorite_list_empty">Walang laman ang playlist na ito</string>
+    <string name="favorite_list_manage">Pamahalaan ang mga playlist</string>
+    <string name="favorite_list_name_hint">Pangalan ng playlist</string>
+    <string name="favorite_list_none_yet">Wala pang mga playlist. Gumawa ng isa upang ayusin ang iyong mga paborito.</string>
+    <string name="favorite_list_rename">Palitan ang pangalan ng playlist</string>
 </resources>

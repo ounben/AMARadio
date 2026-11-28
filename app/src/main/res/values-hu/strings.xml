@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Összes állomás</string>
     <string name="filter_date_any">Bármilyen dátum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktív, %1$s van hátra</string>
+    <string name="accessibility_filter_playlist">Lejátszási lista szűrő: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s törlése</string>
+    <string name="accessibility_playlist_edit_stations">Állomások szerkesztése itt: %1$s</string>
+    <string name="accessibility_playlist_rename">%1$s átnevezése</string>
+    <string name="action_clear_playlist_filter">Lejátszási lista szűrő törlése</string>
+    <string name="action_manage_station_playlists">Hozzáadás lejátszási listához</string>
+    <string name="action_remove_from_playlist">Eltávolítás innen: "%1$s"</string>
+    <string name="action_scroll_to_bottom">Görgetés az aljára</string>
+    <string name="favorite_list_add_stations">Kedvencek hozzáadása</string>
+    <string name="favorite_list_all">Összes</string>
+    <string name="favorite_list_assign_title">Hozzáadás lejátszási listákhoz</string>
+    <string name="favorite_list_create">Új lejátszási lista</string>
+    <string name="favorite_list_delete_message">Törli a(z) "%1$s" listát? Az állomásai a Kedvencek között maradnak.</string>
+    <string name="favorite_list_delete_title">Lejátszási lista törlése</string>
+    <string name="favorite_list_edit_stations">Állomások szerkesztése</string>
+    <string name="favorite_list_empty">Ez a lejátszási lista üres</string>
+    <string name="favorite_list_manage">Lejátszási listák kezelése</string>
+    <string name="favorite_list_name_hint">Lejátszási lista neve</string>
+    <string name="favorite_list_none_yet">Még nincsenek lejátszási listák. Hozzon létre egyet a kedvencek rendszerezéséhez.</string>
+    <string name="favorite_list_rename">Lejátszási lista átnevezése</string>
 </resources>

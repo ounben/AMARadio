@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Vituo vyote</string>
     <string name="filter_date_any">Tarehe yoyote</string>
     <string name="accessibility_sleep_timer_active_remaining">Inatumika, imesalia %1$s</string>
+    <string name="accessibility_filter_playlist">Kichujio cha orodha ya kucheza: %1$s</string>
+    <string name="accessibility_playlist_delete">Futa %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Hariri vituo katika %1$s</string>
+    <string name="accessibility_playlist_rename">Badilisha jina la %1$s</string>
+    <string name="action_clear_playlist_filter">Futa kichujio cha orodha ya kucheza</string>
+    <string name="action_manage_station_playlists">Ongeza kwenye orodha ya kucheza</string>
+    <string name="action_remove_from_playlist">Ondoa kwenye "%1$s"</string>
+    <string name="action_scroll_to_bottom">Sogeza hadi chini kabisa</string>
+    <string name="favorite_list_add_stations">Ongeza vipendwa</string>
+    <string name="favorite_list_all">Vyote</string>
+    <string name="favorite_list_assign_title">Ongeza kwenye orodha za kucheza</string>
+    <string name="favorite_list_create">Orodha mpya ya kucheza</string>
+    <string name="favorite_list_delete_message">Ungependa kufuta "%1$s"? Vituo vyako vitasalia katika Vipendwa.</string>
+    <string name="favorite_list_delete_title">Futa orodha ya kucheza</string>
+    <string name="favorite_list_edit_stations">Hariri vituo</string>
+    <string name="favorite_list_empty">Orodha hii ya kucheza haina kitu</string>
+    <string name="favorite_list_manage">Dhibiti orodha za kucheza</string>
+    <string name="favorite_list_name_hint">Jina la orodha ya kucheza</string>
+    <string name="favorite_list_none_yet">Bado hakuna orodha za kucheza. Unda moja ili kupanga vipendwa vyako.</string>
+    <string name="favorite_list_rename">Badilisha jina la orodha ya kucheza</string>
 </resources>

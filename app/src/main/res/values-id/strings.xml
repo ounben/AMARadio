@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Semua stasiun</string>
     <string name="filter_date_any">Tanggal berapa pun</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktif, tersisa %1$s</string>
+    <string name="accessibility_filter_playlist">Filter daftar putar: %1$s</string>
+    <string name="accessibility_playlist_delete">Hapus %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Edit stasiun di %1$s</string>
+    <string name="accessibility_playlist_rename">Ganti nama %1$s</string>
+    <string name="action_clear_playlist_filter">Hapus filter daftar putar</string>
+    <string name="action_manage_station_playlists">Tambahkan ke daftar putar</string>
+    <string name="action_remove_from_playlist">Hapus dari "%1$s"</string>
+    <string name="action_scroll_to_bottom">Gulir ke paling bawah</string>
+    <string name="favorite_list_add_stations">Tambahkan favorit</string>
+    <string name="favorite_list_all">Semua</string>
+    <string name="favorite_list_assign_title">Tambahkan ke daftar putar</string>
+    <string name="favorite_list_create">Daftar putar baru</string>
+    <string name="favorite_list_delete_message">Hapus "%1$s"? Stasiun Anda akan tetap tersimpan di Favorit.</string>
+    <string name="favorite_list_delete_title">Hapus daftar putar</string>
+    <string name="favorite_list_edit_stations">Edit stasiun</string>
+    <string name="favorite_list_empty">Daftar putar ini kosong</string>
+    <string name="favorite_list_manage">Kelola daftar putar</string>
+    <string name="favorite_list_name_hint">Nama daftar putar</string>
+    <string name="favorite_list_none_yet">Belum ada daftar putar. Buat satu untuk mengatur favorit Anda.</string>
+    <string name="favorite_list_rename">Ganti nama daftar putar</string>
 </resources>

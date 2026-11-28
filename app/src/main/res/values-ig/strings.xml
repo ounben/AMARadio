@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Ọdụ niile</string>
     <string name="filter_date_any">Ụbọchị ọ bụla</string>
     <string name="accessibility_sleep_timer_active_remaining">Na-arụ ọrụ, %1$s fọdụrụ</string>
+    <string name="accessibility_filter_playlist">Nzacha ndepụta ọkpụkpọ: %1$s</string>
+    <string name="accessibility_playlist_delete">Hichapụ %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Dezie ọdụ na %1$s</string>
+    <string name="accessibility_playlist_rename">Gbanwee aha %1$s</string>
+    <string name="action_clear_playlist_filter">Hichapụ nzacha ndepụta ọkpụkpọ</string>
+    <string name="action_manage_station_playlists">Tinye na ndepụta ọkpụkpọ</string>
+    <string name="action_remove_from_playlist">Wepụ na "%1$s"</string>
+    <string name="action_scroll_to_bottom">Pịgharịa gaa n\'ala</string>
+    <string name="favorite_list_add_stations">Tinye ọkacha mmasị</string>
+    <string name="favorite_list_all">Niile</string>
+    <string name="favorite_list_assign_title">Tinye na ndepụta ọkpụkpọ</string>
+    <string name="favorite_list_create">Ndepụta ọkpụkpọ ọhụrụ</string>
+    <string name="favorite_list_delete_message">Hichapụ "%1$s"? Ọdụ gị ga-anọgide na Ọkacha mmasị.</string>
+    <string name="favorite_list_delete_title">Hichapụ ndepụta ọkpụkpọ</string>
+    <string name="favorite_list_edit_stations">Dezie ọdụ</string>
+    <string name="favorite_list_empty">Ndepụta ọkpụkpọ a tọgbọ chakoo</string>
+    <string name="favorite_list_manage">Jikwaa ndepụta ọkpụkpọ</string>
+    <string name="favorite_list_name_hint">Aha ndepụta ọkpụkpọ</string>
+    <string name="favorite_list_none_yet">Enwebeghị ndepụta ọkpụkpọ. Mepụta otu iji hazie ọkacha mmasị gị.</string>
+    <string name="favorite_list_rename">Gbanwee aha ndepụta ọkpụkpọ</string>
 </resources>

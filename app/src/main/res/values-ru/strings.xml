@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Все станции</string>
     <string name="filter_date_any">Любая дата</string>
     <string name="accessibility_sleep_timer_active_remaining">Активен, осталось %1$s</string>
+    <string name="accessibility_filter_playlist">Фильтр плейлиста: %1$s</string>
+    <string name="accessibility_playlist_delete">Удалить %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Редактировать станции в %1$s</string>
+    <string name="accessibility_playlist_rename">Переименовать %1$s</string>
+    <string name="action_clear_playlist_filter">Сбросить фильтр плейлиста</string>
+    <string name="action_manage_station_playlists">Добавить в плейлист</string>
+    <string name="action_remove_from_playlist">Удалить из «%1$s»</string>
+    <string name="action_scroll_to_bottom">Прокрутить вниз</string>
+    <string name="favorite_list_add_stations">Добавить избранное</string>
+    <string name="favorite_list_all">Все</string>
+    <string name="favorite_list_assign_title">Добавить в плейлисты</string>
+    <string name="favorite_list_create">Новый плейлист</string>
+    <string name="favorite_list_delete_message">Удалить «%1$s»? Ваши станции останутся в Избранном.</string>
+    <string name="favorite_list_delete_title">Удалить плейлист</string>
+    <string name="favorite_list_edit_stations">Редактировать станции</string>
+    <string name="favorite_list_empty">Этот плейлист пуст</string>
+    <string name="favorite_list_manage">Управление плейлистами</string>
+    <string name="favorite_list_name_hint">Название плейлиста</string>
+    <string name="favorite_list_none_yet">Плейлистов пока нет. Создайте один, чтобы упорядочить избранное.</string>
+    <string name="favorite_list_rename">Переименовать плейлист</string>
 </resources>

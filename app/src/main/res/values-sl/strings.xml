@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Vse postaje</string>
     <string name="filter_date_any">Kateri koli datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktivno, preostane %1$s</string>
+    <string name="accessibility_filter_playlist">Filter seznama predvajanja: %1$s</string>
+    <string name="accessibility_playlist_delete">Izbriši %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Uredi postaje v %1$s</string>
+    <string name="accessibility_playlist_rename">Preimenuj %1$s</string>
+    <string name="action_clear_playlist_filter">Počisti filter seznama predvajanja</string>
+    <string name="action_manage_station_playlists">Dodaj na seznam predvajanja</string>
+    <string name="action_remove_from_playlist">Odstrani iz "%1$s"</string>
+    <string name="action_scroll_to_bottom">Pomakni na dno</string>
+    <string name="favorite_list_add_stations">Dodaj priljubljene</string>
+    <string name="favorite_list_all">Vse</string>
+    <string name="favorite_list_assign_title">Dodaj na sezname predvajanja</string>
+    <string name="favorite_list_create">Nov seznam predvajanja</string>
+    <string name="favorite_list_delete_message">Izbrisati "%1$s"? Vaše postaje bodo ostale med Priljubljenimi.</string>
+    <string name="favorite_list_delete_title">Izbriši seznam predvajanja</string>
+    <string name="favorite_list_edit_stations">Uredi postaje</string>
+    <string name="favorite_list_empty">Ta seznam predvajanja je prazen</string>
+    <string name="favorite_list_manage">Upravljaj sezname predvajanja</string>
+    <string name="favorite_list_name_hint">Ime seznama predvajanja</string>
+    <string name="favorite_list_none_yet">Še ni seznamov predvajanja. Ustvarite enega za organizacijo priljubljenih.</string>
+    <string name="favorite_list_rename">Preimenuj seznam predvajanja</string>
 </resources>

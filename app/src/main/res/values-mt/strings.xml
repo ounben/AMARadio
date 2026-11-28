@@ -447,4 +447,24 @@
     <string name="filter_all_stations">L-istazzjonijiet kollha</string>
     <string name="filter_date_any">Kwalunkwe data</string>
     <string name="accessibility_sleep_timer_active_remaining">Attiv, fadal %1$s</string>
+    <string name="accessibility_filter_playlist">Filtru tal-playlist: %1$s</string>
+    <string name="accessibility_playlist_delete">Ħassar %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editja l-istazzjonijiet f\'%1$s</string>
+    <string name="accessibility_playlist_rename">Semmi mill-ġdid %1$s</string>
+    <string name="action_clear_playlist_filter">Neħħi l-filtru tal-playlist</string>
+    <string name="action_manage_station_playlists">Żid mal-playlist</string>
+    <string name="action_remove_from_playlist">Neħħi minn "%1$s"</string>
+    <string name="action_scroll_to_bottom">Skrollja sal-qiegħ</string>
+    <string name="favorite_list_add_stations">Żid favoriti</string>
+    <string name="favorite_list_all">Kollha</string>
+    <string name="favorite_list_assign_title">Żid mal-playlists</string>
+    <string name="favorite_list_create">Playlist ġdida</string>
+    <string name="favorite_list_delete_message">Tħassar "%1$s"? L-istazzjonijiet tiegħek jibqgħu fil-Favoriti.</string>
+    <string name="favorite_list_delete_title">Ħassar playlist</string>
+    <string name="favorite_list_edit_stations">Editja l-istazzjonijiet</string>
+    <string name="favorite_list_empty">Din il-playlist hija vojta</string>
+    <string name="favorite_list_manage">Immaniġġja l-playlists</string>
+    <string name="favorite_list_name_hint">Isem il-playlist</string>
+    <string name="favorite_list_none_yet">Għad m\'hemmx playlists. Oħloq waħda biex torganizza l-favoriti tiegħek.</string>
+    <string name="favorite_list_rename">Semmi mill-ġdid il-playlist</string>
 </resources>

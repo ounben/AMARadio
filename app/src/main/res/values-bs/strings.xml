@@ -448,4 +448,24 @@
     <string name="filter_all_stations">Sve stanice</string>
     <string name="filter_date_any">Bilo koji datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktivan, preostalo %1$s</string>
+    <string name="accessibility_filter_playlist">Filter plejliste: %1$s</string>
+    <string name="accessibility_playlist_delete">Izbriši %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Uredi stanice u %1$s</string>
+    <string name="accessibility_playlist_rename">Preimenuj %1$s</string>
+    <string name="action_clear_playlist_filter">Obriši filter plejliste</string>
+    <string name="action_manage_station_playlists">Dodaj na plejlistu</string>
+    <string name="action_remove_from_playlist">Ukloni iz "%1$s"</string>
+    <string name="action_scroll_to_bottom">Pomjeri na dno</string>
+    <string name="favorite_list_add_stations">Dodaj favorite</string>
+    <string name="favorite_list_all">Sve</string>
+    <string name="favorite_list_assign_title">Dodaj na plejliste</string>
+    <string name="favorite_list_create">Nova plejlista</string>
+    <string name="favorite_list_delete_message">Izbrisati "%1$s"? Vaše stanice će ostati u Favoritima.</string>
+    <string name="favorite_list_delete_title">Izbriši plejlistu</string>
+    <string name="favorite_list_edit_stations">Uredi stanice</string>
+    <string name="favorite_list_empty">Ova plejlista je prazna</string>
+    <string name="favorite_list_manage">Upravljaj plejlistama</string>
+    <string name="favorite_list_name_hint">Naziv plejliste</string>
+    <string name="favorite_list_none_yet">Još nema plejlista. Kreirajte jednu da organizujete svoje favorite.</string>
+    <string name="favorite_list_rename">Preimenuj plejlistu</string>
 </resources>

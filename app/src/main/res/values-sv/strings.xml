@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Alla stationer</string>
     <string name="filter_date_any">Valfritt datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s kvar</string>
+    <string name="accessibility_filter_playlist">Spellistefilter: %1$s</string>
+    <string name="accessibility_playlist_delete">Ta bort %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Redigera stationer i %1$s</string>
+    <string name="accessibility_playlist_rename">Byt namn på %1$s</string>
+    <string name="action_clear_playlist_filter">Rensa spellistefilter</string>
+    <string name="action_manage_station_playlists">Lägg till i spellista</string>
+    <string name="action_remove_from_playlist">Ta bort från "%1$s"</string>
+    <string name="action_scroll_to_bottom">Bläddra längst ner</string>
+    <string name="favorite_list_add_stations">Lägg till favoriter</string>
+    <string name="favorite_list_all">Alla</string>
+    <string name="favorite_list_assign_title">Lägg till i spellistor</string>
+    <string name="favorite_list_create">Ny spellista</string>
+    <string name="favorite_list_delete_message">Ta bort "%1$s"? Dina stationer finns kvar i Favoriter.</string>
+    <string name="favorite_list_delete_title">Ta bort spellista</string>
+    <string name="favorite_list_edit_stations">Redigera stationer</string>
+    <string name="favorite_list_empty">Den här spellistan är tom</string>
+    <string name="favorite_list_manage">Hantera spellistor</string>
+    <string name="favorite_list_name_hint">Spellistans namn</string>
+    <string name="favorite_list_none_yet">Inga spellistor ännu. Skapa en för att organisera dina favoriter.</string>
+    <string name="favorite_list_rename">Byt namn på spellista</string>
 </resources>

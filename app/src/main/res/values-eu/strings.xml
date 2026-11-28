@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Irrati guztiak</string>
     <string name="filter_date_any">Edozein data</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktibo, %1$s geratzen da</string>
+    <string name="accessibility_filter_playlist">Erreprodukzio-zerrendaren iragazkia: %1$s</string>
+    <string name="accessibility_playlist_delete">Ezabatu %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editatu irratiak hemen: %1$s</string>
+    <string name="accessibility_playlist_rename">Aldatu %1$s izena</string>
+    <string name="action_clear_playlist_filter">Garbitu erreprodukzio-zerrendaren iragazkia</string>
+    <string name="action_manage_station_playlists">Gehitu erreprodukzio-zerrendan</string>
+    <string name="action_remove_from_playlist">Kendu "%1$s" zerrendatik</string>
+    <string name="action_scroll_to_bottom">Joan behealdera</string>
+    <string name="favorite_list_add_stations">Gehitu gogokoak</string>
+    <string name="favorite_list_all">Denak</string>
+    <string name="favorite_list_assign_title">Gehitu erreprodukzio-zerrendetara</string>
+    <string name="favorite_list_create">Erreprodukzio-zerrenda berria</string>
+    <string name="favorite_list_delete_message">"%1$s" ezabatu? Zure irratiak Gogokoetan mantenduko dira.</string>
+    <string name="favorite_list_delete_title">Ezabatu erreprodukzio-zerrenda</string>
+    <string name="favorite_list_edit_stations">Editatu irratiak</string>
+    <string name="favorite_list_empty">Erreprodukzio-zerrenda hau hutsik dago</string>
+    <string name="favorite_list_manage">Kudeatu erreprodukzio-zerrendak</string>
+    <string name="favorite_list_name_hint">Erreprodukzio-zerrendaren izena</string>
+    <string name="favorite_list_none_yet">Oraindik ez dago erreprodukzio-zerrendarik. Sortu bat zure gogokoak antolatzeko.</string>
+    <string name="favorite_list_rename">Aldatu erreprodukzio-zerrendaren izena</string>
 </resources>

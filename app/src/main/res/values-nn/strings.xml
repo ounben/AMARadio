@@ -446,4 +446,24 @@
     <string name="filter_all_stations">Alle stasjonar</string>
     <string name="filter_date_any">Kva dato som helst</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s att</string>
+    <string name="accessibility_filter_playlist">Spelelistefilter: %1$s</string>
+    <string name="accessibility_playlist_delete">Slett %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Rediger stasjonar i %1$s</string>
+    <string name="accessibility_playlist_rename">Gje %1$s nytt namn</string>
+    <string name="action_clear_playlist_filter">Tøm spelelistefilter</string>
+    <string name="action_manage_station_playlists">Legg til i speleliste</string>
+    <string name="action_remove_from_playlist">Fjern frå "%1$s"</string>
+    <string name="action_scroll_to_bottom">Rull til botnen</string>
+    <string name="favorite_list_add_stations">Legg til favorittar</string>
+    <string name="favorite_list_all">Alle</string>
+    <string name="favorite_list_assign_title">Legg til i spelelister</string>
+    <string name="favorite_list_create">Ny speleliste</string>
+    <string name="favorite_list_delete_message">Slette "%1$s"? Stasjonane dine vert verande i Favorittar.</string>
+    <string name="favorite_list_delete_title">Slett speleliste</string>
+    <string name="favorite_list_edit_stations">Rediger stasjonar</string>
+    <string name="favorite_list_empty">Denne spelelista er tom</string>
+    <string name="favorite_list_manage">Administrer spelelister</string>
+    <string name="favorite_list_name_hint">Namn på speleliste</string>
+    <string name="favorite_list_none_yet">Ingen spelelister enno. Opprett ei for å organisere favorittane dine.</string>
+    <string name="favorite_list_rename">Gje spelelista nytt namn</string>
 </resources>

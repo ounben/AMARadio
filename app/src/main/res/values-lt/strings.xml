@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Visos stotys</string>
     <string name="filter_date_any">Bet kokia data</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktyvus, liko %1$s</string>
+    <string name="accessibility_filter_playlist">Grojaraščio filtras: %1$s</string>
+    <string name="accessibility_playlist_delete">Ištrinti %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Redaguoti stotis grojaraštyje %1$s</string>
+    <string name="accessibility_playlist_rename">Pervardyti %1$s</string>
+    <string name="action_clear_playlist_filter">Išvalyti grojaraščio filtrą</string>
+    <string name="action_manage_station_playlists">Pridėti prie grojaraščio</string>
+    <string name="action_remove_from_playlist">Pašalinti iš "%1$s"</string>
+    <string name="action_scroll_to_bottom">Slinkti į apačią</string>
+    <string name="favorite_list_add_stations">Pridėti mėgstamiausių</string>
+    <string name="favorite_list_all">Visos</string>
+    <string name="favorite_list_assign_title">Pridėti prie grojaraščių</string>
+    <string name="favorite_list_create">Naujas grojaraštis</string>
+    <string name="favorite_list_delete_message">Ištrinti "%1$s"? Jūsų stotys liks Mėgstamiausiuose.</string>
+    <string name="favorite_list_delete_title">Ištrinti grojaraštį</string>
+    <string name="favorite_list_edit_stations">Redaguoti stotis</string>
+    <string name="favorite_list_empty">Šis grojaraštis tuščias</string>
+    <string name="favorite_list_manage">Tvarkyti grojaraščius</string>
+    <string name="favorite_list_name_hint">Grojaraščio pavadinimas</string>
+    <string name="favorite_list_none_yet">Grojaraščių dar nėra. Sukurkite vieną mėgstamiausioms stotims suskirstyti.</string>
+    <string name="favorite_list_rename">Pervardyti grojaraštį</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Todas as estações</string>
     <string name="filter_date_any">Qualquer data</string>
     <string name="accessibility_sleep_timer_active_remaining">Ativo, %1$s restante</string>
+    <string name="accessibility_filter_playlist">Filtro da lista de reprodução: %1$s</string>
+    <string name="accessibility_playlist_delete">Eliminar %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Editar estações em %1$s</string>
+    <string name="accessibility_playlist_rename">Mudar o nome de %1$s</string>
+    <string name="action_clear_playlist_filter">Limpar filtro da lista de reprodução</string>
+    <string name="action_manage_station_playlists">Adicionar à lista de reprodução</string>
+    <string name="action_remove_from_playlist">Remover de "%1$s"</string>
+    <string name="action_scroll_to_bottom">Deslocar para o fundo</string>
+    <string name="favorite_list_add_stations">Adicionar favoritos</string>
+    <string name="favorite_list_all">Todas</string>
+    <string name="favorite_list_assign_title">Adicionar às listas de reprodução</string>
+    <string name="favorite_list_create">Nova lista de reprodução</string>
+    <string name="favorite_list_delete_message">Eliminar "%1$s"? As suas estações permanecerão nos Favoritos.</string>
+    <string name="favorite_list_delete_title">Eliminar lista de reprodução</string>
+    <string name="favorite_list_edit_stations">Editar estações</string>
+    <string name="favorite_list_empty">Esta lista de reprodução está vazia</string>
+    <string name="favorite_list_manage">Gerir listas de reprodução</string>
+    <string name="favorite_list_name_hint">Nome da lista de reprodução</string>
+    <string name="favorite_list_none_yet">Ainda não existem listas de reprodução. Crie uma para organizar os seus favoritos.</string>
+    <string name="favorite_list_rename">Mudar nome da lista de reprodução</string>
 </resources>

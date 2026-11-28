@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Alle Sender</string>
     <string name="filter_date_any">Beliebiges Datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s verbleibend</string>
+    <string name="accessibility_filter_playlist">Playlist-Filter: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s löschen</string>
+    <string name="accessibility_playlist_edit_stations">Sender in %1$s bearbeiten</string>
+    <string name="accessibility_playlist_rename">%1$s umbenennen</string>
+    <string name="action_clear_playlist_filter">Playlist-Filter löschen</string>
+    <string name="action_manage_station_playlists">Zur Playlist hinzufügen</string>
+    <string name="action_remove_from_playlist">Aus „%1$s“ entfernen</string>
+    <string name="action_scroll_to_bottom">Nach unten scrollen</string>
+    <string name="favorite_list_add_stations">Favoriten hinzufügen</string>
+    <string name="favorite_list_all">Alle</string>
+    <string name="favorite_list_assign_title">Zu Playlists hinzufügen</string>
+    <string name="favorite_list_create">Neue Playlist</string>
+    <string name="favorite_list_delete_message">„%1$s“ löschen? Ihre Sender bleiben in den Favoriten.</string>
+    <string name="favorite_list_delete_title">Playlist löschen</string>
+    <string name="favorite_list_edit_stations">Sender bearbeiten</string>
+    <string name="favorite_list_empty">Diese Playlist ist leer</string>
+    <string name="favorite_list_manage">Playlists verwalten</string>
+    <string name="favorite_list_name_hint">Playlist-Name</string>
+    <string name="favorite_list_none_yet">Noch keine Playlists. Erstellen Sie eine, um Ihre Favoriten zu organisieren.</string>
+    <string name="favorite_list_rename">Playlist umbenennen</string>
 </resources>

@@ -449,4 +449,24 @@
     <string name="filter_all_stations">সকলো ষ্টেচন</string>
     <string name="filter_date_any">যিকোনো তাৰিখ</string>
     <string name="accessibility_sleep_timer_active_remaining">সক্ৰিয়, %1$s বাকী আছে</string>
+    <string name="accessibility_filter_playlist">প্লেলিষ্ট ফিল্টাৰ: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s মচক</string>
+    <string name="accessibility_playlist_edit_stations">%1$s-ত ষ্টেচন সম্পাদনা কৰক</string>
+    <string name="accessibility_playlist_rename">%1$s পুনঃনামকৰণ কৰক</string>
+    <string name="action_clear_playlist_filter">প্লেলিষ্ট ফিল্টাৰ মচক</string>
+    <string name="action_manage_station_playlists">প্লেলিষ্টত যোগ কৰক</string>
+    <string name="action_remove_from_playlist">"%1$s" ৰ পৰা আঁতৰাওক</string>
+    <string name="action_scroll_to_bottom">তললৈ স্ক্ৰল কৰক</string>
+    <string name="favorite_list_add_stations">প্ৰিয়সমূহ যোগ কৰক</string>
+    <string name="favorite_list_all">সকলো</string>
+    <string name="favorite_list_assign_title">প্লেলিষ্টত যোগ কৰক</string>
+    <string name="favorite_list_create">নতুন প্লেলিষ্ট</string>
+    <string name="favorite_list_delete_message">"%1$s" মচিব নেকি? আপোনাৰ ষ্টেচনসমূহ প্ৰিয়ত থাকিব।</string>
+    <string name="favorite_list_delete_title">প্লেলিষ্ট মচক</string>
+    <string name="favorite_list_edit_stations">ষ্টেচন সম্পাদনা কৰক</string>
+    <string name="favorite_list_empty">এই প্লেলিষ্ট খালী</string>
+    <string name="favorite_list_manage">প্লেলিষ্ট পৰিচালনা কৰক</string>
+    <string name="favorite_list_name_hint">প্লেলিষ্টৰ নাম</string>
+    <string name="favorite_list_none_yet">এতিয়াও কোনো প্লেলিষ্ট নাই। আপোনাৰ প্ৰিয়সমূহ সজাবলৈ এটা সৃষ্টি কৰক।</string>
+    <string name="favorite_list_rename">প্লেলিষ্ট পুনঃনামকৰণ কৰক</string>
 </resources>

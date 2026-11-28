@@ -447,4 +447,24 @@
     <string name="filter_all_stations">គ្រប់ស្ថានីយ</string>
     <string name="filter_date_any">កាលបរិច្ឆេទណាមួយ</string>
     <string name="accessibility_sleep_timer_active_remaining">សកម្ម នៅសល់ %1$s</string>
+    <string name="accessibility_filter_playlist">តម្រងបញ្ជីចាក់៖ %1$s</string>
+    <string name="accessibility_playlist_delete">លុប %1$s</string>
+    <string name="accessibility_playlist_edit_stations">កែសម្រួលស្ថានីយក្នុង %1$s</string>
+    <string name="accessibility_playlist_rename">ប្តូរឈ្មោះ %1$s</string>
+    <string name="action_clear_playlist_filter">សម្អាតតម្រងបញ្ជីចាក់</string>
+    <string name="action_manage_station_playlists">បន្ថែមទៅបញ្ជីចាក់</string>
+    <string name="action_remove_from_playlist">ដកចេញពី "%1$s"</string>
+    <string name="action_scroll_to_bottom">រំកិលទៅបាត</string>
+    <string name="favorite_list_add_stations">បន្ថែមចំណូលចិត្ត</string>
+    <string name="favorite_list_all">ទាំងអស់</string>
+    <string name="favorite_list_assign_title">បន្ថែមទៅបញ្ជីចាក់</string>
+    <string name="favorite_list_create">បញ្ជីចាក់ថ្មី</string>
+    <string name="favorite_list_delete_message">លុប "%1$s" ឬ? ស្ថានីយរបស់អ្នកនឹងនៅតែមានក្នុងចំណូលចិត្ត។</string>
+    <string name="favorite_list_delete_title">លុបបញ្ជីចាក់</string>
+    <string name="favorite_list_edit_stations">កែសម្រួលស្ថានីយ</string>
+    <string name="favorite_list_empty">បញ្ជីចាក់នេះទទេ</string>
+    <string name="favorite_list_manage">គ្រប់គ្រងបញ្ជីចាក់</string>
+    <string name="favorite_list_name_hint">ឈ្មោះបញ្ជីចាក់</string>
+    <string name="favorite_list_none_yet">មិនទាន់មានបញ្ជីចាក់នៅឡើយទេ។ បង្កើតមួយដើម្បីរៀបចំចំណូលចិត្តរបស់អ្នក។</string>
+    <string name="favorite_list_rename">ប្តូរឈ្មោះបញ្ជីចាក់</string>
 </resources>

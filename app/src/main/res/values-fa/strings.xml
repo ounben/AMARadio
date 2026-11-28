@@ -447,4 +447,24 @@
     <string name="filter_all_stations">همه ایستگاه‌ها</string>
     <string name="filter_date_any">هر تاریخی</string>
     <string name="accessibility_sleep_timer_active_remaining">فعال، %1$s باقی مانده است</string>
+    <string name="accessibility_filter_playlist">فیلتر لیست پخش: %1$s</string>
+    <string name="accessibility_playlist_delete">حذف %1$s</string>
+    <string name="accessibility_playlist_edit_stations">ویرایش ایستگاه‌ها در %1$s</string>
+    <string name="accessibility_playlist_rename">تغییر نام %1$s</string>
+    <string name="action_clear_playlist_filter">پاک کردن فیلتر لیست پخش</string>
+    <string name="action_manage_station_playlists">افزودن به لیست پخش</string>
+    <string name="action_remove_from_playlist">حذف از «%1$s»</string>
+    <string name="action_scroll_to_bottom">اسکرول به پایین</string>
+    <string name="favorite_list_add_stations">افزودن علاقه‌مندی‌ها</string>
+    <string name="favorite_list_all">همه</string>
+    <string name="favorite_list_assign_title">افزودن به لیست‌های پخش</string>
+    <string name="favorite_list_create">لیست پخش جدید</string>
+    <string name="favorite_list_delete_message">«%1$s» حذف شود؟ ایستگاه‌های شما در علاقه‌مندی‌ها باقی خواهند ماند.</string>
+    <string name="favorite_list_delete_title">حذف لیست پخش</string>
+    <string name="favorite_list_edit_stations">ویرایش ایستگاه‌ها</string>
+    <string name="favorite_list_empty">این لیست پخش خالی است</string>
+    <string name="favorite_list_manage">مدیریت لیست‌های پخش</string>
+    <string name="favorite_list_name_hint">نام لیست پخش</string>
+    <string name="favorite_list_none_yet">هنوز لیست پخشی وجود ندارد. برای مرتب‌سازی علاقه‌مندی‌های خود یکی ایجاد کنید.</string>
+    <string name="favorite_list_rename">تغییر نام لیست پخش</string>
 </resources>

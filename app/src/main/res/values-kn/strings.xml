@@ -447,4 +447,24 @@
     <string name="filter_all_stations">ಎಲ್ಲಾ ನಿಲ್ದಾಣಗಳು</string>
     <string name="filter_date_any">ಯಾವುದೇ ದಿನಾಂಕ</string>
     <string name="accessibility_sleep_timer_active_remaining">ಸಕ್ರಿಯ, %1$s ಉಳಿದಿದೆ</string>
+    <string name="accessibility_filter_playlist">ಪ್ಲೇಪಟ್ಟಿ ಫಿಲ್ಟರ್: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ಅಳಿಸಿ</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ನಲ್ಲಿ ನಿಲ್ದಾಣಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="accessibility_playlist_rename">%1$s ಮರುಹೆಸರಿಸಿ</string>
+    <string name="action_clear_playlist_filter">ಪ್ಲೇಪಟ್ಟಿ ಫಿಲ್ಟರ್ ತೆರವುಗೊಳಿಸಿ</string>
+    <string name="action_manage_station_playlists">ಪ್ಲೇಪಟ್ಟಿಗೆ ಸೇರಿಸಿ</string>
+    <string name="action_remove_from_playlist">"%1$s" ನಿಂದ ತೆಗೆದುಹಾಕಿ</string>
+    <string name="action_scroll_to_bottom">ಕೆಳಕ್ಕೆ ಸ್ಕ್ರಾಲ್ ಮಾಡಿ</string>
+    <string name="favorite_list_add_stations">ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸೇರಿಸಿ</string>
+    <string name="favorite_list_all">ಎಲ್ಲಾ</string>
+    <string name="favorite_list_assign_title">ಪ್ಲೇಪಟ್ಟಿಗಳಿಗೆ ಸೇರಿಸಿ</string>
+    <string name="favorite_list_create">ಹೊಸ ಪ್ಲೇಪಟ್ಟಿ</string>
+    <string name="favorite_list_delete_message">"%1$s" ಅಳಿಸುವುದೇ? ನಿಮ್ಮ ನಿಲ್ದಾಣಗಳು ಮೆಚ್ಚಿನವುಗಳಲ್ಲಿ ಉಳಿಯುತ್ತವೆ.</string>
+    <string name="favorite_list_delete_title">ಪ್ಲೇಪಟ್ಟಿ ಅಳಿಸಿ</string>
+    <string name="favorite_list_edit_stations">ನಿಲ್ದಾಣಗಳನ್ನು ಸಂಪಾದಿಸಿ</string>
+    <string name="favorite_list_empty">ಈ ಪ್ಲೇಪಟ್ಟಿ ಖಾಲಿಯಾಗಿದೆ</string>
+    <string name="favorite_list_manage">ಪ್ಲೇಪಟ್ಟಿಗಳನ್ನು ನಿರ್ವಹಿಸಿ</string>
+    <string name="favorite_list_name_hint">ಪ್ಲೇಪಟ್ಟಿ ಹೆಸರು</string>
+    <string name="favorite_list_none_yet">ಇನ್ನೂ ಯಾವುದೇ ಪ್ಲೇಪಟ್ಟಿಗಳಿಲ್ಲ. ನಿಮ್ಮ ಮೆಚ್ಚಿನವುಗಳನ್ನು ಸಂಘಟಿಸಲು ಒಂದನ್ನು ರಚಿಸಿ.</string>
+    <string name="favorite_list_rename">ಪ್ಲೇಪಟ್ಟಿ ಮರುಹೆಸರಿಸಿ</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Барлық станциялар</string>
     <string name="filter_date_any">Кез келген күн</string>
     <string name="accessibility_sleep_timer_active_remaining">Белсенді, %1$s қалды</string>
+    <string name="accessibility_filter_playlist">Ойнату тізімінің сүзгісі: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s жою</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ішіндегі станцияларды өңдеу</string>
+    <string name="accessibility_playlist_rename">%1$s атауын өзгерту</string>
+    <string name="action_clear_playlist_filter">Ойнату тізімінің сүзгісін тазалау</string>
+    <string name="action_manage_station_playlists">Ойнату тізіміне қосу</string>
+    <string name="action_remove_from_playlist">"%1$s" ішінен өшіру</string>
+    <string name="action_scroll_to_bottom">Төменге айналдыру</string>
+    <string name="favorite_list_add_stations">Таңдаулыларды қосу</string>
+    <string name="favorite_list_all">Барлығы</string>
+    <string name="favorite_list_assign_title">Ойнату тізімдеріне қосу</string>
+    <string name="favorite_list_create">Жаңа ойнату тізімі</string>
+    <string name="favorite_list_delete_message">"%1$s" жойылсын ба? Станцияларыңыз Таңдаулыларда қалады.</string>
+    <string name="favorite_list_delete_title">Ойнату тізімін жою</string>
+    <string name="favorite_list_edit_stations">Станцияларды өңдеу</string>
+    <string name="favorite_list_empty">Бұл ойнату тізімі бос</string>
+    <string name="favorite_list_manage">Ойнату тізімдерін басқару</string>
+    <string name="favorite_list_name_hint">Ойнату тізімінің атауы</string>
+    <string name="favorite_list_none_yet">Әзірге ойнату тізімдері жоқ. Таңдаулыларды реттеу үшін біреуін жасаңыз.</string>
+    <string name="favorite_list_rename">Ойнату тізімінің атауын өзгерту</string>
 </resources>

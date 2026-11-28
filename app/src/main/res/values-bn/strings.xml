@@ -447,4 +447,24 @@
     <string name="filter_all_stations">সব স্টেশন</string>
     <string name="filter_date_any">যেকোনো তারিখ</string>
     <string name="accessibility_sleep_timer_active_remaining">সক্রিয়, %1$s বাকি</string>
+    <string name="accessibility_filter_playlist">প্লেলিস্ট ফিল্টার: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s মুছুন</string>
+    <string name="accessibility_playlist_edit_stations">%1$s-এ স্টেশন সম্পাদনা করুন</string>
+    <string name="accessibility_playlist_rename">%1$s-এর নাম পরিবর্তন করুন</string>
+    <string name="action_clear_playlist_filter">প্লেলিস্ট ফিল্টার মুছুন</string>
+    <string name="action_manage_station_playlists">প্লেলিস্টে যোগ করুন</string>
+    <string name="action_remove_from_playlist">"%1$s" থেকে সরান</string>
+    <string name="action_scroll_to_bottom">সবার নিচে স্ক্রল করুন</string>
+    <string name="favorite_list_add_stations">পছন্দেরগুলো যোগ করুন</string>
+    <string name="favorite_list_all">সব</string>
+    <string name="favorite_list_assign_title">প্লেলিস্টে যোগ করুন</string>
+    <string name="favorite_list_create">নতুন প্লেলিস্ট</string>
+    <string name="favorite_list_delete_message">"%1$s" মুছে ফেলবেন? আপনার স্টেশনগুলো পছন্দের তালিকায় থাকবে।</string>
+    <string name="favorite_list_delete_title">প্লেলিস্ট মুছুন</string>
+    <string name="favorite_list_edit_stations">স্টেশন সম্পাদনা করুন</string>
+    <string name="favorite_list_empty">এই প্লেলিস্টটি খালি</string>
+    <string name="favorite_list_manage">প্লেলিস্ট পরিচালনা করুন</string>
+    <string name="favorite_list_name_hint">প্লেলিস্টের নাম</string>
+    <string name="favorite_list_none_yet">এখনও কোনো প্লেলিস্ট নেই। আপনার পছন্দের স্টেশনগুলো সাজাতে একটি তৈরি করুন।</string>
+    <string name="favorite_list_rename">প্লেলিস্টের নাম পরিবর্তন করুন</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Barcha stansiyalar</string>
     <string name="filter_date_any">Istalgan sana</string>
     <string name="accessibility_sleep_timer_active_remaining">Faol, %1$s qoldi</string>
+    <string name="accessibility_filter_playlist">Pleylist filtri: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ni o‘chirish</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ichidagi stansiyalarni tahrirlash</string>
+    <string name="accessibility_playlist_rename">%1$s nomini o‘zgartirish</string>
+    <string name="action_clear_playlist_filter">Pleylist filtrini tozalash</string>
+    <string name="action_manage_station_playlists">Pleylistga qo‘shish</string>
+    <string name="action_remove_from_playlist">"%1$s" dan olib tashlash</string>
+    <string name="action_scroll_to_bottom">Eng pastga aylantirish</string>
+    <string name="favorite_list_add_stations">Sevimlilarni qo‘shish</string>
+    <string name="favorite_list_all">Barchasi</string>
+    <string name="favorite_list_assign_title">Pleylistlarga qo‘shish</string>
+    <string name="favorite_list_create">Yangi pleylist</string>
+    <string name="favorite_list_delete_message">"%1$s" o‘chirilsinmi? Stansiyalaringiz Sevimlilarda saqlanib qoladi.</string>
+    <string name="favorite_list_delete_title">Pleylistni o‘chirish</string>
+    <string name="favorite_list_edit_stations">Stansiyalarni tahrirlash</string>
+    <string name="favorite_list_empty">Bu pleylist bo‘sh</string>
+    <string name="favorite_list_manage">Pleylistlarni boshqarish</string>
+    <string name="favorite_list_name_hint">Pleylist nomi</string>
+    <string name="favorite_list_none_yet">Hali pleylistlar yo‘q. Sevimlilaringizni tartibga solish uchun bittasini yarating.</string>
+    <string name="favorite_list_rename">Pleylist nomini o‘zgartirish</string>
 </resources>

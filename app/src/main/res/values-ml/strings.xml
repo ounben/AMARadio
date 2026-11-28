@@ -447,4 +447,24 @@
     <string name="filter_all_stations">എല്ലാ സ്റ്റേഷനുകളും</string>
     <string name="filter_date_any">ഏത് തീയതിയും</string>
     <string name="accessibility_sleep_timer_active_remaining">സജീവം, %1$s ശേഷിക്കുന്നു</string>
+    <string name="accessibility_filter_playlist">പ്ലേലിസ്റ്റ് ഫിൽട്ടർ: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ഇല്ലാതാക്കുക</string>
+    <string name="accessibility_playlist_edit_stations">%1$s-ലെ സ്റ്റേഷനുകൾ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="accessibility_playlist_rename">%1$s പേര് മാറ്റുക</string>
+    <string name="action_clear_playlist_filter">പ്ലേലിസ്റ്റ് ഫിൽട്ടർ മായ്ക്കുക</string>
+    <string name="action_manage_station_playlists">പ്ലേലിസ്റ്റിലേക്ക് ചേർക്കുക</string>
+    <string name="action_remove_from_playlist">"%1$s" എന്നതിൽ നിന്ന് നീക്കം ചെയ്യുക</string>
+    <string name="action_scroll_to_bottom">ഏറ്റവും താഴേക്ക് സ്ക്രോൾ ചെയ്യുക</string>
+    <string name="favorite_list_add_stations">പ്രിയപ്പെട്ടവ ചേർക്കുക</string>
+    <string name="favorite_list_all">എല്ലാം</string>
+    <string name="favorite_list_assign_title">പ്ലേലിസ്റ്റുകളിലേക്ക് ചേർക്കുക</string>
+    <string name="favorite_list_create">പുതിയ പ്ലേലിസ്റ്റ്</string>
+    <string name="favorite_list_delete_message">"%1$s" ഇല്ലാതാക്കണോ? നിങ്ങളുടെ സ്റ്റേഷനുകൾ പ്രിയപ്പെട്ടവയിൽ തന്നെ തുടരും.</string>
+    <string name="favorite_list_delete_title">പ്ലേലിസ്റ്റ് ഇല്ലാതാക്കുക</string>
+    <string name="favorite_list_edit_stations">സ്റ്റേഷനുകൾ എഡിറ്റ് ചെയ്യുക</string>
+    <string name="favorite_list_empty">ഈ പ്ലേലിസ്റ്റ് ശൂന്യമാണ്</string>
+    <string name="favorite_list_manage">പ്ലേലിസ്റ്റുകൾ നിയന്ത്രിക്കുക</string>
+    <string name="favorite_list_name_hint">പ്ലേലിസ്റ്റിന്റെ പേര്</string>
+    <string name="favorite_list_none_yet">ഇതുവരെ പ്ലേലിസ്റ്റുകളൊന്നുമില്ല. നിങ്ങളുടെ പ്രിയപ്പെട്ടവ ക്രമീകരിക്കാൻ ഒരെണ്ണം സൃഷ്ടിക്കുക.</string>
+    <string name="favorite_list_rename">പ്ലേലിസ്റ്റിന്റെ പേര് മാറ്റുക</string>
 </resources>

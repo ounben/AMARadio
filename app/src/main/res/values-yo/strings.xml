@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Gbogbo ibùdó</string>
     <string name="filter_date_any">Ọjọ́ èyíkéyìí</string>
     <string name="accessibility_sleep_timer_active_remaining">Ń ṣiṣẹ́, %1$s kù</string>
+    <string name="accessibility_filter_playlist">Àlẹ̀mọ́ àkójọ orin: %1$s</string>
+    <string name="accessibility_playlist_delete">Pa %1$s rẹ́</string>
+    <string name="accessibility_playlist_edit_stations">Ṣàtúnṣe àwọn ibùdó nínú %1$s</string>
+    <string name="accessibility_playlist_rename">Yí orúkọ %1$s padà</string>
+    <string name="action_clear_playlist_filter">Pa àlẹ̀mọ́ àkójọ orin rẹ́</string>
+    <string name="action_manage_station_playlists">Fi kún àkójọ orin</string>
+    <string name="action_remove_from_playlist">Yọ kúrò nínú "%1$s"</string>
+    <string name="action_scroll_to_bottom">Yí lọ sí ìsàlẹ̀ pátápátá</string>
+    <string name="favorite_list_add_stations">Fi àwọn àyànfẹ́ kún</string>
+    <string name="favorite_list_all">Gbogbo</string>
+    <string name="favorite_list_assign_title">Fi kún àwọn àkójọ orin</string>
+    <string name="favorite_list_create">Àkójọ orin tuntun</string>
+    <string name="favorite_list_delete_message">Pa "%1$s" rẹ́? Àwọn ibùdó rẹ yóò wà nínú Àwọn àyànfẹ́.</string>
+    <string name="favorite_list_delete_title">Pa àkójọ orin rẹ́</string>
+    <string name="favorite_list_edit_stations">Ṣàtúnṣe àwọn ibùdó</string>
+    <string name="favorite_list_empty">Àkójọ orin yìí ṣófo</string>
+    <string name="favorite_list_manage">Ṣàkóso àwọn àkójọ orin</string>
+    <string name="favorite_list_name_hint">Orúkọ àkójọ orin</string>
+    <string name="favorite_list_none_yet">Kò sí àkójọ orin kankan síbẹ̀. Dá ọ̀kan sílẹ̀ láti ṣètò àwọn àyànfẹ́ rẹ.</string>
+    <string name="favorite_list_rename">Yí orúkọ àkójọ orin padà</string>
 </resources>

@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Gach stáisiún</string>
     <string name="filter_date_any">Aon dáta</string>
     <string name="accessibility_sleep_timer_active_remaining">Gníomhach, %1$s fágtha</string>
+    <string name="accessibility_filter_playlist">Scagaire seinmliosta: %1$s</string>
+    <string name="accessibility_playlist_delete">Scrios %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Cuir stáisiúin in eagar in %1$s</string>
+    <string name="accessibility_playlist_rename">Athainmnigh %1$s</string>
+    <string name="action_clear_playlist_filter">Glan scagaire seinmliosta</string>
+    <string name="action_manage_station_playlists">Cuir leis an seinmliosta</string>
+    <string name="action_remove_from_playlist">Bain ó "%1$s"</string>
+    <string name="action_scroll_to_bottom">Scrollaigh go bun</string>
+    <string name="favorite_list_add_stations">Cuir ceanáin leis</string>
+    <string name="favorite_list_all">Gach ceann</string>
+    <string name="favorite_list_assign_title">Cuir le seinmliostaí</string>
+    <string name="favorite_list_create">Seinmliosta nua</string>
+    <string name="favorite_list_delete_message">Scrios "%1$s"? Fanfaidh do stáisiúin i gCeanáin.</string>
+    <string name="favorite_list_delete_title">Scrios seinmliosta</string>
+    <string name="favorite_list_edit_stations">Cuir stáisiúin in eagar</string>
+    <string name="favorite_list_empty">Tá an seinmliosta seo folamh</string>
+    <string name="favorite_list_manage">Bainistigh seinmliostaí</string>
+    <string name="favorite_list_name_hint">Ainm an tseinmliosta</string>
+    <string name="favorite_list_none_yet">Níl aon seinmliostaí ann fós. Cruthaigh ceann chun do cheanáin a eagrú.</string>
+    <string name="favorite_list_rename">Athainmnigh seinmliosta</string>
 </resources>

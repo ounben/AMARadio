@@ -449,4 +449,24 @@
     <string name="filter_all_stations">אַלע סטאַנציעס</string>
     <string name="filter_date_any">יעדע דאַטע</string>
     <string name="accessibility_sleep_timer_active_remaining">אַקטיוו, %1$s פֿאַרבליבן</string>
+    <string name="accessibility_filter_playlist">פּלייליסט פֿילטער: %1$s</string>
+    <string name="accessibility_playlist_delete">אויסמעקן %1$s</string>
+    <string name="accessibility_playlist_edit_stations">רעדאַגירן סטאַנציעס אין %1$s</string>
+    <string name="accessibility_playlist_rename">ענדערן נאָמען פֿון %1$s</string>
+    <string name="action_clear_playlist_filter">אויסמעקן פּלייליסט פֿילטער</string>
+    <string name="action_manage_station_playlists">צוגעבן צו פּלייליסט</string>
+    <string name="action_remove_from_playlist">אַראָפּנעמען פֿון "%1$s"</string>
+    <string name="action_scroll_to_bottom">סקראָלן צום דנאָ</string>
+    <string name="favorite_list_add_stations">צוגעבן פֿאַוואָריטן</string>
+    <string name="favorite_list_all">אַלע</string>
+    <string name="favorite_list_assign_title">צוגעבן צו פּלייליסטן</string>
+    <string name="favorite_list_create">נײַע פּלייליסט</string>
+    <string name="favorite_list_delete_message">אויסמעקן "%1$s"? אײַערע סטאַנציעס וועלן בלײַבן אין פֿאַוואָריטן.</string>
+    <string name="favorite_list_delete_title">אויסמעקן פּלייליסט</string>
+    <string name="favorite_list_edit_stations">רעדאַגירן סטאַנציעס</string>
+    <string name="favorite_list_empty">די פּלייליסט איז ליידיק</string>
+    <string name="favorite_list_manage">פֿאַרוואַלטן פּלייליסטן</string>
+    <string name="favorite_list_name_hint">פּלייליסט נאָמען</string>
+    <string name="favorite_list_none_yet">נאָך נישטאָ קיין פּלייליסטן. שאַפֿט איינע צו אָרגאַניזירן אײַערע פֿאַוואָריטן.</string>
+    <string name="favorite_list_rename">ענדערן פּלייליסט נאָמען</string>
 </resources>

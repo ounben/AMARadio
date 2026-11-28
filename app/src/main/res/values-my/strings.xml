@@ -447,4 +447,24 @@
     <string name="filter_all_stations">အသံလွှင့်ဌာနအားလုံး</string>
     <string name="filter_date_any">မည်သည့်ရက်စွဲမဆို</string>
     <string name="accessibility_sleep_timer_active_remaining">ဖွင့်ထားသည်၊ %1$s ကျန်သေးသည်</string>
+    <string name="accessibility_filter_playlist">ဖွင့်စာရင်း စစ်ထုတ်မှု- %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s ကို ဖျက်ရန်</string>
+    <string name="accessibility_playlist_edit_stations">%1$s ရှိ အသံလွှင့်ဌာနများကို ပြင်ဆင်ရန်</string>
+    <string name="accessibility_playlist_rename">%1$s ကို အမည်ပြောင်းရန်</string>
+    <string name="action_clear_playlist_filter">ဖွင့်စာရင်းစစ်ထုတ်မှု ရှင်းလင်းရန်</string>
+    <string name="action_manage_station_playlists">ဖွင့်စာရင်းသို့ ထည့်ရန်</string>
+    <string name="action_remove_from_playlist">"%1$s" မှ ဖယ်ရှားရန်</string>
+    <string name="action_scroll_to_bottom">အောက်ဆုံးသို့ ရွှေ့ရန်</string>
+    <string name="favorite_list_add_stations">အကြိုက်ဆုံးများ ထည့်ရန်</string>
+    <string name="favorite_list_all">အားလုံး</string>
+    <string name="favorite_list_assign_title">ဖွင့်စာရင်းများသို့ ထည့်ရန်</string>
+    <string name="favorite_list_create">ဖွင့်စာရင်းအသစ်</string>
+    <string name="favorite_list_delete_message">"%1$s" ကို ဖျက်မလား။ သင့်အသံလွှင့်ဌာနများသည် အကြိုက်ဆုံးများထဲတွင် ဆက်ရှိနေပါမည်။</string>
+    <string name="favorite_list_delete_title">ဖွင့်စာရင်း ဖျက်ရန်</string>
+    <string name="favorite_list_edit_stations">အသံလွှင့်ဌာနများ ပြင်ဆင်ရန်</string>
+    <string name="favorite_list_empty">ဤဖွင့်စာရင်းသည် ဗလာဖြစ်နေပါသည်</string>
+    <string name="favorite_list_manage">ဖွင့်စာရင်းများ စီမံရန်</string>
+    <string name="favorite_list_name_hint">ဖွင့်စာရင်း အမည်</string>
+    <string name="favorite_list_none_yet">ဖွင့်စာရင်းများ မရှိသေးပါ။ သင့်အကြိုက်ဆုံးများကို စုစည်းရန် တစ်ခုဖန်တီးပါ။</string>
+    <string name="favorite_list_rename">ဖွင့်စာရင်း အမည်ပြောင်းရန်</string>
 </resources>

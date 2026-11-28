@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Všetky stanice</string>
     <string name="filter_date_any">Akýkoľvek dátum</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktívne, zostáva %1$s</string>
+    <string name="accessibility_filter_playlist">Filter zoznamu skladieb: %1$s</string>
+    <string name="accessibility_playlist_delete">Odstrániť %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Upraviť stanice v %1$s</string>
+    <string name="accessibility_playlist_rename">Premenovať %1$s</string>
+    <string name="action_clear_playlist_filter">Vymazať filter zoznamu skladieb</string>
+    <string name="action_manage_station_playlists">Pridať do zoznamu skladieb</string>
+    <string name="action_remove_from_playlist">Odstrániť z "%1$s"</string>
+    <string name="action_scroll_to_bottom">Posunúť nadol</string>
+    <string name="favorite_list_add_stations">Pridať obľúbené</string>
+    <string name="favorite_list_all">Všetky</string>
+    <string name="favorite_list_assign_title">Pridať do zoznamov skladieb</string>
+    <string name="favorite_list_create">Nový zoznam skladieb</string>
+    <string name="favorite_list_delete_message">Odstrániť "%1$s"? Vaše stanice zostanú v Obľúbených.</string>
+    <string name="favorite_list_delete_title">Odstrániť zoznam skladieb</string>
+    <string name="favorite_list_edit_stations">Upraviť stanice</string>
+    <string name="favorite_list_empty">Tento zoznam skladieb je prázdný</string>
+    <string name="favorite_list_manage">Spravovať zoznamy skladieb</string>
+    <string name="favorite_list_name_hint">Názov zoznamu skladieb</string>
+    <string name="favorite_list_none_yet">Zatiaľ žiadne zoznamy skladieb. Vytvorte jeden na usporiadanie obľúbených.</string>
+    <string name="favorite_list_rename">Premenovať zoznam skladieb</string>
 </resources>

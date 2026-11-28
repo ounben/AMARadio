@@ -447,4 +447,24 @@
     <string name="filter_all_stations">ყველა სადგური</string>
     <string name="filter_date_any">ნებისმიერი თარიღი</string>
     <string name="accessibility_sleep_timer_active_remaining">აქტიურია, დარჩენილია %1$s</string>
+    <string name="accessibility_filter_playlist">დასაკრავი სიის ფილტრი: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s-ის წაშლა</string>
+    <string name="accessibility_playlist_edit_stations">სადგურების რედაქტირება სიაში %1$s</string>
+    <string name="accessibility_playlist_rename">%1$s-ის გადარქმევა</string>
+    <string name="action_clear_playlist_filter">დასაკრავი სიის ფილტრის გასუფთავება</string>
+    <string name="action_manage_station_playlists">დასაკრავ სიაში დამატება</string>
+    <string name="action_remove_from_playlist">წაშლა სიიდან "%1$s"</string>
+    <string name="action_scroll_to_bottom">ბოლოში ჩასვლა</string>
+    <string name="favorite_list_add_stations">რჩეულების დამატება</string>
+    <string name="favorite_list_all">ყველა</string>
+    <string name="favorite_list_assign_title">დასაკრავ სიებში დამატება</string>
+    <string name="favorite_list_create">ახალი დასაკრავი სია</string>
+    <string name="favorite_list_delete_message">წაიშალოს "%1$s"? თქვენი სადგურები რჩეულებში დარჩება.</string>
+    <string name="favorite_list_delete_title">დასაკრავი სიის წაშლა</string>
+    <string name="favorite_list_edit_stations">სადგურების რედაქტირება</string>
+    <string name="favorite_list_empty">ეს დასაკრავი სია ცარიელია</string>
+    <string name="favorite_list_manage">დასაკრავი სიების მართვა</string>
+    <string name="favorite_list_name_hint">დასაკრავი სიის სახელი</string>
+    <string name="favorite_list_none_yet">დასაკრავი სიები ჯერ არ არის. შექმენით ერთი თქვენი რჩეულების მოსაწესრიგებლად.</string>
+    <string name="favorite_list_rename">დასაკრავი სიის გადარქმევა</string>
 </resources>

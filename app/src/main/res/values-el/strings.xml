@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Όλοι οι σταθμοί</string>
     <string name="filter_date_any">Οποιαδήποτε ημερομηνία</string>
     <string name="accessibility_sleep_timer_active_remaining">Ενεργό, απομένει %1$s</string>
+    <string name="accessibility_filter_playlist">Φίλτρο λίστας αναπαραγωγής: %1$s</string>
+    <string name="accessibility_playlist_delete">Διαγραφή %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Επεξεργασία σταθμών στο %1$s</string>
+    <string name="accessibility_playlist_rename">Μετονομασία %1$s</string>
+    <string name="action_clear_playlist_filter">Εκκαθάριση φίλτρου λίστας αναπαραγωγής</string>
+    <string name="action_manage_station_playlists">Προσθήκη στη λίστα αναπαραγωγής</string>
+    <string name="action_remove_from_playlist">Αφαίρεση από "%1$s"</string>
+    <string name="action_scroll_to_bottom">Κύλιση στο κάτω μέρος</string>
+    <string name="favorite_list_add_stations">Προσθήκη αγαπημένων</string>
+    <string name="favorite_list_all">Όλα</string>
+    <string name="favorite_list_assign_title">Προσθήκη σε λίστες αναπαραγωγής</string>
+    <string name="favorite_list_create">Νέα λίστα αναπαραγωγής</string>
+    <string name="favorite_list_delete_message">Διαγραφή "%1$s"; Οι σταθμοί σας θα παραμείνουν στα Αγαπημένα.</string>
+    <string name="favorite_list_delete_title">Διαγραφή λίστας αναπαραγωγής</string>
+    <string name="favorite_list_edit_stations">Επεξεργασία σταθμών</string>
+    <string name="favorite_list_empty">Αυτή η λίστα αναπαραγωγής είναι κενή</string>
+    <string name="favorite_list_manage">Διαχείριση λιστών αναπαραγωγής</string>
+    <string name="favorite_list_name_hint">Όνομα λίστας αναπαραγωγής</string>
+    <string name="favorite_list_none_yet">Δεν υπάρχουν ακόμα λίστες αναπαραγωγής. Δημιουργήστε μία για να οργανώσετε τα αγαπημένα σας.</string>
+    <string name="favorite_list_rename">Μετονομασία λίστας αναπαραγωγής</string>
 </resources>

@@ -449,4 +449,24 @@
     <string name="filter_all_stations">جميع المحطات</string>
     <string name="filter_date_any">أي تاريخ</string>
     <string name="accessibility_sleep_timer_active_remaining">نشط، يتبقى %1$s</string>
+    <string name="accessibility_filter_playlist">فلتر قائمة التشغيل: %1$s</string>
+    <string name="accessibility_playlist_delete">حذف %1$s</string>
+    <string name="accessibility_playlist_edit_stations">تعديل المحطات في %1$s</string>
+    <string name="accessibility_playlist_rename">إعادة تسمية %1$s</string>
+    <string name="action_clear_playlist_filter">مسح فلتر قائمة التشغيل</string>
+    <string name="action_manage_station_playlists">إضافة إلى قائمة التشغيل</string>
+    <string name="action_remove_from_playlist">إزالة من "%1$s"</string>
+    <string name="action_scroll_to_bottom">التمرير إلى الأسفل</string>
+    <string name="favorite_list_add_stations">إضافة مفضلات</string>
+    <string name="favorite_list_all">الكل</string>
+    <string name="favorite_list_assign_title">إضافة إلى قوائم التشغيل</string>
+    <string name="favorite_list_create">قائمة تشغيل جديدة</string>
+    <string name="favorite_list_delete_message">هل تريد حذف "%1$s"؟ ستبقى محطاتك في المفضلة.</string>
+    <string name="favorite_list_delete_title">حذف قائمة التشغيل</string>
+    <string name="favorite_list_edit_stations">تعديل المحطات</string>
+    <string name="favorite_list_empty">قائمة التشغيل هذه فارغة</string>
+    <string name="favorite_list_manage">إدارة قوائم التشغيل</string>
+    <string name="favorite_list_name_hint">اسم قائمة التشغيل</string>
+    <string name="favorite_list_none_yet">لا توجد قوائم تشغيل بعد. أنشئ واحدة لتنظيم مفضلاتك.</string>
+    <string name="favorite_list_rename">إعادة تسمية قائمة التشغيل</string>
 </resources>

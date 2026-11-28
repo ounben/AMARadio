@@ -446,4 +446,24 @@
     <string name="filter_all_stations">Tut ils emetturs</string>
     <string name="filter_date_any">Mintga data</string>
     <string name="accessibility_sleep_timer_active_remaining">Activ, anc %1$s</string>
+    <string name="accessibility_filter_playlist">Filter da playlist: %1$s</string>
+    <string name="accessibility_playlist_delete">Stizzar %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Modifitgar emetturs en %1$s</string>
+    <string name="accessibility_playlist_rename">Renumnar %1$s</string>
+    <string name="action_clear_playlist_filter">Stizzar il filter da playlist</string>
+    <string name="action_manage_station_playlists">Agiuntar a la playlist</string>
+    <string name="action_remove_from_playlist">Allontanar da «%1$s»</string>
+    <string name="action_scroll_to_bottom">Scrollar tut engiu</string>
+    <string name="favorite_list_add_stations">Agiuntar favurits</string>
+    <string name="favorite_list_all">Tut</string>
+    <string name="favorite_list_assign_title">Agiuntar a playlists</string>
+    <string name="favorite_list_create">Nova playlist</string>
+    <string name="favorite_list_delete_message">Stizzar «%1$s»? Vos emetturs restan en ils favurits.</string>
+    <string name="favorite_list_delete_title">Stizzar la playlist</string>
+    <string name="favorite_list_edit_stations">Modifitgar emetturs</string>
+    <string name="favorite_list_empty">Questa playlist è vida</string>
+    <string name="favorite_list_manage">Administrar playlists</string>
+    <string name="favorite_list_name_hint">Num da la playlist</string>
+    <string name="favorite_list_none_yet">Anc naginas playlists. Cree ina per organisar Vos favurits.</string>
+    <string name="favorite_list_rename">Renumnar la playlist</string>
 </resources>

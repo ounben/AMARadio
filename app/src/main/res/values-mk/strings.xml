@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Сите станици</string>
     <string name="filter_date_any">Било кој датум</string>
     <string name="accessibility_sleep_timer_active_remaining">Активен, преостанува %1$s</string>
+    <string name="accessibility_filter_playlist">Филтер за плејлиста: %1$s</string>
+    <string name="accessibility_playlist_delete">Избриши %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Уреди станици во %1$s</string>
+    <string name="accessibility_playlist_rename">Преименувај %1$s</string>
+    <string name="action_clear_playlist_filter">Исчисти филтер за плејлиста</string>
+    <string name="action_manage_station_playlists">Додај во плејлиста</string>
+    <string name="action_remove_from_playlist">Отстрани од "%1$s"</string>
+    <string name="action_scroll_to_bottom">Лизгај до дното</string>
+    <string name="favorite_list_add_stations">Додај омилени</string>
+    <string name="favorite_list_all">Сите</string>
+    <string name="favorite_list_assign_title">Додај во плејлисти</string>
+    <string name="favorite_list_create">Нова плејлиста</string>
+    <string name="favorite_list_delete_message">Да се избрише "%1$s"? Вашите станици ќе останат во Омилени.</string>
+    <string name="favorite_list_delete_title">Избриши плејлиста</string>
+    <string name="favorite_list_edit_stations">Уреди станици</string>
+    <string name="favorite_list_empty">Оваа плејлиста е празна</string>
+    <string name="favorite_list_manage">Управувај со плејлисти</string>
+    <string name="favorite_list_name_hint">Име на плејлиста</string>
+    <string name="favorite_list_none_yet">Сè уште нема плејлисти. Создадете една за да ги организирате омилените.</string>
+    <string name="favorite_list_rename">Преименувај плејлиста</string>
 </resources>

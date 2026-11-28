@@ -448,4 +448,24 @@
     <string name="filter_all_stations">Всички станции</string>
     <string name="filter_date_any">Всяка дата</string>
     <string name="accessibility_sleep_timer_active_remaining">Активен, остава %1$s</string>
+    <string name="accessibility_filter_playlist">Филтър по плейлист: %1$s</string>
+    <string name="accessibility_playlist_delete">Изтриване на %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Редактиране на станции в %1$s</string>
+    <string name="accessibility_playlist_rename">Преименуване на %1$s</string>
+    <string name="action_clear_playlist_filter">Изчистване на филтъра за плейлист</string>
+    <string name="action_manage_station_playlists">Добавяне към плейлист</string>
+    <string name="action_remove_from_playlist">Премахване от "%1$s"</string>
+    <string name="action_scroll_to_bottom">Превъртане най-отдолу</string>
+    <string name="favorite_list_add_stations">Добавяне на любими</string>
+    <string name="favorite_list_all">Всички</string>
+    <string name="favorite_list_assign_title">Добавяне към плейлисти</string>
+    <string name="favorite_list_create">Нов плейлист</string>
+    <string name="favorite_list_delete_message">Изтриване на "%1$s"? Вашите станции ще останат в Любими.</string>
+    <string name="favorite_list_delete_title">Изтриване на плейлист</string>
+    <string name="favorite_list_edit_stations">Редактиране на станции</string>
+    <string name="favorite_list_empty">Този плейлист е празен</string>
+    <string name="favorite_list_manage">Управление на плейлисти</string>
+    <string name="favorite_list_name_hint">Име на плейлиста</string>
+    <string name="favorite_list_none_yet">Все още няма плейлисти. Създайте такъв, за да организирате любимите си.</string>
+    <string name="favorite_list_rename">Преименуване на плейлиста</string>
 </resources>

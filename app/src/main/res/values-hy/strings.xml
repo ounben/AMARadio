@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Բոլոր կայանները</string>
     <string name="filter_date_any">Ցանկացած ամսաթիվ</string>
     <string name="accessibility_sleep_timer_active_remaining">Ակտիվ է, մնացել է %1$s</string>
+    <string name="accessibility_filter_playlist">Երգացանկի զտիչ՝ %1$s</string>
+    <string name="accessibility_playlist_delete">Ջնջել %1$s-ը</string>
+    <string name="accessibility_playlist_edit_stations">Խմբագրել կայանները %1$s-ում</string>
+    <string name="accessibility_playlist_rename">Վերանվանել %1$s-ը</string>
+    <string name="action_clear_playlist_filter">Մաքրել երգացանկի զտիչը</string>
+    <string name="action_manage_station_playlists">Ավելացնել երգացանկում</string>
+    <string name="action_remove_from_playlist">Հեռացնել «%1$s»-ից</string>
+    <string name="action_scroll_to_bottom">Ոլորել ներքև</string>
+    <string name="favorite_list_add_stations">Ավելացնել ընտրյալներ</string>
+    <string name="favorite_list_all">Բոլորը</string>
+    <string name="favorite_list_assign_title">Ավելացնել երգացանկերում</string>
+    <string name="favorite_list_create">Նոր երգացանկ</string>
+    <string name="favorite_list_delete_message">Ջնջե՞լ «%1$s»-ը: Ձեր կայանները կմնան Ընտրյալներում:</string>
+    <string name="favorite_list_delete_title">Ջնջել երգացանկը</string>
+    <string name="favorite_list_edit_stations">Խմբագրել կայանները</string>
+    <string name="favorite_list_empty">Այս երգացանկը դատարկ է</string>
+    <string name="favorite_list_manage">Կառավարել երգացանկերը</string>
+    <string name="favorite_list_name_hint">Երգացանկի անվանումը</string>
+    <string name="favorite_list_none_yet">Դեռևս երգացանկեր չկան: Ստեղծեք մեկը՝ ձեր ընտրյալները կազմակերպելու համար:</string>
+    <string name="favorite_list_rename">Վերանվանել երգացանկը</string>
 </resources>

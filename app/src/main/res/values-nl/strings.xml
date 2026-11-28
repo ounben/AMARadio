@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Alle zenders</string>
     <string name="filter_date_any">Elke datum</string>
     <string name="accessibility_sleep_timer_active_remaining">Actief, %1$s resterend</string>
+    <string name="accessibility_filter_playlist">Afspeellijstfilter: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s verwijderen</string>
+    <string name="accessibility_playlist_edit_stations">Zenders bewerken in %1$s</string>
+    <string name="accessibility_playlist_rename">Naam van %1$s wijzigen</string>
+    <string name="action_clear_playlist_filter">Afspeellijstfilter wissen</string>
+    <string name="action_manage_station_playlists">Toevoegen aan afspeellijst</string>
+    <string name="action_remove_from_playlist">Verwijderen uit "%1$s"</string>
+    <string name="action_scroll_to_bottom">Naar beneden scrollen</string>
+    <string name="favorite_list_add_stations">Favorieten toevoegen</string>
+    <string name="favorite_list_all">Alle</string>
+    <string name="favorite_list_assign_title">Toevoegen aan afspeellijsten</string>
+    <string name="favorite_list_create">Nieuwe afspeellijst</string>
+    <string name="favorite_list_delete_message">"%1$s" verwijderen? Uw zenders blijven in Favorieten staan.</string>
+    <string name="favorite_list_delete_title">Afspeellijst verwijderen</string>
+    <string name="favorite_list_edit_stations">Zenders bewerken</string>
+    <string name="favorite_list_empty">Deze afspeellijst is leeg</string>
+    <string name="favorite_list_manage">Afspeellijsten beheren</string>
+    <string name="favorite_list_name_hint">Naam van afspeellijst</string>
+    <string name="favorite_list_none_yet">Nog geen afspeellijsten. Maak er een aan om uw favorieten te ordenen.</string>
+    <string name="favorite_list_rename">Naam van afspeellijst wijzigen</string>
 </resources>

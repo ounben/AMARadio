@@ -447,4 +447,24 @@
     <string name="filter_all_stations">Tüm istasyonlar</string>
     <string name="filter_date_any">Herhangi bir tarih</string>
     <string name="accessibility_sleep_timer_active_remaining">Etkin, %1$s kaldı</string>
+    <string name="accessibility_filter_playlist">Oynatma listesi filtresi: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s listesini sil</string>
+    <string name="accessibility_playlist_edit_stations">%1$s içindeki istasyonları düzenle</string>
+    <string name="accessibility_playlist_rename">%1$s listesini yeniden adlandır</string>
+    <string name="action_clear_playlist_filter">Oynatma listesi filtresini temizle</string>
+    <string name="action_manage_station_playlists">Oynatma listesine ekle</string>
+    <string name="action_remove_from_playlist">"%1$s" listesinden kaldır</string>
+    <string name="action_scroll_to_bottom">En alta kaydır</string>
+    <string name="favorite_list_add_stations">Favori ekle</string>
+    <string name="favorite_list_all">Tümü</string>
+    <string name="favorite_list_assign_title">Oynatma listelerine ekle</string>
+    <string name="favorite_list_create">Yeni oynatma listesi</string>
+    <string name="favorite_list_delete_message">"%1$s" silinsin mi? İstasyonlarınız Favoriler\'de kalacaktır.</string>
+    <string name="favorite_list_delete_title">Oynatma listesini sil</string>
+    <string name="favorite_list_edit_stations">İstasyonları düzenle</string>
+    <string name="favorite_list_empty">Bu oynatma listesi boş</string>
+    <string name="favorite_list_manage">Oynatma listelerini yönet</string>
+    <string name="favorite_list_name_hint">Oynatma listesi adı</string>
+    <string name="favorite_list_none_yet">Henüz oynatma listesi yok. Favorilerinizi düzenlemek için bir tane oluşturun.</string>
+    <string name="favorite_list_rename">Oynatma listesini yeniden adlandır</string>
 </resources>

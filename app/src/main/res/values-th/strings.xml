@@ -447,4 +447,24 @@
     <string name="filter_all_stations">ทุกสถานี</string>
     <string name="filter_date_any">ทุกวันที่</string>
     <string name="accessibility_sleep_timer_active_remaining">เปิดใช้งานอยู่ เหลือเวลา %1$s</string>
+    <string name="accessibility_filter_playlist">ตัวกรองเพลย์ลิสต์: %1$s</string>
+    <string name="accessibility_playlist_delete">ลบ %1$s</string>
+    <string name="accessibility_playlist_edit_stations">แก้ไขสถานีใน %1$s</string>
+    <string name="accessibility_playlist_rename">เปลี่ยนชื่อ %1$s</string>
+    <string name="action_clear_playlist_filter">ล้างตัวกรองเพลย์ลิสต์</string>
+    <string name="action_manage_station_playlists">เพิ่มลงในเพลย์ลิสต์</string>
+    <string name="action_remove_from_playlist">ลบออกจาก "%1$s"</string>
+    <string name="action_scroll_to_bottom">เลื่อนไปล่างสุด</string>
+    <string name="favorite_list_add_stations">เพิ่มรายการโปรด</string>
+    <string name="favorite_list_all">ทั้งหมด</string>
+    <string name="favorite_list_assign_title">เพิ่มลงในเพลย์ลิสต์</string>
+    <string name="favorite_list_create">เพลย์ลิสต์ใหม่</string>
+    <string name="favorite_list_delete_message">ลบ "%1$s" หรือไม่? สถานีของคุณจะยังคงอยู่ในรายการโปรด</string>
+    <string name="favorite_list_delete_title">ลบเพลย์ลิสต์</string>
+    <string name="favorite_list_edit_stations">แก้ไขสถานี</string>
+    <string name="favorite_list_empty">เพลย์ลิสต์นี้ว่างเปล่า</string>
+    <string name="favorite_list_manage">จัดการเพลย์ลิสต์</string>
+    <string name="favorite_list_name_hint">ชื่อเพลย์ลิสต์</string>
+    <string name="favorite_list_none_yet">ยังไม่มีเพลย์ลิสต์ สร้างเพลย์ลิสต์เพื่อจัดระเบียบรายการโปรดของคุณ</string>
+    <string name="favorite_list_rename">เปลี่ยนชื่อเพลย์ลิสต์</string>
 </resources>

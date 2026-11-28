@@ -449,4 +449,24 @@
     <string name="filter_all_stations">Totes les emissores</string>
     <string name="filter_date_any">Qualsevol data</string>
     <string name="accessibility_sleep_timer_active_remaining">Actiu, queda %1$s</string>
+    <string name="accessibility_filter_playlist">Filtre de llista de reproducció: %1$s</string>
+    <string name="accessibility_playlist_delete">Suprimeix %1$s</string>
+    <string name="accessibility_playlist_edit_stations">Edita emissores a %1$s</string>
+    <string name="accessibility_playlist_rename">Canvia el nom de %1$s</string>
+    <string name="action_clear_playlist_filter">Esborra el filtre de llista de reproducció</string>
+    <string name="action_manage_station_playlists">Afegeix a la llista de reproducció</string>
+    <string name="action_remove_from_playlist">Elimina de "%1$s"</string>
+    <string name="action_scroll_to_bottom">Desplaça\'t fins al final</string>
+    <string name="favorite_list_add_stations">Afegeix preferits</string>
+    <string name="favorite_list_all">Totes</string>
+    <string name="favorite_list_assign_title">Afegeix a llistes de reproducció</string>
+    <string name="favorite_list_create">Nova llista de reproducció</string>
+    <string name="favorite_list_delete_message">Vols suprimir "%1$s"? Les teves emissores romandran a Preferits.</string>
+    <string name="favorite_list_delete_title">Suprimeix la llista de reproducció</string>
+    <string name="favorite_list_edit_stations">Edita emissores</string>
+    <string name="favorite_list_empty">Aquesta llista de reproducció és buida</string>
+    <string name="favorite_list_manage">Gestiona les llistes de reproducció</string>
+    <string name="favorite_list_name_hint">Nom de la llista de reproducció</string>
+    <string name="favorite_list_none_yet">Encara no hi ha cap llista de reproducció. Crea\'n una per organitzar els teus preferits.</string>
+    <string name="favorite_list_rename">Canvia el nom de la llista de reproducció</string>
 </resources>

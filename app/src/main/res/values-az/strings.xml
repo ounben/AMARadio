@@ -448,4 +448,24 @@
     <string name="filter_all_stations">Bütün stansiyalar</string>
     <string name="filter_date_any">İstənilən tarix</string>
     <string name="accessibility_sleep_timer_active_remaining">Aktiv, %1$s qalıb</string>
+    <string name="accessibility_filter_playlist">Pleylist filtri: %1$s</string>
+    <string name="accessibility_playlist_delete">%1$s sil</string>
+    <string name="accessibility_playlist_edit_stations">%1$s daxilində stansiyaları redaktə et</string>
+    <string name="accessibility_playlist_rename">%1$s adını dəyiş</string>
+    <string name="action_clear_playlist_filter">Pleylist filtrini təmizlə</string>
+    <string name="action_manage_station_playlists">Pleylistə əlavə et</string>
+    <string name="action_remove_from_playlist">"%1$s" siyahısından sil</string>
+    <string name="action_scroll_to_bottom">Aşağı sürüşdür</string>
+    <string name="favorite_list_add_stations">Sevimliləri əlavə et</string>
+    <string name="favorite_list_all">Hamısı</string>
+    <string name="favorite_list_assign_title">Pleylistlərə əlavə et</string>
+    <string name="favorite_list_create">Yeni pleylist</string>
+    <string name="favorite_list_delete_message">"%1$s" silinsin? Stansiyalarınız Sevimlilərdə qalacaq.</string>
+    <string name="favorite_list_delete_title">Pleylisti sil</string>
+    <string name="favorite_list_edit_stations">Stansiyaları redaktə et</string>
+    <string name="favorite_list_empty">Bu pleylist boşdur</string>
+    <string name="favorite_list_manage">Pleylistləri idarə et</string>
+    <string name="favorite_list_name_hint">Pleylist adı</string>
+    <string name="favorite_list_none_yet">Hələ pleylist yoxdur. Sevimlilərinizi nizamlamaq üçün birini yaradın.</string>
+    <string name="favorite_list_rename">Pleylistin adını dəyiş</string>
 </resources>
