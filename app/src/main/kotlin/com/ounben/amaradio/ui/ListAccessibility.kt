@@ -2,6 +2,7 @@ package com.ounben.amaradio.ui
 
 import android.content.Context
 import android.os.Build
+import android.os.SystemClock
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityManager
 import androidx.compose.foundation.lazy.LazyListState
@@ -13,10 +14,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.node.RootForTest
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.semantics.CollectionInfo
 import androidx.compose.ui.semantics.CollectionItemInfo
+import androidx.compose.ui.semantics.SemanticsActions
+import androidx.compose.ui.semantics.SemanticsProperties
 import androidx.compose.ui.semantics.collectionItemInfo
+import androidx.compose.ui.semantics.getAllSemanticsNodes
+import androidx.compose.ui.semantics.getOrNull
 import androidx.compose.ui.semantics.semantics
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
@@ -27,6 +33,8 @@ private data class ScrollRangeSnapshot(
     val fromIndex: Int,
     val toIndex: Int,
     val itemCount: Int,
+    val rowCount: Int,
+    val columnCount: Int,
     val scrollOffset: Int,
     val isScrollInProgress: Boolean
 )
@@ -66,6 +74,8 @@ fun BindListScrollRangeAccessibility(
                     fromIndex = visible.first().index.coerceIn(0, total - 1),
                     toIndex = visible.last().index.coerceIn(0, total - 1),
                     itemCount = total,
+                    rowCount = total,
+                    columnCount = 1,
                     scrollOffset = listState.firstVisibleItemIndex * 500 + listState.firstVisibleItemScrollOffset,
                     isScrollInProgress = listState.isScrollInProgress
                 )
@@ -84,8 +94,9 @@ fun BindListScrollRangeAccessibility(
                 }
 
                 // Wait slightly longer than Compose's 100ms accessibility batch window so our
-                // populated fromIndex/toIndex/itemCount event arrives cleanly after scroll settles.
-                delay(if (snapshot.isScrollInProgress) 450.milliseconds else 180.milliseconds)
+                // populated fromIndex/toIndex/itemCount event arrives cleanly after scroll settles,
+                // while staying comfortably inside TalkBack's 1000ms ScrollTimeout window.
+                delay(if (snapshot.isScrollInProgress) 350.milliseconds else 120.milliseconds)
 
                 val rangeChanged = snapshot.fromIndex != lastFrom || snapshot.toIndex != lastTo
                 val countChangedAtTop = snapshot.itemCount != lastCount && snapshot.fromIndex == 0 && lastFrom == 0
@@ -142,10 +153,14 @@ fun BindGridScrollRangeAccessibility(
             if (visible.isEmpty() || total <= 0) {
                 null
             } else {
+                val cols = (visible.maxOf { it.column } + 1).coerceAtLeast(1)
+                val rows = (total + cols - 1) / cols
                 ScrollRangeSnapshot(
                     fromIndex = visible.first().index.coerceIn(0, total - 1),
                     toIndex = visible.last().index.coerceIn(0, total - 1),
                     itemCount = total,
+                    rowCount = rows,
+                    columnCount = cols,
                     scrollOffset = gridState.firstVisibleItemIndex * 500 + gridState.firstVisibleItemScrollOffset,
                     isScrollInProgress = gridState.isScrollInProgress
                 )
@@ -163,7 +178,7 @@ fun BindGridScrollRangeAccessibility(
                     return@collectLatest
                 }
 
-                delay(if (snapshot.isScrollInProgress) 450.milliseconds else 180.milliseconds)
+                delay(if (snapshot.isScrollInProgress) 350.milliseconds else 120.milliseconds)
 
                 val rangeChanged = snapshot.fromIndex != lastFrom || snapshot.toIndex != lastTo
                 val countChangedAtTop = snapshot.itemCount != lastCount && snapshot.fromIndex == 0 && lastFrom == 0
@@ -219,6 +234,7 @@ private fun dispatchScrollRangeEvent(
 
     event.packageName = view.context.packageName
     event.className = className
+    event.eventTime = SystemClock.uptimeMillis()
     event.isEnabled = true
     event.fromIndex = snapshot.fromIndex
     event.toIndex = snapshot.toIndex
@@ -228,9 +244,73 @@ private fun dispatchScrollRangeEvent(
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
         event.scrollDeltaY = resolvedDelta
     }
-    event.setSource(view)
+    val virtualViewId = findVerticalScrollableVirtualViewId(
+        view = view,
+        expectedScrollOffset = snapshot.scrollOffset,
+        expectedRowCount = snapshot.rowCount,
+        expectedColumnCount = snapshot.columnCount
+    )
+    if (virtualViewId != null) {
+        event.setSource(view, virtualViewId)
+    } else {
+        event.setSource(view)
+    }
     view.parent?.requestSendAccessibilityEvent(view, event)
 }
+
+/**
+ * Resolves the virtual accessibility node ID (`SemanticsNode.id`) of the currently visible
+ * vertically scrollable list/grid inside Compose's `AndroidComposeView` so that
+ * `TYPE_VIEW_SCROLLED` events originate from the real scrollable node (with `isScrollable = true`
+ * and `CollectionInfo`) instead of the non-scrollable root view.
+ */
+private fun findVerticalScrollableVirtualViewId(
+    view: android.view.View,
+    expectedScrollOffset: Int,
+    expectedRowCount: Int,
+    expectedColumnCount: Int,
+): Int? = runCatching {
+    val semanticsOwner = (view as? RootForTest)?.semanticsOwner ?: return null
+    val rootId = semanticsOwner.unmergedRootSemanticsNode.id
+    val viewWidth = view.width.toFloat()
+    val viewHeight = view.height.toFloat()
+
+    val candidates = semanticsOwner
+        .getAllSemanticsNodes(mergingEnabled = false)
+        .filter { node ->
+            if (node.id == rootId) return@filter false
+            val config = node.config
+            if (config.getOrNull(SemanticsProperties.VerticalScrollAxisRange) == null) return@filter false
+            if (config.getOrNull(SemanticsActions.ScrollBy) == null) return@filter false
+            val bounds = node.boundsInRoot
+            bounds.width > 0f && bounds.height > 0f &&
+                (viewWidth <= 0f || (bounds.right > 0f && bounds.left < viewWidth)) &&
+                (viewHeight <= 0f || (bounds.bottom > 0f && bounds.top < viewHeight))
+        }
+
+    if (candidates.isEmpty()) return null
+    if (candidates.size == 1) return candidates.first().id
+
+    candidates.maxByOrNull { node ->
+        val config = node.config
+        val scrollRange = config.getOrNull(SemanticsProperties.VerticalScrollAxisRange)
+        val collectionInfo = config.getOrNull(SemanticsProperties.CollectionInfo)
+        var score = 0
+        if (scrollRange != null && scrollRange.value().toInt() == expectedScrollOffset) {
+            score += 4
+        }
+        if (collectionInfo != null) {
+            score += 1
+            if (collectionInfo.columnCount == expectedColumnCount) {
+                score += 1
+                if (collectionInfo.rowCount == expectedRowCount) {
+                    score += 2
+                }
+            }
+        }
+        score
+    }?.id
+}.getOrNull()
 
 fun listItemCollectionInfo(index: Int): CollectionItemInfo =
     CollectionItemInfo(
