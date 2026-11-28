@@ -10,6 +10,7 @@ import androidx.media3.common.MediaMetadata
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.extractor.DefaultExtractorsFactory
 import androidx.media3.extractor.mp3.Mp3Extractor
+import androidx.media3.session.MediaConstants
 import com.ounben.amaradio.station.DataRadioStation
 import com.ounben.amaradio.utils.StationIconProvider
 import java.io.ByteArrayOutputStream
@@ -61,7 +62,7 @@ object Media3Utils {
             putInt("androidx.media.utils.extras.CONTENT_TYPE", 1)
             putInt("androidx.media.utils.extras.MEDIA_TYPE", 1)
             if (!groupTitle.isNullOrEmpty()) {
-                putString("android.media.browse.CONTENT_STYLE_GROUP_TITLE_HINT", groupTitle)
+                putString(MediaConstants.EXTRAS_KEY_CONTENT_STYLE_GROUP_TITLE, groupTitle)
             }
             
             if (bitmap == null) {
@@ -105,9 +106,16 @@ object Media3Utils {
             .setArtworkUri(iconUri)
             .setExtras(Bundle().apply {
                 putInt("androidx.media.utils.extras.CONTENT_TYPE", 1)
-                putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 1)
+                putInt(
+                    MediaConstants.EXTRAS_KEY_CONTENT_STYLE_BROWSABLE,
+                    MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_CATEGORY_LIST_ITEM
+                )
+                putInt(
+                    MediaConstants.EXTRAS_KEY_CONTENT_STYLE_PLAYABLE,
+                    MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM
+                )
                 if (!groupTitle.isNullOrEmpty()) {
-                    putString("android.media.browse.CONTENT_STYLE_GROUP_TITLE_HINT", groupTitle)
+                    putString(MediaConstants.EXTRAS_KEY_CONTENT_STYLE_GROUP_TITLE, groupTitle)
                 }
                 if (iconUri != null) {
                     putString("android.media.metadata.DISPLAY_ICON_URI", iconUri.toString())

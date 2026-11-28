@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.media3.common.MediaItem
 import androidx.media3.common.MediaMetadata
+import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.LibraryResult
+import androidx.media3.session.MediaConstants
 import androidx.media3.session.MediaLibraryService.LibraryParams
 import androidx.media3.session.MediaSession
 import androidx.media3.session.SessionError
@@ -33,7 +35,26 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     private val stationDao by lazy { AMARadioDatabase.getDatabase(app).stationDao() }
     private val userDb by lazy { AMARadioUserDatabase.getDatabase(app) }
 
+    @androidx.annotation.OptIn(UnstableApi::class)
     fun onGetLibraryRoot(browser: MediaSession.ControllerInfo, params: LibraryParams?): ListenableFuture<LibraryResult<MediaItem>> {
+        val rootExtras = Bundle(params?.extras ?: Bundle.EMPTY).apply {
+            putBoolean("android.media.browse.CONTENT_STYLE_SUPPORTED", true)
+            putInt(
+                MediaConstants.EXTRAS_KEY_CONTENT_STYLE_BROWSABLE,
+                MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_CATEGORY_LIST_ITEM
+            )
+            putInt(
+                MediaConstants.EXTRAS_KEY_CONTENT_STYLE_PLAYABLE,
+                MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM
+            )
+        }
+        val rootParams = LibraryParams.Builder()
+            .setRecent(params?.isRecent ?: false)
+            .setOffline(params?.isOffline ?: false)
+            .setSuggested(params?.isSuggested ?: false)
+            .setExtras(rootExtras)
+            .build()
+
         val rootItem = MediaItem.Builder()
             .setMediaId(MEDIA_ID_ROOT)
             .setMediaMetadata(MediaMetadata.Builder()
@@ -43,11 +64,18 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 .setTitle(app.resources.getString(R.string.app_name))
                 .setExtras(Bundle().apply {
                     putInt("androidx.media.utils.extras.CONTENT_TYPE", 1) // Music
-                    putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 1) // LIST style
+                    putInt(
+                        MediaConstants.EXTRAS_KEY_CONTENT_STYLE_BROWSABLE,
+                        MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_CATEGORY_LIST_ITEM
+                    )
+                    putInt(
+                        MediaConstants.EXTRAS_KEY_CONTENT_STYLE_PLAYABLE,
+                        MediaConstants.EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM
+                    )
                 })
                 .build())
             .build()
-        return Futures.immediateFuture(LibraryResult.ofItem(rootItem, params))
+        return Futures.immediateFuture(LibraryResult.ofItem(rootItem, rootParams))
     }
 
     fun onGetChildren(browser: MediaSession.ControllerInfo, parentId: String, page: Int, pageSize: Int, params: LibraryParams?): ListenableFuture<LibraryResult<ImmutableList<MediaItem>>> {
