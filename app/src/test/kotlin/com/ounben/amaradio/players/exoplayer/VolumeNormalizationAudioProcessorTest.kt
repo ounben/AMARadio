@@ -243,5 +243,12 @@ class VolumeNormalizationAudioProcessorTest {
         assertEquals("60", InAppEqualizerManager.formatFrequency(60))
         assertEquals("3.6k", InAppEqualizerManager.formatFrequency(3600))
         assertEquals("14k", InAppEqualizerManager.formatFrequency(14000))
+
+        val bands = listOf<Short>(400, 200, -100, 300, 400)
+        val serialized = StationAudioManager.serializeBands(bands)
+        assertEquals("400,200,-100,300,400", serialized)
+        assertEquals(bands, StationAudioManager.parseBands(serialized))
+        assertEquals(emptyList<Short>(), StationAudioManager.parseBands(null))
+        assertEquals(emptyList<Short>(), StationAudioManager.parseBands(""))
     }
 }
