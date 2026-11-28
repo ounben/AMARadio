@@ -314,7 +314,6 @@ class AMARadioFullWidget : GlanceAppWidget() {
         val blockBorderColor = if (isFiltered) amber else outlineColor
         val blockBg = if (isFiltered) amber else surfaceVariantColor
         val blockTextColor = if (isFiltered) onAmber else textColor
-        val blockIconTint = if (isFiltered) onAmber else amber
         val expandIcon = if (pickerOpen) R.drawable.ic_expand_less_black_24dp else R.drawable.ic_expand_more_black_24dp
 
         Column(
@@ -382,7 +381,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
                             provider = ImageProvider(R.drawable.ic_widget_filter_24dp),
                             contentDescription = null,
                             modifier = GlanceModifier.size(14.dp),
-                            colorFilter = ColorFilter.tint(blockIconTint)
+                            colorFilter = ColorFilter.tint(blockTextColor)
                         )
                         Spacer(modifier = GlanceModifier.width(6.dp))
                         Text(
