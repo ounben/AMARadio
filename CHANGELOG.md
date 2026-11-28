@@ -5,6 +5,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.55] - 2026-11-28
+### Added
+- **Playlist-Capable Full Widget (`AMARadioFullWidget`)**: Added a compact, block-styled playlist filter bar (`PlaylistFilterBar`) below the Favorites/History tabs with quick `<`/`>` playlist cycling and an inline scrollable `LazyColumn` playlist picker (`PlaylistPickerRow`), independent per-widget-instance filter and tab state via Glance `ActionCallback`s (`SwitchTabActionCallback`, `TogglePlaylistPickerActionCallback`, `SelectPlaylistActionCallback`, `CyclePlaylistActionCallback`), live Room database observation for playlists and playlist items (`WidgetUpdateHelper`), RemoteViews-safe vector icons, R8 keep rules for `WidgetPlaylistSummary`, and playlist-aware `InMemoryStationQueue` playback in `PlayerService` (`EXTRA_PLAYLIST_ID`).
+- **Always-Visible AMARadio Amber Widget Scrollbar**: Styled Glance's `ListView` (`Glance.AppWidget.List` in `styles.xml`) with `widget_scrollbar_thumb.xml`, `fadeScrollbars="false"`, `insideOverlay`, and `smoothScrollbar="true"` so the widget scrollbar matches AMARadio's in-app `verticalScrollbar`.
+
+### Changed
+- **Single-Source-of-Truth Widget Theming**: Exported shared `AmaradioDarkColorScheme` and `AmaradioLightColorScheme` from `Theme.kt` and bridged `WidgetTheme` directly to them (respecting the in-app Dark/Light/System theme preference), migrated both `AMARadioFullWidget` and `AMARadioSmallWidget` to `GlanceTheme.colors`, aligned `colors.xml` `amaradioAmber` to `#FF8F00`, and triggered immediate widget refreshes in `ActivityMain` on theme or language changes.
+- **Consistent Outline-Style Active Filters**: Replaced solid Amber fills on active filter controls with a clean neutral surface, solid `AmaradioAmber` border (`1.5dp` in app, `2dp` in widget), and bold Amber text/icons across `FavoritePlaylistFilterBar`, `RecordingsTab`, and `AMARadioFullWidget`, matching `FilterScreen`.
+
 ## [1.54] - 2026-11-28
 ### Added
 - **Favorite Playlists (#118)**: Added custom favorite playlists (`FavoriteListManager`, `FavoriteListDialogs`, Room DB v9 `FavoriteListEntity`/`FavoriteListItemEntity`) with a playlist filter bar (`FavoritePlaylistFilterBar`), playlist management (`ManageFavoriteListsDialog`, `CreateEditFavoriteListDialog`, `DeleteFavoriteListConfirmDialog`), station assignment (`AssignFavoriteListsDialog`, `ManagePlaylistStationsDialog`), per-playlist station ordering, TalkBack-friendly playlist reordering (`PlaylistPositionPickerDialog`), ZIP backup/restore integration (`BackupManager`), and unit tests (`FavoriteListHelperTest`).
