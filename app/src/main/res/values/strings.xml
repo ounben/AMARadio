@@ -193,8 +193,9 @@
     <string name="station_gain_desc">Adjust loudness for this station (works with or without auto normalization)</string>
     <string name="action_reset">Reset</string>
     <string name="eq_enable">Enable equalizer</string>
+    <string name="eq_station_override">Custom equalizer for this station</string>
+    <string name="eq_using_global">Using global equalizer</string>
     <string name="eq_preset_custom">Custom</string>
-    <string name="eq_system_equalizer">System equalizer</string>
     <string name="eq_active_on_playback">Settings will apply when playback starts</string>
     <string name="eq_not_supported">Equalizer is not supported on this device</string>
 

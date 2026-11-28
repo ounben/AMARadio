@@ -434,17 +434,18 @@ fun StationOptionsDialog(
     var showRecordTimerDialog by remember { mutableStateOf(false) }
     var showAssignPlaylistsDialog by remember { mutableStateOf(false) }
     var showStationGainDialog by remember { mutableStateOf(false) }
+    var showStationEqualizerDialog by remember { mutableStateOf(false) }
     var pendingReplaceRequest by remember { mutableStateOf<Pair<Long, String>?>(null) }
     val isDark = isSystemInDarkTheme()
     val recordRedColor = if (isDark) SolidRedError else SolidRedErrorLight
     val recordManager = remember { com.ounben.amaradio.recorder.RecordManager.getInstance(context) }
     val recordState by recordManager.recordingState.collectAsStateWithLifecycle()
     val isThisStationRecording = recordState.isRecording && recordState.stationUuid == station.StationUuid
-    val stationAudioManager = remember(context) {
-        (context.applicationContext as com.ounben.amaradio.AMARadioApp).stationAudioManager
-    }
-    val stationGains by stationAudioManager.stationGains.collectAsStateWithLifecycle()
+    val app = remember(context) { context.applicationContext as com.ounben.amaradio.AMARadioApp }
+    val stationGains by app.stationAudioManager.stationGains.collectAsStateWithLifecycle()
+    val stationEqProfiles by app.stationAudioManager.stationEqProfiles.collectAsStateWithLifecycle()
     val stationManualGainDb = stationGains[station.StationUuid] ?: 0f
+    val stationEqProfile = stationEqProfiles[station.StationUuid]
 
     AlertDialog(
         onDismissRequest = onDismiss,
@@ -599,6 +600,36 @@ fun StationOptionsDialog(
                     colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
                 )
                 ListItem(
+                    headlineContent = {
+                        Text(
+                            text = stringResource(R.string.settings_equalizer),
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+                    },
+                    supportingContent = if (stationEqProfile != null) {
+                        {
+                            val presetLabel = app.inAppEqualizerManager.getPresetDisplayName(stationEqProfile.presetIndex)
+                                ?: stringResource(R.string.eq_preset_custom)
+                            Text(
+                                text = presetLabel,
+                                color = AmaradioAmber,
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
+                    } else null,
+                    leadingContent = {
+                        Icon(
+                            imageVector = Icons.Default.Equalizer,
+                            contentDescription = null,
+                            tint = if (stationEqProfile != null) AmaradioAmber else MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    },
+                    modifier = Modifier.clickable {
+                        showStationEqualizerDialog = true
+                    },
+                    colors = ListItemDefaults.colors(containerColor = MaterialTheme.colorScheme.surface)
+                )
+                ListItem(
                     headlineContent = { 
                         Text(
                             text = stringResource(R.string.action_station_visit_website),
@@ -733,6 +764,15 @@ fun StationOptionsDialog(
             station = station,
             onDismiss = {
                 showStationGainDialog = false
+            }
+        )
+    }
+
+    if (showStationEqualizerDialog) {
+        InAppEqualizerDialog(
+            station = station,
+            onDismiss = {
+                showStationEqualizerDialog = false
             }
         )
     }

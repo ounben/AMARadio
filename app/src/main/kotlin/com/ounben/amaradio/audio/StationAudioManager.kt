@@ -20,8 +20,14 @@ import java.util.concurrent.CopyOnWriteArraySet
 import kotlin.math.abs
 import kotlin.math.roundToInt
 
+data class StationEqProfile(
+    val presetIndex: Int = -1,
+    val bands: List<Short> = emptyList()
+)
+
 /**
- * Manages global automatic loudness normalization and per-station manual / learned gain offsets.
+ * Manages global automatic loudness normalization and per-station manual gain, learned gain,
+ * and optional per-station equalizer overrides.
  *
  * Keeps an in-memory lock-free cache for instant reads from ExoPlayer's audio pipeline while
  * persisting per-station settings in Room (`station_audio_settings`) and global toggle state
@@ -32,6 +38,7 @@ class StationAudioManager(context: Context) {
     interface Listener {
         fun onAutoNormalizationChanged(enabled: Boolean)
         fun onStationManualGainChanged(stationUuid: String, manualGainDb: Float)
+        fun onStationEqChanged(stationUuid: String, profile: StationEqProfile?) {}
     }
 
     companion object {
@@ -56,6 +63,13 @@ class StationAudioManager(context: Context) {
                 else -> "0.0 dB"
             }
         }
+
+        fun parseBands(raw: String?): List<Short> {
+            if (raw.isNullOrBlank()) return emptyList()
+            return raw.split(",").mapNotNull { it.trim().toShortOrNull() }
+        }
+
+        fun serializeBands(bands: List<Short>): String = bands.joinToString(",")
     }
 
     private val appContext = context.applicationContext
@@ -68,6 +82,9 @@ class StationAudioManager(context: Context) {
 
     private val _stationGains = MutableStateFlow<Map<String, Float>>(emptyMap())
     val stationGains: StateFlow<Map<String, Float>> = _stationGains.asStateFlow()
+
+    private val _stationEqProfiles = MutableStateFlow<Map<String, StationEqProfile>>(emptyMap())
+    val stationEqProfiles: StateFlow<Map<String, StationEqProfile>> = _stationEqProfiles.asStateFlow()
 
     private val _isAutoNormalizationEnabled = MutableStateFlow(
         sharedPref.getBoolean(PREF_VOLUME_NORMALIZATION, false)
@@ -95,13 +112,18 @@ class StationAudioManager(context: Context) {
                 val all = dao.getAll()
                 cache.clear()
                 val manualMap = HashMap<String, Float>(all.size)
+                val eqMap = HashMap<String, StationEqProfile>()
                 all.forEach { entity ->
                     cache[entity.stationUuid] = entity
                     if (abs(entity.manualGainDb) >= 0.01f) {
                         manualMap[entity.stationUuid] = entity.manualGainDb
                     }
+                    entity.toEqProfileOrNull()?.let { profile ->
+                        eqMap[entity.stationUuid] = profile
+                    }
                 }
                 _stationGains.value = manualMap
+                _stationEqProfiles.value = eqMap
             } catch (e: Exception) {
                 Log.e(TAG, "Failed to load station audio settings", e)
             }
@@ -126,6 +148,11 @@ class StationAudioManager(context: Context) {
         return cache[stationUuid]?.learnedGainDb
     }
 
+    fun getStationEqProfile(stationUuid: String?): StationEqProfile? {
+        if (stationUuid.isNullOrBlank()) return null
+        return cache[stationUuid]?.toEqProfileOrNull()
+    }
+
     fun setAutoNormalizationEnabled(enabled: Boolean) {
         sharedPref.edit { putBoolean(PREF_VOLUME_NORMALIZATION, enabled) }
         if (_isAutoNormalizationEnabled.value != enabled) {
@@ -138,19 +165,16 @@ class StationAudioManager(context: Context) {
         if (stationUuid.isBlank()) return
         val normalized = normalizeGainStep(gainDb)
         val existing = cache[stationUuid]
-        val learned = existing?.learnedGainDb
-        val now = System.currentTimeMillis()
-
-        if (normalized == 0f && learned == null) {
-            cache.remove(stationUuid)
-        } else {
-            cache[stationUuid] = StationAudioEntity(
-                stationUuid = stationUuid,
-                manualGainDb = normalized,
-                learnedGainDb = learned,
-                updatedAt = now
-            )
-        }
+        val updated = StationAudioEntity(
+            stationUuid = stationUuid,
+            manualGainDb = normalized,
+            learnedGainDb = existing?.learnedGainDb,
+            eqEnabled = existing?.eqEnabled,
+            eqPresetIndex = existing?.eqPresetIndex,
+            eqBands = existing?.eqBands,
+            updatedAt = System.currentTimeMillis()
+        )
+        updateCacheAndPersist(stationUuid, updated)
 
         // Update Compose-facing flow immediately
         val updatedMap = HashMap(_stationGains.value)
@@ -163,19 +187,31 @@ class StationAudioManager(context: Context) {
 
         // Notify live audio pipeline immediately
         listeners.forEach { it.onStationManualGainChanged(stationUuid, normalized) }
+    }
 
-        scope.launch {
-            try {
-                val entity = cache[stationUuid]
-                if (entity == null) {
-                    dao.deleteByStationUuid(stationUuid)
-                } else {
-                    dao.upsert(entity)
-                }
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to persist manual gain for $stationUuid", e)
-            }
+    fun setStationEqProfile(stationUuid: String, profile: StationEqProfile?) {
+        if (stationUuid.isBlank()) return
+        val existing = cache[stationUuid]
+        val updated = StationAudioEntity(
+            stationUuid = stationUuid,
+            manualGainDb = existing?.manualGainDb ?: 0f,
+            learnedGainDb = existing?.learnedGainDb,
+            eqEnabled = if (profile != null) true else null,
+            eqPresetIndex = profile?.presetIndex,
+            eqBands = profile?.let { serializeBands(it.bands) },
+            updatedAt = System.currentTimeMillis()
+        )
+        updateCacheAndPersist(stationUuid, updated)
+
+        val updatedMap = HashMap(_stationEqProfiles.value)
+        if (profile == null) {
+            updatedMap.remove(stationUuid)
+        } else {
+            updatedMap[stationUuid] = profile
         }
+        _stationEqProfiles.value = updatedMap
+
+        listeners.forEach { it.onStationEqChanged(stationUuid, profile) }
     }
 
     fun saveLearnedGainDb(stationUuid: String, learnedGainDb: Float) {
@@ -185,21 +221,47 @@ class StationAudioManager(context: Context) {
             VolumeNormalizationAudioProcessor.MAX_AUTO_GAIN_DB
         )
         val existing = cache[stationUuid]
-        val manual = existing?.manualGainDb ?: 0f
         val updated = StationAudioEntity(
             stationUuid = stationUuid,
-            manualGainDb = manual,
+            manualGainDb = existing?.manualGainDb ?: 0f,
             learnedGainDb = clamped,
+            eqEnabled = existing?.eqEnabled,
+            eqPresetIndex = existing?.eqPresetIndex,
+            eqBands = existing?.eqBands,
             updatedAt = System.currentTimeMillis()
         )
-        cache[stationUuid] = updated
+        updateCacheAndPersist(stationUuid, updated)
+    }
+
+    private fun updateCacheAndPersist(stationUuid: String, entity: StationAudioEntity) {
+        val isEmpty = abs(entity.manualGainDb) < 0.01f &&
+            entity.learnedGainDb == null &&
+            entity.eqEnabled != true
+
+        if (isEmpty) {
+            cache.remove(stationUuid)
+        } else {
+            cache[stationUuid] = entity
+        }
 
         scope.launch {
             try {
-                dao.upsert(updated)
+                if (isEmpty) {
+                    dao.deleteByStationUuid(stationUuid)
+                } else {
+                    dao.upsert(entity)
+                }
             } catch (e: Exception) {
-                Log.e(TAG, "Failed to persist learned gain for $stationUuid", e)
+                Log.e(TAG, "Failed to persist station audio settings for $stationUuid", e)
             }
         }
+    }
+
+    private fun StationAudioEntity.toEqProfileOrNull(): StationEqProfile? {
+        if (eqEnabled != true) return null
+        return StationEqProfile(
+            presetIndex = eqPresetIndex ?: -1,
+            bands = parseBands(eqBands)
+        )
     }
 }

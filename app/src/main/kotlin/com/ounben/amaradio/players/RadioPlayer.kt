@@ -204,6 +204,7 @@ class RadioPlayer(private val mainContext: Context) : PlayerWrapper.PlayListener
         this.streamName = streamName
         (currentPlayer as? ExoPlayerWrapper)?.setCurrentStationUuid(currentStationUuid)
         val app = mainContext.applicationContext as AMARadioApp
+        app.inAppEqualizerManager.onStationChanged(currentStationUuid, audioSessionId)
         val customizedHttpClient = app.newHttpClient().build()
         currentPlayer.playRemote(customizedHttpClient, stationURL, mainContext, metadata)
     }

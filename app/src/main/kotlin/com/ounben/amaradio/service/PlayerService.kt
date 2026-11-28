@@ -1369,7 +1369,10 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                     }
                 }
                 sendBroadcast(i)
-                (applicationContext as? AMARadioApp)?.inAppEqualizerManager?.onPlaybackSessionActive(audioSessionId)
+                (applicationContext as? AMARadioApp)?.inAppEqualizerManager?.onPlaybackSessionActive(
+                    audioSessionId,
+                    itsCurrentStation?.StationUuid
+                )
             }
         } else {
             if (audioSessionId > 0) {

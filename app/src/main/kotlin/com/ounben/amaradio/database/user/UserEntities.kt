@@ -118,5 +118,8 @@ data class StationAudioEntity(
     @PrimaryKey val stationUuid: String,
     val manualGainDb: Float = 0f,
     val learnedGainDb: Float? = null,
+    val eqEnabled: Boolean? = null,
+    val eqPresetIndex: Int? = null,
+    val eqBands: String? = null,
     val updatedAt: Long = System.currentTimeMillis()
 )

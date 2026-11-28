@@ -1,8 +1,6 @@
 package com.ounben.amaradio.audio
 
 import android.content.Context
-import android.content.Intent
-import android.media.audiofx.AudioEffect
 import android.media.audiofx.Equalizer
 import android.util.Log
 import androidx.core.content.edit
@@ -25,17 +23,23 @@ data class EqualizerUiState(
     val presetNames: List<String> = emptyList(),
     val bands: List<EqualizerBandInfo> = emptyList(),
     val isAttachedToSession: Boolean = false,
-    val isSupported: Boolean = true
+    val isSupported: Boolean = true,
+    val editingStationUuid: String? = null
 )
 
 /**
- * Manages both Android's standard OS Equalizer integration and a compact built-in 5-band
- * Equalizer fallback (via [android.media.audiofx.Equalizer]) for devices without a system EQ app.
+ * Built-in crash-safe 5-band Equalizer (via [android.media.audiofx.Equalizer]) supporting both:
+ * - Global equalizer settings (persisted in SharedPreferences)
+ * - Optional per-station equalizer overrides (persisted in Room via [StationAudioManager])
  *
- * When disabled, the native [Equalizer] instance is released immediately so it never interferes
- * with an external / system OS equalizer.
+ * Whenever a station has a custom EQ profile enabled, it overrides the global EQ while that
+ * station is playing. Switching to a station without an override seamlessly restores the global EQ.
+ * When neither global nor station EQ is enabled, the native [Equalizer] is released.
  */
-class InAppEqualizerManager(context: Context) {
+class InAppEqualizerManager(
+    context: Context,
+    private val stationAudioManager: StationAudioManager
+) {
 
     companion object {
         private const val TAG = "InAppEqualizerManager"
@@ -47,7 +51,6 @@ class InAppEqualizerManager(context: Context) {
         private const val DEFAULT_MIN_MB: Short = -1500
         private const val DEFAULT_MAX_MB: Short = 1500
 
-        // Fallback presets used when editing EQ while no playback session is active yet.
         private val FALLBACK_PRESETS: List<Pair<String, List<Short>>> = listOf(
             "Flat" to listOf(0, 0, 0, 0, 0),
             "Bass Boost" to listOf(500, 300, 0, 0, 100),
@@ -57,25 +60,6 @@ class InAppEqualizerManager(context: Context) {
             "Jazz" to listOf(300, 100, -100, 200, 300),
             "Classical" to listOf(400, 200, -100, 200, 300)
         )
-
-        fun buildSystemEqualizerIntent(context: Context, audioSessionId: Int): Intent {
-            return Intent(AudioEffect.ACTION_DISPLAY_AUDIO_EFFECT_CONTROL_PANEL).apply {
-                putExtra(AudioEffect.EXTRA_PACKAGE_NAME, context.packageName)
-                putExtra(AudioEffect.EXTRA_CONTENT_TYPE, AudioEffect.CONTENT_TYPE_MUSIC)
-                if (audioSessionId > 0) {
-                    putExtra(AudioEffect.EXTRA_AUDIO_SESSION, audioSessionId)
-                }
-            }
-        }
-
-        fun hasSystemEqualizer(context: Context, audioSessionId: Int = 0): Boolean {
-            return try {
-                val intent = buildSystemEqualizerIntent(context, audioSessionId)
-                intent.resolveActivity(context.packageManager) != null
-            } catch (_: Exception) {
-                false
-            }
-        }
 
         fun formatFrequency(freqHz: Int): String {
             return if (freqHz >= 1000) {
@@ -94,26 +78,68 @@ class InAppEqualizerManager(context: Context) {
 
     private var equalizer: Equalizer? = null
     private var attachedSessionId: Int = 0
+    private var activeStationUuid: String? = null
+    private var editingStationUuid: String? = null
     private var dialogOpen: Boolean = false
+    private var hardwareSupported: Boolean = true
 
-    private val _uiState = MutableStateFlow(loadFallbackState())
+    // Cached device hardware capabilities (populated once an Equalizer attaches to any session)
+    private var cachedCenterFreqsHz: List<Int> = DEFAULT_CENTER_FREQS_HZ
+    private var cachedMinMb: Short = DEFAULT_MIN_MB
+    private var cachedMaxMb: Short = DEFAULT_MAX_MB
+    private var cachedPresetNames: List<String> = FALLBACK_PRESETS.map { it.first }
+    private var hasRealHardwareMetadata: Boolean = false
+
+    private val _uiState = MutableStateFlow(buildUiStateLocked(null))
     val uiState: StateFlow<EqualizerUiState> = _uiState.asStateFlow()
 
-    val isEnabled: Boolean
+    val isGlobalEnabled: Boolean
         get() = sharedPref.getBoolean(PREF_EQ_ENABLED, false)
+
+    fun getPresetDisplayName(presetIndex: Int): String? {
+        synchronized(lock) {
+            return cachedPresetNames.getOrNull(presetIndex)
+        }
+    }
 
     /**
      * Called by PlayerService when playback enters Playing with a valid audioSessionId.
-     * Only attaches a hardware Equalizer if the user enabled the in-app equalizer (or the EQ dialog is open).
      */
-    fun onPlaybackSessionActive(audioSessionId: Int) {
+    fun onPlaybackSessionActive(audioSessionId: Int, stationUuid: String?) {
         synchronized(lock) {
-            if (audioSessionId <= 0) return
-            if (isEnabled || dialogOpen) {
-                ensureAttachedLocked(audioSessionId)
-            } else if (attachedSessionId != 0) {
-                releaseLocked()
+            if (!stationUuid.isNullOrBlank()) {
+                activeStationUuid = stationUuid
             }
+            if (audioSessionId <= 0) return
+
+            val needsHardware = isEffectiveEqEnabledLocked() || dialogOpen
+            if (needsHardware) {
+                ensureHardwareAttachedLocked(audioSessionId)
+                applyEffectiveProfileLocked()
+            } else if (attachedSessionId != 0) {
+                releaseHardwareLocked()
+            }
+            refreshUiStateLocked()
+        }
+    }
+
+    /**
+     * Called on station transitions (including when ExoPlayer reuses the same audioSessionId).
+     */
+    fun onStationChanged(stationUuid: String?, audioSessionId: Int) {
+        synchronized(lock) {
+            activeStationUuid = stationUuid
+            val sessionId = if (audioSessionId > 0) audioSessionId else attachedSessionId
+            if (sessionId > 0) {
+                val needsHardware = isEffectiveEqEnabledLocked() || dialogOpen
+                if (needsHardware) {
+                    ensureHardwareAttachedLocked(sessionId)
+                    applyEffectiveProfileLocked()
+                } else if (attachedSessionId != 0) {
+                    releaseHardwareLocked()
+                }
+            }
+            refreshUiStateLocked()
         }
     }
 
@@ -122,233 +148,291 @@ class InAppEqualizerManager(context: Context) {
      */
     fun releaseSession() {
         synchronized(lock) {
-            releaseLocked()
-            _uiState.value = loadFallbackState()
+            releaseHardwareLocked()
+            refreshUiStateLocked()
         }
     }
 
     /**
-     * Called when the In-App Equalizer dialog opens so real device bands & presets are shown if playing.
+     * Opens the Equalizer UI for either global settings ([stationUuid] == null)
+     * or a specific station's override ([stationUuid] != null).
      */
-    fun onDialogOpened(audioSessionId: Int) {
+    fun onDialogOpened(audioSessionId: Int, stationUuid: String? = null) {
         synchronized(lock) {
             dialogOpen = true
+            editingStationUuid = stationUuid
             if (audioSessionId > 0) {
-                ensureAttachedLocked(audioSessionId)
-            } else {
-                _uiState.value = loadFallbackState()
+                ensureHardwareAttachedLocked(audioSessionId)
+                applyEffectiveProfileLocked()
             }
+            refreshUiStateLocked()
         }
     }
 
     /**
-     * Called when the In-App Equalizer dialog closes. If disabled, releases native Equalizer so
-     * it never conflicts with an OS equalizer.
+     * Closes the Equalizer UI and releases native resources if neither global nor active station EQ is enabled.
      */
     fun onDialogClosed() {
         synchronized(lock) {
             dialogOpen = false
-            if (!isEnabled) {
-                releaseLocked()
+            editingStationUuid = null
+            if (!isEffectiveEqEnabledLocked()) {
+                releaseHardwareLocked()
             }
         }
     }
 
-    fun setEnabled(enabled: Boolean, audioSessionId: Int) {
+    fun setEnabled(enabled: Boolean, audioSessionId: Int, stationUuid: String? = null) {
         synchronized(lock) {
-            sharedPref.edit { putBoolean(PREF_EQ_ENABLED, enabled) }
-            if (enabled) {
-                if (audioSessionId > 0) {
-                    ensureAttachedLocked(audioSessionId)
-                } else {
-                    _uiState.value = _uiState.value.copy(enabled = true)
-                }
+            if (stationUuid == null) {
+                sharedPref.edit { putBoolean(PREF_EQ_ENABLED, enabled) }
             } else {
-                try {
-                    equalizer?.enabled = false
-                } catch (_: Exception) {}
-                if (!dialogOpen) {
-                    releaseLocked()
+                if (enabled) {
+                    val existing = stationAudioManager.getStationEqProfile(stationUuid)
+                    val initialProfile = existing ?: StationEqProfile(
+                        presetIndex = sharedPref.getInt(PREF_EQ_PRESET, -1),
+                        bands = loadGlobalBandLevelsLocked().ifEmpty { List(cachedCenterFreqsHz.size) { 0.toShort() } }
+                    )
+                    stationAudioManager.setStationEqProfile(stationUuid, initialProfile)
+                } else {
+                    stationAudioManager.setStationEqProfile(stationUuid, null)
                 }
-                _uiState.value = _uiState.value.copy(enabled = false)
             }
+
+            syncHardwareAfterEditLocked(audioSessionId)
+            refreshUiStateLocked()
         }
     }
 
-    fun setBandLevel(bandIndex: Int, levelMb: Short, audioSessionId: Int) {
+    fun setBandLevel(bandIndex: Int, levelMb: Short, audioSessionId: Int, stationUuid: String? = null) {
         synchronized(lock) {
-            val eq = if (audioSessionId > 0) ensureAttachedLocked(audioSessionId) else equalizer
-            val currentBands = _uiState.value.bands.toMutableList()
-            if (bandIndex !in currentBands.indices) return
+            val bandCount = cachedCenterFreqsHz.size
+            if (bandIndex !in 0 until bandCount) return
+            val clamped = levelMb.coerceIn(cachedMinMb, cachedMaxMb)
 
-            val band = currentBands[bandIndex]
-            val clamped = levelMb.coerceIn(band.minMb, band.maxMb)
-            currentBands[bandIndex] = band.copy(levelMb = clamped)
+            val currentLevels = loadTargetBandLevelsLocked(stationUuid).toMutableList()
+            while (currentLevels.size < bandCount) currentLevels.add(0)
+            currentLevels[bandIndex] = clamped
 
-            if (eq != null) {
-                try {
-                    eq.setBandLevel(bandIndex.toShort(), clamped)
-                } catch (e: Exception) {
-                    Log.w(TAG, "setBandLevel failed for band $bandIndex", e)
-                }
-            }
-
-            saveBandsLocked(currentBands.map { it.levelMb }, presetIndex = -1)
-            _uiState.value = _uiState.value.copy(
-                presetIndex = -1,
-                bands = currentBands
-            )
+            saveTargetProfileLocked(stationUuid, presetIndex = -1, bands = currentLevels)
+            syncHardwareAfterEditLocked(audioSessionId)
+            refreshUiStateLocked()
         }
     }
 
-    fun selectPreset(presetIndex: Int, audioSessionId: Int) {
+    fun selectPreset(presetIndex: Int, audioSessionId: Int, stationUuid: String? = null) {
         synchronized(lock) {
-            val eq = if (audioSessionId > 0) ensureAttachedLocked(audioSessionId) else equalizer
-            if (eq != null) {
-                try {
-                    val count = eq.numberOfPresets.toInt()
-                    if (presetIndex in 0 until count) {
-                        eq.usePreset(presetIndex.toShort())
-                        val updatedBands = readBandsFromHardwareLocked(eq)
-                        saveBandsLocked(updatedBands.map { it.levelMb }, presetIndex = presetIndex)
-                        _uiState.value = _uiState.value.copy(
-                            presetIndex = presetIndex,
-                            bands = updatedBands
-                        )
-                        return
-                    }
-                } catch (e: Exception) {
-                    Log.w(TAG, "selectPreset failed for index $presetIndex", e)
-                }
+            if (presetIndex !in cachedPresetNames.indices) return
+
+            val eq = if (audioSessionId > 0) ensureHardwareAttachedLocked(audioSessionId) else equalizer
+            val resolvedLevels: List<Short> = if (eq != null && hasRealHardwareMetadata) {
+                resolveHardwarePresetLevelsLocked(eq, presetIndex)
+            } else {
+                FALLBACK_PRESETS.getOrNull(presetIndex)?.second?.map {
+                    it.coerceIn(cachedMinMb, cachedMaxMb)
+                } ?: List(cachedCenterFreqsHz.size) { 0.toShort() }
             }
 
-            // Offline / idle fallback preset selection
-            if (presetIndex in FALLBACK_PRESETS.indices) {
-                val levels = FALLBACK_PRESETS[presetIndex].second
-                val updatedBands = _uiState.value.bands.mapIndexed { idx, band ->
-                    val lvl = levels.getOrElse(idx) { 0 }.coerceIn(band.minMb, band.maxMb)
-                    band.copy(levelMb = lvl)
-                }
-                saveBandsLocked(updatedBands.map { it.levelMb }, presetIndex = presetIndex)
-                _uiState.value = _uiState.value.copy(
-                    presetIndex = presetIndex,
-                    bands = updatedBands
-                )
-            }
+            saveTargetProfileLocked(stationUuid, presetIndex = presetIndex, bands = resolvedLevels)
+            syncHardwareAfterEditLocked(audioSessionId)
+            refreshUiStateLocked()
         }
     }
 
-    fun reset(audioSessionId: Int) {
+    fun reset(audioSessionId: Int, stationUuid: String? = null) {
         synchronized(lock) {
-            val eq = if (audioSessionId > 0) ensureAttachedLocked(audioSessionId) else equalizer
-            val resetBands = _uiState.value.bands.map { it.copy(levelMb = 0) }
-            if (eq != null) {
-                resetBands.forEach { band ->
-                    try {
-                        eq.setBandLevel(band.index.toShort(), 0)
-                    } catch (_: Exception) {}
-                }
-            }
-            saveBandsLocked(resetBands.map { it.levelMb }, presetIndex = -1)
-            _uiState.value = _uiState.value.copy(
-                presetIndex = -1,
-                bands = resetBands
-            )
+            val zeroBands = List(cachedCenterFreqsHz.size) { 0.toShort() }
+            saveTargetProfileLocked(stationUuid, presetIndex = -1, bands = zeroBands)
+            syncHardwareAfterEditLocked(audioSessionId)
+            refreshUiStateLocked()
         }
     }
 
-    private fun ensureAttachedLocked(audioSessionId: Int): Equalizer? {
+    private fun isEffectiveEqEnabledLocked(): Boolean {
+        val stationOverride = stationAudioManager.getStationEqProfile(activeStationUuid)
+        return stationOverride != null || isGlobalEnabled
+    }
+
+    private fun syncHardwareAfterEditLocked(audioSessionId: Int) {
+        val sessionId = if (audioSessionId > 0) audioSessionId else attachedSessionId
+        if (sessionId <= 0) return
+
+        val needsHardware = isEffectiveEqEnabledLocked() || dialogOpen
+        if (needsHardware) {
+            ensureHardwareAttachedLocked(sessionId)
+            applyEffectiveProfileLocked()
+        } else {
+            releaseHardwareLocked()
+        }
+    }
+
+    private fun ensureHardwareAttachedLocked(audioSessionId: Int): Equalizer? {
         if (audioSessionId <= 0) return null
         if (equalizer != null && attachedSessionId == audioSessionId) {
-            applyStoredSettingsLocked(equalizer!!)
-            refreshStateFromHardwareLocked(equalizer!!)
             return equalizer
         }
 
-        releaseLocked()
+        releaseHardwareLocked()
 
         return try {
             val eq = Equalizer(0, audioSessionId)
             equalizer = eq
             attachedSessionId = audioSessionId
-            applyStoredSettingsLocked(eq)
-            refreshStateFromHardwareLocked(eq)
+            hardwareSupported = true
+            captureHardwareMetadataLocked(eq)
             eq
         } catch (e: Exception) {
             Log.e(TAG, "Failed to initialize Android Equalizer for session $audioSessionId", e)
             equalizer = null
             attachedSessionId = 0
-            _uiState.value = loadFallbackState().copy(isSupported = false)
+            hardwareSupported = false
             null
         }
     }
 
-    private fun applyStoredSettingsLocked(eq: Equalizer) {
-        val enabled = isEnabled
-        val savedPreset = sharedPref.getInt(PREF_EQ_PRESET, -1)
-        val savedBands = loadSavedBandLevels()
-        val bandCount = eq.numberOfBands.toInt()
-        val range = eq.bandLevelRange
-        val minMb = range.getOrElse(0) { DEFAULT_MIN_MB }
-        val maxMb = range.getOrElse(1) { DEFAULT_MAX_MB }
+    private fun captureHardwareMetadataLocked(eq: Equalizer) {
+        try {
+            val bandCount = eq.numberOfBands.toInt()
+            if (bandCount > 0) {
+                val range = eq.bandLevelRange
+                cachedMinMb = range.getOrElse(0) { DEFAULT_MIN_MB }
+                cachedMaxMb = range.getOrElse(1) { DEFAULT_MAX_MB }
+                cachedCenterFreqsHz = (0 until bandCount).map { idx ->
+                    (eq.getCenterFreq(idx.toShort()) / 1000).coerceAtLeast(1)
+                }
+                val presetCount = eq.numberOfPresets.toInt()
+                if (presetCount > 0) {
+                    cachedPresetNames = (0 until presetCount).map { idx ->
+                        eq.getPresetName(idx.toShort()) ?: "Preset ${idx + 1}"
+                    }
+                }
+                hasRealHardwareMetadata = true
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to read hardware EQ metadata", e)
+        }
+    }
+
+    /**
+     * Reads band levels for [presetIndex] from hardware without leaving the wrong preset active
+     * (caller immediately calls [applyEffectiveProfileLocked] right afterward).
+     */
+    private fun resolveHardwarePresetLevelsLocked(eq: Equalizer, presetIndex: Int): List<Short> {
+        return try {
+            val presetCount = eq.numberOfPresets.toInt()
+            if (presetIndex in 0 until presetCount) {
+                eq.usePreset(presetIndex.toShort())
+                val bandCount = eq.numberOfBands.toInt()
+                (0 until bandCount).map { idx -> eq.getBandLevel(idx.toShort()) }
+            } else {
+                List(cachedCenterFreqsHz.size) { 0.toShort() }
+            }
+        } catch (e: Exception) {
+            Log.w(TAG, "Failed to resolve hardware preset $presetIndex", e)
+            List(cachedCenterFreqsHz.size) { 0.toShort() }
+        }
+    }
+
+    private fun applyEffectiveProfileLocked() {
+        val eq = equalizer ?: return
+        val stationOverride = stationAudioManager.getStationEqProfile(activeStationUuid)
+        val effectiveEnabled = stationOverride != null || isGlobalEnabled
+        val effectivePreset = stationOverride?.presetIndex ?: sharedPref.getInt(PREF_EQ_PRESET, -1)
+        val effectiveBands = stationOverride?.bands ?: loadGlobalBandLevelsLocked()
 
         try {
-            if (savedPreset in 0 until eq.numberOfPresets.toInt()) {
-                eq.usePreset(savedPreset.toShort())
-            } else if (savedBands.isNotEmpty()) {
+            if (!effectiveEnabled) {
+                eq.enabled = false
+                return
+            }
+
+            val bandCount = eq.numberOfBands.toInt()
+            val presetCount = eq.numberOfPresets.toInt()
+            if (effectivePreset in 0 until presetCount) {
+                eq.usePreset(effectivePreset.toShort())
+            } else {
                 for (i in 0 until bandCount) {
-                    val lvl = savedBands.getOrElse(i) { 0 }.coerceIn(minMb, maxMb)
+                    val lvl = effectiveBands.getOrElse(i) { 0.toShort() }.coerceIn(cachedMinMb, cachedMaxMb)
                     eq.setBandLevel(i.toShort(), lvl)
                 }
             }
-            eq.enabled = enabled
+            eq.enabled = true
         } catch (e: Exception) {
-            Log.w(TAG, "Failed to apply stored EQ settings", e)
+            Log.w(TAG, "Failed to apply effective EQ profile", e)
         }
     }
 
-    private fun refreshStateFromHardwareLocked(eq: Equalizer) {
-        try {
-            val bands = readBandsFromHardwareLocked(eq)
-            val presetCount = eq.numberOfPresets.toInt()
-            val presetNames = (0 until presetCount).map { idx ->
-                eq.getPresetName(idx.toShort()) ?: "Preset ${idx + 1}"
+    private fun loadGlobalBandLevelsLocked(): List<Short> {
+        val raw = sharedPref.getString(PREF_EQ_BANDS, "") ?: ""
+        return StationAudioManager.parseBands(raw)
+    }
+
+    private fun loadTargetBandLevelsLocked(stationUuid: String?): List<Short> {
+        return if (stationUuid == null) {
+            loadGlobalBandLevelsLocked()
+        } else {
+            stationAudioManager.getStationEqProfile(stationUuid)?.bands ?: emptyList()
+        }
+    }
+
+    private fun saveTargetProfileLocked(stationUuid: String?, presetIndex: Int, bands: List<Short>) {
+        if (stationUuid == null) {
+            sharedPref.edit {
+                putInt(PREF_EQ_PRESET, presetIndex)
+                putString(PREF_EQ_BANDS, StationAudioManager.serializeBands(bands))
             }
-            val savedPreset = sharedPref.getInt(PREF_EQ_PRESET, -1)
-            val validPreset = if (savedPreset in 0 until presetCount) savedPreset else -1
-
-            _uiState.value = EqualizerUiState(
-                enabled = isEnabled,
-                presetIndex = validPreset,
-                presetNames = presetNames,
-                bands = bands,
-                isAttachedToSession = true,
-                isSupported = true
+        } else {
+            stationAudioManager.setStationEqProfile(
+                stationUuid,
+                StationEqProfile(presetIndex = presetIndex, bands = bands)
             )
-        } catch (e: Exception) {
-            Log.w(TAG, "Failed to read EQ state from hardware", e)
         }
     }
 
-    private fun readBandsFromHardwareLocked(eq: Equalizer): List<EqualizerBandInfo> {
-        val bandCount = eq.numberOfBands.toInt()
-        val range = eq.bandLevelRange
-        val minMb = range.getOrElse(0) { DEFAULT_MIN_MB }
-        val maxMb = range.getOrElse(1) { DEFAULT_MAX_MB }
-        return (0 until bandCount).map { idx ->
-            val centerHz = (eq.getCenterFreq(idx.toShort()) / 1000).coerceAtLeast(1)
-            val levelMb = eq.getBandLevel(idx.toShort())
+    private fun refreshUiStateLocked() {
+        _uiState.value = buildUiStateLocked(editingStationUuid)
+    }
+
+    private fun buildUiStateLocked(targetStationUuid: String?): EqualizerUiState {
+        val isEnabled: Boolean
+        val presetIndex: Int
+        val savedBands: List<Short>
+
+        if (targetStationUuid == null) {
+            isEnabled = isGlobalEnabled
+            presetIndex = sharedPref.getInt(PREF_EQ_PRESET, -1)
+            savedBands = loadGlobalBandLevelsLocked()
+        } else {
+            val override = stationAudioManager.getStationEqProfile(targetStationUuid)
+            isEnabled = override != null
+            presetIndex = override?.presetIndex ?: -1
+            savedBands = override?.bands ?: emptyList()
+        }
+
+        val bands = cachedCenterFreqsHz.mapIndexed { idx, freq ->
+            val lvl = savedBands.getOrElse(idx) { 0.toShort() }.coerceIn(cachedMinMb, cachedMaxMb)
             EqualizerBandInfo(
                 index = idx,
-                centerFreqHz = centerHz,
-                levelMb = levelMb,
-                minMb = minMb,
-                maxMb = maxMb
+                centerFreqHz = freq,
+                levelMb = lvl,
+                minMb = cachedMinMb,
+                maxMb = cachedMaxMb
             )
         }
+        val validPreset = if (presetIndex in cachedPresetNames.indices) presetIndex else -1
+
+        return EqualizerUiState(
+            enabled = isEnabled,
+            presetIndex = validPreset,
+            presetNames = cachedPresetNames,
+            bands = bands,
+            isAttachedToSession = equalizer != null && attachedSessionId > 0,
+            isSupported = hardwareSupported,
+            editingStationUuid = targetStationUuid
+        )
     }
 
-    private fun releaseLocked() {
+    private fun releaseHardwareLocked() {
         try {
             equalizer?.enabled = false
         } catch (_: Exception) {}
@@ -357,43 +441,5 @@ class InAppEqualizerManager(context: Context) {
         } catch (_: Exception) {}
         equalizer = null
         attachedSessionId = 0
-    }
-
-    private fun loadFallbackState(): EqualizerUiState {
-        val enabled = isEnabled
-        val savedPreset = sharedPref.getInt(PREF_EQ_PRESET, -1)
-        val savedBands = loadSavedBandLevels()
-        val bands = DEFAULT_CENTER_FREQS_HZ.mapIndexed { idx, freq ->
-            val lvl = savedBands.getOrElse(idx) { 0 }.coerceIn(DEFAULT_MIN_MB, DEFAULT_MAX_MB)
-            EqualizerBandInfo(
-                index = idx,
-                centerFreqHz = freq,
-                levelMb = lvl,
-                minMb = DEFAULT_MIN_MB,
-                maxMb = DEFAULT_MAX_MB
-            )
-        }
-        val validPreset = if (savedPreset in FALLBACK_PRESETS.indices) savedPreset else -1
-        return EqualizerUiState(
-            enabled = enabled,
-            presetIndex = validPreset,
-            presetNames = FALLBACK_PRESETS.map { it.first },
-            bands = bands,
-            isAttachedToSession = false,
-            isSupported = true
-        )
-    }
-
-    private fun loadSavedBandLevels(): List<Short> {
-        val raw = sharedPref.getString(PREF_EQ_BANDS, "") ?: ""
-        if (raw.isBlank()) return emptyList()
-        return raw.split(",").mapNotNull { it.trim().toShortOrNull() }
-    }
-
-    private fun saveBandsLocked(levels: List<Short>, presetIndex: Int) {
-        sharedPref.edit {
-            putInt(PREF_EQ_PRESET, presetIndex)
-            putString(PREF_EQ_BANDS, levels.joinToString(","))
-        }
     }
 }

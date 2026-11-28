@@ -8,7 +8,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Equalizer
-import androidx.compose.material.icons.filled.Tune
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -202,7 +201,7 @@ fun StationGainDialog(
 
 @Composable
 fun InAppEqualizerDialog(
-    onOpenSystemEqualizer: (() -> Unit)? = null,
+    station: DataRadioStation? = null,
     onDismiss: () -> Unit
 ) {
     val context = LocalContext.current
@@ -210,9 +209,10 @@ fun InAppEqualizerDialog(
         (context.applicationContext as AMARadioApp).inAppEqualizerManager
     }
     val uiState by eqManager.uiState.collectAsStateWithLifecycle()
+    val stationUuid = station?.StationUuid
 
-    DisposableEffect(eqManager) {
-        eqManager.onDialogOpened(PlayerServiceUtil.getAudioSessionId())
+    DisposableEffect(eqManager, stationUuid) {
+        eqManager.onDialogOpened(PlayerServiceUtil.getAudioSessionId(), stationUuid)
         onDispose {
             eqManager.onDialogClosed()
         }
@@ -232,11 +232,22 @@ fun InAppEqualizerDialog(
                     contentDescription = null,
                     tint = AmaradioAmber
                 )
-                Text(
-                    text = stringResource(R.string.settings_equalizer),
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
+                Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
+                    Text(
+                        text = stringResource(R.string.settings_equalizer),
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    if (station != null) {
+                        Text(
+                            text = station.Name,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            maxLines = 1,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
             }
         },
         text = {
@@ -246,27 +257,38 @@ fun InAppEqualizerDialog(
                     .verticalScroll(rememberScrollState()),
                 verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-                // Enable / Disable Switch
+                // Enable / Disable Switch (Global or Per-Station Override)
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = stringResource(R.string.eq_enable),
+                        text = stringResource(
+                            if (station != null) R.string.eq_station_override else R.string.eq_enable
+                        ),
                         style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurface
+                        color = MaterialTheme.colorScheme.onSurface,
+                        modifier = Modifier.weight(1f).padding(end = 12.dp)
                     )
                     Switch(
                         checked = uiState.enabled,
                         onCheckedChange = { checked ->
-                            eqManager.setEnabled(checked, PlayerServiceUtil.getAudioSessionId())
+                            eqManager.setEnabled(checked, PlayerServiceUtil.getAudioSessionId(), stationUuid)
                         },
                         colors = SwitchDefaults.colors(
                             checkedThumbColor = Color.Black,
                             checkedTrackColor = AmaradioAmber
                         )
+                    )
+                }
+
+                if (station != null && !uiState.enabled) {
+                    Text(
+                        text = stringResource(R.string.eq_using_global),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -314,7 +336,7 @@ fun InAppEqualizerDialog(
                                     selected = isSelected,
                                     enabled = uiState.enabled,
                                     onClick = {
-                                        eqManager.selectPreset(index, PlayerServiceUtil.getAudioSessionId())
+                                        eqManager.selectPreset(index, PlayerServiceUtil.getAudioSessionId(), stationUuid)
                                     },
                                     label = {
                                         Text(
@@ -368,7 +390,8 @@ fun InAppEqualizerDialog(
                                     eqManager.setBandLevel(
                                         bandIndex = band.index,
                                         levelMb = snapped,
-                                        audioSessionId = PlayerServiceUtil.getAudioSessionId()
+                                        audioSessionId = PlayerServiceUtil.getAudioSessionId(),
+                                        stationUuid = stationUuid
                                     )
                                 },
                                 enabled = uiState.enabled,
@@ -407,30 +430,6 @@ fun InAppEqualizerDialog(
                         )
                     }
                 }
-
-                if (onOpenSystemEqualizer != null) {
-                    HorizontalDivider(color = MaterialTheme.colorScheme.outline)
-                    TextButton(
-                        onClick = {
-                            eqManager.setEnabled(false, PlayerServiceUtil.getAudioSessionId())
-                            onDismiss()
-                            onOpenSystemEqualizer()
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.textButtonColors(contentColor = AmaradioAmber)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Tune,
-                            contentDescription = null,
-                            modifier = Modifier.size(18.dp)
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = stringResource(R.string.eq_system_equalizer),
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
             }
         },
         confirmButton = {
@@ -448,7 +447,7 @@ fun InAppEqualizerDialog(
         dismissButton = {
             TextButton(
                 onClick = {
-                    eqManager.reset(PlayerServiceUtil.getAudioSessionId())
+                    eqManager.reset(PlayerServiceUtil.getAudioSessionId(), stationUuid)
                 },
                 enabled = uiState.enabled && uiState.bands.any { it.levelMb != 0.toShort() },
                 colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant)

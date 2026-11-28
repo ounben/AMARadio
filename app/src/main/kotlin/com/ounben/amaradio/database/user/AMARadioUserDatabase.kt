@@ -24,7 +24,7 @@ import com.ounben.amaradio.history.TrackHistoryEntry
         FavoriteListItemEntity::class,
         StationAudioEntity::class
     ], 
-    version = 10,
+    version = 11,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -287,6 +287,14 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_10_11 = object : Migration(10, 11) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `station_audio_settings` ADD COLUMN `eqEnabled` INTEGER")
+                db.execSQL("ALTER TABLE `station_audio_settings` ADD COLUMN `eqPresetIndex` INTEGER")
+                db.execSQL("ALTER TABLE `station_audio_settings` ADD COLUMN `eqBands` TEXT")
+            }
+        }
+
         fun getDatabase(context: Context): AMARadioUserDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
@@ -294,8 +302,8 @@ abstract class AMARadioUserDatabase : RoomDatabase() {
                     AMARadioUserDatabase::class.java,
                     "user_data.db"
                 )
-                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10)
-                .fallbackToDestructiveMigrationFrom(true, 11) // Nur bei künftigen Fehlern ab v11 zerstörerisch
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6, MIGRATION_6_7, MIGRATION_7_8, MIGRATION_8_9, MIGRATION_9_10, MIGRATION_10_11)
+                .fallbackToDestructiveMigrationFrom(true, 12) // Nur bei künftigen Fehlern ab v12 zerstörerisch
                 .addCallback(CALLBACK)
                 .build()
                 INSTANCE = instance

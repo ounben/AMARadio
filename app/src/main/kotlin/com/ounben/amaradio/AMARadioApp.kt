@@ -128,7 +128,7 @@ class AMARadioApp : Application(), ImageLoaderFactory, WorkConfiguration.Provide
 
             trackHistoryRepository = TrackHistoryRepository(this)
             stationAudioManager = StationAudioManager(this)
-            inAppEqualizerManager = InAppEqualizerManager(this)
+            inAppEqualizerManager = InAppEqualizerManager(this, stationAudioManager)
 
             com.ounben.amaradio.service.SyncWorker.enqueue(this)
 
