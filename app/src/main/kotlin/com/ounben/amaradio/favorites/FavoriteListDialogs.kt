@@ -130,6 +130,7 @@ fun FavoritePlaylistFilterBar(
                     label = {
                         Text(
                             text = displayLabel,
+                            fontWeight = if (isFiltered) FontWeight.Bold else FontWeight.Normal,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.clearAndSetSemantics { }
@@ -149,14 +150,22 @@ fun FavoritePlaylistFilterBar(
                             modifier = Modifier.size(18.dp)
                         )
                     },
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = isFiltered,
+                        borderColor = MaterialTheme.colorScheme.outline,
+                        selectedBorderColor = AmaradioAmber,
+                        borderWidth = 1.dp,
+                        selectedBorderWidth = 1.5.dp
+                    ),
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = MaterialTheme.colorScheme.surface,
                         labelColor = MaterialTheme.colorScheme.onSurface,
                         iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        selectedContainerColor = AmaradioAmber,
-                        selectedLabelColor = Color.Black,
-                        selectedLeadingIconColor = Color.Black,
-                        selectedTrailingIconColor = Color.Black
+                        selectedContainerColor = MaterialTheme.colorScheme.surface,
+                        selectedLabelColor = AmaradioAmber,
+                        selectedLeadingIconColor = AmaradioAmber,
+                        selectedTrailingIconColor = AmaradioAmber
                     )
                 )
 

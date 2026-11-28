@@ -120,7 +120,6 @@ class AMARadioFullWidget : GlanceAppWidget() {
         val surfaceVariantColor = GlanceTheme.colors.surfaceVariant
         val outlineColor = GlanceTheme.colors.outline
         val amber = GlanceTheme.colors.primary
-        val onAmber = GlanceTheme.colors.onPrimary
 
         val activePlaylist = playlists.find { it.id == selectedPlaylistId }
         val effectiveSelectedId = activePlaylist?.id ?: ""
@@ -226,8 +225,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
                     surfaceVariantColor = surfaceVariantColor,
                     outlineColor = outlineColor,
                     textColor = textColor,
-                    amber = amber,
-                    onAmber = onAmber
+                    amber = amber
                 )
             }
 
@@ -302,8 +300,7 @@ class AMARadioFullWidget : GlanceAppWidget() {
         surfaceVariantColor: ColorProvider,
         outlineColor: ColorProvider,
         textColor: ColorProvider,
-        amber: ColorProvider,
-        onAmber: ColorProvider
+        amber: ColorProvider
     ) {
         val isFiltered = activePlaylist != null
         val filterLabel = if (activePlaylist != null) {
@@ -312,8 +309,8 @@ class AMARadioFullWidget : GlanceAppWidget() {
             "${context.getString(R.string.favorite_list_all)} ($totalFavoritesCount)"
         }
         val blockBorderColor = if (isFiltered) amber else outlineColor
-        val blockBg = if (isFiltered) amber else surfaceVariantColor
-        val blockTextColor = if (isFiltered) onAmber else textColor
+        val blockBorderWidth = if (isFiltered) 2.dp else 1.dp
+        val blockTextColor = if (isFiltered) amber else textColor
         val expandIcon = if (pickerOpen) R.drawable.ic_expand_less_black_24dp else R.drawable.ic_expand_more_black_24dp
 
         Column(
@@ -359,20 +356,20 @@ class AMARadioFullWidget : GlanceAppWidget() {
 
                 Spacer(modifier = GlanceModifier.width(4.dp))
 
-                // Center Filter Block (minimal corner radius + 1dp border)
+                // Center Filter Block (solid neutral background + solid Amber border/accent when active)
                 Box(
                     modifier = GlanceModifier
                         .defaultWeight()
                         .height(30.dp)
                         .background(blockBorderColor)
                         .cornerRadius(4.dp)
-                        .padding(1.dp)
+                        .padding(blockBorderWidth)
                 ) {
                     Row(
                         modifier = GlanceModifier
                             .fillMaxSize()
-                            .background(blockBg)
-                            .cornerRadius(3.dp)
+                            .background(surfaceVariantColor)
+                            .cornerRadius(if (isFiltered) 2.dp else 3.dp)
                             .padding(horizontal = 8.dp)
                             .clickable(actionRunCallback<TogglePlaylistPickerActionCallback>()),
                         verticalAlignment = Alignment.CenterVertically

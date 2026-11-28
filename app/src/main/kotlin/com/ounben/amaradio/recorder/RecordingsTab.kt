@@ -311,6 +311,7 @@ fun RecordingFilterHeader(
                         label = {
                             Text(
                                 text = displayStationName,
+                                fontWeight = if (isStationFiltered) FontWeight.Bold else FontWeight.Normal,
                                 maxLines = 1,
                                 overflow = TextOverflow.Ellipsis,
                                 modifier = Modifier.clearAndSetSemantics { }
@@ -318,14 +319,22 @@ fun RecordingFilterHeader(
                         },
                         leadingIcon = { Icon(Icons.Default.Radio, contentDescription = null, modifier = Modifier.size(18.dp)) },
                         trailingIcon = { Icon(Icons.Default.ArrowDropDown, contentDescription = null, modifier = Modifier.size(18.dp)) },
+                        border = FilterChipDefaults.filterChipBorder(
+                            enabled = true,
+                            selected = isStationFiltered,
+                            borderColor = MaterialTheme.colorScheme.outline,
+                            selectedBorderColor = AmaradioAmber,
+                            borderWidth = 1.dp,
+                            selectedBorderWidth = 1.5.dp
+                        ),
                         colors = FilterChipDefaults.filterChipColors(
                             containerColor = MaterialTheme.colorScheme.surface,
                             labelColor = MaterialTheme.colorScheme.onSurface,
                             iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                            selectedContainerColor = AmaradioAmber,
-                            selectedLabelColor = Color.Black,
-                            selectedLeadingIconColor = Color.Black,
-                            selectedTrailingIconColor = Color.Black
+                            selectedContainerColor = MaterialTheme.colorScheme.surface,
+                            selectedLabelColor = AmaradioAmber,
+                            selectedLeadingIconColor = AmaradioAmber,
+                            selectedTrailingIconColor = AmaradioAmber
                         )
                     )
 
@@ -398,19 +407,28 @@ fun RecordingFilterHeader(
                     label = {
                         Text(
                             text = startChipText,
+                            fontWeight = if (startDateMs > 0L) FontWeight.Bold else FontWeight.Normal,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.clearAndSetSemantics { }
                         )
                     },
                     leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = startDateMs > 0L,
+                        borderColor = MaterialTheme.colorScheme.outline,
+                        selectedBorderColor = AmaradioAmber,
+                        borderWidth = 1.dp,
+                        selectedBorderWidth = 1.5.dp
+                    ),
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = MaterialTheme.colorScheme.surface,
                         labelColor = MaterialTheme.colorScheme.onSurface,
                         iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        selectedContainerColor = AmaradioAmber,
-                        selectedLabelColor = Color.Black,
-                        selectedLeadingIconColor = Color.Black
+                        selectedContainerColor = MaterialTheme.colorScheme.surface,
+                        selectedLabelColor = AmaradioAmber,
+                        selectedLeadingIconColor = AmaradioAmber
                     )
                 )
 
@@ -425,19 +443,28 @@ fun RecordingFilterHeader(
                     label = {
                         Text(
                             text = endChipText,
+                            fontWeight = if (endDateMs > 0L) FontWeight.Bold else FontWeight.Normal,
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis,
                             modifier = Modifier.clearAndSetSemantics { }
                         )
                     },
                     leadingIcon = { Icon(Icons.Default.DateRange, contentDescription = null, modifier = Modifier.size(16.dp)) },
+                    border = FilterChipDefaults.filterChipBorder(
+                        enabled = true,
+                        selected = endDateMs > 0L,
+                        borderColor = MaterialTheme.colorScheme.outline,
+                        selectedBorderColor = AmaradioAmber,
+                        borderWidth = 1.dp,
+                        selectedBorderWidth = 1.5.dp
+                    ),
                     colors = FilterChipDefaults.filterChipColors(
                         containerColor = MaterialTheme.colorScheme.surface,
                         labelColor = MaterialTheme.colorScheme.onSurface,
                         iconColor = MaterialTheme.colorScheme.onSurfaceVariant,
-                        selectedContainerColor = AmaradioAmber,
-                        selectedLabelColor = Color.Black,
-                        selectedLeadingIconColor = Color.Black
+                        selectedContainerColor = MaterialTheme.colorScheme.surface,
+                        selectedLabelColor = AmaradioAmber,
+                        selectedLeadingIconColor = AmaradioAmber
                     )
                 )
 
