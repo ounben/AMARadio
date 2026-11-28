@@ -73,17 +73,30 @@ class MediaSessionCallback(
                 var finalItem = item
                 val searchQuery = item.requestMetadata.searchQuery
                 
-                // 1. Resolve Search Query to Station ID
-                val stationId = if (!searchQuery.isNullOrEmpty()) {
-                    amaradioBrowser.resolveStationByKeywords(searchQuery)
+                // 1. Resolve Search Query or Browsed MediaId to Station ID (+ optional Playlist ID)
+                val resolved = if (!searchQuery.isNullOrEmpty()) {
+                    amaradioBrowser.resolvePlaybackByKeywords(searchQuery)
                 } else {
-                    AMARadioBrowser.stationIdFromMediaId(item.mediaId)
+                    val sid = AMARadioBrowser.stationIdFromMediaId(item.mediaId)
+                    if (sid.isNotEmpty()) {
+                        AMARadioBrowser.ResolvedMedia(
+                            stationId = sid,
+                            playlistId = AMARadioBrowser.playlistIdFromMediaId(item.mediaId)
+                        )
+                    } else {
+                        null
+                    }
                 }
+                val stationId = resolved?.stationId
+                val playlistId = resolved?.playlistId
 
                 if (!stationId.isNullOrEmpty()) {
-                    // 2. Notify Service to start playback with proper warnings/history
+                    // 2. Notify Service to start playback with proper warnings/history/playlist queue
                     val intent = Intent(BROADCAST_PLAY_STATION_BY_ID)
                     intent.putExtra(EXTRA_STATION_ID, stationId)
+                    if (!playlistId.isNullOrEmpty()) {
+                        intent.putExtra(EXTRA_PLAYLIST_ID, playlistId)
+                    }
                     AppEventManager.sendEvent(intent)
 
                     // 3. Build valid MediaItem for immediate player preparation
@@ -167,6 +180,7 @@ class MediaSessionCallback(
     companion object {
         const val BROADCAST_PLAY_STATION_BY_ID = "PLAY_STATION_BY_ID"
         const val EXTRA_STATION_ID = "STATION_ID"
+        const val EXTRA_PLAYLIST_ID = "PLAYLIST_ID"
         const val ACTION_PLAY_STATION_BY_UUID = "PLAY_STATION_BY_UUID"
         const val EXTRA_STATION_UUID = "STATION_UUID"
     }

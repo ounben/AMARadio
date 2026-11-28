@@ -20,7 +20,12 @@ object Media3Utils {
     /**
      * Centralized metadata builder for Radio Stations.
      */
-    fun buildMetadata(station: DataRadioStation, liveTitle: String? = null, bitmap: Bitmap? = null): MediaMetadata {
+    fun buildMetadata(
+        station: DataRadioStation,
+        liveTitle: String? = null,
+        bitmap: Bitmap? = null,
+        groupTitle: String? = null
+    ): MediaMetadata {
         val stationName = station.Name
         
         // STRICT: Only use liveTitle if available. No fallbacks, no "old" data.
@@ -55,6 +60,9 @@ object Media3Utils {
             putString(MediaMetadataCompat.METADATA_KEY_ALBUM, stationName)
             putInt("androidx.media.utils.extras.CONTENT_TYPE", 1)
             putInt("androidx.media.utils.extras.MEDIA_TYPE", 1)
+            if (!groupTitle.isNullOrEmpty()) {
+                putString("android.media.browse.CONTENT_STYLE_GROUP_TITLE_HINT", groupTitle)
+            }
             
             if (bitmap == null) {
                 putString("android.media.metadata.DISPLAY_ICON_URI", artworkUri.toString())
@@ -77,16 +85,30 @@ object Media3Utils {
     /**
      * Builds metadata specifically for browsable folders in Android Auto.
      */
-    fun buildFolderMetadata(title: String, iconUri: Uri?): MediaMetadata {
+    fun buildFolderMetadata(
+        title: String,
+        iconUri: Uri?,
+        subtitle: String? = null,
+        mediaType: Int = MediaMetadata.MEDIA_TYPE_MUSIC,
+        groupTitle: String? = null
+    ): MediaMetadata {
         return MediaMetadata.Builder()
             .setTitle(title)
+            .apply {
+                if (!subtitle.isNullOrEmpty()) {
+                    setSubtitle(subtitle)
+                }
+            }
             .setIsBrowsable(true)
             .setIsPlayable(false)
-            .setMediaType(MediaMetadata.MEDIA_TYPE_MUSIC)
+            .setMediaType(mediaType)
             .setArtworkUri(iconUri)
             .setExtras(Bundle().apply {
                 putInt("androidx.media.utils.extras.CONTENT_TYPE", 1)
                 putInt("android.media.browse.CONTENT_STYLE_BROWSABLE_HINT", 1)
+                if (!groupTitle.isNullOrEmpty()) {
+                    putString("android.media.browse.CONTENT_STYLE_GROUP_TITLE_HINT", groupTitle)
+                }
                 if (iconUri != null) {
                     putString("android.media.metadata.DISPLAY_ICON_URI", iconUri.toString())
                 }

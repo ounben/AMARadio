@@ -350,12 +350,19 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
             AppEventManager.events.collect { intent ->
                 if (intent.action == MediaSessionCallback.BROADCAST_PLAY_STATION_BY_ID) {
                     val stationId = intent.getStringExtra(MediaSessionCallback.EXTRA_STATION_ID)
-                    if (stationId != null) {
-                        val station = amaradioBrowser.getStationById(stationId)
-                                    ?: app.favouriteManager.getById(stationId)
-                                    ?: app.historyManager.getById(stationId)
-                        
-                        station?.let { playWithoutWarnings(it) }
+                    val playlistId = intent.getStringExtra(MediaSessionCallback.EXTRA_PLAYLIST_ID)
+                    if (!stationId.isNullOrEmpty()) {
+                        val baseStation = amaradioBrowser.getStationById(stationId)
+                            ?: app.favouriteManager.getById(stationId)
+                            ?: app.historyManager.getById(stationId)
+                        baseStation?.let { station ->
+                            val stationToPlay = if (!playlistId.isNullOrEmpty()) {
+                                buildPlaylistStationWithQueue(stationId, playlistId, station)
+                            } else {
+                                station
+                            }
+                            playWithoutWarnings(stationToPlay)
+                        }
                     }
                 } else if (intent.action == ACTION_TOGGLE_PLAY_PAUSE) {
                     if (radioPlayer?.isPlaying() == true) pause(PauseReason.USER) else resume()
@@ -370,26 +377,39 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         channel.enableVibration(false)
         notificationManager.createNotificationChannel(channel)
 
-        // 5. Observe History & Favorites for Media3 Library updates (Android Auto Sync)
+        // 5. Observe History, Favorites & Favorite Playlists for Media3 Library updates (Android Auto Sync)
         serviceScope.launch {
             val app = application as AMARadioApp
-            
+            var knownPlaylistIds = emptySet<String>()
+
             combine(
                 app.historyManager.stationsFlow,
-                app.favouriteManager.stationsFlow
-            ) { h, f -> h to f }
+                app.favouriteManager.stationsFlow,
+                app.favoriteListManager.listsFlow,
+                app.favoriteListManager.allItemsFlow
+            ) { h, f, lists, items ->
+                (h to f) to (lists to items)
+            }
             .distinctUntilChanged()
-            .collect {
+            .collect { (_, playlistPair) ->
+                val lists = playlistPair.first
                 // Debounce to settle DB transactions
                 delay(500)
-                Log.d("PLAYER_SERVICE", "History or Favorites changed, notifying Android Auto.")
-                
+                Log.d("PLAYER_SERVICE", "History, Favorites, or Playlists changed, notifying Android Auto.")
+
+                val currentPlaylistIds = lists.mapTo(HashSet()) { it.id }
+                val affectedPlaylistIds = knownPlaylistIds + currentPlaylistIds
+                knownPlaylistIds = currentPlaylistIds
+
                 mediaSession?.let { session ->
                     session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_HISTORY, Int.MAX_VALUE, null)
                     session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_MUSICS_FAVORITE, Int.MAX_VALUE, null)
+                    affectedPlaylistIds.forEach { listId ->
+                        session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_PLAYLIST_PREFIX + listId, Int.MAX_VALUE, null)
+                    }
                     session.notifyChildrenChanged(AMARadioBrowser.MEDIA_ID_ROOT, Int.MAX_VALUE, null)
                 }
-                
+
                 WidgetUpdateHelper.updateAllWidgets(this@PlayerService, itsCurrentStation, radioPlayer?.isPlaying() ?: false, getCurrentTrackInfo())
             }
         }
@@ -507,20 +527,14 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
                                                 ?: app.historyManager.getById(stationId)
                                                 ?: placeholderStation
 
-                                if (!playlistId.isNullOrEmpty()) {
-                                    val playlistStations = withContext(Dispatchers.IO) {
-                                        val userDb = AMARadioUserDatabase.getDatabase(this@PlayerService)
-                                        val allFavorites = userDb.favoriteDao().getAllFavorites().map { entity -> entity.toDataStation() }
-                                        val allItems = userDb.favoriteListDao().getAllItems()
-                                        FavoriteListHelper.filterStationsForList(allFavorites, allItems, playlistId)
-                                    }
-                                    if (playlistStations.isNotEmpty()) {
-                                        station.queue = InMemoryStationQueue(this@PlayerService, playlistStations)
-                                    }
+                                val stationToPlay = if (!playlistId.isNullOrEmpty()) {
+                                    buildPlaylistStationWithQueue(stationId, playlistId, station)
+                                } else {
+                                    station
                                 }
 
                                 withContext(Dispatchers.Main) {
-                                    playWithoutWarnings(station)
+                                    playWithoutWarnings(stationToPlay)
                                 }
                             }
                         }
@@ -553,6 +567,32 @@ class PlayerService : MediaLibraryService(), RadioPlayer.PlayerListener {
         }
 
         return START_STICKY
+    }
+
+    private suspend fun buildPlaylistStationWithQueue(
+        stationId: String,
+        playlistId: String,
+        fallback: DataRadioStation
+    ): DataRadioStation {
+        val playlistStations = withContext(Dispatchers.IO) {
+            val userDb = AMARadioUserDatabase.getDatabase(this@PlayerService)
+            val allFavorites = userDb.favoriteDao().getAllFavorites().map { entity -> entity.toDataStation() }
+            val allItems = userDb.favoriteListDao().getAllItems()
+            FavoriteListHelper.filterStationsForList(allFavorites, allItems, playlistId)
+        }
+        if (playlistStations.isEmpty()) return fallback
+        val queue = InMemoryStationQueue(this@PlayerService, playlistStations)
+        val matched = playlistStations.find { it.StationUuid == stationId }
+        if (matched != null) {
+            if (matched.playableUrl.isNullOrEmpty() && !fallback.playableUrl.isNullOrEmpty()) {
+                matched.playableUrl = fallback.playableUrl
+            }
+            return matched
+        }
+        return fallback.getLightweightCopy().apply {
+            this.playableUrl = fallback.playableUrl
+            this.queue = queue
+        }
     }
 
     private fun getCurrentTrackInfo(): String? {

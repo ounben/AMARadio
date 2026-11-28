@@ -17,6 +17,7 @@ import com.ounben.amaradio.R
 import com.ounben.amaradio.database.AMARadioDatabase
 import com.ounben.amaradio.database.toDataStation
 import com.ounben.amaradio.database.user.AMARadioUserDatabase
+import com.ounben.amaradio.favorites.FavoriteListHelper
 import com.ounben.amaradio.station.DataRadioStation
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,8 +66,7 @@ class AMARadioBrowser(private val app: AMARadioApp) {
             }
             MEDIA_ID_MUSICS_FAVORITE -> {
                 scope.future {
-                    val stations = app.favouriteManager.getList()
-                    val mediaItems = createMediaItemsFromStations(stations)
+                    val mediaItems = createFavoriteAndPlaylistMediaItems()
                     LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
                 }
             }
@@ -85,7 +85,14 @@ class AMARadioBrowser(private val app: AMARadioApp) {
                 }
             }
             else -> {
-                if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
+                if (parentId.startsWith(MEDIA_ID_PLAYLIST_PREFIX)) {
+                    val playlistId = parentId.substring(MEDIA_ID_PLAYLIST_PREFIX.length)
+                    scope.future {
+                        val stations = fetchStationsForPlaylist(playlistId)
+                        val mediaItems = createMediaItemsFromStations(stations, playlistId = playlistId)
+                        LibraryResult.ofItemList(paginate(mediaItems, page, pageSize), params)
+                    }
+                } else if (parentId.startsWith(MEDIA_ID_FILTER_PREFIX)) {
                     val filterId = parentId.substring(MEDIA_ID_FILTER_PREFIX.length)
                     scope.future {
                         val stations = if (filterId == "local") fetchLocalStations() else fetchStationsForFilter(filterId)
@@ -130,17 +137,74 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         }
     }
 
-    private fun createMediaItemsFromStations(stations: List<DataRadioStation>): List<MediaItem> {
-        val mediaItems = ArrayList<MediaItem>()
+    private fun createMediaItemsFromStations(
+        stations: List<DataRadioStation>,
+        playlistId: String? = null,
+        groupTitle: String? = null
+    ): List<MediaItem> {
+        val mediaItems = ArrayList<MediaItem>(stations.size)
         for (station in stations) {
             stationIdToStation[station.StationUuid] = station
-            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(station)
+            val metadata = com.ounben.amaradio.players.exoplayer.Media3Utils.buildMetadata(
+                station = station,
+                groupTitle = groupTitle
+            )
+            val mediaId = if (!playlistId.isNullOrEmpty()) {
+                buildPlaylistStationMediaId(playlistId, station.StationUuid)
+            } else {
+                LEAF_PREFIX + station.StationUuid
+            }
             mediaItems.add(MediaItem.Builder()
-                .setMediaId(LEAF_PREFIX + station.StationUuid)
+                .setMediaId(mediaId)
                 .setMediaMetadata(metadata)
                 .build())
         }
         return mediaItems
+    }
+
+    private suspend fun createFavoriteAndPlaylistMediaItems(): List<MediaItem> {
+        app.userDbMigrationJob?.join()
+        app.favouriteManager.awaitLoaded()
+
+        val allFavorites = app.favouriteManager.getList()
+        val lists = userDb.favoriteListDao().getAllLists()
+        if (lists.isEmpty()) {
+            return createMediaItemsFromStations(allFavorites)
+        }
+
+        val allItems = userDb.favoriteListDao().getAllItems()
+        val counts = FavoriteListHelper.computeListCounts(allFavorites, allItems)
+        val playlistIconUri = Uri.parse("android.resource://${app.packageName}/drawable/ic_playlist_white_24dp")
+
+        val mediaItems = ArrayList<MediaItem>(lists.size + allFavorites.size)
+        for (list in lists) {
+            val count = counts[list.id] ?: 0
+            mediaItems.add(
+                MediaItem.Builder()
+                    .setMediaId(MEDIA_ID_PLAYLIST_PREFIX + list.id)
+                    .setMediaMetadata(
+                        com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
+                            title = "${list.name} ($count)",
+                            iconUri = playlistIconUri,
+                            mediaType = MediaMetadata.MEDIA_TYPE_PLAYLIST
+                        )
+                    )
+                    .build()
+            )
+        }
+
+        val allSectionTitle = app.getString(R.string.favorite_list_all)
+        mediaItems.addAll(createMediaItemsFromStations(allFavorites, groupTitle = allSectionTitle))
+        return mediaItems
+    }
+
+    private suspend fun fetchStationsForPlaylist(playlistId: String): List<DataRadioStation> {
+        app.userDbMigrationJob?.join()
+        app.favouriteManager.awaitLoaded()
+
+        val allFavorites = app.favouriteManager.getList()
+        val allItems = userDb.favoriteListDao().getAllItems()
+        return FavoriteListHelper.filterStationsForList(allFavorites, allItems, playlistId)
     }
 
     private suspend fun fetchStationsForFilter(filterId: String): List<DataRadioStation> {
@@ -172,6 +236,29 @@ class AMARadioBrowser(private val app: AMARadioApp) {
     }
 
     fun onGetItem(browser: MediaSession.ControllerInfo, mediaId: String): ListenableFuture<LibraryResult<MediaItem>> {
+        if (mediaId.startsWith(MEDIA_ID_PLAYLIST_PREFIX)) {
+            val playlistId = mediaId.substring(MEDIA_ID_PLAYLIST_PREFIX.length)
+            return scope.future {
+                val list = userDb.favoriteListDao().getAllLists().find { it.id == playlistId }
+                    ?: return@future LibraryResult.ofError(SessionError.ERROR_BAD_VALUE)
+                val allFavorites = app.favouriteManager.getList()
+                val allItems = userDb.favoriteListDao().getAllItems()
+                val count = FavoriteListHelper.computeListCounts(allFavorites, allItems)[list.id] ?: 0
+                val playlistIconUri = Uri.parse("android.resource://${app.packageName}/drawable/ic_playlist_white_24dp")
+                val item = MediaItem.Builder()
+                    .setMediaId(mediaId)
+                    .setMediaMetadata(
+                        com.ounben.amaradio.players.exoplayer.Media3Utils.buildFolderMetadata(
+                            title = "${list.name} ($count)",
+                            iconUri = playlistIconUri,
+                            mediaType = MediaMetadata.MEDIA_TYPE_PLAYLIST
+                        )
+                    )
+                    .build()
+                LibraryResult.ofItem(item, null)
+            }
+        }
+
         val stationId = stationIdFromMediaId(mediaId)
         val station = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId) ?: app.customStationManager.getById(stationId)
         
@@ -209,27 +296,56 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         }
     }
 
-    suspend fun resolveStationByKeywords(query: String): String? {
-        val keywords = query.lowercase().split(Regex("\\s+")).filter { it.isNotBlank() }
+    data class ResolvedMedia(val stationId: String, val playlistId: String? = null)
+
+    suspend fun resolveStationByKeywords(query: String): String? = resolvePlaybackByKeywords(query)?.stationId
+
+    suspend fun resolvePlaybackByKeywords(query: String): ResolvedMedia? {
+        val trimmed = query.trim()
+        val keywords = trimmed.lowercase().split(Regex("\\s+")).filter { it.isNotBlank() }
         if (keywords.isEmpty()) return null
+
+        // 1. Exact favorite playlist name match (e.g. "Play Jazz on AMARadio")
+        val favoriteLists = userDb.favoriteListDao().getAllLists()
+        val exactPlaylist = favoriteLists.find { it.name.equals(trimmed, ignoreCase = true) }
+        if (exactPlaylist != null) {
+            val playlistStations = fetchStationsForPlaylist(exactPlaylist.id)
+            playlistStations.firstOrNull()?.let { first ->
+                stationIdToStation[first.StationUuid] = first
+                return ResolvedMedia(first.StationUuid, exactPlaylist.id)
+            }
+        }
         
         val favorites = app.favouriteManager.getList()
         favorites.find { station ->
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
-        }?.let { return it.StationUuid }
+        }?.let { return ResolvedMedia(it.StationUuid) }
         
         val history = app.historyManager.getList()
         history.find { station ->
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
-        }?.let { return it.StationUuid }
+        }?.let { return ResolvedMedia(it.StationUuid) }
 
         val customs = app.customStationManager.getList()
         customs.find { station ->
             val name = station.Name.lowercase()
             keywords.all { name.contains(it) }
-        }?.let { return it.StationUuid }
+        }?.let { return ResolvedMedia(it.StationUuid) }
+
+        // 2. Partial favorite playlist keyword match before global station DB fallback
+        val keywordPlaylist = favoriteLists.find { list ->
+            val name = list.name.lowercase()
+            keywords.all { name.contains(it) }
+        }
+        if (keywordPlaylist != null) {
+            val playlistStations = fetchStationsForPlaylist(keywordPlaylist.id)
+            playlistStations.firstOrNull()?.let { first ->
+                stationIdToStation[first.StationUuid] = first
+                return ResolvedMedia(first.StationUuid, keywordPlaylist.id)
+            }
+        }
         
         val results = stationDao.getStationsFiltered(
             w1 = keywords.getOrNull(0), 
@@ -250,9 +366,9 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         results.find { entity ->
             val name = entity.name?.lowercase() ?: ""
             keywords.all { name.contains(it) }
-        }?.let { return it.stationUuid }
+        }?.let { return ResolvedMedia(it.stationUuid) }
         
-        return results.firstOrNull()?.stationUuid
+        return results.firstOrNull()?.stationUuid?.let { ResolvedMedia(it) }
     }
 
     fun getStationById(stationId: String): DataRadioStation? = stationIdToStation[stationId] ?: app.favouriteManager.getById(stationId) ?: app.historyManager.getById(stationId) ?: app.customStationManager.getById(stationId)
@@ -350,11 +466,34 @@ class AMARadioBrowser(private val app: AMARadioApp) {
         const val MEDIA_ID_MUSICS_CUSTOM = "custom_id"
         const val MEDIA_ID_MUSICS_HISTORY = "history_id"
         const val MEDIA_ID_FILTER_PREFIX = "filter_"
+        const val MEDIA_ID_PLAYLIST_PREFIX = "playlist_"
         const val LEAF_PREFIX = "station_"
+        const val PLAYLIST_LEAF_PREFIX = "plstation_"
+        const val PLAYLIST_MEDIA_ID_SEPARATOR = "|"
+
+        @JvmStatic
+        fun buildPlaylistStationMediaId(playlistId: String, stationUuid: String): String {
+            return "$PLAYLIST_LEAF_PREFIX$playlistId$PLAYLIST_MEDIA_ID_SEPARATOR$stationUuid"
+        }
+
+        @JvmStatic
+        fun playlistIdFromMediaId(mediaId: String?): String? {
+            if (mediaId == null || !mediaId.startsWith(PLAYLIST_LEAF_PREFIX)) return null
+            val payload = mediaId.substring(PLAYLIST_LEAF_PREFIX.length)
+            val sepIndex = payload.indexOf(PLAYLIST_MEDIA_ID_SEPARATOR)
+            if (sepIndex <= 0) return null
+            return payload.substring(0, sepIndex)
+        }
 
         @JvmStatic
         fun stationIdFromMediaId(mediaId: String?): String {
             if (mediaId == null) return ""
+            if (mediaId.startsWith(PLAYLIST_LEAF_PREFIX)) {
+                val sepIndex = mediaId.indexOf(PLAYLIST_MEDIA_ID_SEPARATOR, PLAYLIST_LEAF_PREFIX.length)
+                if (sepIndex >= 0 && sepIndex + 1 < mediaId.length) {
+                    return mediaId.substring(sepIndex + 1)
+                }
+            }
             return if (mediaId.startsWith(LEAF_PREFIX)) {
                 mediaId.substring(LEAF_PREFIX.length)
             } else if (mediaId.contains("_")) {
