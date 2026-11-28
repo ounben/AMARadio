@@ -5,6 +5,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
 
+## [1.56] - 2026-11-28
+### Added
+- **Android Auto Favorite Playlists (#118)**: Integrated custom favorite playlists directly into Android Auto's Favorites tab (`AMARadioBrowser`, `Media3Utils`, `ic_playlist_white_24dp`) with browsable playlist folders (`Name (count)`), localized "All" group header (`EXTRAS_KEY_CONTENT_STYLE_GROUP_TITLE`), ordered playlist station browsing (`playlist_<id>`), playlist-aware `InMemoryStationQueue` playback for steering-wheel Next/Previous (`MediaSessionCallback`, `PlayerService.buildPlaylistStationWithQueue`), voice-command playlist matching (`resolvePlaybackByKeywords`), live `notifyChildrenChanged` sync on playlist DB updates, and unit tests (`AMARadioBrowserMediaIdTest`).
+
+### Changed
+- **Android Auto Grid View for Stations**: Switched Android Auto playable station overviews (Local, Favorites, Playlists, History, Filters, Search) to Grid View (`EXTRAS_VALUE_CONTENT_STYLE_GRID_ITEM`) while keeping browsable folders (playlists and filter groups) in Category List View (`EXTRAS_VALUE_CONTENT_STYLE_CATEGORY_LIST_ITEM`) via `LibraryParams.extras` in `AMARadioBrowser.onGetLibraryRoot` and `Media3Utils.buildFolderMetadata`.
+
 ## [1.55] - 2026-11-28
 ### Added
 - **Playlist-Capable Full Widget (`AMARadioFullWidget`)**: Added a compact, block-styled playlist filter bar (`PlaylistFilterBar`) below the Favorites/History tabs with quick `<`/`>` playlist cycling and an inline scrollable `LazyColumn` playlist picker (`PlaylistPickerRow`), independent per-widget-instance filter and tab state via Glance `ActionCallback`s (`SwitchTabActionCallback`, `TogglePlaylistPickerActionCallback`, `SelectPlaylistActionCallback`, `CyclePlaylistActionCallback`), live Room database observation for playlists and playlist items (`WidgetUpdateHelper`), RemoteViews-safe vector icons, R8 keep rules for `WidgetPlaylistSummary`, and playlist-aware `InMemoryStationQueue` playback in `PlayerService` (`EXTRA_PLAYLIST_ID`).
