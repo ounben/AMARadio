@@ -91,7 +91,7 @@ fun StarredScreen(
             verticalAlignment = Alignment.Top,
             key = { page -> page }
         ) { pageIndex ->
-            CompositionLocalProvider(LocalScrollToTopActive provides (pagerState.currentPage == pageIndex)) {
+            CompositionLocalProvider(LocalScrollNavigationActive provides (pagerState.currentPage == pageIndex)) {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     if (pageIndex == 0) {
                         Column(modifier = Modifier.fillMaxSize()) {

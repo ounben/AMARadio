@@ -177,7 +177,7 @@ fun TabsScreen(
         ) { pageIndex ->
             if (pageIndex >= tabs.size) return@HorizontalPager
 
-            CompositionLocalProvider(LocalScrollToTopActive provides (pagerState.currentPage == pageIndex)) {
+            CompositionLocalProvider(LocalScrollNavigationActive provides (pagerState.currentPage == pageIndex)) {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
                     when (val tab = tabs[pageIndex]) {
                         is MainTab.Local -> {

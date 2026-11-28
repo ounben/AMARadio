@@ -283,12 +283,12 @@ fun StationList(
     val gridState = rememberLazyGridState()
     val firstItemFocusRequester = remember { FocusRequester() }
 
-    BindScrollToTop(
+    BindScrollNavigation(
         gridState = gridState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = isGrid && stations.isNotEmpty()
     )
-    BindScrollToTop(
+    BindScrollNavigation(
         listState = listState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = !isGrid && stations.isNotEmpty()
@@ -390,7 +390,7 @@ fun TrackList(
     val listState = rememberLazyListState()
     val firstItemFocusRequester = remember { FocusRequester() }
 
-    BindScrollToTop(
+    BindScrollNavigation(
         listState = listState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = tracks.itemCount > 0
@@ -779,7 +779,7 @@ fun ReorderableStationList(
     modifier: Modifier = Modifier,
     playerViewModel: PlayerViewModel = viewModel(),
     showFavoriteIcon: Boolean = true,
-    scrollToTopBottomOffset: androidx.compose.ui.unit.Dp = 0.dp
+    scrollNavigationBottomOffset: androidx.compose.ui.unit.Dp = 0.dp
 ) {
     val playerUiState by playerViewModel.uiState.collectAsStateWithLifecycle()
     val playingStationUuid = playerUiState.currentStation?.StationUuid
@@ -798,17 +798,17 @@ fun ReorderableStationList(
         }
     }
 
-    BindScrollToTop(
+    BindScrollNavigation(
         gridState = gridState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = isGrid && stationsLocal.isNotEmpty(),
-        extraBottomOffset = scrollToTopBottomOffset
+        extraBottomOffset = scrollNavigationBottomOffset
     )
-    BindScrollToTop(
+    BindScrollNavigation(
         listState = listState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = !isGrid && stationsLocal.isNotEmpty(),
-        extraBottomOffset = scrollToTopBottomOffset
+        extraBottomOffset = scrollNavigationBottomOffset
     )
 
     BindGridScrollRangeAccessibility(
@@ -1145,12 +1145,12 @@ fun CategoryList(
     val gridState = rememberLazyGridState()
     val firstItemFocusRequester = remember { FocusRequester() }
 
-    BindScrollToTop(
+    BindScrollNavigation(
         gridState = gridState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = isGrid && categories.isNotEmpty()
     )
-    BindScrollToTop(
+    BindScrollNavigation(
         listState = listState,
         firstItemFocusRequester = firstItemFocusRequester,
         enabled = !isGrid && categories.isNotEmpty()

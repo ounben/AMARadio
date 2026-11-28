@@ -41,7 +41,7 @@ fun BindListScrollRangeAccessibility(
     listState: LazyListState,
     enabled: Boolean = true,
 ) {
-    val isActive = LocalScrollToTopActive.current && enabled
+    val isActive = LocalScrollNavigationActive.current && enabled
     val view = LocalView.current
     val accessibilityManager = remember(view) {
         view.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager
@@ -121,7 +121,7 @@ fun BindGridScrollRangeAccessibility(
     gridState: LazyGridState,
     enabled: Boolean = true,
 ) {
-    val isActive = LocalScrollToTopActive.current && enabled
+    val isActive = LocalScrollNavigationActive.current && enabled
     val view = LocalView.current
     val accessibilityManager = remember(view) {
         view.context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AccessibilityManager

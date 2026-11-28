@@ -100,7 +100,7 @@ fun MainScreen(
     var showPlayerSelectorDialog by remember { mutableStateOf<DataRadioStation?>(null) }
     var showDeleteConfirmDialog by remember { mutableStateOf<Int?>(null) }
     var isPlayerExpanded by remember { mutableStateOf(false) }
-    val scrollToTopController = remember { ScrollToTopController() }
+    val scrollNavigationController = remember { ScrollNavigationController() }
     val coroutineScope = rememberCoroutineScope()
     
     val settingsViewModel: SettingsViewModel = viewModel()
@@ -187,7 +187,7 @@ fun MainScreen(
             if (useWideLayout) isPlayerExpanded = false
         }
 
-        CompositionLocalProvider(LocalScrollToTopController provides scrollToTopController) {
+        CompositionLocalProvider(LocalScrollNavigationController provides scrollNavigationController) {
         Scaffold(
             topBar = {
                 MainTopBar(
@@ -463,7 +463,7 @@ fun MainScreen(
                         }
                     }
 
-                    // Permanently visible bottom-right Scroll-to-Top button positioned above the MiniPlayer
+                    // Permanently visible bottom-right Scroll-to-Top / Scroll-to-Bottom buttons positioned above the MiniPlayer
                     val baseBottomPadding = if (useWideLayout) {
                         16.dp
                     } else if (miniPlayerHeightDp > 0.dp) {
@@ -471,17 +471,22 @@ fun MainScreen(
                     } else {
                         contentBottomPadding + 12.dp
                     }
-                    ScrollToTopButton(
-                        onClick = {
+                    ScrollNavigationButtons(
+                        onScrollToTop = {
                             coroutineScope.launch {
-                                scrollToTopController.scrollToTop()
+                                scrollNavigationController.scrollToTop()
+                            }
+                        },
+                        onScrollToBottom = {
+                            coroutineScope.launch {
+                                scrollNavigationController.scrollToBottom()
                             }
                         },
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(
                                 end = 16.dp,
-                                bottom = baseBottomPadding + scrollToTopController.extraBottomOffset,
+                                bottom = baseBottomPadding + scrollNavigationController.extraBottomOffset,
                             )
                             .then(
                                 if (isPlayerExpanded && playerUiState.currentStation != null)

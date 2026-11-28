@@ -46,7 +46,7 @@ import com.ounben.amaradio.database.user.AMARadioUserDatabase
 import com.ounben.amaradio.database.user.RecordEntity
 import com.ounben.amaradio.ui.AmaradioAmber
 import com.ounben.amaradio.ui.BindListScrollRangeAccessibility
-import com.ounben.amaradio.ui.BindScrollToTop
+import com.ounben.amaradio.ui.BindScrollNavigation
 import com.ounben.amaradio.ui.SolidRedError
 import com.ounben.amaradio.ui.StationIcon
 import com.ounben.amaradio.ui.listItemCollectionInfo
@@ -109,7 +109,7 @@ fun RecordingsTab() {
         val listState = rememberLazyListState()
         val firstItemFocusRequester = remember { FocusRequester() }
 
-        BindScrollToTop(
+        BindScrollNavigation(
             listState = listState,
             firstItemFocusRequester = firstItemFocusRequester,
             enabled = recordings.isNotEmpty()

@@ -421,6 +421,7 @@
     <string name="action_change_playback_speed">Change playback speed</string>
     <string name="action_reset_playback_speed">Reset playback speed to 1x</string>
     <string name="action_scroll_to_top">Scroll to top</string>
+    <string name="action_scroll_to_bottom">Scroll to bottom</string>
     <string name="accessibility_filter_station">Station filter: %1$s</string>
     <string name="accessibility_filter_date_from">From date: %1$s</string>
     <string name="accessibility_filter_date_to">To date: %1$s</string>
